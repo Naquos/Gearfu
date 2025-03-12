@@ -2,19 +2,19 @@
 export default {
   bootstrap: () => import('./main.server.mjs').then(m => m.default),
   inlineCriticalCss: true,
-  baseHref: '',
+  baseHref: 'https://naquos.github.io/wakfu-builder/',
   locale: undefined,
   routes: [
   {
     "renderMode": 2,
-    "route": "/"
+    "route": "/wakfu-builder"
   }
 ],
   entryPointToBrowserMapping: undefined,
   assets: {
-    'index.csr.html': {size: 23565, hash: 'be457865bab1ed52df8de2f9ee9fab9d14c98aaf36cca7b3e905fd7130e00b2c', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
-    'index.server.html': {size: 17139, hash: '5d55f1f3d43fcb542cae7a657280fd1c260f70daeb19233571c60a40559d79e4', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
-    'index.html': {size: 110452, hash: 'cb5ddf4fe83f2dc4811f60e091d807f1769c65eebf7c0705988be5573e441528', text: () => import('./assets-chunks/index_html.mjs').then(m => m.default)},
+    'index.csr.html': {size: 23604, hash: '6bb28df1c93ade668a50b4356a5278466486e084e264d0eb1a3ad2c58bc4b8f9', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
+    'index.server.html': {size: 17178, hash: 'ad5e0b6110cf20939e8df2a50c2ca54ff796b9ff1fc476201e9953550ef5e7c5', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
+    'index.html': {size: 110494, hash: '01ff67ba33f47049fbf5145588729e698a1f73da986f3e4649ce314fbb09ae86', text: () => import('./assets-chunks/index_html.mjs').then(m => m.default)},
     'styles-36AW6TKX.css': {size: 6979, hash: 'vY6tjD/ce7M', text: () => import('./assets-chunks/styles-36AW6TKX_css.mjs').then(m => m.default)}
   },
 };

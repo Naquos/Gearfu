@@ -1,6 +1,6 @@
 
 export default {
-  basePath: '/',
+  basePath: 'https://naquos.github.io/wakfu-builder',
   supportedLocales: {
   "en-US": ""
 },
