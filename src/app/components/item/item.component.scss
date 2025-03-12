@@ -1,0 +1,38 @@
+
+:host {
+    background-color: #201e1e;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        display: flex;
+        span {
+            width: 40%;
+            margin: auto;
+        }
+    }
+    
+    .content {
+        display: flex;
+
+        .title{
+            display: flex;
+            flex-direction: column;
+
+            h2 {
+                padding-right: 15px;
+            }
+
+            img {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    
+    }
+}

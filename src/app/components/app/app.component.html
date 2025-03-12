@@ -1,0 +1,14 @@
+<div class="background">
+</div>
+
+<div class="content">
+    <div class="filter">
+        <h2>Filtre des items</h2>
+        <app-item-types (selected)="idsItemType = $event"></app-item-types>
+        <app-item-level (levelMin)="levelMin = $event" (levelMax)="levelMax = $event"></app-item-level>
+        <app-rarete-item (rarete)="rarete = $event" ></app-rarete-item>
+        <h2>Filtre calculs des poids</h2>
+        <app-filter-maitrises></app-filter-maitrises>
+    </div>
+    <app-item-list [idsItemTypes]="idsItemType" [levelMin]="levelMin" [levelMax]="levelMax" [rarete]="rarete"></app-item-list>
+</div>

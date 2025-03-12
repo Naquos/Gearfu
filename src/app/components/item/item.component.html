@@ -1,0 +1,15 @@
+<div class="header">
+    <span>Maitrises {{maitrises}}</span>
+    <span>Résistances {{resistances}}</span>
+</div>
+<div class="content">
+    <div class="title">
+        <h2 [style.color]="mapColors.get(item().rarity)">{{item().title}}</h2>
+        <img [src]="'items/' + item().idImage + '.png'">
+    </div>
+    <div>
+        <p *ngFor="let effect of item().equipEffects">
+          <img [src]="'aptitudes/' + effect.actionId +'.png'">  {{ displayEffect(effect) }}
+        </p>
+    </div>
+</div>
