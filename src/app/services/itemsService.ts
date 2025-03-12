@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { effect, Injectable } from "@angular/core";
 import itemsJson from "../../../public/items.json";
 import { Item } from "../models/item";
 import { MaitrisesServices } from "./maitrisesService";
@@ -11,6 +11,7 @@ export class ItemsService {
     protected items: Item[] = [];
     private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceEnum.POIDS);
     private onlyNoSecondary = new BehaviorSubject<boolean>(false);
+    private idMajor = new BehaviorSubject<number[]>([]);
 
     constructor(protected maitrisesService : MaitrisesServices) {
         this.initItemsList();
@@ -47,6 +48,14 @@ export class ItemsService {
       }
     }
 
+    public setIdMajor(value: number[]): void {
+      this.idMajor.next(value);
+    }
+
+    public obsIdMajor(): Observable<number[]> {
+      return this.idMajor.asObservable();
+    }
+
     public setOnlyNoSecondary(value: boolean): void {
       this.onlyNoSecondary.next(value);
     }
@@ -68,13 +77,14 @@ export class ItemsService {
              levelMin: number,
              levelMax: number): Observable<Item[]> {
         ;
-        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.obsSort(), this.obsOnlyNoSecondary()])
-        .pipe(map(([nbElements, idMaitrises, sort, onlyNoSecondary]) => {
+        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.obsSort(), this.obsOnlyNoSecondary(), this.obsIdMajor()])
+        .pipe(map(([nbElements, idMaitrises, sort, onlyNoSecondary, idMajor]) => {
           const listSecondaryMaitrises = [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK];
             return this.items.filter(x =>  itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))
             .filter(x => rarity.length === 0 || rarity.includes(x.rarity))
             .filter(x => x.level >= levelMin && x.level <= levelMax)
-            .filter(x => !onlyNoSecondary || !x.equipEffects.find(x => listSecondaryMaitrises.includes(x.actionId)))
+            .filter(x => !onlyNoSecondary || !x.equipEffects.find(y => listSecondaryMaitrises.includes(y.actionId)))
+            .filter(x => !idMajor.find(id => !x.equipEffects.map(effect => effect.actionId).includes(id)))
             .sort((a,b) => this.sortItem(a, b, nbElements, idMaitrises, sort)).slice(0,30);
         }))
     }

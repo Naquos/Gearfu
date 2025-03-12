@@ -6,10 +6,11 @@ import { RareteItemComponent } from "../rarete-item/rarete-item.component";
 import { FilterMaitrisesComponent } from "../filter-maitrises/filter-maitrises.component";
 import { SortChoiceComponent } from "../sort-choice/sort-choice.component";
 import { OnlyNoSecondaryComponent } from "../only-no-secondary/only-no-secondary.component";
+import { MajorPresentComponent } from "../major-present/major-present.component";
 
 @Component({
   selector: 'app-root',
-  imports: [ItemListComponent, ItemTypesComponent, ItemLevelComponent, RareteItemComponent, FilterMaitrisesComponent, SortChoiceComponent, OnlyNoSecondaryComponent],
+  imports: [ItemListComponent, ItemTypesComponent, ItemLevelComponent, RareteItemComponent, FilterMaitrisesComponent, SortChoiceComponent, OnlyNoSecondaryComponent, MajorPresentComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
