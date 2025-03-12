@@ -10,6 +10,7 @@ import { IdActionsEnum } from "../models/idActionsEnum";
 export class ItemsService {
     protected items: Item[] = [];
     private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceEnum.POIDS);
+    private onlyNoSecondary = new BehaviorSubject<boolean>(false);
 
     constructor(protected maitrisesService : MaitrisesServices) {
         this.initItemsList();
@@ -46,6 +47,14 @@ export class ItemsService {
       }
     }
 
+    public setOnlyNoSecondary(value: boolean): void {
+      this.onlyNoSecondary.next(value);
+    }
+
+    public obsOnlyNoSecondary(): Observable<boolean> {
+      return this.onlyNoSecondary.asObservable();
+    }
+
     public setSort(value: SortChoiceEnum): void {
       this.sort.next(value);
     }
@@ -59,11 +68,13 @@ export class ItemsService {
              levelMin: number,
              levelMax: number): Observable<Item[]> {
         ;
-        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.obsSort()])
-        .pipe(map(([nbElements, idMaitrises, sort]) => {
+        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.obsSort(), this.obsOnlyNoSecondary()])
+        .pipe(map(([nbElements, idMaitrises, sort, onlyNoSecondary]) => {
+          const listSecondaryMaitrises = [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK];
             return this.items.filter(x =>  itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))
             .filter(x => rarity.length === 0 || rarity.includes(x.rarity))
             .filter(x => x.level >= levelMin && x.level <= levelMax)
+            .filter(x => !onlyNoSecondary || !x.equipEffects.find(x => listSecondaryMaitrises.includes(x.actionId)))
             .sort((a,b) => this.sortItem(a, b, nbElements, idMaitrises, sort)).slice(0,30);
         }))
     }
