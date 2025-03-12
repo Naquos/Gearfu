@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MaitrisesServices } from '../../services/maitrisesService';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ButtonCheckboxComponent } from "../../button-checkbox/button-checkbox.component";
+import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 
 @Component({
   selector: 'app-filter-maitrises',

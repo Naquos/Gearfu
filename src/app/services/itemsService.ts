@@ -2,11 +2,14 @@ import { Injectable } from "@angular/core";
 import itemsJson from "../../../public/items.json";
 import { Item } from "../models/item";
 import { MaitrisesServices } from "./maitrisesService";
-import { combineLatest, map, Observable, of, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable, of, tap } from "rxjs";
+import { SortChoiceEnum as SortChoiceEnum } from "../models/sortChoiceEnum";
+import { IdActionsEnum } from "../models/idActionsEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
     protected items: Item[] = [];
+    private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceEnum.POIDS);
 
     constructor(protected maitrisesService : MaitrisesServices) {
         this.initItemsList();
@@ -31,34 +34,50 @@ export class ItemsService {
         }));
     }
 
-    getItems(itemTypeIds: number[],
+    private sortItem(itemA: Item, itemB:Item, nbElements: number, idMaitrises: number[], sort: SortChoiceEnum): number {
+      if(sort === SortChoiceEnum.POIDS) {
+        const poidsItemA = this.calculResistancesForAnItem(itemA) + this.calculMaitrisesForAnItem(itemA, nbElements, idMaitrises);
+        const poidsItemB = this.calculResistancesForAnItem(itemB) + this.calculMaitrisesForAnItem(itemB, nbElements, idMaitrises);
+        return poidsItemB - poidsItemA;
+      } else if (sort === SortChoiceEnum.MAITRISES) {
+        return this.calculMaitrisesForAnItem(itemB, nbElements, idMaitrises) -  this.calculMaitrisesForAnItem(itemA, nbElements, idMaitrises);
+      } else {
+        return this.calculResistancesForAnItem(itemB) - this.calculResistancesForAnItem(itemA);
+      }
+    }
+
+    public setSort(value: SortChoiceEnum): void {
+      this.sort.next(value);
+    }
+
+    public obsSort(): Observable<SortChoiceEnum> {
+      return this.sort.asObservable();
+    }
+
+    public getItems(itemTypeIds: number[],
              rarity: number[],
              levelMin: number,
              levelMax: number): Observable<Item[]> {
         ;
-        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises()])
-        .pipe(map(([nbElements, idMaitrises]) => {
+        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.obsSort()])
+        .pipe(map(([nbElements, idMaitrises, sort]) => {
             return this.items.filter(x =>  itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))
             .filter(x => rarity.length === 0 || rarity.includes(x.rarity))
             .filter(x => x.level >= levelMin && x.level <= levelMax)
-            .sort((a,b) => {
-                const poidsItemA = this.calculResistancesForAnItem(a) + this.calculMaitrisesForAnItem(a, nbElements, idMaitrises);
-                const poidsItemB = this.calculResistancesForAnItem(b) + this.calculMaitrisesForAnItem(b, nbElements, idMaitrises);
-                return poidsItemB - poidsItemA;
-            }).slice(0,30);
+            .sort((a,b) => this.sortItem(a, b, nbElements, idMaitrises, sort)).slice(0,30);
         }))
     }
 
     public calculResistancesForAnItem(item: Item): number {
         let result = 0;
-        const resistancesId = [82,83,84,85];
-        const malusResistancesId = [96, 97, 98, 100];
+        const resistancesId = [IdActionsEnum.RESISTANCES_AIR,IdActionsEnum.RESISTANCES_EAU,IdActionsEnum.RESISTANCES_TERRE,IdActionsEnum.RESISTANCES_FEU];
+        const malusResistancesId = [IdActionsEnum.PERTE_RESISTANCES_FEU, IdActionsEnum.PERTE_RESISTANCES_TERRE, IdActionsEnum.PERTE_RESISTANCE_EAU];
         item.equipEffects.forEach(effect => {
-          if(effect.actionId === 1069) { // résistances variables
+          if(effect.actionId === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE) {
             result += effect.params[0] * effect.params[2];
-          } else if (effect.actionId === 80) { // résistances all
+          } else if (effect.actionId === IdActionsEnum.RESISTANCES_ELEMENTAIRE) {
             result += effect.params[0] * 4;
-          } else if (effect.actionId ===  90) { // perte résistances all
+          } else if (effect.actionId ===  IdActionsEnum.PERTE_RESITANCES_ELEMENTAIRE) {
             result -= effect.params[0] * 4;
           } else if (resistancesId.includes(effect.actionId)) {
             result += effect.params[0];
@@ -72,15 +91,20 @@ export class ItemsService {
       
   public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[]): number {
     let result = 0;
-    const maitrisesIdElems = [120, 122, 123, 124,125];
-    const perteMaitrisesId = [130, 132];
+    const maitrisesIdElems = [IdActionsEnum.MAITRISES_ELEMENTAIRES,IdActionsEnum.MAITRISES_FEU,IdActionsEnum.MAITRISES_TERRE,IdActionsEnum.MAITRISES_EAU,IdActionsEnum.MAITRISES_AIR];
+    const perteMaitrisesId = [IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,IdActionsEnum.PERTE_MAITRISES_FEU];
 
     item.equipEffects.forEach(effect => {
       if(maitrisesIdElems.includes(effect.actionId) ||
         idMaitrises.includes(effect.actionId) ||
-       (effect.actionId === 1068 && effect.params[2] >= nbElements)) {
+        (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements)) {
         result += effect.params[0];
-      } else if (perteMaitrisesId.includes(effect.actionId)) {
+      } else if (perteMaitrisesId.includes(effect.actionId) ||
+                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_CRITIQUE && idMaitrises.includes(IdActionsEnum.MAITRISES_CRITIQUES)) ||
+                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DOS && idMaitrises.includes(IdActionsEnum.MAITRISES_DOS)) ||
+                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_MELEE && idMaitrises.includes(IdActionsEnum.MAITRISES_MELEE)) ||
+                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DISTANCE && idMaitrises.includes(IdActionsEnum.MAITRISES_DISTANCES)) ||
+                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_BERZERK && idMaitrises.includes(IdActionsEnum.MAITRISES_BERZERK)) ) {
         result -= effect.params[0];
       }
     })

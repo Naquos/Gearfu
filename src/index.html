@@ -11,5 +11,9 @@
 </head>
 <body class="mat-typography">
   <app-root></app-root>
+  <footer>WAKFU MMORPG : © 2012-<span id="year"></span> Ankama Studio. Tous droits réservés</footer>
 </body>
+<script>
+  document.getElementById("year").innerHTML=new Date().getFullYear(); 
+</script>
 </html>

@@ -3,7 +3,7 @@ import { ItemType } from '../../models/itemType';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ItemTypeServices } from '../../services/ItemTypesServices';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { ButtonCheckboxComponent } from "../../button-checkbox/button-checkbox.component";
+import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 
 @Component({
   selector: 'app-item-types',

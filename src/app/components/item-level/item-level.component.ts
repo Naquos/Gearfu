@@ -15,13 +15,13 @@ export class ItemLevelComponent {
   public levelMax = output<number>();
 
   protected form = new FormGroup({
-    levelMin: new FormControl(1),
+    levelMin: new FormControl(200),
     levelMax: new FormControl(245)
   });
 
   constructor() {
     this.form.valueChanges.subscribe(changes => {
-      this.levelMin.emit(changes.levelMin ?? 1);
+      this.levelMin.emit(changes.levelMin ?? 200);
       this.levelMax.emit(changes.levelMax ?? 245);
     });
   }

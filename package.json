@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "deploy": "ng deploy --base-href /wakfu-builder/",
     "test": "ng test",
     "serve:ssr:WakfuBuilder": "node dist/wakfu-builder/server/server.mjs"
   },
@@ -34,6 +35,7 @@
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "angular-cli-ghpages": "^2.0.3",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

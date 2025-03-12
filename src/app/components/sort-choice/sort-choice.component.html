@@ -1,0 +1,7 @@
+<section>
+<mat-button-toggle-group>
+    <mat-button-toggle (change)="itemService.setSort(SORT_CHOICE.POIDS)" [value]="SORT_CHOICE.POIDS" [checked]="true">Poids</mat-button-toggle>
+    <mat-button-toggle (change)="itemService.setSort(SORT_CHOICE.MAITRISES)" [value]="SORT_CHOICE.MAITRISES">Maitrises</mat-button-toggle>
+    <mat-button-toggle (change)="itemService.setSort(SORT_CHOICE.RESISTANCES)" [value]="SORT_CHOICE.RESISTANCES">Resistances</mat-button-toggle>
+</mat-button-toggle-group>
+</section>
