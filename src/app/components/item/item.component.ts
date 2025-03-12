@@ -19,6 +19,7 @@ export class ItemComponent implements OnInit {
   public resistances = 0;
   public maitrises = 0;
   protected mapColors:Map<number,String> = new Map();
+  Math = Math;
 
   constructor(protected actionsService : ActionService,
     protected maitrisesService : MaitrisesServices,
@@ -37,9 +38,9 @@ export class ItemComponent implements OnInit {
   ngOnInit(): void {
     this.item().equipEffects = this.item().equipEffects.sort((a, b) => a.actionId - b.actionId);
     this.resistances = this.itemService.calculResistancesForAnItem(this.item());    
-    combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises()])
-    .subscribe(([nbElements, idMaitrises]) => 
-      {this.maitrises = this.itemService.calculMaitrisesForAnItem(this.item(), nbElements, idMaitrises)})
+    combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.itemService.obsMultiplicateurElem()])
+    .subscribe(([nbElements, idMaitrises, multiplicateurElem]) => 
+      {this.maitrises = this.itemService.calculMaitrisesForAnItem(this.item(), nbElements, idMaitrises, multiplicateurElem)})
   }
 
 

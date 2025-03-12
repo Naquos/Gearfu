@@ -12,6 +12,7 @@ export class ItemsService {
     private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceEnum.POIDS);
     private onlyNoSecondary = new BehaviorSubject<boolean>(false);
     private idMajor = new BehaviorSubject<number[]>([]);
+    private multiplicateurElem = new BehaviorSubject<number>(1);
 
     constructor(protected maitrisesService : MaitrisesServices) {
         this.initItemsList();
@@ -36,16 +37,24 @@ export class ItemsService {
         }));
     }
 
-    private sortItem(itemA: Item, itemB:Item, nbElements: number, idMaitrises: number[], sort: SortChoiceEnum): number {
+    private sortItem(itemA: Item, itemB:Item, nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number): number {
       if(sort === SortChoiceEnum.POIDS) {
-        const poidsItemA = this.calculResistancesForAnItem(itemA) + this.calculMaitrisesForAnItem(itemA, nbElements, idMaitrises);
-        const poidsItemB = this.calculResistancesForAnItem(itemB) + this.calculMaitrisesForAnItem(itemB, nbElements, idMaitrises);
+        const poidsItemA = this.calculResistancesForAnItem(itemA) + this.calculMaitrisesForAnItem(itemA, nbElements, idMaitrises, multiplicateurElem);
+        const poidsItemB = this.calculResistancesForAnItem(itemB) + this.calculMaitrisesForAnItem(itemB, nbElements, idMaitrises, multiplicateurElem);
         return poidsItemB - poidsItemA;
       } else if (sort === SortChoiceEnum.MAITRISES) {
-        return this.calculMaitrisesForAnItem(itemB, nbElements, idMaitrises) -  this.calculMaitrisesForAnItem(itemA, nbElements, idMaitrises);
+        return this.calculMaitrisesForAnItem(itemB, nbElements, idMaitrises, multiplicateurElem) -  this.calculMaitrisesForAnItem(itemA, nbElements, idMaitrises, multiplicateurElem);
       } else {
         return this.calculResistancesForAnItem(itemB) - this.calculResistancesForAnItem(itemA);
       }
+    }
+
+    public setMultiplicateurElem(value: number): void {
+      this.multiplicateurElem.next(value);
+    }
+
+    public obsMultiplicateurElem(): Observable<number> {
+      return this.multiplicateurElem.asObservable();
     }
 
     public setIdMajor(value: number[]): void {
@@ -77,15 +86,15 @@ export class ItemsService {
              levelMin: number,
              levelMax: number): Observable<Item[]> {
         ;
-        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.obsSort(), this.obsOnlyNoSecondary(), this.obsIdMajor()])
-        .pipe(map(([nbElements, idMaitrises, sort, onlyNoSecondary, idMajor]) => {
+        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.obsSort(), this.obsOnlyNoSecondary(), this.obsIdMajor(), this.obsMultiplicateurElem()])
+        .pipe(map(([nbElements, idMaitrises, sort, onlyNoSecondary, idMajor, multiplicateurElem]) => {
           const listSecondaryMaitrises = [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK];
             return this.items.filter(x =>  itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))
             .filter(x => rarity.length === 0 || rarity.includes(x.rarity))
             .filter(x => x.level >= levelMin && x.level <= levelMax)
             .filter(x => !onlyNoSecondary || !x.equipEffects.find(y => listSecondaryMaitrises.includes(y.actionId)))
             .filter(x => !idMajor.find(id => !x.equipEffects.map(effect => effect.actionId).includes(id)))
-            .sort((a,b) => this.sortItem(a, b, nbElements, idMaitrises, sort)).slice(0,30);
+            .sort((a,b) => this.sortItem(a, b, nbElements, idMaitrises, sort, multiplicateurElem)).slice(0,30);
         }))
     }
 
@@ -110,17 +119,19 @@ export class ItemsService {
       }
 
       
-  public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[]): number {
+  public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[], multiplicateurElem: number): number {
     let result = 0;
     const maitrisesIdElems = [IdActionsEnum.MAITRISES_ELEMENTAIRES,IdActionsEnum.MAITRISES_FEU,IdActionsEnum.MAITRISES_TERRE,IdActionsEnum.MAITRISES_EAU,IdActionsEnum.MAITRISES_AIR];
     const perteMaitrisesId = [IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,IdActionsEnum.PERTE_MAITRISES_FEU];
 
     item.equipEffects.forEach(effect => {
       if(maitrisesIdElems.includes(effect.actionId) ||
-        idMaitrises.includes(effect.actionId) ||
         (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements)) {
+        result += effect.params[0] * multiplicateurElem;
+      } else if (idMaitrises.includes(effect.actionId)) {
         result += effect.params[0];
-      } else if (perteMaitrisesId.includes(effect.actionId) ||
+      }
+       else if (perteMaitrisesId.includes(effect.actionId) ||
                 (effect.actionId === IdActionsEnum.PERTE_MAITRISES_CRITIQUE && idMaitrises.includes(IdActionsEnum.MAITRISES_CRITIQUES)) ||
                 (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DOS && idMaitrises.includes(IdActionsEnum.MAITRISES_DOS)) ||
                 (effect.actionId === IdActionsEnum.PERTE_MAITRISES_MELEE && idMaitrises.includes(IdActionsEnum.MAITRISES_MELEE)) ||

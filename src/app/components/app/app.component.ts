@@ -7,10 +7,11 @@ import { FilterMaitrisesComponent } from "../filter-maitrises/filter-maitrises.c
 import { SortChoiceComponent } from "../sort-choice/sort-choice.component";
 import { OnlyNoSecondaryComponent } from "../only-no-secondary/only-no-secondary.component";
 import { MajorPresentComponent } from "../major-present/major-present.component";
+import { ModifierElemMaitrisesComponent } from "../modifier-elem-maitrises/modifier-elem-maitrises.component";
 
 @Component({
   selector: 'app-root',
-  imports: [ItemListComponent, ItemTypesComponent, ItemLevelComponent, RareteItemComponent, FilterMaitrisesComponent, SortChoiceComponent, OnlyNoSecondaryComponent, MajorPresentComponent],
+  imports: [ItemListComponent, ItemTypesComponent, ItemLevelComponent, RareteItemComponent, FilterMaitrisesComponent, SortChoiceComponent, OnlyNoSecondaryComponent, MajorPresentComponent, ModifierElemMaitrisesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
