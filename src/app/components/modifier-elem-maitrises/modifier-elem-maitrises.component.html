@@ -1,20 +1,9 @@
 <h3>Activation de mécaniques augmentant la quantité de maitrises élémentaires</h3>
-<section>
-    <mat-button-toggle-group multiple>
-        <mat-button-toggle (change)="form.controls.abnegation.setValue(!form.controls.abnegation.value)">Abnégation</mat-button-toggle>
-        <mat-button-toggle (change)="form.controls.alternance.setValue(!form.controls.alternance.value)">Alternance</mat-button-toggle>
-        <mat-button-toggle (change)="form.controls.alternance2.setValue(!form.controls.alternance2.value)">Alternance 2</mat-button-toggle>
-    </mat-button-toggle-group>
-</section>
-<section>
-    <mat-button-toggle-group multiple>
-        <mat-button-toggle (change)="form.controls.anatomie.setValue(!form.controls.anatomie.value)">Anatomie</mat-button-toggle>
-        <mat-button-toggle (change)="form.controls.CE.setValue(!form.controls.CE.value)">Concentration élémentaires</mat-button-toggle>
-        <mat-button-toggle (change)="form.controls.inflex2.setValue(!form.controls.inflex2.value)">Inflexibilité 2</mat-button-toggle>
-    </mat-button-toggle-group>
-</section>
-<section>
-    <mat-button-toggle-group multiple>
-        <mat-button-toggle (change)="form.controls.coeur.setValue(!form.controls.coeur.value)">Coeur huppermage</mat-button-toggle>
-    </mat-button-toggle-group>
-</section>
+<mat-form-field>
+    <mat-label>Mécaniques</mat-label>
+    <mat-select [formControl]="form" multiple>
+      @for (mecanism of ElemMaitrisesMecanismEnumList; track mecanism) {
+        <mat-option [value]="mecanism">{{mecanism.valueOf()}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>

@@ -1,5 +1,5 @@
 .background {
-    background-image: url("../../../../public/background.png");
+    background-image: url("../../../../public/logo.png");
     position: fixed;
     top: 0;
     left: 0;
@@ -17,8 +17,9 @@
 }
 
 .filter {    
-    
-    background-color: rgb(102, 102, 102);
+
+    background: linear-gradient(to right, #213A57, #618A97);
+    opacity: 0.9;
     color: white;
     font-weight: 400;
     padding: 10px;

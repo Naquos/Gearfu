@@ -1,16 +1,24 @@
 import { Component } from '@angular/core';
 import { ItemsService } from '../../services/itemsService';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { SortChoiceEnum } from '../../models/sortChoiceEnum';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { filter, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-sort-choice',
-  imports: [MatButtonToggleModule],
+  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
   templateUrl: './sort-choice.component.html',
   styleUrl: './sort-choice.component.scss'
 })
 export class SortChoiceComponent {
-  protected SORT_CHOICE = SortChoiceEnum;
+  protected SortChoiceEnumList = Object.values(SortChoiceEnum);
+  protected form = new FormControl<SortChoiceEnum>(SortChoiceEnum.POIDS);
+
   constructor(protected itemService: ItemsService) {
+    this.form.valueChanges
+      .pipe(filter(value => value !== null),tap(console.log))
+      .subscribe(value => this.itemService.setSort(value))
   }
 }

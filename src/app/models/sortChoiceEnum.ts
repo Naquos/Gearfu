@@ -1,5 +1,5 @@
 export enum SortChoiceEnum {
-    POIDS,
-    MAITRISES,
-    RESISTANCES
+    POIDS = "Poids",
+    MAITRISES = "Maîtrises",
+    RESISTANCES = "Résistances"
 }
