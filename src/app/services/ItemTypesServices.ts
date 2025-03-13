@@ -23,6 +23,7 @@ export class ItemTypeServices {
     this.itemTypes.set("accessoires",this.findItemType("Emblème"))
     this.itemTypes.set("bouclier",this.findItemType("Bouclier"))
     this.itemTypes.set("dague",this.findItemType("Dague"))
+    this.itemTypes.set("familier",this.findItemType("Familier{[~1]?s:}"))
   }
   
   private findItemType(title: string): ItemType {

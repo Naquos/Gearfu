@@ -19,7 +19,7 @@ export class ItemComponent implements OnInit {
   public resistances = 0;
   public maitrises = 0;
   protected mapColors:Map<number,String> = new Map();
-  protected window = window;
+  protected window!: Window;
   Math = Math;
 
   constructor(protected actionsService : ActionService,
@@ -37,6 +37,7 @@ export class ItemComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.window = window;
     this.item().equipEffects = this.item().equipEffects.sort((a, b) => a.actionId - b.actionId);
     this.resistances = this.itemService.calculResistancesForAnItem(this.item());    
     combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.itemService.obsMultiplicateurElem()])

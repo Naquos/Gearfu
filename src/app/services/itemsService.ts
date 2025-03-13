@@ -13,6 +13,7 @@ export class ItemsService {
     private onlyNoSecondary = new BehaviorSubject<boolean>(false);
     private idMajor = new BehaviorSubject<number[]>([]);
     private multiplicateurElem = new BehaviorSubject<number>(1);
+    private itemName = new BehaviorSubject<string>("");
 
     constructor(protected maitrisesService : MaitrisesServices) {
         this.initItemsList();
@@ -47,6 +48,14 @@ export class ItemsService {
       } else {
         return this.calculResistancesForAnItem(itemB) - this.calculResistancesForAnItem(itemA);
       }
+    }
+
+    public setItemName(value: string): void {
+      this.itemName.next(value);
+    }
+
+    public obsItemName(): Observable<string> {
+      return this.itemName.asObservable();
     }
 
     public setMultiplicateurElem(value: number): void {
@@ -86,12 +95,13 @@ export class ItemsService {
              levelMin: number,
              levelMax: number): Observable<Item[]> {
         ;
-        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.obsSort(), this.obsOnlyNoSecondary(), this.obsIdMajor(), this.obsMultiplicateurElem()])
-        .pipe(map(([nbElements, idMaitrises, sort, onlyNoSecondary, idMajor, multiplicateurElem]) => {
+        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.obsSort(), this.obsOnlyNoSecondary(), this.obsIdMajor(), this.obsMultiplicateurElem(), this.obsItemName()])
+        .pipe(map(([nbElements, idMaitrises, sort, onlyNoSecondary, idMajor, multiplicateurElem, itemName]) => {
           const listSecondaryMaitrises = [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK];
             return this.items.filter(x =>  itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))
             .filter(x => rarity.length === 0 || rarity.includes(x.rarity))
             .filter(x => x.level >= levelMin && x.level <= levelMax)
+            .filter(x => x.title.toUpperCase().includes(itemName.toUpperCase()))
             .filter(x => !onlyNoSecondary || !x.equipEffects.find(y => listSecondaryMaitrises.includes(y.actionId)))
             .filter(x => this.majorIsPresent(idMajor, x))
             .sort((a,b) => this.sortItem(a, b, nbElements, idMaitrises, sort, multiplicateurElem)).slice(0,30);

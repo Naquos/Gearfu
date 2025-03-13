@@ -29,7 +29,8 @@ export class ItemTypesComponent {
     epaulettes: new FormControl(),
     bouclier: new FormControl(),
     dague: new FormControl(),
-    accessoires: new FormControl()
+    accessoires: new FormControl(),
+    familier: new FormControl()
   });
 
   constructor(private itemTypeServices: ItemTypeServices) {
@@ -49,6 +50,7 @@ export class ItemTypesComponent {
       if(x.bouclier) { result.push(this.itemTypeServices.getItemTypes().get("bouclier")?.id) };
       if(x.dague) { result.push(this.itemTypeServices.getItemTypes().get("dague")?.id) };
       if(x.accessoires) { result.push(this.itemTypeServices.getItemTypes().get("accessoires")?.id) };
+      if(x.familier) { result.push(this.itemTypeServices.getItemTypes().get("familier")?.id) };
       this.selected.emit(result.flat() as number[]);
     });
   }

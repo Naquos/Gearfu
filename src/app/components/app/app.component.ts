@@ -8,10 +8,11 @@ import { SortChoiceComponent } from "../sort-choice/sort-choice.component";
 import { OnlyNoSecondaryComponent } from "../only-no-secondary/only-no-secondary.component";
 import { MajorPresentComponent } from "../major-present/major-present.component";
 import { ModifierElemMaitrisesComponent } from "../modifier-elem-maitrises/modifier-elem-maitrises.component";
+import { SearchItemNameComponent } from "../search-item-name/search-item-name.component";
 
 @Component({
   selector: 'app-root',
-  imports: [ItemListComponent, ItemTypesComponent, ItemLevelComponent, RareteItemComponent, FilterMaitrisesComponent, SortChoiceComponent, OnlyNoSecondaryComponent, MajorPresentComponent, ModifierElemMaitrisesComponent],
+  imports: [ItemListComponent, ItemTypesComponent, ItemLevelComponent, RareteItemComponent, FilterMaitrisesComponent, SortChoiceComponent, OnlyNoSecondaryComponent, MajorPresentComponent, ModifierElemMaitrisesComponent, SearchItemNameComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
