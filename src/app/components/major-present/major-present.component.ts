@@ -17,6 +17,9 @@ export class MajorPresentComponent {
     PM: new FormControl(),
     PW: new FormControl(),
     PO: new FormControl(),
+    ARMURE_DONNEE: new FormControl(),
+    CRITIQUE: new FormControl(),
+    PARADE: new FormControl(),
   });
 
   constructor(private itemService: ItemsService) {
@@ -26,6 +29,9 @@ export class MajorPresentComponent {
       if(x.PM) {result.push(IdActionsEnum.PM)}
       if(x.PW) {result.push(IdActionsEnum.BOOST_PW)}
       if(x.PO) {result.push(IdActionsEnum.PORTEE)}
+      if(x.ARMURE_DONNEE) {result.push(IdActionsEnum.ARMURE_DONNEE_RECUE)}
+      if(x.CRITIQUE) {result.push(IdActionsEnum.COUP_CRITIQUE)}
+      if(x.PARADE) {result.push(IdActionsEnum.PARADE)}
       this.itemService.setIdMajor(result);
     })
   }

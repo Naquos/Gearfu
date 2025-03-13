@@ -93,10 +93,15 @@ export class ItemsService {
             .filter(x => rarity.length === 0 || rarity.includes(x.rarity))
             .filter(x => x.level >= levelMin && x.level <= levelMax)
             .filter(x => !onlyNoSecondary || !x.equipEffects.find(y => listSecondaryMaitrises.includes(y.actionId)))
-            .filter(x => !idMajor.find(id => !x.equipEffects.map(effect => effect.actionId).includes(id)))
+            .filter(x => this.majorIsPresent(idMajor, x))
             .sort((a,b) => this.sortItem(a, b, nbElements, idMaitrises, sort, multiplicateurElem)).slice(0,30);
         }))
     }
+
+  private majorIsPresent(idMajor: number[], x: Item): unknown {
+    return !idMajor.find(id => (id !== IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.map(effect => effect.actionId).includes(id)) 
+                            || (id === IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === 120 )));
+  }
 
     public calculResistancesForAnItem(item: Item): number {
         let result = 0;
