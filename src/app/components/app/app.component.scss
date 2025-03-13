@@ -1,5 +1,5 @@
 .background {
-    background-image: url("../../../../public/backgroundWakfu.jpg");
+    background-image: url("../../../../public/background.png");
     position: fixed;
     top: 0;
     left: 0;
@@ -7,12 +7,13 @@
     height: 100vh;
     background-repeat: no-repeat;
     z-index: -1;
-    background-size: cover;
+    background-size: 100vw 100vh;
 }
 
 .content {
     display: flex;
     justify-content: space-between;
+    margin-top: 80px;
 }
 
 .filter {    
@@ -26,12 +27,17 @@
     width: 20%;
 
     overflow-y: scroll;
-    height: 100%;
-    max-height: 100%;
+    height: calc(100% - 85px);
     padding-bottom: 50px;
+
+    scrollbar-width: none;  /* Firefox */
+    ::-webkit-scrollbar { 
+        display: none;  /* Safari and Chrome */
+    }
 }
 
 app-item-list {
     width: 75%;
+    margin-top: 1%;
     margin-left: 24%;
 }
