@@ -2,20 +2,20 @@
 
 <form [formGroup]="form">
     <div class="group">
-        <app-button-checkbox [control]="form.controls.feu" srcImg="aptitudes/fire.png" ></app-button-checkbox>
-        <app-button-checkbox [control]="form.controls.air" srcImg="aptitudes/air.png" ></app-button-checkbox>
-        <app-button-checkbox [control]="form.controls.terre" srcImg="aptitudes/earth.png" ></app-button-checkbox>
-        <app-button-checkbox [control]="form.controls.eau" srcImg="aptitudes/water.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="Feu" [control]="form.controls.feu" srcImg="aptitudes/fire.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="Air" [control]="form.controls.air" srcImg="aptitudes/air.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="Terre" [control]="form.controls.terre" srcImg="aptitudes/earth.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="Eau" [control]="form.controls.eau" srcImg="aptitudes/water.png" ></app-button-checkbox>
     </div>
 
     <h3>Maitrises secondaires</h3>
 
     <div class="group">
-        <app-button-checkbox [control]="form.controls.melee" srcImg="aptitudes/1052.png" ></app-button-checkbox>
-        <app-button-checkbox [control]="form.controls.distance" srcImg="aptitudes/1053.png" ></app-button-checkbox>
-        <app-button-checkbox [control]="form.controls.critique" srcImg="aptitudes/149.png" ></app-button-checkbox>
-        <app-button-checkbox [control]="form.controls.dos" srcImg="aptitudes/180.png" ></app-button-checkbox>
-        <app-button-checkbox [control]="form.controls.soin" srcImg="aptitudes/26.png" ></app-button-checkbox>
-        <app-button-checkbox [control]="form.controls.berzerk" srcImg="aptitudes/1055.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="Mélée" [control]="form.controls.melee" srcImg="aptitudes/1052.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="Distance" [control]="form.controls.distance" srcImg="aptitudes/1053.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="Critique" [control]="form.controls.critique" srcImg="aptitudes/149.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="Dos" [control]="form.controls.dos" srcImg="aptitudes/180.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="Soin" [control]="form.controls.soin" srcImg="aptitudes/26.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="Berzerk" [control]="form.controls.berzerk" srcImg="aptitudes/1055.png" ></app-button-checkbox>
     </div>
 </form>
