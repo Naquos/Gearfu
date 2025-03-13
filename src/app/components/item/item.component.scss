@@ -21,7 +21,7 @@
             margin: auto;
 
             img {
-                margin-right: 10px;
+                margin: 0 10px;
             }
         }
         .imgContainer {
@@ -49,6 +49,7 @@
 
         .title{
             display: flex;
+            max-width: 30%;
             flex-direction: column;
 
             h3 {

@@ -4,4 +4,8 @@
     grid-template-rows: repeat(5, 1fr);
     grid-column-gap: 20px;
     grid-row-gap: 20px;
+
+    app-item:hover {
+        transform: scale(1.05);
+    }
 }

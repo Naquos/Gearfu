@@ -16,10 +16,10 @@ import { IdActionsEnum } from '../../models/idActionsEnum';
 })
 export class ItemComponent implements OnInit {
   public item = input.required<Item>()
-  public resistances = 0;
-  public maitrises = 0;
+  protected resistances = 0;
+  protected maitrises = 0;
+  protected IdActionEnum = IdActionsEnum;
   protected mapColors:Map<number,String> = new Map();
-  protected window!: Window;
   Math = Math;
 
   constructor(protected actionsService : ActionService,
@@ -37,7 +37,6 @@ export class ItemComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.window = window;
     this.item().equipEffects = this.item().equipEffects.sort((a, b) => a.actionId - b.actionId);
     this.resistances = this.itemService.calculResistancesForAnItem(this.item());    
     combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.itemService.obsMultiplicateurElem()])
@@ -45,6 +44,9 @@ export class ItemComponent implements OnInit {
       {this.maitrises = this.itemService.calculMaitrisesForAnItem(this.item(), nbElements, idMaitrises, multiplicateurElem)})
   }
 
+  protected openEncyclopedie(itemId: number): void {
+    window.open('https://www.wakfu.com/fr/mmorpg/encyclopedie/armures/' + itemId);
+  }
 
   protected displayEffect(effect: EquipEffects): string {
     const descriptionEffect = this.actionsService.getEffectById(effect.actionId).split(":");
