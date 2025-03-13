@@ -1,6 +1,8 @@
 <div class="header">
-    <span>Maitrises {{Math.trunc(maitrises)}}</span>
-    <span>Résistances {{resistances}}</span>
+    <span><img [src]="'aptitudes/1068.png'">Maitrises {{Math.trunc(maitrises)}}</span>
+    <span><img [src]="'aptitudes/1069.png'">Résistances {{resistances}}</span>
+    <span class="imgContainer" (click)="window.open('https://www.wakfu.com/fr/mmorpg/encyclopedie/armures/' + item().id)"><img src="aptitudes/Encyclopédie.png"></span>
+    
 </div>
 <div class="content">
     <div class="title">

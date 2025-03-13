@@ -19,6 +19,7 @@ export class ItemComponent implements OnInit {
   public resistances = 0;
   public maitrises = 0;
   protected mapColors:Map<number,String> = new Map();
+  protected window = window;
   Math = Math;
 
   constructor(protected actionsService : ActionService,
