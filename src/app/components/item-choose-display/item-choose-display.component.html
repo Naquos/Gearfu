@@ -1,7 +1,7 @@
 <ng-container *ngIf="{item: $item | async} as value">
     <ng-container *ngIf="value.item">
-        <div class="itemPresent" [style.backgroundColor]="colorRarityService.getMapColors().get(value.item.rarity)">
-            <img [src]="'items/' + value.item.idImage + '.png'">
+        <div [matTooltip]="value.item.title" class="itemPresent" [style.backgroundColor]="colorRarityService.getMapColors().get(value.item.rarity)">
+            <img (click)="itemChooseService.deleteItem(itemType(), indexItem())" [src]="'items/' + value.item.idImage + '.png'">
         </div>
     </ng-container>
     <ng-container *ngIf="!value.item">

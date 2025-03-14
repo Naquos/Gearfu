@@ -2,7 +2,7 @@ export enum RarityItem {
     RARE = 2,
     MYTHIQUE = 3,
     LEGENDAIRE = 4,
-    SOUVENIR = 5,
-    EPIQUE = 6,
-    RELIQUE = 7
+    RELIQUE = 5,
+    SOUVENIR = 6,
+    EPIQUE = 7
 }

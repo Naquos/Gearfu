@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { map, Observable } from 'rxjs';
 import { ItemChooseService } from '../../services/itemChooseService';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-item-choose-display',
-  imports: [CommonModule],
+  imports: [CommonModule, MatTooltipModule],
   templateUrl: './item-choose-display.component.html',
   styleUrl: './item-choose-display.component.scss'
 })
@@ -19,7 +20,7 @@ export class ItemChooseDisplayComponent implements OnInit {
   protected $item!: Observable<Item | undefined>;
 
   constructor(protected colorRarityService: ColorRarityService,
-              private itemChooseService: ItemChooseService
+              protected itemChooseService: ItemChooseService
   ) {
   }
   ngOnInit(): void {

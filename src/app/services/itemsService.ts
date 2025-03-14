@@ -1,8 +1,8 @@
-import { effect, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import itemsJson from "../../../public/items.json";
 import { Item } from "../models/item";
 import { MaitrisesServices } from "./maitrisesService";
-import { BehaviorSubject, combineLatest, map, Observable, of, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../models/sortChoiceEnum";
 import { IdActionsEnum } from "../models/idActionsEnum";
 
