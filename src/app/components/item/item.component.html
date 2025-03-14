@@ -4,9 +4,9 @@
     <span class="imgContainer" (click)="openEncyclopedie(item().id)"><img src="aptitudes/Encyclopédie.png"></span>
     
 </div>
-<div class="content">
+<div class="content" (click)="itemChooseService.setItem(itemTypeService.getItemType(item().itemTypeId), item())">
     <div class="title">
-        <h3 [style.color]="mapColors.get(item().rarity)">{{item().title}}</h3>
+        <h3 [style.color]="colorRarityService.getMapColors().get(item().rarity)">{{item().title}}</h3>
         <img [src]="'items/' + item().idImage + '.png'">
     </div>
     <div>

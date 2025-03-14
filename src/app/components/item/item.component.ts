@@ -7,6 +7,9 @@ import { MaitrisesServices } from '../../services/maitrisesService';
 import { combineLatest } from 'rxjs';
 import { ItemsService } from '../../services/itemsService';
 import { IdActionsEnum } from '../../models/idActionsEnum';
+import { ColorRarityService } from '../../services/colorRarityService';
+import { ItemChooseService } from '../../services/itemChooseService';
+import { ItemTypeServices } from '../../services/ItemTypesServices';
 
 @Component({
   selector: 'app-item',
@@ -19,19 +22,15 @@ export class ItemComponent implements OnInit {
   protected resistances = 0;
   protected maitrises = 0;
   protected IdActionEnum = IdActionsEnum;
-  protected mapColors:Map<number,String> = new Map();
   Math = Math;
 
   constructor(protected actionsService : ActionService,
     protected maitrisesService : MaitrisesServices,
-    protected itemService : ItemsService
+    protected itemService : ItemsService,
+    protected colorRarityService: ColorRarityService,
+    protected itemChooseService: ItemChooseService,
+    protected itemTypeService: ItemTypeServices
   ) {
-    this.mapColors.set(2,"#4c9646");
-    this.mapColors.set(3,"#dd7f13");
-    this.mapColors.set(4,"#ffef64");
-    this.mapColors.set(5,"#c570ef");
-    this.mapColors.set(6,"#80d6d4");
-    this.mapColors.set(7,"#eebcd7");
   }
 
 

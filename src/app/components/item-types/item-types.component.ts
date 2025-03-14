@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ItemTypeServices } from '../../services/ItemTypesServices';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
+import { ItemTypeEnum } from '../../models/itemTypeEnum';
 
 @Component({
   selector: 'app-item-types',
@@ -37,20 +38,20 @@ export class ItemTypesComponent {
 
     this.form.valueChanges.subscribe(x => {
       const result = [];
-      if(x.uneMain) { result.push(this.itemTypeServices.getItemTypes().get("uneMain")?.id) };
-      if(x.deuxMains) { result.push(this.itemTypeServices.getItemTypes().get("deuxMains")?.id) };
-      if(x.anneau) { result.push(this.itemTypeServices.getItemTypes().get("anneau")?.id) };
-      if(x.bottes) { result.push(this.itemTypeServices.getItemTypes().get("bottes")?.id) };
-      if(x.amulette) { result.push(this.itemTypeServices.getItemTypes().get("amulette")?.id) };
-      if(x.cape) { result.push(this.itemTypeServices.getItemTypes().get("cape")?.id) };
-      if(x.ceinture) { result.push(this.itemTypeServices.getItemTypes().get("ceinture")?.id) };
-      if(x.casque) { result.push(this.itemTypeServices.getItemTypes().get("casque")?.id) };
-      if(x.plastron) { result.push(this.itemTypeServices.getItemTypes().get("plastron")?.id) };
-      if(x.epaulettes) { result.push(this.itemTypeServices.getItemTypes().get("epaulettes")?.id) };
-      if(x.bouclier) { result.push(this.itemTypeServices.getItemTypes().get("bouclier")?.id) };
-      if(x.dague) { result.push(this.itemTypeServices.getItemTypes().get("dague")?.id) };
-      if(x.accessoires) { result.push(this.itemTypeServices.getItemTypes().get("accessoires")?.id) };
-      if(x.familier) { result.push(this.itemTypeServices.getItemTypes().get("familier")?.id) };
+      if(x.uneMain) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.UNE_MAIN)?.id) };
+      if(x.deuxMains) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.DEUX_MAINS)?.id) };
+      if(x.anneau) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.ANNEAU)?.id) };
+      if(x.bottes) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.BOTTES)?.id) };
+      if(x.amulette) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.AMULETTE)?.id) };
+      if(x.cape) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.CAPE)?.id) };
+      if(x.ceinture) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.CEINTURE)?.id) };
+      if(x.casque) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.CASQUE)?.id) };
+      if(x.plastron) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.PLASTRON)?.id) };
+      if(x.epaulettes) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.EPAULETTES)?.id) };
+      if(x.bouclier) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.BOUCLIER)?.id) };
+      if(x.dague) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.DAGUE)?.id) };
+      if(x.accessoires) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.ACCESSOIRES)?.id) };
+      if(x.familier) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.FAMILIER)?.id) };
       this.selected.emit(result.flat() as number[]);
     });
   }
