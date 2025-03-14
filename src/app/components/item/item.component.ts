@@ -37,7 +37,6 @@ export class ItemComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.item);
     this.item.equipEffects = this.item.equipEffects.sort((a, b) => a.actionId - b.actionId);
     this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
     combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.itemService.obsMultiplicateurElem()])
