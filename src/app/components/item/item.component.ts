@@ -1,10 +1,10 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, Input, input, OnInit } from '@angular/core';
 import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
 import { ActionService } from '../../services/actionService';
 import { EquipEffects } from '../../models/equipEffects';
 import { MaitrisesServices } from '../../services/maitrisesService';
-import { combineLatest } from 'rxjs';
+import { combineLatest, tap } from 'rxjs';
 import { ItemsService } from '../../services/itemsService';
 import { IdActionsEnum } from '../../models/idActionsEnum';
 import { ColorRarityService } from '../../services/colorRarityService';
@@ -18,7 +18,8 @@ import { ItemTypeServices } from '../../services/ItemTypesServices';
   styleUrl: './item.component.scss'
 })
 export class ItemComponent implements OnInit {
-  public item = input.required<Item>()
+  @Input()
+  public item!:Item;
   protected resistances = 0;
   protected maitrises = 0;
   protected IdActionEnum = IdActionsEnum;
@@ -36,11 +37,12 @@ export class ItemComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.item().equipEffects = this.item().equipEffects.sort((a, b) => a.actionId - b.actionId);
-    this.resistances = this.itemService.calculResistancesForAnItem(this.item());    
+    console.log(this.item);
+    this.item.equipEffects = this.item.equipEffects.sort((a, b) => a.actionId - b.actionId);
+    this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
     combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.itemService.obsMultiplicateurElem()])
     .subscribe(([nbElements, idMaitrises, multiplicateurElem]) => 
-      {this.maitrises = this.itemService.calculMaitrisesForAnItem(this.item(), nbElements, idMaitrises, multiplicateurElem)})
+      {this.maitrises = this.itemService.calculMaitrisesForAnItem(this.item, nbElements, idMaitrises, multiplicateurElem)})
   }
 
   protected openEncyclopedie(itemId: number): void {
