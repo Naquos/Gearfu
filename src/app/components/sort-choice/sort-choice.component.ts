@@ -18,7 +18,7 @@ export class SortChoiceComponent {
 
   constructor(protected itemService: ItemsService) {
     this.form.valueChanges
-      .pipe(filter(value => value !== null),tap(console.log))
+      .pipe(filter(value => value !== null))
       .subscribe(value => this.itemService.setSort(value))
   }
 }

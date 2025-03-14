@@ -117,7 +117,6 @@ export class ItemChooseService {
                 iif(() => itemType === ItemTypeEnum.ANNEAU,
                     this.getObsItem(ItemTypeEnum.ANNEAU).pipe(
                         first(),
-                        tap(list => console.log(list)),
                         switchMap(list => iif(() => !list.find(anneau => anneau?.title === item.title),
                             of(list).pipe(
                                 map(x => {x[this.indexAnneau] = item; return x}),

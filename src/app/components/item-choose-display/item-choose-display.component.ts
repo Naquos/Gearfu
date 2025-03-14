@@ -50,7 +50,6 @@ export class ItemChooseDisplayComponent implements OnInit {
       const tooltipRef: ComponentRef<ItemComponent> = this.overlayRef.attach(tooltipPortal);
 
       tooltipRef.instance.item = item;
-      console.log(item) 
     }
   }
 
