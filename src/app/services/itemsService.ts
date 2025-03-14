@@ -49,6 +49,10 @@ export class ItemsService {
         return this.calculResistancesForAnItem(itemB) - this.calculResistancesForAnItem(itemA);
       }
     }
+    
+    public searchItem(idItem : number): Item | undefined {
+      return this.items.find(x => x.id === idItem);
+    }
 
     public setItemName(value: string): void {
       this.itemName.next(value);

@@ -1,16 +1,22 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { ItemTypeEnum } from "../models/itemTypeEnum";
-import { BehaviorSubject, combineLatest, EMPTY, filter, first, iif, map, NEVER, Observable, of, switchMap, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, delay, EMPTY, filter, first, iif, map, NEVER, Observable, of, switchMap, take, tap } from "rxjs";
 import { Item } from "../models/item";
 import { ItemTypeServices } from "./ItemTypesServices";
 import { RarityItem } from "../models/rarityItem";
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { ItemsService } from "./itemsService";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService {
     private mapItem:Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>> = new Map();
     private indexAnneau = 0;
 
-    constructor(private itemTypeService: ItemTypeServices) {
+    constructor(private itemTypeService: ItemTypeServices,
+        private itemService: ItemsService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+    ) {
         this.mapItem.set(ItemTypeEnum.UNE_MAIN, new BehaviorSubject<(Item|undefined)[]>([undefined]))
         this.mapItem.set(ItemTypeEnum.ANNEAU, new BehaviorSubject<(Item|undefined)[]>([undefined, undefined]))
         this.mapItem.set(ItemTypeEnum.BOTTES, new BehaviorSubject<(Item|undefined)[]>([undefined]))
@@ -23,6 +29,52 @@ export class ItemChooseService {
         this.mapItem.set(ItemTypeEnum.ACCESSOIRES, new BehaviorSubject<(Item|undefined)[]>([undefined]))
         this.mapItem.set(ItemTypeEnum.BOUCLIER, new BehaviorSubject<(Item|undefined)[]>([undefined]))
         this.mapItem.set(ItemTypeEnum.FAMILIER, new BehaviorSubject<(Item|undefined)[]>([undefined]))
+
+        this.activatedRoute.queryParams.pipe(
+            filter(x => x !== undefined),
+            map(x => x["itemsId"] as string),
+            filter(x => x !== undefined),
+            take(1),
+            map(x => x.split(",")),
+            tap(x => x.forEach(id => this.setItemWithIdItem(parseInt(id))))
+        ).subscribe();
+
+        combineLatest([this.getObsItem(ItemTypeEnum.UNE_MAIN),
+            this.getObsItem(ItemTypeEnum.ANNEAU),
+            this.getObsItem(ItemTypeEnum.BOTTES),
+            this.getObsItem(ItemTypeEnum.AMULETTE),
+            this.getObsItem(ItemTypeEnum.CAPE),
+            this.getObsItem(ItemTypeEnum.CEINTURE),
+            this.getObsItem(ItemTypeEnum.CASQUE),
+            this.getObsItem(ItemTypeEnum.PLASTRON),
+            this.getObsItem(ItemTypeEnum.EPAULETTES),
+            this.getObsItem(ItemTypeEnum.ACCESSOIRES),
+            this.getObsItem(ItemTypeEnum.BOUCLIER),
+            this.getObsItem(ItemTypeEnum.FAMILIER)
+        ]).pipe(
+            delay(500),
+            map(list => list.flat()),
+            map(list => list.map(items => items?.id)),
+            map(list => list.filter(x => x).join(",")),
+        ).subscribe(x => {
+
+            this.router.navigate(
+                [], 
+                {
+                    relativeTo: this.activatedRoute,
+                    queryParams : { itemsId: x }, 
+                    queryParamsHandling: 'merge', // remove to replace all query params by provided
+                }
+            );
+        });
+        
+    }
+
+    private setItemWithIdItem(idItem: number): void {
+        const item = this.itemService.searchItem(idItem);
+        if(item) {
+            this.setItem(this.itemTypeService.getItemType(item.itemTypeId), item)
+        }
     }
 
     public getObsItem(itemType: ItemTypeEnum): Observable<(Item|undefined)[]> {
@@ -65,9 +117,14 @@ export class ItemChooseService {
                 iif(() => itemType === ItemTypeEnum.ANNEAU,
                     this.getObsItem(ItemTypeEnum.ANNEAU).pipe(
                         first(),
-                        map(x => {x[this.indexAnneau] = item; return x}),
-                        tap(x => this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(x)),
-                        tap(() => this.indexAnneau = this.indexAnneau === 0 ? 1 : 0)
+                        tap(list => console.log(list)),
+                        switchMap(list => iif(() => !list.find(anneau => anneau?.title === item.title),
+                            of(list).pipe(
+                                map(x => {x[this.indexAnneau] = item; return x}),
+                                tap(x => this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(x)),
+                                tap(() => this.indexAnneau = this.indexAnneau === 0 ? 1 : 0)),
+                            of(null)
+                        ) )
                     ),
                     of(null)
                 )
