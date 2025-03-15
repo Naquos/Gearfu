@@ -93,9 +93,10 @@ export class ItemsService {
         return combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.sort$, this.onlyNoSecondary$, this.idMajor$, this.multiplicateurElem$, this.itemName$])
         .pipe(map(([nbElements, idMaitrises, sort, onlyNoSecondary, idMajor, multiplicateurElem, itemName]) => {
           const listSecondaryMaitrises = [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK];
-            return this.items.filter(x =>  itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))
-            .filter(x => rarity.length === 0 || rarity.includes(x.rarity))
+            return this.items
             .filter(x => x.level >= levelMin && x.level <= levelMax)
+            .filter(x =>  itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))
+            .filter(x => rarity.length === 0 || rarity.includes(x.rarity))
             .filter(x => x.title.toUpperCase().includes(itemName.toUpperCase()))
             .filter(x => !onlyNoSecondary || !x.equipEffects.find(y => listSecondaryMaitrises.includes(y.actionId)))
             .filter(x => this.majorIsPresent(idMajor, x))
