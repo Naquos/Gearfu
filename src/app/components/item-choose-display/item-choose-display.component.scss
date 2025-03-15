@@ -13,3 +13,12 @@
         height: 56px;
     }
 }
+
+.itemPresent:hover:after {    
+    position: absolute;
+    content: "X";
+    top: 2px;
+    right: 2px;
+    font-weight: bolder;
+    color: #213A57;
+}
