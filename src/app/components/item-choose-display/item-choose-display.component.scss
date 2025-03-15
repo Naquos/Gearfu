@@ -1,3 +1,5 @@
+@use '../../../styles/mixin' as *;
+
 .noItem {
     cursor: pointer;
     width: 56px;
@@ -14,6 +16,10 @@
     }
 }
 
+.itemPresent:active, .noItem:active {
+    @include EnfoncementFonce;
+}
+
 .itemPresent:hover:after {    
     position: absolute;
     content: "X";
@@ -21,4 +27,5 @@
     right: 2px;
     font-weight: bolder;
     color: #213A57;
+    pointer-events: none;
 }
