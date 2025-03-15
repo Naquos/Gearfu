@@ -10,10 +10,20 @@ import { IdActionsEnum } from "../models/idActionsEnum";
 export class ItemsService {
     protected items: Item[] = [];
     private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceEnum.POIDS);
+    public sort$ = this.sort.asObservable();
+
     private onlyNoSecondary = new BehaviorSubject<boolean>(false);
+    public onlyNoSecondary$ = this.onlyNoSecondary.asObservable();
+
     private idMajor = new BehaviorSubject<number[]>([]);
+    public idMajor$ = this.idMajor.asObservable() ;
+
+
     private multiplicateurElem = new BehaviorSubject<number>(1);
+    public multiplicateurElem$ = this.multiplicateurElem.asObservable();
+
     private itemName = new BehaviorSubject<string>("");
+    public itemName$ = this.itemName.asObservable();
 
     constructor(protected maitrisesService : MaitrisesServices) {
         this.initItemsList();
@@ -58,48 +68,29 @@ export class ItemsService {
       this.itemName.next(value);
     }
 
-    public obsItemName(): Observable<string> {
-      return this.itemName.asObservable();
-    }
-
     public setMultiplicateurElem(value: number): void {
       this.multiplicateurElem.next(value);
-    }
-
-    public obsMultiplicateurElem(): Observable<number> {
-      return this.multiplicateurElem.asObservable();
     }
 
     public setIdMajor(value: number[]): void {
       this.idMajor.next(value);
     }
 
-    public obsIdMajor(): Observable<number[]> {
-      return this.idMajor.asObservable();
-    }
-
     public setOnlyNoSecondary(value: boolean): void {
       this.onlyNoSecondary.next(value);
-    }
-
-    public obsOnlyNoSecondary(): Observable<boolean> {
-      return this.onlyNoSecondary.asObservable();
     }
 
     public setSort(value: SortChoiceEnum): void {
       this.sort.next(value);
     }
 
-    public obsSort(): Observable<SortChoiceEnum> {
-      return this.sort.asObservable();
-    }
 
     public getItems(itemTypeIds: number[],
              rarity: number[],
              levelMin: number,
              levelMax: number): Observable<Item[]> {
         ;
-        return combineLatest([this.maitrisesService.obsNbElements(), this.maitrisesService.obsIdMaitrises(), this.obsSort(), this.obsOnlyNoSecondary(), this.obsIdMajor(), this.obsMultiplicateurElem(), this.obsItemName()])
+        return combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.sort$, this.onlyNoSecondary$, this.idMajor$, this.multiplicateurElem$, this.itemName$])
         .pipe(map(([nbElements, idMaitrises, sort, onlyNoSecondary, idMajor, multiplicateurElem, itemName]) => {
           const listSecondaryMaitrises = [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK];
             return this.items.filter(x =>  itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))

@@ -8,6 +8,6 @@
         </div>
     </ng-container>
     <ng-container *ngIf="!value.item">
-        <img class="noItem" [src]="backgroundItemType()"(mouseenter)="closeTooltip()" >
+        <img class="noItem" [src]="backgroundItemType()"(mouseenter)="closeTooltip()" (click)="itemTypeFormServices.setOnlyOneItemType(itemType())" >
     </ng-container>
 </ng-container>

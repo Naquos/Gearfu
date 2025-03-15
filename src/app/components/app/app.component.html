@@ -9,7 +9,7 @@
     <div class="filter">
         <h2>Filtre des items</h2>
         <app-search-item-name></app-search-item-name>
-        <app-item-types (selected)="idsItemType = $event"></app-item-types>
+        <app-item-types></app-item-types>
         <app-item-level (levelMin)="levelMin = $event" (levelMax)="levelMax = $event"></app-item-level>
         <app-rarete-item (rarete)="rarete = $event" ></app-rarete-item>
         <app-filter-maitrises></app-filter-maitrises>
@@ -19,5 +19,5 @@
         <app-modifier-elem-maitrises></app-modifier-elem-maitrises>
         <app-only-no-secondary></app-only-no-secondary>
     </div>
-    <app-item-list [idsItemTypes]="idsItemType" [levelMin]="levelMin" [levelMax]="levelMax" [rarete]="rarete"></app-item-list>
+    <app-item-list [levelMin]="levelMin" [levelMax]="levelMax" [rarete]="rarete"></app-item-list>
 </div>

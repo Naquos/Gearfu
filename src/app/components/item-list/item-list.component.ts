@@ -4,6 +4,7 @@ import { ItemsService } from '../../services/itemsService';
 import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
 import { first } from 'rxjs';
+import { ItemTypeFormServices } from '../../services/itemTypeFormServices';
 
 @Component({
   selector: 'app-item-list',
@@ -12,16 +13,18 @@ import { first } from 'rxjs';
   styleUrl: './item-list.component.scss'
 })
 export class ItemListComponent  {
-  public idsItemTypes = input<number[]>([]);
   public rarete = input<number[]>([]);
   public levelMin = input<number>(1);
   public levelMax = input<number>(245);
 
   protected items:Item[] = [];
 
-  constructor(private itemsService: ItemsService) {
+  constructor(private itemsService: ItemsService,
+            private itemTypeFormServices: ItemTypeFormServices) {
     effect(() => {
-      this.itemsService.getItems(this.idsItemTypes(), this.rarete(), this.levelMin(), this.levelMax()).subscribe(_items => {this.items = _items} );
+      this.itemTypeFormServices.selected$.subscribe(ids => {
+        this.itemsService.getItems(ids, this.rarete(), this.levelMin(), this.levelMax()).subscribe(_items => {this.items = _items} );
+      })
     })
   }
 

@@ -18,7 +18,6 @@ import { ItemChooseComponent } from "../item-choose/item-choose.component";
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  public idsItemType: number[] = [];
   public rarete: number[] = [];
   public levelMin: number = 200;
   public levelMax: number = 245;

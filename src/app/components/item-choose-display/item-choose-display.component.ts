@@ -8,6 +8,7 @@ import { ItemChooseService } from '../../services/itemChooseService';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ItemComponent } from '../item/item.component';
+import { ItemTypeFormServices } from '../../services/itemTypeFormServices';
 
 @Component({
   selector: 'app-item-choose-display',
@@ -26,6 +27,7 @@ export class ItemChooseDisplayComponent implements OnInit {
 
   constructor(protected colorRarityService: ColorRarityService,
               protected itemChooseService: ItemChooseService,
+              protected itemTypeFormServices: ItemTypeFormServices,
               private overlay: Overlay
   ) {}
 
