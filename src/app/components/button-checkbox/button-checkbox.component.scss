@@ -5,3 +5,7 @@ button {
     box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
     cursor: pointer;
 }
+
+button:active {
+    background-color: #415A77;
+}
