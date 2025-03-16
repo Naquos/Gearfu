@@ -5,6 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ItemChooseService } from '../../services/itemChooseService';
 import { take } from 'rxjs';
+import { ZenithService } from '../../services/zenithService';
 
 @Component({
   selector: 'app-item-choose',
@@ -15,7 +16,7 @@ import { take } from 'rxjs';
 export class ItemChooseComponent {
   protected ItemTypeEnum = ItemTypeEnum;
 
-  constructor(private itemChooseService : ItemChooseService) {}
+  constructor(private itemChooseService : ItemChooseService, private zenithService: ZenithService) {}
 
   protected copyToClipboard(): void {
     navigator.clipboard.writeText(window.location.href).then();
@@ -25,5 +26,9 @@ export class ItemChooseComponent {
     this.itemChooseService.idItems$.pipe(take(1)).subscribe(idItems => {
       window.open('https://craftkfu.waklab.fr/?' + idItems, '_blank');
     });
+  }
+
+  protected generateBuild(): void {
+    this.zenithService.createBuild().pipe(take(1)).subscribe(linkBuild => window.open('https://www.zenithwakfu.com/builder/' + linkBuild, '_blank'));
   }
 }
