@@ -6,8 +6,14 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background-color: #81AAB7;
+    flex-direction: column;
+    display: flex;
+    height: 100%;
 }
 
+app-root {
+    flex: 1;
+}
 
 footer {
     width: 100%;
