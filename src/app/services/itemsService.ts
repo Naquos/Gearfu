@@ -11,6 +11,7 @@ import { ItemTypeFormServices } from "./itemTypeFormServices";
 export class ItemsService {
     protected items: Item[] = [];
     protected fullItems$ = new BehaviorSubject<Item[]>([]);
+
     public items$: Observable<Item[]>;
 
     private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceEnum.POIDS);
@@ -76,11 +77,41 @@ export class ItemsService {
           this.sort$,
           this.multiplicateurElem$,
         ])
-        .pipe(tap(x => console.log(x)),
-          map(([items,nbElements, idMaitrises, sort, multiplicateurElem]) => {
-          return items.sort((a,b) => this.sortItem(a, b, nbElements, idMaitrises, sort, multiplicateurElem)).slice(0,30);
-        }))
+        .pipe(
+          tap(([items,nbElements, idMaitrises, sort, multiplicateurElem]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem)),
+          map(([items,]) => items),
+          map(items => items.sort((itemA, itemB) => itemB.weightForSort - itemA.weightForSort).slice(0,30)))
+    }
 
+    private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number): void {
+      let maxMaistrises = 0;
+      let maxResistances = 0;
+
+      if(sort === SortChoiceEnum.EQUILIBRE && items.length) {
+        maxMaistrises = this.calculMaitrisesForAnItem(
+          items.sort((itemA, itemB) => this.calculMaitrisesForAnItem(itemB, nbElements, idMaitrises, multiplicateurElem) - this.calculMaitrisesForAnItem(itemA, nbElements, idMaitrises, multiplicateurElem))[0], 
+          nbElements, 
+          idMaitrises, 
+          multiplicateurElem);
+
+          maxResistances = this.calculResistancesForAnItem(items.sort((itemA, itemB) => this.calculResistancesForAnItem(itemB) - this.calculResistancesForAnItem(itemA))[0]);
+      }
+
+
+
+      items.forEach(item => {
+        if(sort === SortChoiceEnum.POIDS) {
+          item.weightForSort = this.calculResistancesForAnItem(item) + this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
+        } else if (sort === SortChoiceEnum.MAITRISES) {
+          item.weightForSort = this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
+        } else if (sort === SortChoiceEnum.EQUILIBRE) {
+          item.weightForSort = (this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem) / maxMaistrises);
+          item.weightForSort += (this.calculResistancesForAnItem(item) / maxResistances);
+        }
+         else {
+          item.weightForSort = this.calculResistancesForAnItem(item);
+        }
+      })
     }
 
     private initItemsList(): void {
@@ -97,20 +128,9 @@ export class ItemsService {
                 };
             }),
             title: x.title.fr,
-            idImage: x.definition.item.graphicParameters.gfxId
+            idImage: x.definition.item.graphicParameters.gfxId,
+            weightForSort: 0
         }));
-    }
-
-    private sortItem(itemA: Item, itemB:Item, nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number): number {
-      if(sort === SortChoiceEnum.POIDS) {
-        const poidsItemA = this.calculResistancesForAnItem(itemA) + this.calculMaitrisesForAnItem(itemA, nbElements, idMaitrises, multiplicateurElem);
-        const poidsItemB = this.calculResistancesForAnItem(itemB) + this.calculMaitrisesForAnItem(itemB, nbElements, idMaitrises, multiplicateurElem);
-        return poidsItemB - poidsItemA;
-      } else if (sort === SortChoiceEnum.MAITRISES) {
-        return this.calculMaitrisesForAnItem(itemB, nbElements, idMaitrises, multiplicateurElem) -  this.calculMaitrisesForAnItem(itemA, nbElements, idMaitrises, multiplicateurElem);
-      } else {
-        return this.calculResistancesForAnItem(itemB) - this.calculResistancesForAnItem(itemA);
-      }
     }
     
     public searchItem(idItem : number): Item | undefined {
