@@ -38,6 +38,7 @@ header {
     display: flex;
     justify-content: space-between;
     margin-top: 80px;
+    
 }
 
 .filter {    
@@ -49,7 +50,7 @@ header {
     padding: 10px;
 
     position: fixed;
-    width: 20%;
+    width: 400px;
 
     overflow-y: scroll;
     height: calc(100% - 85px);
