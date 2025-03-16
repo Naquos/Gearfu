@@ -10,6 +10,8 @@ import { ItemsService } from "./itemsService";
 @Injectable({providedIn: 'root'})
 export class ItemChooseService {
     private mapItem:Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>> = new Map();
+    private idItems = new BehaviorSubject<string>("");
+    public idItems$ = this.idItems.asObservable();
     private indexAnneau = 0;
 
     constructor(private itemTypeService: ItemTypeServices,
@@ -56,6 +58,7 @@ export class ItemChooseService {
             map(list => list.flat()),
             map(list => list.map(items => items?.id)),
             map(list => list.filter(x => x).join(",")),
+            tap(x => this.setIdItems(x))
         ).subscribe(x => {
 
             this.router.navigate(
@@ -75,6 +78,10 @@ export class ItemChooseService {
         if(item) {
             this.setItem(this.itemTypeService.getItemType(item.itemTypeId), item)
         }
+    }
+
+    public setIdItems(idItems: string): void {
+        this.idItems.next(idItems);
     }
 
     public getObsItem(itemType: ItemTypeEnum): Observable<(Item|undefined)[]> {
