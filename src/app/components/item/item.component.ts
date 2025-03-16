@@ -42,6 +42,7 @@ export class ItemComponent implements OnInit {
     this.mapSortAction.set(IdActionsEnum.PM, 2);
     this.mapSortAction.set(IdActionsEnum.PERTE_PM, 3);
     this.mapSortAction.set(IdActionsEnum.PW, 4);
+    this.mapSortAction.set(IdActionsEnum.BOOST_PW, 4);
     this.mapSortAction.set(IdActionsEnum.DEBOOST_PW, 5);
     this.mapSortAction.set(IdActionsEnum.CONTROLE, 6);
     this.mapSortAction.set(IdActionsEnum.PORTEE, 7);
@@ -69,21 +70,22 @@ export class ItemComponent implements OnInit {
     this.mapSortAction.set(IdActionsEnum.PERTE_MAITRISES_MELEE, 29);
     this.mapSortAction.set(IdActionsEnum.COUP_CRITIQUE, 30);
     this.mapSortAction.set(IdActionsEnum.ARMURE_DONNEE_RECUE, 31);
-    this.mapSortAction.set(IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE, 32);
-    this.mapSortAction.set(IdActionsEnum.RESISTANCES_CRITIQUES, 33);
-    this.mapSortAction.set(IdActionsEnum.RESISTANCES_DOS, 34);
-    this.mapSortAction.set(IdActionsEnum.RESISTANCES_ELEMENTAIRE, 35);
-    this.mapSortAction.set(IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE, 36);
-    this.mapSortAction.set(IdActionsEnum.RESISTANCES_FEU, 37);
-    this.mapSortAction.set(IdActionsEnum.RESISTANCES_EAU, 38);
-    this.mapSortAction.set(IdActionsEnum.RESISTANCES_AIR, 39);
-    this.mapSortAction.set(IdActionsEnum.RESISTANCES_TERRE, 40);
-    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_CRITIQUE, 41);
-    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_DOS, 42);
-    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE, 43);
-    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_FEU, 44);
-    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCE_EAU, 45);
-    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_TERRE, 46);
+    this.mapSortAction.set(IdActionsEnum.PERTE_COUP_CRITIQUE, 32);
+    this.mapSortAction.set(IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE, 33);
+    this.mapSortAction.set(IdActionsEnum.RESISTANCES_CRITIQUES, 34);
+    this.mapSortAction.set(IdActionsEnum.RESISTANCES_DOS, 35);
+    this.mapSortAction.set(IdActionsEnum.RESISTANCES_ELEMENTAIRE, 36);
+    this.mapSortAction.set(IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE, 37);
+    this.mapSortAction.set(IdActionsEnum.RESISTANCES_FEU, 38);
+    this.mapSortAction.set(IdActionsEnum.RESISTANCES_EAU, 39);
+    this.mapSortAction.set(IdActionsEnum.RESISTANCES_AIR, 40);
+    this.mapSortAction.set(IdActionsEnum.RESISTANCES_TERRE, 41);
+    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_CRITIQUE, 42);
+    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_DOS, 43);
+    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE, 44);
+    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_FEU, 45);
+    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCE_EAU, 46);
+    this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_TERRE, 47);
   }
 
 
@@ -109,6 +111,8 @@ export class ItemComponent implements OnInit {
         return symbol + effect.params[0] + " maîtrises dans " + effect.params[2] + " éléments";
       } else if (effect.actionId === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE) {
         return symbol + effect.params[0] + " résistances dans " + effect.params[2] + " éléments";
+      } else if(effect.actionId === IdActionsEnum.PERTE_RESITANCES_ELEMENTAIRE_SANS_CAP) {
+        return symbol + effect.params[0] + " Résistance Élémentaire";
       }
       return symbol + effect.params[0] + descriptionEffect[1];
   }
