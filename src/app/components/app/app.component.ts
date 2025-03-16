@@ -17,4 +17,9 @@ import { ItemChooseComponent } from "../item-choose/item-choose.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {}
+export class AppComponent {
+  protected openDiscord(): void {
+    console.log("toto")
+    window.open('https://discord.gg/fFmzBmZjSb', '_blank');
+  }
+}
