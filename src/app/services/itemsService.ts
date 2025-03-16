@@ -183,7 +183,7 @@ export class ItemsService {
             result += effect.params[0] * effect.params[2];
           } else if (effect.actionId === IdActionsEnum.RESISTANCES_ELEMENTAIRE) {
             result += effect.params[0] * 4;
-          } else if (effect.actionId ===  IdActionsEnum.PERTE_RESITANCES_ELEMENTAIRE) {
+          } else if (effect.actionId ===  IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE) {
             result -= effect.params[0] * 4;
           } else if (resistancesId.includes(effect.actionId)) {
             result += effect.params[0];
