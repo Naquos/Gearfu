@@ -10,8 +10,8 @@
         <h2>Filtre des items</h2>
         <app-search-item-name></app-search-item-name>
         <app-item-types></app-item-types>
-        <app-item-level (levelMin)="levelMin = $event" (levelMax)="levelMax = $event"></app-item-level>
-        <app-rarete-item (rarete)="rarete = $event" ></app-rarete-item>
+        <app-item-level></app-item-level>
+        <app-rarete-item></app-rarete-item>
         <app-filter-maitrises></app-filter-maitrises>
         <app-major-present></app-major-present>
         
@@ -20,5 +20,5 @@
         <app-modifier-elem-maitrises></app-modifier-elem-maitrises>
         <app-only-no-secondary></app-only-no-secondary>
     </div>
-    <app-item-list [levelMin]="levelMin" [levelMax]="levelMax" [rarete]="rarete"></app-item-list>
+    <app-item-list></app-item-list>
 </div>

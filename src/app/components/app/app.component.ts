@@ -17,8 +17,4 @@ import { ItemChooseComponent } from "../item-choose/item-choose.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  public rarete: number[] = [];
-  public levelMin: number = 200;
-  public levelMax: number = 245;
-}
+export class AppComponent {}

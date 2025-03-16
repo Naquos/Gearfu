@@ -2,13 +2,17 @@ import { Injectable } from "@angular/core";
 import itemsJson from "../../../public/items.json";
 import { Item } from "../models/item";
 import { MaitrisesServices } from "./maitrisesService";
-import { BehaviorSubject, combineLatest, map, Observable } from "rxjs";
+import { BehaviorSubject, combineLatest, map, merge, Observable, tap } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../models/sortChoiceEnum";
 import { IdActionsEnum } from "../models/idActionsEnum";
+import { ItemTypeFormServices } from "./itemTypeFormServices";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
     protected items: Item[] = [];
+    protected fullItems$ = new BehaviorSubject<Item[]>([]);
+    public items$: Observable<Item[]>;
+
     private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceEnum.POIDS);
     public sort$ = this.sort.asObservable();
 
@@ -25,12 +29,61 @@ export class ItemsService {
     private itemName = new BehaviorSubject<string>("");
     public itemName$ = this.itemName.asObservable();
 
-    constructor(protected maitrisesService : MaitrisesServices) {
+    private rarirty = new BehaviorSubject<number[]>([]);
+    public rarity$ = this.rarirty.asObservable();
+
+    private levelMin = new BehaviorSubject<number>(200);
+    public levelMin$ = this.levelMin.asObservable();
+
+    private levelMax = new BehaviorSubject<number>(245);
+    public levelMax$ = this.levelMax.asObservable();
+
+
+    protected itemsFilterByLevelMin$ = combineLatest([this.fullItems$, this.levelMin$])
+    .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin)));
+
+    protected itemsFilterByLevelMax$ = combineLatest([this.itemsFilterByLevelMin$, this.levelMax$])
+    .pipe(map(([items, levelMax]) => items.filter(x => x.level <= levelMax)));
+
+    protected itemsFilterByRarity$ = combineLatest([this.itemsFilterByLevelMax$, this.rarirty])
+    .pipe(map(([items, rarity]) => items.filter(x => rarity.length === 0 || rarity.includes(x.rarity))));
+
+    protected itemsFilterByItemName$ = combineLatest([this.itemsFilterByRarity$, this.itemName$])
+    .pipe(map(([items, itemName]) => items.filter(x => x.title.toUpperCase().includes(itemName.toUpperCase()))));
+
+    protected itemsFilterByOnlyNoSecondary$ = combineLatest([this.itemsFilterByItemName$, this.onlyNoSecondary$])
+    .pipe(map(([items, onlyNoSecondary]) => items.filter(x => !onlyNoSecondary || 
+      !x.equipEffects.find(y => [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK].includes(y.actionId)))));
+
+    protected itemsFilterByMajor$ = combineLatest([this.itemsFilterByOnlyNoSecondary$, this.idMajor$])
+    .pipe(map(([items, idMajor]) => items.filter(x => this.majorIsPresent(idMajor, x))));
+
+    protected itemsFilterByItemType$: Observable<Item[]>;
+
+    constructor(protected maitrisesService : MaitrisesServices,
+                private itemTypeFormServices: ItemTypeFormServices
+    ) {
         this.initItemsList();
+        this.fullItems$.next(this.items)
+
+        this.itemsFilterByItemType$ = combineLatest([this.itemsFilterByMajor$, this.itemTypeFormServices.selected$])
+          .pipe(map(([items, itemTypeIds]) => items.filter(x => itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))));
+
+        this.items$ = combineLatest([
+          this.itemsFilterByItemType$,
+          this.maitrisesService.nbElements$,
+          this.maitrisesService.idMaitrises$,
+          this.sort$,
+          this.multiplicateurElem$,
+        ])
+        .pipe(tap(x => console.log(x)),
+          map(([items,nbElements, idMaitrises, sort, multiplicateurElem]) => {
+          return items.sort((a,b) => this.sortItem(a, b, nbElements, idMaitrises, sort, multiplicateurElem)).slice(0,30);
+        }))
 
     }
 
-    private initItemsList() {
+    private initItemsList(): void {
         (itemsJson as [any]).forEach(x => this.items.push({
             id: x.definition.item.id,
             level: x.definition.item.level,
@@ -84,30 +137,22 @@ export class ItemsService {
       this.sort.next(value);
     }
 
-
-    public getItems(itemTypeIds: number[],
-             rarity: number[],
-             levelMin: number,
-             levelMax: number): Observable<Item[]> {
-        ;
-        return combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.sort$, this.onlyNoSecondary$, this.idMajor$, this.multiplicateurElem$, this.itemName$])
-        .pipe(map(([nbElements, idMaitrises, sort, onlyNoSecondary, idMajor, multiplicateurElem, itemName]) => {
-          const listSecondaryMaitrises = [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK];
-            return this.items
-            .filter(x => x.level >= levelMin && x.level <= levelMax)
-            .filter(x =>  itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))
-            .filter(x => rarity.length === 0 || rarity.includes(x.rarity))
-            .filter(x => x.title.toUpperCase().includes(itemName.toUpperCase()))
-            .filter(x => !onlyNoSecondary || !x.equipEffects.find(y => listSecondaryMaitrises.includes(y.actionId)))
-            .filter(x => this.majorIsPresent(idMajor, x))
-            .sort((a,b) => this.sortItem(a, b, nbElements, idMaitrises, sort, multiplicateurElem)).slice(0,30);
-        }))
+    public setRarity(value: number[]): void {
+      this.rarirty.next(value); 
     }
 
-  private majorIsPresent(idMajor: number[], x: Item): unknown {
-    return !idMajor.find(id => (id !== IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.map(effect => effect.actionId).includes(id)) 
-                            || (id === IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === 120 )));
-  }
+    public setLevelMin(value: number): void {
+      this.levelMin.next(value);
+    }
+
+    public setLevelMax(value: number): void {
+      this.levelMax.next(value);
+    }
+
+    private majorIsPresent(idMajor: number[], x: Item): boolean {
+      return !idMajor.find(id => (id !== IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.map(effect => effect.actionId).includes(id)) 
+                              || (id === IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === 120 )));
+    }
 
     public calculResistancesForAnItem(item: Item): number {
         let result = 0;

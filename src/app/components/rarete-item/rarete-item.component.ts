@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 import { CommonModule } from '@angular/common';
+import { ItemsService } from '../../services/itemsService';
 
 @Component({
   selector: 'app-rarete-item',
@@ -12,8 +13,6 @@ import { CommonModule } from '@angular/common';
 })
 export class RareteItemComponent {
 
-  public rarete = output<number[]>();
- 
   protected form = new FormGroup({
     normal: new FormControl(),
     rare: new FormControl(),
@@ -24,7 +23,7 @@ export class RareteItemComponent {
     epique: new FormControl()
   });
 
-  constructor() {
+  constructor(private itemService: ItemsService) {
     this.form.valueChanges.subscribe(changes => {
       const result: number[] = [];
       if(changes.normal) { result.push(1)}
@@ -34,7 +33,7 @@ export class RareteItemComponent {
       if(changes.relique) { result.push(5)}
       if(changes.souvenir) { result.push(6)}
       if(changes.epique) { result.push(7)}
-      this.rarete.emit(result);
+      this.itemService.setRarity(result);
     })
   }
 

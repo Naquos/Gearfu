@@ -1,7 +1,8 @@
-import { Component, output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ItemsService } from '../../services/itemsService';
 
 @Component({
   selector: 'app-item-level',
@@ -11,18 +12,15 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 })
 export class ItemLevelComponent {
 
-  public levelMin = output<number>();
-  public levelMax = output<number>();
-
   protected form = new FormGroup({
     levelMin: new FormControl(200),
     levelMax: new FormControl(245)
   });
 
-  constructor() {
+  constructor(private itemService: ItemsService) {
     this.form.valueChanges.subscribe(changes => {
-      this.levelMin.emit(changes.levelMin ?? 200);
-      this.levelMax.emit(changes.levelMax ?? 245);
+      this.itemService.setLevelMin(changes.levelMin ?? 200);
+      this.itemService.setLevelMax(changes.levelMax ?? 245);
     });
   }
 }
