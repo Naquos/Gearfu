@@ -1,37 +1,43 @@
-import { Component, Input, input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component,Input } from '@angular/core';
 import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
 import { ActionService } from '../../services/actionService';
 import { EquipEffects } from '../../models/equipEffects';
 import { MaitrisesServices } from '../../services/maitrisesService';
-import { combineLatest, tap } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { ItemsService } from '../../services/itemsService';
 import { IdActionsEnum } from '../../models/idActionsEnum';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { ItemChooseService } from '../../services/itemChooseService';
 import { ItemTypeServices } from '../../services/ItemTypesServices';
+import { MatIconModule } from '@angular/material/icon';
+import { ItemTypeEnum } from '../../models/itemTypeEnum';
 
 @Component({
   selector: 'app-item',
-  imports: [CommonModule],
+  imports: [CommonModule, MatIconModule],
   templateUrl: './item.component.html',
   styleUrl: './item.component.scss'
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent implements AfterViewInit {
+  
   @Input()
-  public item!:Item;
+  public item!: Item;
   protected resistances = 0;
   protected maitrises = 0;
   protected IdActionEnum = IdActionsEnum;
   protected mapSortAction= new Map<IdActionsEnum, number>();
   Math = Math;
 
+  protected itemChoosen$?: Observable<(Item | undefined)[]>;
+
   constructor(protected actionsService : ActionService,
     protected maitrisesService : MaitrisesServices,
     protected itemService : ItemsService,
     protected colorRarityService: ColorRarityService,
     protected itemChooseService: ItemChooseService,
-    protected itemTypeService: ItemTypeServices
+    protected itemTypeService: ItemTypeServices,
+    protected cdr: ChangeDetectorRef
   ) {
     this.initMapSortAction();
   }
@@ -88,13 +94,31 @@ export class ItemComponent implements OnInit {
     this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_TERRE, 47);
   }
 
+  ngAfterViewInit(): void {
+    if(this.item) {
+      this.item.equipEffects = this.item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
+      this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
+      combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.itemService.multiplicateurElem$])
+      .subscribe(([nbElements, idMaitrises, multiplicateurElem]) => 
+        {
+            this.maitrises = this.item ? this.itemService.calculMaitrisesForAnItem(this.item, nbElements, idMaitrises, multiplicateurElem) : 0;
+        })
+  
+      this.initItemChoosen();
+    }
+  }
 
-  ngOnInit(): void {
-    this.item.equipEffects = this.item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
-    this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
-    combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.itemService.multiplicateurElem$])
-    .subscribe(([nbElements, idMaitrises, multiplicateurElem]) => 
-      {this.maitrises = this.itemService.calculMaitrisesForAnItem(this.item, nbElements, idMaitrises, multiplicateurElem)})
+  private initItemChoosen(): void {
+    if(this.item) {
+      const itemTypeId = this.itemTypeService.getItemType(this.item.itemTypeId);
+      if (itemTypeId === ItemTypeEnum.DAGUE) {
+        this.itemChoosen$ = this.itemChooseService.getObsItem(ItemTypeEnum.BOUCLIER);
+      } else if (itemTypeId === ItemTypeEnum.DEUX_MAINS) {
+        this.itemChoosen$ = this.itemChooseService.getObsItem(ItemTypeEnum.UNE_MAIN);
+      } else {
+        this.itemChoosen$ = this.itemChooseService.getObsItem(itemTypeId);
+      }
+    }
   }
 
   protected openEncyclopedie(itemId: number): void {
