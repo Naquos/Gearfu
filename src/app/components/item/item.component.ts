@@ -1,10 +1,10 @@
-import { AfterViewInit, ChangeDetectorRef, Component,Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component,ElementRef,Input, ViewContainerRef } from '@angular/core';
 import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
 import { ActionService } from '../../services/actionService';
 import { EquipEffects } from '../../models/equipEffects';
 import { MaitrisesServices } from '../../services/maitrisesService';
-import { combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map, Observable, take, tap } from 'rxjs';
 import { ItemsService } from '../../services/itemsService';
 import { IdActionsEnum } from '../../models/idActionsEnum';
 import { ColorRarityService } from '../../services/colorRarityService';
@@ -12,6 +12,8 @@ import { ItemChooseService } from '../../services/itemChooseService';
 import { ItemTypeServices } from '../../services/ItemTypesServices';
 import { MatIconModule } from '@angular/material/icon';
 import { ItemTypeEnum } from '../../models/itemTypeEnum';
+import { DifferentStatsItem } from '../../models/differentsStatsItem';
+import { TooltipService } from '../../services/TooltipService';
 
 @Component({
   selector: 'app-item',
@@ -23,24 +25,96 @@ export class ItemComponent implements AfterViewInit {
   
   @Input()
   public item!: Item;
+  @Input()
+  public displayDiff = false;
+  
   protected resistances = 0;
   protected maitrises = 0;
   protected IdActionEnum = IdActionsEnum;
   protected mapSortAction= new Map<IdActionsEnum, number>();
   Math = Math;
 
-  protected itemChoosen$?: Observable<(Item | undefined)[]>;
 
-  constructor(protected actionsService : ActionService,
+  protected itemChoosen$ = new BehaviorSubject<(Item | undefined)[]>([]);
+  protected differentStatsItemList$ = this.itemChoosen$.pipe(
+    filter(items => items.length !== 0),
+    map(items => items[0] ? this.fillMapDifferentStatsItem(items[0]) : new Map<IdActionsEnum, DifferentStatsItem>()),
+    map(items => Array.from(items.values()).sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999)))
+  );
+
+  constructor(
+    private viewContainerRef: ViewContainerRef,
+    protected actionsService : ActionService,
     protected maitrisesService : MaitrisesServices,
     protected itemService : ItemsService,
     protected colorRarityService: ColorRarityService,
     protected itemChooseService: ItemChooseService,
     protected itemTypeService: ItemTypeServices,
-    protected cdr: ChangeDetectorRef
+    protected cdr: ChangeDetectorRef,
+    protected tooltipService: TooltipService<{item: Item}>,
+    private el: ElementRef
   ) {
     this.initMapSortAction();
   }
+
+  private fillMapDifferentStatsItem(equippedItem: Item): Map<IdActionsEnum, DifferentStatsItem> {
+    const mapDifferentStatsItem = new Map<IdActionsEnum, DifferentStatsItem>();
+    
+    this.item.equipEffects.forEach(equipEffect =>
+      mapDifferentStatsItem.set(equipEffect.actionId, {
+        value:equipEffect.params[0],
+        params: [...equipEffect.params],
+        actionId: equipEffect.actionId,
+        presentOnCurrentItem: true,
+        presentOnEquippedItem: false
+      })
+    )
+
+    equippedItem.equipEffects.forEach(equipEffect => {
+      let differentsStatsItem = mapDifferentStatsItem.get(equipEffect.actionId);
+      if(differentsStatsItem) {
+        const tempParams = differentsStatsItem.params;
+        tempParams[0] -= equipEffect.params[0];
+        differentsStatsItem = {
+          ...differentsStatsItem,
+          value: differentsStatsItem.value - equipEffect.params[0],
+          params: tempParams,
+          presentOnEquippedItem: true
+        }
+      } else {
+        differentsStatsItem = {
+          value: -equipEffect.params[0],
+          params: [...equipEffect.params],
+          actionId: equipEffect.actionId,
+          presentOnCurrentItem: false,
+          presentOnEquippedItem: true
+        }
+      }
+      mapDifferentStatsItem.set(equipEffect.actionId, differentsStatsItem);
+    })
+    return mapDifferentStatsItem
+  }
+
+  protected getBackgroundDifferentsStats(stats : DifferentStatsItem): string {
+    if(stats.presentOnCurrentItem && !stats.presentOnEquippedItem || stats.value > 0) {
+      return "green";
+    } else if (!stats.presentOnCurrentItem && stats.presentOnEquippedItem || stats.value < 0) {
+      return "red";
+    }
+    return "";
+  }
+
+  protected getBackgroundDifferentsStatsOnValue(value: number): string {
+    if(this.displayDiff) {
+      if(value > 0) {
+        return "green";
+      } else if (value < 0) {
+        return "red";
+      }
+    }
+    return "";
+  }
+
 
   private initMapSortAction(): void {
     this.mapSortAction.set(IdActionsEnum.PA, 0);
@@ -94,30 +168,57 @@ export class ItemComponent implements AfterViewInit {
     this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_TERRE, 47);
   }
 
+
   ngAfterViewInit(): void {
     if(this.item) {
       this.item.equipEffects = this.item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
-      this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
-      combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.itemService.multiplicateurElem$])
-      .subscribe(([nbElements, idMaitrises, multiplicateurElem]) => 
+      combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.itemService.multiplicateurElem$, this.itemChoosen$])
+      .subscribe(([nbElements, idMaitrises, multiplicateurElem, itemChoosen]) => 
         {
+            this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
             this.maitrises = this.item ? this.itemService.calculMaitrisesForAnItem(this.item, nbElements, idMaitrises, multiplicateurElem) : 0;
+            if(this.displayDiff && itemChoosen[0]) {
+              this.resistances -=  this.itemService.calculResistancesForAnItem(itemChoosen[0]);
+              this.maitrises -= this.itemService.calculMaitrisesForAnItem(itemChoosen[0], nbElements, idMaitrises, multiplicateurElem);
+            }
         })
   
       this.initItemChoosen();
+      
+      this.cdr.detectChanges();
     }
   }
 
   private initItemChoosen(): void {
     if(this.item) {
       const itemTypeId = this.itemTypeService.getItemType(this.item.itemTypeId);
+      let obs = new Observable<(Item | undefined)[]>();
       if (itemTypeId === ItemTypeEnum.DAGUE) {
-        this.itemChoosen$ = this.itemChooseService.getObsItem(ItemTypeEnum.BOUCLIER);
+        obs = this.itemChooseService.getObsItem(ItemTypeEnum.BOUCLIER);
       } else if (itemTypeId === ItemTypeEnum.DEUX_MAINS) {
-        this.itemChoosen$ = this.itemChooseService.getObsItem(ItemTypeEnum.UNE_MAIN);
+        obs = this.itemChooseService.getObsItem(ItemTypeEnum.UNE_MAIN);
       } else {
-        this.itemChoosen$ = this.itemChooseService.getObsItem(itemTypeId);
+        obs = this.itemChooseService.getObsItem(itemTypeId);
       }
+
+      obs.pipe(
+        filter(x => x !== undefined && x[0] !== undefined && x[0]?.id !== this.item.id ))
+      .subscribe(x => this.itemChoosen$.next(x))
+    }
+  }
+
+  protected openTooltip(event: MouseEvent, item: Item): void {
+    if(item) {
+      const listItemsWidth = window.screen.width;
+      const mouseOnRight = event.pageX > listItemsWidth / 2
+
+      this.tooltipService.openTooltip(this.viewContainerRef, ItemComponent, event, {item, displayDiff: true},
+        [{ 
+          originX: 'center', originY: 'top',
+          overlayX: 'center', overlayY: 'bottom',
+          offsetY: 80, offsetX: mouseOnRight ? -this.el.nativeElement.offsetWidth - 50 : 230
+         }], false
+      );
     }
   }
 
@@ -125,7 +226,7 @@ export class ItemComponent implements AfterViewInit {
     window.open('https://www.wakfu.com/fr/mmorpg/encyclopedie/armures/' + itemId);
   }
 
-  protected displayEffect(effect: EquipEffects): string {
+  protected displayEffect(effect: EquipEffects | DifferentStatsItem): string {
     const descriptionEffect = this.actionsService.getEffectById(effect.actionId).split(":");
     const symbol = this.actionsService.isBuff(effect.actionId) ? "" : "-"
       if(effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE || effect.actionId === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) {

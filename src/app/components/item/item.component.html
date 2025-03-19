@@ -1,7 +1,7 @@
 <ng-container *ngIf="item">
     <div class="header">
-        <span><img [src]="'aptitudes/1068.png'">Maitrises {{Math.trunc(maitrises)}}</span>
-        <span><img [src]="'aptitudes/1069.png'">Résistances {{resistances}}</span>
+        <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="'aptitudes/1068.png'">Maitrises {{Math.trunc(maitrises)}}</span>
+        <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="'aptitudes/1069.png'">Résistances {{resistances}}</span>
         <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png"></span>
     </div>
     <div class="content" (click)="itemChooseService.setItem(itemTypeService.getItemType(item.itemTypeId), item)">
@@ -10,15 +10,35 @@
             <img [src]="'items/' + item.idImage + '.png'">
         </div>
         <div>
-            <p *ngFor="let effect of item.equipEffects">
-                <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT">
-                    <img  [src]="'aptitudes/' + effect.actionId +'.png'">  {{ displayEffect(effect) }}
+            <ng-container *ngIf="displayDiff">
+                <ng-container *ngIf="{
+                    statsList : differentStatsItemList$ | async
+                } as value">
+                    <p *ngFor="let effect of value.statsList" [class]="getBackgroundDifferentsStats(effect)">
+                        <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT && effect.value !== 0">
+                            <img  [src]="'aptitudes/' + effect.actionId +'.png'">  {{ displayEffect(effect) }}
+                        </ng-container>
+                    </p>
                 </ng-container>
-            </p>
+            </ng-container>
+
+
+            <ng-container *ngIf="!displayDiff">
+                <p *ngFor="let effect of item.equipEffects">
+                    <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT">
+                        <img  [src]="'aptitudes/' + effect.actionId +'.png'">  {{ displayEffect(effect) }}
+                    </ng-container>
+                </p>
+            </ng-container>
         </div>
     </div>
 </ng-container>
 
 <ng-container *ngIf="{itemChoosen: itemChoosen$ | async} as value" >
-    <mat-icon class="iconComparator" fontIcon="swap_horiz" [style.opacity]="value.itemChoosen && value.itemChoosen[0] ? 1 : 0.3"></mat-icon>
+    <mat-icon *ngIf="value.itemChoosen && value.itemChoosen[0] && !displayDiff"
+        class="iconComparator"
+        fontIcon="swap_horiz"
+        (mouseenter)="openTooltip($event, item)" 
+        (mouseleave)="tooltipService.closeTooltip()"
+    ></mat-icon>
 </ng-container>

@@ -24,3 +24,8 @@ footer {
     position: static;
     bottom: 0;
 }
+
+.no-max-width {
+    max-width: none !important;
+    overflow: visible !important;
+  }
