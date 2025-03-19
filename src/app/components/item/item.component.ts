@@ -216,7 +216,7 @@ export class ItemComponent implements AfterViewInit {
         [{ 
           originX: 'center', originY: 'top',
           overlayX: 'center', overlayY: 'bottom',
-          offsetY: 80, offsetX: mouseOnRight ? -this.el.nativeElement.offsetWidth - 50 : 230
+          offsetY: 80, offsetX: mouseOnRight ? -this.el.nativeElement.offsetWidth - 50 : 270
          }], false
       );
     }
