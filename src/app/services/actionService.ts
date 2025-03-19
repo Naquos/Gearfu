@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions } from "../models/actions";
 import actionsJson from "../../../public/actions.json";
 import { IdActionsEnum } from "../models/idActionsEnum";
+import { EquipEffects } from "../models/equipEffects";
 
 @Injectable({providedIn: 'root'})
 export class ActionService {
@@ -60,10 +61,10 @@ export class ActionService {
         ].includes(id);
     }
 
-    public isOpposed(id1: IdActionsEnum, id2: IdActionsEnum): boolean {
-        const list = [id1, id2];
+    public isOpposed(effect1: EquipEffects, effect2: EquipEffects): boolean {
+        const list = [effect1.id, effect2.id];
         return list.includes(IdActionsEnum.POINT_DE_VIE) && list.includes(IdActionsEnum.PERTE_POINT_DE_VIE)
-            || list.includes(IdActionsEnum.ARMURE_DONNEE_RECUE) && list.includes(IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE)
+            || list.includes(IdActionsEnum.ARMURE_DONNEE_RECUE) && list.includes(IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) && effect1.params[4] === effect2.params[4]
             || list.includes(IdActionsEnum.RESISTANCES_ELEMENTAIRE) && list.includes(IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE)
             || list.includes(IdActionsEnum.RESISTANCES_TERRE) && list.includes(IdActionsEnum.PERTE_RESISTANCES_TERRE)
             || list.includes(IdActionsEnum.RESISTANCES_FEU) && list.includes(IdActionsEnum.PERTE_RESISTANCES_FEU)
