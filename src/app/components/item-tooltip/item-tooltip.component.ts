@@ -9,8 +9,8 @@ import { ItemTypeServices } from '../../services/ItemTypesServices';
 import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
 import { DifferentStatsItem } from '../../models/differentsStatsItem';
-import { combineLatest, filter, map } from 'rxjs';
-import { ItemAbstractComponent } from '../abstract/ItemAbsractComponent';
+import { combineLatest, filter, map, Observable, takeUntil } from 'rxjs';
+import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
 
 @Component({
   selector: 'app-item-tooltip',
@@ -25,8 +25,11 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     @Input()
     public indexItemChoosen = 0;
 
+
+    protected loaded$!:Observable<void>;
     
     protected differentStatsItemList$ = this.itemChoosen$.pipe(
+      takeUntil(this.destroy$),
       filter(items => items.length !== 0),
       map(items => items[this.indexItemChoosen] ? this.fillMapDifferentStatsItem(items[this.indexItemChoosen]!) : new Map<IdActionsEnum, DifferentStatsItem>()),
       map(items => Array.from(items.values()).sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999))));
@@ -54,8 +57,9 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     public ngAfterViewInit(): void {
       if(this.item) {
         this.item.equipEffects = this.item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
-        combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.itemService.multiplicateurElem$, this.itemChoosen$])
-        .subscribe(([nbElements, idMaitrises, multiplicateurElem, itemChoosen]) => 
+        this.loaded$ = combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.itemService.multiplicateurElem$, this.itemChoosen$])
+        .pipe(takeUntil(this.destroy$),
+          map(([nbElements, idMaitrises, multiplicateurElem, itemChoosen]) => 
           {
               this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
               this.maitrises = this.item ? this.itemService.calculMaitrisesForAnItem(this.item, nbElements, idMaitrises, multiplicateurElem) : 0;
@@ -63,7 +67,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
                 this.resistances -=  this.itemService.calculResistancesForAnItem(itemChoosen[this.indexItemChoosen]!);
                 this.maitrises -= this.itemService.calculMaitrisesForAnItem(itemChoosen[this.indexItemChoosen]!, nbElements, idMaitrises, multiplicateurElem);
               }
-          })
+          }));
     
         this.initItemChoosen(this.item);
         
@@ -111,7 +115,19 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
 
     equippedItem.equipEffects.forEach(equipEffect => {
       let differentsStatsItem = mapDifferentStatsItem.get(equipEffect.actionId);
-      if(differentsStatsItem) {
+      let opposedStatsItem = this.item.equipEffects.find(x => this.actionsService.isOpposed(x.actionId, equipEffect.actionId));
+      if(opposedStatsItem) {
+        const tempParams = [...equipEffect.params];
+        tempParams[0] = opposedStatsItem.params[0] + tempParams[0];
+        differentsStatsItem = {
+          value: opposedStatsItem.params[0] + equipEffect.params[0],
+          params: tempParams,
+          actionId: opposedStatsItem.actionId,
+          presentOnCurrentItem: true,
+          presentOnEquippedItem: true
+        };
+
+      } else if(differentsStatsItem) {
         const tempParams = differentsStatsItem.params;
         tempParams[0] -= equipEffect.params[0];
         differentsStatsItem = {
@@ -131,7 +147,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
           presentOnEquippedItem: true
         }
       }
-      mapDifferentStatsItem.set(equipEffect.actionId, differentsStatsItem);
+      mapDifferentStatsItem.set(differentsStatsItem.actionId, differentsStatsItem);
     })
     return mapDifferentStatsItem
   }

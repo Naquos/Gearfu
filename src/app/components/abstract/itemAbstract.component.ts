@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject, takeUntil } from "rxjs";
 import { IdActionsEnum } from "../../models/idActionsEnum";
 import { Item } from "../../models/item";
 import { ItemTypeServices } from "../../services/ItemTypesServices";
@@ -7,9 +7,16 @@ import { ItemChooseService } from "../../services/itemChooseService";
 import { EquipEffects } from "../../models/equipEffects";
 import { DifferentStatsItem } from "../../models/differentsStatsItem";
 import { ActionService } from "../../services/actionService";
+import { Component, OnDestroy } from "@angular/core";
 
-export abstract class ItemAbstractComponent {
+@Component({
+  selector: 'app-item',
+  imports: [],
+  templateUrl: './itemAbstract.component.html',
+  styleUrl: './itemAbstract.component.scss'})
+export abstract class ItemAbstractComponent implements OnDestroy {
     
+    protected destroy$ = new Subject<void>();
     protected resistances = 0;
     protected maitrises = 0;
     protected IdActionEnum = IdActionsEnum;
@@ -89,25 +96,31 @@ export abstract class ItemAbstractComponent {
             obs = this.itemChooseService.getObsItem(itemTypeId);
         }
 
-        obs.subscribe(x => this.itemChoosen$.next(x))
+        obs.pipe(takeUntil(this.destroy$)).subscribe(x => this.itemChoosen$.next(x))
     }
 
     
 
   protected displayEffect(effect: EquipEffects | DifferentStatsItem): string {
     const descriptionEffect = this.actionsService.getEffectById(effect.actionId).split(":");
-    const symbol = this.actionsService.isAMalus(effect.actionId) ? "-" : ""
-    const value = this.Math.abs(effect.params[0]);
+    const isAMalus = this.actionsService.isAMalus(effect.actionId); 
+    const symbol = (isAMalus && effect.params[0] > 0) || (!isAMalus && effect.params[0] < 0) ? "-" : ""
+    const value = Math.abs(effect.params[0]);
       if(effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE || effect.actionId === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) {
         const type = effect.params[4] === 120 ? "donnée" : "reçue"
-        return symbol + effect.params[0] + "% armure " + type;
+        return symbol + value + "% armure " + type;
       } else if (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE) {
-        return symbol + effect.params[0] + " maîtrises dans " + effect.params[2] + " éléments";
+        return symbol + value + " maîtrises dans " + effect.params[2] + " éléments";
       } else if (effect.actionId === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE) {
-        return symbol + effect.params[0] + " résistances dans " + effect.params[2] + " éléments";
+        return symbol + value + " résistances dans " + effect.params[2] + " éléments";
       } else if(effect.actionId === IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE_SANS_CAP) {
-        return symbol + effect.params[0] + " Résistance Élémentaire";
+        return symbol + value + " Résistance Élémentaire";
       }
-      return symbol + effect.params[0] + descriptionEffect[1];
+      return symbol + value + descriptionEffect[1];
+  }
+
+  public ngOnDestroy() {
+    this.destroy$.next(); 
+    this.destroy$.complete();
   }
 }

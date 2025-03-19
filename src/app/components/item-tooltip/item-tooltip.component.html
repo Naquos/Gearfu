@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header" *ngIf="{loaded: loaded$ | async}">
     <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="'aptitudes/1068.png'">Maitrises {{Math.trunc(maitrises)}}</span>
     <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="'aptitudes/1069.png'">Résistances {{resistances}}</span>
 </div>

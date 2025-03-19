@@ -28,7 +28,7 @@ export class ActionService {
         return effect[0].includes("Gain") || effect[0].includes("Boost");
     }
 
-    public isAMalus(id: IdActionsEnum) {
+    public isAMalus(id: IdActionsEnum): boolean {
         return [
             IdActionsEnum.PERTE_POINT_DE_VIE,
             IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE,
@@ -58,6 +58,36 @@ export class ActionService {
             IdActionsEnum.PERTE_RESISTANCES_DOS,
 
         ].includes(id);
+    }
+
+    public isOpposed(id1: IdActionsEnum, id2: IdActionsEnum): boolean {
+        const list = [id1, id2];
+        return list.includes(IdActionsEnum.POINT_DE_VIE) && list.includes(IdActionsEnum.PERTE_POINT_DE_VIE)
+            || list.includes(IdActionsEnum.ARMURE_DONNEE_RECUE) && list.includes(IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE)
+            || list.includes(IdActionsEnum.RESISTANCES_ELEMENTAIRE) && list.includes(IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE)
+            || list.includes(IdActionsEnum.RESISTANCES_TERRE) && list.includes(IdActionsEnum.PERTE_RESISTANCES_TERRE)
+            || list.includes(IdActionsEnum.RESISTANCES_FEU) && list.includes(IdActionsEnum.PERTE_RESISTANCES_FEU)
+            || list.includes(IdActionsEnum.RESISTANCES_EAU) && list.includes(IdActionsEnum.PERTE_RESISTANCE_EAU)
+            || list.includes(IdActionsEnum.RESISTANCES_ELEMENTAIRE) && list.includes(IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE_SANS_CAP)
+            || list.includes(IdActionsEnum.MAITRISES_ELEMENTAIRES) && list.includes(IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES)
+            || list.includes(IdActionsEnum.MAITRISES_FEU) && list.includes(IdActionsEnum.PERTE_MAITRISES_FEU)
+            || list.includes(IdActionsEnum.COUP_CRITIQUE) && list.includes(IdActionsEnum.PERTE_COUP_CRITIQUE)
+            || list.includes(IdActionsEnum.INITIATIVE) && list.includes(IdActionsEnum.PERTE_INITIATIVE)
+            || list.includes(IdActionsEnum.TACLE) && list.includes(IdActionsEnum.PERTE_TACLE)
+            || list.includes(IdActionsEnum.ESQUIVE) && list.includes(IdActionsEnum.PERTE_ESQUIVE)
+            || list.includes(IdActionsEnum.MAITRISES_DOS) && list.includes(IdActionsEnum.PERTE_MAITRISES_DOS)
+            || list.includes(IdActionsEnum.BOOST_PW) && list.includes(IdActionsEnum.DEBOOST_PW)
+            || list.includes(IdActionsEnum.PW) && list.includes(IdActionsEnum.DEBOOST_PW)
+            || list.includes(IdActionsEnum.PARADE) && list.includes(IdActionsEnum.PERTE_PARADE)
+            || list.includes(IdActionsEnum.MAITRISES_CRITIQUES) && list.includes(IdActionsEnum.PERTE_MAITRISES_CRITIQUE)
+            || list.includes(IdActionsEnum.MAITRISES_MELEE) && list.includes(IdActionsEnum.PERTE_MAITRISES_MELEE)
+            || list.includes(IdActionsEnum.MAITRISES_DISTANCES) && list.includes(IdActionsEnum.PERTE_MAITRISES_DISTANCE)
+            || list.includes(IdActionsEnum.MAITRISES_BERZERK) && list.includes(IdActionsEnum.PERTE_MAITRISES_BERZERK)
+            || list.includes(IdActionsEnum.RESISTANCES_CRITIQUES) && list.includes(IdActionsEnum.PERTE_RESISTANCES_CRITIQUE)
+            || list.includes(IdActionsEnum.RESISTANCES_DOS) && list.includes(IdActionsEnum.PERTE_RESISTANCES_DOS)
+            || list.includes(IdActionsEnum.PA) && list.includes(IdActionsEnum.PERTE_PA)
+            || list.includes(IdActionsEnum.PM) && list.includes(IdActionsEnum.PERTE_PM)
+            || list.includes(IdActionsEnum.PORTEE) && list.includes(IdActionsEnum.PERTE_PORTEE);
     }
 
 }
