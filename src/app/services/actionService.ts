@@ -62,9 +62,9 @@ export class ActionService {
     }
 
     public isOpposed(effect1: EquipEffects, effect2: EquipEffects): boolean {
-        const list = [effect1.id, effect2.id];
+        const list = [effect1.actionId, effect2.actionId];
         return list.includes(IdActionsEnum.POINT_DE_VIE) && list.includes(IdActionsEnum.PERTE_POINT_DE_VIE)
-            || list.includes(IdActionsEnum.ARMURE_DONNEE_RECUE) && list.includes(IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) && effect1.params[4] === effect2.params[4]
+            || (list.includes(IdActionsEnum.ARMURE_DONNEE_RECUE) && list.includes(IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) && effect1.params[4] === effect2.params[4])
             || list.includes(IdActionsEnum.RESISTANCES_ELEMENTAIRE) && list.includes(IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE)
             || list.includes(IdActionsEnum.RESISTANCES_TERRE) && list.includes(IdActionsEnum.PERTE_RESISTANCES_TERRE)
             || list.includes(IdActionsEnum.RESISTANCES_FEU) && list.includes(IdActionsEnum.PERTE_RESISTANCES_FEU)
