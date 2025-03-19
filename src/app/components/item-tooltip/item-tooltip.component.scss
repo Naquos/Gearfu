@@ -13,7 +13,19 @@
     span {
         border-radius: 10px;
     }
-    
+
+    .green {
+        background: linear-gradient(145deg, green, greenyellow);
+    }
+
+    .red {
+        background: linear-gradient(145deg, red, orange);
+    }
+
+    .green, .red {
+        color:#0D1B2A;
+    }
+
     .header {
         display: flex;
         border-bottom: 3px solid #415A77;

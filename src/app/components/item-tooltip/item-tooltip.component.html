@@ -1,0 +1,27 @@
+<div class="header">
+    <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="'aptitudes/1068.png'">Maitrises {{Math.trunc(maitrises)}}</span>
+    <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="'aptitudes/1069.png'">Résistances {{resistances}}</span>
+</div>
+<div class="content" (click)="itemChooseService.setItem(itemTypeService.getItemType(item.itemTypeId), item)">
+    <div class="title">
+        <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{item.title}}</h3>
+        <img [src]="'items/' + item.idImage + '.png'">
+    </div>
+    <ng-container *ngIf="{itemSelected : itemSelected$ | async} as value">
+        <div class="title" *ngIf="value.itemSelected !== undefined">
+            <h3 [style.color]="colorRarityService.getMapColors().get(value.itemSelected?.rarity ?? 0)">{{value.itemSelected?.title}}</h3>
+            <img [src]="'items/' + value.itemSelected?.idImage + '.png'">
+        </div>
+    </ng-container>
+    <div>
+        <ng-container *ngIf="{
+            statsList : differentStatsItemList$ | async
+        } as value">
+            <p *ngFor="let effect of value.statsList" [class]="getBackgroundDifferentsStats(effect)">
+                <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT && effect.value !== 0">
+                    <img  [src]="'aptitudes/' + effect.actionId +'.png'">  {{ displayEffect(effect) }}
+                </ng-container>
+            </p>
+        </ng-container>
+    </div>
+</div>
