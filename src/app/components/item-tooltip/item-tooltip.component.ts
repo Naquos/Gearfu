@@ -149,6 +149,37 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
       }
       mapDifferentStatsItem.set(differentsStatsItem.actionId, differentsStatsItem);
     })
-    return mapDifferentStatsItem
+    
+    return this.calculDifferenceResistance(mapDifferentStatsItem);
+  }
+
+  private calculDifferenceResistance(map: Map<IdActionsEnum, DifferentStatsItem>): Map<IdActionsEnum, DifferentStatsItem> {
+
+    const resisElem = map.get(IdActionsEnum.RESISTANCES_ELEMENTAIRE);
+    const resisList = [IdActionsEnum.RESISTANCES_FEU, IdActionsEnum.RESISTANCES_EAU, IdActionsEnum.RESISTANCES_AIR, IdActionsEnum.RESISTANCES_TERRE];
+
+
+    if(resisElem && resisList.find(x => map.has(x))) {
+      resisList.forEach(resis => {
+        let differentsStats = map.get(resis);
+        if(differentsStats) {
+          differentsStats.params[0] += resisElem.params[0];
+          differentsStats.value += resisElem.params[0];
+          differentsStats.presentOnCurrentItem = true;
+          differentsStats.presentOnEquippedItem = true;
+        } else {
+          differentsStats = {
+            ...resisElem,
+            actionId: resis,
+            presentOnCurrentItem: true,
+            presentOnEquippedItem: true
+          }
+        }
+        map.set(resis, differentsStats);
+      })
+      map.delete(IdActionsEnum.RESISTANCES_ELEMENTAIRE);
+    }
+
+    return map;
   }
 }

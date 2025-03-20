@@ -3,8 +3,8 @@
     border-radius: 15px;
     padding: 5px;
     color: white;
-    height: 100%;
-    width: 100%;
+    height: fit-content;
+    width: 600px;
     display: flex;
     flex-direction: column;
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
@@ -12,14 +12,15 @@
 
     span {
         border-radius: 10px;
+        width: 200px;
     }
 
     .green {
-        background: linear-gradient(145deg, green, greenyellow);
+        background: linear-gradient(145deg, #4CAF50, #00C896 );
     }
 
     .red {
-        background: linear-gradient(145deg, red, orange);
+        background: linear-gradient(145deg, #E63946 , #FF6B35 );
     }
 
     .green, .red {
@@ -35,7 +36,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            margin: auto;
+            margin: 2px auto;
 
             img {
                 margin: 0 10px;
@@ -85,7 +86,7 @@
         p {
             display: flex;
             align-items: center;
-            margin: 0;
+            margin: 2px 0;
             border-radius: 20px;
 
             img {

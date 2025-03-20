@@ -72,9 +72,9 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     this.itemChoosen$.pipe(take(1)).subscribe(itemsChoosen => {
         this.tooltipService.openTooltip(this.viewContainerRef, ItemsTooltipComponent, event, {item, itemsChoosen},
           [{ 
-            originX: 'center', originY: 'top',
-            overlayX: 'center', overlayY: 'bottom',
-            offsetY: 80, offsetX: mouseOnRight ? -this.el.nativeElement.offsetWidth - 380 : 340
+            originX: mouseOnRight ? 'end' : 'center', originY: 'bottom',
+            overlayX: mouseOnRight ? 'end' : 'center', overlayY: 'bottom',
+            offsetY: 0, offsetX: mouseOnRight ? -this.el.nativeElement.offsetWidth : 340
           }], false
         );
       })
