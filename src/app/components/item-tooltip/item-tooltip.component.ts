@@ -37,6 +37,8 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     protected differentStatsItemList$ = this.itemSelected$.pipe(
       takeUntil(this.destroy$),
       tap(listItems => {
+        this.mapDifferentStatsItem.clear();
+        this.fillMapCurrentItem();
         listItems.forEach(items => items ?this.fillMapDifferentStatsItem(items!): "")}),
       map(() => Array.from(this.mapDifferentStatsItem.values()).sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999))));
 
@@ -104,35 +106,36 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     return "";
   }
 
-  private fillMapDifferentStatsItem(equippedItem: Item): void {
-    
+  private fillMapCurrentItem(): void {
     this.item.equipEffects.forEach(equipEffect => {
 
-        let effect = this.mapDifferentStatsItem.get(equipEffect.actionId)
-        if(effect) {
-          const tempParams = effect.params;
-          tempParams[0] += equipEffect.params[0];
-          effect = {
-            ...effect,
-            value: effect.value + equipEffect.params[0],
-            params: tempParams,
-            presentOnCurrentItem: true
-          }
-
-        } else {
-          effect = {
-            value:equipEffect.params[0],
-            params: [...equipEffect.params],
-            actionId: equipEffect.actionId,
-            presentOnCurrentItem: true,
-            presentOnEquippedItem: false
-          }
+      let effect = this.mapDifferentStatsItem.get(equipEffect.actionId)
+      if(effect) {
+        const tempParams = effect.params;
+        tempParams[0] += equipEffect.params[0];
+        effect = {
+          ...effect,
+          value: effect.value + equipEffect.params[0],
+          params: tempParams,
+          presentOnCurrentItem: true
         }
 
-        this.mapDifferentStatsItem.set(equipEffect.actionId, effect)
+      } else {
+        effect = {
+          value:equipEffect.params[0],
+          params: [...equipEffect.params],
+          actionId: equipEffect.actionId,
+          presentOnCurrentItem: true,
+          presentOnEquippedItem: false
+        }
       }
-    )
 
+      this.mapDifferentStatsItem.set(equipEffect.actionId, effect)
+    })
+  }
+
+  private fillMapDifferentStatsItem(equippedItem: Item): void {
+    
     equippedItem.equipEffects.forEach(equipEffect => {
       let differentsStatsItem = this.mapDifferentStatsItem.get(equipEffect.actionId);
       let opposedStatsItem = this.item.equipEffects.find(x => this.actionsService.isOpposed(x, equipEffect));
