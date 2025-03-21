@@ -1,5 +1,5 @@
 <mat-form-field>
-    <mat-select [formControl]="form">
+    <mat-select [formControl]="form" disableRipple>
         @for (sort of SortChoiceEnumList; track sort) {
         <mat-option [value]="sort">{{sort.valueOf()}}</mat-option>
         }
