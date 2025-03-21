@@ -1,3 +1,5 @@
+import { EffectItems } from "./effectItems";
+
 export interface AddItemRequest {
     equipment: {
         id_equipment: number;
@@ -15,7 +17,7 @@ export interface AddItemRequest {
         order: number;
         name_rarity: string;
         image_rarity: string;
-        effects: string[];
+        effects: EffectItems[];
         criterias: string[];
         translations: string[];
         metadata: {

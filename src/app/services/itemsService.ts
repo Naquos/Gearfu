@@ -80,7 +80,7 @@ export class ItemsService {
         .pipe(
           tap(([items,nbElements, idMaitrises, sort, multiplicateurElem]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem)),
           map(([items,]) => items),
-          map(items => items.sort((itemA, itemB) => itemB.weightForSort - itemA.weightForSort).slice(0,30)))
+          map(items => items.sort((itemA, itemB) => itemB.weightForSort - itemA.weightForSort).slice(0,32)))
     }
 
     private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number): void {

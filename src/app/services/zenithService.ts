@@ -7,6 +7,9 @@ import { AddItemRequest } from "../models/zenith/addItemRequest";
 import { Item } from "../models/item";
 import { ItemTypeServices } from "./ItemTypesServices";
 import { ItemTypeEnum } from "../models/itemTypeEnum";
+import { EquipEffects } from "../models/equipEffects";
+import { EffectItems } from "../models/zenith/effectItems";
+import { IdActionsEnum } from "../models/idActionsEnum";
 
 @Injectable({providedIn: 'root'})
 export class ZenithService {
@@ -76,7 +79,7 @@ export class ZenithService {
                 line_of_sight: 0,
                 name_equipment_type: "",
                 image_equipment_type: "",
-                effects: [],
+                effects: this.createEffectItems(item.equipEffects),
                 translations: [],
                 criterias: [],
                 metadata: {
@@ -89,6 +92,60 @@ export class ZenithService {
             id_build: idBuild
 
         }
+    }
+
+    private createEffectItems(equipEffects: EquipEffects[]): EffectItems[] {
+        return equipEffects.map(x => {
+            return {
+                id_effect: x.id,
+                name_effect: "",
+                ui_position: 0,
+                from_evolution: 0,
+                container_min_level: 0,
+                container_max_level: 0,
+                is_critical: 0,
+                is_use_effect: 0,
+                pivot: {},
+                translations: [],
+                values: [
+                    {
+                        id_spell_effect_value: 0,
+                        offset: 0,
+                        damage: 0,
+                        ratio: 0,
+                        id_stats: x.actionId,
+                        id_effect: 0,
+                        will_calculate_damage: 0,
+                        will_calculate_heal: 0,
+                        base: null,
+                        evolution: null,
+                        random_number: x.params[2],
+                        statistics: {},
+                        elements: [{
+                            id_element: 1,
+                            id_inner_stats: this.isRandomMaitrise(x) ? 122 : 82,
+                            image_element: "fire.png"
+                        },{
+                            id_element: 2,
+                            id_inner_stats: this.isRandomMaitrise(x) ? 124 : 83,
+                            image_element: "water.png"
+                        },{
+                            id_element: 3,
+                            id_inner_stats: this.isRandomMaitrise(x) ? 123 : 84,
+                            image_element: "earth.png"
+                        },{
+                            id_element: 4,
+                            id_inner_stats: this.isRandomMaitrise(x) ? 125 : 85,
+                            image_element: "wind.png"
+                        }].slice(0, x.params[2])
+                }],
+                inner_stats: []
+            }
+        })
+    }
+
+    private isRandomMaitrise(equipEffect : EquipEffects): boolean {
+        return equipEffect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE;
     }
 
 }
