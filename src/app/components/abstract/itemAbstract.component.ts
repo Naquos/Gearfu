@@ -120,7 +120,7 @@ export abstract class ItemAbstractComponent implements OnDestroy {
   }
 
   protected getPoids(): number {
-    return this.maitrises + 1.2 * this.resistances;
+    return this.Math.trunc(this.maitrises + 1.2 * this.resistances);
   }
 
   public ngOnDestroy() {
