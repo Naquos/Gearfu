@@ -27,22 +27,19 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
 
     protected mapDifferentStatsItem = new Map<IdActionsEnum, DifferentStatsItem>();
     protected loaded$!:Observable<void>;
-    
-    protected differentStatsItemList$ = this.itemChoosen$.pipe(
-      takeUntil(this.destroy$),
-      filter(items => items.length !== 0),
-      tap(listItems => {
-        listItems.forEach(items => {
-          if(items[this.indexItemChoosen]) {
-            this.fillMapDifferentStatsItem(items[this.indexItemChoosen]!);
-          }
-        })}),
-      map(() => Array.from(this.mapDifferentStatsItem.values()).sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999))));
 
     protected itemSelected$ = this.itemChoosen$.pipe(
       filter(items => items.length !== 0),
-      map(items => items.map(x =>x[this.indexItemChoosen]))
+      map(items => items.map(x =>x[this.indexItemChoosen])),
+      map(items => items.length >=2 && items[0]?.id === items[1]?.id ? [items.find(x => x !== undefined)] : items),
     )
+    
+    protected differentStatsItemList$ = this.itemSelected$.pipe(
+      takeUntil(this.destroy$),
+      tap(listItems => {
+        listItems.forEach(items => items ?this.fillMapDifferentStatsItem(items!): "")}),
+      map(() => Array.from(this.mapDifferentStatsItem.values()).sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999))));
+
 
      constructor(
         protected _actionsService : ActionService,
@@ -62,16 +59,16 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     public ngAfterViewInit(): void {
       if(this.item) {
         this.item.equipEffects = this.item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
-        this.loaded$ = combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.itemService.multiplicateurElem$, this.itemChoosen$])
+        this.loaded$ = combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.itemService.multiplicateurElem$, this.itemSelected$])
         .pipe(takeUntil(this.destroy$),
-          map(([nbElements, idMaitrises, multiplicateurElem, itemChoosen]) => 
+          map(([nbElements, idMaitrises, multiplicateurElem, itemSelected]) => 
           {
               this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
               this.maitrises = this.item ? this.itemService.calculMaitrisesForAnItem(this.item, nbElements, idMaitrises, multiplicateurElem) : 0;
-              itemChoosen.forEach(item => {
-                if(item[this.indexItemChoosen]) {
-                  this.resistances -=  this.itemService.calculResistancesForAnItem(item[this.indexItemChoosen]!);
-                  this.maitrises -= this.itemService.calculMaitrisesForAnItem(item[this.indexItemChoosen]!, nbElements, idMaitrises, multiplicateurElem);
+              itemSelected.forEach(item => {
+                if(item) {
+                  this.resistances -=  this.itemService.calculResistancesForAnItem(item);
+                  this.maitrises -= this.itemService.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
                 }
               })
           }));
