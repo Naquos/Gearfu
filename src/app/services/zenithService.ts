@@ -68,7 +68,7 @@ export class ZenithService {
         return {
             equipment:{
                 id_equipment: item.id,
-                level: item.level,
+                level: item.itemTypeId === ItemTypeEnum.FAMILIER ? 50 : item.level,
                 id_rarity: item.rarity,
                 ap_cost: 0,
                 mp_cost: 0,
@@ -107,7 +107,8 @@ export class ZenithService {
                 is_use_effect: 0,
                 pivot: {},
                 translations: [],
-                values: [
+                values: [IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE, IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE].includes(x.actionId) ? 
+                [ 
                     {
                         id_spell_effect_value: 0,
                         offset: 0,
@@ -138,7 +139,8 @@ export class ZenithService {
                             id_inner_stats: this.isRandomMaitrise(x) ? 125 : 85,
                             image_element: "wind.png"
                         }].slice(0, x.params[2])
-                }],
+                }
+            ] : [],
                 inner_stats: []
             }
         })

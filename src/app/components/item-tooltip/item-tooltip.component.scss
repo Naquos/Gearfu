@@ -13,6 +13,10 @@
     span {
         border-radius: 10px;
         width: 200px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 2px auto;
     }
 
     .green {
@@ -33,10 +37,6 @@
         margin-bottom: 10px;
 
         span {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 2px auto;
 
             img {
                 margin: 0 10px;
@@ -61,6 +61,19 @@
         display: flex;
         justify-content: space-around;
         cursor: pointer;
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
 
         div:first-child {
             margin-right: 10px;
@@ -92,6 +105,18 @@
             img {
                 margin-right: 10px;
             }
+        }
+
+        .poids {
+            align-items: center;
+            display: flex;
+            
+            img {
+                width: 22px;
+                height: 22px;
+                margin: 0 10px;
+            }
+            text-align: center;
         }
     }
 

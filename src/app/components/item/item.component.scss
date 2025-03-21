@@ -68,6 +68,18 @@
                 height: 80px;
                 margin: auto;
             }
+
+            .poids {
+                align-items: center;
+                display: flex;
+                
+                img {
+                    width: 22px;
+                    height: 22px;
+                    margin: 0 10px;
+                }
+                text-align: center;
+            }
         }
         
         p {

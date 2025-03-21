@@ -6,6 +6,7 @@ import { BehaviorSubject, combineLatest, map, merge, Observable, tap } from "rxj
 import { SortChoiceEnum as SortChoiceEnum } from "../models/sortChoiceEnum";
 import { IdActionsEnum } from "../models/idActionsEnum";
 import { ItemTypeFormServices } from "./itemTypeFormServices";
+import { ItemTypeEnum } from "../models/itemTypeEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -14,7 +15,7 @@ export class ItemsService {
 
     public items$: Observable<Item[]>;
 
-    private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceEnum.POIDS);
+    private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceEnum.MAITRISES);
     public sort$ = this.sort.asObservable();
 
     private onlyNoSecondary = new BehaviorSubject<boolean>(false);
@@ -41,10 +42,10 @@ export class ItemsService {
 
 
     protected itemsFilterByLevelMin$ = combineLatest([this.fullItems$, this.levelMin$])
-    .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin)));
+    .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeEnum.FAMILIER)));
 
     protected itemsFilterByLevelMax$ = combineLatest([this.itemsFilterByLevelMin$, this.levelMax$])
-    .pipe(map(([items, levelMax]) => items.filter(x => x.level <= levelMax)));
+    .pipe(map(([items, levelMax]) => items.filter(x => x.level <= levelMax || x.itemTypeId === ItemTypeEnum.FAMILIER)));
 
     protected itemsFilterByRarity$ = combineLatest([this.itemsFilterByLevelMax$, this.rarirty])
     .pipe(map(([items, rarity]) => items.filter(x => rarity.length === 0 || rarity.includes(x.rarity))));
@@ -101,7 +102,7 @@ export class ItemsService {
 
       items.forEach(item => {
         if(sort === SortChoiceEnum.POIDS) {
-          item.weightForSort = this.calculResistancesForAnItem(item) + this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
+          item.weightForSort = 1.2 * this.calculResistancesForAnItem(item) + this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
         } else if (sort === SortChoiceEnum.MAITRISES) {
           item.weightForSort = this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
         } else if (sort === SortChoiceEnum.EQUILIBRE) {

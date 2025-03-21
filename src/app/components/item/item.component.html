@@ -6,8 +6,9 @@
     </div>
     <div class="content" (click)="setItemChoosen()">
         <div class="title">
-            <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{item.title}}</h3>
+            <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{item.title}} ({{item.level}})</h3>
             <img [src]="'items/' + item.idImage + '.png'">
+            <div class="poids"><img [src]="'aptitudes/poids.png'">Poids {{getPoids()}}</div>
         </div>
         <div>
             <p *ngFor="let effect of item.equipEffects">
