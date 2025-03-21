@@ -91,8 +91,16 @@ export class ItemChooseService {
     public deleteItem(itemType: ItemTypeEnum, indexItem: number) : void {
         this.getObsItem(itemType).pipe(
             first(),
-            map(x => {x[indexItem] = undefined; return x}),
-            tap(x => this.mapItem.get(itemType)?.next(x))
+            switchMap(x => 
+                iif(() => x !== undefined && this.itemTypeService.getItemType(x[0]?.itemTypeId ?? 0) === ItemTypeEnum.DEUX_MAINS,
+                of(x).pipe(tap(() => {
+                    this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]);
+                    this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]);
+                })),
+                of(x).pipe(
+                    map(x => {x[indexItem] = undefined; return x}),
+                    tap(x => this.mapItem.get(itemType)?.next(x))))
+            )
         ).subscribe();
     }
 
@@ -139,7 +147,7 @@ export class ItemChooseService {
                 // Mise en place d'une arme à deux mains
                 iif(() => itemType === ItemTypeEnum.DEUX_MAINS,
                     of(null).pipe(tap(() => {
-                        this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]);
+                        this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([item]);
                         this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([item]);
                     })),
                     of(null)

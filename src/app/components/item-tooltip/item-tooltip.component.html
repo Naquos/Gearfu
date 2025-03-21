@@ -10,10 +10,12 @@
                 <img [src]="'items/' + item.idImage + '.png'">
             </div>
             <ng-container *ngIf="{itemSelected : itemSelected$ | async} as value">
-                <div class="title" *ngIf="value.itemSelected !== undefined">
-                    <h3 [style.color]="colorRarityService.getMapColors().get(value.itemSelected?.rarity ?? 0)">{{value.itemSelected?.title}}  ({{value.itemSelected?.level}})</h3>
-                    <img [src]="'items/' + value.itemSelected?.idImage + '.png'">
-                </div>   
+                <ng-container *ngFor="let item of value.itemSelected">
+                    <div *ngIf="item !== undefined"  class="title" >
+                        <h3 [style.color]="colorRarityService.getMapColors().get(item?.rarity ?? 0)">{{item?.title}}  ({{item?.level}})</h3>
+                        <img [src]="'items/' + item?.idImage + '.png'">
+                    </div>
+                </ng-container>
             </ng-container>
         </div>
         

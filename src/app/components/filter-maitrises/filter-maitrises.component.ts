@@ -3,6 +3,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MaitrisesServices } from '../../services/maitrisesService';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
+import { IdActionsEnum } from '../../models/idActionsEnum';
 
 @Component({
   selector: 'app-filter-maitrises',
@@ -28,19 +29,20 @@ export class FilterMaitrisesComponent {
   constructor(private maitrisesService : MaitrisesServices) {
     this.form.valueChanges.subscribe(changes => {
       let result = 0;
-      if(changes.feu) {result++}
-      if(changes.eau) {result++}
-      if(changes.terre) {result++}
-      if(changes.air) {result++}
+      const resultId = [];
+
+      if(changes.feu) {result++; resultId.push(IdActionsEnum.MAITRISES_FEU)}
+      if(changes.eau) {result++; resultId.push(IdActionsEnum.MAITRISES_EAU)}
+      if(changes.terre) {result++; resultId.push(IdActionsEnum.MAITRISES_TERRE)}
+      if(changes.air) {result++; resultId.push(IdActionsEnum.MAITRISES_AIR)}
       this.maitrisesService.setNbElements(result);
 
-      const resultId = [];
-      if(changes.critique) {resultId.push(149)}
-      if(changes.dos) {resultId.push(180)}
-      if(changes.melee) {resultId.push(1052)}
-      if(changes.distance) {resultId.push(1053)}
-      if(changes.soin) {resultId.push(26)}
-      if(changes.berzerk) {resultId.push(1055)}
+      if(changes.critique) {resultId.push(IdActionsEnum.MAITRISES_CRITIQUES)}
+      if(changes.dos) {resultId.push(IdActionsEnum.MAITRISES_DOS)}
+      if(changes.melee) {resultId.push(IdActionsEnum.MAITRISES_MELEE)}
+      if(changes.distance) {resultId.push(IdActionsEnum.MAITRISES_DISTANCES)}
+      if(changes.soin) {resultId.push(IdActionsEnum.MAITRISES_SOIN)}
+      if(changes.berzerk) {resultId.push(IdActionsEnum.MAITRISES_BERZERK)}
       this.maitrisesService.setIdMaitrises(resultId);
     })
   }

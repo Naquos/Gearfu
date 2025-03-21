@@ -3,7 +3,7 @@ import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
 import { ActionService } from '../../services/actionService';
 import { MaitrisesServices } from '../../services/maitrisesService';
-import { combineLatest, take, takeUntil } from 'rxjs';
+import { combineLatest, map, take, takeUntil } from 'rxjs';
 import { ItemsService } from '../../services/itemsService';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { ItemChooseService } from '../../services/itemChooseService';
@@ -45,8 +45,8 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   }
 
 
-  protected itemIsPresentAndNotChoosen(items: (Item | undefined)[]): boolean {
-    return !!items.find(x => x !== undefined) && !items.find(item => item?.id === this.item.id);
+  protected itemIsPresentAndNotChoosen(itemsList: (Item | undefined)[][]): boolean {
+    return !!itemsList.find(items =>items.find(x => x !== undefined) && !items.find(item => item?.id === this.item.id));
   }
 
   ngAfterViewInit(): void {
@@ -69,7 +69,7 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     const mouseOnRight = event.pageX > window.screen.width / 2;
 
     this.tooltipService.closeTooltip();
-    this.itemChoosen$.pipe(take(1)).subscribe(itemsChoosen => {
+    this.itemChoosen$.pipe(take(1), map(x => x.find(y => y.find(z => z)))).subscribe(itemsChoosen => {
         this.tooltipService.openTooltip(this.viewContainerRef, ItemsTooltipComponent, event, {item, itemsChoosen},
           [{ 
             originX: mouseOnRight ? 'end' : 'center', originY: 'bottom',

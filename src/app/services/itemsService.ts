@@ -201,14 +201,15 @@ export class ItemsService {
       
   public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[], multiplicateurElem: number): number {
     let result = 0;
-    const maitrisesIdElems = [IdActionsEnum.MAITRISES_ELEMENTAIRES,IdActionsEnum.MAITRISES_FEU,IdActionsEnum.MAITRISES_TERRE,IdActionsEnum.MAITRISES_EAU,IdActionsEnum.MAITRISES_AIR];
+    const maitrisesIdElems = [IdActionsEnum.MAITRISES_FEU,IdActionsEnum.MAITRISES_TERRE,IdActionsEnum.MAITRISES_EAU,IdActionsEnum.MAITRISES_AIR];
     const perteMaitrisesId = [IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,IdActionsEnum.PERTE_MAITRISES_FEU];
+    const idMaitrisesWithoutElem = [...idMaitrises].filter(x => !maitrisesIdElems.includes(x));
 
     item.equipEffects.forEach(effect => {
-      if(maitrisesIdElems.includes(effect.actionId) ||
-        (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements)) {
+      if(effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES ||
+         (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements)) {
         result += effect.params[0] * multiplicateurElem;
-      } else if (idMaitrises.includes(effect.actionId)) {
+      } else if (idMaitrisesWithoutElem.includes(effect.actionId)) {
         result += effect.params[0];
       }
        else if (perteMaitrisesId.includes(effect.actionId) ||
@@ -220,6 +221,11 @@ export class ItemsService {
         result -= effect.params[0];
       }
     })
+
+    const effectMaitrises = item.equipEffects.find(x => maitrisesIdElems.includes(x.actionId) && idMaitrises.includes(x.actionId)); 
+    if(effectMaitrises) {
+      result += effectMaitrises.params[0] * multiplicateurElem;
+    }
 
     return result;
   }

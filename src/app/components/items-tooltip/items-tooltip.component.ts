@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
-import { ItemComponent } from "../item/item.component";
 import { ItemTooltipComponent } from '../item-tooltip/item-tooltip.component';
 
 @Component({

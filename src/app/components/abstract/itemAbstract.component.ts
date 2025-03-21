@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable, Subject, takeUntil } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable, Subject, takeUntil } from "rxjs";
 import { IdActionsEnum } from "../../models/idActionsEnum";
 import { Item } from "../../models/item";
 import { ItemTypeServices } from "../../services/ItemTypesServices";
@@ -22,7 +22,7 @@ export abstract class ItemAbstractComponent implements OnDestroy {
     protected IdActionEnum = IdActionsEnum;
     protected mapSortAction= new Map<IdActionsEnum, number>();
     protected Math = Math;
-    protected itemChoosen$ = new BehaviorSubject<(Item | undefined)[]>([]);
+    protected itemChoosen$ = new BehaviorSubject<(Item | undefined)[][]>([[]]);
 
 
     constructor(
@@ -87,13 +87,16 @@ export abstract class ItemAbstractComponent implements OnDestroy {
 
     protected initItemChoosen(item: Item): void {
         const itemTypeId = this.itemTypeService.getItemType(item.itemTypeId);
-        let obs = new Observable<(Item | undefined)[]>();
+        let obs = new Observable<(Item | undefined)[][]>();
         if (itemTypeId === ItemTypeEnum.DAGUE) {
-            obs = this.itemChooseService.getObsItem(ItemTypeEnum.BOUCLIER);
+            obs = this.itemChooseService.getObsItem(ItemTypeEnum.BOUCLIER).pipe(map(x => [x]));
         } else if (itemTypeId === ItemTypeEnum.DEUX_MAINS) {
-            obs = this.itemChooseService.getObsItem(ItemTypeEnum.UNE_MAIN);
+            obs = combineLatest([
+              this.itemChooseService.getObsItem(ItemTypeEnum.UNE_MAIN),
+              this.itemChooseService.getObsItem(ItemTypeEnum.BOUCLIER)
+            ]).pipe(map(([uneMain, bouclier]) => [uneMain, bouclier]));
         } else {
-            obs = this.itemChooseService.getObsItem(itemTypeId);
+            obs = this.itemChooseService.getObsItem(itemTypeId).pipe(map(x => [x]));
         }
 
         obs.pipe(takeUntil(this.destroy$)).subscribe(x => this.itemChoosen$.next(x))
