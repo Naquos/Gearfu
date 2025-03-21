@@ -40,8 +40,11 @@ export class ItemsService {
     private levelMax = new BehaviorSubject<number>(245);
     public levelMax$ = this.levelMax.asObservable();
 
+    protected itemsFilterByUseless$ = this.fullItems$.pipe(
+      map(items => items.filter(x => ![480,812].includes(x.itemTypeId)))
+    )
 
-    protected itemsFilterByLevelMin$ = combineLatest([this.fullItems$, this.levelMin$])
+    protected itemsFilterByLevelMin$ = combineLatest([this.itemsFilterByUseless$, this.levelMin$])
     .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeEnum.FAMILIER)));
 
     protected itemsFilterByLevelMax$ = combineLatest([this.itemsFilterByLevelMin$, this.levelMax$])
