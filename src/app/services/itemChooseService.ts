@@ -181,7 +181,7 @@ export class ItemChooseService {
             tap(itemList => itemList.forEach(list => {
                 const itemType = this.itemTypeService.getItemType(list.find(x => x !== undefined)?.itemTypeId ?? 0); 
 
-                if( itemType === ItemTypeEnum.DEUX_MAINS) { this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]) } 
+                if( itemType === ItemTypeEnum.DEUX_MAINS) { this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]); this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) } 
                 else if(itemType === ItemTypeEnum.DAGUE) { this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) } 
                 else if (itemType === ItemTypeEnum.ANNEAU) {
                     const indexRarity = list.findIndex(x => x?.rarity === rarity);
