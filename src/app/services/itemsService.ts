@@ -137,8 +137,8 @@ export class ItemsService {
         }));
     }
     
-    public searchItem(idItem : number): Item | undefined {
-      return this.items.find(x => x.id === idItem);
+    public searchItem(idItem : number): Observable<Item | undefined> {
+      return this.itemsFilterByUseless$.pipe(map(x => x.find(x => x.id === idItem)));
     }
 
     public setItemName(value: string): void {

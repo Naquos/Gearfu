@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ZenithApiService } from "./zenithApiService";
-import { combineLatestWith, map, Observable, switchMap, tap } from "rxjs";
+import { combineLatestWith, map, Observable, of, switchMap, tap } from "rxjs";
 import { ItemChooseService } from "./itemChooseService";
 import { ItemsService } from "./itemsService";
 import { AddItemRequest } from "../models/zenith/addItemRequest";
@@ -37,9 +37,12 @@ export class ZenithService {
                 const items = idItems.split(",").map(x => parseInt(x));
                 const itemsList = items.map(x => this.itemsService.searchItem(x));
                 itemsList.forEach(item => {
-                    if(item) {
-                        this.zenithApiService.addItemRequest(this.createAddItemsRequest(infoBuild.id_build, item)).subscribe();
-                    }
+                    item.pipe(switchMap(x => {
+                        if(x) {
+                            return this.zenithApiService.addItemRequest(this.createAddItemsRequest(infoBuild.id_build, x));
+                        }
+                        return of(x);
+                    })).subscribe();
                 })
             }),
             tap(() => this.firstRing = true),

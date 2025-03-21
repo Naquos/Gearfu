@@ -74,10 +74,12 @@ export class ItemChooseService {
     }
 
     private setItemWithIdItem(idItem: number): void {
-        const item = this.itemService.searchItem(idItem);
-        if(item) {
-            this.setItem(this.itemTypeService.getItemType(item.itemTypeId), item)
-        }
+        this.itemService.searchItem(idItem)
+        .pipe(
+            first(),
+            filter(x => x !== undefined)
+        ).subscribe(item => 
+            this.setItem(this.itemTypeService.getItemType(item.itemTypeId), item));
     }
 
     public setIdItems(idItems: string): void {
@@ -124,6 +126,18 @@ export class ItemChooseService {
                         filter(x => x !== undefined && this.itemTypeService.getItemType(x?.itemTypeId) === ItemTypeEnum.DEUX_MAINS),
                         tap(() => this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]))
                     ),
+                    of(null)
+                )
+            ),
+            switchMap(() =>
+                //Si on met une arme à une main, et qu'une arme à deux main est equipé, il faut pouvoir l'enlever
+                iif(() => itemType === ItemTypeEnum.UNE_MAIN,
+                    this.getObsItem(ItemTypeEnum.BOUCLIER).pipe(
+                        first(),
+                        tap(() => this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([item])),
+                        map(x => x[0]),
+                        filter(x => x !== undefined && this.itemTypeService.getItemType(x?.itemTypeId) === ItemTypeEnum.DEUX_MAINS),
+                        tap(() => this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]))),
                     of(null)
                 )
             ),
