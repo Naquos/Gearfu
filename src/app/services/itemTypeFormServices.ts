@@ -48,22 +48,22 @@ export class ItemTypeFormServices {
         });
     }
 
-    public setOnlyOneItemType(itemType: ItemTypeEnum) {
+    public setItemType(...itemType: ItemTypeEnum[]) {
         this.form.setValue({
-            deuxMains: itemType === ItemTypeEnum.DEUX_MAINS,
-            uneMain: itemType === ItemTypeEnum.UNE_MAIN,
-            anneau: itemType === ItemTypeEnum.ANNEAU,
-            bottes: itemType === ItemTypeEnum.BOTTES,
-            amulette: itemType === ItemTypeEnum.AMULETTE,
-            cape: itemType === ItemTypeEnum.CAPE,
-            ceinture: itemType === ItemTypeEnum.CEINTURE,
-            casque: itemType === ItemTypeEnum.CASQUE,
-            plastron: itemType === ItemTypeEnum.PLASTRON,
-            epaulettes: itemType === ItemTypeEnum.EPAULETTES,
-            bouclier: itemType === ItemTypeEnum.BOUCLIER,
-            dague: itemType === ItemTypeEnum.DAGUE,
-            accessoires: itemType === ItemTypeEnum.ACCESSOIRES,
-            familier: itemType === ItemTypeEnum.FAMILIER
+            deuxMains: itemType.includes(ItemTypeEnum.DEUX_MAINS),
+            uneMain: itemType.includes(ItemTypeEnum.UNE_MAIN),
+            anneau: itemType.includes(ItemTypeEnum.ANNEAU),
+            bottes: itemType.includes(ItemTypeEnum.BOTTES),
+            amulette: itemType.includes(ItemTypeEnum.AMULETTE),
+            cape: itemType.includes(ItemTypeEnum.CAPE),
+            ceinture: itemType.includes(ItemTypeEnum.CEINTURE),
+            casque: itemType.includes(ItemTypeEnum.CASQUE),
+            plastron: itemType.includes(ItemTypeEnum.PLASTRON),
+            epaulettes: itemType.includes(ItemTypeEnum.EPAULETTES),
+            bouclier: itemType.includes(ItemTypeEnum.BOUCLIER),
+            dague: itemType.includes(ItemTypeEnum.DAGUE),
+            accessoires: itemType.includes(ItemTypeEnum.ACCESSOIRES),
+            familier: itemType.includes(ItemTypeEnum.FAMILIER)
         });
     }
 }

@@ -11,6 +11,6 @@
         </div>
     </ng-container>
     <ng-container *ngIf="!value.item">
-        <img class="noItem" [src]="backgroundItemType()"(mouseenter)="tooltipService.closeTooltip()" (click)="itemTypeFormServices.setOnlyOneItemType(itemType())" alt="noItem" >
+        <img class="noItem" [src]="backgroundItemType()"(mouseenter)="tooltipService.closeTooltip()" (click)="setFilter()" alt="noItem" >
     </ng-container>
 </ng-container>

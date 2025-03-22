@@ -41,4 +41,14 @@ export class ItemChooseDisplayComponent implements OnInit {
       this.tooltipService.openTooltip(this.viewContainerRef, ItemComponent, event, {item});
     }
   }
+
+  protected setFilter():void {
+    if(this.itemType() === ItemTypeEnum.BOUCLIER) {
+      this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DAGUE)
+    } else if(this.itemType() === ItemTypeEnum.UNE_MAIN) {
+      this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DEUX_MAINS)
+    } else {
+      this.itemTypeFormServices.setItemType(this.itemType())
+    }
+  }
 }
