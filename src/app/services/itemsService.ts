@@ -7,6 +7,7 @@ import { SortChoiceEnum as SortChoiceEnum } from "../models/sortChoiceEnum";
 import { IdActionsEnum } from "../models/idActionsEnum";
 import { ItemTypeFormServices } from "./itemTypeFormServices";
 import { ItemTypeEnum } from "../models/itemTypeEnum";
+import { MajorAction } from "../models/majorActions";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -21,7 +22,7 @@ export class ItemsService {
     private onlyNoSecondary = new BehaviorSubject<boolean>(false);
     public onlyNoSecondary$ = this.onlyNoSecondary.asObservable();
 
-    private idMajor = new BehaviorSubject<number[]>([]);
+    private idMajor = new BehaviorSubject<MajorAction[]>([]);
     public idMajor$ = this.idMajor.asObservable() ;
 
 
@@ -149,7 +150,7 @@ export class ItemsService {
       this.multiplicateurElem.next(value);
     }
 
-    public setIdMajor(value: number[]): void {
+    public setIdMajor(value: MajorAction[]): void {
       this.idMajor.next(value);
     }
 
@@ -173,9 +174,9 @@ export class ItemsService {
       this.levelMax.next(value);
     }
 
-    private majorIsPresent(idMajor: number[], x: Item): boolean {
-      return !idMajor.find(id => (id !== IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.map(effect => effect.actionId).includes(id)) 
-                              || (id === IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === 120 )));
+    private majorIsPresent(idMajor: MajorAction[], x: Item): boolean {
+      return !idMajor.find(major => (major.id !== IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.map(effect => effect.actionId).includes(major.id)) 
+                              || (major.id === IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === major.parameter)));
     }
 
     public calculResistancesForAnItem(item: Item): number {

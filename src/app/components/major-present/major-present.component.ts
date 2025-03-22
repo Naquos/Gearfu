@@ -4,6 +4,8 @@ import { ItemsService } from '../../services/itemsService';
 import { IdActionsEnum } from '../../models/idActionsEnum';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from '../button-checkbox/button-checkbox.component';
+import { MajorAction } from '../../models/majorActions';
+import { ParameterMajorActionEnum } from '../../models/parameterMajorActionEnum';
 
 @Component({
   selector: 'app-major-present',
@@ -18,20 +20,22 @@ export class MajorPresentComponent {
     PW: new FormControl(),
     PO: new FormControl(),
     ARMURE_DONNEE: new FormControl(),
+    ARMURE_RECUE: new FormControl(),
     CRITIQUE: new FormControl(),
     PARADE: new FormControl(),
   });
 
   constructor(private itemService: ItemsService) {
     this.form.valueChanges.subscribe(x => {
-      const result: number[] = [];
-      if(x.PA) {result.push(IdActionsEnum.PA)}
-      if(x.PM) {result.push(IdActionsEnum.PM)}
-      if(x.PW) {result.push(IdActionsEnum.BOOST_PW)}
-      if(x.PO) {result.push(IdActionsEnum.PORTEE)}
-      if(x.ARMURE_DONNEE) {result.push(IdActionsEnum.ARMURE_DONNEE_RECUE)}
-      if(x.CRITIQUE) {result.push(IdActionsEnum.COUP_CRITIQUE)}
-      if(x.PARADE) {result.push(IdActionsEnum.PARADE)}
+      const result: MajorAction[] = [];
+      if(x.PA) {result.push({id:IdActionsEnum.PA})}
+      if(x.PM) {result.push({id:IdActionsEnum.PM})}
+      if(x.PW) {result.push({id:IdActionsEnum.BOOST_PW})}
+      if(x.PO) {result.push({id:IdActionsEnum.PORTEE})}
+      if(x.ARMURE_DONNEE) {result.push({id:IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_DONNEE})}
+      if(x.ARMURE_RECUE) {result.push({id:IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_RECUE})}
+      if(x.CRITIQUE) {result.push({id:IdActionsEnum.COUP_CRITIQUE})}
+      if(x.PARADE) {result.push({id:IdActionsEnum.PARADE})}
       this.itemService.setIdMajor(result);
     })
   }

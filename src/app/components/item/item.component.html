@@ -13,7 +13,7 @@
         <div>
             <p *ngFor="let effect of item.equipEffects">
                 <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT">
-                    <img  [src]="'aptitudes/' + effect.actionId +'.png'">  {{ displayEffect(effect) }}
+                    <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'">  {{ displayEffect(effect) }}
                 </ng-container>
             </p>
         </div>

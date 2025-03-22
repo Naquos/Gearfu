@@ -8,6 +8,7 @@ import { EquipEffects } from "../../models/equipEffects";
 import { DifferentStatsItem } from "../../models/differentsStatsItem";
 import { ActionService } from "../../services/actionService";
 import { Component, OnDestroy } from "@angular/core";
+import { ParameterMajorActionEnum } from "../../models/parameterMajorActionEnum";
 
 @Component({
   selector: 'app-item',
@@ -83,6 +84,13 @@ export abstract class ItemAbstractComponent implements OnDestroy {
         this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_FEU, 45);
         this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCE_EAU, 46);
         this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_TERRE, 47);
+    }
+
+    protected getEffectPng(effect : EquipEffects | DifferentStatsItem) {
+      if(effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE) {
+        return effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE ? "ArmureDonnée" : 39;
+      }
+      return effect.actionId;
     }
 
     protected initItemChoosen(item: Item): void {
