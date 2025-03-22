@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import itemsJson from "../../../public/items.json";
 import { Item } from "../models/item";
 import { MaitrisesServices } from "./maitrisesService";
-import { BehaviorSubject, combineLatest, first, map, Observable, of, tap, withLatestFrom } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable, tap } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../models/sortChoiceEnum";
 import { IdActionsEnum } from "../models/idActionsEnum";
 import { ItemTypeFormServices } from "./itemTypeFormServices";
@@ -143,11 +143,13 @@ export class ItemsService {
     }
 
     private initItemsList(): void {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (itemsJson as [any]).forEach(x => this.items.push({
             id: x.definition.item.id,
             level: x.definition.item.level,
             rarity: x.definition.item.baseParameters.rarity,
             itemTypeId: x.definition.item.baseParameters.itemTypeId,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             equipEffects: (x.definition.equipEffects as [any]).map(equipEffect => {
                 return {
                     id: equipEffect.effect.definition.id as number,

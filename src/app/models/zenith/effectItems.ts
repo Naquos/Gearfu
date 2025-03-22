@@ -9,7 +9,7 @@ export interface EffectItems {
     container_max_level: 0,
     is_critical: 0,
     is_use_effect: 0,
-    pivot: {},
+    pivot: object,
     translations: [],
     values: ValuesItem[],
     inner_stats: [],

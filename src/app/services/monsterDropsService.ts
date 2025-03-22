@@ -11,6 +11,7 @@ export class MonsterDropsService {
 
     constructor() {
         const result: MonsterDrops[] = [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (monsterDrops as [any]).forEach(x => result.push({
             id: x.id,
             drops: x.drops

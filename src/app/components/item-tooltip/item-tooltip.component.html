@@ -1,26 +1,28 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="header" *ngIf="{loaded: loaded$ | async}">
-    <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="'aptitudes/1068.png'">Maitrises {{Math.trunc(maitrises)}}</span>
-    <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="'aptitudes/1069.png'">Résistances {{resistances}}</span>
+    <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="'aptitudes/1068.png'" alt="Maitrises">Maitrises {{Math.trunc(maitrises)}}</span>
+    <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="'aptitudes/1069.png'" alt="Resistances">Résistances {{resistances}}</span>
 </div>
 <div class="content" (click)="itemChooseService.setItem(itemTypeService.getItemType(item.itemTypeId), item)">
     <div class="column">
         <div class="row">
             <div class="title">
                 <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{item.title}} ({{item.level}})</h3>
-                <img [src]="'items/' + item.idImage + '.png'">
+                <img [src]="'items/' + item.idImage + '.png'" alt="item">
             </div>
             <ng-container *ngIf="{itemSelected : itemSelected$ | async} as value">
                 <ng-container *ngFor="let item of value.itemSelected">
                     <div *ngIf="item !== undefined"  class="title" >
                         <h3 [style.color]="colorRarityService.getMapColors().get(item?.rarity ?? 0)">{{item?.title}}  ({{item?.level}})</h3>
-                        <img [src]="'items/' + item?.idImage + '.png'">
+                        <img [src]="'items/' + item?.idImage + '.png'" alt="items">
                     </div>
                 </ng-container>
             </ng-container>
         </div>
         
         <span [class]="getBackgroundDifferentsStatsOnValue(getPoids()) + ' poids'">
-            <img [src]="'aptitudes/poids.png'">Poids {{getPoids()}}
+            <img [src]="'aptitudes/poids.png'" alt="poids">Poids {{getPoids()}}
         </span>
     </div>
     
@@ -30,7 +32,7 @@
         <div>
             <p *ngFor="let effect of value.statsList" [class]="getBackgroundDifferentsStats(effect)">
                 <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT && effect.value !== 0">
-                    <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'">  {{ displayEffect(effect) }}
+                    <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'" alt="aptitudes">  {{ displayEffect(effect) }}
                 </ng-container>
             </p>
         </div>

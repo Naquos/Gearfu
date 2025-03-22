@@ -10,6 +10,7 @@ export class RecipeResultsService {
 
     constructor() {
         const result: RecipeResult[] = [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (recipeResult as [any]).forEach(x => result.push({
             recipeId: x.recipeId,
             productedItemId: x.productedItemId,

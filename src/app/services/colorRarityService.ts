@@ -4,7 +4,7 @@ import { RarityItem } from "../models/rarityItem";
 @Injectable({providedIn: 'root'})
 export class ColorRarityService {
     
-  private mapColors:Map<RarityItem,String> = new Map();
+  private mapColors = new Map<RarityItem,string>();
 
   constructor() {
     this.mapColors.set(RarityItem.RARE,"#4c9646");
@@ -15,7 +15,7 @@ export class ColorRarityService {
     this.mapColors.set(RarityItem.EPIQUE,"#eebcd7");
   }
 
-  public getMapColors(): Map<RarityItem, String> {
+  public getMapColors(): Map<RarityItem, string> {
     return this.mapColors;
   }
 }

@@ -1,13 +1,16 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <ng-container *ngIf="{item: $item | async} as value">
     <ng-container *ngIf="value.item">
         <div class="itemPresent" [style.backgroundColor]="colorRarityService.getMapColors().get(value.item.rarity)">
             <img (click)="itemChooseService.deleteItem(itemType(), indexItem())" [src]="'items/' + value.item.idImage + '.png'"
                 (mouseenter)="openTooltip($event, value.item)" 
                 (mouseleave)="tooltipService.closeTooltip()"
+                alt="items"
             >
         </div>
     </ng-container>
     <ng-container *ngIf="!value.item">
-        <img class="noItem" [src]="backgroundItemType()"(mouseenter)="tooltipService.closeTooltip()" (click)="itemTypeFormServices.setOnlyOneItemType(itemType())" >
+        <img class="noItem" [src]="backgroundItemType()"(mouseenter)="tooltipService.closeTooltip()" (click)="itemTypeFormServices.setOnlyOneItemType(itemType())" alt="noItem" >
     </ng-container>
 </ng-container>

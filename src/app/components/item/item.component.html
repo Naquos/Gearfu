@@ -1,19 +1,21 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <ng-container *ngIf="item">
     <div class="header">
-        <span><img [src]="'aptitudes/1068.png'">Maitrises {{Math.trunc(maitrises)}}</span>
-        <span><img [src]="'aptitudes/1069.png'">Résistances {{resistances}}</span>
-        <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png"></span>
+        <span><img [src]="'aptitudes/1068.png'" alt="Maitrises">Maitrises {{Math.trunc(maitrises)}}</span>
+        <span><img [src]="'aptitudes/1069.png'" alt="Résistances">Résistances {{resistances}}</span>
+        <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
     </div>
     <div class="content" (click)="setItemChoosen()">
         <div class="title">
             <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{item.title}} ({{item.level}})</h3>
-            <img [src]="'items/' + item.idImage + '.png'">
-            <div class="poids"><img [src]="'aptitudes/poids.png'">Poids {{getPoids()}}</div>
+            <img [src]="'items/' + item.idImage + '.png'" alt="items">
+            <div class="poids"><img [src]="'aptitudes/poids.png'" alt="poids">Poids {{getPoids()}}</div>
         </div>
         <div>
             <p *ngFor="let effect of item.equipEffects">
                 <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT">
-                    <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'">  {{ displayEffect(effect) }}
+                    <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'" alt="aptitudes">  {{ displayEffect(effect) }}
                 </ng-container>
             </p>
         </div>

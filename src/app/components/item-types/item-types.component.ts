@@ -1,10 +1,8 @@
-import { Component, output } from '@angular/core';
+import { Component } from '@angular/core';
 import { ItemType } from '../../models/itemType';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ItemTypeServices } from '../../services/ItemTypesServices';
+import { ReactiveFormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
-import { ItemTypeEnum } from '../../models/itemTypeEnum';
 import { ItemTypeFormServices } from '../../services/itemTypeFormServices';
 
 @Component({
@@ -14,7 +12,7 @@ import { ItemTypeFormServices } from '../../services/itemTypeFormServices';
   styleUrl: './item-types.component.scss'
 })
 export class ItemTypesComponent {
-  protected itemTypes:Map<String, ItemType> = new Map([]);
+  protected itemTypes = new Map<string, ItemType>([]);
 
   constructor(protected itemTypeFormServices: ItemTypeFormServices) {
   }

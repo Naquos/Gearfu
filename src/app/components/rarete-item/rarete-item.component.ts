@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";

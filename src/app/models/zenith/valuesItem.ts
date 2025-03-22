@@ -12,6 +12,6 @@ export interface ValuesItem {
     base: null,
     evolution: null,
     random_number: number,
-    statistics: {},
+    statistics: object,
     elements: Elements[]
 }

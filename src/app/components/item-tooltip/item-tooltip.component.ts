@@ -138,7 +138,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     
     equippedItem.equipEffects.forEach(equipEffect => {
       let differentsStatsItem = this.mapDifferentStatsItem.get(equipEffect.actionId);
-      let opposedStatsItem = this.item.equipEffects.find(x => this.actionsService.isOpposed(x, equipEffect));
+      const opposedStatsItem = this.item.equipEffects.find(x => this.actionsService.isOpposed(x, equipEffect));
       if(opposedStatsItem) {
         const tempParams = [...equipEffect.params];
         tempParams[0] = opposedStatsItem.params[0] + tempParams[0];

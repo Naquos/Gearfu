@@ -3,6 +3,7 @@ import { ComponentRef, Injectable, ViewContainerRef } from "@angular/core";
 import { ComponentPortal, ComponentType } from "@angular/cdk/portal";
 
 @Injectable({providedIn: 'root'})
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class TooltipService<T extends Record<string, any>> {
     
     private overlayRefs: OverlayRef[] = [];
@@ -15,6 +16,7 @@ export class TooltipService<T extends Record<string, any>> {
         this.overlayRefs = [];
       }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     openTooltip(viewContainerRef: ViewContainerRef, component: ComponentType<T>, event: MouseEvent, value: Record<string, any>, connectedPostion?: ConnectedPosition[], withPush = true): OverlayRef {
       let position = connectedPostion;
       if(!position) {

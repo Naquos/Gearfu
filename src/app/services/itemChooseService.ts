@@ -1,15 +1,15 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ItemTypeEnum } from "../models/itemTypeEnum";
-import { BehaviorSubject, combineLatest, delay, EMPTY, filter, first, iif, map, NEVER, Observable, of, switchMap, take, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, delay, filter, first, iif, map, Observable, of, switchMap, take, tap } from "rxjs";
 import { Item } from "../models/item";
 import { ItemTypeServices } from "./ItemTypesServices";
 import { RarityItem } from "../models/rarityItem";
-import { ActivatedRoute, Params, Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ItemsService } from "./itemsService";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService {
-    private mapItem:Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>> = new Map();
+    private mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>();
     private idItems = new BehaviorSubject<string>("");
     public idItems$ = this.idItems.asObservable();
     private indexAnneau = 0;
