@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import itemsJson from "../../../public/items.json";
 import { Item } from "../models/item";
 import { MaitrisesServices } from "./maitrisesService";
-import { BehaviorSubject, combineLatest, first, map, Observable, of, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, first, map, Observable, of, tap, withLatestFrom } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../models/sortChoiceEnum";
 import { IdActionsEnum } from "../models/idActionsEnum";
 import { ItemTypeFormServices } from "./itemTypeFormServices";
@@ -10,6 +10,8 @@ import { ItemTypeEnum } from "../models/itemTypeEnum";
 import { MajorAction } from "../models/majorActions";
 import { RecipeResultsService } from "./recipeResultsService";
 import { CraftableChoiceEnum } from "../models/craftableChoiceEnum";
+import { MonsterDropsService } from "./monsterDropsService";
+import { ParameterMajorActionEnum } from "../models/parameterMajorActionEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -66,21 +68,29 @@ export class ItemsService {
     .pipe(map(([items, idMajor]) => items.filter(x => this.majorIsPresent(idMajor, x))));
 
     protected itemsFilterCraftable$ = combineLatest([this.itemsFilterByMajor$, this.craftable$]).pipe(
-      map(([items, craftable]) => craftable === CraftableChoiceEnum.CRAFT_DROP ? items :  items.filter(x => x.craftable === (craftable === CraftableChoiceEnum.CRAFT)))
+      map(([items, craftable]) => {
+        if(craftable === CraftableChoiceEnum.CRAFT_DROP) {
+          return items;
+        } else if(craftable === CraftableChoiceEnum.CRAFT) {
+          return items.filter(x => x.craftable);
+        } 
+        return items.filter(x => x.dropable);
+      })
     );
 
     protected itemsFilterByItemType$: Observable<Item[]>;
 
     constructor(protected maitrisesService : MaitrisesServices,
                 private itemTypeFormServices: ItemTypeFormServices,
-                private recipeResultsService: RecipeResultsService
+                private recipeResultsService: RecipeResultsService,
+                private monsterDropService: MonsterDropsService
     ) {
         this.initItemsList();
 
         
         this.items = this.items.filter(x => ![480,812].includes(x.itemTypeId))
 
-        this.fillItemCraftableOrNot().pipe(first()).subscribe(items => this.fullItems$.next(items));
+        this.fillItemCraftableDropableOrNot().pipe(first()).subscribe(items => this.fullItems$.next(items));
 
         this.itemsFilterByItemType$ = combineLatest([this.itemsFilterCraftable$, this.itemTypeFormServices.selected$])
           .pipe(map(([items, itemTypeIds]) => items.filter(x => itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))));
@@ -98,7 +108,7 @@ export class ItemsService {
           map(items => items.sort((itemA, itemB) => itemB.weightForSort - itemA.weightForSort).slice(0,32)))
     }
 
-    private fillItemCraftableOrNot(): Observable<Item[]> {
+    private fillItemCraftableDropableOrNot(): Observable<Item[]> {
 
       return this.recipeResultsService.recipeResults$.pipe(
         map(recipeResults => {
@@ -112,13 +122,27 @@ export class ItemsService {
 
             if(!item.craftable) {
               const itemWithLessRarity = this.items.find(x => x.title.trim() === item.title.trim() && x.rarity < item.rarity);
-              if(itemWithLessRarity === undefined && recipeResults.find(x => x.productedItemId === item.id)) {
+              if(!itemWithLessRarity && recipeResults.find(x => x.productedItemId === item.id)) {
                 this.items.filter(x => x.title.trim() === item.title.trim()).forEach(x => x.craftable = true);
               }
             }
           })
 
           return this.items;
+        }),
+        withLatestFrom(this.monsterDropService.monsterDrops$),
+        map(([, monsterDrops]) => {
+
+          this.items.forEach(item => {
+            if(!item.dropable) {
+              const itemWithLessRarity = this.items.find(x => x.title.trim() === item.title.trim() && x.rarity < item.rarity);
+              if(!itemWithLessRarity && monsterDrops.find(x => x.drops.find(drop => drop.itemId === item.id))) {
+                this.items.filter(x => x.title.trim() === item.title.trim()).forEach(x => x.dropable = true);
+              }
+            }
+          })
+
+          return this.items
         })
       )
     }
@@ -140,15 +164,23 @@ export class ItemsService {
 
 
       items.forEach(item => {
+        item.weightForSort = 0;
         if(sort === SortChoiceEnum.POIDS) {
           item.weightForSort = 1.2 * this.calculResistancesForAnItem(item) + this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
         } else if (sort === SortChoiceEnum.MAITRISES) {
           item.weightForSort = this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
         } else if (sort === SortChoiceEnum.EQUILIBRE) {
-          item.weightForSort = (this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem) / maxMaistrises);
+          item.weightForSort = 1.2 * (this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem) / maxMaistrises);
           item.weightForSort += (this.calculResistancesForAnItem(item) / maxResistances);
-        }
-         else {
+        } else if (sort === SortChoiceEnum.PARADE_ARMURE_DONNEE) {
+          item.equipEffects.forEach(effect => {
+            if(effect.actionId === IdActionsEnum.PARADE ||
+              effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE
+            ) {
+              item.weightForSort += effect.params[0]
+            }
+          })
+        } else {
           item.weightForSort = this.calculResistancesForAnItem(item);
         }
       })
@@ -170,7 +202,8 @@ export class ItemsService {
             title: x.title.fr,
             idImage: x.definition.item.graphicParameters.gfxId,
             weightForSort: 0,
-            craftable: false
+            craftable: false,
+            dropable: false
         }));
     }
     

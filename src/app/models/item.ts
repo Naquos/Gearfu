@@ -9,5 +9,6 @@ export interface Item {
     title: string;
     idImage: number;
     weightForSort: number;
-    craftable: boolean
+    craftable: boolean;
+    dropable: boolean;
 }

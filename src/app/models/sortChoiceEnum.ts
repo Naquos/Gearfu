@@ -3,4 +3,5 @@ export enum SortChoiceEnum {
     MAITRISES = "Maîtrises",
     RESISTANCES = "Résistances",
     EQUILIBRE = "Equilibrés",
+    PARADE_ARMURE_DONNEE = "Parade + Armure données"
 }
