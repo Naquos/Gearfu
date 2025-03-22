@@ -8,9 +8,7 @@ import { IdActionsEnum } from "../models/idActionsEnum";
 import { ItemTypeFormServices } from "./itemTypeFormServices";
 import { ItemTypeEnum } from "../models/itemTypeEnum";
 import { MajorAction } from "../models/majorActions";
-import { RecipeResultsService } from "./recipeResultsService";
 import { CraftableChoiceEnum } from "../models/craftableChoiceEnum";
-import { MonsterDropsService } from "./monsterDropsService";
 import { ParameterMajorActionEnum } from "../models/parameterMajorActionEnum";
 
 @Injectable({providedIn: 'root'})
@@ -81,16 +79,13 @@ export class ItemsService {
     protected itemsFilterByItemType$: Observable<Item[]>;
 
     constructor(protected maitrisesService : MaitrisesServices,
-                private itemTypeFormServices: ItemTypeFormServices,
-                private recipeResultsService: RecipeResultsService,
-                private monsterDropService: MonsterDropsService
+                private itemTypeFormServices: ItemTypeFormServices
     ) {
         this.initItemsList();
 
         
         this.items = this.items.filter(x => ![480,812].includes(x.itemTypeId))
-
-        this.fillItemCraftableDropableOrNot().pipe(first()).subscribe(items => this.fullItems$.next(items));
+        this.fullItems$.next(this.items);
 
         this.itemsFilterByItemType$ = combineLatest([this.itemsFilterCraftable$, this.itemTypeFormServices.selected$])
           .pipe(map(([items, itemTypeIds]) => items.filter(x => itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))));
@@ -106,45 +101,6 @@ export class ItemsService {
           tap(([items,nbElements, idMaitrises, sort, multiplicateurElem]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem)),
           map(([items,]) => items),
           map(items => items.sort((itemA, itemB) => itemB.weightForSort - itemA.weightForSort).slice(0,32)))
-    }
-
-    private fillItemCraftableDropableOrNot(): Observable<Item[]> {
-
-      return this.recipeResultsService.recipeResults$.pipe(
-        map(recipeResults => {
-
-          this.items.forEach(item => {
-            // Si l'item n'est pas "flag" comme craftable
-            // Alors s'il n'existe pas de variante de cet item avec une rareté plus faible
-            // On vérifie si cet item est craftable
-            // ==> Si oui, on flag cet item + ses versions ayant une plus grosse rareté comme étant craftable
-            // ==> Sinon on ne fait rien
-
-            if(!item.craftable) {
-              const itemWithLessRarity = this.items.find(x => x.title.trim() === item.title.trim() && x.rarity < item.rarity);
-              if(!itemWithLessRarity && recipeResults.find(x => x.productedItemId === item.id)) {
-                this.items.filter(x => x.title.trim() === item.title.trim()).forEach(x => x.craftable = true);
-              }
-            }
-          })
-
-          return this.items;
-        }),
-        withLatestFrom(this.monsterDropService.monsterDrops$),
-        map(([, monsterDrops]) => {
-
-          this.items.forEach(item => {
-            if(!item.dropable) {
-              const itemWithLessRarity = this.items.find(x => x.title.trim() === item.title.trim() && x.rarity < item.rarity);
-              if(!itemWithLessRarity && monsterDrops.find(x => x.drops.find(drop => drop.itemId === item.id))) {
-                this.items.filter(x => x.title.trim() === item.title.trim()).forEach(x => x.dropable = true);
-              }
-            }
-          })
-
-          return this.items
-        })
-      )
     }
 
     private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number): void {
@@ -170,8 +126,8 @@ export class ItemsService {
         } else if (sort === SortChoiceEnum.MAITRISES) {
           item.weightForSort = this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
         } else if (sort === SortChoiceEnum.EQUILIBRE) {
-          item.weightForSort = 1.2 * (this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem) / maxMaistrises);
-          item.weightForSort += (this.calculResistancesForAnItem(item) / maxResistances);
+          item.weightForSort =  (this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem) / maxMaistrises);
+          item.weightForSort += 1.2 * (this.calculResistancesForAnItem(item) / maxResistances);
         } else if (sort === SortChoiceEnum.PARADE_ARMURE_DONNEE) {
           item.equipEffects.forEach(effect => {
             if(effect.actionId === IdActionsEnum.PARADE ||
@@ -202,8 +158,8 @@ export class ItemsService {
             title: x.title.fr,
             idImage: x.definition.item.graphicParameters.gfxId,
             weightForSort: 0,
-            craftable: false,
-            dropable: false
+            craftable: x.definition.item.craftable,
+            dropable: x.definition.item.dropable
         }));
     }
     
