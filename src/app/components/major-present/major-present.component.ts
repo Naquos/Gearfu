@@ -23,6 +23,8 @@ export class MajorPresentComponent {
     ARMURE_RECUE: new FormControl(),
     CRITIQUE: new FormControl(),
     PARADE: new FormControl(),
+    RESISTANCE_DOS: new FormControl(),
+    RESISTANCE_CRITIQUE: new FormControl()
   });
 
   constructor(private itemService: ItemsService) {
@@ -36,6 +38,8 @@ export class MajorPresentComponent {
       if(x.ARMURE_RECUE) {result.push({id:IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_RECUE})}
       if(x.CRITIQUE) {result.push({id:IdActionsEnum.COUP_CRITIQUE})}
       if(x.PARADE) {result.push({id:IdActionsEnum.PARADE})}
+      if(x.RESISTANCE_DOS) {result.push({id:IdActionsEnum.RESISTANCES_DOS})}
+      if(x.RESISTANCE_CRITIQUE) {result.push({id:IdActionsEnum.RESISTANCES_CRITIQUES})}
       this.itemService.setIdMajor(result);
     })
   }
