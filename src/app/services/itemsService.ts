@@ -2,12 +2,14 @@ import { Injectable } from "@angular/core";
 import itemsJson from "../../../public/items.json";
 import { Item } from "../models/item";
 import { MaitrisesServices } from "./maitrisesService";
-import { BehaviorSubject, combineLatest, map, merge, Observable, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, first, map, Observable, of, tap } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../models/sortChoiceEnum";
 import { IdActionsEnum } from "../models/idActionsEnum";
 import { ItemTypeFormServices } from "./itemTypeFormServices";
 import { ItemTypeEnum } from "../models/itemTypeEnum";
 import { MajorAction } from "../models/majorActions";
+import { RecipeResultsService } from "./recipeResultsService";
+import { CraftableChoiceEnum } from "../models/craftableChoiceEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -41,11 +43,10 @@ export class ItemsService {
     private levelMax = new BehaviorSubject<number>(245);
     public levelMax$ = this.levelMax.asObservable();
 
-    protected itemsFilterByUseless$ = this.fullItems$.pipe(
-      map(items => items.filter(x => ![480,812].includes(x.itemTypeId)))
-    )
+    private craftable = new BehaviorSubject<CraftableChoiceEnum>(CraftableChoiceEnum.CRAFT_DROP);
+    public craftable$ = this.craftable.asObservable();
 
-    protected itemsFilterByLevelMin$ = combineLatest([this.itemsFilterByUseless$, this.levelMin$])
+    protected itemsFilterByLevelMin$ = combineLatest([this.fullItems$, this.levelMin$])
     .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeEnum.FAMILIER)));
 
     protected itemsFilterByLevelMax$ = combineLatest([this.itemsFilterByLevelMin$, this.levelMax$])
@@ -64,15 +65,24 @@ export class ItemsService {
     protected itemsFilterByMajor$ = combineLatest([this.itemsFilterByOnlyNoSecondary$, this.idMajor$])
     .pipe(map(([items, idMajor]) => items.filter(x => this.majorIsPresent(idMajor, x))));
 
+    protected itemsFilterCraftable$ = combineLatest([this.itemsFilterByMajor$, this.craftable$]).pipe(
+      map(([items, craftable]) => craftable === CraftableChoiceEnum.CRAFT_DROP ? items :  items.filter(x => x.craftable === (craftable === CraftableChoiceEnum.CRAFT)))
+    );
+
     protected itemsFilterByItemType$: Observable<Item[]>;
 
     constructor(protected maitrisesService : MaitrisesServices,
-                private itemTypeFormServices: ItemTypeFormServices
+                private itemTypeFormServices: ItemTypeFormServices,
+                private recipeResultsService: RecipeResultsService
     ) {
         this.initItemsList();
-        this.fullItems$.next(this.items)
 
-        this.itemsFilterByItemType$ = combineLatest([this.itemsFilterByMajor$, this.itemTypeFormServices.selected$])
+        
+        this.items = this.items.filter(x => ![480,812].includes(x.itemTypeId))
+
+        this.fillItemCraftableOrNot().pipe(first()).subscribe(items => this.fullItems$.next(items));
+
+        this.itemsFilterByItemType$ = combineLatest([this.itemsFilterCraftable$, this.itemTypeFormServices.selected$])
           .pipe(map(([items, itemTypeIds]) => items.filter(x => itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))));
 
         this.items$ = combineLatest([
@@ -86,6 +96,31 @@ export class ItemsService {
           tap(([items,nbElements, idMaitrises, sort, multiplicateurElem]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem)),
           map(([items,]) => items),
           map(items => items.sort((itemA, itemB) => itemB.weightForSort - itemA.weightForSort).slice(0,32)))
+    }
+
+    private fillItemCraftableOrNot(): Observable<Item[]> {
+
+      return this.recipeResultsService.recipeResults$.pipe(
+        map(recipeResults => {
+
+          this.items.forEach(item => {
+            // Si l'item n'est pas "flag" comme craftable
+            // Alors s'il n'existe pas de variante de cet item avec une rareté plus faible
+            // On vérifie si cet item est craftable
+            // ==> Si oui, on flag cet item + ses versions ayant une plus grosse rareté comme étant craftable
+            // ==> Sinon on ne fait rien
+
+            if(!item.craftable) {
+              const itemWithLessRarity = this.items.find(x => x.title.trim() === item.title.trim() && x.rarity < item.rarity);
+              if(itemWithLessRarity === undefined && recipeResults.find(x => x.productedItemId === item.id)) {
+                this.items.filter(x => x.title.trim() === item.title.trim()).forEach(x => x.craftable = true);
+              }
+            }
+          })
+
+          return this.items;
+        })
+      )
     }
 
     private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number): void {
@@ -134,12 +169,13 @@ export class ItemsService {
             }),
             title: x.title.fr,
             idImage: x.definition.item.graphicParameters.gfxId,
-            weightForSort: 0
+            weightForSort: 0,
+            craftable: false
         }));
     }
     
     public searchItem(idItem : number): Observable<Item | undefined> {
-      return this.itemsFilterByUseless$.pipe(map(x => x.find(x => x.id === idItem)));
+      return this.fullItems$.pipe(map(x => x.find(x => x.id === idItem)));
     }
 
     public setItemName(value: string): void {
@@ -160,6 +196,10 @@ export class ItemsService {
 
     public setSort(value: SortChoiceEnum): void {
       this.sort.next(value);
+    }
+
+    public setCraftable(value: CraftableChoiceEnum): void {
+      this.craftable.next(value);
     }
 
     public setRarity(value: number[]): void {

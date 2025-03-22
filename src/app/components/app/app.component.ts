@@ -10,16 +10,16 @@ import { MajorPresentComponent } from "../major-present/major-present.component"
 import { ModifierElemMaitrisesComponent } from "../modifier-elem-maitrises/modifier-elem-maitrises.component";
 import { SearchItemNameComponent } from "../search-item-name/search-item-name.component";
 import { ItemChooseComponent } from "../item-choose/item-choose.component";
+import { CraftableChoiceComponent } from "../craftable-choice/craftable-choice.component";
 
 @Component({
   selector: 'app-root',
-  imports: [ItemListComponent, ItemTypesComponent, ItemLevelComponent, RareteItemComponent, FilterMaitrisesComponent, SortChoiceComponent, OnlyNoSecondaryComponent, MajorPresentComponent, ModifierElemMaitrisesComponent, SearchItemNameComponent, ItemChooseComponent],
+  imports: [ItemListComponent, ItemTypesComponent, ItemLevelComponent, RareteItemComponent, FilterMaitrisesComponent, SortChoiceComponent, OnlyNoSecondaryComponent, MajorPresentComponent, ModifierElemMaitrisesComponent, SearchItemNameComponent, ItemChooseComponent, CraftableChoiceComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   protected openDiscord(): void {
-    console.log("toto")
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
   }
 }
