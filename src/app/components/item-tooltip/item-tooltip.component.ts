@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { DifferentStatsItem } from '../../models/differentsStatsItem';
 import { combineLatest, filter, map, Observable, takeUntil, tap } from 'rxjs';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
+import { StatesService } from '../../services/statesService';
 
 @Component({
   selector: 'app-item-tooltip',
@@ -51,8 +52,9 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
         protected _itemChooseService: ItemChooseService,
         protected _itemTypeService: ItemTypeServices,
         protected cdr: ChangeDetectorRef,
+        protected _statesService: StatesService
       ) {
-        super(_itemTypeService, _itemChooseService, _actionsService);
+        super(_itemTypeService, _itemChooseService, _actionsService, _statesService);
       }
 
       

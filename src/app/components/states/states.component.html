@@ -1,0 +1,6 @@
+<div class="header">
+    <span>{{nameStates}}</span>
+</div>
+<div *ngIf="{definition: definition() | async} as value">
+    {{value.definition}}
+</div>

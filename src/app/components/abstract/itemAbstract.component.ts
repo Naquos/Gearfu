@@ -9,6 +9,7 @@ import { DifferentStatsItem } from "../../models/differentsStatsItem";
 import { ActionService } from "../../services/actionService";
 import { Component, OnDestroy } from "@angular/core";
 import { ParameterMajorActionEnum } from "../../models/parameterMajorActionEnum";
+import { StatesService } from "../../services/statesService";
 
 @Component({
   selector: 'app-item',
@@ -29,7 +30,8 @@ export abstract class ItemAbstractComponent implements OnDestroy {
     constructor(
         protected itemTypeService: ItemTypeServices,
         protected itemChooseService: ItemChooseService,
-        protected actionsService: ActionService
+        protected actionsService: ActionService,
+        protected statesService: StatesService
     ) {
         this.initMapSortAction();
     }

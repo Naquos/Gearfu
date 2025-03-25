@@ -17,6 +17,14 @@
                 <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT">
                     <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'" alt="aptitudes">  {{ displayEffect(effect) }}
                 </ng-container>
+                <ng-container *ngIf="effect.actionId === IdActionEnum.APPLIQUE_ETAT">
+                    <span class="appliqueEtat" *ngIf="{states: statesService.findStates(effect.params[0]) | async } as value"
+                        (mouseenter)="openStatesTooltip($event, value.states?.id ?? 0, value.states?.fr ?? '')"
+                        (mouseleave)="stateTooltipService.closeTooltip()"
+                    >
+                        {{ value.states?.fr }}
+                    </span>
+                </ng-container>
             </p>
         </div>
     </div>

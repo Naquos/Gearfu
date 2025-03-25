@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { TooltipService } from '../../services/TooltipService';
 import { ItemsTooltipComponent } from '../items-tooltip/items-tooltip.component';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
+import { StatesService } from '../../services/statesService';
+import { StatesComponent } from '../states/states.component';
 
 @Component({
   selector: 'app-item',
@@ -35,9 +37,11 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     protected _itemChooseService: ItemChooseService,
     protected _itemTypeService: ItemTypeServices,
     protected tooltipService: TooltipService<{itemsChoosen: Item[], item: Item}>,
+    protected stateTooltipService: TooltipService<{statesDefinitionId: number, nameStates: string}>,
     protected cdr: ChangeDetectorRef,
+    protected _statesService: StatesService
   ) {
-    super(_itemTypeService, _itemChooseService, _actionsService);
+    super(_itemTypeService, _itemChooseService, _actionsService, _statesService);
   }
 
   protected setItemChoosen() : void {
@@ -82,5 +86,16 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
 
   protected openEncyclopedie(itemId: number): void {
     window.open('https://www.wakfu.com/fr/mmorpg/encyclopedie/armures/' + itemId);
+  }
+
+  protected openStatesTooltip(event: MouseEvent, statesDefinitionId: number, nameStates: string): void {
+    this.stateTooltipService.closeTooltip();
+    this.stateTooltipService.openTooltip(this.viewContainerRef, StatesComponent, event, {statesDefinitionId, nameStates},
+      [{ 
+        originX: 'center', originY: 'top',
+        overlayX: 'center', overlayY: 'top',
+        offsetY: 20, offsetX: 0
+      }]
+    )
   }
 }
