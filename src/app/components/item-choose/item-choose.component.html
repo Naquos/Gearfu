@@ -2,11 +2,12 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="content">
     <span matTooltip="Poids = Maitrises + 1.2*Résistances" class="infobulle">i</span>
-    <img matTooltip="Zénith Wakfu" src="./zenith-logo.webp" (click)="generateBuild()" alt="zenith">
+    <img matTooltip="Zénith Wakfu" src="./zenith-logo.webp" (click)="generateBuild()" alt="zenith" id="zenithButton">
     <mat-icon aria-hidden="false" fontIcon="gavel" 
         matTooltip="Craftku"
         [matTooltipShowDelay]="300" 
-        (click)="navigateToCraftku()">
+        (click)="navigateToCraftku()"
+        id="craftkuButton">
     </mat-icon>
     <mat-icon aria-hidden="false" fontIcon="file_copy" 
         matTooltip="Copier l'URL"
