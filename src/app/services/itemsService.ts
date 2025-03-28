@@ -239,7 +239,7 @@ export class ItemsService {
 
     item.equipEffects.forEach(effect => {
       if(effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES ||
-         (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements)) {
+        (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements)) {
         result += effect.params[0] * multiplicateurElem;
       } else if (idMaitrisesWithoutElem.includes(effect.actionId)) {
         result += effect.params[0];
@@ -249,12 +249,12 @@ export class ItemsService {
                 (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DOS && idMaitrises.includes(IdActionsEnum.MAITRISES_DOS)) ||
                 (effect.actionId === IdActionsEnum.PERTE_MAITRISES_MELEE && idMaitrises.includes(IdActionsEnum.MAITRISES_MELEE)) ||
                 (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DISTANCE && idMaitrises.includes(IdActionsEnum.MAITRISES_DISTANCES)) ||
-                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_BERZERK && idMaitrises.includes(IdActionsEnum.MAITRISES_BERZERK)) ) {
+                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_BERZERK && idMaitrises.includes(IdActionsEnum.MAITRISES_BERZERK))) {
         result -= effect.params[0];
       }
     })
 
-    const effectMaitrises = item.equipEffects.find(x => maitrisesIdElems.includes(x.actionId) && idMaitrises.includes(x.actionId)); 
+    const effectMaitrises = item.equipEffects.find(x => maitrisesIdElems.includes(x.actionId) && (nbElements === 0 || idMaitrises.includes(x.actionId))); 
     if(effectMaitrises) {
       result += effectMaitrises.params[0] * multiplicateurElem;
     }
