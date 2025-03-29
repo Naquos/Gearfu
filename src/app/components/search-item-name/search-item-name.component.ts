@@ -3,10 +3,11 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ItemsService } from '../../services/itemsService';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search-item-name',
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './search-item-name.component.html',
   styleUrl: './search-item-name.component.scss'
 })

@@ -14,22 +14,24 @@ import { ItemsTooltipComponent } from '../items-tooltip/items-tooltip.component'
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
 import { StatesService } from '../../services/statesService';
 import { StatesComponent } from '../states/states.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { States } from '../../models/states';
 
 @Component({
   selector: 'app-item',
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, TranslateModule],
   templateUrl: './item.component.html',
   styleUrl: './item.component.scss'
 })
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
   
   @Input()
-  public item!: Item;
-  
+  public item!: Item;  
 
   constructor(
     private viewContainerRef: ViewContainerRef,
     private el: ElementRef,
+    protected _translateService: TranslateService,
     protected _actionsService : ActionService,
     protected maitrisesService : MaitrisesServices,
     protected itemService : ItemsService,
@@ -41,7 +43,7 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     protected cdr: ChangeDetectorRef,
     protected _statesService: StatesService
   ) {
-    super(_itemTypeService, _itemChooseService, _actionsService, _statesService);
+    super(_translateService, _itemTypeService, _itemChooseService, _actionsService, _statesService);
   }
 
   protected setItemChoosen() : void {
@@ -86,6 +88,17 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
 
   protected openEncyclopedie(itemId: number): void {
     window.open('https://www.wakfu.com/fr/mmorpg/encyclopedie/armures/' + itemId);
+  }
+
+  protected getStatesTranslate(state?: States | null): string {
+    if(!state) { return ""}
+    const lang = this.translateService.currentLang;
+    const result = state[lang as keyof typeof state];
+    return result.toString() ?? "";
+  }
+
+  protected getTitle(): string {
+    return this.item.title[this.translateService.currentLang as keyof typeof this.item.title];
   }
 
   protected openStatesTooltip(event: MouseEvent, statesDefinitionId: number, nameStates: string): void {

@@ -6,10 +6,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from '../button-checkbox/button-checkbox.component';
 import { MajorAction } from '../../models/majorActions';
 import { ParameterMajorActionEnum } from '../../models/parameterMajorActionEnum';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-major-present',
-  imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent],
+  imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
   templateUrl: './major-present.component.html',
   styleUrl: './major-present.component.scss'
 })

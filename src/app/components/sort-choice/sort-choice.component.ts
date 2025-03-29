@@ -5,10 +5,11 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { filter } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sort-choice',
-  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './sort-choice.component.html',
   styleUrl: './sort-choice.component.scss'
 })

@@ -1,4 +1,9 @@
 export interface StatesDefiniton {
     id: number,
-    description: string
+    description: {
+        fr: string;
+        en: string;
+        es: string;
+        pt: string;
+    }
 }

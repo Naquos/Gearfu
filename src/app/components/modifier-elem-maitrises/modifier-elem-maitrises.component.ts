@@ -4,11 +4,12 @@ import { ItemsService } from '../../services/itemsService';
 import { ElemMaitrisesMecanismEnum } from '../../models/elemMaitrisesMecanismEnum';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-modifier-elem-maitrises',
-  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './modifier-elem-maitrises.component.html',
   styleUrl: './modifier-elem-maitrises.component.scss'
 })

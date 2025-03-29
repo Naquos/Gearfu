@@ -10,6 +10,7 @@ import { ItemTypeEnum } from "../models/itemTypeEnum";
 import { MajorAction } from "../models/majorActions";
 import { CraftableChoiceEnum } from "../models/craftableChoiceEnum";
 import { ParameterMajorActionEnum } from "../models/parameterMajorActionEnum";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -56,7 +57,7 @@ export class ItemsService {
     .pipe(map(([items, rarity]) => items.filter(x => rarity.length === 0 || rarity.includes(x.rarity))));
 
     protected itemsFilterByItemName$ = combineLatest([this.itemsFilterByRarity$, this.itemName$])
-    .pipe(map(([items, itemName]) => items.filter(x => x.title.toUpperCase().includes(itemName.toUpperCase()))));
+    .pipe(map(([items, itemName]) => items.filter(x => x.title[this.translateService.currentLang as keyof typeof x.title].toString().toUpperCase().includes(itemName.toUpperCase()))));
 
     protected itemsFilterByOnlyNoSecondary$ = combineLatest([this.itemsFilterByItemName$, this.onlyNoSecondary$])
     .pipe(map(([items, onlyNoSecondary]) => items.filter(x => !onlyNoSecondary || 
@@ -79,7 +80,8 @@ export class ItemsService {
     protected itemsFilterByItemType$: Observable<Item[]>;
 
     constructor(protected maitrisesService : MaitrisesServices,
-                private itemTypeFormServices: ItemTypeFormServices
+                private itemTypeFormServices: ItemTypeFormServices,
+                private translateService: TranslateService
     ) {
         this.initItemsList();
 
@@ -157,7 +159,12 @@ export class ItemsService {
                     params: equipEffect.effect.definition.params as number[]
                 };
             }),
-            title: x.title.fr,
+            title: {
+              fr: x.title.fr,
+              en: x.title.en,
+              es: x.title.es,
+              pt: x.title.pt
+            },
             idImage: x.definition.item.graphicParameters.gfxId,
             weightForSort: 0,
             craftable: x.definition.item.craftable,
@@ -254,7 +261,7 @@ export class ItemsService {
       }
     })
 
-    const effectMaitrises = item.equipEffects.find(x => maitrisesIdElems.includes(x.actionId) && (nbElements === 0 || idMaitrises.includes(x.actionId))); 
+    const effectMaitrises = item.equipEffects.find(x => maitrisesIdElems.includes(x.actionId) && (nbElements === 0 || (nbElements === 1 && idMaitrises.includes(x.actionId)))); 
     if(effectMaitrises) {
       result += effectMaitrises.params[0] * multiplicateurElem;
     }

@@ -10,6 +10,7 @@ import { ItemTypeEnum } from "../models/itemTypeEnum";
 import { EquipEffects } from "../models/equipEffects";
 import { EffectItems } from "../models/zenith/effectItems";
 import { IdActionsEnum } from "../models/idActionsEnum";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable({providedIn: 'root'})
 export class ZenithService {
@@ -19,7 +20,8 @@ export class ZenithService {
     constructor(private zenithApiService: ZenithApiService,
         private itemChooseService: ItemChooseService,
         private itemsService: ItemsService,
-        private itemTypeServices: ItemTypeServices
+        private itemTypeServices: ItemTypeServices,
+        private translateService: TranslateService
     ) {}
 
 
@@ -78,7 +80,7 @@ export class ZenithService {
                 wp_cost: 0,
                 min_range: 0,
                 max_range: 0,
-                name_equipment: item.title,
+                name_equipment: item.title[this.translateService.currentLang as keyof typeof item.title],
                 line_of_sight: 0,
                 name_equipment_type: "",
                 image_equipment_type: "",

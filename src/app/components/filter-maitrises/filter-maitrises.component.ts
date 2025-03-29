@@ -4,10 +4,11 @@ import { MaitrisesServices } from '../../services/maitrisesService';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 import { IdActionsEnum } from '../../models/idActionsEnum';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-filter-maitrises',
-  imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent],
+  imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
   templateUrl: './filter-maitrises.component.html',
   styleUrl: './filter-maitrises.component.scss'
 })

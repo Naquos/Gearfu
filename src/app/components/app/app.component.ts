@@ -11,15 +11,43 @@ import { ModifierElemMaitrisesComponent } from "../modifier-elem-maitrises/modif
 import { SearchItemNameComponent } from "../search-item-name/search-item-name.component";
 import { ItemChooseComponent } from "../item-choose/item-choose.component";
 import { CraftableChoiceComponent } from "../craftable-choice/craftable-choice.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
-  imports: [ItemListComponent, ItemTypesComponent, ItemLevelComponent, RareteItemComponent, FilterMaitrisesComponent, SortChoiceComponent, OnlyNoSecondaryComponent, MajorPresentComponent, ModifierElemMaitrisesComponent, SearchItemNameComponent, ItemChooseComponent, CraftableChoiceComponent],
+  imports: [
+    MatMenuModule,
+    MatButtonModule,
+    ItemListComponent,
+    ItemTypesComponent,
+    ItemLevelComponent,
+    RareteItemComponent,
+    FilterMaitrisesComponent,
+    SortChoiceComponent,
+    OnlyNoSecondaryComponent,
+    MajorPresentComponent,
+    ModifierElemMaitrisesComponent, 
+    SearchItemNameComponent, 
+    ItemChooseComponent, 
+    CraftableChoiceComponent,
+    TranslateModule
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   protected openDiscord(): void {
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
+  }
+  constructor(protected translate: TranslateService) {
+    this.translate.addLangs(['fr','en', 'es', 'pt']);
+    this.translate.setDefaultLang('en');
+    this.translate.use(navigator.language.split("-")[0] ?? "en");
+  }
+
+  protected setLang(value: string): void {
+    this.translate.use(value);
   }
 }

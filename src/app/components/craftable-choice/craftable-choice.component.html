@@ -3,7 +3,7 @@
 <mat-form-field>
     <mat-select [formControl]="form">
         @for (craftable of craftableChoiceEnumList; track craftable) {
-        <mat-option [value]="craftable">{{craftable.valueOf()}}</mat-option>
+        <mat-option [value]="craftable">{{("craftable-choice-enum." + craftable.valueOf()) | translate}}</mat-option>
         }
     </mat-select>
 </mat-form-field>

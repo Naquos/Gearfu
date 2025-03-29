@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { StatesDefinitionService } from '../../services/statesDefinitionService';
 import { first, map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-states',
@@ -17,10 +18,13 @@ export class StatesComponent {
   @Input()
   nameStates = "";
 
-  constructor(protected statesDefinitionService: StatesDefinitionService) {}
+  constructor(
+    protected statesDefinitionService: StatesDefinitionService,
+    private translateService: TranslateService
+  ) {}
 
   protected definition(): Observable<string  | undefined> {
-    return this.statesDefinitionService.findStatesDefinition(this.statesDefinitionId).pipe(first(), map(x => x?.description));
+    return this.statesDefinitionService.findStatesDefinition(this.statesDefinitionId).pipe(first(), map(x => x?.description[this.translateService.currentLang as keyof typeof x.description]));
   }
 
 }

@@ -3,16 +3,22 @@ import { Actions } from "../models/actions";
 import actionsJson from "../../../public/actions.json";
 import { IdActionsEnum } from "../models/idActionsEnum";
 import { EquipEffects } from "../models/equipEffects";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable({providedIn: 'root'})
 export class ActionService {
 
     protected actions: Actions[] = [];
 
-    constructor() {
+    constructor(private translateService: TranslateService) {
         actionsJson.forEach(x => this.actions.push({
             id: x.definition.id,
-            effect: x.definition.effect
+            description: {
+                fr: x.description?.fr ?? "",
+                en: x.description?.en ?? "",
+                es: x.description?.es ?? "",
+                pt: x.description?.pt ?? ""
+            } 
         }))
     }
 
@@ -21,7 +27,8 @@ export class ActionService {
     }
 
     public getEffectById(id: number): string {
-        return this.actions.find(x => x.id === id)?.effect ?? "";
+        const action = this.actions.find(x => x.id === id); 
+        return action?.description[this.translateService.currentLang as keyof typeof action.description] ?? "";
     }
 
     public isBuff(id: number) {

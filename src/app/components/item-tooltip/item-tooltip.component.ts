@@ -12,10 +12,11 @@ import { DifferentStatsItem } from '../../models/differentsStatsItem';
 import { combineLatest, filter, map, Observable, takeUntil, tap } from 'rxjs';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
 import { StatesService } from '../../services/statesService';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-item-tooltip',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './item-tooltip.component.html',
   styleUrl: './item-tooltip.component.scss'
 })
@@ -45,6 +46,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
 
 
      constructor(
+        protected _translateService: TranslateService,
         protected _actionsService : ActionService,
         protected maitrisesService : MaitrisesServices,
         protected itemService : ItemsService,
@@ -54,7 +56,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
         protected cdr: ChangeDetectorRef,
         protected _statesService: StatesService
       ) {
-        super(_itemTypeService, _itemChooseService, _actionsService, _statesService);
+        super(_translateService,_itemTypeService, _itemChooseService, _actionsService, _statesService);
       }
 
       
@@ -81,6 +83,11 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
         
         this.cdr.detectChanges();
       }
+    }
+
+    protected getTitle(item?: Item): string {
+      if(!item) {return ""}
+      return item.title[this.translateService.currentLang as keyof typeof item.title];
     }
 
     protected getBackgroundDifferentsStatsOnValue(value: number): string {

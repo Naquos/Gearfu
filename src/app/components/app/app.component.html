@@ -4,11 +4,18 @@
     <img id="logo" src="logo.png" alt="logo"> 
     <img class="gearfu" src="gearfu.png" alt="gearfu"> 
     <app-item-choose></app-item-choose>
+    <button mat-button [matMenuTriggerFor]="menu" class="flagButton"><img class="flag" [src]='"aptitudes/"+ translate.currentLang + ".png"' alt="flag"></button>
+        <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="setLang('fr')"><img src="aptitudes/fr.png" alt="flag" width="40px"></button>
+        <button mat-menu-item (click)="setLang('en')"><img src="aptitudes/en.png" alt="flag" width="40px"></button>
+        <button mat-menu-item (click)="setLang('es')"><img src="aptitudes/es.png" alt="flag" width="40px"></button>
+        <button mat-menu-item (click)="setLang('pt')"><img src="aptitudes/pt.png" alt="flag" width="40px"></button>
+    </mat-menu>
     <img class="discord" src="discord.png" (click)="openDiscord()" alt="discord"> 
   </header>
 <div class="content">
     <div class="filter">
-        <h2>Filtre des items</h2>
+        <h2>{{ "app.filter-item" | translate }}</h2>
         <app-search-item-name></app-search-item-name>
         <app-item-types></app-item-types>
         <app-item-level></app-item-level>
@@ -16,7 +23,7 @@
         <app-filter-maitrises></app-filter-maitrises>
         <app-major-present></app-major-present>
         
-        <h2>Tri des items</h2>
+        <h2>{{ "app.sort-item" | translate }}</h2>
         <app-sort-choice></app-sort-choice>
         <app-modifier-elem-maitrises></app-modifier-elem-maitrises>
         <app-only-no-secondary></app-only-no-secondary>

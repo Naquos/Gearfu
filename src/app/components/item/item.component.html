@@ -2,15 +2,15 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <ng-container *ngIf="item">
     <div class="header">
-        <span><img [src]="'aptitudes/1068.png'" alt="Maitrises">Maitrises {{Math.trunc(maitrises)}}</span>
-        <span><img [src]="'aptitudes/1069.png'" alt="Résistances">Résistances {{resistances}}</span>
+        <span><img [src]="'aptitudes/1068.png'" alt="Maitrises">{{ "item.maitrises" | translate }} {{Math.trunc(maitrises)}}</span>
+        <span><img [src]="'aptitudes/1069.png'" alt="Résistances">{{ "item.resistances" | translate }} {{resistances}}</span>
         <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
     </div>
     <div class="content" (click)="setItemChoosen()">
         <div class="title">
-            <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{item.title}} ({{item.level}})</h3>
+            <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{getTitle()}} ({{item.level}})</h3>
             <img [src]="'items/' + item.idImage + '.png'" alt="items">
-            <div class="poids"><img [src]="'aptitudes/poids.png'" alt="poids">Poids {{getPoids()}}</div>
+            <div class="poids"><img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{getPoids()}}</div>
         </div>
         <div>
             <p *ngFor="let effect of item.equipEffects">
@@ -19,10 +19,10 @@
                 </ng-container>
                 <ng-container *ngIf="effect.actionId === IdActionEnum.APPLIQUE_ETAT">
                     <span class="appliqueEtat" *ngIf="{states: statesService.findStates(effect.params[0]) | async } as value"
-                        (mouseenter)="openStatesTooltip($event, value.states?.id ?? 0, value.states?.fr ?? '')"
+                        (mouseenter)="openStatesTooltip($event, value.states?.id ?? 0, getStatesTranslate(value.states))"
                         (mouseleave)="stateTooltipService.closeTooltip()"
                     >
-                        {{ value.states?.fr }}
+                        {{ getStatesTranslate(value.states) }}
                     </span>
                 </ng-container>
             </p>

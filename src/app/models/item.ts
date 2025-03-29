@@ -6,7 +6,12 @@ export interface Item {
     rarity: number;
     itemTypeId: number;
     equipEffects: EquipEffects[];
-    title: string;
+    title: {
+        fr: string;
+        en: string;
+        es: string;
+        pt: string;
+    };
     idImage: number;
     weightForSort: number;
     craftable: boolean;

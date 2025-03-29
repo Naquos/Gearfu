@@ -1,21 +1,21 @@
-<h3>Maitrises élémentaires</h3>
+<h3>{{"filter-maitrises.maitrises-elementaires" | translate}}</h3>
 
 <form [formGroup]="form">
     <div class="group">
-        <app-button-checkbox tooltip="Feu" [control]="form.controls.feu" srcImg="aptitudes/fire.png" ></app-button-checkbox>
-        <app-button-checkbox tooltip="Air" [control]="form.controls.air" srcImg="aptitudes/air.png" ></app-button-checkbox>
-        <app-button-checkbox tooltip="Terre" [control]="form.controls.terre" srcImg="aptitudes/earth.png" ></app-button-checkbox>
-        <app-button-checkbox tooltip="Eau" [control]="form.controls.eau" srcImg="aptitudes/water.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.feu" [control]="form.controls.feu" srcImg="aptitudes/fire.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.air" [control]="form.controls.air" srcImg="aptitudes/air.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.terre" [control]="form.controls.terre" srcImg="aptitudes/earth.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.eau" [control]="form.controls.eau" srcImg="aptitudes/water.png" ></app-button-checkbox>
     </div>
 
-    <h3>Maitrises secondaires</h3>
+    <h3>{{ "filter-maitrises.maitrises-secondaires" | translate }}</h3>
 
     <div class="group">
-        <app-button-checkbox tooltip="Mélée" [control]="form.controls.melee" srcImg="aptitudes/1052.png" ></app-button-checkbox>
-        <app-button-checkbox tooltip="Distance" [control]="form.controls.distance" srcImg="aptitudes/1053.png" ></app-button-checkbox>
-        <app-button-checkbox tooltip="Critique" [control]="form.controls.critique" srcImg="aptitudes/149.png" ></app-button-checkbox>
-        <app-button-checkbox tooltip="Dos" [control]="form.controls.dos" srcImg="aptitudes/180.png" ></app-button-checkbox>
-        <app-button-checkbox tooltip="Soin" [control]="form.controls.soin" srcImg="aptitudes/26.png" ></app-button-checkbox>
-        <app-button-checkbox tooltip="Berzerk" [control]="form.controls.berzerk" srcImg="aptitudes/1055.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.melee" [control]="form.controls.melee" srcImg="aptitudes/1052.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.distance" [control]="form.controls.distance" srcImg="aptitudes/1053.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.critique" [control]="form.controls.critique" srcImg="aptitudes/149.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.dos" [control]="form.controls.dos" srcImg="aptitudes/180.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.soin" [control]="form.controls.soin" srcImg="aptitudes/26.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.berzerk" [control]="form.controls.berzerk" srcImg="aptitudes/1055.png" ></app-button-checkbox>
     </div>
 </form>

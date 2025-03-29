@@ -11,6 +11,11 @@ header {
     top: 0;
     z-index: 1;
 
+    .flag {
+      width: 40px;
+      height: 40px;
+    }
+
     img {
         width: 50px;
         height: 50px;
@@ -32,8 +37,15 @@ header {
         letter-spacing: 3px;
     }
 
+    .flagButton {
+      margin-left: auto;
+    }
+
+    .flagButton:hover {
+      transform: scale(1.06);
+    }
+
     .discord {
-        margin-left: auto;
         cursor: pointer;
     }
     .discord:hover {
@@ -112,4 +124,11 @@ app-item-list {
     -ms-animation: rotating 5s linear infinite;
     -o-animation: rotating 5s linear infinite;
     animation: rotating 5s linear infinite;
+  }
+
+  ::ng-deep {
+    .mat-mdc-menu-panel {
+      background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77) !important;
+      min-width: 0 !important;
+    }
   }

@@ -4,10 +4,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 import { ItemTypeFormServices } from '../../services/itemTypeFormServices';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-item-types',
-  imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent],
+  imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
   templateUrl: './item-types.component.html',
   styleUrl: './item-types.component.scss'
 })

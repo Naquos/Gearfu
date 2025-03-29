@@ -10,6 +10,7 @@ import { ActionService } from "../../services/actionService";
 import { Component, OnDestroy } from "@angular/core";
 import { ParameterMajorActionEnum } from "../../models/parameterMajorActionEnum";
 import { StatesService } from "../../services/statesService";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-item',
@@ -26,8 +27,8 @@ export abstract class ItemAbstractComponent implements OnDestroy {
     protected Math = Math;
     protected itemChoosen$ = new BehaviorSubject<(Item | undefined)[][]>([[]]);
 
-
     constructor(
+        protected translateService: TranslateService,
         protected itemTypeService: ItemTypeServices,
         protected itemChooseService: ItemChooseService,
         protected actionsService: ActionService,
@@ -115,21 +116,21 @@ export abstract class ItemAbstractComponent implements OnDestroy {
     
 
   protected displayEffect(effect: EquipEffects | DifferentStatsItem): string {
-    const descriptionEffect = this.actionsService.getEffectById(effect.actionId).split(":");
+    const descriptionEffect = this.actionsService.getEffectById(effect.actionId);
     const isAMalus = this.actionsService.isAMalus(effect.actionId); 
     const symbol = (isAMalus && effect.params[0] > 0) || (!isAMalus && effect.params[0] < 0) ? "-" : ""
     const value = Math.abs(effect.params[0]);
       if(effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE || effect.actionId === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) {
-        const type = effect.params[4] === 120 ? "donnée" : "reçue"
-        return symbol + value + "% armure " + type;
+        const type = effect.params[4] === 120 ? this.translateService.instant("abstract.donnée") : this.translateService.instant("abstract.recue")
+        return symbol + value + this.translateService.instant("abstract.armure") + type;
       } else if (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE) {
-        return symbol + value + " maîtrises dans " + effect.params[2] + " éléments";
+        return symbol + value + this.translateService.instant("abstract.maitrises") + effect.params[2] + this.translateService.instant("abstract.elements");
       } else if (effect.actionId === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE) {
-        return symbol + value + " résistances dans " + effect.params[2] + " éléments";
+        return symbol + value + this.translateService.instant("abstract.resistances") + effect.params[2] + this.translateService.instant("abstract.elements");
       } else if(effect.actionId === IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE_SANS_CAP) {
-        return symbol + value + " Résistance Élémentaire";
+        return symbol + value + this.translateService.instant("abstract.resistances-elementaires");
       }
-      return symbol + value + descriptionEffect[1];
+      return symbol + value + " " + descriptionEffect;
   }
 
   protected getPoids(): number {

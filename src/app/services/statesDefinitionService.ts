@@ -14,7 +14,12 @@ export class StatesDefinitionService {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (statesDefinition as [any]).forEach(x => result.push({
             id: x.id,
-            description: x.description
+            description: {
+                fr: x.description.fr,
+                en: x.description.en,
+                es: x.description.es,
+                pt: x.description.pt
+            }
         }))
         this.stateDefinitionService.next(result);
     }

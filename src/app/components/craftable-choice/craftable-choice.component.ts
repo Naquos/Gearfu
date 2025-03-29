@@ -5,10 +5,11 @@ import { filter } from 'rxjs';
 import { ItemsService } from '../../services/itemsService';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-craftable-choice',
-  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './craftable-choice.component.html',
   styleUrl: './craftable-choice.component.scss'
 })

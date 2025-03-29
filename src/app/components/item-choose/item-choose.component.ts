@@ -6,10 +6,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ItemChooseService } from '../../services/itemChooseService';
 import { take } from 'rxjs';
 import { ZenithService } from '../../services/zenithService';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-item-choose',
-  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule],
+  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule],
   templateUrl: './item-choose.component.html',
   styleUrl: './item-choose.component.scss'
 })

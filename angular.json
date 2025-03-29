@@ -59,6 +59,7 @@
               "outputHashing": "all"
             },
             "development": {
+              "baseHref": "/Gearfu/",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true

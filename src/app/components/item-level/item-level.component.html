@@ -1,13 +1,13 @@
-<h3>Tranche de level</h3>
+<h3>{{ "item-level.level" | translate}}</h3>
 
 <form [formGroup]="form">
     <mat-form-field >
-        <mat-label>Level min</mat-label>
+        <mat-label>{{ "item-level.level-min" | translate}}</mat-label>
         <input matInput formControlName="levelMin">
       </mat-form-field>
 
       <mat-form-field >
-          <mat-label>Level max</mat-label>
+          <mat-label>{{ "item-level.level-max" | translate}}</mat-label>
           <input matInput formControlName="levelMax">
         </mat-form-field>
 </form>

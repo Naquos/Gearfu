@@ -1,0 +1,117 @@
+{
+    "abstract": {
+        "donnee": "given",
+        "recue": "received",
+        "armure": "% armor",
+        "maitrises": " mastery in ",
+        "resistances": " resistances in ",
+        "elements": " elements",
+        "resistances-elementaires": "Elemental Resistances"
+    },
+    "app": {
+        "filter-item": "Item filter",
+        "sort-item": "Item sorting"
+    },
+    "filter-maitrises": {
+        "maitrises-elementaires": "Elemental Mastery",
+        "maitrises-secondaires": "Secondary Mastery",
+        "feu": "Fire",
+        "eau": "Water",
+        "terre": "Earth",
+        "air": "Wind",
+        "melee": "Melee",
+        "distance": "Distance",
+        "critique": "Critical",
+        "dos": "Back",
+        "soin": "Healing",
+        "berzerk": "Berserk"
+    },
+    "item": {
+        "maitrises": "Mastery",
+        "resistances": "Resistances",
+        "poids": "Weight"
+    },
+    "item-choose": {
+        "zenith": "Export build to Zénith Wakfu",
+        "copy": "Copy URL",
+        "poids": "Weight = Mastery + 1.2*Resistances"
+    },
+    "item-level": {
+        "level": "Level range",
+        "level-min": "Min level",
+        "level-max": "Max level"
+    },
+    "item-types": {
+        "type-item": "Item type",
+        "coiffe": "Helmet",
+        "amulette": "Amulet",
+        "plastron": "Breastplate",
+        "anneau": "Ring",
+        "bottes": "Boots",
+        "cape": "Cape",
+        "epaulettes": "Epaulettes",
+        "ceinture": "Belt",
+        "bouclier": "Shield",
+        "seconde-main": "Off-hand",
+        "une-main": "One-handed",
+        "deux-mains": "Two-handed",
+        "accessoires": "Accessories",
+        "familier": "Pet"
+    },
+    "major-present": {
+        "label": "Major attribute required on the item",
+        "PA": "AP",
+        "PM": "MP",
+        "PW": "WP",
+        "PO": "Range",
+        "armure-donnee": "Armor given",
+        "armure-recue": "Armor received",
+        "critique": "Critical",
+        "parade": "Block",
+        "resistance-dos": "Back resistance",
+        "resistance-critique": "Critical resistance"
+    },
+    "modifier-elem-maitrises": {
+        "label": "Mechanics activation increasing elemental mastery",
+        "mecaniques": "Mechanics"
+    },
+    "only-no-secondary": {
+        "label": "Consider only items without secondary mastery",
+        "oui": "Yes",
+        "non": "No"
+    },
+    "rarete-item": {
+        "label": "Item rarity",
+        "normal": "Normal",
+        "rare": "Rare",
+        "mythique": "Mythic",
+        "legendaire": "Legendary",
+        "souvenir": "Souvenir",
+        "epique": "Epic",
+        "relique": "Relic"
+    },
+    "search-item-name": {
+        "label": "Item name"
+    },
+    "craftable-choice-enum": {
+        "CRAFT_DROP": "Craft and Drop",
+        "CRAFT": "Craft",
+        "DROP": "Drop"
+    },
+    "elem-maitrises-mecanism-enum": {
+        "ABNEGATION": "Abnegation (Pre-nerf)",
+        "ALTERNANCE": "Alternance (Pre-nerf)",
+        "ALTERNANCE_2": "Alternance 2 (Pre-nerf)",
+        "ANATOMIE": "Anatomy (Pre-nerf)",
+        "CONCENTRATION_ELEMENTAIRE": "Elemental Concentration (Pre-nerf)",
+        "INFLEXIBILITE_2": "Inflexibility 2 (Pre-nerf)",
+        "COEUR_HUPPERMAGE": "Huppermage's Heart"
+    },
+    "sort-choice-enum": {
+        "POIDS": "Weight",
+        "MAITRISES": "Mastery",
+        "RESISTANCES": "Resistances",
+        "EQUILIBRE": "Balanced",
+        "PARADE_ARMURE_DONNEE": "Parry + Given Armor"
+    }
+}

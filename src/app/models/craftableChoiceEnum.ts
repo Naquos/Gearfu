@@ -1,5 +1,5 @@
 export enum CraftableChoiceEnum {
-    CRAFT_DROP = "Craft et Drop",
-    CRAFT = "Craft",
-    DROP = "Drop"
+    CRAFT_DROP = "CRAFT_DROP",
+    CRAFT = "CRAFT",
+    DROP = "DROP"
 }

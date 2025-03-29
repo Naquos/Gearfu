@@ -1,28 +1,28 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="header" *ngIf="{loaded: loaded$ | async}">
-    <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="'aptitudes/1068.png'" alt="Maitrises">Maitrises {{Math.trunc(maitrises)}}</span>
-    <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="'aptitudes/1069.png'" alt="Resistances">Résistances {{resistances}}</span>
+    <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="'aptitudes/1068.png'" alt="Maitrises">{{"item.maitrises" | translate}} {{Math.trunc(maitrises)}}</span>
+    <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="'aptitudes/1069.png'" alt="Resistances">{{ "item.resistances" | translate }} {{resistances}}</span>
 </div>
 <div class="content" (click)="itemChooseService.setItem(itemTypeService.getItemType(item.itemTypeId), item)">
     <div class="column">
         <div class="row">
             <div class="title">
-                <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{item.title}} ({{item.level}})</h3>
+                <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{ getTitle(item) }} ({{item.level}})</h3>
                 <img [src]="'items/' + item.idImage + '.png'" alt="item">
             </div>
             <ng-container *ngIf="{itemSelected : itemSelected$ | async} as value">
-                <ng-container *ngFor="let item of value.itemSelected">
-                    <div *ngIf="item !== undefined"  class="title" >
-                        <h3 [style.color]="colorRarityService.getMapColors().get(item?.rarity ?? 0)">{{item?.title}}  ({{item?.level}})</h3>
-                        <img [src]="'items/' + item?.idImage + '.png'" alt="items">
+                <ng-container *ngFor="let itemSelected of value.itemSelected">
+                    <div *ngIf="itemSelected !== undefined"  class="title" >
+                        <h3 [style.color]="colorRarityService.getMapColors().get(itemSelected?.rarity ?? 0)">{{ getTitle(itemSelected) }}  ({{itemSelected?.level}})</h3>
+                        <img [src]="'items/' + itemSelected?.idImage + '.png'" alt="items">
                     </div>
                 </ng-container>
             </ng-container>
         </div>
         
         <span [class]="getBackgroundDifferentsStatsOnValue(getPoids()) + ' poids'">
-            <img [src]="'aptitudes/poids.png'" alt="poids">Poids {{getPoids()}}
+            <img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{getPoids()}}
         </span>
     </div>
     
