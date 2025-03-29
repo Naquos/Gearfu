@@ -1,0 +1,236 @@
+﻿[
+    {
+        "id": 1284,
+        "description": {
+            "fr": "Si dommages subis : 20% de gagner 1 PA",
+            "en": "If damage suffered: 20% chance of gaining 1 AP",
+            "es": "Si recibe daños: 20% de ganar 1 PA",
+            "pt": "Se danos sofridos: 20% de ganhar 1 PA"
+        }
+    },
+    {
+        "id": 1348,
+        "description": {
+            "fr": "À chaque début de tour, le porteur a 50% de chance de gagner ou de perdre un PA.",
+            "en": "At the start of each turn, the bearer has a 50% chance of gaining or losing 1 AP.",
+            "es": "Al principio de cada turno, el portador tiene un 50% de prob. de ganar o perder un PA.",
+            "pt": "No começo de cada turno, o portador tem 50% de chance de ganhar ou perder um PA."
+        }
+    },
+    {
+        "id": 1354,
+        "description": {
+            "fr": "Combat : 1% d'appliquer l'état Peace and Love en recevant un coup",
+            "en": "Fight: 1% chance of applying the Peace and Love state when an attack is taken",
+            "es": "Combate: 1% de aplicar el estado Peace and Love al recibir un golpe",
+            "pt": "Luta: 1% de chance de aplicar o estado Paz e Amor ao receber um ataque"
+        }
+    },
+    {
+        "id": 1583,
+        "description": {
+            "fr": "+1 PM un tour sur deux",
+            "en": "+1 MP every other turn",
+            "es": "+1 PM uno de cada dos turnos",
+            "pt": "+1 PM a cada turno"
+        }
+    },
+    {
+        "id": 2570,
+        "description": {
+            "fr": "Lorsque PV inférieurs à 75% : 99 Résistance Élémentaire",
+            "en": "When HP are less than 75%: 99 Elemental Resistance",
+            "es": "Cuando PdV inferiores al 75%: 99 Resistencia elemental",
+            "pt": "Quando os PV estão abaixo de 75%: 99 Resistência elementar"
+        }
+    },
+    {
+        "id": 2514,
+        "description": {
+            "fr": "Lorsque les PV sont supérieurs à 90% : 99 Maîtrise Élémentaire",
+            "en": "When HP are above 90%: 99 Elemental Mastery",
+            "es": "Cuando los PdV superan el 90%: 99 Dominio elemental",
+            "pt": "Quando os PV estão acima de 90%: 99 Domínio elementar"
+        }
+    },
+    {
+        "id": 2572,
+        "description": {
+            "fr": "Lorsque PV inférieurs à 66%, en début de tour : Soin : 2 475",
+            "en": "When HP are less than 66%, at start of turn: Heal: 2,475",
+            "es": "Cuando PdV inferiores al 66%, al principio del turno: Cura : 2.475",
+            "pt": "Quando os PV estão abaixo de 66% no início do turno: Cura : 2.475"
+        }
+    },
+    {
+        "id": 2636,
+        "description": {
+            "fr": "En début de combat : Augmentation des Résistances de 99% du total de la Résistance Perte de 297% du total de la Résistance",
+            "en": "At start of fight: Resistances increased by 99% of total Resistance Total Resistance decreased by 297%",
+            "es": "Al comienzo del combate: Aumento de las resistencias un 99% del total de la resistencia Pérdida de un 297% del total de la resistencia",
+            "pt": "No início do combate: Aumento das Resistências em 99% do total da Resistência Perda de 297% do total da Resistência"
+        }
+    },
+    {
+        "id": 2515,
+        "description": {
+            "fr": "Lorsque PV inférieurs à 50% : 99 Maîtrise Élémentaire",
+            "en": "When HP are less than 50%: 99 Elemental Mastery",
+            "es": "Cuando PdV inferiores al 50%: 99 Dominio elemental",
+            "pt": "Quando os PV estão abaixo de 50%: 99 Domínio elementar"
+        }
+    },
+    {
+        "id": 2512,
+        "description": {
+            "fr": "+0.99 Maîtrise pour 1% de PV manquants",
+            "en": "+0.99 mastery for 1% of lost HP",
+            "es": "+0.99 dominio por un 1% de PdV faltante",
+            "pt": "+0.99 de domínio por 1% de PV perdidos"
+        }
+    },
+    {
+        "id": 2505,
+        "description": {
+            "fr": "+0.99 Résistance Élémentaire pour 1% de PV manquants",
+            "en": "+0.99 elemental resistance for 1% of lost HP",
+            "es": "+0.99 resistencia elemental por 1% de PdV faltantes",
+            "pt": "+0.99 de resistência elementar por 1% de PV perdidos"
+        }
+    },
+    {
+        "id": 2411,
+        "description": {
+            "fr": "Lorsque PV inférieurs à 50%, en début de tour : Soin : 3 960",
+            "en": "When HP are less than 50%, at start of turn: Heal: 3,960",
+            "es": "Cuando PdV inferiores al 50%, al principio del turno: Cura : 3.960",
+            "pt": "Quando os PV estão abaixo de 50% no início do turno: Cura : 3.960"
+        }
+    },
+    {
+        "id": 4570,
+        "description": {
+            "fr": "Accorde +2 PA un tour sur deux Tour Impair : + 0 PA",
+            "en": "Gives +2 AP every other turn Odd Turn: + 0 AP",
+            "es": "Otorga +2 PA cada dos turnos. Turno impar: + 0 PA",
+            "pt": "Concede + 2 PA em turnos alternados Turno ímpar: + 0 PA"
+        }
+    },
+    {
+        "id": 2574,
+        "description": {
+            "fr": "Lorsque PV inférieurs à 25%, en début de tour : Soin : 3 960",
+            "en": "When HP are less than 25%, at start of turn: Heal: 3,960",
+            "es": "Cuando PdV inferiores al 25%, al principio del turno: Cura : 3.960",
+            "pt": "Quando os PV estão abaixo de 25% no início do turno: Cura : 3.960"
+        }
+    },
+    {
+        "id": 2413,
+        "description": {
+            "fr": "Lorsque PV inférieurs à 50% : 99 Résistance Élémentaire",
+            "en": "When HP are less than 50%: 99 Elemental Resistance",
+            "es": "Cuando PdV inferiores al 50%: 99 Resistencia elemental",
+            "pt": "Quando os PV estão abaixo de 50%: 99 Resistência elementar"
+        }
+    },
+    {
+        "id": 2571,
+        "description": {
+            "fr": "Lorsque PV inférieurs à 75% : 99 Maîtrise Élémentaire",
+            "en": "When HP are less than 75%: 99 Elemental Mastery",
+            "es": "Cuando PdV inferiores al 75%: 99 Dominio elemental",
+            "pt": "Quando os PV estão abaixo de 75%: 99 Domínio elementar"
+        }
+    },
+    {
+        "id": 2513,
+        "description": {
+            "fr": "Lorsque PV inférieurs à 33%, en début de tour : Soin : 2 475",
+            "en": "When HP are less than 33%, at start of turn: Heal: 2,475",
+            "es": "Cuando PdV inferiores al 33%, al principio del turno: Cura : 2.475",
+            "pt": "Quando os PV estão abaixo de 33% no início do turno: Cura : 2.475"
+        }
+    },
+    {
+        "id": 5886,
+        "description": {
+            "fr": "Au début de chaque tour du porteur de l'état, il gagne, par élément : -800 à un coup reçu ou +800 à un coup donné (1x par tour)",
+            "en": "At the start of each of the state bearer's turns, they gain (per element): -800 for a hit taken or +800 for a hit given (1x per turn)",
+            "es": "Al principio de cada turno del portador del estado, gana, por elemento: -800 a un golpe recibido o +800 a un golpe dado (1x por turno)",
+            "pt": "No início de cada turno, o portador do estado recebe por elemento: -800 por golpe recebido ou +800 por golpe dado (1 por turno)"
+        }
+    },
+    {
+        "id": 6731,
+        "description": {
+            "fr": "Pour chaque coup critique occasionné : 1% Dommages infligés et soins réalisés pendant 3 tours. Cumulable 10 fois.",
+            "en": "For each critical hit inflicted: 1% damage inflicted and heals performed for 3 turns. Can be stacked 10 times.",
+            "es": "Por cada golpe crítico ocasionado: 1% de daños infligidos y curas realizadas durante 3 turnos. Acumulable 10 veces.",
+            "pt": "Para cada Golpe Crítico infligido: 1% dos danos infligidos e curas realizadas durante 3 turnos. Pode ser acumulado 10 vezes."
+        }
+    },
+    {
+        "id": 7069,
+        "description": {
+            "fr": "+5% Dommages infligés lorsque le porteur respecte certaines conditions (varient chaque tour). Tour impair : Le porteur est à distance Tour pair : Le porteur est en mêlée",
+            "en": "+5% damage inflicted when the bearer meets certain conditions (these change each turn). Odd turn: The bearer is at a distance Even turn: The bearer is in melee",
+            "es": "+5% de daños infligidos cuando el portador respeta algunas condiciones (varían cada turno). Turno impar: el portador está a distancia Turno par: el portador está en melé",
+            "pt": "+5% de danos infligidos quando o portador cumprir certas condições (varia a cada turno). Turno ímpar: o portador está à distância Turno par: o portador está à curta distância"
+        }
+    },
+    {
+        "id": 7070,
+        "description": {
+            "fr": "+5% Dommages infligés lorsque le porteur respecte certaines conditions (varient chaque tour). Tour impair : Le sort est en zone Tour pair : Le sort est monocible",
+            "en": "+5% damage inflicted when the bearer meets certain conditions (these change each turn). Odd turn: The spell is area-of-effect Even turn: The spell is single-target",
+            "es": "+5% de daños infligidos cuando el portador respeta algunas condiciones (varían cada turno). Turno impar: el hechizo es de zona Turno par: el hechizo es de objetivo único",
+            "pt": "+5% de danos infligidos quando o portador cumprir certas condições (varia a cada turno). Turno ímpar: o feitiço é em zona Turno par: o feitiço é de alvo único"
+        }
+    },
+    {
+        "id": 7071,
+        "description": {
+            "fr": "Lorsque le porteur de l'état commence son tour avec 80% de ses PV ou plus : 15% Soins réalisés 15% Armure donnée -50 Résistance élémentaire",
+            "en": "When the state bearer starts their turn with 80% or more of their HP: 15% Heals performed 15% Armor given -50 Elemental Resistance",
+            "es": "Cuando el portador del estado comienza su turno con el 80% de sus PdV o más: 15% de curas realizadas 15% Armadura dada -50 de resistencia elemental",
+            "pt": "Quando o portador do estado começa o turno com 80% ou mais de seus PV: 15% de curas realizadas 15% de Armadura concedida -50 de resistência elementar"
+        }
+    },
+    {
+        "id": 7072,
+        "description": {
+            "fr": "Lorsque le porteur de l'état commence son tour avec 80% de ses PV ou plus : 1 Portée -40 Résistance élémentaire",
+            "en": "When the state bearer starts their turn with 80% or more of their HP: 1 Range -40 Elemental Resistance",
+            "es": "Cuando el portador del estado comienza su turno con el 80% de sus PdV o más: 1 alcance -40 resistencia elemental",
+            "pt": "Quando o portador do estado começa o turno com 80% ou mais de seus PV: 1 de alcance -40 de resistência elementar"
+        }
+    },
+    {
+        "id": 7073,
+        "description": {
+            "fr": "Lorsque le porteur de l'état commence son tour avec 80% de ses PV ou plus : 10% Dommages infligés -50 Résistance élémentaire",
+            "en": "When the state bearer starts their turn with 80% or more of their HP: 10% Damage inflicted -50 Elemental Resistance",
+            "es": "Cuando el portador del estado comienza su turno con el 80% de sus PdV o más: 10% de daños infligidos -50 de resistencia elemental",
+            "pt": "Quando o portador do estado começa o turno com 80% ou mais de seus PV: 10% de danos infligidos -50 de resistência elementar"
+        }
+    },
+    {
+        "id": 7106,
+        "description": {
+            "fr": "À chaque sort lancé, applique Dofushu : Les sorts lancés doivent coûter au moins 1 PA Si le joueur finit son tour avec Dofushu au niveau 5 : 60 Résistance élémentaire",
+            "en": "On each spell cast, applies Dofushu: Spells cast must cost at least 1 AP If the player ends their turn with Dofushu at level 5: 60 Elemental Resistance",
+            "es": "Con cada hechizo lanzado, aplicaDofub'huritu: Los hechizos lanzados deben costar como mínimo 1 PA Si el jugador acaba su turno con Dofub'huritu en el nivel 5: 60 resistencia elemental",
+            "pt": "A cada feitiço lançado, aplica Dofushu: Os feitiços lançados devem custar pelo menos 1 PA Se o jogador terminar o turno com Dofushu no nível 5: 60 de resistência elementar"
+        }
+    },
+    {
+        "id": 8251,
+        "description": {
+            "fr": "Au début de chaque tour du porteur de l'état, il gagne, par élément : -200% du niveau à un coup reçu ou +200% du niveau à un coup donné (1x par tour)",
+            "en": "At the start of each of the state bearer's turns, they gain (per element): -200% of level upon taking a hit, or +200% of level upon landing a hit (1x per turn)",
+            "es": "Al principio de cada turno del portador del estado, gana, por elemento: -200% del nivel con un golpe recibido o +200% del nivel con un golpe dado (1x por turno)",
+            "pt": "No início de cada turno do portador do estado, ele ganha por elemento: -200% do nível em um golpe recebido ou +200% do nível em um golpe desferido (1x por turno)"
+        }
+    }
+]
