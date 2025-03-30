@@ -1,3 +1,7 @@
+$header-size:80px;
+$footer-size: 38px;
+$item-choose-size: 70px;
+
 header {
     display: flex;
     position: fixed;
@@ -56,7 +60,7 @@ header {
 .content {
     display: flex;
     justify-content: space-between;
-    margin-top: 80px;
+    margin-top: $header-size;
     
 }
 
@@ -130,5 +134,74 @@ app-item-list {
     .mat-mdc-menu-panel {
       background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77) !important;
       min-width: 0 !important;
+    }
+  }
+
+  @media screen and (min-width: 700px) {
+    .menu {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    
+    app-item-choose {
+      z-index: 50;
+      position: fixed;
+      top: $header-size;
+      left: 0px;
+
+      height: calc(100vh - $header-size - $footer-size);
+      overflow-y: scroll;
+      
+      background: #1B263B;
+      width: $item-choose-size;
+    }
+
+    app-item-list {
+      width: calc(100% - $item-choose-size);
+      margin-left: $item-choose-size;
+    }
+
+    header {
+      padding: 15px;
+      width: 100%;
+
+      .menu {
+        margin-right: 25px;        
+        width: 44px;
+        height: 44px;
+        text-align: center;
+        align-content: center;
+      }
+    }
+    .content {
+        height: calc(100vh - $header-size - $footer-size);
+        overflow-y: scroll;
+
+      .filter {
+        z-index: 100;
+        position: fixed;
+        top: $header-size;
+        right: -200%;
+        width: 100%;
+        height: calc(100% - $header-size);
+        transition: right 0.3s ease-in-out;
+  
+        * {
+          width: 90%;
+          margin: auto;
+          display: block;
+          margin-left: 25px;
+        }
+      }
+  
+      .filter.open {
+        right: 0;
+      }
+    }
+
+    .discord {
+      display: none;
     }
   }

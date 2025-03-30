@@ -131,3 +131,18 @@
         border: 5px solid #0D1B2A;
     }
 }
+
+
+@media screen and (max-width: 700px) { 
+    :host {
+        width: 300px;
+    }
+}
+
+::ng-deep {
+    @media screen and (max-width: 700px) { 
+        .cdk-overlay-pane  {
+            transform: none !important;
+        }
+    }
+}

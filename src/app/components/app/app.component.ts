@@ -14,12 +14,14 @@ import { CraftableChoiceComponent } from "../craftable-choice/craftable-choice.c
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
   imports: [
     MatMenuModule,
     MatButtonModule,
+    MatIconModule,
     ItemListComponent,
     ItemTypesComponent,
     ItemLevelComponent,
@@ -38,6 +40,9 @@ import {MatButtonModule} from '@angular/material/button';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
+  protected displayFilter = false;
+
   protected openDiscord(): void {
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
   }
@@ -49,5 +54,9 @@ export class AppComponent {
 
   protected setLang(value: string): void {
     this.translate.use(value);
+  }
+
+  protected handleFilter(): void {
+    this.displayFilter = !this.displayFilter;
   }
 }

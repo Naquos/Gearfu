@@ -37,7 +37,7 @@ export class ItemChooseDisplayComponent implements OnInit {
   }
 
   protected openTooltip(event: MouseEvent, item: Item): void {
-    if(item) {
+    if(item && window.innerWidth > 700) {
       this.tooltipService.openTooltip(this.viewContainerRef, ItemComponent, event, {item});
     }
   }

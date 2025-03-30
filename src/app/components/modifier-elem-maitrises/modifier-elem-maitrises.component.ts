@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemsService } from '../../services/itemsService';
-import { ElemMaitrisesMecanismEnum } from '../../models/elemMaitrisesMecanismEnum';
+import { ElemMaitrisesMecanismEnum } from '../../models/ElemMaitrisesMecanismEnum';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';

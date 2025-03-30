@@ -12,9 +12,10 @@
         <button mat-menu-item (click)="setLang('pt')"><img src="aptitudes/pt.png" alt="flag" width="40px"></button>
     </mat-menu>
     <img class="discord" src="discord.png" (click)="openDiscord()" alt="discord"> 
+    <mat-icon fontIcon="menu" class="menu" (click)="handleFilter()"></mat-icon>
   </header>
 <div class="content">
-    <div class="filter">
+    <div class="filter" [class.open]="displayFilter">
         <h2>{{ "app.filter-item" | translate }}</h2>
         <app-search-item-name></app-search-item-name>
         <app-item-types></app-item-types>

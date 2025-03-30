@@ -3,11 +3,13 @@
 <form [formGroup]="form">
     <mat-form-field >
         <mat-label>{{ "item-level.level-min" | translate}}</mat-label>
-        <input matInput formControlName="levelMin">
+        <input type="number" matInput formControlName="levelMin">
+        <input type="text" matInput formControlName="levelMin">
       </mat-form-field>
 
       <mat-form-field >
           <mat-label>{{ "item-level.level-max" | translate}}</mat-label>
-          <input matInput formControlName="levelMax">
+          <input type="number" matInput formControlName="levelMax">
+          <input type="text" matInput formControlName="levelMax">
         </mat-form-field>
 </form>
