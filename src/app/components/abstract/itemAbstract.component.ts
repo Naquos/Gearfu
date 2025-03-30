@@ -121,7 +121,7 @@ export abstract class ItemAbstractComponent implements OnDestroy {
     const symbol = (isAMalus && effect.params[0] > 0) || (!isAMalus && effect.params[0] < 0) ? "-" : ""
     const value = Math.abs(effect.params[0]);
       if(effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE || effect.actionId === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) {
-        const type = effect.params[4] === 120 ? this.translateService.instant("abstract.donnée") : this.translateService.instant("abstract.recue")
+        const type = effect.params[4] === 120 ? this.translateService.instant("abstract.donnee") : this.translateService.instant("abstract.recue")
         return symbol + value + this.translateService.instant("abstract.armure") + type;
       } else if (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE) {
         return symbol + value + this.translateService.instant("abstract.maitrises") + effect.params[2] + this.translateService.instant("abstract.elements");
