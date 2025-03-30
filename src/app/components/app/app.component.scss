@@ -161,6 +161,7 @@ app-item-list {
     app-item-list {
       width: calc(100% - $item-choose-size);
       margin-left: $item-choose-size;
+      font-size: 12px;
     }
 
     header {
