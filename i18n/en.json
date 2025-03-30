@@ -1,7 +1,7 @@
 {
     "abstract": {
-        "donnee": "given",
-        "recue": "received",
+        "donnee": " given",
+        "recue": " received",
         "armure": "% armor",
         "maitrises": " mastery in ",
         "resistances": " resistances in ",
