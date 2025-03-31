@@ -15,7 +15,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { HammerModule } from '@angular/platform-browser';
 
 
 @Component({
@@ -24,7 +23,6 @@ import { HammerModule } from '@angular/platform-browser';
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
-    HammerModule,
     ItemListComponent,
     ItemTypesComponent,
     ItemLevelComponent,

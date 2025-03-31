@@ -2,7 +2,7 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection, isD
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { HammerModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -23,7 +23,7 @@ export const appConfig: ApplicationConfig = {
               useFactory: HttpLoaderFactory,
               deps: [HttpClient]
             }
-          }),HammerModule
+          })
     ]), provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'
