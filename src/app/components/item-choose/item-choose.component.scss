@@ -51,6 +51,6 @@
     }
     
     span, img, mat-icon, .totalWeight {
-        display: none;
+        display: none!important;
     }
 }
