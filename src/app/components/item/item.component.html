@@ -10,7 +10,7 @@
         <div class="title">
             <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{getTitle()}} ({{item.level}})</h3>
             <img [src]="'items/' + item.idImage + '.png'" alt="items">
-            <div class="poids" [matTooltip]="'poids-infobulle' | translate" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{item.weight}}</div>
+            <div class="poids" [matTooltip]="'item.poids-infobulle' | translate" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{item.weight}}</div>
         </div>
         <div>
             <p *ngFor="let effect of item.equipEffects">
