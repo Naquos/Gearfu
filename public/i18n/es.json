@@ -113,6 +113,7 @@
         "MAITRISES": "Dominio",
         "RESISTANCES": "Resistencias",
         "EQUILIBRE": "Equilibrado",
-        "PARADE_ARMURE_DONNEE": "Anticipación + Armadura dada"
+        "PARADE_ARMURE_DONNEE": "Anticipación + Armadura dada",
+        "POINT_DE_VIE": "Punto de vida"
     }
 }

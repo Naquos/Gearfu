@@ -15,6 +15,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
+
+export class MyHammerConfig extends HammerGestureConfig {
+  override overrides = {
+    swipe: { direction: 6 } // 6 = Hammer.DIRECTION_HORIZONTAL
+  };
+}
 
 @Component({
   selector: 'app-root',
@@ -22,6 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
+    HammerModule,
     ItemListComponent,
     ItemTypesComponent,
     ItemLevelComponent,
@@ -36,6 +44,7 @@ import { MatIconModule } from '@angular/material/icon';
     CraftableChoiceComponent,
     TranslateModule
   ],
+  providers: [ { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig }],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

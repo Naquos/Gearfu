@@ -112,6 +112,7 @@
         "MAITRISES": "Maîtrises",
         "RESISTANCES": "Résistances",
         "EQUILIBRE": "Equilibrés",
-        "PARADE_ARMURE_DONNEE": "Parade + Armure données"
+        "PARADE_ARMURE_DONNEE": "Parade + Armure données",
+        "POINT_DE_VIE": "Point de vie"
     }
 }

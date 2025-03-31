@@ -112,6 +112,7 @@
         "MAITRISES": "Maestria",
         "RESISTANCES": "Resistências",
         "EQUILIBRE": "Equilibrado",
-        "PARADE_ARMURE_DONNEE": "Parada + Armadura concedida"
+        "PARADE_ARMURE_DONNEE": "Parada + Armadura concedida",
+        "POINT_DE_VIE": "Life point"
     }
 }

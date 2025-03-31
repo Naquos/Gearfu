@@ -135,6 +135,8 @@ export class ItemsService {
         } else if (sort === SortChoiceEnum.EQUILIBRE) {
           item.weightForSort =  maitrises / maxMaistrises;
           item.weightForSort += 1.2 * (resistance / maxResistances);
+        } else if (sort === SortChoiceEnum.POINT_DE_VIE) {
+          item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.POINT_DE_VIE)?.params[0] ?? 0;
         } else if (sort === SortChoiceEnum.PARADE_ARMURE_DONNEE) {
           item.equipEffects.forEach(effect => {
             if(effect.actionId === IdActionsEnum.PARADE ||
