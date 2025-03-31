@@ -29,12 +29,13 @@
     "item": {
         "maitrises": "Maestria",
         "resistances": "Resistências",
-        "poids": "Peso"
+        "poids": "Peso",
+        "poids-infobulle": "Peso = Maestria + 1.2*Resistências"
     },
     "item-choose": {
         "zenith": "Exportar build para Zénith Wakfu",
         "copy": "Copiar URL",
-        "poids": "Peso = Maestria + 1.2*Resistências"
+        "poids-total": "Peso total"
     },
     "item-level": {
         "level": "Faixa de nível",
