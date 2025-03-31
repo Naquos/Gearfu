@@ -29,13 +29,12 @@
     "item": {
         "maitrises": "Mastery",
         "resistances": "Resistances",
-        "poids": "Weight",
-        "poids-infobulle": "Weight = Mastery + 1.2*Resistances"
+        "poids": "Weight"
     },
     "item-choose": {
         "zenith": "Export build to Zénith Wakfu",
         "copy": "Copy URL",
-        "poids-total": "Total weight"
+        "poids": "Weight = Mastery + 1.2*Resistances"
     },
     "item-level": {
         "level": "Level range",

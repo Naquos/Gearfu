@@ -29,13 +29,12 @@
     "item": {
         "maitrises":"Maitrises",
         "resistances": "Résistances",
-        "poids": "Poids",
-        "poids-infobulle": "Poids = Maitrises + 1.2*Résistances"
+        "poids": "Poids"
     },
     "item-choose": {
         "zenith": "Exporter le build vers Zénith Wakfu",
         "copy": "Copier l'url",
-        "poids-total": "Poids total"
+        "poids": "Poids = Maitrises + 1.2*Résistances"
     },
     "item-level": {
         "level": "Tranche de level",
