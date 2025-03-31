@@ -179,6 +179,7 @@ app-item-list {
     .content {
         height: calc(100vh - $header-size - $footer-size);
         overflow-y: scroll;
+        touch-action: pan-y !important;
 
       .filter {
         z-index: 100;

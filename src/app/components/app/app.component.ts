@@ -15,13 +15,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
+import { HammerModule } from '@angular/platform-browser';
 
-export class MyHammerConfig extends HammerGestureConfig {
-  override overrides = {
-    swipe: { direction: 6 } // 6 = Hammer.DIRECTION_HORIZONTAL
-  };
-}
 
 @Component({
   selector: 'app-root',
@@ -44,7 +39,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     CraftableChoiceComponent,
     TranslateModule
   ],
-  providers: [ { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig }],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -65,11 +59,7 @@ export class AppComponent {
     this.translate.use(value);
   }
 
-  protected handleFilter(): void {
-    this.displayFilter = !this.displayFilter;
-  }
-
-  protected closedFilter(): void {
-    this.displayFilter = false;
+  protected handleFilter(value?: boolean): void {
+    this.displayFilter = value !== undefined ? value : !this.displayFilter;
   }
 }
