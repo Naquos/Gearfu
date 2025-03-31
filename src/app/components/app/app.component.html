@@ -15,7 +15,7 @@
     <mat-icon fontIcon="menu" class="menu" (click)="handleFilter()"></mat-icon>
   </header>
 <div class="content">
-    <div class="filter" [class.open]="displayFilter">
+    <div class="filter" [class.open]="displayFilter" appSwipe (swipeRight)="handleFilter(false)">
         <h2>{{ "app.filter-item" | translate }}</h2>
         <app-search-item-name></app-search-item-name>
         <app-item-types></app-item-types>
@@ -30,5 +30,5 @@
         <app-only-no-secondary></app-only-no-secondary>
         <app-craftable-choice></app-craftable-choice>
     </div>
-    <app-item-list></app-item-list>
+    <app-item-list appSwipe (swipeLeft)="handleFilter(true)"></app-item-list>
 </div>

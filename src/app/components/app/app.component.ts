@@ -15,6 +15,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { SwipeDirective } from '../../directives/swipe.directive';
 
 
 @Component({
@@ -35,7 +36,8 @@ import { MatIconModule } from '@angular/material/icon';
     SearchItemNameComponent, 
     ItemChooseComponent, 
     CraftableChoiceComponent,
-    TranslateModule
+    TranslateModule,
+    SwipeDirective
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
