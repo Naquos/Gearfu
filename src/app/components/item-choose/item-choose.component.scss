@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
 
-    img, mat-icon, .infobulle {
+    img:not(.poids), mat-icon {
         background-color: #DFE0E1;
         color: #1B263B;
         width: 30px;
@@ -17,11 +17,7 @@
         margin-left: 5px;
     }
 
-    .infobulle {
-        border-radius: 50%;
-    }
-
-    img:active , mat-icon:active {
+    img:not(.poids):active , mat-icon:active {
         background-color: #1B263B;
         color: #DFE0E1;
         transform: translateY(2px);
@@ -34,6 +30,17 @@
     
     app-item-choose-display:hover {
         transform: scale(1.06);
+    }
+
+    .totalWeight {
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        .poids {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
     }
 }
 

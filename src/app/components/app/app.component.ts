@@ -59,4 +59,8 @@ export class AppComponent {
   protected handleFilter(): void {
     this.displayFilter = !this.displayFilter;
   }
+
+  protected closedFilter(): void {
+    this.displayFilter = false;
+  }
 }

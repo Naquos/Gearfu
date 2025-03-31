@@ -1,7 +1,6 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="content">
-    <span [matTooltip]="'item-choose.poids' | translate" class="infobulle">i</span>
     <img [matTooltip]="'item-choose.zenith' | translate"  src="./zenith-logo.webp" (click)="generateBuild()" alt="zenith" id="zenithButton">
     <mat-icon aria-hidden="false" fontIcon="gavel" 
         matTooltip="Craftku"
@@ -27,4 +26,7 @@
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementPremièreMain.png" [itemType]="ItemTypeEnum.UNE_MAIN" ></app-item-choose-display>
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementEmblème.png" [itemType]="ItemTypeEnum.ACCESSOIRES" ></app-item-choose-display>
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementFamilier.png" [itemType]="ItemTypeEnum.FAMILIER" ></app-item-choose-display>
+    <span *ngIf="{totalWeight: itemChooseService.totalWeight$ | async} as value" class="totalWeight">
+        <img [src]="'aptitudes/poids.png'" alt="poids" class="poids"> {{ "item-choose.poids-total" | translate }} : {{ value.totalWeight }} 
+    </span>
 </div>

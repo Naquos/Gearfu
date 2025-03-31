@@ -7,17 +7,18 @@ import { ItemChooseService } from '../../services/itemChooseService';
 import { take } from 'rxjs';
 import { ZenithService } from '../../services/zenithService';
 import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-item-choose',
-  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule],
+  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule, CommonModule],
   templateUrl: './item-choose.component.html',
   styleUrl: './item-choose.component.scss'
 })
 export class ItemChooseComponent {
   protected ItemTypeEnum = ItemTypeEnum;
 
-  constructor(private itemChooseService : ItemChooseService, private zenithService: ZenithService) {}
+  constructor(protected itemChooseService : ItemChooseService, private zenithService: ZenithService) {}
 
   protected copyToClipboard(): void {
     navigator.clipboard.writeText(window.location.href).then();

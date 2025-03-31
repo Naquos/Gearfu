@@ -29,6 +29,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
 
     protected mapDifferentStatsItem = new Map<IdActionsEnum, DifferentStatsItem>();
     protected loaded$!:Observable<void>;
+    protected weight = 0;
 
     protected itemSelected$ = this.itemChoosen$.pipe(
       filter(items => items.length !== 0),
@@ -71,10 +72,12 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
           {
               this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
               this.maitrises = this.item ? this.itemService.calculMaitrisesForAnItem(this.item, nbElements, idMaitrises, multiplicateurElem) : 0;
+              this.weight = this.itemService.calculWeight(this.resistances, this.maitrises)
               itemSelected.forEach(item => {
                 if(item) {
                   this.resistances -=  this.itemService.calculResistancesForAnItem(item);
                   this.maitrises -= this.itemService.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
+                  this.weight = this.itemService.calculWeight(this.resistances, this.maitrises)
                 }
               })
           }));

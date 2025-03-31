@@ -16,10 +16,11 @@ import { StatesService } from '../../services/statesService';
 import { StatesComponent } from '../states/states.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { States } from '../../models/states';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-item',
-  imports: [CommonModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule],
   templateUrl: './item.component.html',
   styleUrl: './item.component.scss'
 })

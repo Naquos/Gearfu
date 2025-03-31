@@ -133,10 +133,6 @@ export abstract class ItemAbstractComponent implements OnDestroy {
       return symbol + value + " " + descriptionEffect;
   }
 
-  protected getPoids(): number {
-    return this.Math.trunc(this.maitrises + 1.2 * this.resistances);
-  }
-
   public ngOnDestroy() {
     this.destroy$.next(); 
     this.destroy$.complete();

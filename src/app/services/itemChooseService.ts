@@ -12,6 +12,9 @@ export class ItemChooseService {
     private mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>();
     private idItems = new BehaviorSubject<string>("");
     public idItems$ = this.idItems.asObservable();
+
+    private totalWeight = new BehaviorSubject<number>(0);
+    public totalWeight$ = this.totalWeight.asObservable();
     private indexAnneau = 0;
 
     constructor(private itemTypeService: ItemTypeServices,
@@ -56,6 +59,7 @@ export class ItemChooseService {
         ]).pipe(
             delay(500),
             map(list => list.flat()),
+            tap(list => this.calculTotalWeight(list)),
             map(list => list.map(items => items?.id)),
             map(list => list.filter(x => x).join(",")),
             tap(x => this.setIdItems(x))
@@ -71,6 +75,16 @@ export class ItemChooseService {
             );
         });
         
+    }
+
+    private calculTotalWeight(list: (Item | undefined)[]): void {
+        let result = 0;
+        const setItem = new Set(); // On met un Set pour éviter que l'arme à deux mains voit son poid compter 2 fois
+        list.forEach(item => setItem.add(item));
+        setItem.forEach(function(x) {
+            result+= (x as (Item |undefined))?.weight ?? 0
+        })
+        this.totalWeight.next(result);
     }
 
     private setItemWithIdItem(idItem: number): void {

@@ -16,4 +16,5 @@ export interface Item {
     weightForSort: number;
     craftable: boolean;
     dropable: boolean;
+    weight: number;
 }

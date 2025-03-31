@@ -122,14 +122,19 @@ export class ItemsService {
 
 
       items.forEach(item => {
+        const resistance = this.calculResistancesForAnItem(item);
+        const maitrises = this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
+
         item.weightForSort = 0;
+        item.weight = this.calculWeight(resistance, maitrises);
+
         if(sort === SortChoiceEnum.POIDS) {
-          item.weightForSort = 1.2 * this.calculResistancesForAnItem(item) + this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
+          item.weightForSort = this.calculWeight(resistance, maitrises);
         } else if (sort === SortChoiceEnum.MAITRISES) {
-          item.weightForSort = this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
+          item.weightForSort = maitrises;
         } else if (sort === SortChoiceEnum.EQUILIBRE) {
-          item.weightForSort =  (this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem) / maxMaistrises);
-          item.weightForSort += 1.2 * (this.calculResistancesForAnItem(item) / maxResistances);
+          item.weightForSort =  maitrises / maxMaistrises;
+          item.weightForSort += 1.2 * (resistance / maxResistances);
         } else if (sort === SortChoiceEnum.PARADE_ARMURE_DONNEE) {
           item.equipEffects.forEach(effect => {
             if(effect.actionId === IdActionsEnum.PARADE ||
@@ -139,9 +144,13 @@ export class ItemsService {
             }
           })
         } else {
-          item.weightForSort = this.calculResistancesForAnItem(item);
+          item.weightForSort = resistance;
         }
       })
+    }
+
+    public calculWeight(resistance: number, maitrises: number): number {
+      return Math.trunc(1.2 * resistance + maitrises);
     }
 
     private initItemsList(): void {
@@ -168,7 +177,8 @@ export class ItemsService {
             idImage: x.definition.item.graphicParameters.gfxId,
             weightForSort: 0,
             craftable: x.definition.item.craftable,
-            dropable: x.definition.item.dropable
+            dropable: x.definition.item.dropable,
+            weight: 0
         }));
     }
     
