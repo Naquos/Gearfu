@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { ItemTypeEnum } from "../models/itemTypeEnum";
 import { BehaviorSubject, combineLatest, delay, filter, first, iif, map, Observable, of, switchMap, take, tap } from "rxjs";
 import { Item } from "../models/item";
@@ -6,9 +6,11 @@ import { ItemTypeServices } from "./ItemTypesServices";
 import { RarityItem } from "../models/rarityItem";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ItemsService } from "./itemsService";
+import { DOCUMENT } from "@angular/common";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService {
+    private KEY_BUILD = "KEY_BUILD";
     private mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>();
     private idItems = new BehaviorSubject<string>("");
     public idItems$ = this.idItems.asObservable();
@@ -21,7 +23,9 @@ export class ItemChooseService {
         private itemService: ItemsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
+        @Inject(DOCUMENT) private document: Document
     ) {
+        const localStorage = this.document.defaultView?.localStorage;
         this.mapItem.set(ItemTypeEnum.UNE_MAIN, new BehaviorSubject<(Item|undefined)[]>([undefined]))
         this.mapItem.set(ItemTypeEnum.ANNEAU, new BehaviorSubject<(Item|undefined)[]>([undefined, undefined]))
         this.mapItem.set(ItemTypeEnum.BOTTES, new BehaviorSubject<(Item|undefined)[]>([undefined]))
@@ -37,8 +41,8 @@ export class ItemChooseService {
 
         this.activatedRoute.queryParams.pipe(
             filter(x => x !== undefined),
-            map(x => x["itemsId"] as string),
-            filter(x => x !== undefined),
+            map(x => x["itemsId"] ? x["itemsId"] as string : localStorage?.getItem(this.KEY_BUILD)),
+            filter(x => x !== undefined && x !== null),
             take(1),
             map(x => x.split(",")),
             tap(x => x.forEach(id => this.setItemWithIdItem(parseInt(id))))
@@ -64,6 +68,7 @@ export class ItemChooseService {
             map(list => list.filter(x => x).join(",")),
             tap(x => this.setIdItems(x))
         ).subscribe(x => {
+            localStorage?.setItem(this.KEY_BUILD, x);
 
             this.router.navigate(
                 [], 

@@ -46,8 +46,11 @@ export class ItemsService {
 
     private craftable = new BehaviorSubject<CraftableChoiceEnum>(CraftableChoiceEnum.CRAFT_DROP);
     public craftable$ = this.craftable.asObservable();
+    
+    public itemsFilterByItemName$ = combineLatest([this.fullItems$, this.itemName$])
+    .pipe(map(([items, itemName]) => items.filter(x => x.title[this.translateService.currentLang as keyof typeof x.title].toString().toUpperCase().includes(itemName.toUpperCase()))));
 
-    protected itemsFilterByLevelMin$ = combineLatest([this.fullItems$, this.levelMin$])
+    protected itemsFilterByLevelMin$ = combineLatest([this.itemsFilterByItemName$, this.levelMin$])
     .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeEnum.FAMILIER)));
 
     protected itemsFilterByLevelMax$ = combineLatest([this.itemsFilterByLevelMin$, this.levelMax$])
@@ -56,10 +59,7 @@ export class ItemsService {
     protected itemsFilterByRarity$ = combineLatest([this.itemsFilterByLevelMax$, this.rarirty])
     .pipe(map(([items, rarity]) => items.filter(x => rarity.length === 0 || rarity.includes(x.rarity))));
 
-    protected itemsFilterByItemName$ = combineLatest([this.itemsFilterByRarity$, this.itemName$])
-    .pipe(map(([items, itemName]) => items.filter(x => x.title[this.translateService.currentLang as keyof typeof x.title].toString().toUpperCase().includes(itemName.toUpperCase()))));
-
-    protected itemsFilterByOnlyNoSecondary$ = combineLatest([this.itemsFilterByItemName$, this.onlyNoSecondary$])
+    protected itemsFilterByOnlyNoSecondary$ = combineLatest([this.itemsFilterByRarity$, this.onlyNoSecondary$])
     .pipe(map(([items, onlyNoSecondary]) => items.filter(x => !onlyNoSecondary || 
       !x.equipEffects.find(y => [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK].includes(y.actionId)))));
 
