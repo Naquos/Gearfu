@@ -1,0 +1,505 @@
+[
+    {
+        "id": 27290,
+        "description": {
+            "fr": "13 PA ou plus",
+            "en": "13 AP or more",
+            "es": "13 PA o más",
+            "pt": "13 PA ou mais"
+        }
+    },
+    {
+        "id": 27304,
+        "description": {
+            "fr": "11 PA ou moins",
+            "en": "11 AP or less",
+            "es": "11 PA o menos",
+            "pt": "11 PA ou menos"
+        }
+    },
+    {
+        "id": 26317,
+        "description": {
+            "fr": "13 PA ou plus",
+            "en": "13 AP or more",
+            "es": "13 PA o más",
+            "pt": "13 PA ou mais"
+        }
+    },
+    {
+        "id": 27410,
+        "description": {
+            "fr": "11 PA ou moins",
+            "en": "11 AP or less",
+            "es": "11 PA o menos",
+            "pt": "11 PA ou menos"
+        }
+    },
+    {
+        "id": 27448,
+        "description": {
+            "fr": "11 PA ou moins",
+            "en": "11 AP or less",
+            "es": "11 PA o menos",
+            "pt": "11 PA ou menos"
+        }
+    },
+    {
+        "id": 26996,
+        "description": {
+            "fr": "8 PW ou plus",
+            "en": "8 WP or more",
+            "es": "8 PW o más",
+            "pt": "8 PW ou mais"
+        }
+    },
+    {
+        "id": 26298,
+        "description": {
+            "fr": "4 PW ou moins",
+            "en": "4 WP or less",
+            "es": "4 PW o menos",
+            "pt": "4 PW ou menos"
+        }
+    },
+    {
+        "id": 26314,
+        "description": {
+            "fr": "4 de contrôle",
+            "en": "4 control",
+            "es": "4 de control",
+            "pt": "4 de controle"
+        }
+    },
+    {
+        "id": 26311,
+        "description": {
+            "fr": "Entre 500 et 600 tacles",
+            "en": "Between 500 and 600 tackle",
+            "es": "Entre 500 y 600 placajes",
+            "pt": "Entre 500 e 600 tackles"
+        }
+    },
+    {
+        "id": 26954,
+        "description": {
+            "fr": "Entre 500 et 600 tacles",
+            "en": "Between 500 and 600 tackle",
+            "es": "Entre 500 y 600 placajes",
+            "pt": "Entre 500 e 600 tackles"
+        }
+    },
+    {
+        "id": 26318,
+        "description": {
+            "fr": "Entre 500 et 600 tacles",
+            "en": "Between 500 and 600 tackle",
+            "es": "Entre 500 y 600 placajes",
+            "pt": "Entre 500 e 600 tackles"
+        }
+    },
+    {
+        "id": 27298,
+        "description": {
+            "fr": "Entre 500 et 600 tacles",
+            "en": "Between 500 and 600 tackle",
+            "es": "Entre 500 y 600 placajes",
+            "pt": "Entre 500 e 600 tackles"
+        }
+    },
+    {
+        "id": 27444,
+        "description": {
+            "fr": "Entre 400 et 500 tacles",
+            "en": "Between 400 and 500 tackle",
+            "es": "Entre 400 y 500 placajes",
+            "pt": "Entre 400 e 500 tackles"
+        }
+    },
+    {
+        "id": 9616,
+        "description": {
+            "fr": "Au moins 500 points de citoyenneté",
+            "en": "At least 500 citizenship points",
+            "es": "Al menos 500 puntos de ciudadanía",
+            "pt": "Pelo menos 500 pontos de cidadania"
+        }
+    },
+    {
+        "id": 9981,
+        "description": {
+            "fr": "Plus que 40% de wakfu",
+            "en": "More than 40% Wakfu",
+            "es": "Más del 40% de Wakfu",
+            "pt": "Mais de 40% de Wakfu"
+        }
+    },
+    {
+        "id": 27695,
+        "description": {
+            "fr": "Entre 40% et 50% de critique",
+            "en": "Between 40% and 50% critical",
+            "es": "Entre 40% y 50% de crítico",
+            "pt": "Entre 40% e 50% de crítico"
+        }
+    },
+    {
+        "id": 26322,
+        "description": {
+            "fr": "Entre 500 et 600 d'esquives",
+            "en": "Between 500 and 600 dodge",
+            "es": "Entre 500 y 600 de esquiva",
+            "pt": "Entre 500 e 600 de esquiva"
+        }
+    },
+    {
+        "id": 26312,
+        "description": {
+            "fr": "20% parade ou moins",
+            "en": "20% parry or less",
+            "es": "20% de parada o menos",
+            "pt": "20% de bloqueio ou menos"
+        }
+    },
+    {
+        "id": 27294,
+        "description": {
+            "fr": "Entre 40% et 50% parade",
+            "en": "Between 40% and 50% parry",
+            "es": "Entre 40% y 50% de parada",
+            "pt": "Entre 40% e 50% de bloqueio"
+        }
+    },
+    {
+        "id": 27446,
+        "description": {
+            "fr": "Entre 40% et 50% de critique",
+            "en": "Between 40% and 50% critical",
+            "es": "Entre 40% y 50% de crítico",
+            "pt": "Entre 40% e 50% de crítico"
+        }
+    },
+    {
+        "id": 27693,
+        "description": {
+            "fr": "5 PM ou moins",
+            "en": "5 MP or less",
+            "es": "5 PM o menos",
+            "pt": "5 PM ou menos"
+        }
+    },
+    {
+        "id": 26324,
+        "description": {
+            "fr": "Entre 500 et 600 d'esquives",
+            "en": "Between 500 and 600 dodge",
+            "es": "Entre 500 y 600 de esquiva",
+            "pt": "Entre 500 e 600 de esquiva"
+        }
+    },
+    {
+        "id": 26998,
+        "description": {
+            "fr": "5 PM ou moins",
+            "en": "5 MP or less",
+            "es": "5 PM o menos",
+            "pt": "5 PM ou menos"
+        }
+    },
+    {
+        "id": 26310,
+        "description": {
+            "fr": "5 PM ou moins",
+            "en": "5 MP or less",
+            "es": "5 PM o menos",
+            "pt": "5 PM ou menos"
+        }
+    },
+    {
+        "id": 27450,
+        "description": {
+            "fr": "5 PM ou moins",
+            "en": "5 MP or less",
+            "es": "5 PM o menos",
+            "pt": "5 PM ou menos"
+        }
+    },
+    {
+        "id": 18691,
+        "description": {
+            "fr": "11 PA ou moins",
+            "en": "11 AP or less",
+            "es": "11 PA o menos",
+            "pt": "11 PA ou menos"
+        }
+    },
+    {
+        "id": 9615,
+        "description": {
+            "fr": "Au moins 500 points de citoyenneté",
+            "en": "At least 500 citizenship points",
+            "es": "Al menos 500 puntos de ciudadanía",
+            "pt": "Pelo menos 500 pontos de cidadania"
+        }
+    },
+    {
+        "id": 9980,
+        "description": {
+            "fr": "Plus que 35% de stasis",
+            "en": "More than 35% Stasis",
+            "es": "Más del 35% de Stasis",
+            "pt": "Mais de 35% de Stasis"
+        }
+    },
+    {
+        "id": 27747,
+        "description": {
+            "fr": "Entre 400 et 500 maitrises distances",
+            "en": "Between 400 and 500 ranged mastery",
+            "es": "Entre 400 y 500 de dominio a distancia",
+            "pt": "Entre 400 e 500 de maestria à distância"
+        }
+    },
+    {
+        "id": 26323,
+        "description": {
+            "fr": "25% critique ou moins",
+            "en": "25% critical or less",
+            "es": "25% de crítico o menos",
+            "pt": "25% de crítico ou menos"
+        }
+    },
+    {
+        "id": 26313,
+        "description": {
+            "fr": "Entre 400 et 500 maitrises distances",
+            "en": "Between 400 and 500 ranged mastery",
+            "es": "Entre 400 y 500 de dominio a distancia",
+            "pt": "Entre 400 e 500 de maestria à distância"
+        }
+    },
+    {
+        "id": 27288,
+        "description": {
+            "fr": "2 PO ou plus",
+            "en": "2 Range or more",
+            "es": "2 de alcance o más",
+            "pt": "2 de alcance ou mais"
+        }
+    },{
+        "id": 26319,
+        "description": {
+            "fr": "Au moins 8 PW",
+            "en": "At least 8 WP",
+            "es": "Al menos 8 PW",
+            "pt": "Pelo menos 8 PW"
+        }
+    },
+    {
+        "id": 9970,
+        "description": {
+            "fr": "Plus que 55% de wakfu",
+            "en": "More than 55% Wakfu",
+            "es": "Más del 55% de Wakfu",
+            "pt": "Mais de 55% de Wakfu"
+        }
+    },
+    {
+        "id": 9972,
+        "description": {
+            "fr": "Plus que 50% de wakfu",
+            "en": "More than 50% Wakfu",
+            "es": "Más del 50% de Wakfu",
+            "pt": "Mais de 50% de Wakfu"
+        }
+    },
+    {
+        "id": 9974,
+        "description": {
+            "fr": "Plus que 50% de wakfu",
+            "en": "More than 50% Wakfu",
+            "es": "Más del 50% de Wakfu",
+            "pt": "Mais de 50% de Wakfu"
+        }
+    },
+    {
+        "id": 9968,
+        "description": {
+            "fr": "Plus que 45% de wakfu",
+            "en": "More than 45% Wakfu",
+            "es": "Más del 45% de Wakfu",
+            "pt": "Mais de 45% de Wakfu"
+        }
+    },
+    {
+        "id": 9964,
+        "description": {
+            "fr": "Plus que 35% de wakfu",
+            "en": "More than 35% Wakfu",
+            "es": "Más del 35% de Wakfu",
+            "pt": "Mais de 35% de Wakfu"
+        }
+    },
+    {
+        "id": 9973,
+        "description": {
+            "fr": "Plus que 35% de stasis",
+            "en": "More than 35% Stasis",
+            "es": "Más del 35% de Stasis",
+            "pt": "Mais de 35% de Stasis"
+        }
+    },
+    {
+        "id": 26495,
+        "description": {
+            "fr": "Anneau de Sufokia équipé",
+            "en": "Sufokia Ring equipped",
+            "es": "Anillo de Sufokia equipado",
+            "pt": "Anel de Sufokia equipado"
+        }
+    },
+    {
+        "id": 26497,
+        "description": {
+            "fr": "Anneau de Brâkmar équipé",
+            "en": "Brakmar Ring equipped",
+            "es": "Anillo de Brâkmar equipado",
+            "pt": "Anel de Brâkmar equipado"
+        }
+    },
+    {
+        "id": 26494,
+        "description": {
+            "fr": "Anneau d'Amakna équipé",
+            "en": "Amakna Ring equipped",
+            "es": "Anillo de Amakna equipado",
+            "pt": "Anel de Amakna equipado"
+        }
+    },
+    {
+        "id": 26496,
+        "description": {
+            "fr": "Anneau de Bonta équipé",
+            "en": "Bonta Ring equipped",
+            "es": "Anillo de Bonta equipado",
+            "pt": "Anel de Bonta equipado"
+        }
+    },
+    {
+        "id": 27378,
+        "description": {
+            "fr": "3 PO ou moins",
+            "en": "3 AP or less",
+            "es": "3 PM o menos",
+            "pt": "3 PM ou menos"
+        }
+    },
+    {
+        "id": 27300,
+        "description": {
+            "fr": "3 PO ou moins",
+            "en": "3 AP or less",
+            "es": "3 PM o menos",
+            "pt": "3 PM ou menos"
+        }
+    },
+    {
+        "id": 26593,
+        "description": {
+            "fr": "20 volonté ou moins",
+            "en": "20 willpower or less",
+            "es": "20 voluntad o menos",
+            "pt": "20 vontade ou menos"
+        }
+    },
+    {
+        "id": 26316,
+        "description": {
+            "fr": "3 PO ou moins",
+            "en": "3 AP or less",
+            "es": "3 PM o menos",
+            "pt": "3 PM ou moins"
+        }
+    },
+    {
+        "id": 9969,
+        "description": {
+            "fr": "Plus que 45% de stasis",
+            "en": "More than 45% stasis",
+            "es": "Más del 45% de estasis",
+            "pt": "Mais de 45% de estase"
+        }
+    },
+    {
+        "id": 9971,
+        "description": {
+            "fr": "Plus que 40% de stasis",
+            "en": "More than 40% stasis",
+            "es": "Más del 40% de estasis",
+            "pt": "Mais de 40% de estase"
+        }
+    },
+    {
+        "id": 9963,
+        "description": {
+            "fr": "Plus que 40% de stasis",
+            "en": "More than 40% stasis",
+            "es": "Más del 40% de estasis",
+            "pt": "Mais de 40% de estase"
+        }
+    },
+    {
+        "id": 17792,
+        "description": {
+            "fr": "Plus que 30% de stasis",
+            "en": "More than 30% stasis",
+            "es": "Más del 30% de estasis",
+            "pt": "Mais de 30% de estase"
+        }
+    },
+    {
+        "id": 9965,
+        "description": {
+            "fr": "Plus que 30% de stasis",
+            "en": "More than 30% stasis",
+            "es": "Más del 30% de estasis",
+            "pt": "Mais de 30% de estase"
+        }
+    },
+    {
+        "id": 9966,
+        "description": {
+            "fr": "Plus que 30% de wakfu",
+            "en": "More than 30% wakfu",
+            "es": "Más del 30% de wakfu",
+            "pt": "Mais de 30% de wakfu"
+        }
+    },
+    {
+        "id": 9967,
+        "description": {
+            "fr": "Plus que 55% de stasis",
+            "en": "More than 55% stasis",
+            "es": "Más del 55% de estasis",
+            "pt": "Mais de 55% de estase"
+        }
+    },
+    {
+        "id": 9976,
+        "description": {
+            "fr": "Plus que 45% de wakfu",
+            "en": "More than 45% wakfu",
+            "es": "Más del 45% de wakfu",
+            "pt": "Mais de 45% de wakfu"
+        }
+    },
+    {
+        "id": 9975,
+        "description": {
+            "fr": "Plus que 30% de stasis",
+            "en": "More than 30% stasis",
+            "es": "Más del 30% de estasis",
+            "pt": "Mais de 30% de estase"
+        }
+    }
+]
