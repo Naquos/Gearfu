@@ -3,7 +3,7 @@ import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
 import { ActionService } from '../../services/actionService';
 import { MaitrisesServices } from '../../services/maitrisesService';
-import { combineLatest, map, take, takeUntil } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, take, takeUntil, tap } from 'rxjs';
 import { ItemsService } from '../../services/itemsService';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { ItemChooseService } from '../../services/itemChooseService';
@@ -17,6 +17,8 @@ import { StatesComponent } from '../states/states.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { States } from '../../models/states';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ItemConditionService } from '../../services/itemConditionService';
+import { ItemCondition } from '../../models/itemCondition';
 
 @Component({
   selector: 'app-item',
@@ -27,7 +29,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
   
   @Input()
-  public item!: Item;  
+  public item!: Item;
+
+  private condition = new BehaviorSubject<ItemCondition | undefined>(undefined);
+  protected condition$ = this.condition.asObservable();
 
   constructor(
     private viewContainerRef: ViewContainerRef,
@@ -42,7 +47,8 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     protected tooltipService: TooltipService<{itemsChoosen: Item[], item: Item}>,
     protected stateTooltipService: TooltipService<{statesDefinitionId: number, nameStates: string}>,
     protected cdr: ChangeDetectorRef,
-    protected _statesService: StatesService
+    protected _statesService: StatesService,
+    protected itemConditionService: ItemConditionService
   ) {
     super(_translateService, _itemTypeService, _itemChooseService, _actionsService, _statesService);
   }
@@ -68,8 +74,18 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
         })
   
       this.initItemChoosen(this.item);
+      this.itemConditionService.findCondition(this.item.id)
+      .pipe(
+        take(1),
+        tap(x => this.condition.next(x))
+      ).subscribe()
+
       this.cdr.detectChanges();
     }
+  }
+
+  protected textCondition(): Observable<string | undefined> {
+    return this.condition$.pipe(map(x => x?.description[this.translateService.currentLang as keyof typeof x.description] ?? undefined));
   }
 
   protected openTooltip(event: MouseEvent, item: Item): void {
@@ -112,4 +128,5 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
       }]
     )
   }
+
 }

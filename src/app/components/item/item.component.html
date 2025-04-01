@@ -6,6 +6,11 @@
         <span><img [src]="'aptitudes/1069.png'" alt="Résistances">{{ "item.resistances" | translate }} {{resistances}}</span>
         <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
     </div>
+    <ng-container *ngIf="{condition: textCondition() | async} as value">
+        <div class="condition" *ngIf="value.condition !== undefined">
+            [ {{ value.condition }} ]
+        </div>
+    </ng-container>
     <div class="content" (click)="setItemChoosen()">
         <div class="title">
             <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{getTitle()}} ({{item.level}})</h3>
