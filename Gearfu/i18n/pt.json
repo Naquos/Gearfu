@@ -35,7 +35,9 @@
     "item-choose": {
         "zenith": "Exportar build para Zénith Wakfu",
         "copy": "Copiar URL",
-        "poids-total": "Peso total"
+        "poids-total": "Peso total",
+        "maitrise-total": "Maestria total",
+        "resistance-total": "Resistências total"
     },
     "item-level": {
         "level": "Faixa de nível",
