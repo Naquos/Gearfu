@@ -48,7 +48,7 @@ export class ItemsService {
     public craftable$ = this.craftable.asObservable();
     
     public itemsFilterByItemName$ = combineLatest([this.fullItems$, this.itemName$])
-    .pipe(map(([items, itemName]) => items.filter(x => x.title[this.translateService.currentLang as keyof typeof x.title].toString().toUpperCase().includes(itemName.toUpperCase()))));
+    .pipe(map(([items, itemName]) => items.filter(x => this.normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(this.normalizeString(itemName)))));
 
     protected itemsFilterByLevelMin$ = combineLatest([this.itemsFilterByItemName$, this.levelMin$])
     .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeEnum.FAMILIER)));
@@ -105,36 +105,34 @@ export class ItemsService {
           map(items => items.sort((itemA, itemB) => itemB.weightForSort - itemA.weightForSort).slice(0,32)))
     }
 
+    private normalizeString(str: string): string {
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
     private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number): void {
       let maxMaistrises = 0;
       let maxResistances = 0;
 
-      if(sort === SortChoiceEnum.EQUILIBRE && items.length) {
-        maxMaistrises = this.calculMaitrisesForAnItem(
-          items.sort((itemA, itemB) => this.calculMaitrisesForAnItem(itemB, nbElements, idMaitrises, multiplicateurElem) - this.calculMaitrisesForAnItem(itemA, nbElements, idMaitrises, multiplicateurElem))[0], 
-          nbElements, 
-          idMaitrises, 
-          multiplicateurElem);
+      items.forEach(item => {
+        item.resistance = Math.trunc(this.calculResistancesForAnItem(item));
+        item.maitrise = Math.trunc(this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem));
+        item.weight = this.calculWeight(item.resistance, item.maitrise);
+        item.weightForSort = 0;
+      })
 
-          maxResistances = this.calculResistancesForAnItem(items.sort((itemA, itemB) => this.calculResistancesForAnItem(itemB) - this.calculResistancesForAnItem(itemA))[0]);
+      if(sort === SortChoiceEnum.EQUILIBRE && items.length) {
+          maxMaistrises =  items.sort((itemA, itemB) => itemB.maitrise - itemA.maitrise)[0].maitrise;
+          maxResistances = items.sort((itemA, itemB) => itemB.resistance - itemA.resistance)[0].resistance;
       }
 
-
-
       items.forEach(item => {
-        const resistance = this.calculResistancesForAnItem(item);
-        const maitrises = this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
-
-        item.weightForSort = 0;
-        item.weight = this.calculWeight(resistance, maitrises);
-
         if(sort === SortChoiceEnum.POIDS) {
-          item.weightForSort = this.calculWeight(resistance, maitrises);
+          item.weightForSort = this.calculWeight(item.resistance, item.maitrise);
         } else if (sort === SortChoiceEnum.MAITRISES) {
-          item.weightForSort = maitrises;
+          item.weightForSort = item.maitrise;
         } else if (sort === SortChoiceEnum.EQUILIBRE) {
-          item.weightForSort =  maitrises / maxMaistrises;
-          item.weightForSort += 1.2 * (resistance / maxResistances);
+          item.weightForSort =  item.maitrise / maxMaistrises;
+          item.weightForSort += 1.2 * (item.resistance / maxResistances);
         } else if (sort === SortChoiceEnum.POINT_DE_VIE) {
           item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.POINT_DE_VIE)?.params[0] ?? 0;
         } else if (sort === SortChoiceEnum.PARADE_ARMURE_DONNEE) {
@@ -146,7 +144,7 @@ export class ItemsService {
             }
           })
         } else {
-          item.weightForSort = resistance;
+          item.weightForSort = item.resistance;
         }
       })
     }
@@ -180,7 +178,9 @@ export class ItemsService {
             weightForSort: 0,
             craftable: x.definition.item.craftable,
             dropable: x.definition.item.dropable,
-            weight: 0
+            weight: 0,
+            maitrise: 0,
+            resistance: 0
         }));
     }
     

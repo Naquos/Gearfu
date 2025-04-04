@@ -1,12 +1,13 @@
 import { Inject, Injectable } from "@angular/core";
 import { ItemTypeEnum } from "../models/itemTypeEnum";
-import { BehaviorSubject, combineLatest, delay, filter, first, iif, map, Observable, of, switchMap, take, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, filter, first, iif, map, Observable, of, switchMap, take, tap } from "rxjs";
 import { Item } from "../models/item";
 import { ItemTypeServices } from "./ItemTypesServices";
 import { RarityItem } from "../models/rarityItem";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ItemsService } from "./itemsService";
 import { DOCUMENT } from "@angular/common";
+import { MaitrisesServices } from "./maitrisesService";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService {
@@ -17,9 +18,19 @@ export class ItemChooseService {
 
     private totalWeight = new BehaviorSubject<number>(0);
     public totalWeight$ = this.totalWeight.asObservable();
+
+    private listItem = new BehaviorSubject<Item[]>([]);
+    private listItem$ = this.listItem.asObservable();
+    
+    private totalMaitrises = new BehaviorSubject<number>(0);
+    public totalMaitrises$ = this.totalMaitrises.asObservable();
+    
+    private totalResistances = new BehaviorSubject<number>(0);
+    public totalResistances$ = this.totalResistances.asObservable();
     private indexAnneau = 0;
 
     constructor(private itemTypeService: ItemTypeServices,
+        private maitrisesService: MaitrisesServices,
         private itemService: ItemsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -59,17 +70,16 @@ export class ItemChooseService {
             this.getObsItem(ItemTypeEnum.EPAULETTES),
             this.getObsItem(ItemTypeEnum.ACCESSOIRES),
             this.getObsItem(ItemTypeEnum.BOUCLIER),
-            this.getObsItem(ItemTypeEnum.FAMILIER)
+            this.getObsItem(ItemTypeEnum.FAMILIER),
         ]).pipe(
-            delay(500),
             map(list => list.flat()),
-            tap(list => this.calculTotalWeight(list)),
+            map(list => list.filter(x => x !== undefined && x !== null)),
+            tap(list => this.listItem.next(list)),
             map(list => list.map(items => items?.id)),
             map(list => list.filter(x => x).join(",")),
             tap(x => this.setIdItems(x))
         ).subscribe(x => {
             localStorage?.setItem(this.KEY_BUILD, x);
-
             this.router.navigate(
                 [], 
                 {
@@ -79,17 +89,33 @@ export class ItemChooseService {
                 }
             );
         });
-        
+
+        combineLatest([
+            this.listItem$,
+            this.maitrisesService.nbElements$,
+            this.maitrisesService.idMaitrises$,
+            this.itemService.multiplicateurElem$
+        ]).pipe(
+            tap(([list, nbElements, idMaitrises, multiplicateurElem]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem)),
+        ).subscribe();
     }
 
-    private calculTotalWeight(list: (Item | undefined)[]): void {
-        let result = 0;
-        const setItem = new Set(); // On met un Set pour éviter que l'arme à deux mains voit son poid compter 2 fois
+    private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number): void {
+        let weight = 0;
+        let resistance = 0;
+        let maitrise = 0;
+        const setItem = new Set<Item>(); // On met un Set pour éviter que l'arme à deux mains voit son poid compter 2 fois
         list.forEach(item => setItem.add(item));
-        setItem.forEach(function(x) {
-            result+= (x as (Item |undefined))?.weight ?? 0
+        setItem.forEach(x => {
+            const tempResis  = this.itemService.calculResistancesForAnItem(x);
+            const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem);
+            resistance+= tempResis;
+            maitrise+= tempMaitrise;
+            weight+= this.itemService.calculWeight(tempResis, tempMaitrise)
         })
-        this.totalWeight.next(result);
+        this.totalWeight.next(weight);
+        this.totalMaitrises.next(maitrise);
+        this.totalResistances.next(resistance);
     }
 
     private setItemWithIdItem(idItem: number): void {

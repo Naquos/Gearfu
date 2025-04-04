@@ -5,7 +5,7 @@ import { Directive, HostListener, output } from '@angular/core';
 })
 export class SwipeDirective {
 
-  private minimumMoove = 50;
+  private minimumMoove = 100;
 
   private startX = 0;
   private startY = 0;

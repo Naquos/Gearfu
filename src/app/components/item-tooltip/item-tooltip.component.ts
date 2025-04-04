@@ -9,7 +9,7 @@ import { ItemTypeServices } from '../../services/ItemTypesServices';
 import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
 import { DifferentStatsItem } from '../../models/differentsStatsItem';
-import { combineLatest, filter, map, Observable, takeUntil, tap } from 'rxjs';
+import { filter, map, Observable, takeUntil, tap } from 'rxjs';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
 import { StatesService } from '../../services/statesService';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -66,17 +66,17 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     public ngAfterViewInit(): void {
       if(this.item) {
         this.item.equipEffects = this.item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
-        this.loaded$ = combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.itemService.multiplicateurElem$, this.itemSelected$])
-        .pipe(takeUntil(this.destroy$),
-          map(([nbElements, idMaitrises, multiplicateurElem, itemSelected]) => 
+        this.loaded$ = this.itemSelected$.pipe(
+          takeUntil(this.destroy$),
+          map((itemSelected) => 
           {
-              this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
-              this.maitrises = this.item ? this.itemService.calculMaitrisesForAnItem(this.item, nbElements, idMaitrises, multiplicateurElem) : 0;
+              this.resistances = this.item.resistance;    
+              this.maitrises = this.item.maitrise;
               this.weight = this.itemService.calculWeight(this.resistances, this.maitrises)
               itemSelected.forEach(item => {
                 if(item) {
-                  this.resistances -=  this.itemService.calculResistancesForAnItem(item);
-                  this.maitrises -= this.itemService.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem);
+                  this.resistances -=  item.resistance;
+                  this.maitrises -= item.maitrise;
                   this.weight = this.itemService.calculWeight(this.resistances, this.maitrises)
                 }
               })

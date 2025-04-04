@@ -32,14 +32,20 @@
         transform: scale(1.06);
     }
 
-    .totalWeight {
-        margin-left: 10px;
+
+
+    .totalValue {
         display: flex;
-        align-items: center;
-        .poids {
-            width: 20px;
-            height: 20px;
-            margin-right: 5px;
+        flex-direction: column;
+        span {
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            .poids {
+                width: 20px;
+                height: 20px;
+                margin-right: 5px;
+            }
         }
     }
 }
@@ -50,7 +56,7 @@
         flex-wrap: wrap;
     }
     
-    span, img, mat-icon, .totalWeight {
+    span, img, mat-icon, .totalValue {
         display: none!important;
     }
 }

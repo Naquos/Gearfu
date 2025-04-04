@@ -3,7 +3,7 @@ import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
 import { ActionService } from '../../services/actionService';
 import { MaitrisesServices } from '../../services/maitrisesService';
-import { BehaviorSubject, combineLatest, map, Observable, take, takeUntil, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, take, tap } from 'rxjs';
 import { ItemsService } from '../../services/itemsService';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { ItemChooseService } from '../../services/itemChooseService';
@@ -65,14 +65,7 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   ngAfterViewInit(): void {
     if(this.item) {
       this.item.equipEffects = this.item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
-      combineLatest([this.maitrisesService.nbElements$, this.maitrisesService.idMaitrises$, this.itemService.multiplicateurElem$])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(([nbElements, idMaitrises, multiplicateurElem]) => 
-        {
-            this.resistances = this.itemService.calculResistancesForAnItem(this.item);    
-            this.maitrises = this.item ? this.itemService.calculMaitrisesForAnItem(this.item, nbElements, idMaitrises, multiplicateurElem) : 0;
-        })
-  
+ 
       this.initItemChoosen(this.item);
       this.itemConditionService.findCondition(this.item.id)
       .pipe(

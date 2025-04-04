@@ -17,4 +17,6 @@ export interface Item {
     craftable: boolean;
     dropable: boolean;
     weight: number;
+    maitrise: number;
+    resistance: number;
 }

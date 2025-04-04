@@ -26,7 +26,17 @@
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementPremièreMain.png" [itemType]="ItemTypeEnum.UNE_MAIN" ></app-item-choose-display>
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementEmblème.png" [itemType]="ItemTypeEnum.ACCESSOIRES" ></app-item-choose-display>
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementFamilier.png" [itemType]="ItemTypeEnum.FAMILIER" ></app-item-choose-display>
-    <span *ngIf="{totalWeight: itemChooseService.totalWeight$ | async} as value" class="totalWeight">
-        <img [src]="'aptitudes/poids.png'" alt="poids" class="poids"> {{ "item-choose.poids-total" | translate }} : {{ value.totalWeight }} 
-    </span>
+    <div class="totalValue">
+        <span *ngIf="{totalMaitrises: itemChooseService.totalMaitrises$ | async} as value">
+            <img [src]="'aptitudes/1068.png'" alt="poids" class="poids"> {{ "item-choose.maitrise-total" | translate }} : {{ value.totalMaitrises }} 
+        </span>
+        
+        <span *ngIf="{totalResistances: itemChooseService.totalResistances$ | async} as value">
+            <img [src]="'aptitudes/1069.png'" alt="poids" class="poids"> {{ "item-choose.resistance-total" | translate }} : {{ value.totalResistances }} 
+        </span>
+        
+        <span *ngIf="{totalWeight: itemChooseService.totalWeight$ | async} as value">
+            <img [src]="'aptitudes/poids.png'" alt="poids" class="poids"> {{ "item-choose.poids-total" | translate }} : {{ value.totalWeight }} 
+        </span>
+    </div>
 </div>
