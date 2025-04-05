@@ -1,6 +1,6 @@
 <h3>{{ "item-level.level" | translate}}</h3>
 
-<form [formGroup]="form">
+<form [formGroup]="itemLevelFormService.form">
     <mat-form-field >
         <mat-label>{{ "item-level.level-min" | translate}}</mat-label>
         <input type="number" matInput formControlName="levelMin">

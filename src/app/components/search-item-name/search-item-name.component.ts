@@ -9,6 +9,10 @@ import { CommonModule } from '@angular/common';
 import { Item } from '../../models/item';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { map, Observable } from 'rxjs';
+import { RareteItemFormServices } from '../../services/rareteItemFormService';
+import { ItemTypeFormServices } from '../../services/itemTypeFormServices';
+import { ItemTypeServices } from '../../services/ItemTypesServices';
+import { ItemLevelFormService } from '../../services/itemLevelFormService';
 
 @Component({
   selector: 'app-search-item-name',
@@ -30,12 +34,32 @@ export class SearchItemNameComponent {
   protected options$?: Observable<Item[]>;
 
 
-  constructor(private translateService: TranslateService, private itemService: ItemsService, protected colorRarityService: ColorRarityService) {
+  constructor(
+    private translateService: TranslateService,
+    private itemService: ItemsService, 
+    private rareteItemFormServices: RareteItemFormServices,
+    private itemTypeFormServices: ItemTypeFormServices,
+    private itemTypeService: ItemTypeServices,
+    private itemLevelFormService: ItemLevelFormService,
+    protected colorRarityService: ColorRarityService) 
+  {
     this.form.valueChanges.subscribe(x => this.itemService.setItemName(x ?? ""));
     this.options$ = this.itemService.itemsFilterByItemName$.pipe(map(x => x.slice(0, 10)))
   }
 
   protected getTitle(item: Item): string {
     return item.title[this.translateService.currentLang as keyof typeof item.title]
+  }
+
+  protected setFilter(item :Item): void {
+    this.rareteItemFormServices.setRarity(item.rarity);
+    this.itemTypeFormServices.setItemType(this.itemTypeService.getItemType(item.itemTypeId));
+
+    if(item.level <= 20) {
+      this.itemLevelFormService.setLevel(0, 20);
+    } else {
+      const temp = Math.ceil((item.level - 20) / 15);
+      this.itemLevelFormService.setLevel((temp - 1 ) * 15 + 20 + 1, temp * 15 + 20);
+    }
   }
 }

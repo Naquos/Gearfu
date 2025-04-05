@@ -3,7 +3,7 @@
     <input matInput [formControl]="form" [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         @for (option of options$ | async; track option) {
-            <mat-option [value]="getTitle(option)" [style.backgroundColor]="colorRarityService.getMapColors().get(option.rarity)">
+            <mat-option [value]="getTitle(option)" [style.backgroundColor]="colorRarityService.getMapColors().get(option.rarity)" (click)="setFilter(option)">
                 <div style="display: flex; align-items: center;">
                     <img [src]="'items/' + option.idImage + '.png'"
                         alt="image item"  
