@@ -52,7 +52,7 @@ export class SearchItemNameComponent {
   }
 
   protected setFilter(item :Item): void {
-    this.rareteItemFormServices.setRarity(item.rarity);
+    this.rareteItemFormServices.setRarity();
     this.itemTypeFormServices.setItemType(this.itemTypeService.getItemType(item.itemTypeId));
 
     if(item.level <= 20) {
