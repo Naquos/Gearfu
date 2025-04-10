@@ -117,6 +117,7 @@
         "TACLE": "Tacle",
         "ESQUIVE": "Esquive",
         "TACLE_ESQUIVE": "Tacle + Esquive",
-        "CRITIQUE":"% Critique"
+        "CRITIQUE":"% Critique",
+        "PARADE": "% Parade"
     }
 }

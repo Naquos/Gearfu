@@ -161,7 +161,10 @@ export class ItemsService {
         } else if(sort === SortChoiceEnum.CRITIQUE) {
           item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.COUP_CRITIQUE)?.params[0] ?? 0;
           item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_COUP_CRITIQUE)?.params[0] ?? 0;
-        } else {
+        } else if (sort === SortChoiceEnum.PARADE) {
+          item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.PARADE)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_PARADE)?.params[0] ?? 0;
+        }else {
           item.weightForSort = item.resistance;
         }
       })

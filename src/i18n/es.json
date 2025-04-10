@@ -117,6 +117,7 @@
         "TACLE": "Bloqueo",
         "ESQUIVE": "Esquiva",
         "TACLE_ESQUIVE": "Bloqueo + Esquiva",
-        "CRITIQUE": "% Crítico"
+        "CRITIQUE": "% Crítico",
+        "PARADE": "% Anticipación"
     }
 }
