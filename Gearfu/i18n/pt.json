@@ -123,6 +123,7 @@
         "TACLE": "Bloqueio",
         "ESQUIVE": "Esquiva",
         "TACLE_ESQUIVE": "Bloqueio + Esquiva",
-        "CRITIQUE": "% Crítico"
+        "CRITIQUE": "% Crítico",
+        "PARADE": "% Parada"
     }
 }

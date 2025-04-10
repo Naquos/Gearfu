@@ -123,6 +123,7 @@
         "TACLE": "Lock",
         "ESQUIVE": "Dodge",
         "TACLE_ESQUIVE": "Lock + Dodge",
-        "CRITIQUE": "% Critical"
+        "CRITIQUE": "% Critical",
+        "PARADE": "% Block"
     }
 }

@@ -119,6 +119,11 @@
         "RESISTANCES": "Resistências",
         "EQUILIBRE": "Equilibrado",
         "PARADE_ARMURE_DONNEE": "Parada + Armadura concedida",
-        "POINT_DE_VIE": "Ponto de vida"
+        "POINT_DE_VIE": "Ponto de vida",
+        "TACLE": "Bloqueio",
+        "ESQUIVE": "Esquiva",
+        "TACLE_ESQUIVE": "Bloqueio + Esquiva",
+        "CRITIQUE": "% Crítico",
+        "PARADE": "% Parada"
     }
 }
