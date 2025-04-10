@@ -9,10 +9,10 @@ import { CommonModule } from '@angular/common';
 import { Item } from '../../models/item';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { map, Observable } from 'rxjs';
-import { RareteItemFormServices } from '../../services/rareteItemFormService';
-import { ItemTypeFormServices } from '../../services/itemTypeFormServices';
+import { RareteItemFormServices } from '../../services/form/rareteItemFormService';
+import { ItemTypeFormServices } from '../../services/form/itemTypeFormServices';
 import { ItemTypeServices } from '../../services/ItemTypesServices';
-import { ItemLevelFormService } from '../../services/itemLevelFormService';
+import { ItemLevelFormService } from '../../services/form/itemLevelFormService';
 
 @Component({
   selector: 'app-search-item-name',

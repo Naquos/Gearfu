@@ -4,7 +4,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { RareteItemFormServices } from '../../services/rareteItemFormService';
+import { RareteItemFormServices } from '../../services/form/rareteItemFormService';
 
 @Component({
   selector: 'app-rarete-item',

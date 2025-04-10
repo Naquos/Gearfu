@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
-import { ItemTypeServices } from "./ItemTypesServices";
-import { ItemTypeEnum } from "../models/itemTypeEnum";
+import { ItemTypeServices } from "../ItemTypesServices";
+import { ItemTypeEnum } from "../../models/itemTypeEnum";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable({providedIn: 'root'})

@@ -1,0 +1,10 @@
+<h3>{{"filter-resistances.resistances-elementaires" | translate}}</h3>
+
+<form [formGroup]="resistancesFormService.form">
+    <div class="group">
+        <app-button-checkbox tooltip="filter-maitrises.feu" [control]="resistancesFormService.form.controls.feu" srcImg="aptitudes/fire.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.air" [control]="resistancesFormService.form.controls.air" srcImg="aptitudes/air.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.terre" [control]="resistancesFormService.form.controls.terre" srcImg="aptitudes/earth.png" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.eau" [control]="resistancesFormService.form.controls.eau" srcImg="aptitudes/water.png" ></app-button-checkbox>
+    </div>
+</form>

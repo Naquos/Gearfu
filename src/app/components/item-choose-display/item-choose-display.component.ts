@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { map, Observable } from 'rxjs';
 import { ItemChooseService } from '../../services/itemChooseService';
-import { ItemTypeFormServices } from '../../services/itemTypeFormServices';
+import { ItemTypeFormServices } from '../../services/form/itemTypeFormServices';
 import { TooltipService } from '../../services/TooltipService';
 import { ItemComponent } from '../item/item.component';
 

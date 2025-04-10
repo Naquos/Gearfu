@@ -3,7 +3,7 @@ import { ItemType } from '../../models/itemType';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
-import { ItemTypeFormServices } from '../../services/itemTypeFormServices';
+import { ItemTypeFormServices } from '../../services/form/itemTypeFormServices';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

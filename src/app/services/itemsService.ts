@@ -5,12 +5,13 @@ import { MaitrisesServices } from "./maitrisesService";
 import { BehaviorSubject, combineLatest, map, Observable, tap } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../models/sortChoiceEnum";
 import { IdActionsEnum } from "../models/idActionsEnum";
-import { ItemTypeFormServices } from "./itemTypeFormServices";
+import { ItemTypeFormServices } from "./form/itemTypeFormServices";
 import { ItemTypeEnum } from "../models/itemTypeEnum";
 import { MajorAction } from "../models/majorActions";
 import { CraftableChoiceEnum } from "../models/craftableChoiceEnum";
 import { ParameterMajorActionEnum } from "../models/parameterMajorActionEnum";
 import { TranslateService } from "@ngx-translate/core";
+import { ResistancesServices } from "./resistancesService";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -80,6 +81,7 @@ export class ItemsService {
     protected itemsFilterByItemType$: Observable<Item[]>;
 
     constructor(protected maitrisesService : MaitrisesServices,
+                private resistanceService: ResistancesServices,
                 private itemTypeFormServices: ItemTypeFormServices,
                 private translateService: TranslateService
     ) {
@@ -98,9 +100,10 @@ export class ItemsService {
           this.maitrisesService.idMaitrises$,
           this.sort$,
           this.multiplicateurElem$,
+          this.resistanceService.idResistances$
         ])
         .pipe(
-          tap(([items,nbElements, idMaitrises, sort, multiplicateurElem]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem)),
+          tap(([items,nbElements, idMaitrises, sort, multiplicateurElem, idResistances]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances)),
           map(([items,]) => items),
           map(items => items.sort((itemA, itemB) => itemB.weightForSort - itemA.weightForSort).slice(0,32)))
     }
@@ -109,12 +112,12 @@ export class ItemsService {
       return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
 
-    private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number): void {
+    private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number, idResistances: number[]): void {
       let maxMaistrises = 0;
       let maxResistances = 0;
 
       items.forEach(item => {
-        item.resistance = Math.trunc(this.calculResistancesForAnItem(item));
+        item.resistance = Math.trunc(this.calculResistancesForAnItem(item, idResistances));
         item.maitrise = Math.trunc(this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem));
         item.weight = this.calculWeight(item.resistance, item.maitrise);
         item.weightForSort = 0;
@@ -127,7 +130,7 @@ export class ItemsService {
 
       items.forEach(item => {
         if(sort === SortChoiceEnum.POIDS) {
-          item.weightForSort = this.calculWeight(item.resistance, item.maitrise);
+          item.weightForSort = item.weight;
         } else if (sort === SortChoiceEnum.MAITRISES) {
           item.weightForSort = item.maitrise;
         } else if (sort === SortChoiceEnum.EQUILIBRE) {
@@ -135,6 +138,7 @@ export class ItemsService {
           item.weightForSort += 1.2 * (item.resistance / maxResistances);
         } else if (sort === SortChoiceEnum.POINT_DE_VIE) {
           item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.POINT_DE_VIE)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_POINT_DE_VIE)?.params[0] ?? 0;
         } else if (sort === SortChoiceEnum.PARADE_ARMURE_DONNEE) {
           item.equipEffects.forEach(effect => {
             if(effect.actionId === IdActionsEnum.PARADE ||
@@ -143,6 +147,20 @@ export class ItemsService {
               item.weightForSort += effect.params[0]
             }
           })
+        } else if(sort === SortChoiceEnum.TACLE) {
+          item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.TACLE)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_TACLE)?.params[0] ?? 0;
+        } else if(sort === SortChoiceEnum.ESQUIVE) {  
+          item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.ESQUIVE)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_ESQUIVE)?.params[0] ?? 0;
+        } else if(sort === SortChoiceEnum.TACLE_ESQUIVE) {
+          item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.TACLE)?.params[0] ?? 0;
+          item.weightForSort += item.equipEffects.find(x => x.actionId === IdActionsEnum.ESQUIVE)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_TACLE)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_ESQUIVE)?.params[0] ?? 0;
+        } else if(sort === SortChoiceEnum.CRITIQUE) {
+          item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.COUP_CRITIQUE)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_COUP_CRITIQUE)?.params[0] ?? 0;
         } else {
           item.weightForSort = item.resistance;
         }
@@ -229,20 +247,24 @@ export class ItemsService {
                               || (major.id === IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === major.parameter)));
     }
 
-    public calculResistancesForAnItem(item: Item): number {
+    public calculResistancesForAnItem(item: Item, idResistances: number[]): number {
         let result = 0;
-        const resistancesId = [IdActionsEnum.RESISTANCES_AIR,IdActionsEnum.RESISTANCES_EAU,IdActionsEnum.RESISTANCES_TERRE,IdActionsEnum.RESISTANCES_FEU];
-        const malusResistancesId = [IdActionsEnum.PERTE_RESISTANCES_FEU, IdActionsEnum.PERTE_RESISTANCES_TERRE, IdActionsEnum.PERTE_RESISTANCE_EAU];
+        const resisElemId = [IdActionsEnum.RESISTANCES_AIR,IdActionsEnum.RESISTANCES_EAU,IdActionsEnum.RESISTANCES_TERRE,IdActionsEnum.RESISTANCES_FEU];
+        const malusResisElemId = [IdActionsEnum.PERTE_RESISTANCES_FEU, IdActionsEnum.PERTE_RESISTANCES_TERRE, IdActionsEnum.PERTE_RESISTANCE_EAU];
+        const nbElements = idResistances.length === 0 ? 4 : idResistances.length;
         item.equipEffects.forEach(effect => {
-          if(effect.actionId === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE) {
-            result += effect.params[0] * effect.params[2];
+          if(effect.actionId === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE && effect.params[2] >= idResistances.length) {
+            result += effect.params[0] * Math.min(effect.params[2], nbElements);
           } else if (effect.actionId === IdActionsEnum.RESISTANCES_ELEMENTAIRE) {
-            result += effect.params[0] * 4;
+            result += effect.params[0] * nbElements;
           } else if (effect.actionId ===  IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE) {
-            result -= effect.params[0] * 4;
-          } else if (resistancesId.includes(effect.actionId)) {
+            result -= effect.params[0] * nbElements;
+          } else if (resisElemId.includes(effect.actionId) && (nbElements === 4 || idResistances.includes(effect.actionId))) {
             result += effect.params[0];
-          } else if (malusResistancesId.includes(effect.actionId)) {
+          } else if ((nbElements === 4 && malusResisElemId.includes(effect.actionId)) ||
+                    (effect.actionId === IdActionsEnum.PERTE_RESISTANCES_FEU && idResistances.includes(IdActionsEnum.RESISTANCES_FEU)) ||
+                    (effect.actionId === IdActionsEnum.PERTE_RESISTANCES_TERRE && idResistances.includes(IdActionsEnum.RESISTANCES_TERRE)) ||
+                    (effect.actionId === IdActionsEnum.PERTE_RESISTANCE_EAU && idResistances.includes(IdActionsEnum.RESISTANCES_EAU))) {
             result -= effect.params[0];
           } 
         })

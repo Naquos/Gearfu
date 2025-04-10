@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
-import { ItemsService } from "./itemsService";
+import { ItemsService } from "../itemsService";
 
 @Injectable({providedIn: 'root'})
 export class ItemLevelFormService {

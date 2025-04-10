@@ -9,6 +9,7 @@ import { ItemsService } from "./itemsService";
 import { MaitrisesServices } from "./maitrisesService";
 import { KeyEnum } from "../models/keyEnum";
 import { LocalStorageService } from "./localStorageService";
+import { ResistancesServices } from "./resistancesService";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService {
@@ -31,6 +32,7 @@ export class ItemChooseService {
 
     constructor(private itemTypeService: ItemTypeServices,
         private maitrisesService: MaitrisesServices,
+        private resistancesService: ResistancesServices,
         private itemService: ItemsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -93,20 +95,21 @@ export class ItemChooseService {
             this.listItem$,
             this.maitrisesService.nbElements$,
             this.maitrisesService.idMaitrises$,
-            this.itemService.multiplicateurElem$
+            this.itemService.multiplicateurElem$,
+            this.resistancesService.idResistances$
         ]).pipe(
-            tap(([list, nbElements, idMaitrises, multiplicateurElem]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem)),
+            tap(([list, nbElements, idMaitrises, multiplicateurElem, idResistances]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances)),
         ).subscribe();
     }
 
-    private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number): void {
+    private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[]): void {
         let weight = 0;
         let resistance = 0;
         let maitrise = 0;
         const setItem = new Set<Item>(); // On met un Set pour éviter que l'arme à deux mains voit son poid compter 2 fois
         list.forEach(item => setItem.add(item));
         setItem.forEach(x => {
-            const tempResis  = this.itemService.calculResistancesForAnItem(x);
+            const tempResis  = this.itemService.calculResistancesForAnItem(x, idResistances);
             const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem);
             resistance+= tempResis;
             maitrise+= tempMaitrise;

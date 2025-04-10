@@ -26,6 +26,9 @@
         "soin": "Curación",
         "berzerk": "Berserker"
     },
+    "filter-resistances": {
+        "resistances-elementaires": "Resistencias elementales"
+    },
     "item": {
         "maitrises": "Dominio",
         "resistances": "Resistencias",

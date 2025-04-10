@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SwipeDirective } from '../../directives/swipe.directive';
 import { KeyEnum } from '../../models/keyEnum';
 import { LocalStorageService } from '../../services/localStorageService';
+import { FilterResistancesComponent } from '../filter-resistances/filter-resistances.component';
 
 
 @Component({
@@ -31,6 +32,7 @@ import { LocalStorageService } from '../../services/localStorageService';
     ItemLevelComponent,
     RareteItemComponent,
     FilterMaitrisesComponent,
+    FilterResistancesComponent,
     SortChoiceComponent,
     OnlyNoSecondaryComponent,
     MajorPresentComponent,

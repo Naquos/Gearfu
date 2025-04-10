@@ -113,6 +113,10 @@
         "RESISTANCES": "Resistances",
         "EQUILIBRE": "Balanced",
         "PARADE_ARMURE_DONNEE": "Parry + Given Armor",
-        "POINT_DE_VIE": "Health point"
+        "POINT_DE_VIE": "Health point",
+        "TACLE": "Lock",
+        "ESQUIVE": "Dodge",
+        "TACLE_ESQUIVE": "Lock + Dodge",
+        "CRITIQUE": "% Critical"
     }
 }
