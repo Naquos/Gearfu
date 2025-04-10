@@ -3,6 +3,8 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
 import { ItemsService } from "../itemsService";
 import { RarityItem } from "../../models/rarityItem";
+import { LocalStorageService } from "../localStorageService";
+import { KeyEnum } from "../../models/keyEnum";
 
 @Injectable({providedIn: 'root'})
 export class RareteItemFormServices {
@@ -20,18 +22,20 @@ export class RareteItemFormServices {
     public selected$ = this.selected.asObservable();
     
 
-  constructor(private itemService: ItemsService) {
+  constructor(private itemService: ItemsService, private localStorageService: LocalStorageService) {
     this.form.valueChanges.subscribe(changes => {
       const result: number[] = [];
-      if(changes.normal) { result.push(1)}
-      if(changes.rare) { result.push(2)}
-      if(changes.mythique) { result.push(3)}
-      if(changes.legendaire) { result.push(4)}
-      if(changes.relique) { result.push(5)}
-      if(changes.souvenir) { result.push(6)}
-      if(changes.epique) { result.push(7)}
+      if(changes.normal) { result.push(RarityItem.NORMAL)}
+      if(changes.rare) { result.push(RarityItem.RARE)}
+      if(changes.mythique) { result.push(RarityItem.MYTHIQUE)}
+      if(changes.legendaire) { result.push(RarityItem.LEGENDAIRE)}
+      if(changes.relique) { result.push(RarityItem.RELIQUE)}
+      if(changes.souvenir) { result.push(RarityItem.SOUVENIR)}
+      if(changes.epique) { result.push(RarityItem.EPIQUE)}
       this.itemService.setRarity(result);
+      this.localStorageService.setItem<number[]>(KeyEnum.KEY_RARETE_ITEM, result ?? []);
     })
+    this.setRarity(...(this.localStorageService.getItem<number[]>(KeyEnum.KEY_RARETE_ITEM) ?? []));
   }
 
     public setRarity(...rarity: RarityItem[]) {
@@ -44,5 +48,9 @@ export class RareteItemFormServices {
             souvenir: rarity.includes(RarityItem.SOUVENIR),
             epique: rarity.includes(RarityItem.EPIQUE),
         });
+    }
+
+    public setDefaultValue(): void {
+        this.setRarity();
     }
 }

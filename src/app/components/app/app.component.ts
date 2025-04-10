@@ -19,6 +19,7 @@ import { SwipeDirective } from '../../directives/swipe.directive';
 import { KeyEnum } from '../../models/keyEnum';
 import { LocalStorageService } from '../../services/localStorageService';
 import { FilterResistancesComponent } from '../filter-resistances/filter-resistances.component';
+import { ResetFormServices } from '../../services/resetFormServices';
 
 
 @Component({
@@ -54,6 +55,7 @@ export class AppComponent {
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
   }
   constructor(protected translate: TranslateService,
+    protected resetFormServices: ResetFormServices,
     private localStorageService: LocalStorageService) {
 
     this.translate.addLangs(['fr','en', 'es', 'pt']);

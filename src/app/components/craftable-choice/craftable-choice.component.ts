@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { CraftableChoiceEnum } from '../../models/craftableChoiceEnum';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { filter } from 'rxjs';
-import { ItemsService } from '../../services/itemsService';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
+import { CraftableChoiceFormService } from '../../services/form/craftableChoiceFormService';
 
 @Component({
   selector: 'app-craftable-choice',
@@ -15,11 +14,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class CraftableChoiceComponent {
   protected craftableChoiceEnumList = Object.values(CraftableChoiceEnum);
-  protected form = new FormControl<CraftableChoiceEnum>(CraftableChoiceEnum.CRAFT_DROP);
 
-  constructor(protected itemService: ItemsService) {
-    this.form.valueChanges
-      .pipe(filter(value => value !== null))
-      .subscribe(value => this.itemService.setCraftable(value))
-  }
+  constructor(protected craftableChoiceFormServie: CraftableChoiceFormService) {}
 }

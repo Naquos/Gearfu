@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { ItemsService } from '../../services/itemsService';
 import { TranslateModule } from '@ngx-translate/core';
+import { OnlyNoSecondaryFormService } from '../../services/form/onlyNoSecondaryFormService';
 
 @Component({
   selector: 'app-only-no-secondary',
@@ -10,6 +10,5 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './only-no-secondary.component.scss'
 })
 export class OnlyNoSecondaryComponent {
-  constructor(protected itemService: ItemsService) {}
-
+  constructor(protected onlyNoSecondaryFormService : OnlyNoSecondaryFormService) {}
 }

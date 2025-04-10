@@ -1,7 +1,7 @@
 <h3>{{ "only-no-secondary.label" | translate }}</h3>
 <section>
     <mat-button-toggle-group>
-        <mat-button-toggle (change)="itemService.setOnlyNoSecondary(true)">{{ "only-no-secondary.oui" | translate }}</mat-button-toggle>
-        <mat-button-toggle (change)="itemService.setOnlyNoSecondary(false)" [checked]="true">{{ "only-no-secondary.non" | translate }}</mat-button-toggle>
+        <mat-button-toggle (change)="onlyNoSecondaryFormService.setValue(true)" [checked]="onlyNoSecondaryFormService.form.value">{{ "only-no-secondary.oui" | translate }}</mat-button-toggle>
+        <mat-button-toggle (change)="onlyNoSecondaryFormService.setValue(false)" [checked]="!onlyNoSecondaryFormService.form.value">{{ "only-no-secondary.non" | translate }}</mat-button-toggle>
     </mat-button-toggle-group>
 </section>

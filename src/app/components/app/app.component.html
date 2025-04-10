@@ -16,7 +16,10 @@
   </header>
 <div class="content">
     <div class="filter" [class.open]="displayFilter" appSwipe (swipeRight)="handleFilter(false)">
-        <h2>{{ "app.filter-item" | translate }}</h2>
+        <div class="filter-header">
+            <h2>{{ "app.filter-item" | translate }}</h2>
+            <button (click)="resetFormServices.resetAllForms()">X</button>
+        </div>
         <app-search-item-name></app-search-item-name>
         <app-item-types></app-item-types>
         <app-item-level></app-item-level>

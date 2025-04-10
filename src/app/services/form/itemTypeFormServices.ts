@@ -3,6 +3,8 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { ItemTypeServices } from "../ItemTypesServices";
 import { ItemTypeEnum } from "../../models/itemTypeEnum";
 import { BehaviorSubject } from "rxjs";
+import { LocalStorageService } from "../localStorageService";
+import { KeyEnum } from "../../models/keyEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemTypeFormServices {
@@ -27,7 +29,10 @@ export class ItemTypeFormServices {
     public selected$ = this.selected.asObservable();
     
 
-    constructor(private itemTypeServices: ItemTypeServices) {
+    constructor(
+        private itemTypeServices: ItemTypeServices,
+        private localStorageService: LocalStorageService,
+        private itemTypeService: ItemTypeServices) {
         this.form.valueChanges.subscribe(x => {
             const result = [];
             if(x.uneMain) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.UNE_MAIN)?.id) };
@@ -44,8 +49,17 @@ export class ItemTypeFormServices {
             if(x.dague) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.DAGUE)?.id) };
             if(x.accessoires) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.ACCESSOIRES)?.id) };
             if(x.familier) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.FAMILIER)?.id) };
+            this.localStorageService.setItem<ItemTypeEnum[]>(KeyEnum.KEY_ITEM_TYPE,
+                result.flat()
+                .filter(x => x !== undefined)
+                .map(x => this.itemTypeService.getItemType(x)));
             this.selected.next(result.flat() as number[]);
         });
+        this.setItemType(...this.localStorageService.getItem<ItemTypeEnum[]>(KeyEnum.KEY_ITEM_TYPE) ?? [])
+    }
+
+    public setDefaultValue(): void {
+        this.setItemType();
     }
 
     public setItemType(...itemType: ItemTypeEnum[]) {

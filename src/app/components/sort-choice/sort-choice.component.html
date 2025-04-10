@@ -1,5 +1,5 @@
 <mat-form-field>
-    <mat-select [formControl]="form">
+    <mat-select [formControl]="sortChoiceFormService.form">
         @for (sort of SortChoiceEnumList; track sort) {
         <mat-option [value]="sort">{{("sort-choice-enum." + sort.valueOf()) | translate}}</mat-option>
         }

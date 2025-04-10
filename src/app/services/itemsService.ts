@@ -12,6 +12,9 @@ import { CraftableChoiceEnum } from "../models/craftableChoiceEnum";
 import { ParameterMajorActionEnum } from "../models/parameterMajorActionEnum";
 import { TranslateService } from "@ngx-translate/core";
 import { ResistancesServices } from "./resistancesService";
+import { SortChoiceFormService } from "./form/sortChoiceFormService";
+import { ItemLevelFormService } from "./form/itemLevelFormService";
+import { CraftableChoiceFormService } from "./form/craftableChoiceFormService";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -20,7 +23,7 @@ export class ItemsService {
 
     public items$: Observable<Item[]>;
 
-    private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceEnum.MAITRISES);
+    private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceFormService.DEFAULT_VALUE);
     public sort$ = this.sort.asObservable();
 
     private onlyNoSecondary = new BehaviorSubject<boolean>(false);
@@ -36,16 +39,16 @@ export class ItemsService {
     private itemName = new BehaviorSubject<string>("");
     public itemName$ = this.itemName.asObservable();
 
-    private rarirty = new BehaviorSubject<number[]>([]);
-    public rarity$ = this.rarirty.asObservable();
+    private rarity = new BehaviorSubject<number[]>([]);
+    public rarity$ = this.rarity.asObservable();
 
-    private levelMin = new BehaviorSubject<number>(200);
+    private levelMin = new BehaviorSubject<number>(ItemLevelFormService.DEFAULT_LEVEL_MIN);
     public levelMin$ = this.levelMin.asObservable();
 
-    private levelMax = new BehaviorSubject<number>(245);
+    private levelMax = new BehaviorSubject<number>(ItemLevelFormService.DEFAULT_LEVEL_MAX);
     public levelMax$ = this.levelMax.asObservable();
 
-    private craftable = new BehaviorSubject<CraftableChoiceEnum>(CraftableChoiceEnum.CRAFT_DROP);
+    private craftable = new BehaviorSubject<CraftableChoiceEnum>(CraftableChoiceFormService.DEFAULT_VALUE);
     public craftable$ = this.craftable.asObservable();
     
     public itemsFilterByItemName$ = combineLatest([this.fullItems$, this.itemName$])
@@ -57,7 +60,7 @@ export class ItemsService {
     protected itemsFilterByLevelMax$ = combineLatest([this.itemsFilterByLevelMin$, this.levelMax$])
     .pipe(map(([items, levelMax]) => items.filter(x => x.level <= levelMax || x.itemTypeId === ItemTypeEnum.FAMILIER)));
 
-    protected itemsFilterByRarity$ = combineLatest([this.itemsFilterByLevelMax$, this.rarirty])
+    protected itemsFilterByRarity$ = combineLatest([this.itemsFilterByLevelMax$, this.rarity])
     .pipe(map(([items, rarity]) => items.filter(x => rarity.length === 0 || rarity.includes(x.rarity))));
 
     protected itemsFilterByOnlyNoSecondary$ = combineLatest([this.itemsFilterByRarity$, this.onlyNoSecondary$])
@@ -234,7 +237,7 @@ export class ItemsService {
     }
 
     public setRarity(value: number[]): void {
-      this.rarirty.next(value); 
+      this.rarity.next(value); 
     }
 
     public setLevelMin(value: number): void {
