@@ -16,6 +16,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SwipeDirective } from '../../directives/swipe.directive';
+import { KeyEnum } from '../../models/keyEnum';
+import { LocalStorageService } from '../../services/localStorageService';
 
 
 @Component({
@@ -49,14 +51,23 @@ export class AppComponent {
   protected openDiscord(): void {
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
   }
-  constructor(protected translate: TranslateService) {
+  constructor(protected translate: TranslateService,
+    private localStorageService: LocalStorageService) {
+
     this.translate.addLangs(['fr','en', 'es', 'pt']);
     this.translate.setDefaultLang('en');
-    this.translate.use(navigator.language.split("-")[0] ?? "en");
+    const lang = this.localStorageService.getItem<string>(KeyEnum.KEY_LANG);
+    if(lang) {
+      this.translate.use(lang);
+    } else {
+      this.translate.use(navigator.language.split("-")[0] ?? "en");
+    }
+    
   }
 
   protected setLang(value: string): void {
     this.translate.use(value);
+    this.localStorageService.setItem<string>(KeyEnum.KEY_LANG, value);
   }
 
   protected handleFilter(value?: boolean): void {

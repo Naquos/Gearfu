@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ItemTypeEnum } from "../models/itemTypeEnum";
 import { BehaviorSubject, combineLatest, filter, first, iif, map, Observable, of, switchMap, take, tap } from "rxjs";
 import { Item } from "../models/item";
@@ -6,12 +6,12 @@ import { ItemTypeServices } from "./ItemTypesServices";
 import { RarityItem } from "../models/rarityItem";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ItemsService } from "./itemsService";
-import { DOCUMENT } from "@angular/common";
 import { MaitrisesServices } from "./maitrisesService";
+import { KeyEnum } from "../models/keyEnum";
+import { LocalStorageService } from "./localStorageService";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService {
-    private KEY_BUILD = "KEY_BUILD";
     private mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>();
     private idItems = new BehaviorSubject<string>("");
     public idItems$ = this.idItems.asObservable();
@@ -34,9 +34,8 @@ export class ItemChooseService {
         private itemService: ItemsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        @Inject(DOCUMENT) private document: Document
+        private localStorageService: LocalStorageService,
     ) {
-        const localStorage = this.document.defaultView?.localStorage;
         this.mapItem.set(ItemTypeEnum.UNE_MAIN, new BehaviorSubject<(Item|undefined)[]>([undefined]))
         this.mapItem.set(ItemTypeEnum.ANNEAU, new BehaviorSubject<(Item|undefined)[]>([undefined, undefined]))
         this.mapItem.set(ItemTypeEnum.BOTTES, new BehaviorSubject<(Item|undefined)[]>([undefined]))
@@ -52,7 +51,7 @@ export class ItemChooseService {
 
         this.activatedRoute.queryParams.pipe(
             filter(x => x !== undefined),
-            map(x => x["itemsId"] ? x["itemsId"] as string : localStorage?.getItem(this.KEY_BUILD)),
+            map(x => x["itemsId"] ? x["itemsId"] as string : this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD)),
             filter(x => x !== undefined && x !== null),
             take(1),
             map(x => x.split(",")),
@@ -79,7 +78,7 @@ export class ItemChooseService {
             map(list => list.filter(x => x).join(",")),
             tap(x => this.setIdItems(x))
         ).subscribe(x => {
-            localStorage?.setItem(this.KEY_BUILD, x);
+            this.localStorageService.setItem<string>(KeyEnum.KEY_BUILD, x);
             this.router.navigate(
                 [], 
                 {
