@@ -207,6 +207,12 @@ app-item-list {
         touch-action: pan-y !important;
 
       .filter {
+
+        .filter-header {
+          display: flex !important;
+          margin-left: 0 !important;
+          width: 100% !important;
+        }
         z-index: 100;
         position: fixed;
         top: $header-size;
