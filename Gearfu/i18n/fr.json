@@ -26,6 +26,9 @@
         "soin": "Soin",
         "berzerk": "Berzerk"
     },
+    "filter-resistances": {
+        "resistances-elementaires": "Résistances élémentaires"
+    },
     "item": {
         "maitrises":"Maitrises",
         "resistances": "Résistances",
@@ -116,6 +119,10 @@
         "RESISTANCES": "Résistances",
         "EQUILIBRE": "Equilibrés",
         "PARADE_ARMURE_DONNEE": "Parade + Armure données",
-        "POINT_DE_VIE": "Point de vie"
+        "POINT_DE_VIE": "Point de vie",
+        "TACLE": "Tacle",
+        "ESQUIVE": "Esquive",
+        "TACLE_ESQUIVE": "Tacle + Esquive",
+        "CRITIQUE":"% Critique"
     }
 }
