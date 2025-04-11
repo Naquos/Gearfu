@@ -39,7 +39,7 @@ export class SearchItemNameFormService extends AbstractFormService<FormControl<s
   }
 
   public setFilter(item :Item): void {
-    this.rareteItemFormServices.setRarity();
+    this.rareteItemFormServices.setDefaultValue();
     this.itemTypeFormServices.setItemType(this.itemTypeService.getItemType(item.itemTypeId));
 
     if(item.level <= 20) {

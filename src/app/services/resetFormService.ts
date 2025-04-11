@@ -12,7 +12,7 @@ import { ModifierElemMaitrisesFormService } from "./form/modifierElemMaitrisesFo
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 
 @Injectable({providedIn: 'root'})
-export class ResetFormServices {
+export class ResetFormService {
   constructor(
     private craftableChoiceFormService: CraftableChoiceFormService,
     private itemLevelFormService: ItemLevelFormService,

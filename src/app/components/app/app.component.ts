@@ -17,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SwipeDirective } from '../../directives/swipe.directive';
 import { KeyEnum } from '../../models/enum/keyEnum';
 import { LocalStorageService } from '../../services/data/localStorageService';
-import { ResetFormServices } from '../../services/resetFormServices';
+import { ResetFormService } from '../../services/resetFormService';
 import { FilterResistancesComponent } from '../form/filter-resistances/filter-resistances.component';
 import { MajorPresentComponent } from '../form/major-present/major-present.component';
 
@@ -55,7 +55,7 @@ export class AppComponent {
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
   }
   constructor(protected translate: TranslateService,
-    protected resetFormServices: ResetFormServices,
+    protected resetFormServices: ResetFormService,
     private localStorageService: LocalStorageService) {
 
     this.translate.addLangs(['fr','en', 'es', 'pt']);
