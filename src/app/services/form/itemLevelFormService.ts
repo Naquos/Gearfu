@@ -35,7 +35,7 @@ export class ItemLevelFormService extends AbstractFormService<FormGroup<TypedCon
       this.init();
   }
 
-  protected override handleChanges(value: { levelMin: number; levelMax: number; }): void {
+  protected override handleChanges(value: ItemLevelForm): void {
     this.levelMin.next(value.levelMin ?? ItemLevelFormService.DEFAULT_LEVEL_MIN);
     this.levelMax.next(value.levelMax ?? ItemLevelFormService.DEFAULT_LEVEL_MAX);
   }
