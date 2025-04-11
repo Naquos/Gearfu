@@ -79,10 +79,10 @@ header {
         cursor: pointer;
         width: 41px;
         height: 34px;
-        background-color: red;
-        color: white;
-        font-weight: bolder;
-        font-size: x-large;
+        background-color: white;
+        color: #213A57;
+        font-weight: 600;
+        font-size: large;
       }
 
       button:active {
@@ -211,7 +211,6 @@ app-item-list {
         .filter-header {
           display: flex !important;
           margin-left: 0 !important;
-          width: 100% !important;
         }
         z-index: 100;
         position: fixed;
