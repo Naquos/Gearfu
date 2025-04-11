@@ -5,7 +5,7 @@ import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 
-interface ItemLevelForm {
+export interface ItemLevelForm {
     levelMin: number;
     levelMax: number;
 }

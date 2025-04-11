@@ -7,7 +7,7 @@ import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 
-interface ItemTypeForm {
+export interface ItemTypeForm {
     deuxMains: boolean;
     uneMain: boolean,
     anneau: boolean,
