@@ -117,9 +117,9 @@ export class ItemChooseService {
             maitrise+= tempMaitrise;
             weight+= this.itemService.calculWeight(tempResis, tempMaitrise)
         })
-        this.totalWeight.next(weight);
-        this.totalMaitrises.next(maitrise);
-        this.totalResistances.next(resistance);
+        this.totalWeight.next(Math.trunc(weight));
+        this.totalMaitrises.next(Math.trunc(maitrise));
+        this.totalResistances.next(Math.trunc(resistance));
     }
 
     private setItemWithIdItem(idItem: number): void {
