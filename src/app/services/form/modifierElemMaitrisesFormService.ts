@@ -1,31 +1,41 @@
 import { Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ItemsService } from "../itemsService";
-import { ElemMaitrisesMecanismEnum } from "../../models/ElemMaitrisesMecanismEnum";
-import { LocalStorageService } from "../localStorageService";
-import { KeyEnum } from "../../models/keyEnum";
+import { ElemMaitrisesMecanismEnum } from "../../models/enum/ElemMaitrisesMecanismEnum";
+import { LocalStorageService } from "../data/localStorageService";
+import { KeyEnum } from "../../models/enum/keyEnum";
+import { AbstractFormService } from "./abstractFormService";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({providedIn: 'root'})
-export class ModifierElemMaitrisesFormService {
-  public form = new FormControl<string[]>([]);
+export class ModifierElemMaitrisesFormService extends AbstractFormService<FormControl<string[]>> {
 
-  constructor(private itemService: ItemsService, private localStorageService: LocalStorageService) {
-    this.form.valueChanges.subscribe(value => {
-        let result = 1;
-        if(value?.includes(ElemMaitrisesMecanismEnum.ABNEGATION.valueOf())) {result*=1.15}
-        if(value?.includes(ElemMaitrisesMecanismEnum.ALTERNANCE.valueOf())) {result*=1.2}
-        if(value?.includes(ElemMaitrisesMecanismEnum.ALTERNANCE_2.valueOf())) {result*=1.15}
-        if(value?.includes(ElemMaitrisesMecanismEnum.ANATOMIE.valueOf())) {result*=1.15}
-        if(value?.includes(ElemMaitrisesMecanismEnum.CONCENTRATION_ELEMENTAIRE.valueOf())) {result*=1.2}
-        if(value?.includes(ElemMaitrisesMecanismEnum.INFLEXIBILITE_2.valueOf())) {result*=1.15}
-        if(value?.includes(ElemMaitrisesMecanismEnum.COEUR_HUPPERMAGE.valueOf())) {result*=1.2}
-        this.itemService.setMultiplicateurElem(result);
-        this.localStorageService.setItem<string[]>(KeyEnum.KEY_MODIFIER_ELEM_MAITRISE, value ?? []);
-    })
-    this.form.setValue(this.localStorageService.getItem<string[]>(KeyEnum.KEY_MODIFIER_ELEM_MAITRISE) ?? []);
+  public static readonly DEFAULT_VALUE: string[] = [];
+
+  private multiplicateurElem = new BehaviorSubject<number>(1);
+  public multiplicateurElem$ = this.multiplicateurElem.asObservable();
+
+  constructor(protected override localStorageService: LocalStorageService) {
+      super(KeyEnum.KEY_CRAFTABLE_CHOICE, localStorageService, new FormControl<string[]>(ModifierElemMaitrisesFormService.DEFAULT_VALUE, { nonNullable: true }));
+      this.init();
+  }
+
+  protected override handleChanges(value: string[]): void {
+    let result = 1;
+    if(value?.includes(ElemMaitrisesMecanismEnum.ABNEGATION.valueOf())) {result*=1.15}
+    if(value?.includes(ElemMaitrisesMecanismEnum.ALTERNANCE.valueOf())) {result*=1.2}
+    if(value?.includes(ElemMaitrisesMecanismEnum.ALTERNANCE_2.valueOf())) {result*=1.15}
+    if(value?.includes(ElemMaitrisesMecanismEnum.ANATOMIE.valueOf())) {result*=1.15}
+    if(value?.includes(ElemMaitrisesMecanismEnum.CONCENTRATION_ELEMENTAIRE.valueOf())) {result*=1.2}
+    if(value?.includes(ElemMaitrisesMecanismEnum.INFLEXIBILITE_2.valueOf())) {result*=1.15}
+    if(value?.includes(ElemMaitrisesMecanismEnum.COEUR_HUPPERMAGE.valueOf())) {result*=1.2}
+    this.multiplicateurElem.next(result);
+  }
+
+  public override setValue(value: string[]): void {
+    this.form.setValue(value);
   }
 
   public setDefaultValue(): void {
-    this.form.setValue([]);
+    this.form.setValue(ModifierElemMaitrisesFormService.DEFAULT_VALUE);
   }
 }

@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
-import { ItemTypesComponent } from '../item-types/item-types.component';
+import { ItemTypesComponent } from '../form/item-types/item-types.component';
 import { ItemListComponent } from '../item-list/item-list.component';
-import { ItemLevelComponent } from "../item-level/item-level.component";
-import { RareteItemComponent } from "../rarete-item/rarete-item.component";
-import { FilterMaitrisesComponent } from "../filter-maitrises/filter-maitrises.component";
-import { SortChoiceComponent } from "../sort-choice/sort-choice.component";
-import { OnlyNoSecondaryComponent } from "../only-no-secondary/only-no-secondary.component";
-import { MajorPresentComponent } from "../major-present/major-present.component";
-import { ModifierElemMaitrisesComponent } from "../modifier-elem-maitrises/modifier-elem-maitrises.component";
-import { SearchItemNameComponent } from "../search-item-name/search-item-name.component";
+import { ItemLevelComponent } from "../form/item-level/item-level.component";
+import { RareteItemComponent } from "../form/rarete-item/rarete-item.component";
+import { FilterMaitrisesComponent } from "../form/filter-maitrises/filter-maitrises.component";
+import { SortChoiceComponent } from "../form/sort-choice/sort-choice.component";
+import { OnlyNoSecondaryComponent } from "../form/only-no-secondary/only-no-secondary.component";
+import { ModifierElemMaitrisesComponent } from "../form/modifier-elem-maitrises/modifier-elem-maitrises.component";
+import { SearchItemNameComponent } from "../form/search-item-name/search-item-name.component";
 import { ItemChooseComponent } from "../item-choose/item-choose.component";
-import { CraftableChoiceComponent } from "../craftable-choice/craftable-choice.component";
+import { CraftableChoiceComponent } from "../form/craftable-choice/craftable-choice.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SwipeDirective } from '../../directives/swipe.directive';
-import { KeyEnum } from '../../models/keyEnum';
-import { LocalStorageService } from '../../services/localStorageService';
-import { FilterResistancesComponent } from '../filter-resistances/filter-resistances.component';
+import { KeyEnum } from '../../models/enum/keyEnum';
+import { LocalStorageService } from '../../services/data/localStorageService';
 import { ResetFormServices } from '../../services/resetFormServices';
+import { FilterResistancesComponent } from '../form/filter-resistances/filter-resistances.component';
+import { MajorPresentComponent } from '../form/major-present/major-present.component';
 
 
 @Component({

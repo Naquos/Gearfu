@@ -1,15 +1,16 @@
 import { Injectable } from "@angular/core";
-import { ItemTypeEnum } from "../models/itemTypeEnum";
+import { ItemTypeEnum } from "../models/enum/itemTypeEnum";
 import { BehaviorSubject, combineLatest, filter, first, iif, map, Observable, of, switchMap, take, tap } from "rxjs";
-import { Item } from "../models/item";
-import { ItemTypeServices } from "./ItemTypesServices";
-import { RarityItem } from "../models/rarityItem";
+import { ItemTypeServices } from "./data/ItemTypesServices";
+import { RarityItemEnum } from "../models/enum/rarityItemEnum";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ItemsService } from "./itemsService";
-import { MaitrisesServices } from "./maitrisesService";
-import { KeyEnum } from "../models/keyEnum";
-import { LocalStorageService } from "./localStorageService";
-import { ResistancesServices } from "./resistancesService";
+import { ItemsService } from "./data/itemsService";
+import { KeyEnum } from "../models/enum/keyEnum";
+import { LocalStorageService } from "./data/localStorageService";
+import { ModifierElemMaitrisesFormService } from "./form/modifierElemMaitrisesFormService";
+import { ResistancesFormService } from "./form/resistancesFormService";
+import { MaitrisesFormService } from "./form/maitrisesFormService";
+import { Item } from "../models/data/item";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService {
@@ -31,12 +32,13 @@ export class ItemChooseService {
     private indexAnneau = 0;
 
     constructor(private itemTypeService: ItemTypeServices,
-        private maitrisesService: MaitrisesServices,
-        private resistancesService: ResistancesServices,
         private itemService: ItemsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private localStorageService: LocalStorageService,
+        private modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
+        private resistancesFormService: ResistancesFormService,
+        private maitrisesFormService: MaitrisesFormService,
     ) {
         this.mapItem.set(ItemTypeEnum.UNE_MAIN, new BehaviorSubject<(Item|undefined)[]>([undefined]))
         this.mapItem.set(ItemTypeEnum.ANNEAU, new BehaviorSubject<(Item|undefined)[]>([undefined, undefined]))
@@ -93,10 +95,10 @@ export class ItemChooseService {
 
         combineLatest([
             this.listItem$,
-            this.maitrisesService.nbElements$,
-            this.maitrisesService.idMaitrises$,
-            this.itemService.multiplicateurElem$,
-            this.resistancesService.idResistances$
+            this.maitrisesFormService.nbElements$,
+            this.maitrisesFormService.idMaitrises$,
+            this.modifierElemMaitrisesFormService.multiplicateurElem$,
+            this.resistancesFormService.idResistances$
         ]).pipe(
             tap(([list, nbElements, idMaitrises, multiplicateurElem, idResistances]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances)),
         ).subscribe();
@@ -158,7 +160,7 @@ export class ItemChooseService {
             first(),
             switchMap(() => 
                 // Qu'une seule épique / relique par stuff
-                iif(() => [RarityItem.EPIQUE, RarityItem.RELIQUE].includes(item.rarity),
+                iif(() => [RarityItemEnum.EPIQUE, RarityItemEnum.RELIQUE].includes(item.rarity),
                     this.deleteFirstItemOnRarity(item?.rarity),
                     of(null)
                 )
@@ -223,7 +225,7 @@ export class ItemChooseService {
         ).subscribe();
     }
 
-    private deleteFirstItemOnRarity(rarity: RarityItem):Observable<null> {
+    private deleteFirstItemOnRarity(rarity: RarityItemEnum):Observable<null> {
         return combineLatest([this.getObsItem(ItemTypeEnum.UNE_MAIN),
             this.getObsItem(ItemTypeEnum.ANNEAU),
             this.getObsItem(ItemTypeEnum.BOTTES),

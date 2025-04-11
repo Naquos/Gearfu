@@ -1,28 +1,32 @@
 import { Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ItemsService } from "../itemsService";
-import { LocalStorageService } from "../localStorageService";
-import { KeyEnum } from "../../models/keyEnum";
+import { LocalStorageService } from "../data/localStorageService";
+import { KeyEnum } from "../../models/enum/keyEnum";
+import { AbstractFormService } from "./abstractFormService";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({providedIn: 'root'})
-export class OnlyNoSecondaryFormService {
-  public static readonly DEFAULT_VALUE = false;
-  public form = new FormControl<boolean>(OnlyNoSecondaryFormService.DEFAULT_VALUE);
+export class OnlyNoSecondaryFormService extends AbstractFormService<FormControl<boolean>> {
 
-  constructor(private itemService: ItemsService, private localStorageService: LocalStorageService) {
-    this.form.valueChanges.subscribe(value => 
-      {
-        this.itemService.setOnlyNoSecondary(value ?? false);
-        this.localStorageService.setItem(KeyEnum.KEY_ONLY_NO_SECONDARY, value)
-      });
-    this.form.setValue(this.localStorageService.getItem(KeyEnum.KEY_ONLY_NO_SECONDARY) ?? OnlyNoSecondaryFormService.DEFAULT_VALUE);
+  public static readonly DEFAULT_VALUE = false;
+
+  private onlyNoSecondary = new BehaviorSubject<boolean>(false);
+  public onlyNoSecondary$ = this.onlyNoSecondary.asObservable();
+
+  constructor(protected override localStorageService: LocalStorageService) {
+    super(KeyEnum.KEY_ONLY_NO_SECONDARY, localStorageService, new FormControl<boolean>(OnlyNoSecondaryFormService.DEFAULT_VALUE, { nonNullable: true }));
+    this.init();
   }
 
-  public setValue(value: boolean): void {
+  protected override handleChanges(value: boolean): void {
+    this.onlyNoSecondary.next(value ?? false);
+  }
+
+  public override setValue(value: boolean): void {
     this.form.setValue(value);
   }
 
-  public setDefaultValue(): void {
+  public override setDefaultValue(): void {
     this.form.setValue(OnlyNoSecondaryFormService.DEFAULT_VALUE);
   }
 }

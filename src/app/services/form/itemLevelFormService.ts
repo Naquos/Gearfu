@@ -1,52 +1,57 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
-import { ItemsService } from "../itemsService";
-import { LocalStorageService } from "../localStorageService";
-import { KeyEnum } from "../../models/keyEnum";
+import { LocalStorageService } from "../data/localStorageService";
+import { KeyEnum } from "../../models/enum/keyEnum";
+import { AbstractFormService, TypedControls } from "./abstractFormService";
+
+interface ItemLevelForm {
+    levelMin: number;
+    levelMax: number;
+}
 
 @Injectable({providedIn: 'root'})
-export class ItemLevelFormService {
+export class ItemLevelFormService extends AbstractFormService<FormGroup<TypedControls<ItemLevelForm>>> {
+  public static readonly DEFAULT_LEVEL_MIN = 200;
+  public static readonly DEFAULT_LEVEL_MAX = 245;    
 
-    public static readonly DEFAULT_LEVEL_MIN = 200;
-    public static readonly DEFAULT_LEVEL_MAX = 245;
+  protected selected = new BehaviorSubject<number[]>([]);
+  public selected$ = this.selected.asObservable();
 
-    public form = new FormGroup({
-        levelMin: new FormControl(ItemLevelFormService.DEFAULT_LEVEL_MIN),
-        levelMax: new FormControl(ItemLevelFormService.DEFAULT_LEVEL_MAX)
-      });
+    
+  private levelMin = new BehaviorSubject<number>(ItemLevelFormService.DEFAULT_LEVEL_MIN);
+  public levelMin$ = this.levelMin.asObservable();
+
+  private levelMax = new BehaviorSubject<number>(ItemLevelFormService.DEFAULT_LEVEL_MAX);
+  public levelMax$ = this.levelMax.asObservable();
     
 
-    protected selected = new BehaviorSubject<number[]>([]);
-    public selected$ = this.selected.asObservable();
-    
+  constructor(protected override localStorageService: LocalStorageService) {
 
-  constructor(private itemService: ItemsService, private localStorageService: LocalStorageService) {
-    const itemLevel = this.localStorageService.getItem<number[]>(KeyEnum.KEY_ITEM_LEVEL) ?? [ItemLevelFormService.DEFAULT_LEVEL_MIN, ItemLevelFormService.DEFAULT_LEVEL_MAX];
-    this.form.valueChanges.subscribe(changes => {
-        this.itemService.setLevelMin(changes.levelMin ?? ItemLevelFormService.DEFAULT_LEVEL_MIN);
-        this.itemService.setLevelMax(changes.levelMax ?? ItemLevelFormService.DEFAULT_LEVEL_MAX);
-        this.localStorageService.setItem<number[]>(KeyEnum.KEY_ITEM_LEVEL, [changes.levelMin ?? ItemLevelFormService.DEFAULT_LEVEL_MIN, changes.levelMax ?? ItemLevelFormService.DEFAULT_LEVEL_MAX]);
-      });
-
-    this.form.setValue({
-      levelMin: itemLevel[0],
-      levelMax: itemLevel[1]
-    });
-
+    super(KeyEnum.KEY_ITEM_LEVEL, localStorageService, new FormGroup<TypedControls<ItemLevelForm>>({
+        levelMin: new FormControl(ItemLevelFormService.DEFAULT_LEVEL_MIN, { nonNullable: true }),
+        levelMax: new FormControl(ItemLevelFormService.DEFAULT_LEVEL_MAX, { nonNullable: true })
+      }));
+      this.init();
   }
 
-  public setDefaultValue(): void {
+  protected override handleChanges(value: { levelMin: number; levelMax: number; }): void {
+    this.levelMin.next(value.levelMin ?? ItemLevelFormService.DEFAULT_LEVEL_MIN);
+    this.levelMax.next(value.levelMax ?? ItemLevelFormService.DEFAULT_LEVEL_MAX);
+  }
+
+  public override setValue(value: ItemLevelForm): void {
+    this.form.setValue({
+      levelMin: value.levelMin ?? ItemLevelFormService.DEFAULT_LEVEL_MIN,
+      levelMax: value.levelMax ?? ItemLevelFormService.DEFAULT_LEVEL_MAX
+    });
+  }
+  
+
+  public override setDefaultValue(): void {
     this.form.setValue({
       levelMin: ItemLevelFormService.DEFAULT_LEVEL_MIN,
       levelMax: ItemLevelFormService.DEFAULT_LEVEL_MAX
     });
-  }
-
-  public setLevel(levelMin: number, levelMax: number) {
-      this.form.setValue({
-          levelMin: levelMin,
-          levelMax: levelMax
-      });
   }
 }

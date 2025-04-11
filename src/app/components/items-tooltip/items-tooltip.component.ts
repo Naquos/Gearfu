@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
 import { ItemTooltipComponent } from '../item-tooltip/item-tooltip.component';
+import { Item } from '../../models/data/item';
 
 @Component({
   selector: 'app-items-tooltip',

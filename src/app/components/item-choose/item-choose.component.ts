@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ItemChooseDisplayComponent } from "../item-choose-display/item-choose-display.component";
-import { ItemTypeEnum } from '../../models/itemTypeEnum';
+import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
 import {MatIconModule} from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ItemChooseService } from '../../services/itemChooseService';
 import { take } from 'rxjs';
-import { ZenithService } from '../../services/zenithService';
+import { ZenithService } from '../../services/zenith/zenithService';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 

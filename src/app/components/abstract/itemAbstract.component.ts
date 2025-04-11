@@ -1,16 +1,16 @@
 import { BehaviorSubject, combineLatest, map, Observable, Subject, takeUntil } from "rxjs";
-import { IdActionsEnum } from "../../models/idActionsEnum";
-import { Item } from "../../models/item";
-import { ItemTypeServices } from "../../services/ItemTypesServices";
-import { ItemTypeEnum } from "../../models/itemTypeEnum";
+import { IdActionsEnum } from "../../models/enum/idActionsEnum";
+import { ItemTypeServices } from "../../services/data/ItemTypesServices";
+import { ItemTypeEnum } from "../../models/enum/itemTypeEnum";
 import { ItemChooseService } from "../../services/itemChooseService";
-import { EquipEffects } from "../../models/equipEffects";
-import { DifferentStatsItem } from "../../models/differentsStatsItem";
-import { ActionService } from "../../services/actionService";
+import { EquipEffects } from "../../models/data/equipEffects";
+import { ActionService } from "../../services/data/actionService";
 import { Component, OnDestroy } from "@angular/core";
-import { ParameterMajorActionEnum } from "../../models/parameterMajorActionEnum";
-import { StatesService } from "../../services/statesService";
+import { ParameterMajorActionEnum } from "../../models/enum/parameterMajorActionEnum";
+import { StatesService } from "../../services/data/statesService";
 import { TranslateService } from "@ngx-translate/core";
+import { DifferentStatsItem } from "../../models/data/differentsStatsItem";
+import { Item } from "../../models/data/item";
 
 @Component({
   selector: 'app-item',

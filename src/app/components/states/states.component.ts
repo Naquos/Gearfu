@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { StatesDefinitionService } from '../../services/statesDefinitionService';
+import { StatesDefinitionService } from '../../services/data/statesDefinitionService';
 import { first, map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';

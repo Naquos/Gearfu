@@ -1,61 +1,96 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
-import { ItemTypeServices } from "../ItemTypesServices";
-import { ItemTypeEnum } from "../../models/itemTypeEnum";
+import { ItemTypeServices } from "../data/ItemTypesServices";
+import { ItemTypeEnum } from "../../models/enum/itemTypeEnum";
 import { BehaviorSubject } from "rxjs";
-import { LocalStorageService } from "../localStorageService";
-import { KeyEnum } from "../../models/keyEnum";
+import { LocalStorageService } from "../data/localStorageService";
+import { KeyEnum } from "../../models/enum/keyEnum";
+import { AbstractFormService, TypedControls } from "./abstractFormService";
+
+interface ItemTypeForm {
+    deuxMains: boolean;
+    uneMain: boolean,
+    anneau: boolean,
+    bottes: boolean,
+    amulette: boolean,
+    cape: boolean,
+    ceinture: boolean,
+    casque: boolean,
+    plastron: boolean,
+    epaulettes: boolean,
+    bouclier: boolean,
+    dague: boolean,
+    accessoires: boolean,
+    familier: boolean
+  }
 
 @Injectable({providedIn: 'root'})
-export class ItemTypeFormServices {
-    public form = new FormGroup({
-        deuxMains: new FormControl(),
-        uneMain: new FormControl(),
-        anneau: new FormControl(),
-        bottes: new FormControl(),
-        amulette: new FormControl(),
-        cape: new FormControl(),
-        ceinture: new FormControl(),
-        casque: new FormControl(),
-        plastron: new FormControl(),
-        epaulettes: new FormControl(),
-        bouclier: new FormControl(),
-        dague: new FormControl(),
-        accessoires: new FormControl(),
-        familier: new FormControl()
-      });
-
+export class ItemTypeFormServices extends AbstractFormService<FormGroup<TypedControls<ItemTypeForm>>> {
     protected selected = new BehaviorSubject<number[]>([]);
     public selected$ = this.selected.asObservable();
     
 
     constructor(
         private itemTypeServices: ItemTypeServices,
-        private localStorageService: LocalStorageService,
+        protected override localStorageService: LocalStorageService,
         private itemTypeService: ItemTypeServices) {
-        this.form.valueChanges.subscribe(x => {
-            const result = [];
-            if(x.uneMain) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.UNE_MAIN)?.id) };
-            if(x.deuxMains) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.DEUX_MAINS)?.id) };
-            if(x.anneau) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.ANNEAU)?.id) };
-            if(x.bottes) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.BOTTES)?.id) };
-            if(x.amulette) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.AMULETTE)?.id) };
-            if(x.cape) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.CAPE)?.id) };
-            if(x.ceinture) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.CEINTURE)?.id) };
-            if(x.casque) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.CASQUE)?.id) };
-            if(x.plastron) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.PLASTRON)?.id) };
-            if(x.epaulettes) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.EPAULETTES)?.id) };
-            if(x.bouclier) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.BOUCLIER)?.id) };
-            if(x.dague) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.DAGUE)?.id) };
-            if(x.accessoires) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.ACCESSOIRES)?.id) };
-            if(x.familier) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.FAMILIER)?.id) };
-            this.localStorageService.setItem<ItemTypeEnum[]>(KeyEnum.KEY_ITEM_TYPE,
-                result.flat()
-                .filter(x => x !== undefined)
-                .map(x => this.itemTypeService.getItemType(x)));
-            this.selected.next(result.flat() as number[]);
+
+        super(KeyEnum.KEY_ITEM_TYPE, localStorageService, new FormGroup<TypedControls<ItemTypeForm>>({
+            deuxMains: new FormControl(),
+            uneMain: new FormControl(),
+            anneau: new FormControl(),
+            bottes: new FormControl(),
+            amulette: new FormControl(),
+            cape: new FormControl(),
+            ceinture: new FormControl(),
+            casque: new FormControl(),
+            plastron: new FormControl(),
+            epaulettes: new FormControl(),
+            bouclier: new FormControl(),
+            dague: new FormControl(),
+            accessoires: new FormControl(),
+            familier: new FormControl()
+        }));
+        this.init();
+    }
+
+    protected override handleChanges(value: ItemTypeForm): void {
+        const result = [];
+        if(value.uneMain) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.UNE_MAIN)?.id) };
+        if(value.deuxMains) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.DEUX_MAINS)?.id) };
+        if(value.anneau) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.ANNEAU)?.id) };
+        if(value.bottes) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.BOTTES)?.id) };
+        if(value.amulette) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.AMULETTE)?.id) };
+        if(value.cape) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.CAPE)?.id) };
+        if(value.ceinture) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.CEINTURE)?.id) };
+        if(value.casque) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.CASQUE)?.id) };
+        if(value.plastron) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.PLASTRON)?.id) };
+        if(value.epaulettes) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.EPAULETTES)?.id) };
+        if(value.bouclier) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.BOUCLIER)?.id) };
+        if(value.dague) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.DAGUE)?.id) };
+        if(value.accessoires) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.ACCESSOIRES)?.id) };
+        if(value.familier) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.FAMILIER)?.id) };
+
+        this.selected.next(result.flat() as number[]);
+    }
+    
+    public override setValue(value: ItemTypeForm): void {
+        this.form.setValue({
+            deuxMains: value.deuxMains ?? false,
+            uneMain: value.uneMain ?? false,
+            anneau: value.anneau ?? false,
+            bottes: value.bottes ?? false,
+            amulette: value.amulette ?? false,
+            cape: value.cape ?? false,
+            ceinture: value.ceinture ?? false,
+            casque: value.casque ?? false,
+            plastron: value.plastron ?? false,
+            epaulettes: value.epaulettes ?? false,
+            bouclier: value.bouclier ?? false,
+            dague: value.dague ?? false,
+            accessoires: value.accessoires ?? false,
+            familier: value.familier ?? false
         });
-        this.setItemType(...this.localStorageService.getItem<ItemTypeEnum[]>(KeyEnum.KEY_ITEM_TYPE) ?? [])
     }
 
     public setDefaultValue(): void {

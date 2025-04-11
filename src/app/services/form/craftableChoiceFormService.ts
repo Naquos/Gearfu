@@ -1,24 +1,32 @@
 import { Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ItemsService } from "../itemsService";
-import { CraftableChoiceEnum } from "../../models/craftableChoiceEnum";
-import { filter, tap } from "rxjs";
-import { LocalStorageService } from "../localStorageService";
-import { KeyEnum } from "../../models/keyEnum";
+import { CraftableChoiceEnum } from "../../models/enum/craftableChoiceEnum";
+import { LocalStorageService } from "../data/localStorageService";
+import { KeyEnum } from "../../models/enum/keyEnum";
+import { AbstractFormService } from "./abstractFormService";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({providedIn: 'root'})
-export class CraftableChoiceFormService {
+export class CraftableChoiceFormService extends AbstractFormService<FormControl<CraftableChoiceEnum>> {
   public static readonly DEFAULT_VALUE = CraftableChoiceEnum.CRAFT_DROP;
-  public form = new FormControl<CraftableChoiceEnum>(CraftableChoiceFormService.DEFAULT_VALUE);
+  
+  private craftable = new BehaviorSubject<CraftableChoiceEnum>(CraftableChoiceFormService.DEFAULT_VALUE);
+  public craftable$ = this.craftable.asObservable();
 
-  constructor(private itemService: ItemsService, private localStorageService: LocalStorageService) {
-      this.form.valueChanges
-        .pipe(filter(value => value !== null), tap(value => this.localStorageService.setItem<CraftableChoiceEnum>(KeyEnum.KEY_CRAFTABLE_CHOICE, value)))
-        .subscribe(value => this.itemService.setCraftable(value))
-      this.form.setValue(this.localStorageService.getItem<CraftableChoiceEnum>(KeyEnum.KEY_CRAFTABLE_CHOICE) ?? CraftableChoiceFormService.DEFAULT_VALUE);
+  constructor(protected override localStorageService: LocalStorageService) {
+    super(KeyEnum.KEY_CRAFTABLE_CHOICE, localStorageService, new FormControl<CraftableChoiceEnum>(CraftableChoiceFormService.DEFAULT_VALUE, { nonNullable: true }));
+    this.init();
   }
 
-  public setDefaultValue(): void {
+  protected override handleChanges(value: CraftableChoiceEnum): void {
+    this.craftable.next(value)
+  }
+
+  public override setValue(value: CraftableChoiceEnum): void {
+    this.form.setValue(value);
+  }
+
+  public override setDefaultValue(): void {
     this.form.setValue(CraftableChoiceFormService.DEFAULT_VALUE);
   }
 }

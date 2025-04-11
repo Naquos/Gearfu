@@ -1,6 +1,5 @@
 import { Component, input, OnInit, ViewContainerRef } from '@angular/core';
-import { ItemTypeEnum } from '../../models/itemTypeEnum';
-import { Item } from '../../models/item';
+import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
 import { CommonModule } from '@angular/common';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { map, Observable } from 'rxjs';
@@ -8,6 +7,7 @@ import { ItemChooseService } from '../../services/itemChooseService';
 import { ItemTypeFormServices } from '../../services/form/itemTypeFormServices';
 import { TooltipService } from '../../services/TooltipService';
 import { ItemComponent } from '../item/item.component';
+import { Item } from '../../models/data/item';
 
 @Component({
   selector: 'app-item-choose-display',

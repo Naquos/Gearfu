@@ -1,23 +1,29 @@
 import { Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ItemsService } from "../itemsService";
-import { filter, tap } from "rxjs";
-import { SortChoiceEnum } from "../../models/sortChoiceEnum";
-import { LocalStorageService } from "../localStorageService";
-import { KeyEnum } from "../../models/keyEnum";
+import { SortChoiceEnum } from "../../models/enum/sortChoiceEnum";
+import { LocalStorageService } from "../data/localStorageService";
+import { KeyEnum } from "../../models/enum/keyEnum";
+import { AbstractFormService } from "./abstractFormService";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({providedIn: 'root'})
-export class SortChoiceFormService {
-  public static readonly DEFAULT_VALUE = SortChoiceEnum.MAITRISES;
-  public form = new FormControl<SortChoiceEnum>(SortChoiceFormService.DEFAULT_VALUE);
+export class SortChoiceFormService extends AbstractFormService<FormControl<SortChoiceEnum>> {
 
-  constructor(private itemService: ItemsService, private localStorageService: LocalStorageService) {
-    this.form.valueChanges
-      .pipe(
-        filter(value => value !== null),
-        tap(value => this.localStorageService.setItem<SortChoiceEnum>(KeyEnum.KEY_SORT_CHOICE, value ?? SortChoiceFormService.DEFAULT_VALUE)))
-      .subscribe(value => this.itemService.setSort(value))
-    this.form.setValue(this.localStorageService.getItem<SortChoiceEnum>(KeyEnum.KEY_SORT_CHOICE) ?? SortChoiceFormService.DEFAULT_VALUE);
+  public static readonly DEFAULT_VALUE = SortChoiceEnum.MAITRISES;
+
+  private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceFormService.DEFAULT_VALUE);
+  public sort$ = this.sort.asObservable();
+
+  constructor(protected override localStorageService: LocalStorageService) {
+    super(KeyEnum.KEY_SORT_CHOICE, localStorageService, new FormControl<SortChoiceEnum>(SortChoiceFormService.DEFAULT_VALUE, { nonNullable: true }));
+    this.init();
+  }
+
+  protected override handleChanges(value: SortChoiceEnum): void {
+    this.sort.next(value)
+  }
+  public override setValue(value: SortChoiceEnum): void {
+    this.form.setValue(value);
   }
 
   public setDefaultValue(): void {

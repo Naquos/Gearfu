@@ -1,24 +1,23 @@
 import { AfterViewInit, ChangeDetectorRef, Component,ElementRef,Input, ViewContainerRef } from '@angular/core';
-import { Item } from '../../models/item';
 import { CommonModule } from '@angular/common';
-import { ActionService } from '../../services/actionService';
-import { MaitrisesServices } from '../../services/maitrisesService';
+import { ActionService } from '../../services/data/actionService';
 import { BehaviorSubject, map, Observable, take, tap } from 'rxjs';
-import { ItemsService } from '../../services/itemsService';
+import { ItemsService } from '../../services/data/itemsService';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { ItemChooseService } from '../../services/itemChooseService';
-import { ItemTypeServices } from '../../services/ItemTypesServices';
+import { ItemTypeServices } from '../../services/data/ItemTypesServices';
 import { MatIconModule } from '@angular/material/icon';
 import { TooltipService } from '../../services/TooltipService';
 import { ItemsTooltipComponent } from '../items-tooltip/items-tooltip.component';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
-import { StatesService } from '../../services/statesService';
+import { StatesService } from '../../services/data/statesService';
 import { StatesComponent } from '../states/states.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { States } from '../../models/states';
+import { States } from '../../models/data/states';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ItemConditionService } from '../../services/itemConditionService';
-import { ItemCondition } from '../../models/itemCondition';
+import { ItemConditionService } from '../../services/data/itemConditionService';
+import { ItemCondition } from '../../models/data/itemCondition';
+import { Item } from '../../models/data/item';
 
 @Component({
   selector: 'app-item',
@@ -39,7 +38,6 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     private el: ElementRef,
     protected _translateService: TranslateService,
     protected _actionsService : ActionService,
-    protected maitrisesService : MaitrisesServices,
     protected itemService : ItemsService,
     protected colorRarityService: ColorRarityService,
     protected _itemChooseService: ItemChooseService,

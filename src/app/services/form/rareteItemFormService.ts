@@ -1,14 +1,32 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
-import { ItemsService } from "../itemsService";
-import { RarityItem } from "../../models/rarityItem";
-import { LocalStorageService } from "../localStorageService";
-import { KeyEnum } from "../../models/keyEnum";
+import { RarityItemEnum } from "../../models/enum/rarityItemEnum";
+import { LocalStorageService } from "../data/localStorageService";
+import { KeyEnum } from "../../models/enum/keyEnum";
+import { AbstractFormService, TypedControls } from "./abstractFormService";
+
+export interface RareteItemForm {
+  normal: boolean;
+  rare: boolean;
+  mythique: boolean;
+  legendaire: boolean;
+  souvenir: boolean;
+  relique: boolean;
+  epique: boolean;
+}
 
 @Injectable({providedIn: 'root'})
-export class RareteItemFormServices {
-    public form = new FormGroup({
+export class RareteItemFormServices extends AbstractFormService<FormGroup<TypedControls<RareteItemForm>>> {
+
+  protected selected = new BehaviorSubject<number[]>([]);
+  public selected$ = this.selected.asObservable();
+  
+  private rarity = new BehaviorSubject<number[]>([]);
+  public rarity$ = this.rarity.asObservable();
+
+  constructor(protected override localStorageService: LocalStorageService) {
+    super(KeyEnum.KEY_RARETE_ITEM, localStorageService, new FormGroup<TypedControls<RareteItemForm>>({
         normal: new FormControl(),
         rare: new FormControl(),
         mythique: new FormControl(),
@@ -16,41 +34,47 @@ export class RareteItemFormServices {
         souvenir: new FormControl(),
         relique: new FormControl(),
         epique: new FormControl()
-      });
-
-    protected selected = new BehaviorSubject<number[]>([]);
-    public selected$ = this.selected.asObservable();
-    
-
-  constructor(private itemService: ItemsService, private localStorageService: LocalStorageService) {
-    this.form.valueChanges.subscribe(changes => {
-      const result: number[] = [];
-      if(changes.normal) { result.push(RarityItem.NORMAL)}
-      if(changes.rare) { result.push(RarityItem.RARE)}
-      if(changes.mythique) { result.push(RarityItem.MYTHIQUE)}
-      if(changes.legendaire) { result.push(RarityItem.LEGENDAIRE)}
-      if(changes.relique) { result.push(RarityItem.RELIQUE)}
-      if(changes.souvenir) { result.push(RarityItem.SOUVENIR)}
-      if(changes.epique) { result.push(RarityItem.EPIQUE)}
-      this.itemService.setRarity(result);
-      this.localStorageService.setItem<number[]>(KeyEnum.KEY_RARETE_ITEM, result ?? []);
-    })
-    this.setRarity(...(this.localStorageService.getItem<number[]>(KeyEnum.KEY_RARETE_ITEM) ?? []));
+      }));
+    this.init();
   }
 
-    public setRarity(...rarity: RarityItem[]) {
-        this.form.setValue({
-            normal: rarity.includes(RarityItem.NORMAL),
-            rare: rarity.includes(RarityItem.RARE),
-            mythique: rarity.includes(RarityItem.MYTHIQUE),
-            legendaire: rarity.includes(RarityItem.LEGENDAIRE),
-            relique: rarity.includes(RarityItem.RELIQUE),
-            souvenir: rarity.includes(RarityItem.SOUVENIR),
-            epique: rarity.includes(RarityItem.EPIQUE),
-        });
-    }
+  protected override handleChanges(value: RareteItemForm): void {
+    const result: number[] = [];
+    if(value.normal) { result.push(RarityItemEnum.NORMAL)}
+    if(value.rare) { result.push(RarityItemEnum.RARE)}
+    if(value.mythique) { result.push(RarityItemEnum.MYTHIQUE)}
+    if(value.legendaire) { result.push(RarityItemEnum.LEGENDAIRE)}
+    if(value.relique) { result.push(RarityItemEnum.RELIQUE)}
+    if(value.souvenir) { result.push(RarityItemEnum.SOUVENIR)}
+    if(value.epique) { result.push(RarityItemEnum.EPIQUE)}
+    this.rarity.next(result);
+  }
 
-    public setDefaultValue(): void {
-        this.setRarity();
-    }
+  public override setValue(value: RareteItemForm): void {
+    this.form.setValue({
+      normal: value.normal ?? false,
+      rare: value.rare ?? false,
+      mythique: value.mythique ?? false,
+      legendaire: value.legendaire ?? false,
+      souvenir: value.souvenir ?? false,
+      relique: value.relique ?? false,
+      epique: value.epique ?? false
+    });
+  }
+
+  public setRarity(...rarity: RarityItemEnum[]) {
+      this.form.setValue({
+          normal: rarity.includes(RarityItemEnum.NORMAL),
+          rare: rarity.includes(RarityItemEnum.RARE),
+          mythique: rarity.includes(RarityItemEnum.MYTHIQUE),
+          legendaire: rarity.includes(RarityItemEnum.LEGENDAIRE),
+          relique: rarity.includes(RarityItemEnum.RELIQUE),
+          souvenir: rarity.includes(RarityItemEnum.SOUVENIR),
+          epique: rarity.includes(RarityItemEnum.EPIQUE),
+      });
+  }
+
+  public setDefaultValue(): void {
+      this.setRarity();
+  }
 }

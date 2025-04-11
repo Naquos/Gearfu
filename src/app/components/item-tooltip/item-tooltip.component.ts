@@ -1,18 +1,17 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input } from '@angular/core';
-import { IdActionsEnum } from '../../models/idActionsEnum';
-import { ActionService } from '../../services/actionService';
-import { MaitrisesServices } from '../../services/maitrisesService';
+import { IdActionsEnum } from '../../models/enum/idActionsEnum';
+import { ActionService } from '../../services/data/actionService';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { ItemChooseService } from '../../services/itemChooseService';
-import { ItemsService } from '../../services/itemsService';
-import { ItemTypeServices } from '../../services/ItemTypesServices';
-import { Item } from '../../models/item';
+import { ItemsService } from '../../services/data/itemsService';
+import { ItemTypeServices } from '../../services/data/ItemTypesServices';
 import { CommonModule } from '@angular/common';
-import { DifferentStatsItem } from '../../models/differentsStatsItem';
 import { filter, map, Observable, takeUntil, tap } from 'rxjs';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
-import { StatesService } from '../../services/statesService';
+import { StatesService } from '../../services/data/statesService';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { DifferentStatsItem } from '../../models/data/differentsStatsItem';
+import { Item } from '../../models/data/item';
 
 @Component({
   selector: 'app-item-tooltip',
@@ -49,7 +48,6 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
      constructor(
         protected _translateService: TranslateService,
         protected _actionsService : ActionService,
-        protected maitrisesService : MaitrisesServices,
         protected itemService : ItemsService,
         protected colorRarityService: ColorRarityService,
         protected _itemChooseService: ItemChooseService,
