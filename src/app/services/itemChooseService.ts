@@ -98,13 +98,14 @@ export class ItemChooseService {
             this.maitrisesFormService.nbElements$,
             this.maitrisesFormService.idMaitrises$,
             this.modifierElemMaitrisesFormService.multiplicateurElem$,
+            this.modifierElemMaitrisesFormService.denouement$,
             this.resistancesFormService.idResistances$
         ]).pipe(
-            tap(([list, nbElements, idMaitrises, multiplicateurElem, idResistances]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances)),
+            tap(([list, nbElements, idMaitrises, multiplicateurElem, denouement, idResistances]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances, denouement)),
         ).subscribe();
     }
 
-    private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[]): void {
+    private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[], denouement: boolean): void {
         let weight = 0;
         let resistance = 0;
         let maitrise = 0;
@@ -112,7 +113,7 @@ export class ItemChooseService {
         list.forEach(item => setItem.add(item));
         setItem.forEach(x => {
             const tempResis  = this.itemService.calculResistancesForAnItem(x, idResistances);
-            const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem);
+            const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem, denouement);
             resistance+= tempResis;
             maitrise+= tempMaitrise;
             weight+= this.itemService.calculWeight(tempResis, tempMaitrise)

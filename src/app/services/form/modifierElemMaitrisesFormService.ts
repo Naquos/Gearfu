@@ -14,8 +14,11 @@ export class ModifierElemMaitrisesFormService extends AbstractFormService<FormCo
   private multiplicateurElem = new BehaviorSubject<number>(1);
   public multiplicateurElem$ = this.multiplicateurElem.asObservable();
 
+  private denouement = new BehaviorSubject<boolean>(false)
+  public denouement$ = this.denouement.asObservable()
+
   constructor(protected override localStorageService: LocalStorageService) {
-      super(KeyEnum.KEY_CRAFTABLE_CHOICE, localStorageService, new FormControl<string[]>(ModifierElemMaitrisesFormService.DEFAULT_VALUE, { nonNullable: true }));
+      super(KeyEnum.KEY_MODIFIER_ELEM_MAITRISE, localStorageService, new FormControl<string[]>(ModifierElemMaitrisesFormService.DEFAULT_VALUE, { nonNullable: true }));
       this.init();
   }
 
@@ -29,6 +32,8 @@ export class ModifierElemMaitrisesFormService extends AbstractFormService<FormCo
     if(value?.includes(ElemMaitrisesMecanismEnum.INFLEXIBILITE_2.valueOf())) {result*=1.15}
     if(value?.includes(ElemMaitrisesMecanismEnum.COEUR_HUPPERMAGE.valueOf())) {result*=1.2}
     this.multiplicateurElem.next(result);
+    
+    this.denouement.next(value?.includes(ElemMaitrisesMecanismEnum.DENOUEMENT.valueOf()) ?? false);
   }
 
   public override setValue(value: string[]): void {

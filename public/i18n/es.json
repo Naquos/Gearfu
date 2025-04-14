@@ -111,7 +111,8 @@
         "ANATOMIE": "Anatomía (Pre-nerf)",
         "CONCENTRATION_ELEMENTAIRE": "Concentración elemental (Pre-nerf)",
         "INFLEXIBILITE_2": "Inflexibilidad 2 (Pre-nerf)",
-        "COEUR_HUPPERMAGE": "Corazón Huppermago"
+        "COEUR_HUPPERMAGE": "Corazón Huppermago",
+        "DENOUEMENT": "Denouement"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",

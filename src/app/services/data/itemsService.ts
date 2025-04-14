@@ -54,10 +54,11 @@ export class ItemsService {
           this.maitrisesFormService.idMaitrises$,
           this.sortChoiceFormService.sort$,
           this.modifierElemMaitrisesFormService.multiplicateurElem$,
+          this.modifierElemMaitrisesFormService.denouement$,
           this.resistanceFormService.idResistances$
         ])
         .pipe(
-          tap(([items,nbElements, idMaitrises, sort, multiplicateurElem, idResistances]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances)),
+          tap(([items,nbElements, idMaitrises, sort, multiplicateurElem, denouement, idResistances]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement)),
           map(([items,]) => items),
           map(items => items.sort((itemA, itemB) => itemB.weightForSort - itemA.weightForSort).slice(0,32)))
     }
@@ -78,9 +79,12 @@ export class ItemsService {
       const itemsFilterByRarity$ = combineLatest([itemsFilterByLevelMax$, this.rareteItemFormService.rarity$])
       .pipe(map(([items, rarity]) => items.filter(x => rarity.length === 0 || rarity.includes(x.rarity))));
   
-      const itemsFilterByOnlyNoSecondary$ = combineLatest([itemsFilterByRarity$, this.onlyNoSecondaryFormService.onlyNoSecondary$])
-      .pipe(map(([items, onlyNoSecondary]) => items.filter(x => !onlyNoSecondary || 
-        !x.equipEffects.find(y => [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK].includes(y.actionId)))));
+      const itemsFilterByOnlyNoSecondary$ = combineLatest([itemsFilterByRarity$, this.onlyNoSecondaryFormService.onlyNoSecondary$, this.modifierElemMaitrisesFormService.denouement$])
+      .pipe(map(([items, onlyNoSecondary, denouement]) => 
+        items.filter(x => !onlyNoSecondary || 
+          !x.equipEffects.find(y => [IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK].includes(y.actionId)))
+          .filter(x => denouement || !x.equipEffects.find(y => y.actionId === IdActionsEnum.MAITRISES_CRITIQUES))
+        ))
   
       const itemsFilterByMajor$ = combineLatest([itemsFilterByOnlyNoSecondary$, this.majorPresentFormService.idMajor$])
       .pipe(map(([items, idMajor]) => items.filter(x => this.majorIsPresent(idMajor, x))));
@@ -104,13 +108,13 @@ export class ItemsService {
       return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
 
-    private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number, idResistances: number[]): void {
+    private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number, idResistances: number[], denouement: boolean): void {
       let maxMaistrises = 0;
       let maxResistances = 0;
 
       items.forEach(item => {
         item.resistance = Math.trunc(this.calculResistancesForAnItem(item, idResistances));
-        item.maitrise = Math.trunc(this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem));
+        item.maitrise = Math.trunc(this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem, denouement));
         item.weight = this.calculWeight(item.resistance, item.maitrise);
         item.weightForSort = 0;
       })
@@ -231,7 +235,7 @@ export class ItemsService {
       }
 
       
-  public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[], multiplicateurElem: number): number {
+  public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[], multiplicateurElem: number, denouement: boolean): number {
     let result = 0;
     const maitrisesIdElems = [IdActionsEnum.MAITRISES_FEU,IdActionsEnum.MAITRISES_TERRE,IdActionsEnum.MAITRISES_EAU,IdActionsEnum.MAITRISES_AIR];
     const perteMaitrisesId = [IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,IdActionsEnum.PERTE_MAITRISES_FEU];
@@ -239,8 +243,9 @@ export class ItemsService {
 
     item.equipEffects.forEach(effect => {
       if(effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES ||
-        (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements)) {
-        result += effect.params[0] * multiplicateurElem;
+        (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements) ||
+        (effect.actionId === IdActionsEnum.MAITRISES_CRITIQUES && denouement)) {
+          result += effect.params[0] * multiplicateurElem;
       } else if (idMaitrisesWithoutElem.includes(effect.actionId)) {
         result += effect.params[0];
       }
