@@ -81,9 +81,9 @@ export class ItemsService {
   
       const itemsFilterByOnlyNoSecondary$ = combineLatest([itemsFilterByRarity$, this.onlyNoSecondaryFormService.onlyNoSecondary$, this.modifierElemMaitrisesFormService.denouement$])
       .pipe(map(([items, onlyNoSecondary, denouement]) => 
-        items.filter(x => !onlyNoSecondary || 
-          !x.equipEffects.find(y => [IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK].includes(y.actionId)))
-          .filter(x => denouement || !x.equipEffects.find(y => y.actionId === IdActionsEnum.MAITRISES_CRITIQUES))
+        items.filter(x => !onlyNoSecondary || (
+          !x.equipEffects.find(y => [IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK].includes(y.actionId))
+          && (denouement || !x.equipEffects.find(y => y.actionId === IdActionsEnum.MAITRISES_CRITIQUES))))
         ))
   
       const itemsFilterByMajor$ = combineLatest([itemsFilterByOnlyNoSecondary$, this.majorPresentFormService.idMajor$])
