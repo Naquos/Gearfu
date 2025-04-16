@@ -1,6 +1,12 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="content">
+    <mat-icon aria-hidden="false" fontIcon="save" 
+        matTooltip="Save"
+        [matTooltipShowDelay]="300" 
+        (click)="saveBuild()"
+        id="craftkuButton">
+    </mat-icon>
     <img [matTooltip]="'item-choose.zenith' | translate"  src="./zenith-logo.webp" (click)="generateBuild()" alt="zenith" id="zenithButton">
     <mat-icon aria-hidden="false" fontIcon="gavel" 
         matTooltip="Craftku"

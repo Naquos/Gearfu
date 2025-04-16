@@ -17,22 +17,38 @@
 <div class="content">
     <div class="filter" [class.open]="displayFilter" appSwipe (swipeRight)="handleFilter(false)">
         <div class="filter-header">
-            <h2>{{ "app.filter-item" | translate }}</h2>
-            <button (click)="resetFormServices.resetAllForms()">X</button>
+            <button (click)="filterOrBuild = 'filter'">{{ "app.filter-item" | translate }}</button>
+            <button (click)="filterOrBuild = 'build'">{{ "app.build" | translate }}</button>
         </div>
-        <app-search-item-name></app-search-item-name>
-        <app-item-types></app-item-types>
-        <app-item-level></app-item-level>
-        <app-rarete-item></app-rarete-item>
-        <app-filter-maitrises></app-filter-maitrises>
-        <app-major-present></app-major-present>
-        <app-filter-resistances></app-filter-resistances>
-        
-        <h2>{{ "app.sort-item" | translate }}</h2>
-        <app-sort-choice></app-sort-choice>
-        <app-modifier-elem-maitrises></app-modifier-elem-maitrises>
-        <app-only-no-secondary></app-only-no-secondary>
-        <app-craftable-choice></app-craftable-choice>
+
+        <ng-container *ngIf="filterOrBuild === 'filter'">
+            <div class="filter-content">
+                <div class="filter-title">
+                    <h2>{{ "app.filter-item" | translate }}</h2>
+                    <button (click)="resetFormServices.resetAllForms()">X</button>
+                </div>
+                <app-search-item-name></app-search-item-name>
+                <app-item-types></app-item-types>
+                <app-item-level></app-item-level>
+                <app-rarete-item></app-rarete-item>
+                <app-filter-maitrises></app-filter-maitrises>
+                <app-major-present></app-major-present>
+                <app-filter-resistances></app-filter-resistances>
+                
+                <h2>{{ "app.sort-item" | translate }}</h2>
+                <app-sort-choice></app-sort-choice>
+                <app-modifier-elem-maitrises></app-modifier-elem-maitrises>
+                <app-only-no-secondary></app-only-no-secondary>
+                <app-craftable-choice></app-craftable-choice>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="filterOrBuild === 'build'">
+            <div class="build-content">
+                <app-import-build></app-import-build>
+                <app-builds-list></app-builds-list>
+            </div>
+        </ng-container>
+       
     </div>
     <app-item-list appSwipe (swipeLeft)="handleFilter(true)"></app-item-list>
 </div>

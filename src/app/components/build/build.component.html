@@ -1,0 +1,23 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<div class="content" (click)="itemChooseService.setIdItemsFromBuild(build())">
+    <div class="row">
+        <img [src]="mapImageItems.get(ItemTypeBuild.CASQUE)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.AMULETTE)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.PLASTRON)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.ANNEAU_GAUCHE)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.ANNEAU_DROITE)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.BOTTES)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.CAPE)" alt="image">
+    </div>
+    <hr />
+    <div class="row">
+        <img [src]="mapImageItems.get(ItemTypeBuild.EPAULETTES)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.CEINTURE)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.SECONDE_MAIN)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.PREMIERE_MAIN)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.ACCESSOIRES)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.FAMILIER)" alt="image">
+        <button (click)="removeBuild($event)">X</button>
+    </div>
+</div>

@@ -20,6 +20,9 @@ import { LocalStorageService } from '../../services/data/localStorageService';
 import { ResetFormService } from '../../services/resetFormService';
 import { FilterResistancesComponent } from '../form/filter-resistances/filter-resistances.component';
 import { MajorPresentComponent } from '../form/major-present/major-present.component';
+import { CommonModule } from '@angular/common';
+import { BuildsListComponent } from "../builds-list/builds-list.component";
+import { ImportBuildComponent } from "../form/import-build/import-build.component";
 
 
 @Component({
@@ -37,19 +40,23 @@ import { MajorPresentComponent } from '../form/major-present/major-present.compo
     SortChoiceComponent,
     OnlyNoSecondaryComponent,
     MajorPresentComponent,
-    ModifierElemMaitrisesComponent, 
-    SearchItemNameComponent, 
-    ItemChooseComponent, 
+    ModifierElemMaitrisesComponent,
+    SearchItemNameComponent,
+    ItemChooseComponent,
     CraftableChoiceComponent,
     TranslateModule,
-    SwipeDirective
-  ],
+    SwipeDirective,
+    CommonModule,
+    BuildsListComponent,
+    ImportBuildComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
 
   protected displayFilter = false;
+  protected filterOrBuild : "filter" | "build" = "filter";
 
   protected openDiscord(): void {
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');

@@ -132,6 +132,31 @@ export class ItemChooseService {
             this.setItem(this.itemTypeService.getItemType(item.itemTypeId), item));
     }
 
+    private cleanMapItem(): void {
+        this.indexAnneau = 0;
+        this.mapItem.forEach((value, key) => {
+            if(key !== ItemTypeEnum.ANNEAU) {
+                value.next([undefined]);
+            } else {
+                value.next([undefined, undefined]);
+            }
+        })
+    }
+
+    public setIdItemsFromBuild(idItems: string): void {
+        this.cleanMapItem();
+        this.idItems.next(idItems);
+        const idItemList = idItems.split(",");
+        if(idItemList.length) {
+            idItemList.forEach(idItem => {
+                const item = this.itemService.getItem(parseInt(idItem));
+                if(item) {
+                    this.setItem(this.itemTypeService.getItemType(item.itemTypeId), item);
+                }
+            })
+        }
+    }
+
     public setIdItems(idItems: string): void {
         this.idItems.next(idItems);
     }

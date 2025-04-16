@@ -205,6 +205,10 @@ export class ItemsService {
       return this.fullItems$.pipe(map(x => x.find(x => x.id === idItem)));
     }
 
+    public getItem(idItem : number): Item | undefined {
+      return this.fullItems$.value.find(x => x.id === idItem);
+    }
+
     private majorIsPresent(idMajor: MajorAction[], x: Item): boolean {
       return !idMajor.find(major => (major.id !== IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.map(effect => effect.actionId).includes(major.id)) 
                               || (major.id === IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === major.parameter)));

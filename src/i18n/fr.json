@@ -10,7 +10,16 @@
     },
     "app": {
         "filter-item":"Filtre des items",
-        "sort-item":"Tri des items"
+        "sort-item":"Tri des items",
+        "build": "Mes builds"
+    },
+    "builds-list": {
+        "label": "Votre liste de builds",
+        "no-build":"Vous n'avez pas encore de builds sauvegardés."
+    },
+    "import-build": {
+        "label": "Importer votre build via une url Gearfu ou Zénith",
+        "placeholder": "Url Gearfu ou Zénith"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Maitrises élémentaires",

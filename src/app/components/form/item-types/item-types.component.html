@@ -1,18 +1,18 @@
 <h3>{{ "item-types.type-item" | translate }}</h3>
 
 <div>
-    <app-button-checkbox [tooltip]="'item-types.coiffe' | translate" [control]="itemTypeFormServices.form.controls.casque" srcImg="aptitudes/Coiffe.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.amulette' | translate" [control]="itemTypeFormServices.form.controls.amulette" srcImg="aptitudes/Amulette.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.plastron' | translate" [control]="itemTypeFormServices.form.controls.plastron" srcImg="aptitudes/Plastron.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.anneau' | translate" [control]="itemTypeFormServices.form.controls.anneau" srcImg="aptitudes/Anneau.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.bottes' | translate" [control]="itemTypeFormServices.form.controls.bottes" srcImg="aptitudes/Bottes.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.cape' | translate" [control]="itemTypeFormServices.form.controls.cape" srcImg="aptitudes/Cape.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.epaulettes' | translate" [control]="itemTypeFormServices.form.controls.epaulettes" srcImg="aptitudes/Epaulettes.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.ceinture' | translate" [control]="itemTypeFormServices.form.controls.ceinture" srcImg="aptitudes/Ceinture.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.bouclier' | translate" [control]="itemTypeFormServices.form.controls.bouclier" srcImg="aptitudes/Bouclier.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.seconde-main' | translate" [control]="itemTypeFormServices.form.controls.dague" srcImg="aptitudes/SecondeMain.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.une-main' | translate" [control]="itemTypeFormServices.form.controls.uneMain" srcImg="aptitudes/UneMain.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.deux-mains' | translate" [control]="itemTypeFormServices.form.controls.deuxMains" srcImg="aptitudes/DeuxMains.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.accessoires' | translate" [control]="itemTypeFormServices.form.controls.accessoires" srcImg="aptitudes/Accessoires.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'item-types.familier' | translate" [control]="itemTypeFormServices.form.controls.familier" srcImg="aptitudes/Familier.png" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.coiffe' | translate" [control]="itemTypeFormServices.form.controls.casque" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.CASQUE)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.amulette' | translate" [control]="itemTypeFormServices.form.controls.amulette" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.AMULETTE)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.plastron' | translate" [control]="itemTypeFormServices.form.controls.plastron" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.PLASTRON)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.anneau' | translate" [control]="itemTypeFormServices.form.controls.anneau" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.ANNEAU)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.bottes' | translate" [control]="itemTypeFormServices.form.controls.bottes" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.BOTTES)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.cape' | translate" [control]="itemTypeFormServices.form.controls.cape" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.CAPE)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.epaulettes' | translate" [control]="itemTypeFormServices.form.controls.epaulettes" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.EPAULETTES)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.ceinture' | translate" [control]="itemTypeFormServices.form.controls.ceinture" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.CEINTURE)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.bouclier' | translate" [control]="itemTypeFormServices.form.controls.bouclier" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.BOUCLIER)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.seconde-main' | translate" [control]="itemTypeFormServices.form.controls.dague" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.DAGUE)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.une-main' | translate" [control]="itemTypeFormServices.form.controls.uneMain" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.UNE_MAIN)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.deux-mains' | translate" [control]="itemTypeFormServices.form.controls.deuxMains" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.DEUX_MAINS)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.accessoires' | translate" [control]="itemTypeFormServices.form.controls.accessoires" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.ACCESSOIRES)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'item-types.familier' | translate" [control]="itemTypeFormServices.form.controls.familier" [srcImg]="itemTypesServices.getLogo(ItemTypeEnum.FAMILIER)" ></app-button-checkbox>
 </div>

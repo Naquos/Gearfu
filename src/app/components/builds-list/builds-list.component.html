@@ -1,0 +1,14 @@
+<h2>{{ "builds-list.label" | translate }}</h2>
+<ng-container *ngIf="{buildList : saveBuildService.buildList$ | async } as value" >
+    <ng-container *ngIf="value.buildList && value.buildList.length === 0">
+        <div class="no-build">
+            <span>😫</span>
+            <p>{{ "builds-list.no-build" | translate }}</p>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="value.buildList &&  value.buildList.length > 0">
+        <div *ngFor="let build of value.buildList">
+            <app-build [build]="build"></app-build>
+        </div>
+    </ng-container>
+</ng-container>

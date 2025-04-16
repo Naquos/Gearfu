@@ -19,7 +19,6 @@ export class ItemChooseDisplayComponent implements OnInit {
   public backgroundItemType = input.required<string>();
   public itemType = input.required<ItemTypeEnum>();
   public indexItem = input<number>(0);
-  public canInteract = input<boolean>(true);
   protected $item!: Observable<Item | undefined>;
 
   
@@ -38,20 +37,18 @@ export class ItemChooseDisplayComponent implements OnInit {
   }
 
   protected openTooltip(event: MouseEvent, item: Item): void {
-    if(item && window.innerWidth > 700 && this.canInteract()) {
+    if(item && window.innerWidth > 700) {
       this.tooltipService.openTooltip(this.viewContainerRef, ItemComponent, event, {item});
     }
   }
 
   protected setFilter():void {
-    if(this.canInteract()) {
-      if(this.itemType() === ItemTypeEnum.BOUCLIER) {
-        this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DAGUE)
-      } else if(this.itemType() === ItemTypeEnum.UNE_MAIN) {
-        this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DEUX_MAINS)
-      } else {
-        this.itemTypeFormServices.setItemType(this.itemType())
-      }
+    if(this.itemType() === ItemTypeEnum.BOUCLIER) {
+      this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DAGUE)
+    } else if(this.itemType() === ItemTypeEnum.UNE_MAIN) {
+      this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DEUX_MAINS)
+    } else {
+      this.itemTypeFormServices.setItemType(this.itemType())
     }
   }
 }

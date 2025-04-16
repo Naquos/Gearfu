@@ -48,6 +48,38 @@ export class ItemTypeServices {
     return result;
   }
 
-
-
+  public getLogo(itemType: ItemTypeEnum): string {
+    switch (itemType) {
+      case ItemTypeEnum.DEUX_MAINS:
+        return "aptitudes/DeuxMains.png"
+      case ItemTypeEnum.UNE_MAIN:
+        return "aptitudes/UneMain.png"
+      case ItemTypeEnum.ANNEAU:
+        return "aptitudes/Anneau.png"
+      case ItemTypeEnum.BOTTES:
+        return "aptitudes/Bottes.png"
+      case ItemTypeEnum.AMULETTE:
+        return "aptitudes/Amulette.png"
+      case ItemTypeEnum.CAPE:
+        return "aptitudes/Cape.png"
+      case ItemTypeEnum.CEINTURE:
+        return "aptitudes/Ceinture.png"
+      case ItemTypeEnum.CASQUE:
+        return "aptitudes/Coiffe.png"
+      case ItemTypeEnum.PLASTRON:
+        return "aptitudes/Plastron.png"
+      case ItemTypeEnum.EPAULETTES:
+        return "aptitudes/Epaulettes.png"
+      case ItemTypeEnum.ACCESSOIRES:
+        return "aptitudes/Accessoires.png"
+      case ItemTypeEnum.BOUCLIER:
+        return "aptitudes/Bouclier.png"
+      case ItemTypeEnum.DAGUE:
+        return "aptitudes/SecondeMain.png"
+      case ItemTypeEnum.FAMILIER:
+        return "aptitudes/Familier.png"
+      default:
+        return "aptitudes/Accessoires.png"
+    }
+  }
 }

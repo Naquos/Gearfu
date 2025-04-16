@@ -1,0 +1,21 @@
+app-build {
+    display: block;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: white;
+}
+
+.no-build {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: white;
+    
+    span {
+        font-size: 200px
+    }
+}

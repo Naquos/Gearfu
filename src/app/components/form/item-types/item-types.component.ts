@@ -5,6 +5,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 import { ItemTypeFormServices } from '../../../services/form/itemTypeFormServices';
 import { TranslateModule } from '@ngx-translate/core';
+import { ItemTypeServices } from '../../../services/data/ItemTypesServices';
+import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
 
 @Component({
   selector: 'app-item-types',
@@ -14,7 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ItemTypesComponent {
   protected itemTypes = new Map<string, ItemType>([]);
+  protected ItemTypeEnum = ItemTypeEnum;
 
-  constructor(protected itemTypeFormServices: ItemTypeFormServices) {
+  constructor(protected itemTypeFormServices: ItemTypeFormServices, protected itemTypesServices: ItemTypeServices) {
   }
 }

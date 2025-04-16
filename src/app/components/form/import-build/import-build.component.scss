@@ -1,0 +1,36 @@
+:host
+{
+    h2 {
+        color: white;
+    }
+
+    div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        mat-form-field {
+            width: calc(100% - 76px);
+        }
+        
+        mat-icon {
+            width: 56px;
+            height: 56px;
+            border: 2px solid #415A77;
+            box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+            cursor: pointer;
+            background-color: white;
+            color: #213A57;
+            font-size: 50px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        mat-icon:active {
+            transform: translateY(2px);
+            box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
+      }
+    }
+
+    
+}

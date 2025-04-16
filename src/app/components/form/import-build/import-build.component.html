@@ -1,0 +1,8 @@
+<h2>{{ "import-build.label" | translate }}</h2>
+<div>
+    <mat-form-field>
+        <mat-label>{{ "import-build.placeholder" | translate }}</mat-label>
+        <input matInput [formControl]="importBuildService.form">
+    </mat-form-field>
+    <mat-icon fontIcon="check" (click)="importBuildService.importBuild()"></mat-icon>
+</div>
