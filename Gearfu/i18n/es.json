@@ -10,7 +10,16 @@
     },
     "app": {
         "filter-item": "Filtro de objetos",
-        "sort-item": "Orden de objetos"
+        "sort-item": "Orden de objetos",
+        "build": "Mis construcciones"
+    },
+    "builds-list": {
+        "label": "Tu lista de builds",
+        "no-build": "Aún no has guardado ningún build."
+    },
+    "import-build": {
+        "label": "Importa tu build mediante una URL de Gearfu o Zénith",
+        "placeholder": "URL de Gearfu o Zénith"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Dominio elemental",
@@ -112,7 +121,7 @@
         "CONCENTRATION_ELEMENTAIRE": "Concentración elemental (Pre-nerf)",
         "INFLEXIBILITE_2": "Inflexibilidad 2 (Pre-nerf)",
         "COEUR_HUPPERMAGE": "Corazón Huppermago",
-        "DENOUEMENT": "Desenlace"
+        "DENOUEMENT": "Denouement"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",
