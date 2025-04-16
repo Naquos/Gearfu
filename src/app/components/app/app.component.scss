@@ -239,6 +239,11 @@ app-item-list {
         .filter-header {
           display: flex !important;
           margin-left: 0 !important;
+          width: 100%;
+          button {
+            width: calc(50% - 20px);
+            font-size: 14px;
+          }
         }
         z-index: 100;
         position: fixed;
@@ -252,7 +257,6 @@ app-item-list {
           width: 90%;
           margin: auto;
           display: block;
-          margin-left: 25px;
         }
       }
   
