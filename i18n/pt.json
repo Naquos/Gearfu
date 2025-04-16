@@ -10,7 +10,16 @@
     },
     "app": {
         "filter-item": "Filtro de itens",
-        "sort-item": "Ordenação de itens"
+        "sort-item": "Ordenação de itens",
+        "build": "Minhas construções"
+    },
+    "builds-list": {
+        "label": "Sua lista de builds",
+        "no-build": "Você ainda não salvou nenhum build."
+    },
+    "import-build": {
+        "label": "Importe seu build através de uma URL do Gearfu ou Zénith",
+        "placeholder": "URL do Gearfu ou Zénith"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Maestria elemental",
