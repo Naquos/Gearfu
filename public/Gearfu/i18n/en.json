@@ -10,7 +10,16 @@
     },
     "app": {
         "filter-item": "Item filter",
-        "sort-item": "Item sorting"
+        "sort-item": "Item sorting",
+        "build": "My builds"
+    },
+    "builds-list": {
+        "label": "Your builds list",
+        "no-build": "You haven't saved any builds yet."
+    },
+    "import-build": {
+        "label": "Import your build via a Gearfu or Zenith URL",
+        "placeholder": "Gearfu or Zenith URL"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Elemental Mastery",
@@ -119,7 +128,7 @@
         "MAITRISES": "Mastery",
         "RESISTANCES": "Resistances",
         "EQUILIBRE": "Balanced",
-        "PARADE_ARMURE_DONNEE": "Block + Given Armor",
+        "PARADE_ARMURE_DONNEE": "Parry + Given Armor",
         "POINT_DE_VIE": "Health point",
         "TACLE": "Lock",
         "ESQUIVE": "Dodge",
