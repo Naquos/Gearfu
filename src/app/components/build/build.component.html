@@ -1,6 +1,6 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<div class="content" (click)="itemChooseService.setIdItemsFromBuild(build())">
+<div class="content" (click)="itemChooseService.setIdItemsFromBuild(build()?.codeBuild || '')">
     <div class="row">
         <img [src]="mapImageItems.get(ItemTypeBuild.CASQUE)" alt="image">
         <img [src]="mapImageItems.get(ItemTypeBuild.AMULETTE)" alt="image">

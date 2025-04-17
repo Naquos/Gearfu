@@ -5,6 +5,7 @@ import { Item } from '../../models/data/item';
 import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
 import { SaveBuildService } from '../../services/saveBuildService';
 import { ItemChooseService } from '../../services/itemChooseService';
+import { Build } from '../../models/data/build';
 
 
 export enum ItemTypeBuild  {
@@ -31,7 +32,7 @@ export enum ItemTypeBuild  {
   styleUrl: './build.component.scss'
 })
 export class BuildComponent implements OnInit {
-  public build = input<string>("");
+  public build = input<Build |  undefined>(undefined);
 
   protected ItemTypeBuild = ItemTypeBuild;
   protected mapImageItems = new Map<ItemTypeBuild, string>([
@@ -59,8 +60,8 @@ export class BuildComponent implements OnInit {
     protected itemChooseService: ItemChooseService) {}
 
   ngOnInit(): void {
-    const idItemList = this.build().split(",");
-    if(idItemList.length) {
+    const idItemList = this.build()?.codeBuild.split(",");
+    if(idItemList && idItemList.length) {
       idItemList.forEach(idItem => {
         const item = this.itemService.getItem(parseInt(idItem));
         if(item) {
@@ -76,7 +77,7 @@ export class BuildComponent implements OnInit {
 
   protected removeBuild(event : MouseEvent): void {
     event.stopPropagation();
-    this.saveBuildService.removeBuild(this.build());
+    this.saveBuildService.removeBuild(this.build()?.codeBuild ?? "");
   }
 
   private getItemType(item: Item): ItemTypeBuild[] {
