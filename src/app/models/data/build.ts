@@ -1,3 +1,4 @@
 export interface Build {
-    codeBuild: string
+    codeBuild: string;
+    nameBuild?: string;
 }

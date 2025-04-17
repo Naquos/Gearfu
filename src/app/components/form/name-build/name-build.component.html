@@ -1,0 +1,8 @@
+<h2>Sauvegarder votre build</h2>
+<div>
+    <mat-form-field>
+        <mat-label>Nom de votre build</mat-label>
+        <input matInput [formControl]="nameBuildFormService.form">
+    </mat-form-field>
+    <mat-icon fontIcon="save" (click)="nameBuildFormService.addBuild()"></mat-icon>
+</div>

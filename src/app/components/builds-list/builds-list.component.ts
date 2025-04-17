@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { SaveBuildService } from '../../services/saveBuildService';
 import { CommonModule } from '@angular/common';
 import { BuildComponent } from '../build/build.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { SaveBuildService } from '../../services/saveBuildService';
 
 @Component({
   selector: 'app-builds-list',
@@ -11,7 +11,5 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './builds-list.component.scss'
 })
 export class BuildsListComponent {
-
   constructor(protected saveBuildService: SaveBuildService) {}
-
 }

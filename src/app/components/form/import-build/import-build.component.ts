@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ImportBuildService } from '../../../services/form/importBuildService';
+import { ImportBuildFormService } from '../../../services/form/importBuildFormService';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -13,5 +13,5 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './import-build.component.scss'
 })
 export class ImportBuildComponent {
-  constructor(protected importBuildService: ImportBuildService) {}
+  constructor(protected importBuildService: ImportBuildFormService) {}
 }

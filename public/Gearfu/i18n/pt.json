@@ -90,6 +90,10 @@
         "label": "Ativação de mecânicas que aumentam a maestria elemental",
         "mecaniques": "Mecânicas"
     },
+    "name-build": {
+        "label": "Salvar seu build",
+        "placeholder": "Nome do seu build"
+    },
     "only-no-secondary": {
         "label": "Considerar apenas itens sem maestria secundária",
         "oui": "Sim",

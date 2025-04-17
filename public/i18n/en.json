@@ -90,6 +90,10 @@
         "label": "Mechanics activation increasing elemental mastery",
         "mecaniques": "Mechanics"
     },
+    "name-build": {
+        "label": "Save your build",
+        "placeholder": "Name your build"
+    },
     "only-no-secondary": {
         "label": "Consider only items without secondary mastery",
         "oui": "Yes",

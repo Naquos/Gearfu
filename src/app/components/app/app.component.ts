@@ -23,6 +23,7 @@ import { MajorPresentComponent } from '../form/major-present/major-present.compo
 import { CommonModule } from '@angular/common';
 import { BuildsListComponent } from "../builds-list/builds-list.component";
 import { ImportBuildComponent } from "../form/import-build/import-build.component";
+import { NameBuildComponent } from "../form/name-build/name-build.component";
 
 
 @Component({
@@ -48,7 +49,8 @@ import { ImportBuildComponent } from "../form/import-build/import-build.componen
     SwipeDirective,
     CommonModule,
     BuildsListComponent,
-    ImportBuildComponent
+    ImportBuildComponent,
+    NameBuildComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

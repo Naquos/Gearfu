@@ -8,7 +8,7 @@ import { take } from 'rxjs';
 import { ZenithService } from '../../services/zenith/zenithService';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-import { SaveBuildService } from '../../services/saveBuildService';
+import { NameBuildFormService } from '../../services/form/nameBuildFormService';
 
 @Component({
   selector: 'app-item-choose',
@@ -19,7 +19,7 @@ import { SaveBuildService } from '../../services/saveBuildService';
 export class ItemChooseComponent {
   protected ItemTypeEnum = ItemTypeEnum;
 
-  constructor(protected itemChooseService : ItemChooseService, private zenithService: ZenithService, private saveBuildService: SaveBuildService) {}
+  constructor(protected itemChooseService : ItemChooseService, private zenithService: ZenithService, private saveBuildService: NameBuildFormService) {}
 
   protected copyToClipboard(): void {
     navigator.clipboard.writeText(window.location.href).then();
@@ -33,11 +33,5 @@ export class ItemChooseComponent {
 
   protected generateBuild(): void {
     this.zenithService.createBuild().pipe(take(1)).subscribe(linkBuild => window.open('https://www.zenithwakfu.com/builder/' + linkBuild, '_blank'));
-  }
-
-  protected saveBuild(): void {
-    this.itemChooseService.idItems$.pipe(take(1)).subscribe(idItems => {
-      this.saveBuildService.addBuild(idItems);
-    });
   }
 }

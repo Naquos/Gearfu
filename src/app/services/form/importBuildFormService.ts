@@ -1,35 +1,35 @@
 import { Injectable } from "@angular/core";
-import { SaveBuildService } from "../saveBuildService";
 import { FormControl } from "@angular/forms";
 import { AbstractFormService } from "./abstractFormService";
 import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { ZenithApiService } from "../zenith/zenithApiService";
-import { map, tap } from "rxjs";
+import { tap } from "rxjs";
+import { SaveBuildService } from "../saveBuildService";
 
 @Injectable({providedIn: 'root'})
-export class ImportBuildService extends AbstractFormService<FormControl<string>> {
+export class ImportBuildFormService extends AbstractFormService<FormControl<string>> {
     public static readonly DEFAULT_VALUE = "";
 
     constructor(private saveBuildService: SaveBuildService, private zenithApiService: ZenithApiService, protected override localStorageService: LocalStorageService) {
-        super(KeyEnum.KEY_IMPORT_BUILD, localStorageService, new FormControl<string>(ImportBuildService.DEFAULT_VALUE, { nonNullable: true }));
+        super(KeyEnum.KEY_IMPORT_BUILD, localStorageService, new FormControl<string>(ImportBuildFormService.DEFAULT_VALUE, { nonNullable: true }));
             this.init();
     }
 
     private importBuildFromUrlGearfu(): void {
         const build = this.form.value.split("itemsId=")[1];
         if(build) {
-            this.saveBuildService.addBuild(build);
+            this.saveBuildService.addBuild(build, "Gearfu - Build import");
         }
     }
 
     private importBuildFromUrlZenith(): void {
         const build = this.form.value.split("builder/")[1];
         if(build) {
-            this.zenithApiService.getBuild(build).pipe(
-                map(response => response.equipments.map(x => x.id_equipment)),
-                tap(ids => this.saveBuildService.addBuild(ids.join(","))),
-            ).subscribe();
+            this.zenithApiService.getBuild(build).pipe(tap(response => {
+                const ids = response.equipments.map(x => x.id_equipment);
+                this.saveBuildService.addBuild(ids.join(","), response.name_build);
+            })).subscribe();
         }
     }
     
@@ -43,7 +43,7 @@ export class ImportBuildService extends AbstractFormService<FormControl<string>>
     }
 
     public override setDefaultValue(): void {
-        this.form.setValue(ImportBuildService.DEFAULT_VALUE);
+        this.form.setValue(ImportBuildFormService.DEFAULT_VALUE);
     }
 
     public importBuild(): void {

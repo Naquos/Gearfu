@@ -90,6 +90,10 @@
         "label": "Activación de mecánicas que aumentan el dominio elemental",
         "mecaniques": "Mecánicas"
     },
+    "name-build": {
+        "label": "Guardar tu build",
+        "placeholder": "Nombre de tu build"
+    },
     "only-no-secondary": {
         "label": "Considerar solo objetos sin dominio secundario",
         "oui": "Sí",
