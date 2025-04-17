@@ -30,7 +30,7 @@ export class SaveBuildService {
     public removeBuild(build: string): void {
         if(!build) return; // Avoid removing empty builds
         const currentBuilds = this.buildList.getValue();
-        const updatedBuilds = currentBuilds.filter(b => b.codeBuild !== build || b.codeBuild === "" || b.codeBuild === undefined);
+        const updatedBuilds = currentBuilds.filter(b => b.codeBuild !== build || b.codeBuild !== "" || b.codeBuild !== undefined);
         this.buildList.next(updatedBuilds);
         this.localStorageService.setItem(KeyEnum.KEY_SAVE_BUILD, updatedBuilds);
     }
