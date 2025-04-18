@@ -13,6 +13,9 @@
         "sort-item": "Item sorting",
         "build": "My builds"
     },
+    "build": {
+        "zenith":"Go to Zenith"
+    },
     "builds-list": {
         "label": "Your builds list",
         "no-build": "You haven't saved any builds yet."

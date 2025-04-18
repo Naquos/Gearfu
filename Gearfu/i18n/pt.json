@@ -13,6 +13,9 @@
         "sort-item": "Ordenação de itens",
         "build": "Minhas construções"
     },
+    "build": {
+        "zenith":"Ir para Zénith"
+    },
     "builds-list": {
         "label": "Sua lista de builds",
         "no-build": "Você ainda não salvou nenhum build."
