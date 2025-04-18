@@ -86,6 +86,12 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
       }
     }
 
+    protected setItem(item: Item): void {
+      const itemType = this.itemTypeService.getItemType(item.itemTypeId);
+      if(!itemType) {return}
+      this.itemChooseService.setItem(itemType, item);
+    }
+
     protected getTitle(item?: Item): string {
       if(!item) {return ""}
       return item.title[this.translateService.currentLang as keyof typeof item.title];

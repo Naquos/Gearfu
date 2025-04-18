@@ -38,8 +38,8 @@ export class ItemTypeServices {
     return this.itemTypes;
   }
 
-  public getItemType(itemTypeId: number): ItemTypeEnum {
-    let result = ItemTypeEnum.FAMILIER;
+  public getItemType(itemTypeId: number): ItemTypeEnum | undefined {
+    let result = undefined;
     this.itemTypes.forEach((value, key) => {
       if(value.id.includes(itemTypeId)) {
         result = key;
@@ -48,7 +48,7 @@ export class ItemTypeServices {
     return result;
   }
 
-  public getLogo(itemType: ItemTypeEnum): string {
+  public getLogo(itemType: ItemTypeEnum | undefined): string {
     switch (itemType) {
       case ItemTypeEnum.DEUX_MAINS:
         return "aptitudes/DeuxMains.png"
@@ -79,7 +79,7 @@ export class ItemTypeServices {
       case ItemTypeEnum.FAMILIER:
         return "aptitudes/Familier.png"
       default:
-        return "aptitudes/Accessoires.png"
+        return ""
     }
   }
 }

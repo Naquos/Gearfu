@@ -98,6 +98,8 @@ export abstract class ItemAbstractComponent implements OnDestroy {
 
     protected initItemChoosen(item: Item): void {
         const itemTypeId = this.itemTypeService.getItemType(item.itemTypeId);
+        if(!itemTypeId) return;
+        
         let obs = new Observable<(Item | undefined)[][]>();
         if (itemTypeId === ItemTypeEnum.DAGUE) {
             obs = this.itemChooseService.getObsItem(ItemTypeEnum.BOUCLIER).pipe(map(x => [x]));

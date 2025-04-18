@@ -32,7 +32,7 @@ export class NameBuildFormService extends AbstractFormService<FormControl<string
     public addBuild(): void {
         this.itemChooseService.idItems$.pipe(
             take(1),
-            tap(ids => this.saveBuildService.addBuild(ids, this.form.value))
+            tap(ids => this.saveBuildService.addBuild({codeBuild: ids, nameBuild: this.form.value}))
         ).subscribe();
     }
 }

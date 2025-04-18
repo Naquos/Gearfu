@@ -17,18 +17,23 @@ export class ImportBuildFormService extends AbstractFormService<FormControl<stri
     }
 
     private importBuildFromUrlGearfu(): void {
-        const build = this.form.value.split("itemsId=")[1];
-        if(build) {
-            this.saveBuildService.addBuild(build, "Gearfu - Build import");
+        const codeBuild = this.form.value.split("itemsId=")[1];
+        if(codeBuild) {
+            this.saveBuildService.addBuild({codeBuild, nameBuild: "Gearfu - Build import"});
         }
     }
 
     private importBuildFromUrlZenith(): void {
-        const build = this.form.value.split("builder/")[1];
-        if(build) {
-            this.zenithApiService.getBuild(build).pipe(tap(response => {
+        const codeBuild = this.form.value.split("builder/")[1];
+        if(codeBuild) {
+            this.zenithApiService.getBuild(codeBuild).pipe(tap(response => {
                 const ids = response.equipments.map(x => x.id_equipment);
-                this.saveBuildService.addBuild(ids.join(","), response.name_build);
+                this.saveBuildService.addBuild(
+                    {
+                        codeBuild: ids.join(","),
+                        nameBuild: response.name_build,
+                        codeZenith: response.link_build
+                    });
             })).subscribe();
         }
     }

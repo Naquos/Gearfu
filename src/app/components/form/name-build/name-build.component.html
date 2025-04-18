@@ -1,7 +1,7 @@
-<h2>Sauvegarder votre build</h2>
+<h2>{{"name-build.label" | translate }}</h2>
 <div>
     <mat-form-field>
-        <mat-label>Nom de votre build</mat-label>
+        <mat-label>{{"name-build.placeholder" | translate }}</mat-label>
         <input matInput [formControl]="nameBuildFormService.form">
     </mat-form-field>
     <mat-icon fontIcon="save" (click)="nameBuildFormService.addBuild()"></mat-icon>

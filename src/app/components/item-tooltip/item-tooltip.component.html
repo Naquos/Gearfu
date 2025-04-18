@@ -4,7 +4,7 @@
     <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="'aptitudes/1068.png'" alt="Maitrises">{{"item.maitrises" | translate}} {{Math.trunc(maitrises)}}</span>
     <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="'aptitudes/1069.png'" alt="Resistances">{{ "item.resistances" | translate }} {{resistances}}</span>
 </div>
-<div class="content" (click)="itemChooseService.setItem(itemTypeService.getItemType(item.itemTypeId), item)">
+<div class="content" (click)="setItem(item)">
     <div class="column">
         <div class="row">
             <div class="title">

@@ -14,13 +14,12 @@ export class SaveBuildService {
         this.buildList.next(savedBuilds);
     }
 
-    public addBuild(codeBuild: string, nameBuild: string): void {
-        if(!codeBuild) return; // Avoid adding empty builds
+    public addBuild(build: Build): void {
+        if(!build.codeBuild) return; // Avoid adding empty builds
         const currentBuilds = this.buildList.getValue()
         const codeBuildsList = currentBuilds.map(b => b.codeBuild);
-        if (!codeBuildsList.includes(codeBuild)) {
-            const newBuild: Build = { codeBuild, nameBuild };
-            currentBuilds.unshift(newBuild);
+        if (!codeBuildsList.includes(build.codeBuild)) {
+            currentBuilds.unshift(build);
             this.buildList.next(currentBuilds);
             this.localStorageService.setItem(KeyEnum.KEY_SAVE_BUILD, currentBuilds);
         }

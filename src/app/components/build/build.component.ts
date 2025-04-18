@@ -6,7 +6,9 @@ import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
 import { ItemChooseService } from '../../services/itemChooseService';
 import { Build } from '../../models/data/build';
 import { SaveBuildService } from '../../services/saveBuildService';
-
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 export enum ItemTypeBuild  {
   CASQUE =  "CASQUE",
@@ -27,7 +29,7 @@ export enum ItemTypeBuild  {
 
 @Component({
   selector: 'app-build',
-  imports: [],
+  imports: [CommonModule, MatTooltipModule, TranslateModule],
   templateUrl: './build.component.html',
   styleUrl: './build.component.scss'
 })
@@ -75,6 +77,11 @@ export class BuildComponent implements OnInit {
     }
   }
 
+  protected goToZenith(event: MouseEvent): void {
+    event.stopPropagation();
+    window.open('https://www.zenithwakfu.com/builder/' + this.build()?.codeZenith, '_blank')
+  }
+
   protected removeBuild(event : MouseEvent): void {
     event.stopPropagation();
     this.saveBuildService.removeBuild(this.build()?.codeBuild ?? "");
@@ -116,7 +123,7 @@ export class BuildComponent implements OnInit {
       case ItemTypeEnum.FAMILIER:
         return [ItemTypeBuild.FAMILIER];
       default:
-        return [ItemTypeBuild.ACCESSOIRES];
+        return [];
     }
   }
 }

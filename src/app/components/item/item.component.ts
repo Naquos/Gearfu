@@ -52,7 +52,9 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   }
 
   protected setItemChoosen() : void {
-    this.itemChooseService.setItem(this.itemTypeService.getItemType(this.item.itemTypeId), this.item)
+    const itemType = this.itemTypeService.getItemType(this.item.itemTypeId);
+    if(!itemType) { return; }
+    this.itemChooseService.setItem(itemType, this.item)
   }
 
 

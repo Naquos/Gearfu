@@ -40,7 +40,9 @@ export class SearchItemNameFormService extends AbstractFormService<FormControl<s
 
   public setFilter(item :Item): void {
     this.rareteItemFormServices.setDefaultValue();
-    this.itemTypeFormServices.setItemType(this.itemTypeService.getItemType(item.itemTypeId));
+    const itemType = this.itemTypeService.getItemType(item.itemTypeId);
+    if(!itemType) {return}
+    this.itemTypeFormServices.setItemType(itemType);
 
     if(item.level <= 20) {
       this.itemLevelFormService.setValue({levelMin:0, levelMax:20});

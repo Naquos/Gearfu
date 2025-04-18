@@ -128,8 +128,12 @@ export class ItemChooseService {
         .pipe(
             first(),
             filter(x => x !== undefined)
-        ).subscribe(item => 
-            this.setItem(this.itemTypeService.getItemType(item.itemTypeId), item));
+        ).subscribe(item => {
+                const itemType = this.itemTypeService.getItemType(item.itemTypeId);
+                if(!itemType) {return ;} 
+                this.setItem(itemType, item)
+            }
+        );
     }
 
     private cleanMapItem(): void {
@@ -151,7 +155,9 @@ export class ItemChooseService {
             idItemList.forEach(idItem => {
                 const item = this.itemService.getItem(parseInt(idItem));
                 if(item) {
-                    this.setItem(this.itemTypeService.getItemType(item.itemTypeId), item);
+                    const itemType = this.itemTypeService.getItemType(item.itemTypeId);
+                    if(!itemType) {return ;} 
+                    this.setItem(itemType, item)
                 }
             })
         }
@@ -276,7 +282,7 @@ export class ItemChooseService {
                     const indexRarity = list.findIndex(x => x?.rarity === rarity);
                     list[indexRarity] = undefined;
                     this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(list);
-                } else {
+                } else if(itemType !== undefined) {
                     this.mapItem.get(itemType)?.next([undefined])
                 }
             })),

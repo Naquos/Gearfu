@@ -146,10 +146,10 @@
     {
         "id": 26322,
         "description": {
-            "fr": "Entre 500 et 600 d'esquives",
-            "en": "Between 500 and 600 dodge",
-            "es": "Entre 500 y 600 de esquiva",
-            "pt": "Entre 500 e 600 de esquiva"
+            "fr": "Entre 40% et 50% de critique",
+            "en": "Between 40% and 50% critical",
+            "es": "Entre 40% y 50% de crítico",
+            "pt": "Entre 40% e 50% de crítico"
         }
     },
     {
@@ -191,7 +191,7 @@
     {
         "id": 26324,
         "description": {
-            "fr": "Entre 500 et 600 d'esquives",
+            "fr": "Entre 500 et 600 d'esquive",
             "en": "Between 500 and 600 dodge",
             "es": "Entre 500 y 600 de esquiva",
             "pt": "Entre 500 e 600 de esquiva"

@@ -13,6 +13,9 @@
         "sort-item":"Tri des items",
         "build": "Mes builds"
     },
+    "build": {
+        "zenith":"Aller vers Zénith"
+    },
     "builds-list": {
         "label": "Votre liste de builds",
         "no-build":"Vous n'avez pas encore de builds sauvegardés."
