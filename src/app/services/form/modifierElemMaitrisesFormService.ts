@@ -24,12 +24,6 @@ export class ModifierElemMaitrisesFormService extends AbstractFormService<FormCo
 
   protected override handleChanges(value: string[]): void {
     let result = 1;
-    if(value?.includes(ElemMaitrisesMecanismEnum.ABNEGATION.valueOf())) {result*=1.15}
-    if(value?.includes(ElemMaitrisesMecanismEnum.ALTERNANCE.valueOf())) {result*=1.2}
-    if(value?.includes(ElemMaitrisesMecanismEnum.ALTERNANCE_2.valueOf())) {result*=1.15}
-    if(value?.includes(ElemMaitrisesMecanismEnum.ANATOMIE.valueOf())) {result*=1.15}
-    if(value?.includes(ElemMaitrisesMecanismEnum.CONCENTRATION_ELEMENTAIRE.valueOf())) {result*=1.2}
-    if(value?.includes(ElemMaitrisesMecanismEnum.INFLEXIBILITE_2.valueOf())) {result*=1.15}
     if(value?.includes(ElemMaitrisesMecanismEnum.COEUR_HUPPERMAGE.valueOf())) {result*=1.2}
     this.multiplicateurElem.next(result);
     

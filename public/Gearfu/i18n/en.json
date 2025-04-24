@@ -121,12 +121,6 @@
         "DROP": "Drop"
     },
     "elem-maitrises-mecanism-enum": {
-        "ABNEGATION": "Abnegation (Pre-nerf)",
-        "ALTERNANCE": "Alternance (Pre-nerf)",
-        "ALTERNANCE_2": "Alternance 2 (Pre-nerf)",
-        "ANATOMIE": "Anatomy (Pre-nerf)",
-        "CONCENTRATION_ELEMENTAIRE": "Elemental Concentration (Pre-nerf)",
-        "INFLEXIBILITE_2": "Inflexibility 2 (Pre-nerf)",
         "COEUR_HUPPERMAGE": "Huppermage's Heart",
         "DENOUEMENT": "Unraveling"
     },
