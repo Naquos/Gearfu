@@ -121,12 +121,6 @@
         "DROP": "Botín"
     },
     "elem-maitrises-mecanism-enum": {
-        "ABNEGATION": "Abnegación (Pre-nerf)",
-        "ALTERNANCE": "Alternancia (Pre-nerf)",
-        "ALTERNANCE_2": "Alternancia 2 (Pre-nerf)",
-        "ANATOMIE": "Anatomía (Pre-nerf)",
-        "CONCENTRATION_ELEMENTAIRE": "Concentración elemental (Pre-nerf)",
-        "INFLEXIBILITE_2": "Inflexibilidad 2 (Pre-nerf)",
         "COEUR_HUPPERMAGE": "Corazón Huppermago",
         "DENOUEMENT": "Denouement"
     },
