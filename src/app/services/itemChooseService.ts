@@ -22,7 +22,7 @@ export class ItemChooseService {
     public totalWeight$ = this.totalWeight.asObservable();
 
     private listItem = new BehaviorSubject<Item[]>([]);
-    private listItem$ = this.listItem.asObservable();
+    public listItem$ = this.listItem.asObservable();
     
     private totalMaitrises = new BehaviorSubject<number>(0);
     public totalMaitrises$ = this.totalMaitrises.asObservable();
@@ -77,7 +77,7 @@ export class ItemChooseService {
         ]).pipe(
             map(list => list.flat()),
             map(list => list.filter(x => x !== undefined && x !== null)),
-            tap(list => this.listItem.next(list)),
+            tap(list => this.listItem.next([... new Set<Item>(list)])),
             map(list => list.map(items => items?.id)),
             map(list => list.filter(x => x).join(",")),
             tap(x => this.setIdItems(x))
@@ -109,9 +109,7 @@ export class ItemChooseService {
         let weight = 0;
         let resistance = 0;
         let maitrise = 0;
-        const setItem = new Set<Item>(); // On met un Set pour éviter que l'arme à deux mains voit son poid compter 2 fois
-        list.forEach(item => setItem.add(item));
-        setItem.forEach(x => {
+        list.forEach(x => {
             const tempResis  = this.itemService.calculResistancesForAnItem(x, idResistances);
             const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem, denouement);
             resistance+= tempResis;

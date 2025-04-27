@@ -24,6 +24,7 @@ import { CommonModule } from '@angular/common';
 import { BuildsListComponent } from "../builds-list/builds-list.component";
 import { ImportBuildComponent } from "../form/import-build/import-build.component";
 import { NameBuildComponent } from "../form/name-build/name-build.component";
+import { RecapStatsComponent } from "../recap-stats/recap-stats.component";
 
 
 @Component({
@@ -50,7 +51,8 @@ import { NameBuildComponent } from "../form/name-build/name-build.component";
     CommonModule,
     BuildsListComponent,
     ImportBuildComponent,
-    NameBuildComponent
+    NameBuildComponent,
+    RecapStatsComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

@@ -89,11 +89,11 @@ export abstract class ItemAbstractComponent implements OnDestroy {
         this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_TERRE, 47);
     }
 
-    protected getEffectPng(effect : EquipEffects | DifferentStatsItem) {
+    protected getEffectPng(effect : EquipEffects | DifferentStatsItem): string {
       if(effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE) {
-        return effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE ? "ArmureDonnée" : 39;
+        return effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE ? "ArmureDonnée" : "39";
       }
-      return effect.actionId;
+      return `${effect.actionId}`;
     }
 
     protected initItemChoosen(item: Item): void {

@@ -138,6 +138,14 @@ header {
     
 }
 
+app-recap-stats {
+  position: absolute;
+  width: calc(100% - 400px);
+  top: $header-size;
+  left: 400px;
+  height: 64px;
+}
+
 app-item-list {
     width: calc(100% - 500px);
     margin-top: 1%;
@@ -193,6 +201,10 @@ app-item-list {
   @media screen and (min-width: 700px) {
     .menu {
       display: none;
+    }
+
+    app-item-list { 
+      margin-top: calc(1% + 64px);
     }
   }
 
@@ -265,7 +277,7 @@ app-item-list {
       }
     }
 
-    .discord {
+    .discord, app-recap-stats {
       display: none;
     }
   }

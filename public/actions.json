@@ -29,10 +29,10 @@
             "effect": "Deboost : Point de vie (PV)"
         },
         "description": {
-            "fr": "Point{[\u003e1]?s:} de Vie",
-            "en": "Health Point{[\u003e1]?s:",
-            "es": "punto{[\u003d1]?:s} de vida",
-            "pt": "Ponto{[\u003e1]?s:} de Vida"
+            "fr": "Points de Vie",
+            "en": "Health Points:",
+            "es": "puntos de vida",
+            "pt": "Pontos de Vida"
         }
     },
     {
