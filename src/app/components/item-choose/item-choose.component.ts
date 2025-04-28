@@ -8,7 +8,6 @@ import { take } from 'rxjs';
 import { ZenithService } from '../../services/zenith/zenithService';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-import { NameBuildFormService } from '../../services/form/nameBuildFormService';
 
 @Component({
   selector: 'app-item-choose',
@@ -19,7 +18,7 @@ import { NameBuildFormService } from '../../services/form/nameBuildFormService';
 export class ItemChooseComponent {
   protected readonly ItemTypeEnum = ItemTypeEnum;
 
-  constructor(protected itemChooseService : ItemChooseService, private zenithService: ZenithService, private saveBuildService: NameBuildFormService) {}
+  constructor(protected itemChooseService : ItemChooseService, private zenithService: ZenithService) {}
 
   protected copyToClipboard(): void {
     navigator.clipboard.writeText(window.location.href).then();

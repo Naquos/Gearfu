@@ -60,6 +60,7 @@ header {
 
 .content {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     margin-top: $header-size;
     
@@ -139,10 +140,8 @@ header {
 }
 
 app-recap-stats {
-  position: fixed;
-  z-index: 1;
+  position: relative;
   width: calc(100% - 400px);
-  top: $header-size;
   left: 400px;
   min-height: 64px;
 }
@@ -202,10 +201,6 @@ app-item-list {
   @media screen and (min-width: 700px) {
     .menu {
       display: none;
-    }
-
-    app-item-list { 
-      margin-top: calc(1% + 64px);
     }
   }
 

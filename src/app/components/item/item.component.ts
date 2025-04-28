@@ -28,7 +28,7 @@ import { Item } from '../../models/data/item';
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
   
   @Input()
-  public readonly item!: Item;
+  public item!: Item;
 
   private readonly condition = new BehaviorSubject<ItemCondition | undefined>(undefined);
   protected readonly condition$ = this.condition.asObservable();
