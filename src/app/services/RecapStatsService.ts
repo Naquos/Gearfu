@@ -5,55 +5,86 @@ import { ParameterMajorActionEnum } from "../models/enum/parameterMajorActionEnu
 import { tap, map, BehaviorSubject } from "rxjs";
 import { ActionService } from "./data/actionService";
 import { ItemChooseService } from "./itemChooseService";
+import { EquipEffects } from "../models/data/equipEffects";
+import { Item } from "../models/data/item";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class RecapStatsService {
-      private readonly effectList: RecapStats[] = [
-        {id:IdActionsEnum.POINT_DE_VIE, value: 0},
-        {id:IdActionsEnum.PA, value: 0},
-        {id:IdActionsEnum.PM, value: 0},
-        {id:IdActionsEnum.BOOST_PW, value: 0},
-        {id:IdActionsEnum.COUP_CRITIQUE, value: 0},
-        {id:IdActionsEnum.PARADE, value: 0},
-        {id:IdActionsEnum.PORTEE, value: 0},
-        {id:IdActionsEnum.ESQUIVE, value: 0},
-        {id:IdActionsEnum.TACLE, value: 0},
-        {id:IdActionsEnum.VOLONTE, value: 0},
-        {id:IdActionsEnum.RESISTANCES_DOS, value: 0},
-        {id:IdActionsEnum.RESISTANCES_CRITIQUES, value: 0},
-        {id:IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, value: 0},
-        {id:IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, value: 0},
-      ]
+  private readonly initialEffectList: RecapStats[] = [
+    { id: IdActionsEnum.POINT_DE_VIE, value: 0 },
+    { id: IdActionsEnum.PA, value: 0 },
+    { id: IdActionsEnum.PM, value: 0 },
+    { id: IdActionsEnum.BOOST_PW, value: 0 },
+    { id: IdActionsEnum.COUP_CRITIQUE, value: 0 },
+    { id: IdActionsEnum.PARADE, value: 0 },
+    { id: IdActionsEnum.PORTEE, value: 0 },
+    { id: IdActionsEnum.ESQUIVE, value: 0 },
+    { id: IdActionsEnum.TACLE, value: 0 },
+    { id: IdActionsEnum.VOLONTE, value: 0 },
+    { id: IdActionsEnum.RESISTANCES_DOS, value: 0 },
+    { id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 0 },
+    { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, value: 0 },
+    { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, value: 0 },
+  ];
 
-    private readonly recap = new BehaviorSubject<RecapStats[]>(this.effectList);
-    public readonly recap$ = this.recap.asObservable();
+  private readonly recapSubject = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);
+  public readonly recap$ = this.recapSubject.asObservable();
 
-    constructor(private actionService: ActionService,
-        private itemChooseService: ItemChooseService,
-    ) {
-        this.itemChooseService.listItem$.pipe(
-        tap(() => this.effectList.forEach(x => x.value = 0)),
-        map(items => items.map(item => item.equipEffects).flat()),
-        map(effects  => effects.map(x =>  ({
-                id: x.actionId,
-                parameterMajorAction: x.actionId !== IdActionsEnum.ARMURE_DONNEE_RECUE ? undefined :
-                x.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE ? ParameterMajorActionEnum.ARMURE_DONNEE : ParameterMajorActionEnum.ARMURE_RECUE,
-                value: x.params[0]
-            }))),
-        tap(effects =>  effects.forEach(effect => this.setEffect(effect))),
-        tap(() => this.recap.next(this.effectList)),
-        ).subscribe();
+  constructor(
+    private readonly actionService: ActionService,
+    private readonly itemChooseService: ItemChooseService,
+  ) {
+    this.initializeListeners();
+  }
+
+  private initializeListeners(): void {
+    this.itemChooseService.listItem$.pipe(
+      tap(() => this.resetEffects()),
+      map(items => this.extractEquipEffects(items)),
+      map(effects => this.mapToRecapStats(effects)),
+      tap(mappedEffects => mappedEffects.forEach(effect => this.applyEffect(effect))),
+      tap(() => this.emitEffects()),
+    ).subscribe();
+  }
+
+  private resetEffects(): void {
+    this.recapSubject.value.forEach(effect => effect.value = 0);
+  }
+
+  private extractEquipEffects(items: Item[]): EquipEffects[] {
+    return items.flatMap(item => item.equipEffects);
+  }
+
+  private mapToRecapStats(effects: EquipEffects[]): RecapStats[] {
+    return effects.map(effect => ({
+      id: effect.actionId,
+      parameterMajorAction: effect.actionId !== IdActionsEnum.ARMURE_DONNEE_RECUE
+        ? undefined
+        : (effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE
+          ? ParameterMajorActionEnum.ARMURE_DONNEE
+          : ParameterMajorActionEnum.ARMURE_RECUE),
+      value: effect.params[0]
+    }));
+  }
+
+  private applyEffect(effect: RecapStats): void {
+    const isMalus = this.actionService.isAMalus(effect.id);
+    const adjustedActionId = isMalus
+      ? this.actionService.getOpposedEffect(effect.id)
+      : effect.id;
+    const modifier = isMalus ? -1 : 1;
+
+    const existingEffect = this.recapSubject.value.find(x =>
+      (x.id !== IdActionsEnum.ARMURE_DONNEE_RECUE && x.id === adjustedActionId)
+      || (x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameterMajorAction === effect.parameterMajorAction)
+    );
+
+    if (existingEffect) {
+      existingEffect.value += modifier * effect.value;
     }
+  }
 
-    private setEffect(effect: RecapStats): void {
-        const isAMalus = this.actionService.isAMalus(effect.id);
-        const actionId  = isAMalus ? this.actionService.getOpposedEffect(effect.id) : effect.id;
-        const valueModifier = isAMalus ? -1 : 1;
-    
-        const temp = this.effectList.find(x => (x.id !== IdActionsEnum.ARMURE_DONNEE_RECUE && x.id === actionId)
-        || (x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameterMajorAction === effect.parameterMajorAction));
-        if(temp) {
-          temp.value += valueModifier * effect.value;
-        }
-      }
+  private emitEffects(): void {
+    this.recapSubject.next([...this.recapSubject.value]);
+  }
 }
