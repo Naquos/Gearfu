@@ -144,7 +144,7 @@ app-recap-stats {
   width: calc(100% - 400px);
   top: $header-size;
   left: 400px;
-  height: 64px;
+  min-height: 64px;
 }
 
 app-item-list {

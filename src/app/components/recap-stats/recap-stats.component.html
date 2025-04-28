@@ -1,6 +1,8 @@
-<div class="content">
-    <span *ngFor="let effect of effectList">
-        <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'" alt="aptitudes">
-        {{ displayEffect(effect) }}
-    </span>
-</div>
+<ng-container *ngIf="{recap:  recapStatsService.recap$ | async} as data">
+    <div class="content">
+        <span *ngFor="let effect of data.recap">
+            <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'" alt="aptitudes">
+            {{ displayEffect(effect) }}
+        </span>
+    </div>
+</ng-container>
