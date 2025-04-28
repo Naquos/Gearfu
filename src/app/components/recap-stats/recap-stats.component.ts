@@ -39,30 +39,26 @@ export class RecapStatsComponent {
     this.itemChooseService.listItem$.pipe(
       tap(() => this.effectList.forEach(x => x.value = 0)),
       map(items => items.map(item => item.equipEffects).flat()),
-      map(effects  => effects.map(x => {
-        if(x.actionId !== IdActionsEnum.ARMURE_DONNEE_RECUE) {
-          return {id: x.actionId, value: x.params[0]};
-        } 
-        return {id: IdActionsEnum.ARMURE_DONNEE_RECUE,
-           parameterMajorAction: x.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE ? ParameterMajorActionEnum.ARMURE_DONNEE : ParameterMajorActionEnum.ARMURE_RECUE,
-           value: x.params[0]
-          };
-      })),
+      map(effects  => effects.map(x =>  ({
+            id: x.actionId,
+            parameterMajorAction: x.actionId !== IdActionsEnum.ARMURE_DONNEE_RECUE ? undefined :
+             x.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE ? ParameterMajorActionEnum.ARMURE_DONNEE : ParameterMajorActionEnum.ARMURE_RECUE,
+            value: x.params[0]
+          }))),
       tap(effects =>  effects.forEach(effect => this.setEffect(effect)))
     ).subscribe();
   }
 
   protected displayEffect(effect: RecapStats): string {
     const descriptionEffect = this.actionService.getEffectById(effect.id);
-    const isAMalus = this.actionService.isAMalus(effect.id); 
-    const symbol = (isAMalus && effect.value > 0) || (!isAMalus && effect.value < 0) ? "-" : ""
+    const symbol = effect.value < 0? "-" : ""
     const value = Math.abs(effect.value);
-      if(effect.id === IdActionsEnum.ARMURE_DONNEE_RECUE || effect.id === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) {
-        const type = effect.parameterMajorAction === ParameterMajorActionEnum.ARMURE_DONNEE ? 
-        this.translateService.instant("abstract.donnee") : this.translateService.instant("abstract.recue")
-        return symbol + value + this.translateService.instant("abstract.armure") + type;
-      }
-      return symbol + value + " " + descriptionEffect;
+    if(effect.id === IdActionsEnum.ARMURE_DONNEE_RECUE || effect.id === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) {
+      const type = effect.parameterMajorAction === ParameterMajorActionEnum.ARMURE_DONNEE ? 
+      this.translateService.instant("abstract.donnee") : this.translateService.instant("abstract.recue")
+      return symbol + value + this.translateService.instant("abstract.armure") + type;
+    }
+    return symbol + value + " " + descriptionEffect;
   }
 
   protected getEffectPng(effect : RecapStats): string {
@@ -73,20 +69,14 @@ export class RecapStatsComponent {
   }
 
   private setEffect(effect: RecapStats): void {
-    if(!this.actionService.isAMalus(effect.id)) {
-      const temp = this.effectList.find(x => (x.id !== IdActionsEnum.ARMURE_DONNEE_RECUE && x.id === effect.id)
-       || (x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameterMajorAction === effect.parameterMajorAction));
-      if(temp) {
-        temp.value += effect.value;
-      }
-    }
-    else {
-      const effectId = this.actionService.getOpposedEffect(effect.id);
-      const temp = this.effectList.find(x => (x.id !== IdActionsEnum.ARMURE_DONNEE_RECUE && x.id === effectId)
-      || (x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameterMajorAction === effect.parameterMajorAction));
-      if(temp) {
-        temp.value -= effect.value;
-      }
+    const isAMalus = this.actionService.isAMalus(effect.id);
+    const actionId  = isAMalus ? this.actionService.getOpposedEffect(effect.id) : effect.id;
+    const valueModifier = isAMalus ? -1 : 1;
+
+    const temp = this.effectList.find(x => (x.id !== IdActionsEnum.ARMURE_DONNEE_RECUE && x.id === actionId)
+    || (x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameterMajorAction === effect.parameterMajorAction));
+    if(temp) {
+      temp.value += valueModifier * effect.value;
     }
   }
 

@@ -139,7 +139,8 @@ header {
 }
 
 app-recap-stats {
-  position: absolute;
+  position: fixed;
+  z-index: 1;
   width: calc(100% - 400px);
   top: $header-size;
   left: 400px;
