@@ -13,7 +13,7 @@ import { CraftableChoiceFormService } from '../../../services/form/craftableChoi
   styleUrl: './craftable-choice.component.scss'
 })
 export class CraftableChoiceComponent {
-  protected craftableChoiceEnumList = Object.values(CraftableChoiceEnum);
+  protected readonly craftableChoiceEnumList = Object.values(CraftableChoiceEnum);
 
   constructor(protected craftableChoiceFormServie: CraftableChoiceFormService) {}
 }

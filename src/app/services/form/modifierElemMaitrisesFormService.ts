@@ -11,11 +11,11 @@ export class ModifierElemMaitrisesFormService extends AbstractFormService<FormCo
 
   public static readonly DEFAULT_VALUE: string[] = [];
 
-  private multiplicateurElem = new BehaviorSubject<number>(1);
-  public multiplicateurElem$ = this.multiplicateurElem.asObservable();
+  private readonly multiplicateurElem = new BehaviorSubject<number>(1);
+  public readonly multiplicateurElem$ = this.multiplicateurElem.asObservable();
 
-  private denouement = new BehaviorSubject<boolean>(false)
-  public denouement$ = this.denouement.asObservable()
+  private readonly denouement = new BehaviorSubject<boolean>(false)
+  public readonly denouement$ = this.denouement.asObservable()
 
   constructor(protected override localStorageService: LocalStorageService) {
       super(KeyEnum.KEY_MODIFIER_ELEM_MAITRISE, localStorageService, new FormControl<string[]>(ModifierElemMaitrisesFormService.DEFAULT_VALUE, { nonNullable: true }));

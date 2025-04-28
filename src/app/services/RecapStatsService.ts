@@ -27,8 +27,8 @@ export class RecapStatsService {
     { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, value: 0 },
   ];
 
-  private readonly recapSubject = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);
-  public readonly recap$ = this.recapSubject.asObservable();
+  private readonly recap = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);
+  public readonly recap$ = this.recap.asObservable();
 
   constructor(
     private readonly actionService: ActionService,
@@ -48,7 +48,7 @@ export class RecapStatsService {
   }
 
   private resetEffects(): void {
-    this.recapSubject.value.forEach(effect => effect.value = 0);
+    this.recap.value.forEach(effect => effect.value = 0);
   }
 
   private extractEquipEffects(items: Item[]): EquipEffects[] {
@@ -74,7 +74,7 @@ export class RecapStatsService {
       : effect.id;
     const modifier = isMalus ? -1 : 1;
 
-    const existingEffect = this.recapSubject.value.find(x =>
+    const existingEffect = this.recap.value.find(x =>
       (x.id !== IdActionsEnum.ARMURE_DONNEE_RECUE && x.id === adjustedActionId)
       || (x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameterMajorAction === effect.parameterMajorAction)
     );
@@ -85,6 +85,6 @@ export class RecapStatsService {
   }
 
   private emitEffects(): void {
-    this.recapSubject.next([...this.recapSubject.value]);
+    this.recap.next([...this.recap.value]);
   }
 }

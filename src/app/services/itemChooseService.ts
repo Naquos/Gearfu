@@ -14,21 +14,21 @@ import { Item } from "../models/data/item";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService {
-    private mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>();
-    private idItems = new BehaviorSubject<string>("");
-    public idItems$ = this.idItems.asObservable();
+    private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>();
+    private readonly idItems = new BehaviorSubject<string>("");
+    public readonly idItems$ = this.idItems.asObservable();
 
-    private totalWeight = new BehaviorSubject<number>(0);
-    public totalWeight$ = this.totalWeight.asObservable();
+    private readonly totalWeight = new BehaviorSubject<number>(0);
+    public readonly totalWeight$ = this.totalWeight.asObservable();
 
-    private listItem = new BehaviorSubject<Item[]>([]);
-    public listItem$ = this.listItem.asObservable();
+    private readonly listItem = new BehaviorSubject<Item[]>([]);
+    public readonly listItem$ = this.listItem.asObservable();
     
-    private totalMaitrises = new BehaviorSubject<number>(0);
-    public totalMaitrises$ = this.totalMaitrises.asObservable();
+    private readonly totalMaitrises = new BehaviorSubject<number>(0);
+    public readonly totalMaitrises$ = this.totalMaitrises.asObservable();
     
-    private totalResistances = new BehaviorSubject<number>(0);
-    public totalResistances$ = this.totalResistances.asObservable();
+    private readonly totalResistances = new BehaviorSubject<number>(0);
+    public readonly totalResistances$ = this.totalResistances.asObservable();
     private indexAnneau = 0;
 
     constructor(private itemTypeService: ItemTypeServices,

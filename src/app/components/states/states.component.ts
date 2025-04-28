@@ -13,10 +13,10 @@ import { TranslateService } from '@ngx-translate/core';
 export class StatesComponent {
 
   @Input()
-  statesDefinitionId = 0;
+  public statesDefinitionId = 0;
 
   @Input()
-  nameStates = "";
+  public nameStates = "";
 
   constructor(
     protected statesDefinitionService: StatesDefinitionService,

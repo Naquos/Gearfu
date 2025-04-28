@@ -9,8 +9,8 @@ import { BuildResponse } from "../../models/zenith/buildResponse";
 
 @Injectable({providedIn: 'root'})
 export class ZenithApiService {
-    private urlZenith = "https://api.zenithwakfu.com/builder/api/";
-    private headers = new HttpHeaders({
+    private readonly urlZenith = "https://api.zenithwakfu.com/builder/api/";
+    private readonly headers = new HttpHeaders({
         "Host": "api.zenithwakfu.com",
         "Origin": "https://zenithwakfu.com",
         "Referer": "https://zenithwakfu.com/",

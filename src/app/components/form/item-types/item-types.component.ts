@@ -15,8 +15,8 @@ import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
   styleUrl: './item-types.component.scss'
 })
 export class ItemTypesComponent {
-  protected itemTypes = new Map<string, ItemType>([]);
-  protected ItemTypeEnum = ItemTypeEnum;
+  protected readonly itemTypes = new Map<string, ItemType>([]);
+  protected readonly ItemTypeEnum = ItemTypeEnum;
 
   constructor(protected itemTypeFormServices: ItemTypeFormServices, protected itemTypesServices: ItemTypeServices) {
   }

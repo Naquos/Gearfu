@@ -7,7 +7,7 @@ import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
 @Injectable({providedIn: 'root'})
 export class ItemTypeServices {
     
-  protected itemTypes = new Map<ItemTypeEnum, ItemType>([]);
+  protected readonly itemTypes = new Map<ItemTypeEnum, ItemType>([]);
   
   constructor() {
     

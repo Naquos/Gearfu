@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component,ElementRef,Input, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActionService } from '../../services/data/actionService';
-import { BehaviorSubject, map, Observable, take, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { ItemsService } from '../../services/data/itemsService';
 import { ColorRarityService } from '../../services/colorRarityService';
 import { ItemChooseService } from '../../services/itemChooseService';
@@ -28,10 +28,10 @@ import { Item } from '../../models/data/item';
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
   
   @Input()
-  public item!: Item;
+  public readonly item!: Item;
 
-  private condition = new BehaviorSubject<ItemCondition | undefined>(undefined);
-  protected condition$ = this.condition.asObservable();
+  private readonly condition = new BehaviorSubject<ItemCondition | undefined>(undefined);
+  protected readonly condition$ = this.condition.asObservable();
 
   constructor(
     private viewContainerRef: ViewContainerRef,
@@ -67,11 +67,10 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
       this.item.equipEffects = this.item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
  
       this.initItemChoosen(this.item);
-      this.itemConditionService.findCondition(this.item.id)
-      .pipe(
-        take(1),
-        tap(x => this.condition.next(x))
-      ).subscribe()
+      const condition = this.itemConditionService.findCondition(this.item.id);
+      if(condition) {
+        this.condition.next(condition);
+      }
 
       this.cdr.detectChanges();
     }

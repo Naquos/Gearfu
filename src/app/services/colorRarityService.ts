@@ -4,7 +4,7 @@ import { RarityItemEnum } from "../models/enum/rarityItemEnum";
 @Injectable({providedIn: 'root'})
 export class ColorRarityService {
     
-  private mapColors = new Map<RarityItemEnum,string>();
+  private readonly mapColors = new Map<RarityItemEnum,string>();
 
   constructor() {
     this.mapColors.set(RarityItemEnum.RARE,"#4c9646");

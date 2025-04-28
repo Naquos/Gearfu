@@ -19,13 +19,13 @@ import { Item } from "../../models/data/item";
   styleUrl: './itemAbstract.component.scss'})
 export abstract class ItemAbstractComponent implements OnDestroy {
     
-    protected destroy$ = new Subject<void>();
+    protected readonly destroy$ = new Subject<void>();
     protected resistances = 0;
     protected maitrises = 0;
-    protected IdActionEnum = IdActionsEnum;
-    protected mapSortAction= new Map<IdActionsEnum, number>();
-    protected Math = Math;
-    protected itemChoosen$ = new BehaviorSubject<(Item | undefined)[][]>([[]]);
+    protected readonly IdActionEnum = IdActionsEnum;
+    protected readonly mapSortAction= new Map<IdActionsEnum, number>();
+    protected readonly Math = Math;
+    protected readonly itemChoosen$ = new BehaviorSubject<(Item | undefined)[][]>([[]]);
 
     constructor(
         protected translateService: TranslateService,

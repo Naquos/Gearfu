@@ -22,11 +22,11 @@ export interface MaitrisesForm {
 @Injectable({providedIn: 'root'})
 export class MaitrisesFormService extends AbstractFormService<FormGroup<TypedControls<MaitrisesForm>>> {
   
-  private nbElements = new BehaviorSubject<number>(0);
-  public nbElements$ = this.nbElements.asObservable();
+  private readonly nbElements = new BehaviorSubject<number>(0);
+  public readonly nbElements$ = this.nbElements.asObservable();
 
-  private idMaitrises = new BehaviorSubject<number[]>([]);
-  public idMaitrises$ = this.idMaitrises.asObservable();
+  private readonly idMaitrises = new BehaviorSubject<number[]>([]);
+  public readonly idMaitrises$ = this.idMaitrises.asObservable();
     
 
   constructor(protected override localStorageService: LocalStorageService) {

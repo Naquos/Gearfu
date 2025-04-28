@@ -15,15 +15,15 @@ export class ItemLevelFormService extends AbstractFormService<FormGroup<TypedCon
   public static readonly DEFAULT_LEVEL_MIN = 200;
   public static readonly DEFAULT_LEVEL_MAX = 245;    
 
-  protected selected = new BehaviorSubject<number[]>([]);
-  public selected$ = this.selected.asObservable();
+  protected readonly selected = new BehaviorSubject<number[]>([]);
+  public readonly  selected$ = this.selected.asObservable();
 
     
-  private levelMin = new BehaviorSubject<number>(ItemLevelFormService.DEFAULT_LEVEL_MIN);
-  public levelMin$ = this.levelMin.asObservable();
+  private readonly levelMin = new BehaviorSubject<number>(ItemLevelFormService.DEFAULT_LEVEL_MIN);
+  public readonly levelMin$ = this.levelMin.asObservable();
 
-  private levelMax = new BehaviorSubject<number>(ItemLevelFormService.DEFAULT_LEVEL_MAX);
-  public levelMax$ = this.levelMax.asObservable();
+  private readonly levelMax = new BehaviorSubject<number>(ItemLevelFormService.DEFAULT_LEVEL_MAX);
+  public readonly levelMax$ = this.levelMax.asObservable();
     
 
   constructor(protected override localStorageService: LocalStorageService) {

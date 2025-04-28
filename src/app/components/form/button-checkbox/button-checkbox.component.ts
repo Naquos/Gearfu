@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './button-checkbox.component.scss',
 })
 export class ButtonCheckboxComponent {
-  public srcImg = input<string>("");
-  public control = input<FormControl<boolean>>();
-  public tooltip = input<string>("");
+  public readonly srcImg = input<string>("");
+  public readonly control = input<FormControl<boolean>>();
+  public readonly tooltip = input<string>("");
 }

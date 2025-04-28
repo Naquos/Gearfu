@@ -26,8 +26,8 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     @Input()
     public indexItemChoosen = 0;
 
-    protected mapDifferentStatsItem = new Map<IdActionsEnum, DifferentStatsItem>();
-    protected loaded$!:Observable<void>;
+    protected readonly mapDifferentStatsItem = new Map<IdActionsEnum, DifferentStatsItem>();
+    protected loaded$!: Observable<void>;
     protected weight = 0;
 
     protected itemSelected$ = this.itemChoosen$.pipe(

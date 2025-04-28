@@ -16,8 +16,8 @@ export interface RareteItemForm {
 @Injectable({providedIn: 'root'})
 export class ResistancesFormService extends AbstractFormService<FormGroup<TypedControls<RareteItemForm>>> {
 
-  private idResistances = new BehaviorSubject<number[]>([]);
-  public idResistances$ = this.idResistances.asObservable();
+  private readonly idResistances = new BehaviorSubject<number[]>([]);
+  public readonly idResistances$ = this.idResistances.asObservable();
 
   constructor(protected override localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_RESISTANCES, localStorageService, new FormGroup<TypedControls<RareteItemForm>>({

@@ -13,6 +13,6 @@ import { SortChoiceFormService } from '../../../services/form/sortChoiceFormServ
   styleUrl: './sort-choice.component.scss'
 })
 export class SortChoiceComponent {
-  protected SortChoiceEnumList = Object.values(SortChoiceEnum);
+  protected readonly SortChoiceEnumList = Object.values(SortChoiceEnum);
   constructor(protected sortChoiceFormService: SortChoiceFormService) {}
 }

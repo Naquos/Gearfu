@@ -6,8 +6,8 @@ import { States } from "../../models/data/states";
 @Injectable({providedIn: 'root'})
 export class StatesService {
     
-    private stateService = new BehaviorSubject<States[]>([]);
-    public stateService$ = this.stateService.asObservable();
+    private readonly stateService = new BehaviorSubject<States[]>([]);
+    public readonly stateService$ = this.stateService.asObservable();
 
     constructor() {
         const result: States[] = [];

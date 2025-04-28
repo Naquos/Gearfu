@@ -10,8 +10,8 @@ import { BehaviorSubject } from "rxjs";
 export class CraftableChoiceFormService extends AbstractFormService<FormControl<CraftableChoiceEnum>> {
   public static readonly DEFAULT_VALUE = CraftableChoiceEnum.CRAFT_DROP;
   
-  private craftable = new BehaviorSubject<CraftableChoiceEnum>(CraftableChoiceFormService.DEFAULT_VALUE);
-  public craftable$ = this.craftable.asObservable();
+  private readonly craftable = new BehaviorSubject<CraftableChoiceEnum>(CraftableChoiceFormService.DEFAULT_VALUE);
+  public readonly craftable$ = this.craftable.asObservable();
 
   constructor(protected override localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_CRAFTABLE_CHOICE, localStorageService, new FormControl<CraftableChoiceEnum>(CraftableChoiceFormService.DEFAULT_VALUE, { nonNullable: true }));

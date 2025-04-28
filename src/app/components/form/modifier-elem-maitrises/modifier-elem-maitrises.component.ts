@@ -14,6 +14,6 @@ import { ModifierElemMaitrisesFormService } from '../../../services/form/modifie
   styleUrl: './modifier-elem-maitrises.component.scss'
 })
 export class ModifierElemMaitrisesComponent {
-    protected ElemMaitrisesMecanismEnumList = Object.values(ElemMaitrisesMecanismEnum);
+    protected readonly ElemMaitrisesMecanismEnumList = Object.values(ElemMaitrisesMecanismEnum);
     constructor(protected modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService) {}
 }

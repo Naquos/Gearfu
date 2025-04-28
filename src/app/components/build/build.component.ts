@@ -34,10 +34,10 @@ export enum ItemTypeBuild  {
   styleUrl: './build.component.scss'
 })
 export class BuildComponent implements OnInit {
-  public build = input<Build |  undefined>(undefined);
+  public readonly build = input<Build |  undefined>(undefined);
 
-  protected ItemTypeBuild = ItemTypeBuild;
-  protected mapImageItems = new Map<ItemTypeBuild, string>([
+  protected readonly ItemTypeBuild = ItemTypeBuild;
+  protected readonly mapImageItems = new Map<ItemTypeBuild, string>([
     [ItemTypeBuild.CASQUE, "./aptitudes/EmplacementCoiffe.png"],
     [ItemTypeBuild.AMULETTE, "./aptitudes/EmplacementAmulette.png"],
     [ItemTypeBuild.PLASTRON, "./aptitudes/EmplacementPlastron.png"],

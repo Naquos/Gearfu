@@ -5,15 +5,15 @@ import { Directive, HostListener, output } from '@angular/core';
 })
 export class SwipeDirective {
 
-  private minimumMoove = 100;
+  private static readonly MINIMUM_MOOVE = 100;
 
   private startX = 0;
   private startY = 0;
 
-  public swipeLeft = output<void>();
-  public swipeRight = output<void>();
-  public swipeUp = output<void>();
-  public swipeDown = output<void>();
+  public readonly swipeLeft = output<void>();
+  public readonly swipeRight = output<void>();
+  public readonly swipeUp = output<void>();
+  public readonly swipeDown = output<void>();
   
 
   @HostListener('touchstart', ['$event']) onTouchStart(event: TouchEvent) {
@@ -27,15 +27,15 @@ export class SwipeDirective {
     const endX = touch.clientX;
     const endY = touch.clientY;
 
-    if(endX - this.startX >= this.minimumMoove) {
+    if(endX - this.startX >= SwipeDirective.MINIMUM_MOOVE) {
       this.swipeRight.emit();
-    } else if (this.startX - endX >= this.minimumMoove) {
+    } else if (this.startX - endX >= SwipeDirective.MINIMUM_MOOVE) {
       this.swipeLeft.emit();
     }
     
-    if(endY - this.startY >= this.minimumMoove) {
+    if(endY - this.startY >= SwipeDirective.MINIMUM_MOOVE) {
       this.swipeDown.emit();
-    } else if (this.startX - endX >= this.minimumMoove) {
+    } else if (this.startX - endX >= SwipeDirective.MINIMUM_MOOVE) {
       this.swipeUp.emit();
     }
   }

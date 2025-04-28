@@ -24,8 +24,8 @@ export interface MajorPresentForm {
 @Injectable({providedIn: 'root'})
 export class MajorPresentFormService extends AbstractFormService<FormGroup<TypedControls<MajorPresentForm>>> {
 
-  private idMajor = new BehaviorSubject<MajorAction[]>([]);
-  public idMajor$ = this.idMajor.asObservable();
+  private readonly idMajor = new BehaviorSubject<MajorAction[]>([]);
+  public readonly idMajor$ = this.idMajor.asObservable();
 
   constructor(protected override localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_MAJOR_PRESENT, localStorageService, new FormGroup<TypedControls<MajorPresentForm>>({

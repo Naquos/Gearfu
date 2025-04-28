@@ -14,8 +14,8 @@ import { Item } from "../../models/data/item";
 export class SearchItemNameFormService extends AbstractFormService<FormControl<string>>{
 
   public static readonly DEFAULT_VALUE = "";
-  private itemName = new BehaviorSubject<string>("");
-  public itemName$ = this.itemName.asObservable();
+  private readonly itemName = new BehaviorSubject<string>("");
+  public readonly itemName$ = this.itemName.asObservable();
 
   constructor(private rareteItemFormServices: RareteItemFormServices,
         private itemTypeFormServices: ItemTypeFormServices,

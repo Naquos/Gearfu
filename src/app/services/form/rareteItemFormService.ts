@@ -19,11 +19,11 @@ export interface RareteItemForm {
 @Injectable({providedIn: 'root'})
 export class RareteItemFormServices extends AbstractFormService<FormGroup<TypedControls<RareteItemForm>>> {
 
-  protected selected = new BehaviorSubject<number[]>([]);
-  public selected$ = this.selected.asObservable();
+  protected readonly selected = new BehaviorSubject<number[]>([]);
+  public readonly selected$ = this.selected.asObservable();
   
-  private rarity = new BehaviorSubject<number[]>([]);
-  public rarity$ = this.rarity.asObservable();
+  private readonly rarity = new BehaviorSubject<number[]>([]);
+  public readonly rarity$ = this.rarity.asObservable();
 
   constructor(protected override localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_RARETE_ITEM, localStorageService, new FormGroup<TypedControls<RareteItemForm>>({

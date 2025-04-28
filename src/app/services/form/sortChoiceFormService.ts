@@ -11,8 +11,8 @@ export class SortChoiceFormService extends AbstractFormService<FormControl<SortC
 
   public static readonly DEFAULT_VALUE = SortChoiceEnum.MAITRISES;
 
-  private sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceFormService.DEFAULT_VALUE);
-  public sort$ = this.sort.asObservable();
+  private readonly sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceFormService.DEFAULT_VALUE);
+  public readonly sort$ = this.sort.asObservable();
 
   constructor(protected override localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_SORT_CHOICE, localStorageService, new FormControl<SortChoiceEnum>(SortChoiceFormService.DEFAULT_VALUE, { nonNullable: true }));

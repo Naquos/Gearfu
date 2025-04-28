@@ -15,7 +15,7 @@ export type TypedControls<T> = {
 
 @Injectable({providedIn: 'root'})
 export abstract class AbstractFormService<TControl extends FormControl | FormGroup> implements OnDestroy {
-    protected destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     public form!: TControl;
 
     constructor(private keyEnum: KeyEnum, protected localStorageService: LocalStorageService, private _form: TControl) {

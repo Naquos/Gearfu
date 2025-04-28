@@ -12,7 +12,7 @@ import { Item } from '../../models/data/item';
 export class ItemsTooltipComponent {
 
   @Input()
-  public item!: Item ;
+  public item!: Item;
 
   @Input()
   public itemsChoosen: Item[] = [];

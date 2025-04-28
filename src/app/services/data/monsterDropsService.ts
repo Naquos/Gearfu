@@ -6,8 +6,8 @@ import monsterDrops from "../../../../public/monsterDrops.json";
 @Injectable({providedIn: 'root'})
 export class MonsterDropsService {
     
-    private monsterDrops = new BehaviorSubject<MonsterDrops[]>([]);
-    public monsterDrops$ = this.monsterDrops.asObservable();
+    private readonly monsterDrops = new BehaviorSubject<MonsterDrops[]>([]);
+    public readonly monsterDrops$ = this.monsterDrops.asObservable();
 
     constructor() {
         const result: MonsterDrops[] = [];

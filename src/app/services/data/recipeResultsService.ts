@@ -5,8 +5,8 @@ import recipeResult from "../../../../public/recipeResults.json";
 
 @Injectable({providedIn: 'root'})
 export class RecipeResultsService {
-    private recipeResults = new BehaviorSubject<RecipeResult[]>([]);
-    public recipeResults$ = this.recipeResults.asObservable();
+    private readonly recipeResults = new BehaviorSubject<RecipeResult[]>([]);
+    public readonly recipeResults$ = this.recipeResults.asObservable();
 
     constructor() {
         const result: RecipeResult[] = [];

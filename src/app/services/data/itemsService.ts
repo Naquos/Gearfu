@@ -24,7 +24,7 @@ import { MajorAction } from "../../models/data/majorActions";
 @Injectable({providedIn: 'root'})
 export class ItemsService {
     protected items: Item[] = [];
-    protected fullItems$ = new BehaviorSubject<Item[]>([]);
+    protected readonly fullItems$ = new BehaviorSubject<Item[]>([]);
 
     public items$: Observable<Item[]>;
 

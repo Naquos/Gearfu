@@ -26,8 +26,8 @@ export interface ItemTypeForm {
 
 @Injectable({providedIn: 'root'})
 export class ItemTypeFormServices extends AbstractFormService<FormGroup<TypedControls<ItemTypeForm>>> {
-    protected selected = new BehaviorSubject<number[]>([]);
-    public selected$ = this.selected.asObservable();
+    protected readonly selected = new BehaviorSubject<number[]>([]);
+    public readonly selected$ = this.selected.asObservable();
     
 
     constructor(

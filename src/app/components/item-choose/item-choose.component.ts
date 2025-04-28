@@ -17,7 +17,7 @@ import { NameBuildFormService } from '../../services/form/nameBuildFormService';
   styleUrl: './item-choose.component.scss'
 })
 export class ItemChooseComponent {
-  protected ItemTypeEnum = ItemTypeEnum;
+  protected readonly ItemTypeEnum = ItemTypeEnum;
 
   constructor(protected itemChooseService : ItemChooseService, private zenithService: ZenithService, private saveBuildService: NameBuildFormService) {}
 

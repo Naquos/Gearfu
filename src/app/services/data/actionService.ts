@@ -68,10 +68,12 @@ export class ActionService {
         [IdActionsEnum.PORTEE, IdActionsEnum.PERTE_PORTEE],
     ];
 
-    protected actions: Actions[] = [];
+    protected readonly actions = new Map<number, Actions>();
 
     constructor(private translateService: TranslateService) {
-        actionsJson.forEach(x => this.actions.push({
+        actionsJson.forEach(x => this.actions.set(
+            x.definition.id,
+            {
             id: x.definition.id,
             description: {
                 fr: x.description?.fr ?? "",
@@ -88,18 +90,9 @@ export class ActionService {
         
     }
 
-    public getActions(): Actions[] {
-        return this.actions;
-    }
-
     public getEffectById(id: number): string {
-        const action = this.actions.find(x => x.id === id); 
+        const action = this.actions.get(id); 
         return action?.description[this.translateService.currentLang as keyof typeof action.description] ?? "";
-    }
-
-    public isBuff(id: number) {
-        const effect = this.getEffectById(id).split(":");
-        return effect[0].includes("Gain") || effect[0].includes("Boost");
     }
 
     public isAMalus(id: IdActionsEnum): boolean {

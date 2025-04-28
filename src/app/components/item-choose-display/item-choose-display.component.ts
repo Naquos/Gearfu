@@ -16,9 +16,9 @@ import { Item } from '../../models/data/item';
   styleUrl: './item-choose-display.component.scss'
 })
 export class ItemChooseDisplayComponent implements OnInit {
-  public backgroundItemType = input.required<string>();
-  public itemType = input.required<ItemTypeEnum>();
-  public indexItem = input<number>(0);
+  public readonly backgroundItemType = input.required<string>();
+  public readonly itemType = input.required<ItemTypeEnum>();
+  public readonly indexItem = input<number>(0);
   protected $item!: Observable<Item | undefined>;
 
   
