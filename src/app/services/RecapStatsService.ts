@@ -2,14 +2,15 @@ import { Injectable } from "@angular/core";
 import { RecapStats } from "../models/data/recap-stats";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { ParameterMajorActionEnum } from "../models/enum/parameterMajorActionEnum";
-import { tap, map, BehaviorSubject } from "rxjs";
+import { tap, map, BehaviorSubject, takeUntil } from "rxjs";
 import { ActionService } from "./data/actionService";
 import { ItemChooseService } from "./itemChooseService";
 import { EquipEffects } from "../models/data/equipEffects";
 import { Item } from "../models/data/item";
+import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 
 @Injectable({ providedIn: 'root' })
-export class RecapStatsService {
+export class RecapStatsService extends AbstractDestroyService {
   private readonly initialEffectList: RecapStats[] = [
     { id: IdActionsEnum.POINT_DE_VIE, value: 0 },
     { id: IdActionsEnum.PA, value: 0 },
@@ -34,11 +35,13 @@ export class RecapStatsService {
     private readonly actionService: ActionService,
     private readonly itemChooseService: ItemChooseService,
   ) {
+    super();
     this.initializeListeners();
   }
 
   private initializeListeners(): void {
     this.itemChooseService.listItem$.pipe(
+      takeUntil(this.destroy$),
       tap(() => this.resetEffects()),
       map(items => this.extractEquipEffects(items)),
       map(effects => this.mapToRecapStats(effects)),

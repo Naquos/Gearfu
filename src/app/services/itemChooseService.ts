@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ItemTypeEnum } from "../models/enum/itemTypeEnum";
-import { BehaviorSubject, combineLatest, filter, first, iif, map, Observable, of, switchMap, take, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, filter, first, iif, map, Observable, of, switchMap, take, takeUntil, tap } from "rxjs";
 import { ItemTypeServices } from "./data/ItemTypesServices";
 import { RarityItemEnum } from "../models/enum/rarityItemEnum";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -11,10 +11,26 @@ import { ModifierElemMaitrisesFormService } from "./form/modifierElemMaitrisesFo
 import { ResistancesFormService } from "./form/resistancesFormService";
 import { MaitrisesFormService } from "./form/maitrisesFormService";
 import { Item } from "../models/data/item";
+import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 
 @Injectable({providedIn: 'root'})
-export class ItemChooseService {
-    private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>();
+export class ItemChooseService extends AbstractDestroyService {
+    private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>(
+        [
+            [ItemTypeEnum.UNE_MAIN, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.ANNEAU, new BehaviorSubject<(Item|undefined)[]>([undefined, undefined])],
+            [ItemTypeEnum.BOTTES, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.AMULETTE, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.CAPE, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.CEINTURE, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.CASQUE, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.PLASTRON, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.EPAULETTES, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.ACCESSOIRES, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.BOUCLIER, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.FAMILIER, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+        ]
+    );
     private readonly idItems = new BehaviorSubject<string>("");
     public readonly idItems$ = this.idItems.asObservable();
 
@@ -40,59 +56,16 @@ export class ItemChooseService {
         private resistancesFormService: ResistancesFormService,
         private maitrisesFormService: MaitrisesFormService,
     ) {
-        this.mapItem.set(ItemTypeEnum.UNE_MAIN, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-        this.mapItem.set(ItemTypeEnum.ANNEAU, new BehaviorSubject<(Item|undefined)[]>([undefined, undefined]))
-        this.mapItem.set(ItemTypeEnum.BOTTES, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-        this.mapItem.set(ItemTypeEnum.AMULETTE, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-        this.mapItem.set(ItemTypeEnum.CAPE, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-        this.mapItem.set(ItemTypeEnum.CEINTURE, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-        this.mapItem.set(ItemTypeEnum.CASQUE, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-        this.mapItem.set(ItemTypeEnum.PLASTRON, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-        this.mapItem.set(ItemTypeEnum.EPAULETTES, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-        this.mapItem.set(ItemTypeEnum.ACCESSOIRES, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-        this.mapItem.set(ItemTypeEnum.BOUCLIER, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-        this.mapItem.set(ItemTypeEnum.FAMILIER, new BehaviorSubject<(Item|undefined)[]>([undefined]))
-
-        this.activatedRoute.queryParams.pipe(
-            filter(x => x !== undefined),
-            map(x => x["itemsId"] ? x["itemsId"] as string : this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD)),
-            filter(x => x !== undefined && x !== null),
-            take(1),
-            map(x => x.split(",")),
-            tap(x => x.forEach(id => this.setItemWithIdItem(parseInt(id))))
-        ).subscribe();
-
-        combineLatest([this.getObsItem(ItemTypeEnum.UNE_MAIN),
-            this.getObsItem(ItemTypeEnum.ANNEAU),
-            this.getObsItem(ItemTypeEnum.BOTTES),
-            this.getObsItem(ItemTypeEnum.AMULETTE),
-            this.getObsItem(ItemTypeEnum.CAPE),
-            this.getObsItem(ItemTypeEnum.CEINTURE),
-            this.getObsItem(ItemTypeEnum.CASQUE),
-            this.getObsItem(ItemTypeEnum.PLASTRON),
-            this.getObsItem(ItemTypeEnum.EPAULETTES),
-            this.getObsItem(ItemTypeEnum.ACCESSOIRES),
-            this.getObsItem(ItemTypeEnum.BOUCLIER),
-            this.getObsItem(ItemTypeEnum.FAMILIER),
-        ]).pipe(
-            map(list => list.flat()),
-            map(list => list.filter(x => x !== undefined && x !== null)),
-            tap(list => this.listItem.next([... new Set<Item>(list)])),
-            map(list => list.map(items => items?.id)),
-            map(list => list.filter(x => x).join(",")),
-            tap(x => this.setIdItems(x))
-        ).subscribe(x => {
-            this.localStorageService.setItem<string>(KeyEnum.KEY_BUILD, x);
-            this.router.navigate(
-                [], 
-                {
-                    relativeTo: this.activatedRoute,
-                    queryParams : { itemsId: x }, 
-                    queryParamsHandling: 'merge', // remove to replace all query params by provided
-                }
-            );
+        super();
+        setTimeout(() => {
+            this.initItemChooses();
+            this.updateUrl();
         });
 
+        this.handleCalculTotal();
+    }
+
+    private handleCalculTotal(): void {
         combineLatest([
             this.listItem$,
             this.maitrisesFormService.nbElements$,
@@ -101,7 +74,54 @@ export class ItemChooseService {
             this.modifierElemMaitrisesFormService.denouement$,
             this.resistancesFormService.idResistances$
         ]).pipe(
-            tap(([list, nbElements, idMaitrises, multiplicateurElem, denouement, idResistances]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances, denouement)),
+            takeUntil(this.destroy$),
+            tap(([list, nbElements, idMaitrises, multiplicateurElem, denouement, idResistances]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances, denouement))
+        ).subscribe();
+    }
+
+    private updateUrl(): void {
+        combineLatest([this.getObsItem(ItemTypeEnum.UNE_MAIN),
+        this.getObsItem(ItemTypeEnum.ANNEAU),
+        this.getObsItem(ItemTypeEnum.BOTTES),
+        this.getObsItem(ItemTypeEnum.AMULETTE),
+        this.getObsItem(ItemTypeEnum.CAPE),
+        this.getObsItem(ItemTypeEnum.CEINTURE),
+        this.getObsItem(ItemTypeEnum.CASQUE),
+        this.getObsItem(ItemTypeEnum.PLASTRON),
+        this.getObsItem(ItemTypeEnum.EPAULETTES),
+        this.getObsItem(ItemTypeEnum.ACCESSOIRES),
+        this.getObsItem(ItemTypeEnum.BOUCLIER),
+        this.getObsItem(ItemTypeEnum.FAMILIER),
+        ]).pipe(
+            takeUntil(this.destroy$),
+            map(list => list.flat()),
+            map(list => list.filter(x => x !== undefined && x !== null)),
+            tap(list => this.listItem.next([...new Set<Item>(list)])),
+            map(list => list.map(items => items?.id)),
+            map(list => list.filter(x => x).join(",")),
+            tap(x => this.setIdItems(x))
+        ).subscribe(x => {
+            this.localStorageService.setItem<string>(KeyEnum.KEY_BUILD, x);
+            this.router.navigate(
+                [],
+                {
+                    relativeTo: this.activatedRoute,
+                    queryParams: { itemsId: x },
+                    queryParamsHandling: 'merge',
+                }
+            );
+        });
+    }
+
+    private initItemChooses(): void {
+        this.activatedRoute.queryParams.pipe(
+            takeUntil(this.destroy$),
+            filter(x => x !== undefined),
+            map(x => x["itemsId"] ? x["itemsId"] as string : this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD)),
+            filter(x => x !== undefined && x !== null),
+            take(1),
+            map(x => x.split(",")),
+            tap(x => x.forEach(id => this.setItemWithIdItem(parseInt(id))))
         ).subscribe();
     }
 

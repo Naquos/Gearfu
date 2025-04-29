@@ -1,8 +1,9 @@
-import { Injectable, OnDestroy } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { filter, Subject, takeUntil, tap } from "rxjs";
+import { filter, takeUntil, tap } from "rxjs";
 import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
+import { AbstractDestroyService } from "../abstract/abstractDestroyService";
 
 type FormValue<T> =
   T extends FormControl<infer V> ? V :
@@ -14,13 +15,13 @@ export type TypedControls<T> = {
   };
 
 @Injectable({providedIn: 'root'})
-export abstract class AbstractFormService<TControl extends FormControl | FormGroup> implements OnDestroy {
-    private readonly destroy$ = new Subject<void>();
+export abstract class AbstractFormService<TControl extends FormControl | FormGroup> extends AbstractDestroyService {
+
     public form!: TControl;
 
     constructor(private keyEnum: KeyEnum, protected localStorageService: LocalStorageService, private _form: TControl) {
+        super();
         this.form = _form;
-
     }
 
     protected init(): void {
@@ -37,11 +38,6 @@ export abstract class AbstractFormService<TControl extends FormControl | FormGro
         if (value !== null) {
             this.setValue(value);
         }
-    }
-
-    public ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 
     protected abstract handleChanges(value: FormValue<TControl>): void;
