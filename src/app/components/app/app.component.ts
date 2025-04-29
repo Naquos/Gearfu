@@ -65,9 +65,9 @@ export class AppComponent {
   protected openDiscord(): void {
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
   }
-  constructor(protected translate: TranslateService,
-    protected resetFormServices: ResetFormService,
-    private localStorageService: LocalStorageService) {
+  constructor(protected readonly translate: TranslateService,
+    protected readonly resetFormServices: ResetFormService,
+    private readonly localStorageService: LocalStorageService) {
 
     this.translate.addLangs(['fr','en', 'es', 'pt']);
     this.translate.setDefaultLang('en');

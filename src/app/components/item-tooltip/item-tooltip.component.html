@@ -8,13 +8,13 @@
     <div class="column">
         <div class="row">
             <div class="title">
-                <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{ getTitle(item) }} ({{item.level}})</h3>
+                <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{ getTitle(item) }} ({{item.level}})</h3>
                 <img [src]="'items/' + item.idImage + '.png'" alt="item">
             </div>
             <ng-container *ngIf="{itemSelected : itemSelected$ | async} as value">
                 <ng-container *ngFor="let itemSelected of value.itemSelected">
                     <div *ngIf="itemSelected !== undefined"  class="title" >
-                        <h3 [style.color]="colorRarityService.getMapColors().get(itemSelected?.rarity ?? 0)">{{ getTitle(itemSelected) }}  ({{itemSelected?.level}})</h3>
+                        <h3 [style.color]="colorRarityService.mapColors.get(itemSelected?.rarity ?? 0)">{{ getTitle(itemSelected) }}  ({{itemSelected?.level}})</h3>
                         <img [src]="'items/' + itemSelected?.idImage + '.png'" alt="items">
                     </div>
                 </ng-container>

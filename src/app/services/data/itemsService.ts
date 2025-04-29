@@ -32,18 +32,18 @@ export class ItemsService {
 
     protected itemsFilters$!: Observable<Item[]>;
 
-    constructor(private itemTypeFormServices: ItemTypeFormServices,
-                private translateService: TranslateService,
-                private onlyNoSecondaryFormService: OnlyNoSecondaryFormService,
-                private sortChoiceFormService: SortChoiceFormService,
-                private majorPresentFormService: MajorPresentFormService,
-                private modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
-                private searchItemNameFormService: SearchItemNameFormService,
-                private rareteItemFormService: RareteItemFormServices,
-                private itemLevelFormService: ItemLevelFormService,
-                private craftableChoiceFormService: CraftableChoiceFormService,
-                private resistanceFormService: ResistancesFormService,
-                private maitrisesFormService: MaitrisesFormService,
+    constructor(private readonly itemTypeFormServices: ItemTypeFormServices,
+                private readonly translateService: TranslateService,
+                private readonly onlyNoSecondaryFormService: OnlyNoSecondaryFormService,
+                private readonly sortChoiceFormService: SortChoiceFormService,
+                private readonly majorPresentFormService: MajorPresentFormService,
+                private readonly modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
+                private readonly searchItemNameFormService: SearchItemNameFormService,
+                private readonly rareteItemFormService: RareteItemFormServices,
+                private readonly itemLevelFormService: ItemLevelFormService,
+                private readonly craftableChoiceFormService: CraftableChoiceFormService,
+                private readonly resistanceFormService: ResistancesFormService,
+                private readonly maitrisesFormService: MaitrisesFormService,
     ) {
         this.initItemsList();
         this.initFilter();

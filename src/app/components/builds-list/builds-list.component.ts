@@ -11,5 +11,5 @@ import { SaveBuildService } from '../../services/saveBuildService';
   styleUrl: './builds-list.component.scss'
 })
 export class BuildsListComponent {
-  constructor(protected saveBuildService: SaveBuildService) {}
+  constructor(protected readonly saveBuildService: SaveBuildService) {}
 }

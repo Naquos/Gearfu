@@ -10,7 +10,7 @@ export class SaveBuildService {
     private readonly buildList = new BehaviorSubject<Build[]>([]);
     public readonly buildList$ = this.buildList.asObservable();
     
-    constructor(private localStorageService: LocalStorageService) {
+    constructor(private readonly localStorageService: LocalStorageService) {
         const savedBuilds = this.localStorageService.getItem<Build[]>(KeyEnum.KEY_SAVE_BUILD) || [];
         this.buildList.next(savedBuilds);
     }

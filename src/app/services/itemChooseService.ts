@@ -47,14 +47,14 @@ export class ItemChooseService extends AbstractDestroyService {
     public readonly totalResistances$ = this.totalResistances.asObservable();
     private indexAnneau = 0;
 
-    constructor(private itemTypeService: ItemTypeServices,
-        private itemService: ItemsService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private localStorageService: LocalStorageService,
-        private modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
-        private resistancesFormService: ResistancesFormService,
-        private maitrisesFormService: MaitrisesFormService,
+    constructor(private readonly itemTypeService: ItemTypeServices,
+        private readonly itemService: ItemsService,
+        private readonly router: Router,
+        private readonly activatedRoute: ActivatedRoute,
+        private readonly localStorageService: LocalStorageService,
+        private readonly modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
+        private readonly resistancesFormService: ResistancesFormService,
+        private readonly maitrisesFormService: MaitrisesFormService,
     ) {
         super();
         setTimeout(() => {

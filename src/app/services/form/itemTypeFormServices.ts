@@ -31,8 +31,8 @@ export class ItemTypeFormServices extends AbstractFormService<FormGroup<TypedCon
     
 
     constructor(
-        private itemTypeServices: ItemTypeServices,
-        protected override localStorageService: LocalStorageService) {
+        private readonly itemTypeServices: ItemTypeServices,
+        protected override readonly localStorageService: LocalStorageService) {
 
         super(KeyEnum.KEY_ITEM_TYPE, localStorageService, new FormGroup<TypedControls<ItemTypeForm>>({
             deuxMains: new FormControl(),

@@ -11,6 +11,6 @@ import { CommonModule } from '@angular/common';
 })
 export class ItemListComponent  {
 
-  constructor(protected itemsService: ItemsService) {  }
+  constructor(protected readonly itemsService: ItemsService) {  }
 
 }

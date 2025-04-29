@@ -11,7 +11,7 @@ import { SaveBuildService } from "../saveBuildService";
 export class ImportBuildFormService extends AbstractFormService<FormControl<string>> {
     public static readonly DEFAULT_VALUE = "";
 
-    constructor(private saveBuildService: SaveBuildService, private zenithApiService: ZenithApiService, protected override localStorageService: LocalStorageService) {
+    constructor(private readonly saveBuildService: SaveBuildService, private readonly zenithApiService: ZenithApiService, protected override readonly localStorageService: LocalStorageService) {
         super(KeyEnum.KEY_IMPORT_BUILD, localStorageService, new FormControl<string>(ImportBuildFormService.DEFAULT_VALUE, { nonNullable: true }));
             this.init();
     }

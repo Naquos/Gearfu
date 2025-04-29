@@ -26,7 +26,7 @@ export class ItemLevelFormService extends AbstractFormService<FormGroup<TypedCon
   public readonly levelMax$ = this.levelMax.asObservable();
     
 
-  constructor(protected override localStorageService: LocalStorageService) {
+  constructor(protected override readonly localStorageService: LocalStorageService) {
 
     super(KeyEnum.KEY_ITEM_LEVEL, localStorageService, new FormGroup<TypedControls<ItemLevelForm>>({
         levelMin: new FormControl(ItemLevelFormService.DEFAULT_LEVEL_MIN, { nonNullable: true }),

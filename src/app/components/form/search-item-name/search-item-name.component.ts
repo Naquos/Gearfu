@@ -29,10 +29,10 @@ export class SearchItemNameComponent {
   protected options$?: Observable<Item[]>;
 
   constructor(
-    private translateService: TranslateService,
-    private itemService: ItemsService, 
-    protected colorRarityService: ColorRarityService,
-    protected searchItemNameFormService: SearchItemNameFormService) 
+    private readonly translateService: TranslateService,
+    private readonly itemService: ItemsService, 
+    protected readonly colorRarityService: ColorRarityService,
+    protected readonly searchItemNameFormService: SearchItemNameFormService) 
   {
     this.options$ = this.itemService.itemsFilterByItemName$.pipe(map(x => x.slice(0, 10)))
   }

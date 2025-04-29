@@ -12,5 +12,5 @@ import { ButtonCheckboxComponent } from '../button-checkbox/button-checkbox.comp
   styleUrl: './major-present.component.scss'
 })
 export class MajorPresentComponent {
-  constructor(protected majorPresentFormService: MajorPresentFormService) {}
+  constructor(protected readonly majorPresentFormService: MajorPresentFormService) {}
 }

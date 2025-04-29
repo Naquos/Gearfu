@@ -10,5 +10,5 @@ import { OnlyNoSecondaryFormService } from '../../../services/form/onlyNoSeconda
   styleUrl: './only-no-secondary.component.scss'
 })
 export class OnlyNoSecondaryComponent {
-  constructor(protected onlyNoSecondaryFormService : OnlyNoSecondaryFormService) {}
+  constructor(protected readonly onlyNoSecondaryFormService : OnlyNoSecondaryFormService) {}
 }

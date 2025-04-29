@@ -18,6 +18,6 @@ export class ItemTypesComponent {
   protected readonly itemTypes = new Map<string, ItemType>([]);
   protected readonly ItemTypeEnum = ItemTypeEnum;
 
-  constructor(protected itemTypeFormServices: ItemTypeFormServices, protected itemTypesServices: ItemTypeServices) {
+  constructor(protected readonly itemTypeFormServices: ItemTypeFormServices, protected readonly itemTypesServices: ItemTypeServices) {
   }
 }

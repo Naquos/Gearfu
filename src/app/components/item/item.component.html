@@ -13,7 +13,7 @@
     </ng-container>
     <div class="content" (click)="setItemChoosen()">
         <div class="title">
-            <h3 [style.color]="colorRarityService.getMapColors().get(item.rarity)">{{getTitle()}} ({{item.level}}) <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item.itemTypeId))" alt="item type logo"> </h3>
+            <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{getTitle()}} ({{item.level}}) <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item.itemTypeId))" alt="item type logo"> </h3>
             <img [src]="'items/' + item.idImage + '.png'" alt="items">
             <div class="poids" [matTooltip]="'item.poids-infobulle' | translate" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{item.weight}}</div>
         </div>
@@ -23,7 +23,7 @@
                     <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'" alt="aptitudes">  {{ displayEffect(effect) }}
                 </ng-container>
                 <ng-container *ngIf="effect.actionId === IdActionEnum.APPLIQUE_ETAT">
-                    <span class="appliqueEtat" *ngIf="{states: statesService.findStates(effect.params[0]) | async } as value"
+                    <span class="appliqueEtat" *ngIf="{states: statesService.findStates(effect.params[0]) } as value"
                         (mouseenter)="openStatesTooltip($event, value.states?.id ?? 0, getStatesTranslate(value.states))"
                         (mouseleave)="stateTooltipService.closeTooltip()"
                     >

@@ -13,7 +13,7 @@ export class OnlyNoSecondaryFormService extends AbstractFormService<FormControl<
   private readonly onlyNoSecondary = new BehaviorSubject<boolean>(false);
   public readonly onlyNoSecondary$ = this.onlyNoSecondary.asObservable();
 
-  constructor(protected override localStorageService: LocalStorageService) {
+  constructor(protected override readonly localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_ONLY_NO_SECONDARY, localStorageService, new FormControl<boolean>(OnlyNoSecondaryFormService.DEFAULT_VALUE, { nonNullable: true }));
     this.init();
   }

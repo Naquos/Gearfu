@@ -34,19 +34,19 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   protected readonly condition$ = this.condition.asObservable();
 
   constructor(
-    private viewContainerRef: ViewContainerRef,
-    private el: ElementRef,
-    protected _translateService: TranslateService,
-    protected _actionsService : ActionService,
-    protected itemService : ItemsService,
-    protected colorRarityService: ColorRarityService,
-    protected _itemChooseService: ItemChooseService,
-    protected _itemTypeService: ItemTypeServices,
-    protected tooltipService: TooltipService<{itemsChoosen: Item[], item: Item}>,
-    protected stateTooltipService: TooltipService<{statesDefinitionId: number, nameStates: string}>,
-    protected cdr: ChangeDetectorRef,
-    protected _statesService: StatesService,
-    protected itemConditionService: ItemConditionService
+    private readonly viewContainerRef: ViewContainerRef,
+    private readonly el: ElementRef,
+    protected readonly _translateService: TranslateService,
+    protected readonly _actionsService : ActionService,
+    protected readonly itemService : ItemsService,
+    protected readonly colorRarityService: ColorRarityService,
+    protected readonly _itemChooseService: ItemChooseService,
+    protected readonly _itemTypeService: ItemTypeServices,
+    protected readonly tooltipService: TooltipService<{itemsChoosen: Item[], item: Item}>,
+    protected readonly stateTooltipService: TooltipService<{statesDefinitionId: number, nameStates: string}>,
+    protected readonly cdr: ChangeDetectorRef,
+    protected readonly _statesService: StatesService,
+    protected readonly itemConditionService: ItemConditionService
   ) {
     super(_translateService, _itemTypeService, _itemChooseService, _actionsService, _statesService);
   }

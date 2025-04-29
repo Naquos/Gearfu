@@ -15,5 +15,5 @@ import { CraftableChoiceFormService } from '../../../services/form/craftableChoi
 export class CraftableChoiceComponent {
   protected readonly craftableChoiceEnumList = Object.values(CraftableChoiceEnum);
 
-  constructor(protected craftableChoiceFormServie: CraftableChoiceFormService) {}
+  constructor(protected readonly craftableChoiceFormServie: CraftableChoiceFormService) {}
 }

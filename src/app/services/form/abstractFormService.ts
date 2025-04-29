@@ -19,7 +19,7 @@ export abstract class AbstractFormService<TControl extends FormControl | FormGro
 
     public form!: TControl;
 
-    constructor(private keyEnum: KeyEnum, protected localStorageService: LocalStorageService, private _form: TControl) {
+    constructor(private readonly keyEnum: KeyEnum, protected readonly localStorageService: LocalStorageService, private readonly _form: TControl) {
         super();
         this.form = _form;
     }

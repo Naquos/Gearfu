@@ -13,5 +13,5 @@ import { ItemLevelFormService } from '../../../services/form/itemLevelFormServic
 })
 export class ItemLevelComponent {
 
-  constructor(protected itemLevelFormService: ItemLevelFormService) {}
+  constructor(protected readonly itemLevelFormService: ItemLevelFormService) {}
 }

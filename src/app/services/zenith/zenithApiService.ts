@@ -17,7 +17,7 @@ export class ZenithApiService {
         "X-Requested-With": "XMLHttpRequest"
     });
 
-    constructor(private http: HttpClient) {}
+    constructor(private readonly http: HttpClient) {}
 
     public createBuild(data: CreateBuildRequest): Observable<CreateBuildResponse> {
         return this.http.post<CreateBuildResponse>(this.urlZenith + "create", data, {headers: this.headers});

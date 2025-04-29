@@ -15,5 +15,5 @@ import { ModifierElemMaitrisesFormService } from '../../../services/form/modifie
 })
 export class ModifierElemMaitrisesComponent {
     protected readonly ElemMaitrisesMecanismEnumList = Object.values(ElemMaitrisesMecanismEnum);
-    constructor(protected modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService) {}
+    constructor(protected readonly modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService) {}
 }

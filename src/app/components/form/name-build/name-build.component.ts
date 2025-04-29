@@ -13,5 +13,5 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './name-build.component.scss'
 })
 export class NameBuildComponent {
-  constructor(protected nameBuildFormService: NameBuildFormService) {}
+  constructor(protected readonly nameBuildFormService: NameBuildFormService) {}
 }

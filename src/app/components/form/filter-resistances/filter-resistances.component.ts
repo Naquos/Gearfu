@@ -13,5 +13,5 @@ import { ButtonCheckboxComponent } from '../button-checkbox/button-checkbox.comp
 })
 export class FilterResistancesComponent {
 
-  constructor(protected resistancesFormService: ResistancesFormService) {}
+  constructor(protected readonly resistancesFormService: ResistancesFormService) {}
 }

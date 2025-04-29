@@ -25,7 +25,7 @@ export class RareteItemFormServices extends AbstractFormService<FormGroup<TypedC
   private readonly rarity = new BehaviorSubject<number[]>([]);
   public readonly rarity$ = this.rarity.asObservable();
 
-  constructor(protected override localStorageService: LocalStorageService) {
+  constructor(protected override readonly localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_RARETE_ITEM, localStorageService, new FormGroup<TypedControls<RareteItemForm>>({
         normal: new FormControl(),
         rare: new FormControl(),

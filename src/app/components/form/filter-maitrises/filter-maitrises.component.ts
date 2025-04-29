@@ -13,6 +13,6 @@ import { MaitrisesFormService } from '../../../services/form/maitrisesFormServic
 })
 export class FilterMaitrisesComponent {
 
-  constructor(protected maitrisesFormServices: MaitrisesFormService) {}
+  constructor(protected readonly maitrisesFormServices: MaitrisesFormService) {}
 
 }

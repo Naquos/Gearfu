@@ -13,7 +13,7 @@ export class CraftableChoiceFormService extends AbstractFormService<FormControl<
   private readonly craftable = new BehaviorSubject<CraftableChoiceEnum>(CraftableChoiceFormService.DEFAULT_VALUE);
   public readonly craftable$ = this.craftable.asObservable();
 
-  constructor(protected override localStorageService: LocalStorageService) {
+  constructor(protected override readonly localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_CRAFTABLE_CHOICE, localStorageService, new FormControl<CraftableChoiceEnum>(CraftableChoiceFormService.DEFAULT_VALUE, { nonNullable: true }));
     this.init();
   }

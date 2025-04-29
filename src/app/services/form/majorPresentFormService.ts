@@ -27,7 +27,7 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
   private readonly idMajor = new BehaviorSubject<MajorAction[]>([]);
   public readonly idMajor$ = this.idMajor.asObservable();
 
-  constructor(protected override localStorageService: LocalStorageService) {
+  constructor(protected override readonly localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_MAJOR_PRESENT, localStorageService, new FormGroup<TypedControls<MajorPresentForm>>({
         PA: new FormControl(),
         PM: new FormControl(),

@@ -29,7 +29,7 @@ export class MaitrisesFormService extends AbstractFormService<FormGroup<TypedCon
   public readonly idMaitrises$ = this.idMaitrises.asObservable();
     
 
-  constructor(protected override localStorageService: LocalStorageService) {
+  constructor(protected override readonly localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_MAITRISES, localStorageService, new FormGroup<TypedControls<MaitrisesForm>>({
         feu: new FormControl(),
         eau: new FormControl(),

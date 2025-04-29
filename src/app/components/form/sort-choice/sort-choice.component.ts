@@ -14,5 +14,5 @@ import { SortChoiceFormService } from '../../../services/form/sortChoiceFormServ
 })
 export class SortChoiceComponent {
   protected readonly SortChoiceEnumList = Object.values(SortChoiceEnum);
-  constructor(protected sortChoiceFormService: SortChoiceFormService) {}
+  constructor(protected readonly sortChoiceFormService: SortChoiceFormService) {}
 }

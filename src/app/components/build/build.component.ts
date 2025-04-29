@@ -56,10 +56,10 @@ export class BuildComponent implements OnInit {
   private firstAnneau = true;
 
   constructor(
-    private itemService: ItemsService,
-    private itemTypeService: ItemTypeServices,
-    protected saveBuildService: SaveBuildService,
-    protected itemChooseService: ItemChooseService) {}
+    private readonly itemService: ItemsService,
+    private readonly itemTypeService: ItemTypeServices,
+    protected readonly saveBuildService: SaveBuildService,
+    protected readonly itemChooseService: ItemChooseService) {}
 
   ngOnInit(): void {
     const idItemList = this.build()?.codeBuild.split(",");

@@ -17,11 +17,11 @@ export class ZenithService {
 
     private firstRing = true;
 
-    constructor(private zenithApiService: ZenithApiService,
-        private itemChooseService: ItemChooseService,
-        private itemsService: ItemsService,
-        private itemTypeServices: ItemTypeServices,
-        private translateService: TranslateService
+    constructor(private readonly zenithApiService: ZenithApiService,
+        private readonly itemChooseService: ItemChooseService,
+        private readonly itemsService: ItemsService,
+        private readonly itemTypeServices: ItemTypeServices,
+        private readonly translateService: TranslateService
     ) {}
 
 

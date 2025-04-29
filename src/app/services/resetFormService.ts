@@ -14,17 +14,17 @@ import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 @Injectable({providedIn: 'root'})
 export class ResetFormService {
   constructor(
-    private craftableChoiceFormService: CraftableChoiceFormService,
-    private itemLevelFormService: ItemLevelFormService,
-    private itemTypeFormServices: ItemTypeFormServices,
-    private maitrisesFormService: MaitrisesFormService,
-    private majorPresentFormService: MajorPresentFormService,
-    private modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
-    private onlyNoSecondaryFormService: OnlyNoSecondaryFormService,
-    private rareteItemFormServices: RareteItemFormServices,
-    private resistancesFormService: ResistancesFormService,
-    private searchItemNameFormService: SearchItemNameFormService,
-    private sortChoiceFormService: SortChoiceFormService,
+    private readonly craftableChoiceFormService: CraftableChoiceFormService,
+    private readonly itemLevelFormService: ItemLevelFormService,
+    private readonly itemTypeFormServices: ItemTypeFormServices,
+    private readonly maitrisesFormService: MaitrisesFormService,
+    private readonly majorPresentFormService: MajorPresentFormService,
+    private readonly modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
+    private readonly onlyNoSecondaryFormService: OnlyNoSecondaryFormService,
+    private readonly rareteItemFormServices: RareteItemFormServices,
+    private readonly resistancesFormService: ResistancesFormService,
+    private readonly searchItemNameFormService: SearchItemNameFormService,
+    private readonly sortChoiceFormService: SortChoiceFormService,
   ) {}
 
     public resetAllForms(): void {

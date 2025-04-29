@@ -15,9 +15,9 @@ import { RecapStatsService } from '../../services/RecapStatsService';
 })
 export class RecapStatsComponent {
 
-  constructor(private actionService: ActionService,
-    private translateService: TranslateService,
-    protected recapStatsService: RecapStatsService,
+  constructor(private readonly actionService: ActionService,
+    private readonly translateService: TranslateService,
+    protected readonly recapStatsService: RecapStatsService,
     ) {
   }
 

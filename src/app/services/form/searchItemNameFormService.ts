@@ -17,11 +17,11 @@ export class SearchItemNameFormService extends AbstractFormService<FormControl<s
   private readonly itemName = new BehaviorSubject<string>("");
   public readonly itemName$ = this.itemName.asObservable();
 
-  constructor(private rareteItemFormServices: RareteItemFormServices,
-        private itemTypeFormServices: ItemTypeFormServices,
-        private itemTypeService: ItemTypeServices,
-        private itemLevelFormService: ItemLevelFormService,
-        protected override localStorageService: LocalStorageService
+  constructor(private readonly rareteItemFormServices: RareteItemFormServices,
+        private readonly itemTypeFormServices: ItemTypeFormServices,
+        private readonly itemTypeService: ItemTypeServices,
+        private readonly itemLevelFormService: ItemLevelFormService,
+        protected override readonly localStorageService: LocalStorageService
   ) {
     super(KeyEnum.KEY_SEARCH_ITEM_NAME, localStorageService, new FormControl<string>("", { nonNullable: true }));
     this.init();

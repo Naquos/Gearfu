@@ -19,7 +19,7 @@ export class ResistancesFormService extends AbstractFormService<FormGroup<TypedC
   private readonly idResistances = new BehaviorSubject<number[]>([]);
   public readonly idResistances$ = this.idResistances.asObservable();
 
-  constructor(protected override localStorageService: LocalStorageService) {
+  constructor(protected override readonly localStorageService: LocalStorageService) {
     super(KeyEnum.KEY_RESISTANCES, localStorageService, new FormGroup<TypedControls<RareteItemForm>>({
         feu: new FormControl(),
         eau: new FormControl(),

@@ -4,18 +4,12 @@ import { RarityItemEnum } from "../models/enum/rarityItemEnum";
 @Injectable({providedIn: 'root'})
 export class ColorRarityService {
     
-  private readonly mapColors = new Map<RarityItemEnum,string>();
-
-  constructor() {
-    this.mapColors.set(RarityItemEnum.RARE,"#4c9646");
-    this.mapColors.set(RarityItemEnum.MYTHIQUE,"#dd7f13");
-    this.mapColors.set(RarityItemEnum.LEGENDAIRE,"#ffef64");
-    this.mapColors.set(RarityItemEnum.RELIQUE,"#c570ef");
-    this.mapColors.set(RarityItemEnum.SOUVENIR,"#80d6d4");
-    this.mapColors.set(RarityItemEnum.EPIQUE,"#eebcd7");
-  }
-
-  public getMapColors(): Map<RarityItemEnum, string> {
-    return this.mapColors;
-  }
+  public readonly mapColors = new Map<RarityItemEnum,string>([
+    [RarityItemEnum.RARE,"#4c9646"],
+    [RarityItemEnum.MYTHIQUE,"#dd7f13"],
+    [RarityItemEnum.LEGENDAIRE,"#ffef64"],
+    [RarityItemEnum.RELIQUE,"#c570ef"],
+    [RarityItemEnum.SOUVENIR,"#80d6d4"],
+    [RarityItemEnum.EPIQUE,"#eebcd7"]
+  ]);
 }

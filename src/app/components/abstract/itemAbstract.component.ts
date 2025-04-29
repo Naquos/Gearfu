@@ -23,71 +23,68 @@ export abstract class ItemAbstractComponent implements OnDestroy {
     protected resistances = 0;
     protected maitrises = 0;
     protected readonly IdActionEnum = IdActionsEnum;
-    protected readonly mapSortAction= new Map<IdActionsEnum, number>();
+    protected readonly mapSortAction= new Map<IdActionsEnum, number>([
+      [IdActionsEnum.PA, 0],
+      [IdActionsEnum.PERTE_PA, 1],
+      [IdActionsEnum.PM, 2],
+      [IdActionsEnum.PERTE_PM, 3],
+      [IdActionsEnum.PW, 4],
+      [IdActionsEnum.BOOST_PW, 4],
+      [IdActionsEnum.DEBOOST_PW, 5],
+      [IdActionsEnum.CONTROLE, 6],
+      [IdActionsEnum.PORTEE, 7],
+      [IdActionsEnum.PERTE_PORTEE, 8],
+      [IdActionsEnum.POINT_DE_VIE, 9],
+      [IdActionsEnum.PERTE_POINT_DE_VIE, 10],
+      [IdActionsEnum.TACLE, 11],
+      [IdActionsEnum.ESQUIVE, 12],
+      [IdActionsEnum.PARADE, 13],
+      [IdActionsEnum.PERTE_TACLE, 14],
+      [IdActionsEnum.PERTE_ESQUIVE, 15],
+      [IdActionsEnum.PERTE_PARADE, 16],
+      [IdActionsEnum.MAITRISES_ELEMENTAIRES, 17],
+      [IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE, 18],
+      [IdActionsEnum.MAITRISES_CRITIQUES, 19],
+      [IdActionsEnum.MAITRISES_DOS, 20],
+      [IdActionsEnum.MAITRISES_SOIN, 21],
+      [IdActionsEnum.MAITRISES_BERZERK, 22],
+      [IdActionsEnum.MAITRISES_DISTANCES, 23],
+      [IdActionsEnum.MAITRISES_MELEE, 24],
+      [IdActionsEnum.PERTE_MAITRISES_CRITIQUE, 25],
+      [IdActionsEnum.PERTE_MAITRISES_DOS, 26],
+      [IdActionsEnum.PERTE_MAITRISES_BERZERK, 27],
+      [IdActionsEnum.PERTE_MAITRISES_DISTANCE, 28],
+      [IdActionsEnum.PERTE_MAITRISES_MELEE, 29],
+      [IdActionsEnum.COUP_CRITIQUE, 30],
+      [IdActionsEnum.ARMURE_DONNEE_RECUE, 31],
+      [IdActionsEnum.PERTE_COUP_CRITIQUE, 32],
+      [IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE, 33],
+      [IdActionsEnum.RESISTANCES_CRITIQUES, 34],
+      [IdActionsEnum.RESISTANCES_DOS, 35],
+      [IdActionsEnum.RESISTANCES_ELEMENTAIRE, 36],
+      [IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE, 37],
+      [IdActionsEnum.RESISTANCES_FEU, 38],
+      [IdActionsEnum.RESISTANCES_EAU, 39],
+      [IdActionsEnum.RESISTANCES_AIR, 40],
+      [IdActionsEnum.RESISTANCES_TERRE, 41],
+      [IdActionsEnum.PERTE_RESISTANCES_CRITIQUE, 42],
+      [IdActionsEnum.PERTE_RESISTANCES_DOS, 43],
+      [IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE, 44],
+      [IdActionsEnum.PERTE_RESISTANCES_FEU, 45],
+      [IdActionsEnum.PERTE_RESISTANCE_EAU, 46],
+      [IdActionsEnum.PERTE_RESISTANCES_TERRE, 47],
+    ]);
+    
     protected readonly Math = Math;
     protected readonly itemChoosen$ = new BehaviorSubject<(Item | undefined)[][]>([[]]);
 
     constructor(
-        protected translateService: TranslateService,
-        protected itemTypeService: ItemTypeServices,
-        protected itemChooseService: ItemChooseService,
-        protected actionsService: ActionService,
-        protected statesService: StatesService
-    ) {
-        this.initMapSortAction();
-    }
-
-    private initMapSortAction(): void {
-        this.mapSortAction.set(IdActionsEnum.PA, 0);
-        this.mapSortAction.set(IdActionsEnum.PERTE_PA, 1);
-        this.mapSortAction.set(IdActionsEnum.PM, 2);
-        this.mapSortAction.set(IdActionsEnum.PERTE_PM, 3);
-        this.mapSortAction.set(IdActionsEnum.PW, 4);
-        this.mapSortAction.set(IdActionsEnum.BOOST_PW, 4);
-        this.mapSortAction.set(IdActionsEnum.DEBOOST_PW, 5);
-        this.mapSortAction.set(IdActionsEnum.CONTROLE, 6);
-        this.mapSortAction.set(IdActionsEnum.PORTEE, 7);
-        this.mapSortAction.set(IdActionsEnum.PERTE_PORTEE, 8);
-        this.mapSortAction.set(IdActionsEnum.POINT_DE_VIE, 9);
-        this.mapSortAction.set(IdActionsEnum.PERTE_POINT_DE_VIE, 10);
-        this.mapSortAction.set(IdActionsEnum.TACLE, 11);
-        this.mapSortAction.set(IdActionsEnum.ESQUIVE, 12);
-        this.mapSortAction.set(IdActionsEnum.PARADE, 13);
-        this.mapSortAction.set(IdActionsEnum.PERTE_TACLE, 14);
-        this.mapSortAction.set(IdActionsEnum.PERTE_ESQUIVE, 15);
-        this.mapSortAction.set(IdActionsEnum.PERTE_PARADE, 16);
-        this.mapSortAction.set(IdActionsEnum.MAITRISES_ELEMENTAIRES, 17);
-        this.mapSortAction.set(IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE, 18);
-        this.mapSortAction.set(IdActionsEnum.MAITRISES_CRITIQUES, 19);
-        this.mapSortAction.set(IdActionsEnum.MAITRISES_DOS, 20);
-        this.mapSortAction.set(IdActionsEnum.MAITRISES_SOIN, 21);
-        this.mapSortAction.set(IdActionsEnum.MAITRISES_BERZERK, 22);
-        this.mapSortAction.set(IdActionsEnum.MAITRISES_DISTANCES, 23);
-        this.mapSortAction.set(IdActionsEnum.MAITRISES_MELEE, 24);
-        this.mapSortAction.set(IdActionsEnum.PERTE_MAITRISES_CRITIQUE, 25);
-        this.mapSortAction.set(IdActionsEnum.PERTE_MAITRISES_DOS, 26);
-        this.mapSortAction.set(IdActionsEnum.PERTE_MAITRISES_BERZERK, 27);
-        this.mapSortAction.set(IdActionsEnum.PERTE_MAITRISES_DISTANCE, 28);
-        this.mapSortAction.set(IdActionsEnum.PERTE_MAITRISES_MELEE, 29);
-        this.mapSortAction.set(IdActionsEnum.COUP_CRITIQUE, 30);
-        this.mapSortAction.set(IdActionsEnum.ARMURE_DONNEE_RECUE, 31);
-        this.mapSortAction.set(IdActionsEnum.PERTE_COUP_CRITIQUE, 32);
-        this.mapSortAction.set(IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE, 33);
-        this.mapSortAction.set(IdActionsEnum.RESISTANCES_CRITIQUES, 34);
-        this.mapSortAction.set(IdActionsEnum.RESISTANCES_DOS, 35);
-        this.mapSortAction.set(IdActionsEnum.RESISTANCES_ELEMENTAIRE, 36);
-        this.mapSortAction.set(IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE, 37);
-        this.mapSortAction.set(IdActionsEnum.RESISTANCES_FEU, 38);
-        this.mapSortAction.set(IdActionsEnum.RESISTANCES_EAU, 39);
-        this.mapSortAction.set(IdActionsEnum.RESISTANCES_AIR, 40);
-        this.mapSortAction.set(IdActionsEnum.RESISTANCES_TERRE, 41);
-        this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_CRITIQUE, 42);
-        this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_DOS, 43);
-        this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE, 44);
-        this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_FEU, 45);
-        this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCE_EAU, 46);
-        this.mapSortAction.set(IdActionsEnum.PERTE_RESISTANCES_TERRE, 47);
-    }
+        protected readonly translateService: TranslateService,
+        protected readonly itemTypeService: ItemTypeServices,
+        protected readonly itemChooseService: ItemChooseService,
+        protected readonly actionsService: ActionService,
+        protected readonly statesService: StatesService
+    ) {}
 
     protected getEffectPng(effect : EquipEffects | DifferentStatsItem): string {
       if(effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE) {

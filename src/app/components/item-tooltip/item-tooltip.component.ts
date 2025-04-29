@@ -46,14 +46,14 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
 
 
      constructor(
-        protected _translateService: TranslateService,
-        protected _actionsService : ActionService,
-        protected itemService : ItemsService,
-        protected colorRarityService: ColorRarityService,
-        protected _itemChooseService: ItemChooseService,
-        protected _itemTypeService: ItemTypeServices,
-        protected cdr: ChangeDetectorRef,
-        protected _statesService: StatesService
+        protected readonly _translateService: TranslateService,
+        protected readonly _actionsService : ActionService,
+        protected readonly itemService : ItemsService,
+        protected readonly colorRarityService: ColorRarityService,
+        protected readonly _itemChooseService: ItemChooseService,
+        protected readonly _itemTypeService: ItemTypeServices,
+        protected readonly cdr: ChangeDetectorRef,
+        protected readonly _statesService: StatesService
       ) {
         super(_translateService,_itemTypeService, _itemChooseService, _actionsService, _statesService);
       }

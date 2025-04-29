@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 export class ItemChooseComponent {
   protected readonly ItemTypeEnum = ItemTypeEnum;
 
-  constructor(protected itemChooseService : ItemChooseService, private zenithService: ZenithService) {}
+  constructor(protected readonly itemChooseService : ItemChooseService, private readonly zenithService: ZenithService) {}
 
   protected copyToClipboard(): void {
     navigator.clipboard.writeText(window.location.href).then();

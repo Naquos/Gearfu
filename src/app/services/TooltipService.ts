@@ -7,7 +7,7 @@ import { ComponentPortal, ComponentType } from "@angular/cdk/portal";
 export class TooltipService<T extends Record<string, any>> {
     
     private overlayRefs: OverlayRef[] = [];
-    constructor(private overlay: Overlay) {}
+    constructor(private readonly overlay: Overlay) {}
 
     
 

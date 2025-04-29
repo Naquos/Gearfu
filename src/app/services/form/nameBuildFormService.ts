@@ -12,9 +12,9 @@ export class NameBuildFormService extends AbstractFormService<FormControl<string
     
     public static readonly DEFAULT_VALUE = "";
     
-    constructor(protected override localStorageService: LocalStorageService,
-        private saveBuildService: SaveBuildService,
-        private itemChooseService: ItemChooseService) {
+    constructor(protected override readonly localStorageService: LocalStorageService,
+        private readonly saveBuildService: SaveBuildService,
+        private readonly itemChooseService: ItemChooseService) {
         super(KeyEnum.KEY_NAME_BUILD, localStorageService, new FormControl<string>(NameBuildFormService.DEFAULT_VALUE, { nonNullable: true }));
         this.init();
     }

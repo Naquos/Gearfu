@@ -23,11 +23,11 @@ export class ItemChooseDisplayComponent implements OnInit {
 
   
 
-  constructor(protected colorRarityService: ColorRarityService,
-              protected itemChooseService: ItemChooseService,
-              protected itemTypeFormServices: ItemTypeFormServices,
-              protected tooltipService: TooltipService<{item: Item}>,
-              private viewContainerRef: ViewContainerRef
+  constructor(protected readonly colorRarityService: ColorRarityService,
+              protected readonly itemChooseService: ItemChooseService,
+              protected readonly itemTypeFormServices: ItemTypeFormServices,
+              protected readonly tooltipService: TooltipService<{item: Item}>,
+              private readonly viewContainerRef: ViewContainerRef
   ) {}
 
 

@@ -70,7 +70,7 @@ export class ActionService {
 
     protected readonly actions = new Map<number, Actions>();
 
-    constructor(private translateService: TranslateService) {
+    constructor(private readonly translateService: TranslateService) {
         actionsJson.forEach(x => this.actions.set(
             x.definition.id,
             {

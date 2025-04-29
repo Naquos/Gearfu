@@ -7,25 +7,22 @@ import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
 @Injectable({providedIn: 'root'})
 export class ItemTypeServices {
     
-  protected readonly itemTypes = new Map<ItemTypeEnum, ItemType>([]);
-  
-  constructor() {
-    
-    this.itemTypes.set(ItemTypeEnum.DEUX_MAINS,this.findItemType("Deux mains"))
-    this.itemTypes.set(ItemTypeEnum.UNE_MAIN,this.findItemType("Une main"))
-    this.itemTypes.set(ItemTypeEnum.ANNEAU,this.findItemType("Anneau"))
-    this.itemTypes.set(ItemTypeEnum.BOTTES,this.findItemType("Bottes"))
-    this.itemTypes.set(ItemTypeEnum.AMULETTE,this.findItemType("Amulette"))
-    this.itemTypes.set(ItemTypeEnum.CAPE,this.findItemType("Cape"))
-    this.itemTypes.set(ItemTypeEnum.CEINTURE,this.findItemType("Ceinture"))
-    this.itemTypes.set(ItemTypeEnum.CASQUE,this.findItemType("Casque"))
-    this.itemTypes.set(ItemTypeEnum.PLASTRON,this.findItemType("Plastron"))
-    this.itemTypes.set(ItemTypeEnum.EPAULETTES,this.findItemType("Epaulettes"))
-    this.itemTypes.set(ItemTypeEnum.ACCESSOIRES,this.findItemType("Emblème"))
-    this.itemTypes.set(ItemTypeEnum.BOUCLIER,this.findItemType("Bouclier"))
-    this.itemTypes.set(ItemTypeEnum.DAGUE,this.findItemType("Dague"))
-    this.itemTypes.set(ItemTypeEnum.FAMILIER,this.findItemType("Familier{[~1]?s:}"))
-  }
+  protected readonly itemTypes = new Map<ItemTypeEnum, ItemType>([
+    [ItemTypeEnum.DEUX_MAINS,this.findItemType("Deux mains")],
+    [ItemTypeEnum.UNE_MAIN,this.findItemType("Une main")],
+    [ItemTypeEnum.ANNEAU,this.findItemType("Anneau")],
+    [ItemTypeEnum.BOTTES,this.findItemType("Bottes")],
+    [ItemTypeEnum.AMULETTE,this.findItemType("Amulette")],
+    [ItemTypeEnum.CAPE,this.findItemType("Cape")],
+    [ItemTypeEnum.CEINTURE,this.findItemType("Ceinture")],
+    [ItemTypeEnum.CASQUE,this.findItemType("Casque")],
+    [ItemTypeEnum.PLASTRON,this.findItemType("Plastron")],
+    [ItemTypeEnum.EPAULETTES,this.findItemType("Epaulettes")],
+    [ItemTypeEnum.ACCESSOIRES,this.findItemType("Emblème")],
+    [ItemTypeEnum.BOUCLIER,this.findItemType("Bouclier")],
+    [ItemTypeEnum.DAGUE,this.findItemType("Dague")],
+    [ItemTypeEnum.FAMILIER,this.findItemType("Familier{[~1]?s:}")],
+  ]);
   
   private findItemType(title: string): ItemType {
     return {

@@ -17,7 +17,7 @@ export class ModifierElemMaitrisesFormService extends AbstractFormService<FormCo
   private readonly denouement = new BehaviorSubject<boolean>(false)
   public readonly denouement$ = this.denouement.asObservable()
 
-  constructor(protected override localStorageService: LocalStorageService) {
+  constructor(protected override readonly localStorageService: LocalStorageService) {
       super(KeyEnum.KEY_MODIFIER_ELEM_MAITRISE, localStorageService, new FormControl<string[]>(ModifierElemMaitrisesFormService.DEFAULT_VALUE, { nonNullable: true }));
       this.init();
   }

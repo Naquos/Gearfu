@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { StatesDefinitionService } from '../../services/data/statesDefinitionService';
-import { first, map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -19,12 +18,16 @@ export class StatesComponent {
   public nameStates = "";
 
   constructor(
-    protected statesDefinitionService: StatesDefinitionService,
-    private translateService: TranslateService
+    protected readonly statesDefinitionService: StatesDefinitionService,
+    private readonly translateService: TranslateService
   ) {}
 
-  protected definition(): Observable<string  | undefined> {
-    return this.statesDefinitionService.findStatesDefinition(this.statesDefinitionId).pipe(first(), map(x => x?.description[this.translateService.currentLang as keyof typeof x.description]));
+  protected definition(): string | undefined {
+    const definition = this.statesDefinitionService.findStatesDefinition(this.statesDefinitionId);
+    if (definition) {
+      return definition.description[this.translateService.currentLang as keyof typeof definition.description];
+    }
+    return undefined
   }
 
 }

@@ -7,7 +7,7 @@ export class LocalStorageService {
 
     private localStorage?: Storage;
 
-    constructor(@Inject(DOCUMENT) private document: Document) {
+    constructor(@Inject(DOCUMENT) private readonly document: Document) {
         this.localStorage = this.document.defaultView?.localStorage;
     }
 

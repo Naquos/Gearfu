@@ -14,5 +14,5 @@ import { RareteItemFormServices } from '../../../services/form/rareteItemFormSer
 })
 export class RareteItemComponent {
 
-  constructor(protected rareteItemFormService: RareteItemFormServices) {}
+  constructor(protected readonly rareteItemFormService: RareteItemFormServices) {}
 }
