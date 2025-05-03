@@ -52,7 +52,8 @@
         "copy": "Copiar URL",
         "poids-total": "Peso total",
         "maitrise-total": "Dominio total",
-        "resistance-total": "Resistencias total"
+        "resistance-total": "Resistencias total",
+        "delete": "Eliminar compilación"
     },
     "item-level": {
         "level": "Rango de nivel",
