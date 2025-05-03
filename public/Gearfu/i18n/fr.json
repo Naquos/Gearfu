@@ -52,7 +52,8 @@
         "copy": "Copier l'url",
         "poids-total": "Poids total",
         "maitrise-total": "Maitrises total",
-        "resistance-total": "Résistances total"
+        "resistance-total": "Résistances total",
+        "delete": "Supprimer le build"
     },
     "item-level": {
         "level": "Tranche de level",

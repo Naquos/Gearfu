@@ -154,7 +154,7 @@ export class ItemChooseService extends AbstractDestroyService {
         );
     }
 
-    private cleanMapItem(): void {
+    public cleanItemChoosen(): void {
         this.indexAnneau = 0;
         this.mapItem.forEach((value, key) => {
             if(key !== ItemTypeEnum.ANNEAU) {
@@ -166,7 +166,7 @@ export class ItemChooseService extends AbstractDestroyService {
     }
 
     public setIdItemsFromBuild(idItems: string): void {
-        this.cleanMapItem();
+        this.cleanItemChoosen();
         this.idItems.next(idItems);
         const idItemList = idItems.split(",");
         if(idItemList.length) {

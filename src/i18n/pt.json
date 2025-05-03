@@ -43,7 +43,8 @@
     "item-choose": {
         "zenith": "Exportar build para Zénith Wakfu",
         "copy": "Copiar URL",
-        "poids": "Peso = Maestria + 1.2*Resistências"
+        "poids": "Peso = Maestria + 1.2*Resistências",
+        "delete": "Excluir build"
     },
     "item-level": {
         "level": "Faixa de nível",

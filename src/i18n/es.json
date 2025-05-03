@@ -43,7 +43,8 @@
     "item-choose": {
         "zenith": "Exportar construcción a Zénith Wakfu",
         "copy": "Copiar URL",
-        "poids": "Peso = Dominio + 1.2*Resistencias"
+        "poids": "Peso = Dominio + 1.2*Resistencias",
+        "delete": "Eliminar compilación"
     },
     "item-level": {
         "level": "Rango de nivel",

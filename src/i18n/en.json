@@ -43,7 +43,8 @@
     "item-choose": {
         "zenith": "Export build to Zénith Wakfu",
         "copy": "Copy URL",
-        "poids": "Weight = Mastery + 1.2*Resistances"
+        "poids": "Weight = Mastery + 1.2*Resistances",
+        "delete": "Delete build"
     },
     "item-level": {
         "level": "Level range",

@@ -52,7 +52,8 @@
         "copy": "Copiar URL",
         "poids-total": "Peso total",
         "maitrise-total": "Maestria total",
-        "resistance-total": "Resistências total"
+        "resistance-total": "Resistências total",
+        "delete": "Excluir build"
     },
     "item-level": {
         "level": "Faixa de nível",

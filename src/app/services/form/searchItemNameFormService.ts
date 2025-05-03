@@ -9,6 +9,7 @@ import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService } from "./abstractFormService";
 import { BehaviorSubject } from "rxjs";
 import { Item } from "../../models/data/item";
+import { MajorPresentFormService } from "./majorPresentFormService";
 
 @Injectable({providedIn: 'root'})
 export class SearchItemNameFormService extends AbstractFormService<FormControl<string>>{
@@ -21,6 +22,7 @@ export class SearchItemNameFormService extends AbstractFormService<FormControl<s
         private readonly itemTypeFormServices: ItemTypeFormServices,
         private readonly itemTypeService: ItemTypeServices,
         private readonly itemLevelFormService: ItemLevelFormService,
+        private readonly majorPresentFormService: MajorPresentFormService,
         protected override readonly localStorageService: LocalStorageService
   ) {
     super(KeyEnum.KEY_SEARCH_ITEM_NAME, localStorageService, new FormControl<string>("", { nonNullable: true }));
@@ -40,6 +42,7 @@ export class SearchItemNameFormService extends AbstractFormService<FormControl<s
 
   public setFilter(item :Item): void {
     this.rareteItemFormServices.setDefaultValue();
+    this.majorPresentFormService.setDefaultValue();
     const itemType = this.itemTypeService.getItemType(item.itemTypeId);
     if(!itemType) {return}
     this.itemTypeFormServices.setItemType(itemType);

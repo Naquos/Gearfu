@@ -52,7 +52,8 @@
         "copy": "Copy URL",
         "poids-total": "Total weight",
         "maitrise-total": "Total mastery",
-        "resistance-total": "Total resistance"
+        "resistance-total": "Total resistance",
+        "delete": "Delete build"
     },
     "item-level": {
         "level": "Level range",

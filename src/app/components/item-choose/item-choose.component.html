@@ -13,6 +13,11 @@
         [matTooltipShowDelay]="300" 
         (click)="copyToClipboard()">
     </mat-icon>
+    <mat-icon aria-hidden="false" fontIcon="delete" 
+        [matTooltip]="'item-choose.delete' | translate"
+        [matTooltipShowDelay]="300" 
+        (click)="itemChooseService.cleanItemChoosen()">
+    </mat-icon>
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementCoiffe.png" [itemType]="ItemTypeEnum.CASQUE" ></app-item-choose-display>
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementAmulette.png" [itemType]="ItemTypeEnum.AMULETTE" ></app-item-choose-display>
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementPlastron.png" [itemType]="ItemTypeEnum.PLASTRON" ></app-item-choose-display>
