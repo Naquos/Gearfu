@@ -156,29 +156,23 @@ export class ItemChooseService extends AbstractDestroyService {
 
     public cleanItemChoosen(): void {
         this.indexAnneau = 0;
-        this.mapItem.forEach((value, key) => {
-            if(key !== ItemTypeEnum.ANNEAU) {
-                value.next([undefined]);
-            } else {
-                value.next([undefined, undefined]);
-            }
-        })
+        this.mapItem.forEach((value, key) => { value.next(key === ItemTypeEnum.ANNEAU ? [undefined, undefined] : [undefined]) });
     }
 
     public setIdItemsFromBuild(idItems: string): void {
         this.cleanItemChoosen();
         this.idItems.next(idItems);
         const idItemList = idItems.split(",");
-        if(idItemList.length) {
-            idItemList.forEach(idItem => {
-                const item = this.itemService.getItem(parseInt(idItem));
-                if(item) {
-                    const itemType = this.itemTypeService.getItemType(item.itemTypeId);
-                    if(!itemType) {return ;} 
-                    this.setItem(itemType, item)
-                }
-            })
-        }
+        if(!idItemList) {return;}
+        idItemList.forEach(idItem => {
+            const item = this.itemService.getItem(parseInt(idItem));
+            if(!item) {return;}
+
+            const itemType = this.itemTypeService.getItemType(item.itemTypeId);
+            if(!itemType) {return;}
+
+            this.setItem(itemType, item)
+        })
     }
 
     public setIdItems(idItems: string): void {
@@ -203,77 +197,103 @@ export class ItemChooseService extends AbstractDestroyService {
                     tap(x => this.mapItem.get(itemType)?.next(x))))
             )
         ).subscribe();
+        
     }
-
     public setItem(itemType: ItemTypeEnum, item: Item): void {
         of(null).pipe(
             first(),
-            switchMap(() => 
-                // Qu'une seule épique / relique par stuff
-                iif(() => [RarityItemEnum.EPIQUE, RarityItemEnum.RELIQUE].includes(item.rarity),
-                    this.deleteFirstItemOnRarity(item?.rarity),
-                    of(null)
-                )
-            ),
-            switchMap(() =>
-                // Si on met une seconde main, alors la première main ne doit pas être une arme à deux mains
-                iif(() => [ItemTypeEnum.DAGUE, ItemTypeEnum.BOUCLIER].includes(itemType),
-                    this.getObsItem(ItemTypeEnum.UNE_MAIN).pipe(
-                        first(),
-                        tap(() => this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([item])),
-                        map(x => x[0]),
-                        filter(x => x !== undefined && this.itemTypeService.getItemType(x?.itemTypeId) === ItemTypeEnum.DEUX_MAINS),
-                        tap(() => this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]))
-                    ),
-                    of(null)
-                )
-            ),
-            switchMap(() =>
-                //Si on met une arme à une main, et qu'une arme à deux main est equipé, il faut pouvoir l'enlever
-                iif(() => itemType === ItemTypeEnum.UNE_MAIN,
-                    this.getObsItem(ItemTypeEnum.BOUCLIER).pipe(
-                        first(),
-                        tap(() => this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([item])),
-                        map(x => x[0]),
-                        filter(x => x !== undefined && this.itemTypeService.getItemType(x?.itemTypeId) === ItemTypeEnum.DEUX_MAINS),
-                        tap(() => this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]))),
-                    of(null)
-                )
-            ),
-            switchMap(() =>
-                // Mettre un anneau puis l'autre
-                iif(() => itemType === ItemTypeEnum.ANNEAU,
-                    this.getObsItem(ItemTypeEnum.ANNEAU).pipe(
-                        first(),
-                        switchMap(list => iif(() => !list.find(anneau => anneau?.title === item.title),
-                            of(list).pipe(
-                                map(x => {x[this.indexAnneau] = item; return x}),
-                                tap(x => this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(x)),
-                                tap(() => this.indexAnneau = this.indexAnneau === 0 ? 1 : 0)),
-                            of(null)
-                        ) )
-                    ),
-                    of(null)
-                )
-            ),
-            switchMap(() =>
-                // Mise en place d'une arme à deux mains
-                iif(() => itemType === ItemTypeEnum.DEUX_MAINS,
-                    of(null).pipe(tap(() => {
-                        this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([item]);
-                        this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([item]);
-                    })),
-                    of(null)
-                )
-            ),
-            switchMap(() =>
-                iif(() => itemType !== ItemTypeEnum.ANNEAU,
-                    of(null).pipe(tap(() => this.mapItem.get(itemType)?.next([item]))),
-                    of(null)
-                ) 
-            ),
+            switchMap(() => this.ensureUniqueRelic(item)),
+            switchMap(() => this.ensureCompatibleWithSecondHand(itemType, item)),
+            switchMap(() => this.ensureCompatibleWithFirstHand(itemType, item)),
+            switchMap(() => this.handleRings(itemType, item)),
+            switchMap(() => this.handleDeuxMains(itemType, item)),
+            switchMap(() => this.finalEquip(itemType, item))
         ).subscribe();
     }
+
+    private ensureUniqueRelic(item: Item): Observable<null> {
+        return [RarityItemEnum.EPIQUE, RarityItemEnum.RELIQUE].includes(item.rarity)
+            ? this.deleteFirstItemOnRarity(item.rarity)
+            : of(null);
+    }
+    
+    private ensureCompatibleWithSecondHand(itemType: ItemTypeEnum, item: Item): Observable<null> {
+        if (![ItemTypeEnum.DAGUE, ItemTypeEnum.BOUCLIER].includes(itemType)) {
+            return of(null);
+        }
+    
+        return this.getObsItem(ItemTypeEnum.UNE_MAIN).pipe(
+            first(),
+            tap(() => this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([item])),
+            map(x => x[0]),
+            filter(x => x !== undefined && this.itemTypeService.getItemType(x.itemTypeId) === ItemTypeEnum.DEUX_MAINS),
+            tap(() => this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined])),
+            map(() => null)
+        );
+    }
+    
+    private ensureCompatibleWithFirstHand(itemType: ItemTypeEnum, item: Item): Observable<null> {
+        if (itemType !== ItemTypeEnum.UNE_MAIN) {
+            return of(null);
+        }
+    
+        return this.getObsItem(ItemTypeEnum.BOUCLIER).pipe(
+            first(),
+            tap(() => this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([item])),
+            map(x => x[0]),
+            filter(x => x !== undefined && this.itemTypeService.getItemType(x.itemTypeId) === ItemTypeEnum.DEUX_MAINS),
+            tap(() => this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined])),
+            map(() => null)
+        );
+    }
+    
+    private handleRings(itemType: ItemTypeEnum, item: Item): Observable<null> {
+        if (itemType !== ItemTypeEnum.ANNEAU) {
+            return of(null);
+        }
+    
+        return this.getObsItem(ItemTypeEnum.ANNEAU).pipe(
+            first(),
+            switchMap(list =>
+                !list.find(anneau => anneau?.title === item.title)
+                    ? of(list).pipe(
+                        map(oldList => {
+                            const newList = [...oldList];
+                            newList[this.indexAnneau] = item;
+                            return newList;
+                        }),
+                        tap(updatedList => this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(updatedList)),
+                        tap(() => this.indexAnneau = this.indexAnneau === 0 ? 1 : 0)
+                    )
+                    : of(null)
+            ),
+            map(() => null)
+        );
+    }
+    
+    private handleDeuxMains(itemType: ItemTypeEnum, item: Item): Observable<null> {
+        if (itemType !== ItemTypeEnum.DEUX_MAINS) {
+            return of(null);
+        }
+    
+        return of(null).pipe(
+            tap(() => {
+                this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([item]);
+                this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([item]);
+            })
+        );
+    }
+    
+    private finalEquip(itemType: ItemTypeEnum, item: Item): Observable<null> {
+        if (itemType === ItemTypeEnum.ANNEAU) {
+            return of(null); // déjà géré dans `handleRings`
+        }
+    
+        return of(null).pipe(
+            tap(() => this.mapItem.get(itemType)?.next([item]))
+        );
+    }
+    
 
     private deleteFirstItemOnRarity(rarity: RarityItemEnum):Observable<null> {
         return combineLatest([this.getObsItem(ItemTypeEnum.UNE_MAIN),
