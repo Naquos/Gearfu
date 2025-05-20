@@ -2,8 +2,8 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <ng-container *ngIf="item">
     <div class="header">
-        <span><img [src]="'aptitudes/1068.png'" alt="Maitrises">{{ "item.maitrises" | translate }} {{Math.trunc(item.maitrise)}}</span>
-        <span><img [src]="'aptitudes/1069.png'" alt="Résistances">{{ "item.resistances" | translate }} {{item.resistance}}</span>
+        <span><img [src]="imageService.getImageUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{ "item.maitrises" | translate }} {{Math.trunc(item.maitrise)}}</span>
+        <span><img [src]="imageService.getImageUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances">{{ "item.resistances" | translate }} {{item.resistance}}</span>
         <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
     </div>
     <ng-container *ngIf="{condition: textCondition() | async} as value">
@@ -20,7 +20,7 @@
         <div>
             <p *ngFor="let effect of item.equipEffects">
                 <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT">
-                    <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'" alt="aptitudes">  {{ displayEffect(effect) }}
+                    <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ displayEffect(effect) }}
                 </ng-container>
                 <ng-container *ngIf="effect.actionId === IdActionEnum.APPLIQUE_ETAT">
                     <span class="appliqueEtat" *ngIf="{states: statesService.findStates(effect.params[0]) } as value"

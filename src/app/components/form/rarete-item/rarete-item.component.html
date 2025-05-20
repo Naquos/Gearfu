@@ -1,11 +1,11 @@
 <h3>{{ "rarete-item.label" | translate }}</h3>
 
 <div>
-    <app-button-checkbox [tooltip]="'rarete-item.normal' | translate" [control]="rareteItemFormService.form.controls.normal" srcImg="rarities/1.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'rarete-item.rare' | translate" [control]="rareteItemFormService.form.controls.rare" srcImg="rarities/2.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'rarete-item.mythique' | translate" [control]="rareteItemFormService.form.controls.mythique" srcImg="rarities/3.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'rarete-item.legendaire' | translate" [control]="rareteItemFormService.form.controls.legendaire" srcImg="rarities/4.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'rarete-item.souvenir' | translate" [control]="rareteItemFormService.form.controls.souvenir" srcImg="rarities/6.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'rarete-item.epique' | translate" [control]="rareteItemFormService.form.controls.epique" srcImg="rarities/7.png" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'rarete-item.relique' | translate" [control]="rareteItemFormService.form.controls.relique" srcImg="rarities/5.png" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'rarete-item.normal' | translate" [control]="rareteItemFormService.form.controls.normal" [srcImg]="imageService.mapRarityUrl.get(RarityItemEnum.NORMAL) ?? ''" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'rarete-item.rare' | translate" [control]="rareteItemFormService.form.controls.rare" [srcImg]="imageService.mapRarityUrl.get(RarityItemEnum.RARE) ?? ''" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'rarete-item.mythique' | translate" [control]="rareteItemFormService.form.controls.mythique" [srcImg]="imageService.mapRarityUrl.get(RarityItemEnum.MYTHIQUE) ?? ''" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'rarete-item.legendaire' | translate" [control]="rareteItemFormService.form.controls.legendaire" [srcImg]="imageService.mapRarityUrl.get(RarityItemEnum.LEGENDAIRE) ?? ''" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'rarete-item.souvenir' | translate" [control]="rareteItemFormService.form.controls.souvenir" [srcImg]="imageService.mapRarityUrl.get(RarityItemEnum.SOUVENIR) ?? ''" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'rarete-item.epique' | translate" [control]="rareteItemFormService.form.controls.epique" [srcImg]="imageService.mapRarityUrl.get(RarityItemEnum.EPIQUE) ?? ''" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'rarete-item.relique' | translate" [control]="rareteItemFormService.form.controls.relique" [srcImg]="imageService.mapRarityUrl.get(RarityItemEnum.RELIQUE) ?? ''" ></app-button-checkbox>
 </div>

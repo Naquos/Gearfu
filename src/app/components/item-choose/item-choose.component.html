@@ -33,11 +33,11 @@
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementFamilier.png" [itemType]="ItemTypeEnum.FAMILIER" ></app-item-choose-display>
     <div class="totalValue">
         <span *ngIf="{totalMaitrises: itemChooseService.totalMaitrises$ | async} as value">
-            <img [src]="'aptitudes/1068.png'" alt="poids" class="poids"> {{ "item-choose.maitrise-total" | translate }} : {{ value.totalMaitrises }} 
+            <img [src]="imageService.getImageUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES)" alt="poids" class="poids"> {{ "item-choose.maitrise-total" | translate }} : {{ value.totalMaitrises }} 
         </span>
         
         <span *ngIf="{totalResistances: itemChooseService.totalResistances$ | async} as value">
-            <img [src]="'aptitudes/1069.png'" alt="poids" class="poids"> {{ "item-choose.resistance-total" | translate }} : {{ value.totalResistances }} 
+            <img [src]="imageService.getImageUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt="poids" class="poids"> {{ "item-choose.resistance-total" | translate }} : {{ value.totalResistances }} 
         </span>
         
         <span *ngIf="{totalWeight: itemChooseService.totalWeight$ | async} as value">

@@ -12,6 +12,7 @@ import { StatesService } from '../../services/data/statesService';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DifferentStatsItem } from '../../models/data/differentsStatsItem';
 import { Item } from '../../models/data/item';
+import { ImageService } from '../../services/imageService';
 
 @Component({
   selector: 'app-item-tooltip',
@@ -53,9 +54,10 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
         protected readonly _itemChooseService: ItemChooseService,
         protected readonly _itemTypeService: ItemTypeServices,
         protected readonly cdr: ChangeDetectorRef,
-        protected readonly _statesService: StatesService
+        protected readonly _statesService: StatesService,
+        protected readonly _imageService: ImageService
       ) {
-        super(_translateService,_itemTypeService, _itemChooseService, _actionsService, _statesService);
+        super(_translateService,_itemTypeService, _itemChooseService, _actionsService, _statesService, _imageService);
       }
 
       

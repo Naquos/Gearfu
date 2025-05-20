@@ -8,6 +8,8 @@ import { take } from 'rxjs';
 import { ZenithService } from '../../services/zenith/zenithService';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import { ImageService } from '../../services/imageService';
+import { IdActionsEnum } from '../../models/enum/idActionsEnum';
 
 @Component({
   selector: 'app-item-choose',
@@ -17,8 +19,9 @@ import { CommonModule } from '@angular/common';
 })
 export class ItemChooseComponent {
   protected readonly ItemTypeEnum = ItemTypeEnum;
+  protected readonly IdActionsEnum = IdActionsEnum;
 
-  constructor(protected readonly itemChooseService : ItemChooseService, private readonly zenithService: ZenithService) {}
+  constructor(protected readonly itemChooseService : ItemChooseService, private readonly zenithService: ZenithService, protected readonly imageService: ImageService) {}
 
   protected copyToClipboard(): void {
     navigator.clipboard.writeText(window.location.href).then();

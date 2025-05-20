@@ -6,7 +6,8 @@ import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
 
 @Injectable({providedIn: 'root'})
 export class ItemTypeServices {
-    
+  
+  private readonly baseUrl = "https://vertylo.github.io/wakassets/itemTypes/"; // Base URL for images
   protected readonly itemTypes = new Map<ItemTypeEnum, ItemType>([
     [ItemTypeEnum.DEUX_MAINS,this.findItemType("Deux mains")],
     [ItemTypeEnum.UNE_MAIN,this.findItemType("Une main")],
@@ -48,33 +49,33 @@ export class ItemTypeServices {
   public getLogo(itemType: ItemTypeEnum | undefined): string {
     switch (itemType) {
       case ItemTypeEnum.DEUX_MAINS:
-        return "aptitudes/DeuxMains.png"
+        return this.baseUrl + "519.png"
       case ItemTypeEnum.UNE_MAIN:
-        return "aptitudes/UneMain.png"
+        return this.baseUrl + "518.png"
       case ItemTypeEnum.ANNEAU:
-        return "aptitudes/Anneau.png"
+        return this.baseUrl + "103.png"
       case ItemTypeEnum.BOTTES:
-        return "aptitudes/Bottes.png"
+        return this.baseUrl + "119.png"
       case ItemTypeEnum.AMULETTE:
-        return "aptitudes/Amulette.png"
+        return this.baseUrl + "120.png"
       case ItemTypeEnum.CAPE:
-        return "aptitudes/Cape.png"
+        return this.baseUrl + "132.png"
       case ItemTypeEnum.CEINTURE:
-        return "aptitudes/Ceinture.png"
+        return this.baseUrl + "133.png"
       case ItemTypeEnum.CASQUE:
-        return "aptitudes/Coiffe.png"
+        return this.baseUrl + "134.png"
       case ItemTypeEnum.PLASTRON:
-        return "aptitudes/Plastron.png"
+        return this.baseUrl + "136.png"
       case ItemTypeEnum.EPAULETTES:
-        return "aptitudes/Epaulettes.png"
+        return this.baseUrl + "138.png"
       case ItemTypeEnum.ACCESSOIRES:
-        return "aptitudes/Accessoires.png"
+        return this.baseUrl + "521.png"
       case ItemTypeEnum.BOUCLIER:
-        return "aptitudes/Bouclier.png"
+        return this.baseUrl + "520.png"
       case ItemTypeEnum.DAGUE:
-        return "aptitudes/SecondeMain.png"
+        return this.baseUrl + "571.png"
       case ItemTypeEnum.FAMILIER:
-        return "aptitudes/Familier.png"
+        return this.baseUrl + "582.png"
       default:
         return ""
     }

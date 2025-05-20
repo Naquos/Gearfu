@@ -11,6 +11,7 @@ import { StatesService } from "../../services/data/statesService";
 import { TranslateService } from "@ngx-translate/core";
 import { DifferentStatsItem } from "../../models/data/differentsStatsItem";
 import { Item } from "../../models/data/item";
+import { ImageService } from "../../services/imageService";
 
 @Component({
   selector: 'app-item',
@@ -77,20 +78,22 @@ export abstract class ItemAbstractComponent implements OnDestroy {
     
     protected readonly Math = Math;
     protected readonly itemChoosen$ = new BehaviorSubject<(Item | undefined)[][]>([[]]);
+    protected readonly IdActionsEnum = IdActionsEnum;
 
     constructor(
         protected readonly translateService: TranslateService,
         protected readonly itemTypeService: ItemTypeServices,
         protected readonly itemChooseService: ItemChooseService,
         protected readonly actionsService: ActionService,
-        protected readonly statesService: StatesService
+        protected readonly statesService: StatesService,
+        protected readonly imageService: ImageService,
     ) {}
 
     protected getEffectPng(effect : EquipEffects | DifferentStatsItem): string {
-      if(effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE) {
-        return effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE ? "ArmureDonnée" : "39";
-      }
-      return `${effect.actionId}`;
+      return this.imageService.getImageUrl(
+        effect.actionId, 
+        effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === ParameterMajorActionEnum.ARMURE_RECUE
+      );
     }
 
     protected initItemChoosen(item: Item): void {

@@ -5,6 +5,8 @@ import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.comp
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RareteItemFormServices } from '../../../services/form/rareteItemFormService';
+import { ImageService } from '../../../services/imageService';
+import { RarityItemEnum } from '../../../models/enum/rarityItemEnum';
 
 @Component({
   selector: 'app-rarete-item',
@@ -14,5 +16,6 @@ import { RareteItemFormServices } from '../../../services/form/rareteItemFormSer
 })
 export class RareteItemComponent {
 
-  constructor(protected readonly rareteItemFormService: RareteItemFormServices) {}
+  protected readonly RarityItemEnum = RarityItemEnum;
+  constructor(protected readonly rareteItemFormService: RareteItemFormServices, protected readonly imageService: ImageService) {}
 }

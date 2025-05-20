@@ -18,6 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ItemConditionService } from '../../services/data/itemConditionService';
 import { ItemCondition } from '../../models/data/itemCondition';
 import { Item } from '../../models/data/item';
+import { ImageService } from '../../services/imageService';
 
 @Component({
   selector: 'app-item',
@@ -46,9 +47,10 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     protected readonly stateTooltipService: TooltipService<{statesDefinitionId: number, nameStates: string}>,
     protected readonly cdr: ChangeDetectorRef,
     protected readonly _statesService: StatesService,
-    protected readonly itemConditionService: ItemConditionService
+    protected readonly itemConditionService: ItemConditionService,
+    protected readonly _imageService: ImageService
   ) {
-    super(_translateService, _itemTypeService, _itemChooseService, _actionsService, _statesService);
+    super(_translateService, _itemTypeService, _itemChooseService, _actionsService, _statesService, _imageService);
   }
 
   protected setItemChoosen() : void {

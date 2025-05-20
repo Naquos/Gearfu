@@ -4,6 +4,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 import { TranslateModule } from '@ngx-translate/core';
 import { MaitrisesFormService } from '../../../services/form/maitrisesFormService';
+import { ImageService } from '../../../services/imageService';
+import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 
 @Component({
   selector: 'app-filter-maitrises',
@@ -13,6 +15,8 @@ import { MaitrisesFormService } from '../../../services/form/maitrisesFormServic
 })
 export class FilterMaitrisesComponent {
 
-  constructor(protected readonly maitrisesFormServices: MaitrisesFormService) {}
+  protected readonly IdActionsEnum = IdActionsEnum;
+  
+  constructor(protected readonly maitrisesFormServices: MaitrisesFormService, protected readonly imageService: ImageService) {}
 
 }

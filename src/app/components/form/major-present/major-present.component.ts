@@ -4,6 +4,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslateModule } from '@ngx-translate/core';
 import { MajorPresentFormService } from '../../../services/form/majorPresentFormService';
 import { ButtonCheckboxComponent } from '../button-checkbox/button-checkbox.component';
+import { ImageService } from '../../../services/imageService';
+import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 
 @Component({
   selector: 'app-major-present',
@@ -12,5 +14,8 @@ import { ButtonCheckboxComponent } from '../button-checkbox/button-checkbox.comp
   styleUrl: './major-present.component.scss'
 })
 export class MajorPresentComponent {
-  constructor(protected readonly majorPresentFormService: MajorPresentFormService) {}
+  
+  protected readonly IdActionsEnum = IdActionsEnum;
+
+  constructor(protected readonly majorPresentFormService: MajorPresentFormService, protected readonly imageService: ImageService) {}
 }

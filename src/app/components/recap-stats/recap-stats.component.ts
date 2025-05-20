@@ -6,6 +6,7 @@ import { ParameterMajorActionEnum } from '../../models/enum/parameterMajorAction
 import { ActionService } from '../../services/data/actionService';
 import { TranslateService } from '@ngx-translate/core';
 import { RecapStatsService } from '../../services/RecapStatsService';
+import { ImageService } from '../../services/imageService';
 
 @Component({
   selector: 'app-recap-stats',
@@ -18,6 +19,7 @@ export class RecapStatsComponent {
   constructor(private readonly actionService: ActionService,
     private readonly translateService: TranslateService,
     protected readonly recapStatsService: RecapStatsService,
+    protected readonly imageService: ImageService
     ) {
   }
 
@@ -34,10 +36,10 @@ export class RecapStatsComponent {
   }
 
   protected getEffectPng(effect : RecapStats): string {
-    if(effect.id === IdActionsEnum.ARMURE_DONNEE_RECUE) {
-      return effect.parameterMajorAction === ParameterMajorActionEnum.ARMURE_DONNEE ? "ArmureDonnée" : "39";
-    }
-    return `${effect.id}`;
+      return this.imageService.getImageUrl(
+        effect.id, 
+        effect.id === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.parameterMajorAction === ParameterMajorActionEnum.ARMURE_DONNEE
+      );
   }
 
 

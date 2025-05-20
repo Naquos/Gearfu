@@ -32,7 +32,7 @@
         <div>
             <p *ngFor="let effect of value.statsList" [class]="getBackgroundDifferentsStats(effect)">
                 <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT && effect.value !== 0">
-                    <img  [src]="'aptitudes/' + getEffectPng(effect) +'.png'" alt="aptitudes">  {{ displayEffect(effect) }}
+                    <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ displayEffect(effect) }}
                 </ng-container>
             </p>
         </div>
