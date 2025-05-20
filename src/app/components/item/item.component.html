@@ -2,8 +2,8 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <ng-container *ngIf="item">
     <div class="header">
-        <span><img [src]="imageService.getImageUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{ "item.maitrises" | translate }} {{Math.trunc(item.maitrise)}}</span>
-        <span><img [src]="imageService.getImageUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances">{{ "item.resistances" | translate }} {{item.resistance}}</span>
+        <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{ "item.maitrises" | translate }} {{Math.trunc(item.maitrise)}}</span>
+        <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances">{{ "item.resistances" | translate }} {{item.resistance}}</span>
         <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
     </div>
     <ng-container *ngIf="{condition: textCondition() | async} as value">
@@ -14,7 +14,7 @@
     <div class="content" (click)="setItemChoosen()">
         <div class="title">
             <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{getTitle()}} ({{item.level}}) <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item.itemTypeId))" alt="item type logo"> </h3>
-            <img [src]="'https://vertylo.github.io/wakassets/items/' + item.idImage + '.png'" alt="items">
+            <img [src]="imageService.getItemUrl(item.idImage)" alt="items">
             <div class="poids" [matTooltip]="'item.poids-infobulle' | translate" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{item.weight}}</div>
         </div>
         <div>

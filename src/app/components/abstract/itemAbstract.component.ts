@@ -90,7 +90,7 @@ export abstract class ItemAbstractComponent implements OnDestroy {
     ) {}
 
     protected getEffectPng(effect : EquipEffects | DifferentStatsItem): string {
-      return this.imageService.getImageUrl(
+      return this.imageService.getActionIdUrl(
         effect.actionId, 
         effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === ParameterMajorActionEnum.ARMURE_RECUE
       );

@@ -8,6 +8,7 @@ import { ItemTypeFormServices } from '../../services/form/itemTypeFormServices';
 import { TooltipService } from '../../services/TooltipService';
 import { ItemComponent } from '../item/item.component';
 import { Item } from '../../models/data/item';
+import { ImageService } from '../../services/imageService';
 
 @Component({
   selector: 'app-item-choose-display',
@@ -27,7 +28,8 @@ export class ItemChooseDisplayComponent implements OnInit {
               protected readonly itemChooseService: ItemChooseService,
               protected readonly itemTypeFormServices: ItemTypeFormServices,
               protected readonly tooltipService: TooltipService<{item: Item}>,
-              private readonly viewContainerRef: ViewContainerRef
+              private readonly viewContainerRef: ViewContainerRef,
+              protected readonly imageService: ImageService,
   ) {}
 
 

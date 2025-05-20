@@ -3,7 +3,7 @@
 <ng-container *ngIf="{item: $item | async} as value">
     <ng-container *ngIf="value.item">
         <div class="itemPresent" [style.backgroundColor]="colorRarityService.mapColors.get(value.item.rarity)">
-            <img (click)="itemChooseService.deleteItem(itemType(), indexItem())" [src]="'https://vertylo.github.io/wakassets/items/' + value.item.idImage + '.png'"
+            <img (click)="itemChooseService.deleteItem(itemType(), indexItem())" [src]="imageService.getItemUrl(value.item.idImage)"
                 (mouseenter)="openTooltip($event, value.item)" 
                 (mouseleave)="tooltipService.closeTooltip()"
                 alt="items"

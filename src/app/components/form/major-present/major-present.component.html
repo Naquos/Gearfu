@@ -1,14 +1,14 @@
 <h3>{{"major-present.label" | translate}}</h3>
 
 <div>
-    <app-button-checkbox [tooltip]="'major-present.PA' | translate" [control]="majorPresentFormService.form.controls.PA" [srcImg]="imageService.getImageUrl(IdActionsEnum.PA)" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'major-present.PM' | translate" [control]="majorPresentFormService.form.controls.PM" [srcImg]="imageService.getImageUrl(IdActionsEnum.PM)" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'major-present.PW' | translate" [control]="majorPresentFormService.form.controls.PW" [srcImg]="imageService.getImageUrl(IdActionsEnum.PW)" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'major-present.PO' | translate" [control]="majorPresentFormService.form.controls.PO" [srcImg]="imageService.getImageUrl(IdActionsEnum.PORTEE)" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'major-present.armure-donnee' | translate" [control]="majorPresentFormService.form.controls.ARMURE_DONNEE" [srcImg]="imageService.getImageUrl(IdActionsEnum.ARMURE_DONNEE_RECUE)" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'major-present.armure-recue' | translate" [control]="majorPresentFormService.form.controls.ARMURE_RECUE" [srcImg]="imageService.getImageUrl(IdActionsEnum.ARMURE_DONNEE_RECUE, true)" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'major-present.critique' | translate" [control]="majorPresentFormService.form.controls.CRITIQUE" [srcImg]="imageService.getImageUrl(IdActionsEnum.COUP_CRITIQUE)" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'major-present.parade' | translate" [control]="majorPresentFormService.form.controls.PARADE" [srcImg]="imageService.getImageUrl(IdActionsEnum.PARADE)" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'major-present.resistance-dos' | translate" [control]="majorPresentFormService.form.controls.RESISTANCE_DOS" [srcImg]="imageService.getImageUrl(IdActionsEnum.RESISTANCES_DOS)" ></app-button-checkbox>
-    <app-button-checkbox [tooltip]="'major-present.resistance-critique' | translate" [control]="majorPresentFormService.form.controls.RESISTANCE_CRITIQUE" [srcImg]="imageService.getImageUrl(IdActionsEnum.RESISTANCES_CRITIQUES)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PA' | translate" [control]="majorPresentFormService.form.controls.PA" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PA)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PM' | translate" [control]="majorPresentFormService.form.controls.PM" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PM)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PW' | translate" [control]="majorPresentFormService.form.controls.PW" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PW)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PO' | translate" [control]="majorPresentFormService.form.controls.PO" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.armure-donnee' | translate" [control]="majorPresentFormService.form.controls.ARMURE_DONNEE" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.ARMURE_DONNEE_RECUE)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.armure-recue' | translate" [control]="majorPresentFormService.form.controls.ARMURE_RECUE" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.ARMURE_DONNEE_RECUE, true)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.critique' | translate" [control]="majorPresentFormService.form.controls.CRITIQUE" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.COUP_CRITIQUE)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.parade' | translate" [control]="majorPresentFormService.form.controls.PARADE" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PARADE)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.resistance-dos' | translate" [control]="majorPresentFormService.form.controls.RESISTANCE_DOS" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_DOS)" ></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.resistance-critique' | translate" [control]="majorPresentFormService.form.controls.RESISTANCE_CRITIQUE" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_CRITIQUES)" ></app-button-checkbox>
 </div>

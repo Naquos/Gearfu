@@ -10,6 +10,7 @@ import { ColorRarityService } from '../../../services/colorRarityService';
 import { map, Observable } from 'rxjs';
 import { SearchItemNameFormService } from '../../../services/form/searchItemNameFormService';
 import { Item } from '../../../models/data/item';
+import { ImageService } from '../../../services/imageService';
 
 @Component({
   selector: 'app-search-item-name',
@@ -32,7 +33,9 @@ export class SearchItemNameComponent {
     private readonly translateService: TranslateService,
     private readonly itemService: ItemsService, 
     protected readonly colorRarityService: ColorRarityService,
-    protected readonly searchItemNameFormService: SearchItemNameFormService) 
+    protected readonly searchItemNameFormService: SearchItemNameFormService,
+    protected readonly imageService: ImageService
+  ) 
   {
     this.options$ = this.itemService.itemsFilterByItemName$.pipe(map(x => x.slice(0, 10)))
   }

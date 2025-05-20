@@ -2,9 +2,9 @@
 
 <form [formGroup]="resistancesFormService.form">
     <div class="group">
-        <app-button-checkbox tooltip="filter-maitrises.feu" [control]="resistancesFormService.form.controls.feu" [srcImg]="imageService.getImageUrl(IdActionsEnum.RESISTANCES_FEU)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.air" [control]="resistancesFormService.form.controls.air" [srcImg]="imageService.getImageUrl(IdActionsEnum.RESISTANCES_AIR)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.terre" [control]="resistancesFormService.form.controls.terre" [srcImg]="imageService.getImageUrl(IdActionsEnum.RESISTANCES_TERRE)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.eau" [control]="resistancesFormService.form.controls.eau" [srcImg]="imageService.getImageUrl(IdActionsEnum.RESISTANCES_FEU)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.feu" [control]="resistancesFormService.form.controls.feu" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_FEU)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.air" [control]="resistancesFormService.form.controls.air" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_AIR)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.terre" [control]="resistancesFormService.form.controls.terre" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_TERRE)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.eau" [control]="resistancesFormService.form.controls.eau" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_FEU)" ></app-button-checkbox>
     </div>
 </form>

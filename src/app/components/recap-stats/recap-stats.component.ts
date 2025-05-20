@@ -36,7 +36,7 @@ export class RecapStatsComponent {
   }
 
   protected getEffectPng(effect : RecapStats): string {
-      return this.imageService.getImageUrl(
+      return this.imageService.getActionIdUrl(
         effect.id, 
         effect.id === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.parameterMajorAction === ParameterMajorActionEnum.ARMURE_DONNEE
       );

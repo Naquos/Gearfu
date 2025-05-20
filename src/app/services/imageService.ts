@@ -1,13 +1,17 @@
 import { Injectable } from "@angular/core";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { RarityItemEnum } from "../models/enum/rarityItemEnum";
+import { ItemTypeEnum } from "../models/enum/itemTypeEnum";
 
 @Injectable({providedIn: 'root'})
 export class ImageService {
 
-    private readonly baseUrlCharacteristics = "https://vertylo.github.io/wakassets/characteristics/"; // Base URL for images
-    private readonly baseUrlRarities = "https://vertylo.github.io/wakassets/rarities/"; // Base URL for images
-        
+    private readonly baseUrl = "https://vertylo.github.io/wakassets/"; // Base URL for images
+    private readonly baseUrlCharacteristics = this.baseUrl + "characteristics/";
+    private readonly baseUrlRarities = this.baseUrl + "rarities/"; 
+    private readonly baseUrlImage = this.baseUrl + "items/"
+    private readonly baseUrlItemType = this.baseUrl + "itemTypes/";
+
     private readonly mapUrlCharacteristics = new Map<IdActionsEnum,string>([
         [IdActionsEnum.DOMMAGE_NEUTRE,this.baseUrlCharacteristics + ""],
         [IdActionsEnum.POINT_DE_VIE,this.baseUrlCharacteristics + "HP.png"],
@@ -94,7 +98,28 @@ export class ImageService {
         [RarityItemEnum.EPIQUE, this.baseUrlRarities + RarityItemEnum.EPIQUE + ".png"],
     ]);
 
-      public getImageUrl(idAction: IdActionsEnum, armureRecue?: boolean): string {
+    public readonly mapUrlItemType = new Map<ItemTypeEnum,string>([
+        [ItemTypeEnum.DEUX_MAINS, this.baseUrlItemType + "519.png"],
+        [ItemTypeEnum.UNE_MAIN, this.baseUrlItemType + "518.png"],
+        [ItemTypeEnum.ANNEAU, this.baseUrlItemType + "103.png"],
+        [ItemTypeEnum.BOTTES, this.baseUrlItemType + "119.png"],
+        [ItemTypeEnum.AMULETTE, this.baseUrlItemType + "120.png"],
+        [ItemTypeEnum.CAPE, this.baseUrlItemType + "132.png"],
+        [ItemTypeEnum.CEINTURE, this.baseUrlItemType + "133.png"],
+        [ItemTypeEnum.CASQUE, this.baseUrlItemType + "134.png"],
+        [ItemTypeEnum.PLASTRON, this.baseUrlItemType + "136.png"],
+        [ItemTypeEnum.EPAULETTES, this.baseUrlItemType + "138.png"],
+        [ItemTypeEnum.ACCESSOIRES, this.baseUrlItemType + "521.png"],
+        [ItemTypeEnum.BOUCLIER, this.baseUrlItemType + "520.png"],
+        [ItemTypeEnum.DAGUE, this.baseUrlItemType + "571.png"],
+        [ItemTypeEnum.FAMILIER, this.baseUrlItemType + "582.png"],
+    ]);
+
+      public getActionIdUrl(idAction: IdActionsEnum, armureRecue?: boolean): string {
         return armureRecue ? this.baseUrlCharacteristics + "ARMOR_RECEIVED.png" : this.mapUrlCharacteristics.get(idAction) || "";
+      }
+
+      public getItemUrl(idItem: number): string {
+        return this.baseUrlImage + idItem + ".png";
       }
 }

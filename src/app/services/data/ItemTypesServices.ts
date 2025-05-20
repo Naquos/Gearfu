@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import itemTypesJson from '../../../../public/itemTypes.json';
 import { ItemType } from '../../models/data/itemType';
 import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
+import { ImageService } from '../imageService';
 
 @Injectable({providedIn: 'root'})
 export class ItemTypeServices {
+
+  constructor(private readonly imageService: ImageService) {}
   
-  private readonly baseUrl = "https://vertylo.github.io/wakassets/itemTypes/"; // Base URL for images
   protected readonly itemTypes = new Map<ItemTypeEnum, ItemType>([
     [ItemTypeEnum.DEUX_MAINS,this.findItemType("Deux mains")],
     [ItemTypeEnum.UNE_MAIN,this.findItemType("Une main")],
@@ -47,37 +49,6 @@ export class ItemTypeServices {
   }
 
   public getLogo(itemType: ItemTypeEnum | undefined): string {
-    switch (itemType) {
-      case ItemTypeEnum.DEUX_MAINS:
-        return this.baseUrl + "519.png"
-      case ItemTypeEnum.UNE_MAIN:
-        return this.baseUrl + "518.png"
-      case ItemTypeEnum.ANNEAU:
-        return this.baseUrl + "103.png"
-      case ItemTypeEnum.BOTTES:
-        return this.baseUrl + "119.png"
-      case ItemTypeEnum.AMULETTE:
-        return this.baseUrl + "120.png"
-      case ItemTypeEnum.CAPE:
-        return this.baseUrl + "132.png"
-      case ItemTypeEnum.CEINTURE:
-        return this.baseUrl + "133.png"
-      case ItemTypeEnum.CASQUE:
-        return this.baseUrl + "134.png"
-      case ItemTypeEnum.PLASTRON:
-        return this.baseUrl + "136.png"
-      case ItemTypeEnum.EPAULETTES:
-        return this.baseUrl + "138.png"
-      case ItemTypeEnum.ACCESSOIRES:
-        return this.baseUrl + "521.png"
-      case ItemTypeEnum.BOUCLIER:
-        return this.baseUrl + "520.png"
-      case ItemTypeEnum.DAGUE:
-        return this.baseUrl + "571.png"
-      case ItemTypeEnum.FAMILIER:
-        return this.baseUrl + "582.png"
-      default:
-        return ""
-    }
+    return itemType ? this.imageService.mapUrlItemType.get(itemType) ?? "" : "";
   }
 }
