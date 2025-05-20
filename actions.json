@@ -641,10 +641,10 @@
             "effect": "Gain : Parade"
         },
         "description": {
-            "fr": "Parade",
-            "en": "Block",
-            "es": "de anticipación",
-            "pt": "de Parada"
+            "fr": "% Parade",
+            "en": "% Block",
+            "es": "% de anticipación",
+            "pt": "% de Parada"
         }
     },
     {
