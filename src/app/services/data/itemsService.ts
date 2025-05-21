@@ -45,7 +45,6 @@ export class ItemsService {
     ) {}
 
     public init(): void {
-      console.log("Init items service");
         this.initItemsList();
         this.initFilter();
 
@@ -161,9 +160,6 @@ export class ItemsService {
     }
 
     private initItemsList(): void {
-
-      console.log("Loading items...");
-
       this.ankamaCdnService.getItems().subscribe((items) => {
         items.forEach(x => this.items.push({
             id: x.definition.item.id,
@@ -190,7 +186,6 @@ export class ItemsService {
             resistance: 0
         }));
       });
-      console.log("Items loaded");
     }
     
     public searchItem(idItem : number): Observable<Item | undefined> {
