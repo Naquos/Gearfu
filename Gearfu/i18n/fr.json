@@ -116,11 +116,6 @@
     "search-item-name": {
         "label": "Nom de l'item"
     },
-    "craftable-choice-enum": {
-        "CRAFT_DROP": "Craft et Drop",
-        "CRAFT": "Craft",
-        "DROP": "Drop"
-    },
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Coeur huppermage",
         "DENOUEMENT": "Denouement"
