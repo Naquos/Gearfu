@@ -13,10 +13,11 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DifferentStatsItem } from '../../models/data/differentsStatsItem';
 import { Item } from '../../models/data/item';
 import { ImageService } from '../../services/imageService';
+import { ActionsPipe } from "../../pipe/actions/actions.pipe";
 
 @Component({
   selector: 'app-item-tooltip',
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, ActionsPipe],
   templateUrl: './item-tooltip.component.html',
   styleUrl: './item-tooltip.component.scss'
 })

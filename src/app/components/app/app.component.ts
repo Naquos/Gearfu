@@ -25,6 +25,7 @@ import { ImportBuildComponent } from "../form/import-build/import-build.componen
 import { NameBuildComponent } from "../form/name-build/name-build.component";
 import { RecapStatsComponent } from "../recap-stats/recap-stats.component";
 import { ItemsService } from '../../services/data/itemsService';
+import { AnkamaCdnService } from '../../services/ankamaCdnService';
 
 
 @Component({
@@ -68,7 +69,8 @@ export class AppComponent implements OnInit{
   constructor(protected readonly translate: TranslateService,
     protected readonly resetFormServices: ResetFormService,
     private readonly localStorageService: LocalStorageService,
-    private readonly itemService: ItemsService
+    private readonly itemService: ItemsService,
+    private readonly ankamaCdnService: AnkamaCdnService,
   ) {
     this.translate.addLangs(['fr','en', 'es', 'pt']);
     this.translate.setDefaultLang('en');
@@ -82,6 +84,7 @@ export class AppComponent implements OnInit{
 
   public ngOnInit(): void {
     this.itemService.init();
+    this.ankamaCdnService.loadActions();
   }
 
   protected setLang(value: string): void {

@@ -24,15 +24,22 @@ export class RecapStatsComponent {
   }
 
   protected displayEffect(effect: RecapStats): string {
-    const descriptionEffect = this.actionService.getEffectById(effect.id);
     const symbol = effect.value < 0? "-" : ""
     const value = Math.abs(effect.value);
+    
     if(effect.id === IdActionsEnum.ARMURE_DONNEE_RECUE || effect.id === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) {
       const type = effect.parameterMajorAction === ParameterMajorActionEnum.ARMURE_DONNEE ? 
       this.translateService.instant("abstract.donnee") : this.translateService.instant("abstract.recue")
       return symbol + value + this.translateService.instant("abstract.armure") + type;
     }
-    return symbol + value + " " + descriptionEffect;
+
+    let descriptionEffect = `${this.actionService.getEffectById(effect.id)}`;
+    descriptionEffect = descriptionEffect.replace("[#1]", symbol + value);
+
+    const regex = /\[.*\]/;
+    const match = descriptionEffect.match(regex);
+
+    return match ? descriptionEffect.replace(match[0], "") : descriptionEffect;
   }
 
   protected getEffectPng(effect : RecapStats): string {

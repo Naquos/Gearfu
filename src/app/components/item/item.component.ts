@@ -19,10 +19,11 @@ import { ItemConditionService } from '../../services/data/itemConditionService';
 import { ItemCondition } from '../../models/data/itemCondition';
 import { Item } from '../../models/data/item';
 import { ImageService } from '../../services/imageService';
+import { ActionsPipe } from "../../pipe/actions/actions.pipe";
 
 @Component({
   selector: 'app-item',
-  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule],
+  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe],
   templateUrl: './item.component.html',
   styleUrl: './item.component.scss'
 })

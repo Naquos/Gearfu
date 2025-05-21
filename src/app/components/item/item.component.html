@@ -20,7 +20,7 @@
         <div>
             <p *ngFor="let effect of item.equipEffects">
                 <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT">
-                    <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ displayEffect(effect) }}
+                    <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ effect | actions | async }}
                 </ng-container>
                 <ng-container *ngIf="effect.actionId === IdActionEnum.APPLIQUE_ETAT">
                     <span class="appliqueEtat" *ngIf="{states: statesService.findStates(effect.params[0]) } as value"

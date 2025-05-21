@@ -1,9 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Actions } from "../../models/data/actions";
-import actionsJson from "../../../../public/actions.json";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { EquipEffects } from "../../models/data/equipEffects";
 import { TranslateService } from "@ngx-translate/core";
+import { AnkamaCdnService } from "../ankamaCdnService";
 
 @Injectable({providedIn: 'root'})
 export class ActionService {
@@ -68,21 +67,7 @@ export class ActionService {
         [IdActionsEnum.PORTEE, IdActionsEnum.PERTE_PORTEE],
     ];
 
-    protected readonly actions = new Map<number, Actions>();
-
-    constructor(private readonly translateService: TranslateService) {
-        actionsJson.forEach(x => this.actions.set(
-            x.definition.id,
-            {
-            id: x.definition.id,
-            description: {
-                fr: x.description?.fr ?? "",
-                en: x.description?.en ?? "",
-                es: x.description?.es ?? "",
-                pt: x.description?.pt ?? ""
-            } 
-        }))
-
+    constructor(private readonly translateService: TranslateService, private readonly ankamaCdnService: AnkamaCdnService) {
         for (const [positive, negative] of ActionService.opposedPairs) {
             ActionService.opposedEffects.set(positive, negative);
             ActionService.opposedEffects.set(negative, positive);
@@ -91,8 +76,9 @@ export class ActionService {
     }
 
     public getEffectById(id: number): string {
-        const action = this.actions.get(id); 
-        return action?.description[this.translateService.currentLang as keyof typeof action.description] ?? "";
+        const action = this.ankamaCdnService.getActionList().find(action => action.definition.id === id);
+        if(!action) { return ""; }
+        return `${action.description[this.translateService.currentLang as keyof typeof action.description]}`;
     }
 
     public isAMalus(id: IdActionsEnum): boolean {

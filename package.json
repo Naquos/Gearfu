@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node --max-old-space-size=8192 node_modules/@angular/cli/bin/ng serve",
+    "start": "node node_modules/@angular/cli/bin/ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "deploy": "ng deploy --base-href /Gearfu/",
