@@ -187,6 +187,7 @@ export class ItemsService {
             resistance: 0
         }));
       });
+      console.log("Items loaded");
     }
     
     public searchItem(idItem : number): Observable<Item | undefined> {

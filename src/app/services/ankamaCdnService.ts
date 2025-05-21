@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ConfigCdn } from "../models/ankama-cdn/config-cdn";
 import { ItemCdn } from "../models/ankama-cdn/item-cdn";
-import { Observable, switchMap } from "rxjs";
+import { Observable, switchMap, tap } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class AnkamaCdnService {
@@ -12,6 +12,8 @@ export class AnkamaCdnService {
 
     public getItems():  Observable<ItemCdn[]> {
         return this.http.get<ConfigCdn>(this.baseUrl + "config.json").pipe(
-            switchMap((config) => this.http.get<ItemCdn[]>(this.baseUrl + config.version + "/items.json")));
+            tap((config) => console.log("Config CDN:", config)),
+            switchMap((config) => this.http.get<ItemCdn[]>(this.baseUrl + config.version + "/items.json")),
+            tap((items) => console.log("Items CDN:", items)));
     }
 }
