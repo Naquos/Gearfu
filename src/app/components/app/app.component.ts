@@ -24,6 +24,7 @@ import { BuildsListComponent } from "../builds-list/builds-list.component";
 import { ImportBuildComponent } from "../form/import-build/import-build.component";
 import { NameBuildComponent } from "../form/name-build/name-build.component";
 import { RecapStatsComponent } from "../recap-stats/recap-stats.component";
+import { ItemsService } from '../../services/data/itemsService';
 
 
 @Component({
@@ -65,8 +66,10 @@ export class AppComponent {
   }
   constructor(protected readonly translate: TranslateService,
     protected readonly resetFormServices: ResetFormService,
-    private readonly localStorageService: LocalStorageService) {
-
+    private readonly localStorageService: LocalStorageService,
+    private readonly itemService: ItemsService
+  ) {
+    this.itemService.init();
     this.translate.addLangs(['fr','en', 'es', 'pt']);
     this.translate.setDefaultLang('en');
     const lang = this.localStorageService.getItem<string>(KeyEnum.KEY_LANG);

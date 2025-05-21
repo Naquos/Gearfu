@@ -24,7 +24,7 @@ export class ItemsService {
     protected items: Item[] = [];
     protected readonly fullItems$ = new BehaviorSubject<Item[]>([]);
 
-    public items$: Observable<Item[]>;
+    public items$?: Observable<Item[]>;
 
     public itemsFilterByItemName$!: Observable<Item[]>;
 
@@ -42,7 +42,9 @@ export class ItemsService {
                 private readonly resistanceFormService: ResistancesFormService,
                 private readonly maitrisesFormService: MaitrisesFormService,
                 private readonly ankamaCdnService: AnkamaCdnService,
-    ) {
+    ) {}
+
+    public init(): void {
         this.initItemsList();
         this.initFilter();
 
@@ -173,10 +175,10 @@ export class ItemsService {
                 };
             }),
             title: {
-              fr: x.title.fr,
-              en: x.title.en,
-              es: x.title.es,
-              pt: x.title.pt
+              fr: x.title?.fr ?? "",
+              en: x.title?.en ?? "",
+              es: x.title?.es ?? "",
+              pt: x.title?.pt ?? ""
             },
             idImage: x.definition.item.graphicParameters.gfxId,
             weightForSort: 0,
