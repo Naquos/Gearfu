@@ -1,9 +1,0 @@
-<h3>Mode d'obtention des items</h3>
-
-<mat-form-field>
-    <mat-select [formControl]="craftableChoiceFormServie.form">
-        @for (craftable of craftableChoiceEnumList; track craftable) {
-        <mat-option [value]="craftable">{{("craftable-choice-enum." + craftable.valueOf()) | translate}}</mat-option>
-        }
-    </mat-select>
-</mat-form-field>

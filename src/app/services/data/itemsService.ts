@@ -1,15 +1,12 @@
 import { Injectable } from "@angular/core";
-import itemsJson from "../../../../public/items.json";
 import { BehaviorSubject, combineLatest, map, Observable, tap } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../../models/enum/sortChoiceEnum";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { ItemTypeFormServices } from "../form/itemTypeFormServices";
 import { ItemTypeEnum } from "../../models/enum/itemTypeEnum";
-import { CraftableChoiceEnum } from "../../models/enum/craftableChoiceEnum";
 import { ParameterMajorActionEnum } from "../../models/enum/parameterMajorActionEnum";
 import { TranslateService } from "@ngx-translate/core";
 import { SortChoiceFormService } from "../form/sortChoiceFormService";
-import { CraftableChoiceFormService } from "../form/craftableChoiceFormService";
 import { OnlyNoSecondaryFormService } from "../form/onlyNoSecondaryFormService";
 import { MajorPresentFormService } from "../form/majorPresentFormService";
 import { ModifierElemMaitrisesFormService } from "../form/modifierElemMaitrisesFormService";
@@ -20,6 +17,7 @@ import { ResistancesFormService } from "../form/resistancesFormService";
 import { MaitrisesFormService } from "../form/maitrisesFormService";
 import { Item } from "../../models/data/item";
 import { MajorAction } from "../../models/data/majorActions";
+import { AnkamaCdnService } from "../ankamaCdnService";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -41,9 +39,9 @@ export class ItemsService {
                 private readonly searchItemNameFormService: SearchItemNameFormService,
                 private readonly rareteItemFormService: RareteItemFormServices,
                 private readonly itemLevelFormService: ItemLevelFormService,
-                private readonly craftableChoiceFormService: CraftableChoiceFormService,
                 private readonly resistanceFormService: ResistancesFormService,
                 private readonly maitrisesFormService: MaitrisesFormService,
+                private readonly ankamaCdnService: AnkamaCdnService,
     ) {
         this.initItemsList();
         this.initFilter();
@@ -88,19 +86,8 @@ export class ItemsService {
   
       const itemsFilterByMajor$ = combineLatest([itemsFilterByOnlyNoSecondary$, this.majorPresentFormService.idMajor$])
       .pipe(map(([items, idMajor]) => items.filter(x => this.majorIsPresent(idMajor, x))));
-  
-      const itemsFilterCraftable$ = combineLatest([itemsFilterByMajor$, this.craftableChoiceFormService.craftable$]).pipe(
-        map(([items, craftable]) => {
-          if(craftable === CraftableChoiceEnum.CRAFT_DROP) {
-            return items;
-          } else if(craftable === CraftableChoiceEnum.CRAFT) {
-            return items.filter(x => x.craftable);
-          } 
-          return items.filter(x => x.dropable);
-        })
-      );
 
-      this.itemsFilters$ = combineLatest([itemsFilterCraftable$, this.itemTypeFormServices.selected$])
+      this.itemsFilters$ = combineLatest([itemsFilterByMajor$, this.itemTypeFormServices.selected$])
       .pipe(map(([items, itemTypeIds]) => items.filter(x => itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))));
     }
 
@@ -171,18 +158,18 @@ export class ItemsService {
     }
 
     private initItemsList(): void {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (itemsJson as [any]).forEach(x => this.items.push({
+
+      this.ankamaCdnService.getItems().subscribe((items) => {
+        items.forEach(x => this.items.push({
             id: x.definition.item.id,
             level: x.definition.item.level,
             rarity: x.definition.item.baseParameters.rarity,
             itemTypeId: x.definition.item.baseParameters.itemTypeId,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            equipEffects: (x.definition.equipEffects as [any]).map(equipEffect => {
+            equipEffects: x.definition.equipEffects.map(equipEffect => {
                 return {
-                    id: equipEffect.effect.definition.id as number,
-                    actionId: equipEffect.effect.definition.actionId as number,
-                    params: equipEffect.effect.definition.params as number[]
+                    id: equipEffect.effect.definition.id,
+                    actionId: equipEffect.effect.definition.actionId,
+                    params: equipEffect.effect.definition.params
                 };
             }),
             title: {
@@ -193,12 +180,11 @@ export class ItemsService {
             },
             idImage: x.definition.item.graphicParameters.gfxId,
             weightForSort: 0,
-            craftable: x.definition.item.craftable,
-            dropable: x.definition.item.dropable,
             weight: 0,
             maitrise: 0,
             resistance: 0
         }));
+      });
     }
     
     public searchItem(idItem : number): Observable<Item | undefined> {

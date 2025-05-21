@@ -116,11 +116,6 @@
     "search-item-name": {
         "label": "Nome do item"
     },
-    "craftable-choice-enum": {
-        "CRAFT_DROP": "Craft e Drop",
-        "CRAFT": "Craft",
-        "DROP": "Drop"
-    },
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Coração do Huppermago",
         "DENOUEMENT": "Denouement"

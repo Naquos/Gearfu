@@ -14,8 +14,6 @@ export interface Item {
     };
     idImage: number;
     weightForSort: number;
-    craftable: boolean;
-    dropable: boolean;
     weight: number;
     maitrise: number;
     resistance: number;

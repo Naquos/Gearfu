@@ -9,7 +9,6 @@ import { OnlyNoSecondaryComponent } from "../form/only-no-secondary/only-no-seco
 import { ModifierElemMaitrisesComponent } from "../form/modifier-elem-maitrises/modifier-elem-maitrises.component";
 import { SearchItemNameComponent } from "../form/search-item-name/search-item-name.component";
 import { ItemChooseComponent } from "../item-choose/item-choose.component";
-import { CraftableChoiceComponent } from "../form/craftable-choice/craftable-choice.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
@@ -45,7 +44,6 @@ import { RecapStatsComponent } from "../recap-stats/recap-stats.component";
     ModifierElemMaitrisesComponent,
     SearchItemNameComponent,
     ItemChooseComponent,
-    CraftableChoiceComponent,
     TranslateModule,
     SwipeDirective,
     CommonModule,

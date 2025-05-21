@@ -1,7 +1,0 @@
-@use '@angular/material' as mat;
-
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
-mat-button-toggle {
-    color: var(--mat-standard-button-toggle-selected-state-text-color, var(--mat-sys-on-secondary-container));
-    background-color: var(--mat-standard-button-toggle-selected-state-background-color, var(--mat-sys-secondary-container));
-}

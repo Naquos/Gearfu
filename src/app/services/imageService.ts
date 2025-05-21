@@ -115,11 +115,11 @@ export class ImageService {
         [ItemTypeEnum.FAMILIER, this.baseUrlItemType + "582.png"],
     ]);
 
-      public getActionIdUrl(idAction: IdActionsEnum, armureRecue?: boolean): string {
+    public getActionIdUrl(idAction: IdActionsEnum, armureRecue?: boolean): string {
         return armureRecue ? this.baseUrlCharacteristics + "ARMOR_RECEIVED.png" : this.mapUrlCharacteristics.get(idAction) || "";
-      }
+    }
 
-      public getItemUrl(idItem: number): string {
+    public getItemUrl(idItem: number): string {
         return this.baseUrlImage + idItem + ".png";
-      }
+    }
 }

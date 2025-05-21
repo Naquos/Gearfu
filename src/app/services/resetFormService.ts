@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { CraftableChoiceFormService } from "./form/craftableChoiceFormService";
 import { ItemLevelFormService } from "./form/itemLevelFormService";
 import { ItemTypeFormServices } from "./form/itemTypeFormServices";
 import { MaitrisesFormService } from "./form/maitrisesFormService";
@@ -14,7 +13,6 @@ import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 @Injectable({providedIn: 'root'})
 export class ResetFormService {
   constructor(
-    private readonly craftableChoiceFormService: CraftableChoiceFormService,
     private readonly itemLevelFormService: ItemLevelFormService,
     private readonly itemTypeFormServices: ItemTypeFormServices,
     private readonly maitrisesFormService: MaitrisesFormService,
@@ -28,7 +26,6 @@ export class ResetFormService {
   ) {}
 
     public resetAllForms(): void {
-        this.craftableChoiceFormService.setDefaultValue();
         this.itemLevelFormService.setDefaultValue();
         this.itemTypeFormServices.setDefaultValue();
         this.maitrisesFormService.setDefaultValue();

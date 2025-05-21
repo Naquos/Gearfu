@@ -116,11 +116,6 @@
     "search-item-name": {
         "label": "Item name"
     },
-    "craftable-choice-enum": {
-        "CRAFT_DROP": "Craft and Drop",
-        "CRAFT": "Craft",
-        "DROP": "Drop"
-    },
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Huppermage's Heart",
         "DENOUEMENT": "Unraveling"

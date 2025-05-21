@@ -1,8 +1,8 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="header" *ngIf="{loaded: loaded$ | async}">
-    <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="'aptitudes/1068.png'" alt="Maitrises">{{"item.maitrises" | translate}} {{Math.trunc(maitrises)}}</span>
-    <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="'aptitudes/1069.png'" alt="Resistances">{{ "item.resistances" | translate }} {{resistances}}</span>
+    <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{"item.maitrises" | translate}} {{Math.trunc(maitrises)}}</span>
+    <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Resistances">{{ "item.resistances" | translate }} {{resistances}}</span>
 </div>
 <div class="content" (click)="setItem(item)">
     <div class="column">
