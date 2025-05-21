@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ItemTypesComponent } from '../form/item-types/item-types.component';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { ItemLevelComponent } from "../form/item-level/item-level.component";
@@ -56,7 +56,7 @@ import { ItemsService } from '../../services/data/itemsService';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   protected displayFilter = false;
   protected filterOrBuild : "filter" | "build" = "filter";
@@ -64,12 +64,12 @@ export class AppComponent {
   protected openDiscord(): void {
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
   }
+
   constructor(protected readonly translate: TranslateService,
     protected readonly resetFormServices: ResetFormService,
     private readonly localStorageService: LocalStorageService,
     private readonly itemService: ItemsService
   ) {
-    this.itemService.init();
     this.translate.addLangs(['fr','en', 'es', 'pt']);
     this.translate.setDefaultLang('en');
     const lang = this.localStorageService.getItem<string>(KeyEnum.KEY_LANG);
@@ -77,8 +77,11 @@ export class AppComponent {
       this.translate.use(lang);
     } else {
       this.translate.use(navigator.language.split("-")[0] ?? "en");
-    }
-    
+    } 
+  }
+
+  public ngOnInit(): void {
+    this.itemService.init();
   }
 
   protected setLang(value: string): void {
