@@ -9,6 +9,7 @@ import { SaveBuildService } from '../../services/saveBuildService';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ImageService } from '../../services/imageService';
 
 export enum ItemTypeBuild  {
   CASQUE =  "CASQUE",
@@ -58,6 +59,7 @@ export class BuildComponent implements OnInit {
   constructor(
     private readonly itemService: ItemsService,
     private readonly itemTypeService: ItemTypeServices,
+    private readonly imageService: ImageService,
     protected readonly saveBuildService: SaveBuildService,
     protected readonly itemChooseService: ItemChooseService) {}
 
@@ -69,7 +71,7 @@ export class BuildComponent implements OnInit {
         if(item) {
           this.getItemType(item).forEach(type => {
             if(this.mapImageItems.has(type)) {
-              this.mapImageItems.set(type, `items/${item.idImage}.png`);
+              this.mapImageItems.set(type, this.imageService.getItemUrl(item.idImage));
             }
           })
         }
