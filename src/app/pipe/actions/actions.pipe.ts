@@ -1,19 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { EquipEffects } from '../../models/data/equipEffects';
-import { AnkamaCdnService } from '../../services/ankamaCdnService';
 import { combineLatest, map, Observable, startWith } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { ActionsCdn } from '../../models/ankama-cdn/actions-cdn';
+import { ActionsCdn } from '../../models/ankama-cdn/actionsCdn';
 import { IdActionsEnum } from '../../models/enum/idActionsEnum';
 import { DifferentStatsItem } from '../../models/data/differentsStatsItem';
 import { ActionService } from '../../services/data/actionService';
+import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
 
 @Pipe({
   name: 'actions'
 })
 export class ActionsPipe implements PipeTransform {
 
-  constructor(private readonly ankamaCdnService: AnkamaCdnService,
+  constructor(private readonly ankamaCdnFacade: AnkamaCdnFacade,
     private readonly translateService: TranslateService,
     private readonly actionService: ActionService) {}
 
@@ -21,7 +21,7 @@ export class ActionsPipe implements PipeTransform {
     
     return combineLatest([
       this.translateService.onLangChange.pipe(startWith({lang: this.translateService.currentLang, translations: {}})),
-      this.ankamaCdnService.action$
+      this.ankamaCdnFacade.action$
     ]).pipe(
       map(([, actions]) => actions),
       map(actions => this.findAction(actions, effect)),

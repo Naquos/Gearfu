@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { EquipEffects } from "../../models/data/equipEffects";
 import { TranslateService } from "@ngx-translate/core";
-import { AnkamaCdnService } from "../ankamaCdnService";
+import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
 
 @Injectable({providedIn: 'root'})
 export class ActionService {
@@ -67,7 +67,7 @@ export class ActionService {
         [IdActionsEnum.PORTEE, IdActionsEnum.PERTE_PORTEE],
     ];
 
-    constructor(private readonly translateService: TranslateService, private readonly ankamaCdnService: AnkamaCdnService) {
+    constructor(private readonly translateService: TranslateService, private readonly ankamaCdnFacade: AnkamaCdnFacade) {
         for (const [positive, negative] of ActionService.opposedPairs) {
             ActionService.opposedEffects.set(positive, negative);
             ActionService.opposedEffects.set(negative, positive);
@@ -76,7 +76,7 @@ export class ActionService {
     }
 
     public getEffectById(id: number): string {
-        const action = this.ankamaCdnService.getActionList().find(action => action.definition.id === id);
+        const action = this.ankamaCdnFacade.getActionList().find(action => action.definition.id === id);
         if(!action) { return ""; }
         return `${action.description[this.translateService.currentLang as keyof typeof action.description]}`;
     }

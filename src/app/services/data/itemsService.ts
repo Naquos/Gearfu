@@ -17,7 +17,7 @@ import { ResistancesFormService } from "../form/resistancesFormService";
 import { MaitrisesFormService } from "../form/maitrisesFormService";
 import { Item } from "../../models/data/item";
 import { MajorAction } from "../../models/data/majorActions";
-import { AnkamaCdnService } from "../ankamaCdnService";
+import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -41,7 +41,7 @@ export class ItemsService {
                 private readonly itemLevelFormService: ItemLevelFormService,
                 private readonly resistanceFormService: ResistancesFormService,
                 private readonly maitrisesFormService: MaitrisesFormService,
-                private readonly ankamaCdnService: AnkamaCdnService,
+                private readonly ankamaCdnFacade: AnkamaCdnFacade,
     ) {}
 
     public init(): void {
@@ -160,7 +160,7 @@ export class ItemsService {
     }
 
     private initItemsList(): void {
-      this.ankamaCdnService.getItems().subscribe((items) => {
+      this.ankamaCdnFacade.item$.subscribe((items) => {
         items.forEach(x => this.items.push({
             id: x.definition.item.id,
             level: x.definition.item.level,

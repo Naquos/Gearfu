@@ -1,24 +1,21 @@
 import { Injectable } from "@angular/core";
-import states from "../../../../public/states.json";
 import { States } from "../../models/data/states";
+import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
 
 @Injectable({providedIn: 'root'})
 export class StatesService {
-    
-    private readonly stateService = new Map<number, States>();
 
-    constructor() {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (states as [any]).forEach(x => this.stateService.set(Number.parseInt(x.definition.id), {
-            id: x.definition.id,
-            fr: x.title?.fr ?? "",
-            en: x.title?.en ?? "",
-            es: x.title?.es ?? "",
-            pt: x.title?.pt ?? ""
-        }))
-    }
+    constructor(private readonly AnkamaCdnFacade: AnkamaCdnFacade) {}
 
     public findStates(id: number): States  | undefined {
-        return this.stateService.get(id);
+        const state = this.AnkamaCdnFacade.getStatesList().find((state) => state.definition.id === id);
+        if(!state) { return undefined; }
+        return {
+            id: state.definition.id,
+            fr: state.title.fr,
+            en: state.title.en,
+            es: state.title.es,
+            pt: state.title.pt
+        };
     }
 }
