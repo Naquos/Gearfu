@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, combineLatest, map, Observable, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable, take, tap } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../../models/enum/sortChoiceEnum";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { ItemTypeFormServices } from "../form/itemTypeFormServices";
@@ -160,7 +160,7 @@ export class ItemsService {
     }
 
     private initItemsList(): void {
-      this.ankamaCdnFacade.item$.subscribe((items) => {
+      this.ankamaCdnFacade.item$.pipe(take(1)).subscribe((items) => {
         items.forEach(x => this.items.push({
             id: x.definition.item.id,
             level: x.definition.item.level,
