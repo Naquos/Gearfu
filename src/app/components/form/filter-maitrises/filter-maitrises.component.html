@@ -3,9 +3,9 @@
 <form [formGroup]="maitrisesFormServices.form">
     <div class="group">
         <app-button-checkbox tooltip="filter-maitrises.feu" [control]="maitrisesFormServices.form.controls.feu" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_FEU)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.air" [control]="maitrisesFormServices.form.controls.air" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_AIR)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.terre" [control]="maitrisesFormServices.form.controls.terre" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_TERRE)" ></app-button-checkbox>
         <app-button-checkbox tooltip="filter-maitrises.eau" [control]="maitrisesFormServices.form.controls.eau" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_EAU)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.terre" [control]="maitrisesFormServices.form.controls.terre" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_TERRE)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.air" [control]="maitrisesFormServices.form.controls.air" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_AIR)" ></app-button-checkbox>
     </div>
 
     <h3>{{ "filter-maitrises.maitrises-secondaires" | translate }}</h3>
