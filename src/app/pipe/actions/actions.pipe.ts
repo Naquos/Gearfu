@@ -65,11 +65,16 @@ export class ActionsPipe implements PipeTransform {
   }
 
   private singularOrPlurial(definition: string, effect: EquipEffects | DifferentStatsItem) {
-    const regex = /\{\[>2\]\?([^}]){0,5}:([^}]){0,5}\}/g;
+    definition = this.singularOrPlurialWithRegex(definition, effect,  /\{\[>2\]\?([^}]){0,5}:([^}]){0,5}\}/g, 2);
+    definition = this.singularOrPlurialWithRegex(definition, effect,  /\{\[>1\]\?([^}]){0,5}:([^}]){0,5}\}/g);
+    return definition;
+  }
+
+  private singularOrPlurialWithRegex(definition: string, effect: EquipEffects | DifferentStatsItem, regex: RegExp, index = 0) {
     const match = [...definition.matchAll(regex)];
     if (match) {
-      if (effect.params.length > 2) {
-        const endWords = match.map(m => m[effect.params[2] >= 2 ? 1 : 2]);
+      if (effect.params.length > index) {
+        const endWords = match.map(m => m[effect.params[index] >= 2 ? 1 : 2]);
         for (let i = 0; i < match.length; i++) {
           definition = definition.replace(match[i][0], endWords[i] ?? '');
         }
