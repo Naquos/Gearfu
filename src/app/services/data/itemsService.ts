@@ -62,11 +62,11 @@ export class ItemsService {
         .pipe(
           tap(([items,nbElements, idMaitrises, sort, multiplicateurElem, denouement, idResistances]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement)),
           map(([items,]) => items),
-          map(items => items.sort((itemA, itemB) => itemB.weightForSort - itemA.weightForSort).slice(0,32)))
+          map(items => items.sort((itemA, itemB) => itemB.weightForSort > itemA.weightForSort ? 1 : itemB.weightForSort === itemA.weightForSort ? 0 : -1).slice(0,32)))
     }
 
     private initFilter(): void {
-      this.items = this.items.filter(x => ![480,812].includes(x.itemTypeId))
+      this.items = this.items.filter(x => ![480,811,812].includes(x.itemTypeId))
       this.fullItems$.next(this.items);
 
       this.itemsFilterByItemName$ = combineLatest([this.fullItems$, this.searchItemNameFormService.itemName$])
@@ -215,7 +215,7 @@ export class ItemsService {
             result += effect.params[0] * Math.min(effect.params[2], nbElements);
           } else if (effect.actionId === IdActionsEnum.RESISTANCES_ELEMENTAIRE) {
             result += effect.params[0] * nbElements;
-          } else if (effect.actionId ===  IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE) {
+          } else if (effect.actionId ===  IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE || effect.actionId === IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE_SANS_CAP) {
             result -= effect.params[0] * nbElements;
           } else if (resisElemId.includes(effect.actionId) && (nbElements === 4 || idResistances.includes(effect.actionId))) {
             result += effect.params[0];
