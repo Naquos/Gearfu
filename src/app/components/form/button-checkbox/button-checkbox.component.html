@@ -1,6 +1,7 @@
 <button
     [matTooltip]="tooltip() | translate"
     [matTooltipShowDelay]="300"
+    [class.crossed-out]="crossedOut()"
     mat-mini-fab (click)="control()?.setValue(!control()?.value)" [style.backgroundColor]="control()?.value ? '#415A77' : ''">
     <img [src]="srcImg()" alt="logo">
 </button>

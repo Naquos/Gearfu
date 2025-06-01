@@ -8,6 +8,10 @@ button {
     height: 34px;
 }
 
+.crossed-out {
+    background-color: red;
+}
+
 button:active {
     background-color: #415A77;
     transform: translateY(2px);

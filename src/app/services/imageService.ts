@@ -58,6 +58,7 @@ export class ImageService {
         [IdActionsEnum.VOLONTE,this.baseUrlCharacteristics + "WILLPOWER.png"],
         [IdActionsEnum.MAITRISES_DOS,this.baseUrlCharacteristics + "BACKSTAB_BONUS.png"],
         [IdActionsEnum.PERTE_MAITRISES_DOS,this.baseUrlCharacteristics + "BACKSTAB_BONUS.png"],
+        [IdActionsEnum.PERTE_MAITRISES_SOIN,this.baseUrlCharacteristics + "HEAL_IN_PERCENT.png"],
         [IdActionsEnum.CONTROLE,this.baseUrlCharacteristics + "LEADERSHIP.png"],
         [IdActionsEnum.BOOST_PW,this.baseUrlCharacteristics + "WP.png"],
         [IdActionsEnum.DEBOOST_PW,this.baseUrlCharacteristics + "WP.png"],

@@ -14,4 +14,5 @@ export class ButtonCheckboxComponent {
   public readonly srcImg = input<string>("");
   public readonly control = input<FormControl<boolean>>();
   public readonly tooltip = input<string>("");
+  public readonly crossedOut = input<boolean>(false);
 }

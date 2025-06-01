@@ -30,6 +30,8 @@ export class ItemsService {
 
     protected itemsFilters$!: Observable<Item[]>;
 
+    private static readonly ARMURE_DONNEE_RECUE_LIST = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
+
     constructor(private readonly itemTypeFormServices: ItemTypeFormServices,
                 private readonly translateService: TranslateService,
                 private readonly onlyNoSecondaryFormService: OnlyNoSecondaryFormService,
@@ -197,8 +199,10 @@ export class ItemsService {
     }
 
     private majorIsPresent(idMajor: MajorAction[], x: Item): boolean {
-      return !idMajor.find(major => (major.id !== IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.map(effect => effect.actionId).includes(major.id)) 
-                              || (major.id === IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === major.parameter)));
+      return !idMajor.find(major => (!ItemsService.ARMURE_DONNEE_RECUE_LIST.includes(major.id) && !x.equipEffects.map(effect => effect.actionId).includes(major.id)) 
+                              || (major.id === IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === major.parameter))
+                              || (major.id === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE && effect.params[4] === major.parameter))
+                            );
     }
 
     public calculResistancesForAnItem(item: Item, idResistances: number[]): number {
