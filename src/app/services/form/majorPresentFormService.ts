@@ -13,6 +13,7 @@ export interface MajorPresentForm {
   PM: boolean;
   PW: boolean;
   PO: boolean;
+  CONTROLE: boolean;
   ARMURE_DONNEE: boolean;
   ARMURE_RECUE: boolean;
   CRITIQUE: boolean;
@@ -52,6 +53,7 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
         PM: new FormControl(),
         PW: new FormControl(),
         PO: new FormControl(),
+        CONTROLE: new FormControl(),
         ARMURE_DONNEE: new FormControl(),
         ARMURE_RECUE: new FormControl(),
         CRITIQUE: new FormControl(),
@@ -84,6 +86,7 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
     if(value.PM) {result.push({id:IdActionsEnum.PM})}
     if(value.PW) {result.push({id:IdActionsEnum.BOOST_PW})}
     if(value.PO) {result.push({id:IdActionsEnum.PORTEE})}
+    if(value.CONTROLE) {result.push({id:IdActionsEnum.CONTROLE})}
     if(value.ARMURE_DONNEE) {result.push({id:IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_DONNEE})}
     if(value.ARMURE_RECUE) {result.push({id:IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_RECUE})}
     if(value.CRITIQUE) {result.push({id:IdActionsEnum.COUP_CRITIQUE})}
@@ -118,6 +121,7 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
       PM: value.PM ?? false,
       PW: value.PW ?? false,
       PO: value.PO ?? false,
+      CONTROLE: value.CONTROLE ?? false,
       ARMURE_DONNEE: value.ARMURE_DONNEE ?? false,
       ARMURE_RECUE: value.ARMURE_RECUE ?? false,
       CRITIQUE: value.CRITIQUE ?? false,
@@ -155,6 +159,7 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
       PM: major.some(x => x.id === IdActionsEnum.PM),
       PW: major.some(x => x.id === IdActionsEnum.BOOST_PW),
       PO: major.some(x => x.id === IdActionsEnum.PORTEE),
+      CONTROLE: major.some(x => x.id === IdActionsEnum.CONTROLE),
       ARMURE_DONNEE: major.some(x => x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameter === ParameterMajorActionEnum.ARMURE_DONNEE),
       ARMURE_RECUE: major.some(x => x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameter === ParameterMajorActionEnum.ARMURE_RECUE),
       CRITIQUE: major.some(x => x.id === IdActionsEnum.COUP_CRITIQUE),
