@@ -46,6 +46,7 @@ export enum IdActionsEnum {
     PERTE_MAITRISES_DOS = 181,
     PERTE_MAITRISES_SOIN = -1, // N'existe pas dans le jeu, mais est utilisé pour pas qu'on me pose des question sur l'affichage des actions majeures
     CONTROLE = 184,
+    PERTE_CONTROLE = -1, // N'existe pas dans le jeu, mais est utilisé pour pas qu'on me pose des question sur l'affichage des actions majeures
     BOOST_PW = 191,
     DEBOOST_PW = 192,
     PW = 193,
