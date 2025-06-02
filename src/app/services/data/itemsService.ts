@@ -62,7 +62,11 @@ export class ItemsService {
         .pipe(
           tap(([items,nbElements, idMaitrises, sort, multiplicateurElem, denouement, idResistances]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement)),
           map(([items,]) => items),
-          map(items => items.sort((itemA, itemB) => itemB.weightForSort > itemA.weightForSort ? 1 : itemB.weightForSort === itemA.weightForSort ? 0 : -1).slice(0,32)))
+          map(items => items.sort(this.sortItems()).slice(0,32)))
+    }
+
+    private sortItems(): ((a: Item, b: Item) => number) | undefined {
+      return (itemA, itemB) => itemB.weightForSort > itemA.weightForSort ? 1 : itemB.weightForSort === itemA.weightForSort ? itemB.weight - itemA.weight : -1;
     }
 
     private initFilter(): void {
