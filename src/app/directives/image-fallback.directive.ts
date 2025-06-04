@@ -1,4 +1,5 @@
 import { Directive, HostListener } from '@angular/core';
+import { ImageService } from '../services/imageService';
 
 @Directive({
   selector: 'img[appFallback]'
@@ -7,6 +8,6 @@ export class ImageFallbackDirective {
 
   @HostListener('error', ['$event.target'])
   onError(target: HTMLImageElement) {
-    target.src = 'https://vertylo.github.io/wakassets/items/0000000.png'; // Fallback image URL
+    target.src = ImageService.IMAGE_ERROR; // Fallback image URL
   }
 }
