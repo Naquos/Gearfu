@@ -8,18 +8,7 @@ export class ItemConditionService {
     private readonly condition = new Map<number, ItemCondition>(); 
 
     constructor() {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (itemCondition as [any]).forEach(x => this.condition.set(
-            x.id,
-        {
-            id: x.id,
-            description: {
-                fr: x.description?.fr ?? "",
-                en: x.description?.en ?? "",
-                es: x.description?.es ?? "",
-                pt: x.description?.pt ?? ""
-            }
-        }))
+        (itemCondition as [ItemCondition]).forEach(x => this.condition.set(x.id,x))
     }
 
     public findCondition(id: number): ItemCondition  | undefined {

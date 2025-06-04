@@ -9,7 +9,25 @@
         }
     },
     {
+        "id": 27289,
+        "description": {
+            "fr": "13 PA ou plus",
+            "en": "13 AP or more",
+            "es": "13 PA o más",
+            "pt": "13 PA ou mais"
+        }
+    },
+    {
         "id": 27304,
+        "description": {
+            "fr": "11 PA ou moins",
+            "en": "11 AP or less",
+            "es": "11 PA o menos",
+            "pt": "11 PA ou menos"
+        }
+    },
+    {
+        "id": 27303,
         "description": {
             "fr": "11 PA ou moins",
             "en": "11 AP or less",
@@ -27,7 +45,25 @@
         }
     },
     {
+        "id": 26296,
+        "description": {
+            "fr": "13 PA ou plus",
+            "en": "13 AP or more",
+            "es": "13 PA o más",
+            "pt": "13 PA ou mais"
+        }
+    },
+    {
         "id": 27410,
+        "description": {
+            "fr": "11 PA ou moins",
+            "en": "11 AP or less",
+            "es": "11 PA o menos",
+            "pt": "11 PA ou menos"
+        }
+    },
+    {
+        "id": 27409,
         "description": {
             "fr": "11 PA ou moins",
             "en": "11 AP or less",
@@ -42,6 +78,33 @@
             "en": "11 AP or less",
             "es": "11 PA o menos",
             "pt": "11 PA ou menos"
+        }
+    },
+    {
+        "id": 27447,
+        "description": {
+            "fr": "11 PA ou moins",
+            "en": "11 AP or less",
+            "es": "11 PA o menos",
+            "pt": "11 PA ou menos"
+        }
+    },
+    {
+        "id": 26995,
+        "description": {
+            "fr": "8 PW ou plus",
+            "en": "8 WP or more",
+            "es": "8 PW o más",
+            "pt": "8 PW ou mais"
+        }
+    },
+    {
+        "id": 26994,
+        "description": {
+            "fr": "8 PW ou plus",
+            "en": "8 WP or more",
+            "es": "8 PW o más",
+            "pt": "8 PW ou mais"
         }
     },
     {
@@ -72,7 +135,25 @@
         }
     },
     {
+        "id": 26293,
+        "description": {
+            "fr": "4 de contrôle",
+            "en": "4 control",
+            "es": "4 de control",
+            "pt": "4 de controle"
+        }
+    },
+    {
         "id": 26311,
+        "description": {
+            "fr": "Entre 500 et 600 tacles",
+            "en": "Between 500 and 600 tackle",
+            "es": "Entre 500 y 600 placajes",
+            "pt": "Entre 500 e 600 tackles"
+        }
+    },
+    {
+        "id": 26290,
         "description": {
             "fr": "Entre 500 et 600 tacles",
             "en": "Between 500 and 600 tackle",
@@ -90,7 +171,25 @@
         }
     },
     {
+        "id": 26953,
+        "description": {
+            "fr": "Entre 500 et 600 tacles",
+            "en": "Between 500 and 600 tackle",
+            "es": "Entre 500 y 600 placajes",
+            "pt": "Entre 500 e 600 tackles"
+        }
+    },
+    {
         "id": 26318,
+        "description": {
+            "fr": "Entre 500 et 600 tacles",
+            "en": "Between 500 and 600 tackle",
+            "es": "Entre 500 y 600 placajes",
+            "pt": "Entre 500 e 600 tackles"
+        }
+    },
+    {
+        "id": 26299,
         "description": {
             "fr": "Entre 500 et 600 tacles",
             "en": "Between 500 and 600 tackle",
@@ -108,7 +207,25 @@
         }
     },
     {
+        "id": 27297,
+        "description": {
+            "fr": "Entre 500 et 600 tacles",
+            "en": "Between 500 and 600 tackle",
+            "es": "Entre 500 y 600 placajes",
+            "pt": "Entre 500 e 600 tackles"
+        }
+    },
+    {
         "id": 27444,
+        "description": {
+            "fr": "Entre 400 et 500 tacles",
+            "en": "Between 400 and 500 tackle",
+            "es": "Entre 400 y 500 placajes",
+            "pt": "Entre 400 e 500 tackles"
+        }
+    },
+    {
+        "id": 27443,
         "description": {
             "fr": "Entre 400 et 500 tacles",
             "en": "Between 400 and 500 tackle",
@@ -153,7 +270,25 @@
         }
     },
     {
+        "id": 26302,
+        "description": {
+            "fr": "Entre 40% et 50% de critique",
+            "en": "Between 40% and 50% critical",
+            "es": "Entre 40% y 50% de crítico",
+            "pt": "Entre 40% e 50% de crítico"
+        }
+    },
+    {
         "id": 26312,
+        "description": {
+            "fr": "20% parade ou moins",
+            "en": "20% parry or less",
+            "es": "20% de parada o menos",
+            "pt": "20% de bloqueio ou menos"
+        }
+    },
+    {
+        "id": 26291,
         "description": {
             "fr": "20% parade ou moins",
             "en": "20% parry or less",
@@ -171,7 +306,25 @@
         }
     },
     {
+        "id": 27293,
+        "description": {
+            "fr": "Entre 40% et 50% parade",
+            "en": "Between 40% and 50% parry",
+            "es": "Entre 40% y 50% de parada",
+            "pt": "Entre 40% e 50% de bloqueio"
+        }
+    },
+    {
         "id": 27446,
+        "description": {
+            "fr": "Entre 40% et 50% de critique",
+            "en": "Between 40% and 50% critical",
+            "es": "Entre 40% y 50% de crítico",
+            "pt": "Entre 40% e 50% de crítico"
+        }
+    },
+    {
+        "id": 274465,
         "description": {
             "fr": "Entre 40% et 50% de critique",
             "en": "Between 40% and 50% critical",
@@ -198,7 +351,25 @@
         }
     },
     {
+        "id": 26304,
+        "description": {
+            "fr": "Entre 500 et 600 d'esquive",
+            "en": "Between 500 and 600 dodge",
+            "es": "Entre 500 y 600 de esquiva",
+            "pt": "Entre 500 e 600 de esquiva"
+        }
+    },
+    {
         "id": 26998,
+        "description": {
+            "fr": "5 PM ou moins",
+            "en": "5 MP or less",
+            "es": "5 PM o menos",
+            "pt": "5 PM ou menos"
+        }
+    },
+    {
+        "id": 26997,
         "description": {
             "fr": "5 PM ou moins",
             "en": "5 MP or less",
@@ -216,7 +387,25 @@
         }
     },
     {
+        "id": 26289,
+        "description": {
+            "fr": "5 PM ou moins",
+            "en": "5 MP or less",
+            "es": "5 PM o menos",
+            "pt": "5 PM ou menos"
+        }
+    },
+    {
         "id": 27450,
+        "description": {
+            "fr": "5 PM ou moins",
+            "en": "5 MP or less",
+            "es": "5 PM o menos",
+            "pt": "5 PM ou menos"
+        }
+    },
+    {
+        "id": 27449,
         "description": {
             "fr": "5 PM ou moins",
             "en": "5 MP or less",
@@ -270,7 +459,25 @@
         }
     },
     {
+        "id": 26303,
+        "description": {
+            "fr": "25% critique ou moins",
+            "en": "25% critical or less",
+            "es": "25% de crítico o menos",
+            "pt": "25% de crítico ou menos"
+        }
+    },
+    {
         "id": 26313,
+        "description": {
+            "fr": "Entre 400 et 500 maitrises distances",
+            "en": "Between 400 and 500 ranged mastery",
+            "es": "Entre 400 y 500 de dominio a distancia",
+            "pt": "Entre 400 e 500 de maestria à distância"
+        }
+    },
+    {
+        "id": 26292,
         "description": {
             "fr": "Entre 400 et 500 maitrises distances",
             "en": "Between 400 and 500 ranged mastery",
@@ -286,8 +493,27 @@
             "es": "2 de alcance o más",
             "pt": "2 de alcance ou mais"
         }
-    },{
+    },
+    {
+        "id": 27287,
+        "description": {
+            "fr": "2 PO ou plus",
+            "en": "2 Range or more",
+            "es": "2 de alcance o más",
+            "pt": "2 de alcance ou mais"
+        }
+    },
+    {
         "id": 26319,
+        "description": {
+            "fr": "Au moins 8 PW",
+            "en": "At least 8 WP",
+            "es": "Al menos 8 PW",
+            "pt": "Pelo menos 8 PW"
+        }
+    },
+    {
+        "id": 26300,
         "description": {
             "fr": "Au moins 8 PW",
             "en": "At least 8 WP",
@@ -395,7 +621,25 @@
         }
     },
     {
+        "id": 27377,
+        "description": {
+            "fr": "3 PO ou moins",
+            "en": "3 AP or less",
+            "es": "3 PM o menos",
+            "pt": "3 PM ou menos"
+        }
+    },
+    {
         "id": 27300,
+        "description": {
+            "fr": "3 PO ou moins",
+            "en": "3 AP or less",
+            "es": "3 PM o menos",
+            "pt": "3 PM ou menos"
+        }
+    },
+    {
+        "id": 27299,
         "description": {
             "fr": "3 PO ou moins",
             "en": "3 AP or less",
@@ -418,7 +662,16 @@
             "fr": "3 PO ou moins",
             "en": "3 AP or less",
             "es": "3 PM o menos",
-            "pt": "3 PM ou moins"
+            "pt": "3 PM ou menos"
+        }
+    },
+    {
+        "id": 26295,
+        "description": {
+            "fr": "3 PO ou moins",
+            "en": "3 AP or less",
+            "es": "3 PM o menos",
+            "pt": "3 PM ou menos"
         }
     },
     {
