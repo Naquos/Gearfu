@@ -14,10 +14,11 @@ import { DifferentStatsItem } from '../../models/data/differentsStatsItem';
 import { Item } from '../../models/data/item';
 import { ImageService } from '../../services/imageService';
 import { ActionsPipe } from "../../pipe/actions/actions.pipe";
+import { ImageFallbackDirective } from '../../directives/image-fallback.directive';
 
 @Component({
   selector: 'app-item-tooltip',
-  imports: [CommonModule, TranslateModule, ActionsPipe],
+  imports: [CommonModule, TranslateModule, ActionsPipe, ImageFallbackDirective],
   templateUrl: './item-tooltip.component.html',
   styleUrl: './item-tooltip.component.scss'
 })

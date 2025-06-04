@@ -9,10 +9,11 @@ import { TooltipService } from '../../services/TooltipService';
 import { ItemComponent } from '../item/item.component';
 import { Item } from '../../models/data/item';
 import { ImageService } from '../../services/imageService';
+import { ImageFallbackDirective } from '../../directives/image-fallback.directive';
 
 @Component({
   selector: 'app-item-choose-display',
-  imports: [CommonModule],
+  imports: [CommonModule, ImageFallbackDirective],
   templateUrl: './item-choose-display.component.html',
   styleUrl: './item-choose-display.component.scss'
 })

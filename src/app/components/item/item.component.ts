@@ -20,10 +20,11 @@ import { ItemCondition } from '../../models/data/itemCondition';
 import { Item } from '../../models/data/item';
 import { ImageService } from '../../services/imageService';
 import { ActionsPipe } from "../../pipe/actions/actions.pipe";
+import { ImageFallbackDirective } from '../../directives/image-fallback.directive';
 
 @Component({
   selector: 'app-item',
-  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe],
+  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective],
   templateUrl: './item.component.html',
   styleUrl: './item.component.scss'
 })
