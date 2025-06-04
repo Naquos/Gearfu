@@ -9,7 +9,7 @@ import { TooltipService } from '../../services/TooltipService';
 import { ItemComponent } from '../item/item.component';
 import { Item } from '../../models/data/item';
 import { ImageService } from '../../services/imageService';
-import { ImageFallbackDirective } from '../../directives/image-fallback.directive';
+import { ImageFallbackDirective } from '../../directives/imageFallback.directive';
 
 @Component({
   selector: 'app-item-choose-display',

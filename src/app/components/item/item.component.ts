@@ -20,7 +20,7 @@ import { ItemCondition } from '../../models/data/itemCondition';
 import { Item } from '../../models/data/item';
 import { ImageService } from '../../services/imageService';
 import { ActionsPipe } from "../../pipe/actions/actions.pipe";
-import { ImageFallbackDirective } from '../../directives/image-fallback.directive';
+import { ImageFallbackDirective } from '../../directives/imageFallback.directive';
 
 @Component({
   selector: 'app-item',
