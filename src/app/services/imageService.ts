@@ -9,9 +9,9 @@ export class ImageService {
     public static readonly BASE_URL = "https://vertylo.github.io/wakassets/"; // Base URL for images
     public static readonly BASE_URL_CHARACTERISTICS = ImageService.BASE_URL + "characteristics/";
     public static readonly BASE_URL_RARITIES = ImageService.BASE_URL + "rarities/"; 
-    public static readonly BASE_URL_IMAGE = ImageService.BASE_URL + "items/";
+    public static readonly BASE_URL_ITEMS = ImageService.BASE_URL + "items/";
     public static readonly BASE_URL_ITEM_TYPE = ImageService.BASE_URL + "itemTypes/";
-    public static readonly IMAGE_ERROR = ImageService.BASE_URL_IMAGE + "0000000.png";
+    public static readonly IMAGE_ERROR = ImageService.BASE_URL_ITEMS + "0000000.png";
 
 
     private readonly mapUrlCharacteristics = new Map<IdActionsEnum,string>([
@@ -123,6 +123,6 @@ export class ImageService {
     }
 
     public getItemUrl(idItem: number): string {
-        return ImageService.BASE_URL_IMAGE + idItem + ".png";
+        return ImageService.BASE_URL_ITEMS + idItem + ".png";
     }
 }
