@@ -1,0 +1,7 @@
+<h3>{{ "only-no-elem.label" | translate }}</h3>
+<section>
+    <mat-button-toggle-group>
+        <mat-button-toggle (change)="onlyNoElemFormService.setValue(true)" [checked]="onlyNoElemFormService.form.value">{{ "only-no-elem.oui" | translate }}</mat-button-toggle>
+        <mat-button-toggle (change)="onlyNoElemFormService.setValue(false)" [checked]="!onlyNoElemFormService.form.value">{{ "only-no-elem.non" | translate }}</mat-button-toggle>
+    </mat-button-toggle-group>
+</section>

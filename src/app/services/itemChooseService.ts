@@ -12,6 +12,8 @@ import { ResistancesFormService } from "./form/resistancesFormService";
 import { MaitrisesFormService } from "./form/maitrisesFormService";
 import { Item } from "../models/data/item";
 import { AbstractDestroyService } from "./abstract/abstractDestroyService";
+import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
+import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService extends AbstractDestroyService {
@@ -55,6 +57,8 @@ export class ItemChooseService extends AbstractDestroyService {
         private readonly modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
         private readonly resistancesFormService: ResistancesFormService,
         private readonly maitrisesFormService: MaitrisesFormService,
+        private readonly onlyNoElemFormService: OnlyNoElemFormService,
+        private readonly onlyNoSecondaryFormService: OnlyNoSecondaryFormService
     ) {
         super();
         setTimeout(() => {
@@ -72,10 +76,13 @@ export class ItemChooseService extends AbstractDestroyService {
             this.maitrisesFormService.idMaitrises$,
             this.modifierElemMaitrisesFormService.multiplicateurElem$,
             this.modifierElemMaitrisesFormService.denouement$,
-            this.resistancesFormService.idResistances$
+            this.resistancesFormService.idResistances$,
+            this.onlyNoElemFormService.onlyNoElem$,
+            this.onlyNoSecondaryFormService.onlyNoSecondary$
+
         ]).pipe(
             takeUntil(this.destroy$),
-            tap(([list, nbElements, idMaitrises, multiplicateurElem, denouement, idResistances]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances, denouement))
+            tap(([list, nbElements, idMaitrises, multiplicateurElem, denouement, idResistances, noElem, noSecondary]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances, denouement, noElem, noSecondary))
         ).subscribe();
     }
 
@@ -125,13 +132,13 @@ export class ItemChooseService extends AbstractDestroyService {
         ).subscribe();
     }
 
-    private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[], denouement: boolean): void {
+    private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean): void {
         let weight = 0;
         let resistance = 0;
         let maitrise = 0;
         list.forEach(x => {
             const tempResis  = this.itemService.calculResistancesForAnItem(x, idResistances);
-            const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem, denouement);
+            const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary);
             resistance+= tempResis;
             maitrise+= tempMaitrise;
             weight+= this.itemService.calculWeight(tempResis, tempMaitrise)

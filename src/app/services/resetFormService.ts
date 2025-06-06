@@ -9,6 +9,7 @@ import { MajorPresentFormService } from "./form/majorPresentFormService";
 import { ResistancesFormService } from "./form/resistancesFormService";
 import { ModifierElemMaitrisesFormService } from "./form/modifierElemMaitrisesFormService";
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
+import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
 
 @Injectable({providedIn: 'root'})
 export class ResetFormService {
@@ -18,6 +19,7 @@ export class ResetFormService {
     private readonly maitrisesFormService: MaitrisesFormService,
     private readonly majorPresentFormService: MajorPresentFormService,
     private readonly modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
+    private readonly onlyNoElemFormService: OnlyNoElemFormService,
     private readonly onlyNoSecondaryFormService: OnlyNoSecondaryFormService,
     private readonly rareteItemFormServices: RareteItemFormServices,
     private readonly resistancesFormService: ResistancesFormService,
@@ -31,6 +33,7 @@ export class ResetFormService {
         this.maitrisesFormService.setDefaultValue();
         this.majorPresentFormService.setDefaultValue();
         this.modifierElemMaitrisesFormService.setDefaultValue();
+        this.onlyNoElemFormService.setDefaultValue();
         this.onlyNoSecondaryFormService.setDefaultValue();
         this.rareteItemFormServices.setDefaultValue();
         this.resistancesFormService.setDefaultValue();

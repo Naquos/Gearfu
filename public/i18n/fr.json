@@ -116,6 +116,11 @@
         "label":"Sauvegarder votre build",
         "placeholder":"Nom de votre build"
     },
+    "only-no-elem": {
+        "label":"Prendre en compte exclusivement les items avec aucune maitrise élémentaire",
+        "oui": "Oui",
+        "non": "Non"
+    },
     "only-no-secondary": {
         "label":"Prendre en compte exclusivement les items avec aucune maitrises secondaires",
         "oui": "Oui",

@@ -18,6 +18,7 @@ import { MaitrisesFormService } from "../form/maitrisesFormService";
 import { Item } from "../../models/data/item";
 import { MajorAction } from "../../models/data/majorActions";
 import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
+import { OnlyNoElemFormService } from "../form/onlyNoElemFormService";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -44,6 +45,7 @@ export class ItemsService {
                 private readonly resistanceFormService: ResistancesFormService,
                 private readonly maitrisesFormService: MaitrisesFormService,
                 private readonly ankamaCdnFacade: AnkamaCdnFacade,
+                private readonly onlyNoElemFormService: OnlyNoElemFormService
     ) {}
 
     public init(): void {
@@ -57,10 +59,13 @@ export class ItemsService {
           this.sortChoiceFormService.sort$,
           this.modifierElemMaitrisesFormService.multiplicateurElem$,
           this.modifierElemMaitrisesFormService.denouement$,
-          this.resistanceFormService.idResistances$
+          this.resistanceFormService.idResistances$,
+          this.onlyNoElemFormService.onlyNoElem$,
+          this.onlyNoSecondaryFormService.onlyNoSecondary$
         ])
         .pipe(
-          tap(([items,nbElements, idMaitrises, sort, multiplicateurElem, denouement, idResistances]) => this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement)),
+          tap(([items,nbElements, idMaitrises, sort, multiplicateurElem, denouement, idResistances, onlyNoElem, onlyNoSecondary]) => 
+            this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement, onlyNoElem, onlyNoSecondary)),
           map(([items,]) => items),
           map(items => items.sort(this.sortItems()).slice(0,32)))
     }
@@ -84,8 +89,14 @@ export class ItemsService {
   
       const itemsFilterByRarity$ = combineLatest([itemsFilterByLevelMax$, this.rareteItemFormService.rarity$])
       .pipe(map(([items, rarity]) => items.filter(x => rarity.length === 0 || rarity.includes(x.rarity))));
+
+      const itemsFilterByOnlyNoElem$ = combineLatest([itemsFilterByRarity$, this.onlyNoElemFormService.onlyNoElem$])
+      .pipe(map(([items, onlyNoElem]) =>
+        items.filter(x => !onlyNoElem || !x.equipEffects.find(y => [IdActionsEnum.MAITRISES_FEU, IdActionsEnum.MAITRISES_EAU, IdActionsEnum.MAITRISES_TERRE, IdActionsEnum.MAITRISES_AIR,
+           IdActionsEnum.MAITRISES_ELEMENTAIRES, IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE].includes(y.actionId)))
+      ));
   
-      const itemsFilterByOnlyNoSecondary$ = combineLatest([itemsFilterByRarity$, this.onlyNoSecondaryFormService.onlyNoSecondary$, this.modifierElemMaitrisesFormService.denouement$])
+      const itemsFilterByOnlyNoSecondary$ = combineLatest([itemsFilterByOnlyNoElem$, this.onlyNoSecondaryFormService.onlyNoSecondary$, this.modifierElemMaitrisesFormService.denouement$])
       .pipe(map(([items, onlyNoSecondary, denouement]) => 
         items.filter(x => !onlyNoSecondary || (
           !x.equipEffects.find(y => [IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK].includes(y.actionId))
@@ -103,13 +114,13 @@ export class ItemsService {
       return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
 
-    private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number, idResistances: number[], denouement: boolean): void {
+    private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean): void {
       let maxMaistrises = 0;
       let maxResistances = 0;
 
       items.forEach(item => {
         item.resistance = Math.trunc(this.calculResistancesForAnItem(item, idResistances));
-        item.maitrise = Math.trunc(this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem, denouement));
+        item.maitrise = Math.trunc(this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary));
         item.weight = this.calculWeight(item.resistance, item.maitrise);
         item.weightForSort = 0;
       })
@@ -234,32 +245,33 @@ export class ItemsService {
       }
 
       
-  public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[], multiplicateurElem: number, denouement: boolean): number {
+  public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[], multiplicateurElem: number, denouement: boolean, noElem: boolean, noSecondary: boolean): number {
     let result = 0;
     const maitrisesIdElems = [IdActionsEnum.MAITRISES_FEU,IdActionsEnum.MAITRISES_TERRE,IdActionsEnum.MAITRISES_EAU,IdActionsEnum.MAITRISES_AIR];
     const perteMaitrisesId = [IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,IdActionsEnum.PERTE_MAITRISES_FEU];
     const idMaitrisesWithoutElem = [...idMaitrises].filter(x => !maitrisesIdElems.includes(x));
 
     item.equipEffects.forEach(effect => {
-      if(effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES ||
+      if(!noElem && (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES ||
         (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements) ||
-        (effect.actionId === IdActionsEnum.MAITRISES_CRITIQUES && denouement)) {
+        (effect.actionId === IdActionsEnum.MAITRISES_CRITIQUES && denouement))) {
           result += effect.params[0] * multiplicateurElem;
-      } else if (idMaitrisesWithoutElem.includes(effect.actionId)) {
+      } else if (!noSecondary && idMaitrisesWithoutElem.includes(effect.actionId)) {
         result += effect.params[0];
-      }
-       else if (perteMaitrisesId.includes(effect.actionId) ||
-                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_CRITIQUE && idMaitrises.includes(IdActionsEnum.MAITRISES_CRITIQUES)) ||
-                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DOS && idMaitrises.includes(IdActionsEnum.MAITRISES_DOS)) ||
-                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_MELEE && idMaitrises.includes(IdActionsEnum.MAITRISES_MELEE)) ||
-                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DISTANCE && idMaitrises.includes(IdActionsEnum.MAITRISES_DISTANCES)) ||
-                (effect.actionId === IdActionsEnum.PERTE_MAITRISES_BERZERK && idMaitrises.includes(IdActionsEnum.MAITRISES_BERZERK))) {
+      } else if (!noElem && perteMaitrisesId.includes(effect.actionId) ||
+                !noSecondary && (
+                  (effect.actionId === IdActionsEnum.PERTE_MAITRISES_CRITIQUE && idMaitrises.includes(IdActionsEnum.MAITRISES_CRITIQUES)) ||
+                  (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DOS && idMaitrises.includes(IdActionsEnum.MAITRISES_DOS)) ||
+                  (effect.actionId === IdActionsEnum.PERTE_MAITRISES_MELEE && idMaitrises.includes(IdActionsEnum.MAITRISES_MELEE)) ||
+                  (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DISTANCE && idMaitrises.includes(IdActionsEnum.MAITRISES_DISTANCES)) ||
+                  (effect.actionId === IdActionsEnum.PERTE_MAITRISES_BERZERK && idMaitrises.includes(IdActionsEnum.MAITRISES_BERZERK))
+                )) {
         result -= effect.params[0];
       }
     })
 
     const effectMaitrises = item.equipEffects.find(x => maitrisesIdElems.includes(x.actionId) && (nbElements === 0 || (nbElements === 1 && idMaitrises.includes(x.actionId)))); 
-    if(effectMaitrises) {
+    if(!noElem && effectMaitrises) {
       result += effectMaitrises.params[0] * multiplicateurElem;
     }
     return result;

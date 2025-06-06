@@ -116,6 +116,11 @@
         "label": "Save your build",
         "placeholder": "Name your build"
     },
+    "only-no-elem": {
+        "label":"Consider only items without elemental mastery",
+        "oui": "Yes",
+        "non": "No"
+    },
     "only-no-secondary": {
         "label": "Consider only items without secondary mastery",
         "oui": "Yes",

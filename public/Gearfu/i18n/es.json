@@ -116,6 +116,11 @@
         "label": "Guardar tu build",
         "placeholder": "Nombre de tu build"
     },
+    "only-no-elem": {
+        "label":"Considerar solo objetos sin dominio elemental",
+        "oui": "Sí",
+        "non": "No"
+    },
     "only-no-secondary": {
         "label": "Considerar solo objetos sin dominio secundario",
         "oui": "Sí",
