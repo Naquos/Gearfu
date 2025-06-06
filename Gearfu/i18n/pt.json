@@ -116,6 +116,11 @@
         "label": "Salvar seu build",
         "placeholder": "Nome do seu build"
     },
+    "only-no-elem": {
+        "label": "Considerar apenas itens sem maestria elemental",
+        "oui": "Sim",
+        "non": "Não"
+    },
     "only-no-secondary": {
         "label": "Considerar apenas itens sem maestria secundária",
         "oui": "Sim",
