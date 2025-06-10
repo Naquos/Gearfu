@@ -12,20 +12,24 @@ import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
   private readonly initialEffectList: RecapStats[] = [
-    { id: IdActionsEnum.POINT_DE_VIE, value: 0 },
-    { id: IdActionsEnum.PA, value: 0 },
-    { id: IdActionsEnum.PM, value: 0 },
-    { id: IdActionsEnum.BOOST_PW, value: 0 },
-    { id: IdActionsEnum.COUP_CRITIQUE, value: 0 },
-    { id: IdActionsEnum.PARADE, value: 0 },
-    { id: IdActionsEnum.PORTEE, value: 0 },
-    { id: IdActionsEnum.ESQUIVE, value: 0 },
-    { id: IdActionsEnum.TACLE, value: 0 },
-    { id: IdActionsEnum.VOLONTE, value: 0 },
-    { id: IdActionsEnum.RESISTANCES_DOS, value: 0 },
-    { id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 0 },
-    { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, value: 0 },
-    { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, value: 0 },
+    { id: IdActionsEnum.POINT_DE_VIE, value: 0, params: [] },
+    { id: IdActionsEnum.PA, value: 0, params: [] },
+    { id: IdActionsEnum.PM, value: 0, params: [] },
+    { id: IdActionsEnum.BOOST_PW, value: 0, params: [] },
+    { id: IdActionsEnum.RESISTANCES_FEU, value: 0, params: [] },
+    { id: IdActionsEnum.RESISTANCES_EAU, value: 0, params: [] },
+    { id: IdActionsEnum.RESISTANCES_TERRE, value: 0, params: [] },
+    { id: IdActionsEnum.RESISTANCES_AIR, value: 0, params: [] },
+    { id: IdActionsEnum.COUP_CRITIQUE, value: 0, params: [] },
+    { id: IdActionsEnum.PARADE, value: 0, params: [] },
+    { id: IdActionsEnum.PORTEE, value: 0, params: [] },
+    { id: IdActionsEnum.ESQUIVE, value: 0, params: [] },
+    { id: IdActionsEnum.TACLE, value: 0, params: [] },
+    { id: IdActionsEnum.VOLONTE, value: 0, params: [] },
+    { id: IdActionsEnum.RESISTANCES_DOS, value: 0, params: [] },
+    { id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 0, params: [] },
+    { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, value: 0, params: [] },
+    { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, value: 0, params: [] },
   ];
 
   private readonly recap = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);
@@ -66,11 +70,36 @@ export class RecapStatsService extends AbstractDestroyService {
         : (effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE
           ? ParameterMajorActionEnum.ARMURE_DONNEE
           : ParameterMajorActionEnum.ARMURE_RECUE),
-      value: effect.params[0]
+      value: effect.params[0],
+      params: effect.params
     }));
   }
 
+  private applyEffectResistance(effect: RecapStats): void {
+    if(effect.id === IdActionsEnum.RESISTANCES_ELEMENTAIRE) {
+      this.applyEffect({id: IdActionsEnum.RESISTANCES_FEU, value: effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.RESISTANCES_EAU, value: effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.RESISTANCES_TERRE, value: effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.RESISTANCES_AIR, value: effect.value, params: effect.params});
+
+    } else if(effect.id === IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE || effect.id === IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE_SANS_CAP) {
+      this.applyEffect({id: IdActionsEnum.RESISTANCES_FEU, value: -effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.RESISTANCES_EAU, value: -effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.RESISTANCES_TERRE, value: -effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.RESISTANCES_AIR, value: -effect.value, params: effect.params});
+      
+    } else if(effect.id === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE) {
+      const nbElements = effect.params[2];
+      if (nbElements >= 1) {this.applyEffect({id: IdActionsEnum.RESISTANCES_FEU, value: effect.value, params: effect.params})}
+      if (nbElements >= 2) {this.applyEffect({id: IdActionsEnum.RESISTANCES_EAU, value: effect.value, params: effect.params})}
+      if (nbElements >= 3) {this.applyEffect({id: IdActionsEnum.RESISTANCES_TERRE, value: effect.value, params: effect.params})}
+      if (nbElements >= 4) {this.applyEffect({id: IdActionsEnum.RESISTANCES_AIR, value: effect.value, params: effect.params})}
+    }
+  }
+
   private applyEffect(effect: RecapStats): void {
+    this.applyEffectResistance(effect);
+
     const isMalus = this.actionService.isAMalus(effect.id);
     const adjustedActionId = isMalus
       ? this.actionService.getOpposedEffect(effect.id)

@@ -5,4 +5,5 @@ export interface RecapStats {
     id: IdActionsEnum;
     parameterMajorAction?: ParameterMajorActionEnum;
     value: number;
+    params: number[];
 }

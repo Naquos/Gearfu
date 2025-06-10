@@ -3,8 +3,6 @@ import { IdActionsEnum } from '../../models/enum/idActionsEnum';
 import { CommonModule } from '@angular/common';
 import { RecapStats } from '../../models/data/recap-stats';
 import { ParameterMajorActionEnum } from '../../models/enum/parameterMajorActionEnum';
-import { ActionService } from '../../services/data/actionService';
-import { TranslateService } from '@ngx-translate/core';
 import { RecapStatsService } from '../../services/RecapStatsService';
 import { ImageService } from '../../services/imageService';
 
@@ -16,8 +14,14 @@ import { ImageService } from '../../services/imageService';
 })
 export class RecapStatsComponent {
 
-  constructor(private readonly actionService: ActionService,
-    private readonly translateService: TranslateService,
+  private static readonly RESISTANCES_LIST = [
+    IdActionsEnum.RESISTANCES_FEU,
+    IdActionsEnum.RESISTANCES_EAU,
+    IdActionsEnum.RESISTANCES_TERRE,
+    IdActionsEnum.RESISTANCES_AIR
+  ];
+
+  constructor(
     protected readonly recapStatsService: RecapStatsService,
     protected readonly imageService: ImageService
     ) {
@@ -26,20 +30,13 @@ export class RecapStatsComponent {
   protected displayEffect(effect: RecapStats): string {
     const symbol = effect.value < 0? "-" : ""
     const value = Math.abs(effect.value);
-    
-    if(effect.id === IdActionsEnum.ARMURE_DONNEE_RECUE || effect.id === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) {
-      const type = effect.parameterMajorAction === ParameterMajorActionEnum.ARMURE_DONNEE ? 
-      this.translateService.instant("abstract.donnee") : this.translateService.instant("abstract.recue")
-      return symbol + value + this.translateService.instant("abstract.armure") + type;
+
+    if(RecapStatsComponent.RESISTANCES_LIST.includes(effect.id)) {
+      const percentage = Math.floor((1 - Math.pow(0.8, value / 100)) * 100);
+      return `${symbol}${value} (${percentage}%)`;
     }
 
-    let descriptionEffect = `${this.actionService.getEffectById(effect.id)}`;
-    descriptionEffect = descriptionEffect.replace("[#1]", symbol + value);
-
-    const regex = /\[.*\]/;
-    const match = descriptionEffect.match(regex);
-
-    return match ? descriptionEffect.replace(match[0], "") : descriptionEffect;
+    return symbol + value;
   }
 
   protected getEffectPng(effect : RecapStats): string {
