@@ -33,7 +33,7 @@ export class RecapStatsComponent {
 
     if(RecapStatsComponent.RESISTANCES_LIST.includes(effect.id)) {
       const percentage = Math.floor((1 - Math.pow(0.8, value / 100)) * 100);
-      return `${symbol}${value} (${percentage}%)`;
+      return `${symbol}${percentage}% (${value})`;
     }
 
     return symbol + value;
