@@ -27,4 +27,10 @@ export interface ItemCdn {
         es: string;
         pt: string;
     };
+    description: {
+        fr: string;
+        en: string;
+        es: string;
+        pt: string;
+    };
 }

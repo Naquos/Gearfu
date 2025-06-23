@@ -6,6 +6,12 @@ export interface Item {
     rarity: number;
     itemTypeId: number;
     equipEffects: EquipEffects[];
+    description: {
+        fr: string;
+        en: string;
+        es: string;
+        pt: string;
+    }
     title: {
         fr: string;
         en: string;

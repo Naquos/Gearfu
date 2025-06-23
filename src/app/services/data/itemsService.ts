@@ -74,13 +74,13 @@ export class ItemsService {
       return (itemA, itemB) => itemB.weightForSort > itemA.weightForSort ? 1 : itemB.weightForSort === itemA.weightForSort ? itemB.weight - itemA.weight : -1;
     }
 
-    private isCorrect(item: Item): boolean {
-      return item.title.fr !== "" && item.equipEffects.length > 0;
+    private isNotWIP(item: Item): boolean {
+      return !!item.title && item.equipEffects.length > 0 && !!item.description;
     }
 
     private initFilter(): void {
       this.items = this.items.filter(x => ![480,811,812].includes(x.itemTypeId))
-        .filter(x => this.isCorrect(x));
+        .filter(x => this.isNotWIP(x));
       this.fullItems$.next(this.items);
 
       this.itemsFilterByItemName$ = combineLatest([this.fullItems$, this.searchItemNameFormService.itemName$])
@@ -195,12 +195,8 @@ export class ItemsService {
                     params: equipEffect.effect.definition.params
                 };
             }),
-            title: {
-              fr: x.title?.fr ?? "",
-              en: x.title?.en ?? "",
-              es: x.title?.es ?? "",
-              pt: x.title?.pt ?? ""
-            },
+            title: x.title,
+            description: x.description,
             idImage: x.definition.item.graphicParameters.gfxId,
             weightForSort: 0,
             weight: 0,
