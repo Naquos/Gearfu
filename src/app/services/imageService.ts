@@ -88,7 +88,7 @@ export class ImageService {
         [IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE,ImageService.BASE_URL_CHARACTERISTICS + "RES_IN_PERCENT.png"],
         [IdActionsEnum.DOMMAGE_LUMIERE,ImageService.BASE_URL_CHARACTERISTICS + "DMG_LIGHT_PERCENT.png"],
         [IdActionsEnum.SOIN_LUMIERE,ImageService.BASE_URL_CHARACTERISTICS + "DMG_LIGHT_PERCENT.png"],
-        [IdActionsEnum.QUANTITE_ITEM_RECOLTEE,ImageService.BASE_URL_CHARACTERISTICS + ""],
+        [IdActionsEnum.QUANTITE_ITEM_RECOLTEE,ImageService.BASE_URL_CHARACTERISTICS + "LEADERSHIP.png"],
       ]);
 
     public readonly mapRarityUrl = new Map<RarityItemEnum,string>([

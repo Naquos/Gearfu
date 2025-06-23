@@ -35,6 +35,7 @@ export class ActionsPipe implements PipeTransform {
     let result = `${definition}`;
     result = this.replaceValues(result, effect);
     result = this.cleanHeaderDefinition(result);
+    result = this.cleanRecoltEffect(result);
     result = this.singularOrPlurial(result, effect);
     result = this.atLeastSixParameters(result, effect);
     result = this.armorGivenOrReceived(result, effect);
@@ -83,13 +84,21 @@ export class ActionsPipe implements PipeTransform {
     return definition;
   }
 
-  private cleanHeaderDefinition(definition: string) {
-    const regex = /(\[#.*\]) /g;
+  private  cleanDefinition(definition: string, regex: RegExp): string {
     const match = definition.match(regex);
     if (match) {
       definition = definition.replace(match[0], '');
     }
     return definition;
+  }
+
+  
+  private cleanRecoltEffect(definition: string): string {
+    return this.cleanDefinition(definition, /{\[~2]?.+}/g);
+  }
+
+  private cleanHeaderDefinition(definition: string) {
+    return this.cleanDefinition(definition, /(\[#.*\]) /g);
   }
 
   private replaceValues(definition: string, effect: EquipEffects | DifferentStatsItem) {
