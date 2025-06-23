@@ -10,6 +10,7 @@ import { ResistancesFormService } from "./form/resistancesFormService";
 import { ModifierElemMaitrisesFormService } from "./form/modifierElemMaitrisesFormService";
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
+import { ReverseFormService } from "./form/reverseFormService";
 
 @Injectable({providedIn: 'root'})
 export class ResetFormService {
@@ -25,6 +26,7 @@ export class ResetFormService {
     private readonly resistancesFormService: ResistancesFormService,
     private readonly searchItemNameFormService: SearchItemNameFormService,
     private readonly sortChoiceFormService: SortChoiceFormService,
+    private readonly reverseFormService: ReverseFormService
   ) {}
 
     public resetAllForms(): void {
@@ -39,5 +41,6 @@ export class ResetFormService {
         this.resistancesFormService.setDefaultValue();
         this.searchItemNameFormService.setDefaultValue();
         this.sortChoiceFormService.setDefaultValue();
+        this.reverseFormService.setDefaultValue();
     }
 }
