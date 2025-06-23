@@ -27,6 +27,7 @@ import { RecapStatsComponent } from "../recap-stats/recap-stats.component";
 import { ItemsService } from '../../services/data/itemsService';
 import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
 import { OnlyNoElemComponent } from '../form/only-no-elem/only-no-elem.component';
+import { ReverseButtonComponent } from '../form/reverse-button/reverse-button.component';
 
 
 @Component({
@@ -54,7 +55,8 @@ import { OnlyNoElemComponent } from '../form/only-no-elem/only-no-elem.component
     BuildsListComponent,
     ImportBuildComponent,
     NameBuildComponent,
-    RecapStatsComponent
+    RecapStatsComponent,
+    ReverseButtonComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

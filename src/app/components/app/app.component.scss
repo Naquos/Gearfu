@@ -104,9 +104,13 @@ header {
         justify-content: space-between;
         align-items: center;
   
-        button {
+        button, app-reverse-button {
           width: 41px;
           border-radius: 25%;
+        }
+
+        app-reverse-button {
+          margin-left: auto;
         }
       }
     }

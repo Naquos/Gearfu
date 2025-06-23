@@ -19,6 +19,7 @@ import { Item } from "../../models/data/item";
 import { MajorAction } from "../../models/data/majorActions";
 import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
 import { OnlyNoElemFormService } from "../form/onlyNoElemFormService";
+import { ReverseFormService } from "../form/reverseFormService";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -45,14 +46,15 @@ export class ItemsService {
                 private readonly resistanceFormService: ResistancesFormService,
                 private readonly maitrisesFormService: MaitrisesFormService,
                 private readonly ankamaCdnFacade: AnkamaCdnFacade,
-                private readonly onlyNoElemFormService: OnlyNoElemFormService
+                private readonly onlyNoElemFormService: OnlyNoElemFormService,
+                private readonly reverseFormService: ReverseFormService
     ) {}
 
     public init(): void {
         this.initItemsList();
         this.initFilter();
 
-        this.items$ = combineLatest([
+        const itemsFilters$ = combineLatest([
           this.itemsFilters$,
           this.maitrisesFormService.nbElements$,
           this.maitrisesFormService.idMaitrises$,
@@ -66,8 +68,15 @@ export class ItemsService {
         .pipe(
           tap(([items,nbElements, idMaitrises, sort, multiplicateurElem, denouement, idResistances, onlyNoElem, onlyNoSecondary]) => 
             this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement, onlyNoElem, onlyNoSecondary)),
-          map(([items,]) => items),
-          map(items => items.sort(this.sortItems()).slice(0,32)))
+          map(([items,]) => items));
+
+          this.items$ = combineLatest([itemsFilters$, this.reverseFormService.reverse$])
+          .pipe(
+            map(([items, reverse]) => {
+              const sortedItems = items.sort(this.sortItems());
+              return reverse  ? sortedItems.reverse() : sortedItems;
+            }),
+            map(items => items.slice(0,32)));
     }
 
     private sortItems(): ((a: Item, b: Item) => number) | undefined {
@@ -75,7 +84,7 @@ export class ItemsService {
     }
 
     private isNotWIP(item: Item): boolean {
-      return !!item.title && item.equipEffects.length > 0 && !!item.description;
+      return !!item.title && !!item.description;
     }
 
     private initFilter(): void {

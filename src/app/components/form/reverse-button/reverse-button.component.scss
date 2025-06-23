@@ -1,21 +1,17 @@
 button {
-    margin: 5px;
     border: 2px solid #415A77;
-    border-radius: 25%;
     box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
     cursor: pointer;
-    width: 41px;
-    height: 34px;
     background-color: white;
+    color: #213A57;
+    font-weight: 600;
+    font-size: 17px;
+    height: 34px;
+    width: 41px;
+    border-radius: 25%;
 }
-
-.crossed-out {
-    background-color: red;
-}
-
 
 button:active {
-    background-color: #415A77;
     transform: translateY(2px);
     box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
 }
