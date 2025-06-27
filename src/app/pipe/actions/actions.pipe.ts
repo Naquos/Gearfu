@@ -43,11 +43,7 @@ export class ActionsPipe implements PipeTransform {
   }
 
   private armorGivenOrReceived(definition: string, effect: EquipEffects | DifferentStatsItem): string {
-    const regex = /{\[~2\]\?%:}/
-    const match = definition.match(regex);
-    if (!match ||
-      (effect.actionId !== IdActionsEnum.ARMURE_DONNEE_RECUE && effect.actionId !== IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE)
-    ) { return definition;}
+    if (effect.actionId !== IdActionsEnum.ARMURE_DONNEE_RECUE && effect.actionId !== IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE) { return definition; }
 
     const type = effect.params[4] === 120 ? this.translateService.instant("abstract.donnee") : this.translateService.instant("abstract.recue")
     const value = Math.abs(effect.params[0]);

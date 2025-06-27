@@ -10,4 +10,5 @@ export enum SortChoiceEnum {
     TACLE_ESQUIVE = "TACLE_ESQUIVE",
     CRITIQUE = "CRITIQUE",
     PARADE  = "PARADE",
+    CRITIQUE_PARADE = "CRITIQUE_PARADE",
 }

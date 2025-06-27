@@ -6,7 +6,7 @@ import { RareteItemComponent } from "../form/rarete-item/rarete-item.component";
 import { FilterMaitrisesComponent } from "../form/filter-maitrises/filter-maitrises.component";
 import { SortChoiceComponent } from "../form/sort-choice/sort-choice.component";
 import { OnlyNoSecondaryComponent } from "../form/only-no-secondary/only-no-secondary.component";
-import { ModifierElemMaitrisesComponent } from "../form/modifier-elem-maitrises/modifier-elem-maitrises.component";
+import { ModifierMecanismComponent } from "../form/modifier-mecanism/modifier-mecanism.component";
 import { SearchItemNameComponent } from "../form/search-item-name/search-item-name.component";
 import { ItemChooseComponent } from "../item-choose/item-choose.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -46,7 +46,7 @@ import { ReverseButtonComponent } from '../form/reverse-button/reverse-button.co
     OnlyNoElemComponent,
     OnlyNoSecondaryComponent,
     MajorPresentComponent,
-    ModifierElemMaitrisesComponent,
+    ModifierMecanismComponent,
     SearchItemNameComponent,
     ItemChooseComponent,
     TranslateModule,

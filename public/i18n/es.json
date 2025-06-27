@@ -109,7 +109,7 @@
         "PERTE_MAITRISES_BERZERK": "Pérdida de maestría berserker"
     },
     "modifier-elem-maitrises": {
-        "label": "Activación de mecánicas que aumentan el dominio elemental",
+        "label": "Activación de mecánicas",
         "mecaniques": "Mecánicas"
     },
     "name-build": {
@@ -141,7 +141,8 @@
     },
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Corazón Huppermago",
-        "DENOUEMENT": "Denouement"
+        "DENOUEMENT": "Denouement",
+        "DEMESURE": "Démesure"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",
@@ -154,6 +155,7 @@
         "ESQUIVE": "Esquiva",
         "TACLE_ESQUIVE": "Bloqueo + Esquiva",
         "CRITIQUE": "% Crítico",
-        "PARADE": "% Anticipación"
+        "PARADE": "% Anticipación",
+        "CRITIQUE_PARADE": "% Crítico + Anticipación"
     }
 }

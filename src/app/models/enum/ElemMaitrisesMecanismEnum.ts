@@ -1,4 +1,5 @@
-export enum ElemMaitrisesMecanismEnum {
+export enum Mecanism {
     COEUR_HUPPERMAGE = "COEUR_HUPPERMAGE",
     DENOUEMENT = "DENOUEMENT",
+    DEMESURE = "DEMESURE",
 }

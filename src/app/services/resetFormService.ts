@@ -7,7 +7,7 @@ import { SearchItemNameFormService } from "./form/searchItemNameFormService";
 import { SortChoiceFormService } from "./form/sortChoiceFormService";
 import { MajorPresentFormService } from "./form/majorPresentFormService";
 import { ResistancesFormService } from "./form/resistancesFormService";
-import { ModifierElemMaitrisesFormService } from "./form/modifierElemMaitrisesFormService";
+import { ModifierMecanismFormService } from "./form/modifierElemMaitrisesFormService";
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
 import { ReverseFormService } from "./form/reverseFormService";
@@ -19,7 +19,7 @@ export class ResetFormService {
     private readonly itemTypeFormServices: ItemTypeFormServices,
     private readonly maitrisesFormService: MaitrisesFormService,
     private readonly majorPresentFormService: MajorPresentFormService,
-    private readonly modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
+    private readonly modifierElemMaitrisesFormService: ModifierMecanismFormService,
     private readonly onlyNoElemFormService: OnlyNoElemFormService,
     private readonly onlyNoSecondaryFormService: OnlyNoSecondaryFormService,
     private readonly rareteItemFormServices: RareteItemFormServices,

@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ItemsService } from "./data/itemsService";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { LocalStorageService } from "./data/localStorageService";
-import { ModifierElemMaitrisesFormService } from "./form/modifierElemMaitrisesFormService";
+import { ModifierMecanismFormService } from "./form/modifierElemMaitrisesFormService";
 import { ResistancesFormService } from "./form/resistancesFormService";
 import { MaitrisesFormService } from "./form/maitrisesFormService";
 import { Item } from "../models/data/item";
@@ -54,7 +54,7 @@ export class ItemChooseService extends AbstractDestroyService {
         private readonly router: Router,
         private readonly activatedRoute: ActivatedRoute,
         private readonly localStorageService: LocalStorageService,
-        private readonly modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
+        private readonly modifierElemMaitrisesFormService: ModifierMecanismFormService,
         private readonly resistancesFormService: ResistancesFormService,
         private readonly maitrisesFormService: MaitrisesFormService,
         private readonly onlyNoElemFormService: OnlyNoElemFormService,

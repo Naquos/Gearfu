@@ -9,7 +9,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { SortChoiceFormService } from "../form/sortChoiceFormService";
 import { OnlyNoSecondaryFormService } from "../form/onlyNoSecondaryFormService";
 import { MajorPresentFormService } from "../form/majorPresentFormService";
-import { ModifierElemMaitrisesFormService } from "../form/modifierElemMaitrisesFormService";
+import { ModifierMecanismFormService } from "../form/modifierElemMaitrisesFormService";
 import { SearchItemNameFormService } from "../form/searchItemNameFormService";
 import { RareteItemFormServices } from "../form/rareteItemFormService";
 import { ItemLevelFormService } from "../form/itemLevelFormService";
@@ -39,7 +39,7 @@ export class ItemsService {
                 private readonly onlyNoSecondaryFormService: OnlyNoSecondaryFormService,
                 private readonly sortChoiceFormService: SortChoiceFormService,
                 private readonly majorPresentFormService: MajorPresentFormService,
-                private readonly modifierElemMaitrisesFormService: ModifierElemMaitrisesFormService,
+                private readonly modifierElemMaitrisesFormService: ModifierMecanismFormService,
                 private readonly searchItemNameFormService: SearchItemNameFormService,
                 private readonly rareteItemFormService: RareteItemFormServices,
                 private readonly itemLevelFormService: ItemLevelFormService,
@@ -120,7 +120,10 @@ export class ItemsService {
       const itemsFilterByMajor$ = combineLatest([itemsFilterByOnlyNoSecondary$, this.majorPresentFormService.idMajor$])
       .pipe(map(([items, idMajor]) => items.filter(x => this.majorIsPresent(idMajor, x))));
 
-      this.itemsFilters$ = combineLatest([itemsFilterByMajor$, this.itemTypeFormServices.selected$])
+      const itemsFilterByDemesure$ = combineLatest([itemsFilterByMajor$, this.modifierElemMaitrisesFormService.demesure$])
+      .pipe(map(([items, demesure]) => items.filter(x => !demesure || x.equipEffects.find(effect => [IdActionsEnum.PARADE, IdActionsEnum.COUP_CRITIQUE].includes(effect.actionId)))));
+
+      this.itemsFilters$ = combineLatest([itemsFilterByDemesure$, this.itemTypeFormServices.selected$])
       .pipe(map(([items, itemTypeIds]) => items.filter(x => itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))));
     }
 
@@ -180,7 +183,12 @@ export class ItemsService {
         } else if (sort === SortChoiceEnum.PARADE) {
           item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.PARADE)?.params[0] ?? 0;
           item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_PARADE)?.params[0] ?? 0;
-        }else {
+        } else if (sort === SortChoiceEnum.CRITIQUE_PARADE) {
+          item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.COUP_CRITIQUE)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_COUP_CRITIQUE)?.params[0] ?? 0;
+          item.weightForSort += item.equipEffects.find(x => x.actionId === IdActionsEnum.PARADE)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_PARADE)?.params[0] ?? 0;
+        } else {
           item.weightForSort = item.resistance;
         }
       })

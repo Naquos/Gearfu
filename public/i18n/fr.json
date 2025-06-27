@@ -109,7 +109,7 @@
         "PERTE_MAITRISES_BERZERK": "Perte maitrises berzerk"
     },
     "modifier-elem-maitrises": {
-        "label":"Activation de mécaniques augmentant la quantité de maitrises élémentaires",
+        "label":"Activation de mécaniques",
         "mecaniques":"Mécaniques"
     },
     "name-build": {
@@ -141,7 +141,8 @@
     },
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Coeur huppermage",
-        "DENOUEMENT": "Denouement"
+        "DENOUEMENT": "Denouement",
+        "DEMESURE": "Démesure"
     },
     "sort-choice-enum" : {
         "POIDS": "Poids",
@@ -154,6 +155,7 @@
         "ESQUIVE": "Esquive",
         "TACLE_ESQUIVE": "Tacle + Esquive",
         "CRITIQUE":"% Critique",
-        "PARADE": "% Parade"
+        "PARADE": "% Parade",
+        "CRITIQUE_PARADE": "% Critique + Parade"
     }
 }
