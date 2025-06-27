@@ -109,7 +109,7 @@
         "PERTE_MAITRISES_BERZERK": "Berserk Mastery Loss"
     },
     "modifier-elem-maitrises": {
-        "label": "Mechanics activation increasing elemental mastery",
+        "label": "Mechanics activation",
         "mecaniques": "Mechanics"
     },
     "name-build": {
@@ -117,7 +117,7 @@
         "placeholder": "Name your build"
     },
     "only-no-elem": {
-        "label":"Consider only items without elemental mastery",
+        "label": "Consider only items without elemental mastery",
         "oui": "Yes",
         "non": "No"
     },
@@ -141,7 +141,8 @@
     },
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Huppermage's Heart",
-        "DENOUEMENT": "Unraveling"
+        "DENOUEMENT": "Unraveling",
+        "DEMESURE": "Demeanor"
     },
     "sort-choice-enum": {
         "POIDS": "Weight",
@@ -154,6 +155,7 @@
         "ESQUIVE": "Dodge",
         "TACLE_ESQUIVE": "Lock + Dodge",
         "CRITIQUE": "% Critical",
-        "PARADE": "% Block"
+        "PARADE": "% Block",
+        "CRITIQUE_PARADE": "% Critical + Block"
     }
 }
