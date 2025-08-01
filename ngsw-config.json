@@ -22,8 +22,34 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+          "/**/*.svg",
+          "/**/*.cur",
+          "/**/*.jpg",
+          "/**/*.jpeg",
+          "/**/*.png",
+          "/**/*.apng",
+          "/**/*.webp",
+          "/**/*.avif",
+          "/**/*.gif",
+          "/**/*.otf",
+          "/**/*.ttf",
+          "/**/*.woff",
+          "/**/*.woff2"
         ]
+      }
+    }
+  ],
+   "dataGroups": [
+    {
+      "name": "config-json",
+      "urls": [
+        "https://wakfu.cdn.ankama.com/gamedata/config.json"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 1,
+        "maxAge": "1h",
+        "timeout": "5s"
       }
     }
   ]
