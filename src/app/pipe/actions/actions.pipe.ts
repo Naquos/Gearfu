@@ -39,7 +39,12 @@ export class ActionsPipe implements PipeTransform {
     result = this.singularOrPlurial(result, effect);
     result = this.atLeastSixParameters(result, effect);
     result = this.armorGivenOrReceived(result, effect);
+    result = this.deleteDoubleMinus(result);
     return result;
+  }
+
+  private deleteDoubleMinus(result: string): string {
+    return result.replace(/--/g, '');
   }
 
   private armorGivenOrReceived(definition: string, effect: EquipEffects | DifferentStatsItem): string {
