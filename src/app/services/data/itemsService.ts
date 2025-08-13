@@ -84,7 +84,7 @@ export class ItemsService {
     }
 
     private isNotWIP(item: Item): boolean {
-      return !!item.title && !!item.description;
+      return !!item.title && item.id !== 32352;
     }
 
     private initFilter(): void {
