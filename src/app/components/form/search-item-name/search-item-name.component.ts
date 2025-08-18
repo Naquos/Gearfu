@@ -11,6 +11,7 @@ import { map, Observable } from 'rxjs';
 import { SearchItemNameFormService } from '../../../services/form/searchItemNameFormService';
 import { Item } from '../../../models/data/item';
 import { ImageService } from '../../../services/imageService';
+import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
 
 @Component({
   selector: 'app-search-item-name',
@@ -21,7 +22,8 @@ import { ImageService } from '../../../services/imageService';
     ReactiveFormsModule, 
     TranslateModule, 
     MatAutocompleteModule, 
-    CommonModule
+    CommonModule,
+    ImageFallbackDirective
   ],
   templateUrl: './search-item-name.component.html',
   styleUrl: './search-item-name.component.scss'
