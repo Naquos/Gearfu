@@ -11,33 +11,33 @@ export class ItemTypeServices {
   constructor(private readonly imageService: ImageService) {}
   
   private readonly itemTypes = new Map<ItemTypeEnum, ItemType>([    
-    [ItemTypeEnum.DEUX_MAINS,{id:[
+    [ItemTypeEnum.DEUX_MAINS,{ids:[
       ItemTypeDefinitionEnum.HACHE,
       ItemTypeDefinitionEnum.PELLE,
       ItemTypeDefinitionEnum.MARTEAU,
       ItemTypeDefinitionEnum.ARC,
       ItemTypeDefinitionEnum.EPEE_DEUX_MAINS,
       ItemTypeDefinitionEnum.BATON_DEUX_MAINS,
-    ], title:"Deux mains"}],
-    [ItemTypeEnum.UNE_MAIN,{id:[
+    ]}],
+    [ItemTypeEnum.UNE_MAIN,{ids:[
       ItemTypeDefinitionEnum.BAGUETTE,
       ItemTypeDefinitionEnum.EPEE,
       ItemTypeDefinitionEnum.BATON,
       ItemTypeDefinitionEnum.AIGUILLE,
       ItemTypeDefinitionEnum.CARTE,
-    ], title:"Une main"}],
-    [ItemTypeEnum.ANNEAU,{id:[ItemTypeDefinitionEnum.ANNEAU], title:"Anneau"}],
-    [ItemTypeEnum.BOTTES,{id:[ItemTypeDefinitionEnum.BOTTES], title:"Bottes"}],
-    [ItemTypeEnum.AMULETTE,{id:[ItemTypeDefinitionEnum.AMULETTE], title:"Amulette"}],
-    [ItemTypeEnum.CAPE,{id:[ItemTypeDefinitionEnum.CAPE], title:"Cape"}],
-    [ItemTypeEnum.CEINTURE,{id:[ItemTypeDefinitionEnum.CEINTURE], title:"Ceinture"}],
-    [ItemTypeEnum.CASQUE,{id:[ItemTypeDefinitionEnum.CASQUE], title:"Casque"}],
-    [ItemTypeEnum.PLASTRON,{id:[ItemTypeDefinitionEnum.PLASTRON], title:"Plastron"}],
-    [ItemTypeEnum.EPAULETTES,{id:[ItemTypeDefinitionEnum.EPAULETTES], title:"Epaulettes"}],
-    [ItemTypeEnum.ACCESSOIRES,{id:[ItemTypeDefinitionEnum.EMBLEME], title:"Emblème"}],
-    [ItemTypeEnum.BOUCLIER,{id:[ItemTypeDefinitionEnum.BOUCLIER], title:"Bouclier"}],
-    [ItemTypeEnum.DAGUE,{id:[ItemTypeDefinitionEnum.DAGUE], title:"Dague"}],
-    [ItemTypeEnum.FAMILIER,{id:[ItemTypeDefinitionEnum.FAMILIER], title:"Familier{[~1]?s:}"}],
+    ]}],
+    [ItemTypeEnum.ANNEAU,{ids:[ItemTypeDefinitionEnum.ANNEAU]}],
+    [ItemTypeEnum.BOTTES,{ids:[ItemTypeDefinitionEnum.BOTTES]}],
+    [ItemTypeEnum.AMULETTE,{ids:[ItemTypeDefinitionEnum.AMULETTE]}],
+    [ItemTypeEnum.CAPE,{ids:[ItemTypeDefinitionEnum.CAPE]}],
+    [ItemTypeEnum.CEINTURE,{ids:[ItemTypeDefinitionEnum.CEINTURE]}],
+    [ItemTypeEnum.CASQUE,{ids:[ItemTypeDefinitionEnum.CASQUE]}],
+    [ItemTypeEnum.PLASTRON,{ids:[ItemTypeDefinitionEnum.PLASTRON]}],
+    [ItemTypeEnum.EPAULETTES,{ids:[ItemTypeDefinitionEnum.EPAULETTES]}],
+    [ItemTypeEnum.ACCESSOIRES,{ids:[ItemTypeDefinitionEnum.EMBLEME]}],
+    [ItemTypeEnum.BOUCLIER,{ids:[ItemTypeDefinitionEnum.BOUCLIER]}],
+    [ItemTypeEnum.DAGUE,{ids:[ItemTypeDefinitionEnum.DAGUE]}],
+    [ItemTypeEnum.FAMILIER,{ids:[ItemTypeDefinitionEnum.FAMILIER]}],
   ]);
 
   public getItemTypes(): Map<ItemTypeEnum, ItemType> {
@@ -47,7 +47,7 @@ export class ItemTypeServices {
   public getItemType(itemTypeId: number): ItemTypeEnum | undefined {
     let result = undefined;
     this.itemTypes.forEach((value, key) => {
-      if(value.id.includes(itemTypeId)) {
+      if(value.ids.includes(itemTypeId)) {
         result = key;
       }
     })
