@@ -37,8 +37,9 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
       filter(items => items.length !== 0),
       map(items => items.map(x =>x[this.indexItemChoosen])),
       map(items => items.length >=2 && items[0]?.id === items[1]?.id ? [items.find(x => x !== undefined)] : items),
-    )
-    
+      map(x => x.filter(item => item !== undefined)),
+    );
+
     protected differentStatsItemList$ = this.itemSelected$.pipe(
       takeUntil(this.destroy$),
       tap(listItems => {
@@ -46,7 +47,6 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
         this.fillMapCurrentItem();
         listItems.forEach(items => items ?this.fillMapDifferentStatsItem(items!): "")}),
       map(() => Array.from(this.mapDifferentStatsItem.values()).sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999))));
-
 
      constructor(
         protected readonly _translateService: TranslateService,

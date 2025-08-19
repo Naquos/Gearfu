@@ -13,8 +13,8 @@
             </div>
             <ng-container *ngIf="{itemSelected : itemSelected$ | async} as value">
                 <ng-container *ngFor="let itemSelected of value.itemSelected">
-                    <div *ngIf="itemSelected !== undefined"  class="title" >
-                        <h3 [style.color]="colorRarityService.mapColors.get(itemSelected?.rarity ?? 0)">{{ getTitle(itemSelected) }}  ({{itemSelected?.level}})</h3>
+                    <div class="title" >
+                        <h3 [style.color]="colorRarityService.mapColors.get(itemSelected.rarity)">{{ getTitle(itemSelected) }}  ({{itemSelected?.level}})</h3>
                         <img [src]="imageService.getItemUrl(itemSelected.idImage)" appFallback alt="items">
                     </div>
                 </ng-container>
