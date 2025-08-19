@@ -1,11 +1,15 @@
+import { IdActionsEnum } from "../enum/idActionsEnum";
+import { ItemTypeDefinitionEnum } from "../enum/itemTypeDefinitionEnum";
+import { RarityItemEnum } from "../enum/rarityItemEnum";
+
 export interface ItemCdn {
     definition: {
         item: {
             id: number;
             level: number;
             baseParameters: {
-                rarity: number;
-                itemTypeId: number;
+                rarity: RarityItemEnum;
+                itemTypeId: ItemTypeDefinitionEnum;
             };
             graphicParameters: {
                 gfxId: number;
@@ -15,7 +19,7 @@ export interface ItemCdn {
             effect: {
                 definition: {
                     id: number;
-                    actionId: number;
+                    actionId: IdActionsEnum;
                     params: number[];
                 };
             };
