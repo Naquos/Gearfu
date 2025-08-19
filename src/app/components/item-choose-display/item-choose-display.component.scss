@@ -10,10 +10,30 @@
     cursor: pointer;
     width: 56px;
     height: 56px;
+    position: relative;
     img {
         width: 56px;
         height: 56px;
         margin-right: 10px;
+    }
+    span {
+        display: none;
+        position: absolute;
+        content: "X";
+        top: 0px;
+        right: 5px;
+        font-weight: bolder;
+        color: #213A57;
+        font-size: 25px;
+        text-shadow:
+            -2px -2px 0 #000,
+            2px -2px 0 #000,
+            -2px 2px 0 #000,
+            2px 2px 0 #000,
+            -3px 0px 0 #000,
+            3px 0px 0 #000,
+            0px -3px 0 #000,
+            0px 3px 0 #000;
     }
 }
 
@@ -21,12 +41,12 @@
     @include EnfoncementFonce;
 }
 
-.itemPresent:hover:after {    
-    position: absolute;
-    content: "X";
-    top: 2px;
-    right: 2px;
-    font-weight: bolder;
-    color: #213A57;
-    pointer-events: none;
+.itemPresent:hover {
+    span {
+        display: block;
+    }
+
+    span:hover {
+        transform: scale(1.2);
+    }
 }

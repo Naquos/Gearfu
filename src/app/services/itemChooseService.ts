@@ -209,6 +209,8 @@ export class ItemChooseService extends AbstractDestroyService {
     public setItem(itemType: ItemTypeEnum, item: Item): void {
         of(null).pipe(
             first(),
+            switchMap(() => this.deleteItemInBuild(item)),
+            filter(itemFound => !itemFound),
             switchMap(() => this.ensureUniqueRelic(item)),
             switchMap(() => this.ensureCompatibleWithSecondHand(itemType, item)),
             switchMap(() => this.ensureCompatibleWithFirstHand(itemType, item)),
@@ -325,6 +327,7 @@ export class ItemChooseService extends AbstractDestroyService {
                 else if(itemType === ItemTypeEnum.DAGUE) { this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) } 
                 else if (itemType === ItemTypeEnum.ANNEAU) {
                     const indexRarity = list.findIndex(x => x?.rarity === rarity);
+                    this.indexAnneau = indexRarity;
                     list[indexRarity] = undefined;
                     this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(list);
                 } else if(itemType !== undefined) {
@@ -332,6 +335,42 @@ export class ItemChooseService extends AbstractDestroyService {
                 }
             })),
             map(() => null)
+        )
+    }
+
+    private deleteItemInBuild(newItem: Item):Observable<boolean> {
+        let itemFind = false;
+        return combineLatest([this.getObsItem(ItemTypeEnum.UNE_MAIN),
+            this.getObsItem(ItemTypeEnum.ANNEAU),
+            this.getObsItem(ItemTypeEnum.BOTTES),
+            this.getObsItem(ItemTypeEnum.AMULETTE),
+            this.getObsItem(ItemTypeEnum.CAPE),
+            this.getObsItem(ItemTypeEnum.CEINTURE),
+            this.getObsItem(ItemTypeEnum.CASQUE),
+            this.getObsItem(ItemTypeEnum.PLASTRON),
+            this.getObsItem(ItemTypeEnum.EPAULETTES),
+            this.getObsItem(ItemTypeEnum.ACCESSOIRES),
+            this.getObsItem(ItemTypeEnum.BOUCLIER),
+            this.getObsItem(ItemTypeEnum.FAMILIER)
+        ]).pipe(
+            first(),
+            map(itemList => itemList.filter(list => list.find(item => item?.id === newItem.id))),
+            tap(itemList => itemList.forEach(list => {
+                itemFind = true;
+                const itemType = this.itemTypeService.getItemType(list.find(x => x !== undefined)?.itemTypeId ?? 0); 
+
+                if (itemType === ItemTypeEnum.DEUX_MAINS) { this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]); this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) }
+                else if (itemType === ItemTypeEnum.DAGUE) { this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) }
+                else if (itemType === ItemTypeEnum.ANNEAU) {
+                    const index = list.findIndex(x => x?.id === newItem.id);
+                    list[index] = undefined;
+                    this.indexAnneau = index;
+                    this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(list);
+                } else if(itemType !== undefined) {
+                    this.mapItem.get(itemType)?.next([undefined])
+                }
+            })),
+            map(() => itemFind)
         )
     }
 }
