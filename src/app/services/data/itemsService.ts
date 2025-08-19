@@ -3,7 +3,6 @@ import { BehaviorSubject, combineLatest, map, Observable, take, tap } from "rxjs
 import { SortChoiceEnum as SortChoiceEnum } from "../../models/enum/sortChoiceEnum";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { ItemTypeFormServices } from "../form/itemTypeFormServices";
-import { ItemTypeEnum } from "../../models/enum/itemTypeEnum";
 import { ParameterMajorActionEnum } from "../../models/enum/parameterMajorActionEnum";
 import { TranslateService } from "@ngx-translate/core";
 import { SortChoiceFormService } from "../form/sortChoiceFormService";
@@ -20,6 +19,7 @@ import { MajorAction } from "../../models/data/majorActions";
 import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
 import { OnlyNoElemFormService } from "../form/onlyNoElemFormService";
 import { ReverseFormService } from "../form/reverseFormService";
+import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -96,11 +96,11 @@ export class ItemsService {
       .pipe(map(([items, itemName]) => items.filter(x => this.normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(this.normalizeString(itemName)))));
   
       const itemsFilterByLevelMin$ = combineLatest([this.itemsFilterByItemName$, this.itemLevelFormService.levelMin$])
-      .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeEnum.FAMILIER)));
+      .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
   
       const itemsFilterByLevelMax$ = combineLatest([itemsFilterByLevelMin$, this.itemLevelFormService.levelMax$])
-      .pipe(map(([items, levelMax]) => items.filter(x => x.level <= levelMax || x.itemTypeId === ItemTypeEnum.FAMILIER)));
-  
+      .pipe(map(([items, levelMax]) => items.filter(x => x.level <= levelMax || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
+
       const itemsFilterByRarity$ = combineLatest([itemsFilterByLevelMax$, this.rareteItemFormService.rarity$])
       .pipe(map(([items, rarity]) => items.filter(x => rarity.length === 0 || rarity.includes(x.rarity))));
 

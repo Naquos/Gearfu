@@ -44,7 +44,7 @@ export class ItemTypeServices {
     return this.itemTypes;
   }
 
-  public getItemType(itemTypeId: number): ItemTypeEnum | undefined {
+  public getItemType(itemTypeId: ItemTypeDefinitionEnum): ItemTypeEnum | undefined {
     let result = undefined;
     this.itemTypes.forEach((value, key) => {
       if(value.ids.includes(itemTypeId)) {

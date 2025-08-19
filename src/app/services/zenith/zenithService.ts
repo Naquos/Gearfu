@@ -11,6 +11,7 @@ import { EffectItems } from "../../models/zenith/effectItems";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { TranslateService } from "@ngx-translate/core";
 import { Item } from "../../models/data/item";
+import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum";
 
 @Injectable({providedIn: 'root'})
 export class ZenithService {
@@ -73,7 +74,7 @@ export class ZenithService {
         return {
             equipment:{
                 id_equipment: item.id,
-                level: item.itemTypeId === ItemTypeEnum.FAMILIER ? 50 : item.level,
+                level: item.itemTypeId === ItemTypeDefinitionEnum.FAMILIER ? 50 : item.level,
                 id_rarity: item.rarity,
                 ap_cost: 0,
                 mp_cost: 0,

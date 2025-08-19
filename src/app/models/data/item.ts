@@ -1,10 +1,11 @@
+import { ItemTypeDefinitionEnum } from "../enum/itemTypeDefinitionEnum";
 import { EquipEffects } from "./equipEffects";
 
 export interface Item {
     id: number;
     level: number;
     rarity: number;
-    itemTypeId: number;
+    itemTypeId: ItemTypeDefinitionEnum;
     equipEffects: EquipEffects[];
     description: {
         fr: string;

@@ -194,7 +194,7 @@ export class ItemChooseService extends AbstractDestroyService {
         this.getObsItem(itemType).pipe(
             first(),
             switchMap(x => 
-                iif(() => x !== undefined && this.itemTypeService.getItemType(x[0]?.itemTypeId ?? 0) === ItemTypeEnum.DEUX_MAINS,
+                iif(() => x !== undefined && !!x[0]?.itemTypeId && this.itemTypeService.getItemType(x[0]?.itemTypeId) === ItemTypeEnum.DEUX_MAINS,
                 of(x).pipe(tap(() => {
                     this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]);
                     this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]);
@@ -321,7 +321,9 @@ export class ItemChooseService extends AbstractDestroyService {
             first(),
             map(itemList => itemList.filter(list => list.find(item => item?.rarity === rarity))),
             tap(itemList => itemList.forEach(list => {
-                const itemType = this.itemTypeService.getItemType(list.find(x => x !== undefined)?.itemTypeId ?? 0); 
+                const itemTypeId=  list.find(x => x !== undefined)?.itemTypeId;
+                if(!itemTypeId) { return; }
+                const itemType = this.itemTypeService.getItemType(itemTypeId); 
 
                 if( itemType === ItemTypeEnum.DEUX_MAINS) { this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]); this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) } 
                 else if(itemType === ItemTypeEnum.DAGUE) { this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) } 
@@ -356,8 +358,10 @@ export class ItemChooseService extends AbstractDestroyService {
             first(),
             map(itemList => itemList.filter(list => list.find(item => item?.id === newItem.id))),
             tap(itemList => itemList.forEach(list => {
+                const itemTypeId=  list.find(x => x !== undefined)?.itemTypeId;
+                if(!itemTypeId) { return; }
                 itemFind = true;
-                const itemType = this.itemTypeService.getItemType(list.find(x => x !== undefined)?.itemTypeId ?? 0); 
+                const itemType = this.itemTypeService.getItemType(itemTypeId); 
 
                 if (itemType === ItemTypeEnum.DEUX_MAINS) { this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]); this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) }
                 else if (itemType === ItemTypeEnum.DAGUE) { this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) }
