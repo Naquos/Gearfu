@@ -156,7 +156,7 @@ export class ItemChooseService extends AbstractDestroyService {
         ).subscribe(item => {
                 const itemType = this.itemTypeService.getItemType(item.itemTypeId);
                 if(!itemType) {return ;} 
-                this.setItem(itemType, item)
+                this.setItem(itemType, item, false)
             }
         );
     }
@@ -178,7 +178,7 @@ export class ItemChooseService extends AbstractDestroyService {
             const itemType = this.itemTypeService.getItemType(item.itemTypeId);
             if(!itemType) {return;}
 
-            this.setItem(itemType, item)
+            this.setItem(itemType, item, false)
         })
     }
 
@@ -206,11 +206,13 @@ export class ItemChooseService extends AbstractDestroyService {
         ).subscribe();
         
     }
-    public setItem(itemType: ItemTypeEnum, item: Item): void {
+    public setItem(itemType: ItemTypeEnum, item: Item, deleteItem = true): void {
         of(null).pipe(
             first(),
-            switchMap(() => this.deleteItemInBuild(item)),
-            filter(itemFound => !itemFound),
+            switchMap(() => 
+                iif(() => deleteItem, 
+                    this.deleteItemInBuild(item).pipe(filter(itemFound => !itemFound)),
+                    of(null))),
             switchMap(() => this.ensureUniqueRelic(item)),
             switchMap(() => this.ensureCompatibleWithSecondHand(itemType, item)),
             switchMap(() => this.ensureCompatibleWithFirstHand(itemType, item)),
