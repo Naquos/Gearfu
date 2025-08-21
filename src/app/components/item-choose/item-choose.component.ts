@@ -33,6 +33,10 @@ export class ItemChooseComponent {
     });
   }
 
+  protected navigateToWakfuIndex(): void {
+      window.open('https://efusryuga.github.io/WakfuIndex/', '_blank');
+  }
+
   protected generateBuild(): void {
     this.zenithService.createBuild().pipe(take(1)).subscribe(linkBuild => window.open('https://www.zenithwakfu.com/builder/' + linkBuild, '_blank'));
   }
