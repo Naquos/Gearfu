@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1756217100629,
+  "timestamp": 1756218192099,
   "index": "/Gearfu/index.csr.html",
   "assetGroups": [
     {
@@ -80,6 +80,19 @@
         "ignoreVary": true
       },
       "version": 1
+    },
+    {
+      "name": "gamedata-json",
+      "patterns": [
+        "https:\\/\\/wakfu\\.cdn\\.ankama\\.com\\/gamedata\\/[^/]*\\.json"
+      ],
+      "strategy": "performance",
+      "maxSize": 50,
+      "maxAge": 2592000000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
     }
   ],
   "hashTable": {
@@ -116,7 +129,7 @@
     "/Gearfu/icons/icon-72x72.png": "f1682da55f3f51493e06577c281deddb498ef3a7",
     "/Gearfu/icons/icon-96x96.png": "bf96900932a13186af36d1aca86a01dbe85ae7ce",
     "/Gearfu/index.csr.html": "ef6ed2032e0ff0456da438a85ac7fdb30095c5fc",
-    "/Gearfu/index.html": "fd3cd2a10822eb865465b9a53eb952e8b3141b74",
+    "/Gearfu/index.html": "bbb6085cd9ae6f7dfa6ec35671006c12a453d255",
     "/Gearfu/logo.png": "eb4ca47e89051ede0f24d53970c7406224d3d83c",
     "/Gearfu/main-ZX2WCCS5.js": "d347de94a483d3d1e9e8f5785f66fcb56957b4b5",
     "/Gearfu/manifest.webmanifest": "c6442930528939f819d7a7bcf54cb6dc1909ea98",
