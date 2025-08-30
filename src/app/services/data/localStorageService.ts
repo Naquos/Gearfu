@@ -1,13 +1,15 @@
-import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable } from "@angular/core";
+
+import { Injectable, DOCUMENT, inject } from "@angular/core";
 import { KeyEnum } from "../../models/enum/keyEnum";
 
 @Injectable({providedIn: 'root'})
 export class LocalStorageService {
 
+    private readonly document = inject(DOCUMENT);
+
     private localStorage?: Storage;
 
-    constructor(@Inject(DOCUMENT) private readonly document: Document) {
+    constructor() {
         this.localStorage = this.document.defaultView?.localStorage;
     }
 

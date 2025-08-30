@@ -1,19 +1,20 @@
 @use '../../../styles/mixin' as *;
+$size: 56px;
 
 .noItem {
     cursor: pointer;
-    width: 56px;
-    height: 56px;
+    width: $size;
+    height: $size;
 }
 
 .itemPresent {
     cursor: pointer;
-    width: 56px;
-    height: 56px;
+    width: $size;
+    height: $size;
     position: relative;
     img {
-        width: 56px;
-        height: 56px;
+        width: $size;
+        height: $size;
         margin-right: 10px;
     }
     span {
@@ -48,5 +49,23 @@
 
     span:hover {
         transform: scale(1.2);
+    }
+}
+
+@media screen and (min-width: 701px) and (max-width: 1700px) {
+    $size: 36px;
+    .noItem {
+        width: $size;
+        height: $size;
+    }
+
+    .itemPresent {
+        width: $size;
+        height: $size;
+        img {
+            width: $size;
+            height: $size;
+        }
+        
     }
 }

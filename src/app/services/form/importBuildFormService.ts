@@ -1,7 +1,6 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { AbstractFormService } from "./abstractFormService";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { ZenithApiService } from "../zenith/zenithApiService";
 import { tap } from "rxjs";
@@ -9,11 +8,16 @@ import { SaveBuildService } from "../saveBuildService";
 
 @Injectable({providedIn: 'root'})
 export class ImportBuildFormService extends AbstractFormService<FormControl<string>> {
+    private readonly saveBuildService = inject(SaveBuildService);
+    private readonly zenithApiService = inject(ZenithApiService);
     public static readonly DEFAULT_VALUE = "";
+    
+    public readonly form = new FormControl<string>(ImportBuildFormService.DEFAULT_VALUE, { nonNullable: true });
+    protected readonly keyEnum = KeyEnum.KEY_IMPORT_BUILD;
 
-    constructor(private readonly saveBuildService: SaveBuildService, private readonly zenithApiService: ZenithApiService, protected override readonly localStorageService: LocalStorageService) {
-        super(KeyEnum.KEY_IMPORT_BUILD, localStorageService, new FormControl<string>(ImportBuildFormService.DEFAULT_VALUE, { nonNullable: true }));
-            this.init();
+    constructor() {
+        super();
+        this.init();
     }
 
     private importBuildFromUrlGearfu(): void {

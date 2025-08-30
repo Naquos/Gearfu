@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 
@@ -24,15 +23,16 @@ export class ItemLevelFormService extends AbstractFormService<FormGroup<TypedCon
 
   private readonly levelMax = new BehaviorSubject<number>(ItemLevelFormService.DEFAULT_LEVEL_MAX);
   public readonly levelMax$ = this.levelMax.asObservable();
-    
 
-  constructor(protected override readonly localStorageService: LocalStorageService) {
-
-    super(KeyEnum.KEY_ITEM_LEVEL, localStorageService, new FormGroup<TypedControls<ItemLevelForm>>({
+  protected readonly keyEnum = KeyEnum.KEY_ITEM_LEVEL;
+  public readonly form = new FormGroup<TypedControls<ItemLevelForm>>({
         levelMin: new FormControl(ItemLevelFormService.DEFAULT_LEVEL_MIN, { nonNullable: true }),
         levelMax: new FormControl(ItemLevelFormService.DEFAULT_LEVEL_MAX, { nonNullable: true })
-      }));
-      this.init();
+      });
+
+  constructor() {
+    super();
+    this.init();
   }
 
   protected override handleChanges(value: ItemLevelForm): void {

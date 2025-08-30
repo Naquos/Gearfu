@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BuildComponent } from '../build/build.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,5 +11,5 @@ import { SaveBuildService } from '../../services/saveBuildService';
   styleUrl: './builds-list.component.scss'
 })
 export class BuildsListComponent {
-  constructor(protected readonly saveBuildService: SaveBuildService) {}
+  protected readonly saveBuildService = inject(SaveBuildService);
 }

@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { inject, Pipe, PipeTransform } from '@angular/core';
 import { EquipEffects } from '../../models/data/equipEffects';
 import { combineLatest, map, Observable, startWith } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,9 +13,9 @@ import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
 })
 export class ActionsPipe implements PipeTransform {
 
-  constructor(private readonly ankamaCdnFacade: AnkamaCdnFacade,
-    private readonly translateService: TranslateService,
-    private readonly actionService: ActionService) {}
+  private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
+  private readonly translateService = inject(TranslateService);
+  private readonly actionService = inject(ActionService);
 
   transform(effect: EquipEffects | DifferentStatsItem): Observable<string> {
     

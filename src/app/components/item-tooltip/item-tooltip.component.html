@@ -1,9 +1,11 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<div class="header" *ngIf="{loaded: loaded$ | async}">
-    <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{"item.maitrises" | translate}} {{Math.trunc(maitrises)}}</span>
-    <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Resistances">{{ "item.resistances" | translate }} {{resistances}}</span>
-</div>
+ @if (loaded$ | async) {
+    <div class="header">
+        <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{"item.maitrises" | translate}} {{Math.trunc(maitrises)}}</span>
+        <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Resistances">{{ "item.resistances" | translate }} {{resistances}}</span>
+    </div>
+ }
 <div class="content" (click)="setItem(item)">
     <div class="column">
         <div class="row">
@@ -11,30 +13,30 @@
                 <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{ getTitle(item) }} ({{item.level}})</h3>
                 <img [src]="imageService.getItemUrl(item.idImage)" alt="item">
             </div>
-            <ng-container *ngIf="{itemSelected : itemSelected$ | async} as value">
-                <ng-container *ngFor="let itemSelected of value.itemSelected">
+            @if (itemSelected$ | async; as itemSelected) {
+                @for (item of itemSelected; track $index) {
                     <div class="title" >
-                        <h3 [style.color]="colorRarityService.mapColors.get(itemSelected.rarity)">{{ getTitle(itemSelected) }}  ({{itemSelected?.level}})</h3>
-                        <img [src]="imageService.getItemUrl(itemSelected.idImage)" appFallback alt="items">
+                        <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{ getTitle(item) }}  ({{item.level}})</h3>
+                        <img [src]="imageService.getItemUrl(item.idImage)" appFallback alt="items">
                     </div>
-                </ng-container>
-            </ng-container>
+                }
+            }
         </div>
         
         <span [class]="getBackgroundDifferentsStatsOnValue(weight) + ' poids'">
             <img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{weight}}
         </span>
     </div>
-    
-    <ng-container *ngIf="{
-        statsList : differentStatsItemList$ | async
-    } as value">
+
+    @if (differentStatsItemList$ | async; as statsList) {
         <div>
-            <p *ngFor="let effect of value.statsList" [class]="getBackgroundDifferentsStats(effect)">
-                <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT && effect.value !== 0">
-                    <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ effect | actions | async }}
-                </ng-container>
-            </p>
+            @for (effect of statsList; track $index) {
+                <p [class]="getBackgroundDifferentsStats(effect)">
+                    @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT && effect.value !== 0) {
+                        <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ effect | actions | async }}
+                    }
+                </p>
+            }
         </div>
-    </ng-container>
+    }
 </div>

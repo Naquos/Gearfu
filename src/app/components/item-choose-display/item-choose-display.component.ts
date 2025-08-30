@@ -1,4 +1,4 @@
-import { Component, input, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, inject, input, OnInit, ViewContainerRef } from '@angular/core';
 import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
 import { CommonModule } from '@angular/common';
 import { ColorRarityService } from '../../services/colorRarityService';
@@ -18,22 +18,17 @@ import { ImageFallbackDirective } from '../../directives/imageFallback.directive
   styleUrl: './item-choose-display.component.scss'
 })
 export class ItemChooseDisplayComponent implements OnInit {
+  protected readonly colorRarityService = inject(ColorRarityService);
+  protected readonly itemChooseService = inject(ItemChooseService);
+  protected readonly itemTypeFormServices = inject(ItemTypeFormServices);
+  protected readonly tooltipService = inject(TooltipService<{item: Item}>);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  protected readonly imageService = inject(ImageService);
+
   public readonly backgroundItemType = input.required<string>();
   public readonly itemType = input.required<ItemTypeEnum>();
   public readonly indexItem = input<number>(0);
   protected $item!: Observable<Item | undefined>;
-
-  
-
-  constructor(protected readonly colorRarityService: ColorRarityService,
-              protected readonly itemChooseService: ItemChooseService,
-              protected readonly itemTypeFormServices: ItemTypeFormServices,
-              protected readonly tooltipService: TooltipService<{item: Item}>,
-              private readonly viewContainerRef: ViewContainerRef,
-              protected readonly imageService: ImageService,
-  ) {}
-
-
 
   ngOnInit(): void {
     this.$item = this.itemChooseService.getObsItem(this.itemType()).pipe(map(x => x[this.indexItem()]));

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IdActionsEnum } from '../../models/enum/idActionsEnum';
 import { CommonModule } from '@angular/common';
 import { RecapStats } from '../../models/data/recap-stats';
@@ -14,18 +14,15 @@ import { ImageService } from '../../services/imageService';
 })
 export class RecapStatsComponent {
 
+  protected readonly recapStatsService = inject(RecapStatsService);
+  protected readonly imageService = inject(ImageService);
+
   private static readonly RESISTANCES_LIST = [
     IdActionsEnum.RESISTANCES_FEU,
     IdActionsEnum.RESISTANCES_EAU,
     IdActionsEnum.RESISTANCES_TERRE,
     IdActionsEnum.RESISTANCES_AIR
   ];
-
-  constructor(
-    protected readonly recapStatsService: RecapStatsService,
-    protected readonly imageService: ImageService
-    ) {
-  }
 
   protected displayEffect(effect: RecapStats): string {
     const symbol = effect.value < 0? "-" : ""

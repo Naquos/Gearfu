@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ItemComponent } from '../item/item.component';
 import { ItemsService } from '../../services/data/itemsService';
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './item-list.component.scss'
 })
 export class ItemListComponent  {
-
-  constructor(protected readonly itemsService: ItemsService) {  }
-
+  protected readonly itemsService = inject(ItemsService);
 }

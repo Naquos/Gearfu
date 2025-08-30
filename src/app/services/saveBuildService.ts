@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { LocalStorageService } from "./data/localStorageService";
 import { BehaviorSubject } from "rxjs";
 import { KeyEnum } from "../models/enum/keyEnum";
@@ -7,10 +7,12 @@ import { Build } from "../models/data/build";
 @Injectable({providedIn: 'root'})
 export class SaveBuildService {
     
+    private readonly localStorageService = inject(LocalStorageService);
+    
     private readonly buildList = new BehaviorSubject<Build[]>([]);
     public readonly buildList$ = this.buildList.asObservable();
     
-    constructor(private readonly localStorageService: LocalStorageService) {
+    constructor() {
         const savedBuilds = this.localStorageService.getItem<Build[]>(KeyEnum.KEY_SAVE_BUILD) || [];
         this.buildList.next(savedBuilds);
     }

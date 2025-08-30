@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { AnkamaCdnService } from "./ankamaCdnService";
 import { BehaviorSubject, filter, tap } from "rxjs";
 import { ActionsCdn } from "../../models/ankama-cdn/actionsCdn";
@@ -7,7 +7,9 @@ import { StatesCdn } from "../../models/ankama-cdn/statesCdn";
 
 @Injectable({providedIn: 'root'})
 export class AnkamaCdnFacade {
-    
+
+    private readonly ankamaCdnService = inject(AnkamaCdnService);
+
     private readonly config = new BehaviorSubject<string>("");
     public readonly config$ = this.config.asObservable().pipe(
         filter(config => config.length > 0),
@@ -27,8 +29,6 @@ export class AnkamaCdnFacade {
     public readonly states$ = this.states.asObservable().pipe(
         filter(states => states.length > 0),
     );
-    
-    constructor(private readonly ankamaCdnService: AnkamaCdnService) {}
 
     private loadItems(config: string): void {
         this.ankamaCdnService.getItems(config).pipe(tap(items => this.item.next(items))).subscribe();

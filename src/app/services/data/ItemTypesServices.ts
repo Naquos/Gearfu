@@ -1,5 +1,5 @@
 
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ItemType } from '../../models/data/itemType';
 import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
 import { ImageService } from '../imageService';
@@ -8,8 +8,8 @@ import { ItemTypeDefinitionEnum } from '../../models/enum/itemTypeDefinitionEnum
 @Injectable({providedIn: 'root'})
 export class ItemTypeServices {
 
-  constructor(private readonly imageService: ImageService) {}
-  
+  private readonly imageService = inject(ImageService);
+
   private readonly itemTypes = new Map<ItemTypeEnum, ItemType>([    
     [ItemTypeEnum.DEUX_MAINS,{ids:[
       ItemTypeDefinitionEnum.HACHE,

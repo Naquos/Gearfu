@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { ConfigCdn } from "../../models/ankama-cdn/configCdn";
 import { ItemCdn } from "../../models/ankama-cdn/itemCdn";
 import { Observable } from "rxjs";
@@ -8,9 +8,8 @@ import { StatesCdn } from "../../models/ankama-cdn/statesCdn";
 
 @Injectable({providedIn: 'root'})
 export class AnkamaCdnService {
+    private readonly http = inject(HttpClient);
     private readonly baseUrl = "https://wakfu.cdn.ankama.com/gamedata/";
-
-    constructor(private readonly http: HttpClient) {}
 
     public getConfig(): Observable<ConfigCdn> {
         return this.http.get<ConfigCdn>(this.baseUrl + "config.json");

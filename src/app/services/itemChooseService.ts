@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { ItemTypeEnum } from "../models/enum/itemTypeEnum";
 import { BehaviorSubject, combineLatest, filter, first, iif, map, Observable, of, switchMap, take, takeUntil, tap } from "rxjs";
 import { ItemTypeServices } from "./data/ItemTypesServices";
@@ -17,6 +17,18 @@ import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService extends AbstractDestroyService {
+    private readonly itemTypeService = inject(ItemTypeServices);
+    private readonly itemService = inject(ItemsService);
+    private readonly router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
+    private readonly localStorageService = inject(LocalStorageService);
+    private readonly modifierElemMaitrisesFormService = inject(ModifierMecanismFormService);
+    private readonly resistancesFormService = inject(ResistancesFormService);
+    private readonly maitrisesFormService = inject(MaitrisesFormService);
+    private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
+    private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
+
+
     private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>(
         [
             [ItemTypeEnum.UNE_MAIN, new BehaviorSubject<(Item|undefined)[]>([undefined])],
@@ -49,17 +61,7 @@ export class ItemChooseService extends AbstractDestroyService {
     public readonly totalResistances$ = this.totalResistances.asObservable();
     private indexAnneau = 0;
 
-    constructor(private readonly itemTypeService: ItemTypeServices,
-        private readonly itemService: ItemsService,
-        private readonly router: Router,
-        private readonly activatedRoute: ActivatedRoute,
-        private readonly localStorageService: LocalStorageService,
-        private readonly modifierElemMaitrisesFormService: ModifierMecanismFormService,
-        private readonly resistancesFormService: ResistancesFormService,
-        private readonly maitrisesFormService: MaitrisesFormService,
-        private readonly onlyNoElemFormService: OnlyNoElemFormService,
-        private readonly onlyNoSecondaryFormService: OnlyNoSecondaryFormService
-    ) {
+    constructor() {
         super();
         setTimeout(() => {
             this.initItemChooses();

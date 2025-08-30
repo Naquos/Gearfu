@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService } from "./abstractFormService";
 import { BehaviorSubject } from "rxjs";
@@ -12,9 +11,12 @@ export class OnlyNoSecondaryFormService extends AbstractFormService<FormControl<
 
   private readonly onlyNoSecondary = new BehaviorSubject<boolean>(false);
   public readonly onlyNoSecondary$ = this.onlyNoSecondary.asObservable();
+  
+  protected readonly keyEnum = KeyEnum.KEY_ONLY_NO_SECONDARY;
+  public readonly form =  new FormControl<boolean>(OnlyNoSecondaryFormService.DEFAULT_VALUE, { nonNullable: true });
 
-  constructor(protected override readonly localStorageService: LocalStorageService) {
-    super(KeyEnum.KEY_ONLY_NO_SECONDARY, localStorageService, new FormControl<boolean>(OnlyNoSecondaryFormService.DEFAULT_VALUE, { nonNullable: true }));
+  constructor() {
+    super();
     this.init();
   }
 

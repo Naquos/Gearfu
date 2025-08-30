@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ItemType } from '../../../models/data/itemType';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -15,9 +15,8 @@ import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
   styleUrl: './item-types.component.scss'
 })
 export class ItemTypesComponent {
+  protected readonly itemTypeFormServices = inject(ItemTypeFormServices);
+  protected readonly itemTypesServices = inject(ItemTypeServices);
   protected readonly itemTypes = new Map<string, ItemType>([]);
   protected readonly ItemTypeEnum = ItemTypeEnum;
-
-  constructor(protected readonly itemTypeFormServices: ItemTypeFormServices, protected readonly itemTypesServices: ItemTypeServices) {
-  }
 }

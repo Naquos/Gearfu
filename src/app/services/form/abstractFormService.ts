@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { filter, takeUntil, tap } from "rxjs";
 import { LocalStorageService } from "../data/localStorageService";
@@ -17,12 +17,11 @@ export type TypedControls<T> = {
 @Injectable({providedIn: 'root'})
 export abstract class AbstractFormService<TControl extends FormControl | FormGroup> extends AbstractDestroyService {
 
-    public form!: TControl;
+    protected readonly localStorageService = inject(LocalStorageService);
+    public readonly abstract form: TControl;
+    protected readonly abstract keyEnum: KeyEnum;
 
-    constructor(private readonly keyEnum: KeyEnum, protected readonly localStorageService: LocalStorageService, private readonly _form: TControl) {
-        super();
-        this.form = _form;
-    }
+    constructor() {super();}
 
     protected init(): void {
         this.form.valueChanges

@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Mecanism } from "../../models/enum/ElemMaitrisesMecanismEnum";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService } from "./abstractFormService";
 import { BehaviorSubject } from "rxjs";
@@ -20,8 +19,11 @@ export class ModifierMecanismFormService extends AbstractFormService<FormControl
   private readonly demesure = new BehaviorSubject<boolean>(false)
   public readonly demesure$ = this.demesure.asObservable()
 
-  constructor(protected override readonly localStorageService: LocalStorageService) {
-      super(KeyEnum.KEY_MODIFIER_MECANISM, localStorageService, new FormControl<string[]>(ModifierMecanismFormService.DEFAULT_VALUE, { nonNullable: true }));
+  protected readonly keyEnum = KeyEnum.KEY_MODIFIER_MECANISM;
+  public readonly form =  new FormControl<string[]>(ModifierMecanismFormService.DEFAULT_VALUE, { nonNullable: true });
+
+  constructor() {
+      super();
       this.init();
   }
 

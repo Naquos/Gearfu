@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { EquipEffects } from "../../models/data/equipEffects";
 import { TranslateService } from "@ngx-translate/core";
@@ -6,6 +6,9 @@ import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
 
 @Injectable({providedIn: 'root'})
 export class ActionService {
+
+    private readonly translateService = inject(TranslateService);
+    private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
 
     private static readonly malusActions = new Set<IdActionsEnum>([
         IdActionsEnum.PERTE_POINT_DE_VIE,
@@ -67,7 +70,7 @@ export class ActionService {
         [IdActionsEnum.PORTEE, IdActionsEnum.PERTE_PORTEE],
     ];
 
-    constructor(private readonly translateService: TranslateService, private readonly ankamaCdnFacade: AnkamaCdnFacade) {
+    constructor() {
         for (const [positive, negative] of ActionService.opposedPairs) {
             ActionService.opposedEffects.set(positive, negative);
             ActionService.opposedEffects.set(negative, positive);

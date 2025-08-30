@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
 import { RarityItemEnum } from "../../models/enum/rarityItemEnum";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 
@@ -25,16 +24,18 @@ export class RareteItemFormServices extends AbstractFormService<FormGroup<TypedC
   private readonly rarity = new BehaviorSubject<number[]>([]);
   public readonly rarity$ = this.rarity.asObservable();
 
-  constructor(protected override readonly localStorageService: LocalStorageService) {
-    super(KeyEnum.KEY_RARETE_ITEM, localStorageService, new FormGroup<TypedControls<RareteItemForm>>({
+  protected readonly keyEnum = KeyEnum.KEY_RARETE_ITEM;
+  public readonly form =  new FormGroup<TypedControls<RareteItemForm>>({
         normal: new FormControl(),
         rare: new FormControl(),
         mythique: new FormControl(),
         legendaire: new FormControl(),
         souvenir: new FormControl(),
         relique: new FormControl(),
-        epique: new FormControl()
-      }));
+        epique: new FormControl()});
+
+  constructor() {
+    super();
     this.init();
   }
 

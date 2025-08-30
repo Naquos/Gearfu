@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { ItemsService } from '../../services/data/itemsService';
 import { ItemTypeServices } from '../../services/data/ItemTypesServices';
 import { Item } from '../../models/data/item';
@@ -35,6 +35,13 @@ export enum ItemTypeBuild  {
   styleUrl: './build.component.scss'
 })
 export class BuildComponent implements OnInit {
+
+  private readonly itemService = inject(ItemsService);
+  private readonly itemTypeService = inject(ItemTypeServices);
+  private readonly imageService = inject(ImageService);
+  protected readonly saveBuildService = inject(SaveBuildService);
+  protected readonly itemChooseService = inject(ItemChooseService);
+
   public readonly build = input<Build |  undefined>(undefined);
 
   protected readonly ItemTypeBuild = ItemTypeBuild;
@@ -55,13 +62,6 @@ export class BuildComponent implements OnInit {
   ])
 
   private firstAnneau = true;
-
-  constructor(
-    private readonly itemService: ItemsService,
-    private readonly itemTypeService: ItemTypeServices,
-    private readonly imageService: ImageService,
-    protected readonly saveBuildService: SaveBuildService,
-    protected readonly itemChooseService: ItemChooseService) {}
 
   ngOnInit(): void {
     const idItemList = this.build()?.codeBuild.split(",");

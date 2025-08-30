@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {  ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
@@ -15,7 +15,7 @@ import { RarityItemEnum } from '../../../models/enum/rarityItemEnum';
   styleUrl: './rarete-item.component.scss'
 })
 export class RareteItemComponent {
-
+  protected readonly rareteItemFormService = inject(RareteItemFormServices);
+  protected readonly imageService = inject(ImageService);
   protected readonly RarityItemEnum = RarityItemEnum;
-  constructor(protected readonly rareteItemFormService: RareteItemFormServices, protected readonly imageService: ImageService) {}
 }

@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { AbstractFormService } from "./abstractFormService";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { BehaviorSubject } from "rxjs";
 
@@ -11,8 +10,11 @@ export class ReverseFormService extends AbstractFormService<FormControl<boolean>
     private readonly reverse = new BehaviorSubject<boolean>(ReverseFormService.DEFAULT_VALUE);
     public readonly reverse$ = this.reverse.asObservable();
 
-    constructor(protected override readonly localStorageService: LocalStorageService) {
-        super(KeyEnum.KEY_REVERSE, localStorageService, new FormControl<boolean>(ReverseFormService.DEFAULT_VALUE, { nonNullable: true }));
+    protected readonly keyEnum = KeyEnum.KEY_REVERSE;
+    public readonly form =  new FormControl<boolean>(ReverseFormService.DEFAULT_VALUE, { nonNullable: true });
+
+    constructor() {
+        super();
         this.init();
     }
 

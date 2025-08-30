@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NameBuildFormService } from '../../../services/form/nameBuildFormService';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,5 +13,5 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './name-build.component.scss'
 })
 export class NameBuildComponent {
-  constructor(protected readonly nameBuildFormService: NameBuildFormService) {}
+  protected readonly nameBuildFormService = inject(NameBuildFormService);
 }

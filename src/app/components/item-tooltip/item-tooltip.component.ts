@@ -1,18 +1,13 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { IdActionsEnum } from '../../models/enum/idActionsEnum';
-import { ActionService } from '../../services/data/actionService';
 import { ColorRarityService } from '../../services/colorRarityService';
-import { ItemChooseService } from '../../services/itemChooseService';
 import { ItemsService } from '../../services/data/itemsService';
-import { ItemTypeServices } from '../../services/data/ItemTypesServices';
 import { CommonModule } from '@angular/common';
 import { filter, map, Observable, takeUntil, tap } from 'rxjs';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
-import { StatesService } from '../../services/data/statesService';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { DifferentStatsItem } from '../../models/data/differentsStatsItem';
 import { Item } from '../../models/data/item';
-import { ImageService } from '../../services/imageService';
 import { ActionsPipe } from "../../pipe/actions/actions.pipe";
 import { ImageFallbackDirective } from '../../directives/imageFallback.directive';
 
@@ -23,6 +18,10 @@ import { ImageFallbackDirective } from '../../directives/imageFallback.directive
   styleUrl: './item-tooltip.component.scss'
 })
 export class ItemTooltipComponent extends ItemAbstractComponent implements AfterViewInit {
+  
+    protected readonly itemService = inject(ItemsService);
+    protected readonly colorRarityService = inject(ColorRarityService);
+    protected readonly cdr = inject(ChangeDetectorRef);
 
     @Input()
     public item!: Item;
@@ -30,7 +29,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     public indexItemChoosen = 0;
 
     protected readonly mapDifferentStatsItem = new Map<IdActionsEnum, DifferentStatsItem>();
-    protected loaded$!: Observable<void>;
+    protected loaded$!: Observable<boolean>;
     protected weight = 0;
 
     protected itemSelected$ = this.itemChoosen$.pipe(
@@ -48,18 +47,8 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
         listItems.forEach(items => items ?this.fillMapDifferentStatsItem(items!): "")}),
       map(() => Array.from(this.mapDifferentStatsItem.values()).sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999))));
 
-     constructor(
-        protected readonly _translateService: TranslateService,
-        protected readonly _actionsService : ActionService,
-        protected readonly itemService : ItemsService,
-        protected readonly colorRarityService: ColorRarityService,
-        protected readonly _itemChooseService: ItemChooseService,
-        protected readonly _itemTypeService: ItemTypeServices,
-        protected readonly cdr: ChangeDetectorRef,
-        protected readonly _statesService: StatesService,
-        protected readonly _imageService: ImageService
-      ) {
-        super(_translateService,_itemTypeService, _itemChooseService, _actionsService, _statesService, _imageService);
+     constructor() {
+        super();
       }
 
       
@@ -82,6 +71,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
                   this.weight = this.itemService.calculWeight(this.resistances, this.maitrises)
                 }
               })
+              return true;
           }));
     
         this.initItemChoosen(this.item);

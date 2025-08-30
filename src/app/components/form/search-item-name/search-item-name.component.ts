@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -29,16 +29,16 @@ import { ImageFallbackDirective } from '../../../directives/imageFallback.direct
   styleUrl: './search-item-name.component.scss'
 })
 export class SearchItemNameComponent {
+
+  private readonly translateService = inject(TranslateService);
+  private readonly itemService = inject(ItemsService);
+  protected readonly colorRarityService = inject(ColorRarityService);
+  protected readonly searchItemNameFormService = inject(SearchItemNameFormService);
+  protected readonly imageService = inject(ImageService);
+
   protected options$?: Observable<Item[]>;
 
-  constructor(
-    private readonly translateService: TranslateService,
-    private readonly itemService: ItemsService, 
-    protected readonly colorRarityService: ColorRarityService,
-    protected readonly searchItemNameFormService: SearchItemNameFormService,
-    protected readonly imageService: ImageService
-  ) 
-  {
+  constructor() {
     this.options$ = this.itemService.itemsFilterByItemName$.pipe(map(x => x.slice(0, 10)))
   }
 

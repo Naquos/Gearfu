@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ItemTypesComponent } from '../form/item-types/item-types.component';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { ItemLevelComponent } from "../form/item-level/item-level.component";
@@ -19,7 +19,6 @@ import { LocalStorageService } from '../../services/data/localStorageService';
 import { ResetFormService } from '../../services/resetFormService';
 import { FilterResistancesComponent } from '../form/filter-resistances/filter-resistances.component';
 import { MajorPresentComponent } from '../form/major-present/major-present.component';
-import { CommonModule } from '@angular/common';
 import { BuildsListComponent } from "../builds-list/builds-list.component";
 import { ImportBuildComponent } from "../form/import-build/import-build.component";
 import { NameBuildComponent } from "../form/name-build/name-build.component";
@@ -51,7 +50,6 @@ import { ReverseButtonComponent } from '../form/reverse-button/reverse-button.co
     ItemChooseComponent,
     TranslateModule,
     SwipeDirective,
-    CommonModule,
     BuildsListComponent,
     ImportBuildComponent,
     NameBuildComponent,
@@ -62,6 +60,12 @@ import { ReverseButtonComponent } from '../form/reverse-button/reverse-button.co
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit{
+  
+  protected readonly resetFormServices = inject(ResetFormService);
+  protected readonly translate = inject(TranslateService);
+  private readonly localStorageService = inject(LocalStorageService);
+  private readonly itemService = inject(ItemsService);
+  private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
 
   protected displayFilter = false;
   protected filterOrBuild : "filter" | "build" = "filter";
@@ -70,12 +74,7 @@ export class AppComponent implements OnInit{
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
   }
 
-  constructor(protected readonly translate: TranslateService,
-    protected readonly resetFormServices: ResetFormService,
-    private readonly localStorageService: LocalStorageService,
-    private readonly itemService: ItemsService,
-    private readonly ankamaCdnFacade: AnkamaCdnFacade,
-  ) {
+  constructor() {
     this.translate.addLangs(['fr','en', 'es', 'pt']);
     this.translate.setDefaultLang('en');
     const lang = this.localStorageService.getItem<string>(KeyEnum.KEY_LANG);

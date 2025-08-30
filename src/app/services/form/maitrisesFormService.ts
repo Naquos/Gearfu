@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 
@@ -27,10 +26,9 @@ export class MaitrisesFormService extends AbstractFormService<FormGroup<TypedCon
 
   private readonly idMaitrises = new BehaviorSubject<number[]>([]);
   public readonly idMaitrises$ = this.idMaitrises.asObservable();
-    
 
-  constructor(protected override readonly localStorageService: LocalStorageService) {
-    super(KeyEnum.KEY_MAITRISES, localStorageService, new FormGroup<TypedControls<MaitrisesForm>>({
+  protected readonly keyEnum = KeyEnum.KEY_MAITRISES;
+  public readonly form = new FormGroup<TypedControls<MaitrisesForm>>({
         feu: new FormControl(),
         eau: new FormControl(),
         terre: new FormControl(),
@@ -41,8 +39,12 @@ export class MaitrisesFormService extends AbstractFormService<FormGroup<TypedCon
         distance: new FormControl(),
         soin: new FormControl(),
         berzerk: new FormControl()
-      }));
-      this.init();
+      })
+    
+
+  constructor() {
+    super();
+    this.init();
   }
 
   protected override handleChanges(value: MaitrisesForm): void {

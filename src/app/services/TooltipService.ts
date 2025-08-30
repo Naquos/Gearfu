@@ -1,15 +1,13 @@
 import { ConnectedPosition, Overlay, OverlayRef } from "@angular/cdk/overlay";
-import { ComponentRef, Injectable, ViewContainerRef } from "@angular/core";
+import { ComponentRef, inject, Injectable, ViewContainerRef } from "@angular/core";
 import { ComponentPortal, ComponentType } from "@angular/cdk/portal";
 
 @Injectable({providedIn: 'root'})
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class TooltipService<T extends Record<string, any>> {
-    
-    private overlayRefs: OverlayRef[] = [];
-    constructor(private readonly overlay: Overlay) {}
+    private readonly overlay: Overlay = inject(Overlay);
 
-    
+    private overlayRefs: OverlayRef[] = [];
 
     closeTooltip(): void {
         this.overlayRefs.forEach(ref => ref.dispose());

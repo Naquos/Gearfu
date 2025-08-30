@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { ItemLevelFormService } from "./form/itemLevelFormService";
 import { ItemTypeFormServices } from "./form/itemTypeFormServices";
 import { MaitrisesFormService } from "./form/maitrisesFormService";
@@ -14,20 +14,19 @@ import { ReverseFormService } from "./form/reverseFormService";
 
 @Injectable({providedIn: 'root'})
 export class ResetFormService {
-  constructor(
-    private readonly itemLevelFormService: ItemLevelFormService,
-    private readonly itemTypeFormServices: ItemTypeFormServices,
-    private readonly maitrisesFormService: MaitrisesFormService,
-    private readonly majorPresentFormService: MajorPresentFormService,
-    private readonly modifierElemMaitrisesFormService: ModifierMecanismFormService,
-    private readonly onlyNoElemFormService: OnlyNoElemFormService,
-    private readonly onlyNoSecondaryFormService: OnlyNoSecondaryFormService,
-    private readonly rareteItemFormServices: RareteItemFormServices,
-    private readonly resistancesFormService: ResistancesFormService,
-    private readonly searchItemNameFormService: SearchItemNameFormService,
-    private readonly sortChoiceFormService: SortChoiceFormService,
-    private readonly reverseFormService: ReverseFormService
-  ) {}
+  
+    private readonly itemLevelFormService = inject(ItemLevelFormService);
+    private readonly itemTypeFormServices = inject(ItemTypeFormServices);
+    private readonly maitrisesFormService = inject(MaitrisesFormService);
+    private readonly majorPresentFormService = inject(MajorPresentFormService);
+    private readonly modifierElemMaitrisesFormService = inject(ModifierMecanismFormService);
+    private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
+    private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
+    private readonly rareteItemFormServices = inject(RareteItemFormServices);
+    private readonly resistancesFormService = inject(ResistancesFormService);
+    private readonly searchItemNameFormService = inject(SearchItemNameFormService);
+    private readonly sortChoiceFormService = inject(SortChoiceFormService);
+    private readonly reverseFormService = inject(ReverseFormService);
 
     public resetAllForms(): void {
         this.itemLevelFormService.setDefaultValue();

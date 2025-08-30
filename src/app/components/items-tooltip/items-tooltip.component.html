@@ -1,9 +1,6 @@
-<ng-container 
-    *ngFor="let choosen of itemsChoosen;  index as i"
->
+@for (choosen of itemsChoosen; track choosen.id; let i = $index) {
     <app-item-tooltip
-        *ngIf="choosen !== undefined"
         [item]="item"
         [indexItemChoosen]="i"
     ></app-item-tooltip>
-</ng-container>
+}

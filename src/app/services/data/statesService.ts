@@ -1,11 +1,10 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { States } from "../../models/data/states";
 import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
 
 @Injectable({providedIn: 'root'})
 export class StatesService {
-
-    constructor(private readonly AnkamaCdnFacade: AnkamaCdnFacade) {}
+    private readonly AnkamaCdnFacade = inject(AnkamaCdnFacade);
 
     public findStates(id: number): States  | undefined {
         const state = this.AnkamaCdnFacade.getStatesList().find((state) => state.definition.id === id);

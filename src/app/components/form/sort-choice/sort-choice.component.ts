@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SortChoiceEnum } from '../../../models/enum/sortChoiceEnum';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +13,6 @@ import { SortChoiceFormService } from '../../../services/form/sortChoiceFormServ
   styleUrl: './sort-choice.component.scss'
 })
 export class SortChoiceComponent {
+  protected readonly sortChoiceFormService = inject(SortChoiceFormService);
   protected readonly SortChoiceEnumList = Object.values(SortChoiceEnum);
-  constructor(protected readonly sortChoiceFormService: SortChoiceFormService) {}
 }

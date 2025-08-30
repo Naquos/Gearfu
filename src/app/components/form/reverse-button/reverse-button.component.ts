@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReverseFormService } from '../../../services/form/reverseFormService';
 import { ButtonCheckboxComponent } from '../button-checkbox/button-checkbox.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,7 +10,6 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './reverse-button.component.scss'
 })
 export class ReverseButtonComponent {
-
-  constructor(protected readonly reverseFormService: ReverseFormService) { }
+  protected readonly reverseFormService = inject(ReverseFormService);
 
 }

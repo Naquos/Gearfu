@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 import { OnlyNoSecondaryFormService } from '../../../services/form/onlyNoSecondaryFormService';
@@ -10,5 +10,5 @@ import { OnlyNoSecondaryFormService } from '../../../services/form/onlyNoSeconda
   styleUrl: './only-no-secondary.component.scss'
 })
 export class OnlyNoSecondaryComponent {
-  constructor(protected readonly onlyNoSecondaryFormService : OnlyNoSecondaryFormService) {}
+  protected readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
 }

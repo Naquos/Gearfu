@@ -5,7 +5,7 @@ import { ItemTypeEnum } from "../../models/enum/itemTypeEnum";
 import { ItemChooseService } from "../../services/itemChooseService";
 import { EquipEffects } from "../../models/data/equipEffects";
 import { ActionService } from "../../services/data/actionService";
-import { Component, OnDestroy } from "@angular/core";
+import { Component, inject, OnDestroy } from "@angular/core";
 import { ParameterMajorActionEnum } from "../../models/enum/parameterMajorActionEnum";
 import { StatesService } from "../../services/data/statesService";
 import { TranslateService } from "@ngx-translate/core";
@@ -19,6 +19,13 @@ import { ImageService } from "../../services/imageService";
   templateUrl: './itemAbstract.component.html',
   styleUrl: './itemAbstract.component.scss'})
 export abstract class ItemAbstractComponent implements OnDestroy {
+  
+    protected readonly translateService = inject(TranslateService);
+    protected readonly itemTypeService = inject(ItemTypeServices);
+    protected readonly itemChooseService = inject(ItemChooseService);
+    protected readonly actionsService = inject(ActionService);
+    protected readonly statesService = inject(StatesService);
+    protected readonly imageService = inject(ImageService);
     
     protected readonly destroy$ = new Subject<void>();
     protected resistances = 0;
@@ -79,15 +86,6 @@ export abstract class ItemAbstractComponent implements OnDestroy {
     protected readonly Math = Math;
     protected readonly itemChoosen$ = new BehaviorSubject<(Item | undefined)[][]>([[]]);
     protected readonly IdActionsEnum = IdActionsEnum;
-
-    constructor(
-        protected readonly translateService: TranslateService,
-        protected readonly itemTypeService: ItemTypeServices,
-        protected readonly itemChooseService: ItemChooseService,
-        protected readonly actionsService: ActionService,
-        protected readonly statesService: StatesService,
-        protected readonly imageService: ImageService,
-    ) {}
 
     protected getEffectPng(effect : EquipEffects | DifferentStatsItem): string {
       return this.imageService.getActionIdUrl(

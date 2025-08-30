@@ -1,5 +1,4 @@
-import { Injectable } from "@angular/core";
-import { LocalStorageService } from "../data/localStorageService";
+import { inject, Injectable } from "@angular/core";
 import { take, tap } from "rxjs";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { FormControl } from "@angular/forms";
@@ -9,13 +8,16 @@ import { ItemChooseService } from "../itemChooseService";
 
 @Injectable({providedIn: 'root'})
 export class NameBuildFormService extends AbstractFormService<FormControl<string>> {
-    
+    private readonly saveBuildService = inject(SaveBuildService);
+    private readonly itemChooseService = inject(ItemChooseService);
+
     public static readonly DEFAULT_VALUE = "";
     
-    constructor(protected override readonly localStorageService: LocalStorageService,
-        private readonly saveBuildService: SaveBuildService,
-        private readonly itemChooseService: ItemChooseService) {
-        super(KeyEnum.KEY_NAME_BUILD, localStorageService, new FormControl<string>(NameBuildFormService.DEFAULT_VALUE, { nonNullable: true }));
+    protected readonly keyEnum = KeyEnum.KEY_NAME_BUILD;
+    public readonly form =  new FormControl<string>(NameBuildFormService.DEFAULT_VALUE, { nonNullable: true });
+    
+    constructor() {
+        super();
         this.init();
     }
 

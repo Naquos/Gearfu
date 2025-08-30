@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 import { OnlyNoElemFormService } from '../../../services/form/onlyNoElemFormService';
@@ -10,5 +10,5 @@ import { OnlyNoElemFormService } from '../../../services/form/onlyNoElemFormServ
   styleUrl: './only-no-elem.component.scss'
 })
 export class OnlyNoElemComponent {
-  constructor(protected readonly onlyNoElemFormService : OnlyNoElemFormService) {}
+  protected readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
 }

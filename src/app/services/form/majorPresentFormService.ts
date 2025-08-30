@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { ParameterMajorActionEnum } from "../../models/enum/parameterMajorActionEnum";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 import { BehaviorSubject } from "rxjs";
@@ -47,9 +46,9 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
 
   private readonly idMajor = new BehaviorSubject<MajorAction[]>([]);
   public readonly idMajor$ = this.idMajor.asObservable();
-
-  constructor(protected override readonly localStorageService: LocalStorageService) {
-    super(KeyEnum.KEY_MAJOR_PRESENT, localStorageService, new FormGroup<TypedControls<MajorPresentForm>>({
+  
+  protected readonly keyEnum = KeyEnum.KEY_MAJOR_PRESENT;
+  public readonly form =  new FormGroup<TypedControls<MajorPresentForm>>({
         PA: new FormControl(),
         PM: new FormControl(),
         PW: new FormControl(),
@@ -78,8 +77,11 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
         PERTE_MAITRISES_DOS: new FormControl(),
         PERTE_MAITRISES_SOIN: new FormControl(),
         PERTE_MAITRISES_BERZERK: new FormControl()
-      }));
-      this.init();
+      });
+
+  constructor() {
+    super();
+    this.init();
   }
 
   protected override handleChanges(value: MajorPresentForm): void {

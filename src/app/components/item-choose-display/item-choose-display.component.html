@@ -1,19 +1,17 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<ng-container *ngIf="{item: $item | async} as value">
-    <ng-container *ngIf="value.item">
-        <div class="itemPresent" [style.backgroundColor]="colorRarityService.mapColors.get(value.item.rarity)">
-            <img [src]="imageService.getItemUrl(value.item.idImage)"
-                (click)="setFilter()"    
-                (mouseenter)="openTooltip($event, value.item)" 
-                (mouseleave)="tooltipService.closeTooltip()"
-                alt="items"
-                appFallback
-            >
-            <span (click)="itemChooseService.deleteItem(itemType(), indexItem())">X</span>
-        </div>
-    </ng-container>
-    <ng-container *ngIf="!value.item">
-        <img class="noItem" [src]="backgroundItemType()"(mouseenter)="tooltipService.closeTooltip()" (click)="setFilter()" alt="noItem" >
-    </ng-container>
-</ng-container>
+ @if($item | async; as item)
+ {
+    <div class="itemPresent" [style.backgroundColor]="colorRarityService.mapColors.get(item.rarity)">
+        <img [src]="imageService.getItemUrl(item.idImage)"
+        (click)="setFilter()"    
+        (mouseenter)="openTooltip($event, item)" 
+        (mouseleave)="tooltipService.closeTooltip()"
+        alt="items"
+        appFallback
+        >
+        <span (click)="itemChooseService.deleteItem(itemType(), indexItem())">X</span>
+    </div>
+}  @else {
+    <img class="noItem" [src]="backgroundItemType()" (mouseenter)="tooltipService.closeTooltip()" (click)="setFilter()" alt="noItem" >
+}

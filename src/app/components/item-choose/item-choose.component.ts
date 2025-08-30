@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ItemChooseDisplayComponent } from "../item-choose-display/item-choose-display.component";
 import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
 import {MatIconModule} from '@angular/material/icon';
@@ -18,10 +18,12 @@ import { IdActionsEnum } from '../../models/enum/idActionsEnum';
   styleUrl: './item-choose.component.scss'
 })
 export class ItemChooseComponent {
+  protected readonly itemChooseService = inject(ItemChooseService);
+  private readonly zenithService = inject(ZenithService);
+  protected readonly imageService = inject(ImageService);
+
   protected readonly ItemTypeEnum = ItemTypeEnum;
   protected readonly IdActionsEnum = IdActionsEnum;
-
-  constructor(protected readonly itemChooseService : ItemChooseService, private readonly zenithService: ZenithService, protected readonly imageService: ImageService) {}
 
   protected copyToClipboard(): void {
     navigator.clipboard.writeText(window.location.href).then();

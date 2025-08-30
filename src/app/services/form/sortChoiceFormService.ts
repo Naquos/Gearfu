@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { SortChoiceEnum } from "../../models/enum/sortChoiceEnum";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService } from "./abstractFormService";
 import { BehaviorSubject } from "rxjs";
@@ -13,9 +12,12 @@ export class SortChoiceFormService extends AbstractFormService<FormControl<SortC
 
   private readonly sort = new BehaviorSubject<SortChoiceEnum>(SortChoiceFormService.DEFAULT_VALUE);
   public readonly sort$ = this.sort.asObservable();
+  
+  protected readonly keyEnum = KeyEnum.KEY_SORT_CHOICE;
+  public readonly form =  new FormControl<SortChoiceEnum>(SortChoiceFormService.DEFAULT_VALUE, { nonNullable: true });
 
-  constructor(protected override readonly localStorageService: LocalStorageService) {
-    super(KeyEnum.KEY_SORT_CHOICE, localStorageService, new FormControl<SortChoiceEnum>(SortChoiceFormService.DEFAULT_VALUE, { nonNullable: true }));
+  constructor() {
+    super();
     this.init();
   }
 

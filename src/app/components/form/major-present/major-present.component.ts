@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslateModule } from '@ngx-translate/core';
@@ -14,8 +14,7 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
   styleUrl: './major-present.component.scss'
 })
 export class MajorPresentComponent {
-  
+  protected readonly majorPresentFormService = inject(MajorPresentFormService);
+  protected readonly imageService = inject(ImageService);
   protected readonly IdActionsEnum = IdActionsEnum;
-
-  constructor(protected readonly majorPresentFormService: MajorPresentFormService, protected readonly imageService: ImageService) {}
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { StatesDefinitionService } from '../../services/data/statesDefinitionService';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,17 +10,15 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrl: './states.component.scss'
 })
 export class StatesComponent {
+  
+  protected readonly statesDefinitionService = inject(StatesDefinitionService);
+  private readonly translateService = inject(TranslateService);
 
   @Input()
   public statesDefinitionId = 0;
 
   @Input()
   public nameStates = "";
-
-  constructor(
-    protected readonly statesDefinitionService: StatesDefinitionService,
-    private readonly translateService: TranslateService
-  ) {}
 
   protected definition(): string | undefined {
     const definition = this.statesDefinitionService.findStatesDefinition(this.statesDefinitionId);

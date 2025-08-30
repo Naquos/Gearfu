@@ -1,5 +1,7 @@
-<div class="content" *ngIf="{items: itemsService.items$ | async} as data">
-    <div *ngFor="let item of data.items">
-        <app-item [item]="item"></app-item>
+@if (itemsService.items$ | async; as items) {
+    <div class="content" >
+        @for (item of items; track item.id) {
+            <app-item [item]="item"></app-item>
+        }
     </div>
-</div>
+}

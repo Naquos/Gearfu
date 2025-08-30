@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Mecanism } from '../../../models/enum/ElemMaitrisesMecanismEnum';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +14,6 @@ import { ModifierMecanismFormService } from '../../../services/form/modifierElem
   styleUrl: './modifier-mecanism.component.scss'
 })
 export class ModifierMecanismComponent {
-    protected readonly ElemMaitrisesMecanismEnumList = Object.values(Mecanism);
-    constructor(protected readonly modifierMecanismFormService: ModifierMecanismFormService) {}
+  protected readonly modifierMecanismFormService = inject(ModifierMecanismFormService);
+  protected readonly ElemMaitrisesMecanismEnumList = Object.values(Mecanism);
 }

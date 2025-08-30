@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { RecapStats } from "../models/data/recap-stats";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { ParameterMajorActionEnum } from "../models/enum/parameterMajorActionEnum";
@@ -11,6 +11,9 @@ import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
+  private readonly actionService = inject(ActionService);
+  private readonly itemChooseService = inject(ItemChooseService);
+
   private readonly initialEffectList: RecapStats[] = [
     { id: IdActionsEnum.POINT_DE_VIE, value: 0, params: [] },
     { id: IdActionsEnum.PA, value: 0, params: [] },
@@ -35,10 +38,7 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly recap = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);
   public readonly recap$ = this.recap.asObservable();
 
-  constructor(
-    private readonly actionService: ActionService,
-    private readonly itemChooseService: ItemChooseService,
-  ) {
+  constructor() {
     super();
     this.initializeListeners();
   }

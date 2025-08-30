@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { ZenithApiService } from "./zenithApiService";
 import { combineLatestWith, map, Observable, of, switchMap, tap } from "rxjs";
 import { ItemChooseService } from "../itemChooseService";
@@ -15,16 +15,13 @@ import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum
 
 @Injectable({providedIn: 'root'})
 export class ZenithService {
+    private readonly zenithApiService = inject(ZenithApiService);
+    private readonly itemChooseService = inject(ItemChooseService);
+    private readonly itemsService = inject(ItemsService);
+    private readonly itemTypeServices = inject(ItemTypeServices);
+    private readonly translateService = inject(TranslateService);
 
     private firstRing = true;
-
-    constructor(private readonly zenithApiService: ZenithApiService,
-        private readonly itemChooseService: ItemChooseService,
-        private readonly itemsService: ItemsService,
-        private readonly itemTypeServices: ItemTypeServices,
-        private readonly translateService: TranslateService
-    ) {}
-
 
     public createBuild(): Observable<string> {
         return this.zenithApiService.createBuild({

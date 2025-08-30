@@ -1,9 +1,8 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ItemTypeServices } from "../data/ItemTypesServices";
 import { ItemTypeEnum } from "../../models/enum/itemTypeEnum";
 import { BehaviorSubject } from "rxjs";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 
@@ -26,15 +25,13 @@ export interface ItemTypeForm {
 
 @Injectable({providedIn: 'root'})
 export class ItemTypeFormServices extends AbstractFormService<FormGroup<TypedControls<ItemTypeForm>>> {
+    private readonly itemTypeServices = inject(ItemTypeServices);
+
     protected readonly selected = new BehaviorSubject<number[]>([]);
     public readonly selected$ = this.selected.asObservable();
-    
 
-    constructor(
-        private readonly itemTypeServices: ItemTypeServices,
-        protected override readonly localStorageService: LocalStorageService) {
-
-        super(KeyEnum.KEY_ITEM_TYPE, localStorageService, new FormGroup<TypedControls<ItemTypeForm>>({
+    protected readonly keyEnum = KeyEnum.KEY_ITEM_TYPE;
+    public readonly form = new FormGroup<TypedControls<ItemTypeForm>>({
             deuxMains: new FormControl(),
             uneMain: new FormControl(),
             anneau: new FormControl(),
@@ -49,7 +46,10 @@ export class ItemTypeFormServices extends AbstractFormService<FormGroup<TypedCon
             dague: new FormControl(),
             accessoires: new FormControl(),
             familier: new FormControl()
-        }));
+        });
+
+    constructor() {
+        super();
         this.init();
     }
 

@@ -3,6 +3,10 @@
     [matTooltipShowDelay]="300"
     [class.crossed-out]="crossedOut()"
     mat-mini-fab (click)="control()?.setValue(!control()?.value)" [style.backgroundColor]="control()?.value ? '#415A77' : ''">
-    <mat-icon *ngIf="matIcon() !== ''" [fontIcon]="matIcon()" [style.color]="control()?.value ? 'white' : '#213A57'"></mat-icon>
-    <img *ngIf="srcImg() !== ''" [src]="srcImg()" alt="logo">
+    @if(matIcon()) {
+        <mat-icon [fontIcon]="matIcon()" [style.color]="control()?.value ? 'white' : '#213A57'"></mat-icon>
+    }
+    @if(srcImg()) {
+        <img [src]="srcImg()" alt="logo">
+    }
 </button>

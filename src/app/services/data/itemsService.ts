@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, map, Observable, take, tap } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../../models/enum/sortChoiceEnum";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
@@ -23,6 +23,21 @@ import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
+    private readonly itemTypeFormServices = inject(ItemTypeFormServices);
+    private readonly translateService = inject(TranslateService);
+    private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
+    private readonly sortChoiceFormService = inject(SortChoiceFormService);
+    private readonly majorPresentFormService = inject(MajorPresentFormService);
+    private readonly modifierElemMaitrisesFormService = inject(ModifierMecanismFormService);
+    private readonly searchItemNameFormService = inject(SearchItemNameFormService);
+    private readonly rareteItemFormService = inject(RareteItemFormServices);
+    private readonly itemLevelFormService = inject(ItemLevelFormService);
+    private readonly resistanceFormService = inject(ResistancesFormService);
+    private readonly maitrisesFormService = inject(MaitrisesFormService);
+    private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
+    private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
+    private readonly reverseFormService = inject(ReverseFormService);
+
     protected items: Item[] = [];
     protected readonly fullItems$ = new BehaviorSubject<Item[]>([]);
 
@@ -33,22 +48,6 @@ export class ItemsService {
     protected itemsFilters$!: Observable<Item[]>;
 
     private static readonly ARMURE_DONNEE_RECUE_LIST = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
-
-    constructor(private readonly itemTypeFormServices: ItemTypeFormServices,
-                private readonly translateService: TranslateService,
-                private readonly onlyNoSecondaryFormService: OnlyNoSecondaryFormService,
-                private readonly sortChoiceFormService: SortChoiceFormService,
-                private readonly majorPresentFormService: MajorPresentFormService,
-                private readonly modifierElemMaitrisesFormService: ModifierMecanismFormService,
-                private readonly searchItemNameFormService: SearchItemNameFormService,
-                private readonly rareteItemFormService: RareteItemFormServices,
-                private readonly itemLevelFormService: ItemLevelFormService,
-                private readonly resistanceFormService: ResistancesFormService,
-                private readonly maitrisesFormService: MaitrisesFormService,
-                private readonly ankamaCdnFacade: AnkamaCdnFacade,
-                private readonly onlyNoElemFormService: OnlyNoElemFormService,
-                private readonly reverseFormService: ReverseFormService
-    ) {}
 
     public init(): void {
         this.initItemsList();

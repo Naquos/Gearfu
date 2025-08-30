@@ -1,6 +1,8 @@
 <div class="header">
     <span>{{nameStates}}</span>
 </div>
-<div *ngIf="{definition: definition() } as value">
-    {{value.definition}}
-</div>
+@if (definition()) {
+    <div>
+        {{definition()}}
+    </div>
+}

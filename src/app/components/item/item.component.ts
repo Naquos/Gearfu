@@ -1,24 +1,19 @@
-import { AfterViewInit, ChangeDetectorRef, Component,ElementRef,Input, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component,ElementRef,inject,Input, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActionService } from '../../services/data/actionService';
 import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { ItemsService } from '../../services/data/itemsService';
 import { ColorRarityService } from '../../services/colorRarityService';
-import { ItemChooseService } from '../../services/itemChooseService';
-import { ItemTypeServices } from '../../services/data/ItemTypesServices';
 import { MatIconModule } from '@angular/material/icon';
 import { TooltipService } from '../../services/TooltipService';
 import { ItemsTooltipComponent } from '../items-tooltip/items-tooltip.component';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
-import { StatesService } from '../../services/data/statesService';
 import { StatesComponent } from '../states/states.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { States } from '../../models/data/states';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ItemConditionService } from '../../services/data/itemConditionService';
 import { ItemCondition } from '../../models/data/itemCondition';
 import { Item } from '../../models/data/item';
-import { ImageService } from '../../services/imageService';
 import { ActionsPipe } from "../../pipe/actions/actions.pipe";
 import { ImageFallbackDirective } from '../../directives/imageFallback.directive';
 
@@ -30,29 +25,24 @@ import { ImageFallbackDirective } from '../../directives/imageFallback.directive
 })
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
   
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly el = inject(ElementRef);
+  protected readonly itemService = inject(ItemsService);
+  protected readonly colorRarityService = inject(ColorRarityService);
+  protected readonly tooltipService = inject(TooltipService<{itemsChoosen: Item[], item: Item}>);
+  protected readonly stateTooltipService = inject(TooltipService<{statesDefinitionId: number, nameStates: string}>);
+  protected readonly cdr = inject(ChangeDetectorRef);
+  protected readonly itemConditionService = inject(ItemConditionService);
+
+
   @Input()
   public item!: Item;
 
   private readonly condition = new BehaviorSubject<ItemCondition | undefined>(undefined);
   protected readonly condition$ = this.condition.asObservable();
 
-  constructor(
-    private readonly viewContainerRef: ViewContainerRef,
-    private readonly el: ElementRef,
-    protected readonly _translateService: TranslateService,
-    protected readonly _actionsService : ActionService,
-    protected readonly itemService : ItemsService,
-    protected readonly colorRarityService: ColorRarityService,
-    protected readonly _itemChooseService: ItemChooseService,
-    protected readonly _itemTypeService: ItemTypeServices,
-    protected readonly tooltipService: TooltipService<{itemsChoosen: Item[], item: Item}>,
-    protected readonly stateTooltipService: TooltipService<{statesDefinitionId: number, nameStates: string}>,
-    protected readonly cdr: ChangeDetectorRef,
-    protected readonly _statesService: StatesService,
-    protected readonly itemConditionService: ItemConditionService,
-    protected readonly _imageService: ImageService
-  ) {
-    super(_translateService, _itemTypeService, _itemChooseService, _actionsService, _statesService, _imageService);
+  constructor() {
+    super()
   }
 
   protected setItemChoosen() : void {

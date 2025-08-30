@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
@@ -14,9 +14,8 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
   styleUrl: './filter-maitrises.component.scss'
 })
 export class FilterMaitrisesComponent {
+  protected readonly maitrisesFormServices = inject(MaitrisesFormService);
+  protected readonly imageService = inject(ImageService);
 
   protected readonly IdActionsEnum = IdActionsEnum;
-  
-  constructor(protected readonly maitrisesFormServices: MaitrisesFormService, protected readonly imageService: ImageService) {}
-
 }

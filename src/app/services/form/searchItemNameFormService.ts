@@ -1,10 +1,9 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { ItemTypeServices } from "../data/ItemTypesServices";
 import { ItemLevelFormService } from "./itemLevelFormService";
 import { ItemTypeFormServices } from "./itemTypeFormServices";
 import { RareteItemFormServices } from "./rareteItemFormService";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService } from "./abstractFormService";
 import { BehaviorSubject } from "rxjs";
@@ -14,18 +13,21 @@ import { MajorPresentFormService } from "./majorPresentFormService";
 @Injectable({providedIn: 'root'})
 export class SearchItemNameFormService extends AbstractFormService<FormControl<string>>{
 
+  private readonly rareteItemFormServices = inject(RareteItemFormServices);
+  private readonly itemTypeFormServices = inject(ItemTypeFormServices);
+  private readonly itemTypeService = inject(ItemTypeServices);
+  private readonly itemLevelFormService = inject(ItemLevelFormService);
+  private readonly majorPresentFormService = inject(MajorPresentFormService);
+
   public static readonly DEFAULT_VALUE = "";
   private readonly itemName = new BehaviorSubject<string>("");
   public readonly itemName$ = this.itemName.asObservable();
 
-  constructor(private readonly rareteItemFormServices: RareteItemFormServices,
-        private readonly itemTypeFormServices: ItemTypeFormServices,
-        private readonly itemTypeService: ItemTypeServices,
-        private readonly itemLevelFormService: ItemLevelFormService,
-        private readonly majorPresentFormService: MajorPresentFormService,
-        protected override readonly localStorageService: LocalStorageService
-  ) {
-    super(KeyEnum.KEY_SEARCH_ITEM_NAME, localStorageService, new FormControl<string>("", { nonNullable: true }));
+  protected readonly keyEnum = KeyEnum.KEY_SEARCH_ITEM_NAME;
+  public readonly form =  new FormControl<string>(SearchItemNameFormService.DEFAULT_VALUE, { nonNullable: true });
+
+  constructor() {
+    super();
     this.init();
   }
 

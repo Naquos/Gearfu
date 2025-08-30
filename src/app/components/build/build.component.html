@@ -2,9 +2,11 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="header">
     <div class="header-name" [style.position]="build()?.codeZenith ? 'absolute' : 'initial'">{{build()?.nameBuild}}</div>
-    <div *ngIf="build()?.codeZenith" class="header-zenith">
-        <img [matTooltip]="'build.zenith' | translate"  src="./zenith-logo.webp" (click)="goToZenith($event)" alt="zenith">
-    </div>
+    @if (build()?.codeZenith) {
+        <div class="header-zenith">
+            <img [matTooltip]="'build.zenith' | translate"  src="./zenith-logo.webp" (click)="goToZenith($event)" alt="zenith">
+        </div>
+    }
 </div>
 <div 
     class="content"

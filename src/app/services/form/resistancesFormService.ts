@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
-import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 
@@ -18,14 +17,17 @@ export class ResistancesFormService extends AbstractFormService<FormGroup<TypedC
 
   private readonly idResistances = new BehaviorSubject<number[]>([]);
   public readonly idResistances$ = this.idResistances.asObservable();
-
-  constructor(protected override readonly localStorageService: LocalStorageService) {
-    super(KeyEnum.KEY_RESISTANCES, localStorageService, new FormGroup<TypedControls<RareteItemForm>>({
+  
+  protected readonly keyEnum = KeyEnum.KEY_RESISTANCES;
+  public readonly form =  new FormGroup<TypedControls<RareteItemForm>>({
         feu: new FormControl(),
         eau: new FormControl(),
         terre: new FormControl(),
         air: new FormControl()
-    }));
+    });
+
+  constructor() {
+    super();
     this.init();
   } 
 
