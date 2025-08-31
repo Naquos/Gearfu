@@ -22,4 +22,7 @@ export enum ItemTypeDefinitionEnum {
     CARTE = 254,
     EMBLEME = 646,
     FAMILIER = 582,
+    LANTERNE = 480,
+    STATISTIQUES = 811,
+    SUBLIMATIONS = 812
 }

@@ -87,7 +87,7 @@ export class ItemsService {
     }
 
     private initFilter(): void {
-      this.items = this.items.filter(x => ![480,811,812].includes(x.itemTypeId))
+      this.items = this.items.filter(x => ![ItemTypeDefinitionEnum.LANTERNE, ItemTypeDefinitionEnum.STATISTIQUES, ItemTypeDefinitionEnum.SUBLIMATIONS].includes(x.itemTypeId))
         .filter(x => this.isNotWIP(x));
       this.fullItems$.next(this.items);
 
