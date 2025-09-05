@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ItemChooseDisplayComponent } from "../item-choose-display/item-choose-display.component";
 import { ItemTypeEnum } from '../../models/enum/itemTypeEnum';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ItemChooseService } from '../../services/itemChooseService';
 import { take } from 'rxjs';
@@ -36,7 +36,11 @@ export class ItemChooseComponent {
   }
 
   protected navigateToWakfuIndex(): void {
-      window.open('https://efusryuga.github.io/WakfuIndex/', '_blank');
+    window.open('https://efusryuga.github.io/WakfuIndex/', '_blank');
+  }
+
+  protected navigateToWakfocus(): void {
+    window.open('https://www.dropbox.com/scl/fo/12onmfink7n0g5wj96f3y/AAxeJABC7OSe3UkPsbspDkg?rlkey=h2w7w4wp4jer3l0uw3jmy8q0k&st=nrkw68lp&dl=0', '_blank');
   }
 
   protected generateBuild(): void {
