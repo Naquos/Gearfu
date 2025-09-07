@@ -1,4 +1,4 @@
-@for (choosen of itemsChoosen; track choosen.id; let i = $index) {
+@for (choosen of itemsChoosen; let i = $index; track i) {
     <app-item-tooltip
         [item]="item"
         [indexItemChoosen]="i"
