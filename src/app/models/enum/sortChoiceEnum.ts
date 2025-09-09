@@ -13,4 +13,6 @@ export enum SortChoiceEnum {
     CRITIQUE_PARADE = "CRITIQUE_PARADE",
     PA = "PA",
     PM = "PM",
+    PO = "PO",
+    PW = "PW"
 }

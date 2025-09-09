@@ -193,6 +193,14 @@ export class ItemsService {
         } else if (sort === SortChoiceEnum.PM) {
           item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.PM)?.params[0] ?? 0;
           item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_PM)?.params[0] ?? 0;
+        } else if (sort === SortChoiceEnum.PO) {
+          item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.PORTEE)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_PORTEE)?.params[0] ?? 0;
+        } else if (sort === SortChoiceEnum.PW) {
+          item.weightForSort = item.equipEffects.find(x => x.actionId === IdActionsEnum.PW)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.PERTE_PW)?.params[0] ?? 0;
+          item.weightForSort += item.equipEffects.find(x => x.actionId === IdActionsEnum.BOOST_PW)?.params[0] ?? 0;
+          item.weightForSort -= item.equipEffects.find(x => x.actionId === IdActionsEnum.DEBOOST_PW)?.params[0] ?? 0;
         } else {
           item.weightForSort = item.resistance;
         }
