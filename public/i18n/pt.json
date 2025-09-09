@@ -156,6 +156,8 @@
         "TACLE_ESQUIVE": "Bloqueio + Esquiva",
         "CRITIQUE": "% Crítico",
         "PARADE": "% Parada",
-        "CRITIQUE_PARADE": "% Crítico + Parada"
+        "CRITIQUE_PARADE": "% Crítico + Parada",
+        "PA": "PA",
+        "PM": "PM"
     }
 }

@@ -156,6 +156,8 @@
         "TACLE_ESQUIVE": "Tacle + Esquive",
         "CRITIQUE":"% Critique",
         "PARADE": "% Parade",
-        "CRITIQUE_PARADE": "% Critique + Parade"
+        "CRITIQUE_PARADE": "% Critique + Parade",
+        "PA": "PA",
+        "PM": "PM"
     }
 }

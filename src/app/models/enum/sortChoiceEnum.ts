@@ -11,4 +11,6 @@ export enum SortChoiceEnum {
     CRITIQUE = "CRITIQUE",
     PARADE  = "PARADE",
     CRITIQUE_PARADE = "CRITIQUE_PARADE",
+    PA = "PA",
+    PM = "PM",
 }

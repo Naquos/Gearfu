@@ -156,6 +156,8 @@
         "TACLE_ESQUIVE": "Lock + Dodge",
         "CRITIQUE": "% Critical",
         "PARADE": "% Block",
-        "CRITIQUE_PARADE": "% Critical + Block"
+        "CRITIQUE_PARADE": "% Critical + Block",
+        "PA": "AP",
+        "PM": "MP"
     }
 }
