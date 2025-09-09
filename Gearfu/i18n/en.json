@@ -158,6 +158,8 @@
         "PARADE": "% Block",
         "CRITIQUE_PARADE": "% Critical + Block",
         "PA": "AP",
-        "PM": "MP"
+        "PM": "MP",
+        "PO": "Range",
+        "PW": "WP"
     }
 }

@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1757442144908,
+  "timestamp": 1757443430249,
   "index": "/Gearfu/index.csr.html",
   "assetGroups": [
     {
@@ -11,10 +11,12 @@
         "ignoreVary": true
       },
       "urls": [
+        "/Gearfu/chunk-6MDQTQU3.js",
+        "/Gearfu/chunk-KHV2ILOJ.js",
         "/Gearfu/favicon.ico",
         "/Gearfu/index.csr.html",
         "/Gearfu/index.html",
-        "/Gearfu/main-4IXK7BQN.js",
+        "/Gearfu/main-NVYAGEBI.js",
         "/Gearfu/manifest.webmanifest",
         "/Gearfu/polyfills-HPZ7KTN2.js",
         "/Gearfu/styles-WNKEX7PZ.css"
@@ -105,6 +107,8 @@
     "/Gearfu/aptitudes/fr.webp": "550dc6ac19187c5171f7644408b7318b98ca19b1",
     "/Gearfu/aptitudes/poids.png": "f9ae42f0a251d746696be46536e11c9ebf82d572",
     "/Gearfu/aptitudes/pt.webp": "3ac09cf7a3801fc270d8ecc60e53cd0d898db28c",
+    "/Gearfu/chunk-6MDQTQU3.js": "922cc940ccbac71ffb6172ba39b06ccbd91b1890",
+    "/Gearfu/chunk-KHV2ILOJ.js": "57d3e81eae7f10c3b57391edb2db046049d2e557",
     "/Gearfu/discord.png": "8410ee7fdd53e1c4b7035186a8840084e988a606",
     "/Gearfu/favicon.ico": "c7c57945367016bc26381042a23383b8fbae0e28",
     "/Gearfu/gearfu.png": "33745e159ea108419eb7acfc0abf0ba8469467b0",
@@ -116,11 +120,11 @@
     "/Gearfu/icons/icon-512x512.png": "5222eeb8ce6eee86aa9e9f51851720d01c96ce95",
     "/Gearfu/icons/icon-72x72.png": "f1682da55f3f51493e06577c281deddb498ef3a7",
     "/Gearfu/icons/icon-96x96.png": "bf96900932a13186af36d1aca86a01dbe85ae7ce",
-    "/Gearfu/index.csr.html": "99742a0bea51dccbdde41a557e03c2be08cf0a8c",
-    "/Gearfu/index.html": "4cf60e4613c03d602f6cf66b938b6d529c64244e",
+    "/Gearfu/index.csr.html": "ac95e642ed1cd80b8bd93953ad29ab7f53f81556",
+    "/Gearfu/index.html": "2e6e0e0b2f6afa0ae1fcac0673d4c91f69803998",
     "/Gearfu/logo-WakFocus.png": "8db839a70924a93b6d342727a32e80e15c7c0a85",
     "/Gearfu/logo.png": "eb4ca47e89051ede0f24d53970c7406224d3d83c",
-    "/Gearfu/main-4IXK7BQN.js": "74adc5625e482ca20017ff74028d8fad9dd7221f",
+    "/Gearfu/main-NVYAGEBI.js": "6eb64636e92d5cfc1707a52b4cb63a6e80096f55",
     "/Gearfu/manifest.webmanifest": "c6442930528939f819d7a7bcf54cb6dc1909ea98",
     "/Gearfu/polyfills-HPZ7KTN2.js": "a328286aa2e927a96bf670f744a3fb4f9eec3a51",
     "/Gearfu/styles-WNKEX7PZ.css": "507d8a12a840346cd664c4a1e4fb9b01252354d5",

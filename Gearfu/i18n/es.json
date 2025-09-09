@@ -158,6 +158,8 @@
         "PARADE": "% Anticipación",
         "CRITIQUE_PARADE": "% Crítico + Anticipación",
         "PA": "PA",
-        "PM": "PM"
+        "PM": "PM",
+        "PO": "Alcance",
+        "PW": "PW"
     }
 }
