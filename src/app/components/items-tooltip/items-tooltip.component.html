@@ -1,6 +1,8 @@
 @for (choosen of itemsChoosen; let i = $index; track i) {
-    <app-item-tooltip
-        [item]="item"
-        [indexItemChoosen]="i"
-    ></app-item-tooltip>
+    @if (itemsChoosen[i] !== undefined) {
+        <app-item-tooltip
+            [item]="item"
+            [indexItemChoosen]="i"
+        ></app-item-tooltip>
+    }
 }
