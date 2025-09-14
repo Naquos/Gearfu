@@ -142,7 +142,8 @@
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Coeur huppermage",
         "DENOUEMENT": "Denouement",
-        "DEMESURE": "Démesure"
+        "DEMESURE": "Démesure",
+        "CHAOS": "Chaos"
     },
     "sort-choice-enum" : {
         "POIDS": "Poids",
