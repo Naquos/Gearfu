@@ -62,11 +62,12 @@ export class ItemsService {
           this.modifierElemMaitrisesFormService.denouement$,
           this.resistanceFormService.idResistances$,
           this.onlyNoElemFormService.onlyNoElem$,
-          this.onlyNoSecondaryFormService.onlyNoSecondary$
+          this.onlyNoSecondaryFormService.onlyNoSecondary$,
+          this.modifierElemMaitrisesFormService.chaos$
         ])
         .pipe(
-          tap(([items,nbElements, idMaitrises, sort, multiplicateurElem, denouement, idResistances, onlyNoElem, onlyNoSecondary]) => 
-            this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement, onlyNoElem, onlyNoSecondary)),
+          tap(([items,nbElements, idMaitrises, sort, multiplicateurElem, denouement, idResistances, onlyNoElem, onlyNoSecondary, chaos]) => 
+            this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement, onlyNoElem, onlyNoSecondary, chaos)),
           map(([items,]) => items));
 
           this.items$ = combineLatest([itemsFilters$, this.reverseFormService.reverse$])
@@ -130,13 +131,13 @@ export class ItemsService {
       return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
 
-    private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean): void {
+    private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean, chaos: boolean): void {
       let maxMaistrises = 0;
       let maxResistances = 0;
 
       items.forEach(item => {
         item.resistance = Math.trunc(this.calculResistancesForAnItem(item, idResistances));
-        item.maitrise = Math.trunc(this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary));
+        item.maitrise = Math.trunc(this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary, chaos));
         item.weight = this.calculWeight(item.resistance, item.maitrise);
         item.weightForSort = 0;
       })
@@ -276,20 +277,20 @@ export class ItemsService {
       }
 
       
-  public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[], multiplicateurElem: number, denouement: boolean, noElem: boolean, noSecondary: boolean): number {
+  public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[], multiplicateurElem: number, denouement: boolean, noElem: boolean, noSecondary: boolean, chaos: boolean): number {
     let result = 0;
     const maitrisesIdElems = [IdActionsEnum.MAITRISES_FEU,IdActionsEnum.MAITRISES_TERRE,IdActionsEnum.MAITRISES_EAU,IdActionsEnum.MAITRISES_AIR];
     const perteMaitrisesId = [IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,IdActionsEnum.PERTE_MAITRISES_FEU];
     const idMaitrisesWithoutElem = [...idMaitrises].filter(x => !maitrisesIdElems.includes(x));
 
     item.equipEffects.forEach(effect => {
-      if(!noElem && (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES ||
+      if(!noElem && !chaos && (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES ||
         (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements) ||
         (effect.actionId === IdActionsEnum.MAITRISES_CRITIQUES && denouement))) {
           result += effect.params[0] * multiplicateurElem;
       } else if (!noSecondary && idMaitrisesWithoutElem.includes(effect.actionId)) {
         result += effect.params[0];
-      } else if (!noElem && perteMaitrisesId.includes(effect.actionId) ||
+      } else if (!noElem && !chaos && perteMaitrisesId.includes(effect.actionId) ||
                 !noSecondary && (
                   (effect.actionId === IdActionsEnum.PERTE_MAITRISES_CRITIQUE && idMaitrises.includes(IdActionsEnum.MAITRISES_CRITIQUES)) ||
                   (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DOS && idMaitrises.includes(IdActionsEnum.MAITRISES_DOS)) ||
@@ -302,7 +303,7 @@ export class ItemsService {
     })
 
     const effectMaitrises = item.equipEffects.find(x => maitrisesIdElems.includes(x.actionId) && (nbElements === 0 || (nbElements === 1 && idMaitrises.includes(x.actionId)))); 
-    if(!noElem && effectMaitrises) {
+    if(!noElem && !chaos && effectMaitrises) {
       result += effectMaitrises.params[0] * multiplicateurElem;
     }
     return result;

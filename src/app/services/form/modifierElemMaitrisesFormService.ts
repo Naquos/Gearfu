@@ -19,6 +19,9 @@ export class ModifierMecanismFormService extends AbstractFormService<FormControl
   private readonly demesure = new BehaviorSubject<boolean>(false)
   public readonly demesure$ = this.demesure.asObservable()
 
+  private readonly chaos = new BehaviorSubject<boolean>(false)
+  public readonly chaos$ = this.chaos.asObservable()
+
   protected readonly keyEnum = KeyEnum.KEY_MODIFIER_MECANISM;
   public readonly form =  new FormControl<string[]>(ModifierMecanismFormService.DEFAULT_VALUE, { nonNullable: true });
 
@@ -34,6 +37,7 @@ export class ModifierMecanismFormService extends AbstractFormService<FormControl
     
     this.denouement.next(value?.includes(Mecanism.DENOUEMENT.valueOf()) ?? false);
     this.demesure.next(value?.includes(Mecanism.DEMESURE.valueOf()) ?? false);
+    this.chaos.next(value?.includes(Mecanism.CHAOS.valueOf()) ?? false);
   }
 
   public override setValue(value: string[]): void {

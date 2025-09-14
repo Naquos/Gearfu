@@ -142,7 +142,8 @@
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Huppermage's Heart",
         "DENOUEMENT": "Unraveling",
-        "DEMESURE": "Demeanor"
+        "DEMESURE": "Demeanor",
+        "CHAOS": "Chaos"
     },
     "sort-choice-enum": {
         "POIDS": "Weight",

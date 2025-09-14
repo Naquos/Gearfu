@@ -80,11 +80,11 @@ export class ItemChooseService extends AbstractDestroyService {
             this.modifierElemMaitrisesFormService.denouement$,
             this.resistancesFormService.idResistances$,
             this.onlyNoElemFormService.onlyNoElem$,
-            this.onlyNoSecondaryFormService.onlyNoSecondary$
-
+            this.onlyNoSecondaryFormService.onlyNoSecondary$,
+            this.modifierElemMaitrisesFormService.chaos$
         ]).pipe(
             takeUntil(this.destroy$),
-            tap(([list, nbElements, idMaitrises, multiplicateurElem, denouement, idResistances, noElem, noSecondary]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances, denouement, noElem, noSecondary))
+            tap(([list, nbElements, idMaitrises, multiplicateurElem, denouement, idResistances, noElem, noSecondary, chaos]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances, denouement, noElem, noSecondary, chaos))
         ).subscribe();
     }
 
@@ -134,13 +134,13 @@ export class ItemChooseService extends AbstractDestroyService {
         ).subscribe();
     }
 
-    private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean): void {
+    private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean, chaos: boolean): void {
         let weight = 0;
         let resistance = 0;
         let maitrise = 0;
         list.forEach(x => {
             const tempResis  = this.itemService.calculResistancesForAnItem(x, idResistances);
-            const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary);
+            const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary, chaos);
             resistance+= tempResis;
             maitrise+= tempMaitrise;
             weight+= this.itemService.calculWeight(tempResis, tempMaitrise)
