@@ -250,5 +250,23 @@
             "es": "Si el portador inflige tanto daños de melé como a distancia a un enemigo en su turno: Dofus ébano (Niv 1) (20% DI) en los aliados en un círculo de tamaño 2 alrededor del portador",
             "pt": "Se o portador infligir tanto danos corpo a corpo como à distância a um inimigo no seu turno: Dofus ébano (Nível 1) (20% DI) nos aliados num círculo de tamanho 2 à volta do portador"
         }
+    },
+    {
+        "id": 9078,
+        "description": {
+            "fr": "En fin de tour, s'il reste au moins 1 PM au porteur : 1PM pour le tour suivant",
+            "en": "At the end of the turn, if the bearer has at least 1 MP left: 1 MP for the next turn",
+            "es": "Al final del turno, si al portador le queda al menos 1 PM: 1 PM para el siguiente turno",
+            "pt": "No final do turno, se o portador tiver pelo menos 1 PM restante: 1 PM para o próximo turno"
+        }
+    },
+    {
+        "id": 9077,
+        "description": {
+            "fr": "En fin de tour, s'il reste au moins 1 PA au porteur : 1PA pour le tour suivant",
+            "en": "At the end of the turn, if the bearer has at least 1 AP left: 1 AP for the next turn",
+            "es": "Al final del turno, si al portador le queda al menos 1 PA: 1 PA para el siguiente turno",
+            "pt": "No final do turno, se o portador tiver pelo menos 1 PA restante: 1 PA para o próximo turno"
+        }
     }
 ]
