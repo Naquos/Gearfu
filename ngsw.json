@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1757859141899,
+  "timestamp": 1758023661343,
   "index": "/Gearfu/index.csr.html",
   "assetGroups": [
     {
@@ -69,22 +69,7 @@
       "patterns": []
     }
   ],
-  "dataGroups": [
-    {
-      "name": "config-json",
-      "patterns": [
-        "https:\\/\\/wakfu\\.cdn\\.ankama\\.com\\/gamedata\\/config\\.json"
-      ],
-      "strategy": "freshness",
-      "maxSize": 1,
-      "maxAge": 3600000,
-      "timeoutMs": 5000,
-      "cacheQueryOptions": {
-        "ignoreVary": true
-      },
-      "version": 1
-    }
-  ],
+  "dataGroups": [],
   "hashTable": {
     "/Gearfu/WakfuIndex.png": "9c84562afd10208ab6835b4edb31de4a516c1c5c",
     "/Gearfu/aptitudes/EmplacementAmulette.png": "d112124ea6fd9609ae0828dab9d790b2c973a6bb",
@@ -121,7 +106,7 @@
     "/Gearfu/icons/icon-72x72.png": "f1682da55f3f51493e06577c281deddb498ef3a7",
     "/Gearfu/icons/icon-96x96.png": "bf96900932a13186af36d1aca86a01dbe85ae7ce",
     "/Gearfu/index.csr.html": "fcb26d269c2ffb565630667687c07f26cbea4cb8",
-    "/Gearfu/index.html": "439bb9bd8c5c40e5c05565f22c62906cdc8891dc",
+    "/Gearfu/index.html": "f22b075ce039b138a29de5d1217850576f5711e0",
     "/Gearfu/logo-WakFocus.png": "8db839a70924a93b6d342727a32e80e15c7c0a85",
     "/Gearfu/logo.png": "eb4ca47e89051ede0f24d53970c7406224d3d83c",
     "/Gearfu/main-7JMWCRAB.js": "458d231b63bce8a1f29a0c8eef515a3f87a29040",
