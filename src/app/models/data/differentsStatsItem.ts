@@ -6,4 +6,5 @@ export interface DifferentStatsItem {
     actionId: IdActionsEnum,
     presentOnCurrentItem: boolean;
     presentOnEquippedItem: boolean;
+    isArmureRecue: boolean;
 }

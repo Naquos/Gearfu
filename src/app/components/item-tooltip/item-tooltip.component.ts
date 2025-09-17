@@ -10,6 +10,7 @@ import { DifferentStatsItem } from '../../models/data/differentsStatsItem';
 import { Item } from '../../models/data/item';
 import { ActionsPipe } from "../../pipe/actions/actions.pipe";
 import { ImageFallbackDirective } from '../../directives/imageFallback.directive';
+import { ParameterMajorActionEnum } from '../../models/enum/parameterMajorActionEnum';
 
 @Component({
   selector: 'app-item-tooltip',
@@ -28,7 +29,9 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     @Input()
     public indexItemChoosen = 0;
 
-    protected readonly mapDifferentStatsItem = new Map<IdActionsEnum, DifferentStatsItem>();
+    protected readonly ARMURE_DONNEE_RECUE = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
+
+    protected listDifferentsStatsItem:DifferentStatsItem[] = [];
     protected loaded$!: Observable<boolean>;
     protected weight = 0;
 
@@ -42,10 +45,10 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     protected differentStatsItemList$ = this.itemSelected$.pipe(
       takeUntil(this.destroy$),
       tap(listItems => {
-        this.mapDifferentStatsItem.clear();
-        this.fillMapCurrentItem();
+        this.listDifferentsStatsItem = [];
+        this.fillListCurrentItem();
         listItems.forEach(items => items ?this.fillMapDifferentStatsItem(items!): "")}),
-      map(() => Array.from(this.mapDifferentStatsItem.values()).sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999))));
+      map(() => this.listDifferentsStatsItem.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999))));
 
      constructor() {
         super();
@@ -116,10 +119,20 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     return "";
   }
 
-  private fillMapCurrentItem(): void {
-    this.item.equipEffects.forEach(equipEffect => {
+  private getByActionId(actionId: IdActionsEnum, isArmureRecue: boolean): DifferentStatsItem | undefined {
+    return this.listDifferentsStatsItem.find(x => x.actionId === actionId && x.isArmureRecue === isArmureRecue);
+  }
 
-      let effect = this.mapDifferentStatsItem.get(equipEffect.actionId)
+  private pushSetDifferentsStatsItem(differentsStatsItem: DifferentStatsItem | undefined): void {
+    if (!differentsStatsItem) { return; }
+    this.listDifferentsStatsItem = this.listDifferentsStatsItem.filter(x => x.actionId !== differentsStatsItem.actionId || x.isArmureRecue !== differentsStatsItem.isArmureRecue);
+    this.listDifferentsStatsItem.push(differentsStatsItem);
+  }
+
+  private fillListCurrentItem(): void {
+    this.item.equipEffects.forEach(equipEffect => {
+      const isArmureRecue = this.ARMURE_DONNEE_RECUE.includes(equipEffect.actionId) && equipEffect.params[4] ===  ParameterMajorActionEnum.ARMURE_RECUE;
+      let effect = this.getByActionId(equipEffect.actionId, isArmureRecue);
       if(effect) {
         const tempParams = effect.params;
         tempParams[0] += equipEffect.params[0];
@@ -136,18 +149,20 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
           params: [...equipEffect.params],
           actionId: equipEffect.actionId,
           presentOnCurrentItem: true,
-          presentOnEquippedItem: false
+          presentOnEquippedItem: false,
+          isArmureRecue: isArmureRecue
         }
       }
 
-      this.mapDifferentStatsItem.set(equipEffect.actionId, effect)
+      this.pushSetDifferentsStatsItem(effect);
     })
   }
 
   private fillMapDifferentStatsItem(equippedItem: Item): void {
     
     equippedItem.equipEffects.forEach(equipEffect => {
-      let differentsStatsItem = this.mapDifferentStatsItem.get(equipEffect.actionId);
+      const isArmureRecue = this.ARMURE_DONNEE_RECUE.includes(equipEffect.actionId) && equipEffect.params[4] ===  ParameterMajorActionEnum.ARMURE_RECUE;
+      let differentsStatsItem = this.getByActionId(equipEffect.actionId, isArmureRecue);
       const opposedStatsItem = this.item.equipEffects.find(x => this.actionsService.isOpposed(x, equipEffect));
       if(opposedStatsItem) {
         const tempParams = [...equipEffect.params];
@@ -157,10 +172,11 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
           params: tempParams,
           actionId: opposedStatsItem.actionId,
           presentOnCurrentItem: true,
-          presentOnEquippedItem: true
+          presentOnEquippedItem: true,
+          isArmureRecue: isArmureRecue,
         };
 
-      } else if(differentsStatsItem) {
+      } else if(differentsStatsItem && differentsStatsItem.isArmureRecue === isArmureRecue) {
         const tempParams = differentsStatsItem.params;
         tempParams[0] -= equipEffect.params[0];
         differentsStatsItem = {
@@ -177,10 +193,11 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
           params: tempParams,
           actionId: equipEffect.actionId,
           presentOnCurrentItem: false,
-          presentOnEquippedItem: true
+          presentOnEquippedItem: true,
+          isArmureRecue: isArmureRecue,
         }
       }
-      this.mapDifferentStatsItem.set(differentsStatsItem.actionId, differentsStatsItem);
+      this.pushSetDifferentsStatsItem(differentsStatsItem);
     })
     
     this.calculDifferenceResistance();
@@ -188,13 +205,13 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
 
   private calculDifferenceResistance(): void {
 
-    const resisElem = this.mapDifferentStatsItem.get(IdActionsEnum.RESISTANCES_ELEMENTAIRE);
+    const resisElem = this.getByActionId(IdActionsEnum.RESISTANCES_ELEMENTAIRE, false);
     const resisList = [IdActionsEnum.RESISTANCES_FEU, IdActionsEnum.RESISTANCES_EAU, IdActionsEnum.RESISTANCES_AIR, IdActionsEnum.RESISTANCES_TERRE];
 
 
-    if(resisElem && resisList.find(x => this.mapDifferentStatsItem.has(x))) {
+    if(resisElem && resisList.find(x => this.getByActionId(x, false))) {
       resisList.forEach(resis => {
-        let differentsStats = this.mapDifferentStatsItem.get(resis);
+        let differentsStats = this.getByActionId(resis, false);
         if(differentsStats) {
           differentsStats.params[0] += resisElem.params[0];
           differentsStats.value += resisElem.params[0];
@@ -208,9 +225,9 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
             presentOnEquippedItem: true
           }
         }
-        this.mapDifferentStatsItem.set(resis, differentsStats);
+        this.pushSetDifferentsStatsItem(differentsStats);
       })
-      this.mapDifferentStatsItem.delete(IdActionsEnum.RESISTANCES_ELEMENTAIRE);
+      this.listDifferentsStatsItem = this.listDifferentsStatsItem.filter(x => x.actionId !== IdActionsEnum.RESISTANCES_ELEMENTAIRE);
     }
   }
 }

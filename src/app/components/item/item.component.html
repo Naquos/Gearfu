@@ -18,19 +18,20 @@
             <div class="poids" [matTooltip]="'item.poids-infobulle' | translate" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{item.weight}}</div>
         </div>
         <div>
-            <p *ngFor="let effect of item.equipEffects">
-                <ng-container *ngIf="effect.actionId !== IdActionEnum.APPLIQUE_ETAT">
-                    <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ effect | actions | async }}
-                </ng-container>
-                <ng-container *ngIf="effect.actionId === IdActionEnum.APPLIQUE_ETAT">
-                    <span class="appliqueEtat" *ngIf="{states: statesService.findStates(effect.params[0]) } as value"
-                        (mouseenter)="openStatesTooltip($event, value.states?.id ?? 0, getStatesTranslate(value.states))"
-                        (mouseleave)="stateTooltipService.closeTooltip()"
-                    >
-                        {{ getStatesTranslate(value.states) }}
-                    </span>
-                </ng-container>
-            </p>
+            @for (effect of item.equipEffects; track effect.id) {
+                <p>
+                    @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT) {
+                        <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ effect | actions | async }}
+                    } @else {
+                        <span class="appliqueEtat" *ngIf="{states: statesService.findStates(effect.params[0]) } as value"
+                            (mouseenter)="openStatesTooltip($event, value.states?.id ?? 0, getStatesTranslate(value.states))"
+                            (mouseleave)="stateTooltipService.closeTooltip()"
+                        >
+                            {{ getStatesTranslate(value.states) }}
+                        </span>
+                    }
+                </p>
+            }
         </div>
     </div>
  }
