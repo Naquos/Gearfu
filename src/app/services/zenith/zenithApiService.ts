@@ -6,6 +6,7 @@ import { GetBuildInfoResponse } from "../../models/zenith/getBuildInfoResponse";
 import { AddItemRequest } from "../../models/zenith/addItemRequest";
 import { CreateBuildRequest } from "../../models/zenith/createBuildRequest";
 import { BuildResponse } from "../../models/zenith/buildResponse";
+import { CustomStatisticsUpdate } from "../../models/zenith/customStatisticsUpdate";
 
 @Injectable({providedIn: 'root'})
 export class ZenithApiService {
@@ -32,5 +33,9 @@ export class ZenithApiService {
 
     public getBuild(id: string):  Observable<BuildResponse> {
         return this.http.get<BuildResponse>(this.urlZenith + "build/" + id, {headers: this.headers});
+    }
+
+    public updateCustomStatistics(customStatistics: CustomStatisticsUpdate ): Observable<void> {
+        return this.http.post<void>(this.urlZenith + "customstatistics/update", customStatistics, {headers: this.headers});
     }
 }
