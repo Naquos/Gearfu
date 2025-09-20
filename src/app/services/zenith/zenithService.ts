@@ -24,7 +24,6 @@ export class ZenithService {
     private readonly actionService = inject(ActionService);
 
     private firstRing = true;
-    private missingItems: Item[] = [];
 
     public createBuild(): Observable<string> {
         return this.zenithApiService.createBuild({
@@ -39,6 +38,7 @@ export class ZenithService {
             switchMap(([infoBuild, idItems]) => {
                 const items = idItems.split(',').map(s => parseInt(s, 10)).filter(n => !isNaN(n));
                 const failedItems: Item[] = []; // on accumule ici les items non trouvés (500)
+                const items231AndMore: Item[] = []; // on accumule ici les items 231+ car Zénith n'est pas à jour
 
                 const itemRequests$ = items.map(id =>
                     this.itemsService.searchItem(id).pipe(
@@ -48,6 +48,9 @@ export class ZenithService {
                                 // si searchItem renvoie null/undefined : on le considère comme "manquant" et on continue
                                 // failedItems.push({ id, reason: 'notFoundLocally' });
                                 return of(item);
+                            }
+                            if (item.level >= 231) {
+                                items231AndMore.push(item);
                             }
 
                             return this.zenithApiService.addItemRequest(
@@ -85,8 +88,12 @@ export class ZenithService {
                                 id_build: infoBuild.id_build,
                                 id_stats: effect.actionId,
                                 value: effect.params[0] || 0
-                            })
+                            }, effect)
                         );
+
+                        // 3. On calcul les effets pour les items 231+
+
+                        // 4. on les ajoute à la liste des updates
                         return forkJoin(updateRequests$).pipe(
                             tap(() => this.firstRing = true),
                             map(() => infoBuild.link_build)
@@ -97,8 +104,20 @@ export class ZenithService {
         );
     }
 
+    private handleItems231AndMore(items: Item[]): EquipEffects[] {
+        const mapEffects = this.convertItemsToMapEffecs(items);
+        
+
+        return Array.from(mapEffects.values());
+        
+    }
+
     private handleMissingItems(items: Item[]): EquipEffects[] {
-        this.missingItems = items;
+        const mapEffects = this.convertItemsToMapEffecs(items);
+        return Array.from(mapEffects.values());
+    }
+
+    private convertItemsToMapEffecs(items: Item[]) {
         const mapEffects = new Map<number, EquipEffects>();
         items.forEach(item => {
             item.equipEffects.forEach(effect => {
@@ -118,7 +137,7 @@ export class ZenithService {
                 }
             });
         });
-        return Array.from(mapEffects.values());
+        return mapEffects;
     }
 
     private getItemTypeId(item: Item): number {
