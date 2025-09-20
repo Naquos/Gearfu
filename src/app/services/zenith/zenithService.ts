@@ -13,6 +13,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Item } from "../../models/data/item";
 import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum";
 import { ActionService } from "../data/actionService";
+import { BuildResponse } from "../../models/zenith/buildResponse";
 
 @Injectable({ providedIn: 'root' })
 export class ZenithService {
@@ -26,6 +27,8 @@ export class ZenithService {
     private firstRing = true;
 
     public createBuild(): Observable<string> {
+        let build: BuildResponse = {} as BuildResponse;
+        let linkBuild = "";
         return this.zenithApiService.createBuild({
             flags: [],
             id_job: 7,
@@ -33,6 +36,7 @@ export class ZenithService {
             level: 245,
             name: "Gearfu - Generated"
         }).pipe(
+            tap(x => linkBuild = x.link),
             switchMap(x => this.zenithApiService.getBuildInfo(x.link)),
             combineLatestWith(this.itemChooseService.idItems$),
             switchMap(([infoBuild, idItems]) => {
@@ -61,7 +65,6 @@ export class ZenithService {
                                     console.log(err)
                                     // si le serveur renvoie 500 => non bloquant : on stocke l'item et on renvoie une valeur "ok: false"
                                     if (err && err.status === 500) {
-                                        console.warn(`Item ${id} non ajouté (500)`, item);
                                         failedItems.push(item);
                                         return of(item);
                                     }
@@ -74,15 +77,21 @@ export class ZenithService {
                 );
 
                 return forkJoin(itemRequests$).pipe(
+                    switchMap(() => this.zenithApiService.getBuild(linkBuild)),
+                    tap(x => build = x),
                     switchMap(() => {
-                        if (failedItems.length === 0) {
+                        if (!failedItems.length && !items231AndMore.length) {
                             // Aucun item manquant → on continue direct
                             return of(infoBuild.link_build);
                         }
                         // 1. On calcule les effets combinés
                         const combinedEffects = this.handleMissingItems(failedItems);
 
-                        // 2. Pour chaque effet combiné, on prépare un appel updateCustomStatistics
+                        // 2. On calcul les effets pour les items 231+
+                        const correctEffects = this.handleItems231AndMore(items231AndMore, build);
+                        combinedEffects.push(...correctEffects);
+
+                        // 3. Pour chaque effet combiné, on prépare un appel updateCustomStatistics
                         const updateRequests$ = combinedEffects.map(effect =>
                             this.zenithApiService.updateCustomStatistics({
                                 id_build: infoBuild.id_build,
@@ -90,8 +99,6 @@ export class ZenithService {
                                 value: effect.params[0] || 0
                             }, effect)
                         );
-
-                        // 3. On calcul les effets pour les items 231+
 
                         // 4. on les ajoute à la liste des updates
                         return forkJoin(updateRequests$).pipe(
@@ -104,12 +111,33 @@ export class ZenithService {
         );
     }
 
-    private handleItems231AndMore(items: Item[]): EquipEffects[] {
+    private handleItems231AndMore(items: Item[], build: BuildResponse): EquipEffects[] {
         const mapEffects = this.convertItemsToMapEffecs(items);
-        
 
-        return Array.from(mapEffects.values());
-        
+        const effectsBuild = build.equipments.filter(equipment => items.find(item => item.id === equipment.id_equipment))
+            .map(equipment =>
+                equipment.effects.map(effect => {
+                    return effect.values.map(value => {
+                        const isAMalus = this.actionService.isAMalus(value.id_stats);
+                        return {
+                            id: value.id_stats,
+                            actionId: isAMalus ? this.actionService.getOpposedEffect(value.id_stats) : value.id_stats,
+                            params: [isAMalus ? -value.damage : value.damage, 0, value.elements.length, 0],
+                        }
+                    })
+                })
+            ).flat(2);
+
+
+        effectsBuild.forEach(effect => {
+            const existing = mapEffects.get(effect.actionId);
+            if (!existing) { return; }
+            // Somme les params des effets similaires
+            existing.params[0] -= effect.params[0] || 0;
+        });
+
+        return Array.from(mapEffects.values()).filter(x => x.params[0] !== 0);
+
     }
 
     private handleMissingItems(items: Item[]): EquipEffects[] {

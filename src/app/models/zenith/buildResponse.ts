@@ -4,8 +4,14 @@ export interface BuildResponse {
         id_equipment: number,
         effects: {
             id_effect: number,
-            value: number
-        }
+            values: {
+                id_stats: number,
+                damage: number,
+                elements: {
+                    id_build: number
+                }[]
+            }[]
+        }[]
     }[]
     link_build: string,
 }
