@@ -1,28 +1,8 @@
 {
   "configVersion": 1,
-  "timestamp": 1758403300792,
+  "timestamp": 1758405020126,
   "index": "/Gearfu/index.csr.html",
   "assetGroups": [
-    {
-      "name": "app",
-      "installMode": "prefetch",
-      "updateMode": "prefetch",
-      "cacheQueryOptions": {
-        "ignoreVary": true
-      },
-      "urls": [
-        "/Gearfu/chunk-6MDQTQU3.js",
-        "/Gearfu/chunk-KHV2ILOJ.js",
-        "/Gearfu/favicon.ico",
-        "/Gearfu/index.csr.html",
-        "/Gearfu/index.html",
-        "/Gearfu/main-Y2PN3UHJ.js",
-        "/Gearfu/manifest.webmanifest",
-        "/Gearfu/polyfills-HPZ7KTN2.js",
-        "/Gearfu/styles-WNKEX7PZ.css"
-      ],
-      "patterns": []
-    },
     {
       "name": "assets",
       "installMode": "lazy",
@@ -92,10 +72,7 @@
     "/Gearfu/aptitudes/fr.webp": "550dc6ac19187c5171f7644408b7318b98ca19b1",
     "/Gearfu/aptitudes/poids.png": "f9ae42f0a251d746696be46536e11c9ebf82d572",
     "/Gearfu/aptitudes/pt.webp": "3ac09cf7a3801fc270d8ecc60e53cd0d898db28c",
-    "/Gearfu/chunk-6MDQTQU3.js": "922cc940ccbac71ffb6172ba39b06ccbd91b1890",
-    "/Gearfu/chunk-KHV2ILOJ.js": "57d3e81eae7f10c3b57391edb2db046049d2e557",
     "/Gearfu/discord.png": "8410ee7fdd53e1c4b7035186a8840084e988a606",
-    "/Gearfu/favicon.ico": "c7c57945367016bc26381042a23383b8fbae0e28",
     "/Gearfu/gearfu.png": "33745e159ea108419eb7acfc0abf0ba8469467b0",
     "/Gearfu/icons/icon-128x128.png": "1bce9bb631571d6df92cad24e96ea2ea6f98a8eb",
     "/Gearfu/icons/icon-144x144.png": "cadbcdcf66f6d8fe93ad2b3baa2868c565722af3",
@@ -105,14 +82,8 @@
     "/Gearfu/icons/icon-512x512.png": "5222eeb8ce6eee86aa9e9f51851720d01c96ce95",
     "/Gearfu/icons/icon-72x72.png": "f1682da55f3f51493e06577c281deddb498ef3a7",
     "/Gearfu/icons/icon-96x96.png": "bf96900932a13186af36d1aca86a01dbe85ae7ce",
-    "/Gearfu/index.csr.html": "e7c045bf4d27f641eb5e900b20b36233000c6af1",
-    "/Gearfu/index.html": "838c4fb52d1bb66950c2b17829f8a55415ada866",
     "/Gearfu/logo-WakFocus.png": "8db839a70924a93b6d342727a32e80e15c7c0a85",
     "/Gearfu/logo.png": "eb4ca47e89051ede0f24d53970c7406224d3d83c",
-    "/Gearfu/main-Y2PN3UHJ.js": "a1b1e1a29362894c92402979814e475985d9e087",
-    "/Gearfu/manifest.webmanifest": "c6442930528939f819d7a7bcf54cb6dc1909ea98",
-    "/Gearfu/polyfills-HPZ7KTN2.js": "a328286aa2e927a96bf670f744a3fb4f9eec3a51",
-    "/Gearfu/styles-WNKEX7PZ.css": "507d8a12a840346cd664c4a1e4fb9b01252354d5",
     "/Gearfu/zenith-logo.webp": "1bb8e4c3d82a21109a0ea8c196097c637c1cb3d6"
   },
   "navigationUrls": [
