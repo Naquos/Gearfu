@@ -282,3 +282,10 @@ app-item-list {
       display: none;
     }
   }
+
+  
+@media screen and (max-width: 1000px) {
+    app-recap-stats {
+        display: none!important;
+    }
+}
