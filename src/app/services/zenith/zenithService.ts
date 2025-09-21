@@ -90,14 +90,15 @@ export class ZenithService {
                         // 2. On calcul les effets pour les items 231+
                         const correctEffects = this.handleItems231AndMore(items231AndMore, build);
 
-                        correctEffects.forEach(effect => {
-                            const existing = combinedEffects.find(e => e.actionId === effect.actionId);
-                            if (existing) {
-                                existing.params[0] += effect.params[0] || 0;
-                            } else {
-                                combinedEffects.push(effect);
-                            }
-                        });
+                        // correctEffects.forEach(effect => {
+                        //     const existing = combinedEffects.find(e => e.actionId === effect.actionId);
+                        //     if (existing) {
+                        //         existing.params[0] += effect.params[0] || 0;
+                        //     } else {
+                        //         combinedEffects.push(effect);
+                        //     }
+                        // });
+                        combinedEffects.push(...correctEffects);
 
                         // 3. Pour chaque effet combiné, on prépare un appel updateCustomStatistics
                         const updateRequests$ = combinedEffects.map(effect =>
