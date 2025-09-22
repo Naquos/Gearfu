@@ -56,7 +56,7 @@ export class ActionService {
         [IdActionsEnum.TACLE, IdActionsEnum.PERTE_TACLE],
         [IdActionsEnum.ESQUIVE, IdActionsEnum.PERTE_ESQUIVE],
         [IdActionsEnum.MAITRISES_DOS, IdActionsEnum.PERTE_MAITRISES_DOS],
-        [IdActionsEnum.BOOST_PW, IdActionsEnum.DEBOOST_PW],
+        [IdActionsEnum.PW, IdActionsEnum.DEBOOST_PW],
         [IdActionsEnum.PW, IdActionsEnum.DEBOOST_PW],
         [IdActionsEnum.PARADE, IdActionsEnum.PERTE_PARADE],
         [IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.PERTE_MAITRISES_CRITIQUE],

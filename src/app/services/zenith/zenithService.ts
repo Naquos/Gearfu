@@ -80,7 +80,8 @@ export class ZenithService {
                     switchMap(() => this.zenithApiService.getBuild(linkBuild)),
                     tap(x => build = x),
                     switchMap(() => {
-                        if (!failedItems.length && !items231AndMore.length) {
+                        if (true) {
+                        // if (!failedItems.length && !items231AndMore.length) {
                             // Aucun item manquant → on continue direct
                             return of(infoBuild.link_build);
                         }
@@ -90,14 +91,6 @@ export class ZenithService {
                         // 2. On calcul les effets pour les items 231+
                         const correctEffects = this.handleItems231AndMore(items231AndMore, build);
 
-                        // correctEffects.forEach(effect => {
-                        //     const existing = combinedEffects.find(e => e.actionId === effect.actionId);
-                        //     if (existing) {
-                        //         existing.params[0] += effect.params[0] || 0;
-                        //     } else {
-                        //         combinedEffects.push(effect);
-                        //     }
-                        // });
                         combinedEffects.push(...correctEffects);
 
                         // 3. Pour chaque effet combiné, on prépare un appel updateCustomStatistics
@@ -158,13 +151,13 @@ export class ZenithService {
         const mapEffects = new Map<number, EquipEffects>();
         items.forEach(item => {
             item.equipEffects.forEach(effect => {
-                if (effect.actionId === IdActionsEnum.APPLIQUE_ETAT) {
+                if ([IdActionsEnum.APPLIQUE_ETAT, IdActionsEnum.ARMURE_DONNEE_RECUE].includes(effect.actionId)) {
                     return; // on ignore les états appliqués
 
                 }
                 let actionId = effect.actionId;
                 if (this.actionService.isAMalus(actionId)) { actionId = this.actionService.getOpposedEffect(actionId); }
-
+                
                 const existing = mapEffects.get(actionId);
                 if (!existing) {
                     mapEffects.set(actionId, { ...effect, params: [...effect.params] });
