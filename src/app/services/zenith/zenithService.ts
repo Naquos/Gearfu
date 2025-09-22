@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { ZenithApiService } from "./zenithApiService";
-import { catchError, combineLatestWith, forkJoin, map, Observable, of, switchMap, take, tap, throwError } from "rxjs";
+import { catchError, combineLatestWith, forkJoin, iif, map, Observable, of, switchMap, take, tap, throwError } from "rxjs";
 import { ItemChooseService } from "../itemChooseService";
 import { ItemsService } from "../data/itemsService";
 import { AddItemRequest } from "../../models/zenith/addItemRequest";
@@ -80,8 +80,8 @@ export class ZenithService {
                     switchMap(() => this.zenithApiService.getBuild(linkBuild)),
                     tap(x => build = x),
                     switchMap(() => {
-                        if (true) {
-                        // if (!failedItems.length && !items231AndMore.length) {
+                        // if (true) {
+                        if (!failedItems.length && !items231AndMore.length) {
                             // Aucun item manquant → on continue direct
                             return of(infoBuild.link_build);
                         }
@@ -103,9 +103,13 @@ export class ZenithService {
                         );
 
                         // 4. on les ajoute à la liste des updates
-                        return forkJoin(updateRequests$).pipe(
-                            tap(() => this.firstRing = true),
-                            map(() => infoBuild.link_build)
+                        return iif(() => updateRequests$.length > 0,
+                            forkJoin(updateRequests$).pipe(
+                                map(() => infoBuild.link_build)
+                            ),
+                            of(infoBuild.link_build)
+                        ).pipe(
+                            tap(() => this.firstRing = true)
                         );
                     }),
                 );
@@ -120,11 +124,13 @@ export class ZenithService {
             .map(equipment =>
                 equipment.effects.map(effect => {
                     return effect.values.map(value => {
-                        const isAMalus = this.actionService.isAMalus(value.id_stats);
+                        let actionId = value.id_stats;
+                        if (this.actionService.isAMalus(actionId)) { actionId = this.actionService.getOpposedEffect(actionId); }
+                        if (actionId === IdActionsEnum.PW) { actionId = IdActionsEnum.BOOST_PW; }
                         return {
                             id: value.id_stats,
-                            actionId: isAMalus ? this.actionService.getOpposedEffect(value.id_stats) : value.id_stats,
-                            params: [isAMalus ? -value.damage : value.damage, 0, value.elements.length, 0],
+                            actionId: actionId,
+                            params: [value.damage, 0, value.elements.length, 0],
                         }
                     })
                 })
@@ -133,9 +139,9 @@ export class ZenithService {
 
         effectsBuild.forEach(effect => {
             const existing = mapEffects.get(effect.actionId);
-            if (!existing) { return; }
             // Somme les params des effets similaires
-            existing.params[0] -= effect.params[0] || 0;
+            if (existing) { existing.params[0] -= effect.params[0] || 0; }
+
         });
 
         return Array.from(mapEffects.values()).filter(x => x.params[0] !== 0);
@@ -157,10 +163,11 @@ export class ZenithService {
                 }
                 let actionId = effect.actionId;
                 if (this.actionService.isAMalus(actionId)) { actionId = this.actionService.getOpposedEffect(actionId); }
-                
+
+
                 const existing = mapEffects.get(actionId);
                 if (!existing) {
-                    mapEffects.set(actionId, { ...effect, params: [...effect.params] });
+                    mapEffects.set(actionId, { ...effect, actionId, params: [...effect.params] });
                 } else {
                     // Somme les params des effets similaires
                     existing.params[0] += effect.params[0] || 0;
