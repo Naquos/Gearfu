@@ -39,51 +39,28 @@ export class ZenithApiService {
         return this.http.get<BuildResponse>(this.urlZenith + "build/" + id, { headers: this.headers });
     }
 
+    private prepareRequestsCustomStatistics(customStatistics: CustomStatisticsUpdate, nbElements: number, elementsList: IdActionsEnum[]): Observable<void[]> {
+        const requests$ = [];
+        for (let i = 0; i < nbElements; i++) {
+            const customStatisticsElement = {
+                id_build: customStatistics.id_build,
+                id_stats: elementsList[i],
+                value: customStatistics.value
+            };
+            requests$.push(this.uniqueUpdateCustomStatistics(customStatisticsElement));
+        }
+        return forkJoin(requests$);
+    }
+
     public updateCustomStatistics(customStatistics: CustomStatisticsUpdate, equipEffect: EquipEffects): Observable<void[]> {
         if (customStatistics.id_stats === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE) {
-            const requests$ = [];
-            for (let i = 0; i < equipEffect.params[2]; i++) {
-                const customStatisticsElement = {
-                    id_build: customStatistics.id_build,
-                    id_stats: this.ELEMENTS_MAITRISES[i],
-                    value: customStatistics.value
-                };
-                requests$.push(this.uniqueUpdateCustomStatistics(customStatisticsElement));
-            }
-            return forkJoin(requests$);
+            return this.prepareRequestsCustomStatistics(customStatistics, equipEffect.params[2], this.ELEMENTS_MAITRISES);
         } else if (customStatistics.id_stats === IdActionsEnum.MAITRISES_ELEMENTAIRES) {
-            const requests$ = [];
-            for (let i = 0; i < 4; i++) {
-                const customStatisticsElement = {
-                    id_build: customStatistics.id_build,
-                    id_stats: this.ELEMENTS_MAITRISES[i],
-                    value: customStatistics.value
-                };
-                requests$.push(this.uniqueUpdateCustomStatistics(customStatisticsElement));
-            }
-            return forkJoin(requests$);
+            return this.prepareRequestsCustomStatistics(customStatistics, 4, this.ELEMENTS_MAITRISES);
         } else if (customStatistics.id_stats === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE) {
-            const requests$ = [];
-            for (let i = 0; i < equipEffect.params[2]; i++) {
-                const customStatisticsElement = {
-                    id_build: customStatistics.id_build,
-                    id_stats: this.ELEMENTS_RESISTANCES[i],
-                    value: customStatistics.value
-                };
-                requests$.push(this.uniqueUpdateCustomStatistics(customStatisticsElement));
-            }
-            return forkJoin(requests$);
+            return this.prepareRequestsCustomStatistics(customStatistics, equipEffect.params[2], this.ELEMENTS_RESISTANCES);
         } else if (customStatistics.id_stats === IdActionsEnum.RESISTANCES_ELEMENTAIRE) {
-            const requests$ = [];
-            for (let i = 0; i < 4; i++) {
-                const customStatisticsElement = {
-                    id_build: customStatistics.id_build,
-                    id_stats: this.ELEMENTS_RESISTANCES[i],
-                    value: customStatistics.value
-                };
-                requests$.push(this.uniqueUpdateCustomStatistics(customStatisticsElement));
-            }
-            return forkJoin(requests$);
+            return this.prepareRequestsCustomStatistics(customStatistics, 4, this.ELEMENTS_RESISTANCES);
         }
         return forkJoin([this.uniqueUpdateCustomStatistics(customStatistics)]);
     }
