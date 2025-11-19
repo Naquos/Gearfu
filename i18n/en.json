@@ -49,6 +49,7 @@
     },
     "item-choose": {
         "zenith": "Export build to Zénith Wakfu",
+        "zenith-export": "Export to Zénith",
         "copy": "Copy URL",
         "poids-total": "Total weight",
         "maitrise-total": "Total mastery",
@@ -79,6 +80,7 @@
     },
     "major-present": {
         "label": "Major attribute required on the item",
+        "label-malus": "Malus required on the item",
         "PA": "AP",
         "PM": "MP",
         "PW": "WP",

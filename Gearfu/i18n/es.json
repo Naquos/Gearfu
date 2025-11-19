@@ -49,6 +49,7 @@
     },
     "item-choose": {
         "zenith": "Exportar construcción a Zénith Wakfu",
+        "zenith-export": "Exportar a Zénith",
         "copy": "Copiar URL",
         "poids-total": "Peso total",
         "maitrise-total": "Dominio total",
@@ -79,6 +80,7 @@
     },
     "major-present": {
         "label": "Atributo mayor requerido en el objeto",
+        "label-malus": "Malus requerido en el objeto",
         "PA": "PA",
         "PM": "PM",
         "PW": "PW",
