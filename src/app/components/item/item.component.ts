@@ -93,6 +93,10 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     window.open('https://www.wakfu.com/fr/mmorpg/encyclopedie/armures/' + itemId);
   }
 
+  protected copyToClipboard(): void {
+    navigator.clipboard.writeText(this.item.title[this.translateService.currentLang as keyof typeof this.item.title]);
+  }
+
   protected getStatesTranslate(state?: States | null): string {
     if(!state) { return ""}
     const lang = this.translateService.currentLang;
