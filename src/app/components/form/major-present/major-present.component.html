@@ -14,6 +14,8 @@
     <app-button-checkbox [tooltip]="'major-present.resistance-critique' | translate" [control]="majorPresentFormService.form.controls.RESISTANCE_CRITIQUE" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_CRITIQUES)" ></app-button-checkbox>
 </div>
 
+<h3>{{"major-present.label-malus" | translate}}</h3>
+
 <div>    
     <app-button-checkbox [tooltip]="'major-present.PERTE_PA' | translate" [control]="majorPresentFormService.form.controls.PERTE_PA" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PA)" [crossedOut]="true"></app-button-checkbox>
     <app-button-checkbox [tooltip]="'major-present.PERTE_PM' | translate" [control]="majorPresentFormService.form.controls.PERTE_PM" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PM)" [crossedOut]="true"></app-button-checkbox>
