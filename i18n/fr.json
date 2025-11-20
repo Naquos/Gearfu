@@ -138,6 +138,9 @@
         "epique": "Epique",
         "relique": "Relique"
     },
+    "recap-stats": {
+        "info": "La quantité de maitrises et résistances présentes sur chaque item dépend de la sélection des filtres choisis"
+    },
     "search-item-name": {
         "label": "Nom de l'item"
     },
