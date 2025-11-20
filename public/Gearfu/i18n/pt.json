@@ -138,6 +138,9 @@
         "epique": "Épico",
         "relique": "Relíquia"
     },
+    "recap-stats": {
+        "info": "A quantidade de maestria e resistência presente em cada item depende da seleção dos filtros escolhidos"
+    },
     "search-item-name": {
         "label": "Nome do item"
     },

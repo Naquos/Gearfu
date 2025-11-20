@@ -5,10 +5,11 @@ import { RecapStats } from '../../models/data/recap-stats';
 import { ParameterMajorActionEnum } from '../../models/enum/parameterMajorActionEnum';
 import { RecapStatsService } from '../../services/RecapStatsService';
 import { ImageService } from '../../services/imageService';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-recap-stats',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './recap-stats.component.html',
   styleUrl: './recap-stats.component.scss'
 })

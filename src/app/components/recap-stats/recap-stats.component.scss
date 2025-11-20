@@ -13,12 +13,17 @@
         span {
             text-align: center;
             color: white;
-
             img {
                 position: relative;
                 top: 3px;
                 margin-right: 5px;
             }
         }
+    }
+
+    .info {
+        text-align: center;
+        color: white;
+        width: 100%;
     }
 }

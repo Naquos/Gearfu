@@ -2,11 +2,13 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
  @if($item | async; as item)
  {
-    <div class="itemPresent" [style.backgroundColor]="colorRarityService.mapColors.get(item.rarity)">
-        <img [src]="imageService.getItemUrl(item.idImage)"
-        (click)="setFilter()"    
+    <div class="itemPresent" 
+        [style.backgroundColor]="colorRarityService.mapColors.get(item.rarity)"
         (mouseenter)="openTooltip($event, item)" 
         (mouseleave)="tooltipService.closeTooltip()"
+        >
+        <img [src]="imageService.getItemUrl(item.idImage)"
+        (click)="setFilter()"    
         alt="items"
         appFallback
         >
