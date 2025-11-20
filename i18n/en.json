@@ -45,7 +45,7 @@
         "maitrises": "Mastery",
         "resistances": "Resistances",
         "poids": "Weight",
-        "poids-infobulle": "Weight = Mastery + 1.2*Resistances"
+        "poids-infobulle": "Weight = Mastery + {{ ratio }}*Resistances"
     },
     "item-choose": {
         "zenith": "Export build to Zénith Wakfu",
