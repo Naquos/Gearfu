@@ -2,7 +2,8 @@
     [matTooltip]="tooltip() | translate"
     [matTooltipShowDelay]="300"
     [class.crossed-out]="crossedOut()"
-    mat-mini-fab (click)="control()?.setValue(!control()?.value)" [style.backgroundColor]="control()?.value ? '#415A77' : ''">
+    [class.background-color-blue]="control()?.value"
+    mat-mini-fab (click)="control()?.setValue(!control()?.value)">
     @if(matIcon()) {
         <mat-icon [fontIcon]="matIcon()" [style.color]="control()?.value ? 'white' : '#213A57'"></mat-icon>
     }

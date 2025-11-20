@@ -2,7 +2,7 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
  @if(item) {
     <div class="header">
-        <span class="imgContainer" (click)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
+        <span class="imgContainer fileCopy" (click)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
         <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{ "item.maitrises" | translate }} {{Math.trunc(item.maitrise)}}</span>
         <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances">{{ "item.resistances" | translate }} {{item.resistance}}</span>
         <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
@@ -24,11 +24,12 @@
                     @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT) {
                         <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ effect | actions | async }}
                     } @else {
-                        <span class="appliqueEtat" *ngIf="{states: statesService.findStates(effect.params[0]) } as value"
-                            (mouseenter)="openStatesTooltip($event, value.states?.id ?? 0, getStatesTranslate(value.states))"
+                        @let state = statesService.findStates(effect.params[0]);
+                        <span class="appliqueEtat" 
+                            (mouseenter)="openStatesTooltip($event, state?.id ?? 0, getStatesTranslate(state))"
                             (mouseleave)="stateTooltipService.closeTooltip()"
                         >
-                            {{ getStatesTranslate(value.states) }}
+                            {{ getStatesTranslate(state) }}
                         </span>
                     }
                 </p>

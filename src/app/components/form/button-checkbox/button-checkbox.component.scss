@@ -9,6 +9,12 @@ button {
     background-color: white;
 }
 
+.background-color-blue {
+    background-color: #415A77 !important;
+    border-width: 3px;
+    border-color: #112a47;
+}
+
 .crossed-out {
     background-color: red;
 }
@@ -16,6 +22,7 @@ button {
 
 button:active {
     background-color: #415A77;
+    border-color: #112a47;
     transform: translateY(2px);
     box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
 }

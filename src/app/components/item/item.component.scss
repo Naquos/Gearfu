@@ -130,5 +130,9 @@
     :host {
         max-width: 90%;
         margin: auto;
+
+        .fileCopy {
+            display: none!important;
+        }
     }
 }
