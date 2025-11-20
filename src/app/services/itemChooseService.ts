@@ -143,7 +143,7 @@ export class ItemChooseService extends AbstractDestroyService {
             const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary, chaos);
             resistance+= tempResis;
             maitrise+= tempMaitrise;
-            weight+= this.itemService.calculWeight(tempResis, tempMaitrise)
+            weight+= this.itemService.calculWeight(tempResis, tempMaitrise, x.level)
         })
         this.totalWeight.next(Math.trunc(weight));
         this.totalMaitrises.next(Math.trunc(maitrise));

@@ -45,7 +45,7 @@
         "maitrises": "Dominio",
         "resistances": "Resistencias",
         "poids": "Peso",
-        "poids-infobulle": "Peso = Dominio + 1.2*Resistencias"
+        "poids-infobulle": "Peso = Dominio + {{ ratio }}*Resistencias"
     },
     "item-choose": {
         "zenith": "Exportar construcción a Zénith Wakfu",

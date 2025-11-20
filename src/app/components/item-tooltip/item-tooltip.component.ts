@@ -66,12 +66,12 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
           {
               this.resistances = this.item.resistance;    
               this.maitrises = this.item.maitrise;
-              this.weight = this.itemService.calculWeight(this.resistances, this.maitrises)
+              this.weight = this.itemService.calculWeight(this.resistances, this.maitrises, this.item.level);
               itemSelected.forEach(item => {
                 if(item) {
                   this.resistances -=  item.resistance;
                   this.maitrises -= item.maitrise;
-                  this.weight = this.itemService.calculWeight(this.resistances, this.maitrises)
+                  this.weight = this.itemService.calculWeight(this.resistances, this.maitrises, item.level)
                 }
               })
               return true;

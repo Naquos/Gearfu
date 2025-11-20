@@ -20,6 +20,8 @@ import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
 import { OnlyNoElemFormService } from "../form/onlyNoElemFormService";
 import { ReverseFormService } from "../form/reverseFormService";
 import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum";
+import { EffetMaitrisesChassesEnum } from "../../models/enum/effetMaitrisesChassesEnum";
+import { EffetResistancesChassesEnum } from "../../models/enum/effetResistancesChassesEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -138,7 +140,7 @@ export class ItemsService {
       items.forEach(item => {
         item.resistance = Math.trunc(this.calculResistancesForAnItem(item, idResistances));
         item.maitrise = Math.trunc(this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary, chaos));
-        item.weight = this.calculWeight(item.resistance, item.maitrise);
+        item.weight = this.calculWeight(item.resistance, item.maitrise, item.level);
         item.weightForSort = 0;
       })
 
@@ -208,8 +210,37 @@ export class ItemsService {
       })
     }
 
-    public calculWeight(resistance: number, maitrises: number): number {
-      return Math.trunc(1.2 * resistance + maitrises);
+    public calculWeight(resistance: number, maitrises: number, level: number): number {
+      return Math.trunc(this.ratioWeightByLevel(level) * resistance + maitrises);
+    }
+
+    public ratioWeightByLevel(level: number): number {
+      if(level < 36) {
+        return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_1 / EffetResistancesChassesEnum.LEVEL_1);
+      } else if (level < 51) {
+        return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_2 / EffetResistancesChassesEnum.LEVEL_2);
+      } else if (level < 66) {
+        return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_3 / EffetResistancesChassesEnum.LEVEL_3);
+      } else if (level < 81) {
+        return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_4 / EffetResistancesChassesEnum.LEVEL_4);
+      } else if (level < 96) {
+        return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_5 / EffetResistancesChassesEnum.LEVEL_5);
+      } else if (level < 126) {
+        return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_6 / EffetResistancesChassesEnum.LEVEL_6);
+      } else if (level < 141) {
+        return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_7 / EffetResistancesChassesEnum.LEVEL_7);
+      } else if (level < 171) {
+        return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_8 / EffetResistancesChassesEnum.LEVEL_8);
+      } else if (level < 186) {
+        return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_9 / EffetResistancesChassesEnum.LEVEL_9);
+      } else if (level < 216) {
+        return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_10 / EffetResistancesChassesEnum.LEVEL_10);
+      }
+      return this.truncate2(EffetMaitrisesChassesEnum.LEVEL_11 / EffetResistancesChassesEnum.LEVEL_11);
+    }
+
+    private truncate2(num: number): number {
+      return Math.trunc(num * 100) / 100;
     }
 
     private initItemsList(): void {
