@@ -377,6 +377,7 @@ export class ItemsService {
           m.drops.some(d => this.archiIds.has(d.itemId))
         );
 
+
         if (item.rarity === RarityItemEnum.SOUVENIR) {
           item.isDropable = !isDropableOnBoss && !isDropableOnArchi;
           item.isDropableOnBoss = isDropableOnBoss;
@@ -388,8 +389,9 @@ export class ItemsService {
         if (!sameNameItems) return;
 
         for (const x of sameNameItems) {
-          x.isDropable =
-            (x.rarity !== RarityItemEnum.NORMAL || x.level <= 35) &&
+          if (x.rarity === RarityItemEnum.SOUVENIR) continue;
+
+          x.isDropable = (x.rarity !== RarityItemEnum.NORMAL || x.level <= 35) &&
             x.level >= item.level &&
             (!isDropableOnBoss && !isDropableOnArchi);
 
