@@ -20,6 +20,11 @@
         "label": "Votre liste de builds",
         "no-build":"Vous n'avez pas encore de builds sauvegardés."
     },
+    "drop-craftable": {
+        "craftable":"Pouvant être crafté",
+        "droppable":"Pouvant être droppé",
+        "cacher":"Cacher les items obtenables par craft ou par drop"
+    },
     "filter-maitrises": {
         "maitrises-elementaires": "Maitrises élémentaires",
         "maitrises-secondaires": "Maitrises secondaires",

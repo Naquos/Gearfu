@@ -20,6 +20,11 @@
         "label": "Your builds list",
         "no-build": "You haven't saved any builds yet."
     },
+    "drop-craftable": {
+        "craftable": "Can be crafted",
+        "droppable": "Can be dropped",
+        "cacher": "Hide items obtainable by craft or drop"
+    },
     "import-build": {
         "label": "Import your build via a Gearfu or Zenith URL",
         "placeholder": "Gearfu or Zenith URL"
