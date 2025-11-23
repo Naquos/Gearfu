@@ -164,7 +164,11 @@ export class ItemsService {
     }
 
     private normalizeString(str: string): string {
-      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      return str.normalize("NFKD")
+        .replace(/['’‘´`]/g, "'")   // unifier toutes les apostrophes
+        .replace(/\s+/g, " ")       // normaliser espaces multiples
+        .trim()
+        .toLowerCase();
     }
 
     private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean, chaos: boolean): void {
@@ -376,7 +380,6 @@ export class ItemsService {
         const isDropableOnArchi = dropList.some(m =>
           m.drops.some(d => this.archiIds.has(d.itemId))
         );
-
 
         if (item.rarity === RarityItemEnum.SOUVENIR) {
           item.isDropable = !isDropableOnBoss && !isDropableOnArchi;
