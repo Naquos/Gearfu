@@ -46,7 +46,9 @@
         "resistances": "Resistencias",
         "poids": "Peso",
         "poids-infobulle": "Peso = Dominio + {{ ratio }}*Resistencias",
-        "copier": "Copiar nombre del objeto"
+        "copier": "Copiar nombre del objeto",
+        "craftable": "Puede ser craftado",
+        "droppable": "Puede ser dropeado"
     },
     "item-choose": {
         "zenith": "Exportar construcción a Zénith Wakfu",

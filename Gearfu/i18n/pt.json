@@ -46,7 +46,9 @@
         "resistances": "Resistências",
         "poids": "Peso",
         "poids-infobulle": "Peso = Maestria + {{ ratio }}*Resistências",
-        "copier": "Copiar nome do item"
+        "copier": "Copiar nome do item",
+        "craftable": "Pode ser craftado",
+        "droppable": "Pode ser dropado"
     },
     "item-choose": {
         "zenith": "Exportar build para Zénith Wakfu",

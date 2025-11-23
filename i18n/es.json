@@ -20,6 +20,11 @@
         "label": "Tu lista de builds",
         "no-build": "Aún no has guardado ningún build."
     },
+    "drop-craftable": {
+        "craftable":"Puede ser craftado",
+        "droppable":"Puede ser dropeado",
+        "cacher":"Ocultar objetos obtenibles por craft o drop"
+    },
     "import-build": {
         "label": "Importa tu build mediante una URL de Gearfu o Zénith",
         "placeholder": "URL de Gearfu o Zénith"
@@ -46,7 +51,9 @@
         "resistances": "Resistencias",
         "poids": "Peso",
         "poids-infobulle": "Peso = Dominio + {{ ratio }}*Resistencias",
-        "copier": "Copiar nombre del objeto"
+        "copier": "Copiar nombre del objeto",
+        "craftable": "Puede ser craftado",
+        "droppable": "Puede ser dropeado"
     },
     "item-choose": {
         "zenith": "Exportar construcción a Zénith Wakfu",
