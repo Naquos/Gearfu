@@ -318,7 +318,7 @@ export class ItemsService {
         return;
       }
 
-      const itemWithLessRarity = this.items.find(x => x.title.en.trim() === item.title.en.trim() && x.rarity < item.rarity && x.rarity !== RarityItemEnum.NORMAL);
+      const itemWithLessRarity = this.items.find(x => x.title.en.trim() === item.title.en.trim() && x.rarity < item.rarity);
       if(itemWithLessRarity) {
         return;
       }
