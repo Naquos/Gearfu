@@ -20,6 +20,11 @@
         "label": "Votre liste de builds",
         "no-build":"Vous n'avez pas encore de builds sauvegardés."
     },
+    "drop-craftable": {
+        "craftable":"Pouvant être crafté",
+        "droppable":"Pouvant être droppé",
+        "cacher":"Cacher les items obtenables par craft ou par drop"
+    },
     "filter-maitrises": {
         "maitrises-elementaires": "Maitrises élémentaires",
         "maitrises-secondaires": "Maitrises secondaires",
@@ -46,7 +51,9 @@
         "resistances": "Résistances",
         "poids": "Poids",
         "poids-infobulle": "Poids = Maitrises + {{ ratio }}*Résistances",
-        "copier":"Copier le nom de l'item"
+        "copier":"Copier le nom de l'item",
+        "craftable":"Peut être crafté",
+        "droppable":"Peut être droppé"
     },
     "item-choose": {
         "zenith": "Exporter le build vers Zénith Wakfu",

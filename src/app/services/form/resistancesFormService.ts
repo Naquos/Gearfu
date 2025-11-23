@@ -41,12 +41,12 @@ export class ResistancesFormService extends AbstractFormService<FormGroup<TypedC
     this.idResistances.next(resultId);
   }
 
-  public override setValue(value: RareteItemForm): void {
+  public override setValue(value: RareteItemForm | null): void {
     this.form.setValue({
-      feu: value.feu ?? false,
-      eau: value.eau ?? false,
-      terre: value.terre ?? false,
-      air: value.air ?? false
+      feu: value?.feu ?? false,
+      eau: value?.eau ?? false,
+      terre: value?.terre ?? false,
+      air: value?.air ?? false
     });
   }
   

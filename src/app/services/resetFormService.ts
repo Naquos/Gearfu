@@ -11,6 +11,7 @@ import { ModifierMecanismFormService } from "./form/modifierElemMaitrisesFormSer
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
 import { ReverseFormService } from "./form/reverseFormService";
+import { DropCraftableFormService } from "./form/dropCraftableFormService";
 
 @Injectable({providedIn: 'root'})
 export class ResetFormService {
@@ -27,6 +28,7 @@ export class ResetFormService {
     private readonly searchItemNameFormService = inject(SearchItemNameFormService);
     private readonly sortChoiceFormService = inject(SortChoiceFormService);
     private readonly reverseFormService = inject(ReverseFormService);
+    private readonly dropCraftableFormService = inject(DropCraftableFormService);
 
     public resetAllForms(): void {
         this.itemLevelFormService.setDefaultValue();
@@ -41,5 +43,6 @@ export class ResetFormService {
         this.searchItemNameFormService.setDefaultValue();
         this.sortChoiceFormService.setDefaultValue();
         this.reverseFormService.setDefaultValue();
+        this.dropCraftableFormService.setDefaultValue();
     }
 }

@@ -27,6 +27,8 @@ import { ItemsService } from '../../services/data/itemsService';
 import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
 import { OnlyNoElemComponent } from '../form/only-no-elem/only-no-elem.component';
 import { ReverseButtonComponent } from '../form/reverse-button/reverse-button.component';
+import { WakassetCdnFacade } from '../../services/wakasset-cdn/wakassetCdnFacade';
+import { DropCraftableComponent } from "../form/drop-craftable/drop-craftable.component";
 
 
 @Component({
@@ -54,7 +56,8 @@ import { ReverseButtonComponent } from '../form/reverse-button/reverse-button.co
     ImportBuildComponent,
     NameBuildComponent,
     RecapStatsComponent,
-    ReverseButtonComponent
+    ReverseButtonComponent,
+    DropCraftableComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -66,6 +69,7 @@ export class AppComponent implements OnInit{
   private readonly localStorageService = inject(LocalStorageService);
   private readonly itemService = inject(ItemsService);
   private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
+  private readonly wakassetCdnFacade = inject(WakassetCdnFacade);
 
   protected displayFilter = false;
   protected filterOrBuild : "filter" | "build" = "filter";
@@ -87,6 +91,7 @@ export class AppComponent implements OnInit{
 
   public ngOnInit(): void {
     this.ankamaCdnFacade.load();
+    this.wakassetCdnFacade.load();
     this.itemService.init();
   }
 

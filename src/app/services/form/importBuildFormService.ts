@@ -47,8 +47,8 @@ export class ImportBuildFormService extends AbstractFormService<FormControl<stri
         // No need to handle changes here, as the value is set directly from the input field.
     }
 
-    public override setValue(value: string): void {
-        this.form.setValue(value);
+    public override setValue(value: string | null): void {
+        this.form.setValue(value ?? ImportBuildFormService.DEFAULT_VALUE);
     }
 
     public override setDefaultValue(): void {

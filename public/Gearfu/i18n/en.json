@@ -46,7 +46,9 @@
         "resistances": "Resistances",
         "poids": "Weight",
         "poids-infobulle": "Weight = Mastery + {{ ratio }}*Resistances",
-        "copier": "Copy item name"
+        "copier": "Copy item name",
+        "craftable": "Can be crafted",
+        "droppable": "Can be dropped"
     },
     "item-choose": {
         "zenith": "Export build to Zénith Wakfu",

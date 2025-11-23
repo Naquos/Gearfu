@@ -5,6 +5,7 @@ import { ItemCdn } from "../../models/ankama-cdn/itemCdn";
 import { Observable } from "rxjs";
 import { ActionsCdn } from "../../models/ankama-cdn/actionsCdn";
 import { StatesCdn } from "../../models/ankama-cdn/statesCdn";
+import { RecipeResultsCdn } from "../../models/ankama-cdn/recipeResulsCdn";
 
 @Injectable({providedIn: 'root'})
 export class AnkamaCdnService {
@@ -25,5 +26,9 @@ export class AnkamaCdnService {
 
     public getStates(config: string): Observable<StatesCdn[]> {
         return this.http.get<StatesCdn[]>(this.baseUrl + config + "/states.json");
+    }
+
+    public getRecipesResult(config: string): Observable<RecipeResultsCdn[]> {
+        return this.http.get<RecipeResultsCdn[]>(this.baseUrl + config + "/recipeResults.json");
     }
 }

@@ -40,8 +40,8 @@ export class ModifierMecanismFormService extends AbstractFormService<FormControl
     this.chaos.next(value?.includes(Mecanism.CHAOS.valueOf()) ?? false);
   }
 
-  public override setValue(value: string[]): void {
-    this.form.setValue(value);
+  public override setValue(value: string[] | null): void {
+    this.form.setValue(value ?? ModifierMecanismFormService.DEFAULT_VALUE);
   }
 
   public setDefaultValue(): void {

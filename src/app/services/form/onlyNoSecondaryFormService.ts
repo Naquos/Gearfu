@@ -24,8 +24,8 @@ export class OnlyNoSecondaryFormService extends AbstractFormService<FormControl<
     this.onlyNoSecondary.next(value ?? false);
   }
 
-  public override setValue(value: boolean): void {
-    this.form.setValue(value);
+  public override setValue(value: boolean | null): void {
+    this.form.setValue(value ?? OnlyNoSecondaryFormService.DEFAULT_VALUE);
   }
 
   public override setDefaultValue(): void {

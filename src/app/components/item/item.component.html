@@ -18,7 +18,8 @@
             <img [src]="imageService.getItemUrl(item.idImage)" alt="items" appFallback>
             <div class="poids" [matTooltip]="'item.poids-infobulle' | translate:{ratio: itemService.ratioWeightByLevel(item.level)}" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{item.weight}}</div>
         </div>
-        <div>
+        <div class="effects">
+            <div>
             @for (effect of item.equipEffects; track effect.id) {
                 <p>
                     @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT) {
@@ -34,6 +35,15 @@
                     }
                 </p>
             }
+            </div>
+            <div class="craftAndDrop">
+                @if (item.isCraftable) {
+                    <img [src]="imageService.getItemUrl(71919810)" alt="craftable" [matTooltip]="'item.craftable' | translate">
+                }
+                @if(item.isDropable) {
+                    <img [src]="imageService.getItemUrl(60625177)" alt="droppable" [matTooltip]="'item.droppable' | translate">
+                }
+            </div>
         </div>
     </div>
  }

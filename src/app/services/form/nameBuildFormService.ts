@@ -24,8 +24,8 @@ export class NameBuildFormService extends AbstractFormService<FormControl<string
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
     protected override handleChanges(_value: string): void {}
     
-    public override setValue(value: string): void {
-        this.form.setValue(value);
+    public override setValue(value: string | null): void {
+        this.form.setValue(value ?? NameBuildFormService.DEFAULT_VALUE);
     }
     public override setDefaultValue(): void {
         this.form.setValue(NameBuildFormService.DEFAULT_VALUE);

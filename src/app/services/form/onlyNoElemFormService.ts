@@ -24,8 +24,8 @@ export class OnlyNoElemFormService extends AbstractFormService<FormControl<boole
     this.onlyNoElem.next(value ?? false);
   }
 
-  public override setValue(value: boolean): void {
-    this.form.setValue(value);
+  public override setValue(value: boolean | null): void {
+    this.form.setValue(value ?? OnlyNoElemFormService.DEFAULT_VALUE);
   }
 
   public override setDefaultValue(): void {

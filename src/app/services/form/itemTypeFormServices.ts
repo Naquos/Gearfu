@@ -73,22 +73,22 @@ export class ItemTypeFormServices extends AbstractFormService<FormGroup<TypedCon
         this.selected.next(result.flat() as number[]);
     }
     
-    public override setValue(value: ItemTypeForm): void {
+    public override setValue(value: ItemTypeForm | null): void {
         this.form.setValue({
-            deuxMains: value.deuxMains ?? false,
-            uneMain: value.uneMain ?? false,
-            anneau: value.anneau ?? false,
-            bottes: value.bottes ?? false,
-            amulette: value.amulette ?? false,
-            cape: value.cape ?? false,
-            ceinture: value.ceinture ?? false,
-            casque: value.casque ?? false,
-            plastron: value.plastron ?? false,
-            epaulettes: value.epaulettes ?? false,
-            bouclier: value.bouclier ?? false,
-            dague: value.dague ?? false,
-            accessoires: value.accessoires ?? false,
-            familier: value.familier ?? false
+            deuxMains: value?.deuxMains ?? false,
+            uneMain: value?.uneMain ?? false,
+            anneau: value?.anneau ?? false,
+            bottes: value?.bottes ?? false,
+            amulette: value?.amulette ?? false,
+            cape: value?.cape ?? false,
+            ceinture: value?.ceinture ?? false,
+            casque: value?.casque ?? false,
+            plastron: value?.plastron ?? false,
+            epaulettes: value?.epaulettes ?? false,
+            bouclier: value?.bouclier ?? false,
+            dague: value?.dague ?? false,
+            accessoires: value?.accessoires ?? false,
+            familier: value?.familier ?? false
         });
     }
 

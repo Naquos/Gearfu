@@ -40,10 +40,10 @@ export class ItemLevelFormService extends AbstractFormService<FormGroup<TypedCon
     this.levelMax.next(value.levelMax ?? ItemLevelFormService.DEFAULT_LEVEL_MAX);
   }
 
-  public override setValue(value: ItemLevelForm): void {
+  public override setValue(value: ItemLevelForm | null): void {
     this.form.setValue({
-      levelMin: value.levelMin ?? ItemLevelFormService.DEFAULT_LEVEL_MIN,
-      levelMax: value.levelMax ?? ItemLevelFormService.DEFAULT_LEVEL_MAX
+      levelMin: value?.levelMin ?? ItemLevelFormService.DEFAULT_LEVEL_MIN,
+      levelMax: value?.levelMax ?? ItemLevelFormService.DEFAULT_LEVEL_MAX
     });
   }
   

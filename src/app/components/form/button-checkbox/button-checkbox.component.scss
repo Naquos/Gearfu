@@ -7,6 +7,10 @@ button {
     width: 41px;
     height: 34px;
     background-color: white;
+    img {
+        max-width: 25px;
+        max-height: 25px;
+    }
 }
 
 .background-color-blue {

@@ -34,8 +34,8 @@ export class SearchItemNameFormService extends AbstractFormService<FormControl<s
   protected override handleChanges(value: string): void {
     this.itemName.next(value ?? SearchItemNameFormService.DEFAULT_VALUE); 
   }
-  public override setValue(value: string): void {
-    this.form.setValue(value);
+  public override setValue(value: string | null): void {
+    this.form.setValue(value ?? SearchItemNameFormService.DEFAULT_VALUE);
   }
 
   public setDefaultValue(): void {

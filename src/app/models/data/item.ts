@@ -25,4 +25,6 @@ export interface Item {
     weight: number;
     maitrise: number;
     resistance: number;
+    isCraftable: boolean;
+    isDropable: boolean;
 }

@@ -4,6 +4,7 @@ import { BehaviorSubject, filter, tap } from "rxjs";
 import { ActionsCdn } from "../../models/ankama-cdn/actionsCdn";
 import { ItemCdn } from "../../models/ankama-cdn/itemCdn";
 import { StatesCdn } from "../../models/ankama-cdn/statesCdn";
+import { RecipeResultsCdn } from "../../models/ankama-cdn/recipeResulsCdn";
 
 @Injectable({providedIn: 'root'})
 export class AnkamaCdnFacade {
@@ -30,6 +31,11 @@ export class AnkamaCdnFacade {
         filter(states => states.length > 0),
     );
 
+    private readonly recipes = new BehaviorSubject<RecipeResultsCdn[]>([]);
+    public readonly recipes$ = this.recipes.asObservable().pipe(
+        filter(recipes => recipes.length > 0),
+    );
+
     private loadItems(config: string): void {
         this.ankamaCdnService.getItems(config).pipe(tap(items => this.item.next(items))).subscribe();
     }
@@ -42,6 +48,10 @@ export class AnkamaCdnFacade {
         this.ankamaCdnService.getStates(config).pipe(tap(states => this.states.next(states))).subscribe();
     }
 
+    private loadRecipesResult(config: string): void {
+        this.ankamaCdnService.getRecipesResult(config).pipe(tap(recipes => this.recipes.next(recipes))).subscribe();
+    }
+
     public load(): void {
         this.ankamaCdnService.getConfig()
             .pipe(
@@ -49,6 +59,7 @@ export class AnkamaCdnFacade {
                 tap(config => this.loadItems(config.version)),
                 tap(config => this.loadActions(config.version)),
                 tap(config => this.loadStates(config.version)),
+                tap(config => this.loadRecipesResult(config.version)),
             ).subscribe();
     }
 

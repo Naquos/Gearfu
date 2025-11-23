@@ -51,15 +51,15 @@ export class RareteItemFormServices extends AbstractFormService<FormGroup<TypedC
     this.rarity.next(result);
   }
 
-  public override setValue(value: RareteItemForm): void {
+  public override setValue(value: RareteItemForm | null): void {
     this.form.setValue({
-      normal: value.normal ?? false,
-      rare: value.rare ?? false,
-      mythique: value.mythique ?? false,
-      legendaire: value.legendaire ?? false,
-      souvenir: value.souvenir ?? false,
-      relique: value.relique ?? false,
-      epique: value.epique ?? false
+      normal: value?.normal ?? false,
+      rare: value?.rare ?? false,
+      mythique: value?.mythique ?? false,
+      legendaire: value?.legendaire ?? false,
+      souvenir: value?.souvenir ?? false,
+      relique: value?.relique ?? false,
+      epique: value?.epique ?? false
     });
   }
 

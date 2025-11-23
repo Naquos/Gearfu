@@ -112,6 +112,19 @@
             font-weight: 500;
             text-decoration: underline;
         }
+
+        .effects {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            
+            .craftAndDrop {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+            }
+        }
     }
 
     .iconComparator {    

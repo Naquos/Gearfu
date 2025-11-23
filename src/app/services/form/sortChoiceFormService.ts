@@ -24,8 +24,8 @@ export class SortChoiceFormService extends AbstractFormService<FormControl<SortC
   protected override handleChanges(value: SortChoiceEnum): void {
     this.sort.next(value)
   }
-  public override setValue(value: SortChoiceEnum): void {
-    this.form.setValue(value);
+  public override setValue(value: SortChoiceEnum | null): void {
+    this.form.setValue(value ?? SortChoiceFormService.DEFAULT_VALUE);
   }
 
   public setDefaultValue(): void {

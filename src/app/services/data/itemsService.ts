@@ -22,6 +22,11 @@ import { ReverseFormService } from "../form/reverseFormService";
 import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum";
 import { EffetMaitrisesChassesEnum } from "../../models/enum/effetMaitrisesChassesEnum";
 import { EffetResistancesChassesEnum } from "../../models/enum/effetResistancesChassesEnum";
+import { RecipeResultsCdn } from "../../models/ankama-cdn/recipeResulsCdn";
+import { WakassetCdnFacade } from "../wakasset-cdn/wakassetCdnFacade";
+import { MonsterDropCdn } from "../../models/wakasset/monsterDropCdn";
+import { DropCraftableFormService } from "../form/dropCraftableFormService";
+import { RarityItemEnum } from "../../models/enum/rarityItemEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -37,8 +42,10 @@ export class ItemsService {
     private readonly resistanceFormService = inject(ResistancesFormService);
     private readonly maitrisesFormService = inject(MaitrisesFormService);
     private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
+    private readonly wakassetCdnFacade = inject(WakassetCdnFacade);
     private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
     private readonly reverseFormService = inject(ReverseFormService);
+    private readonly dropCraftableFormService = inject(DropCraftableFormService);
 
     protected items: Item[] = [];
     protected readonly fullItems$ = new BehaviorSubject<Item[]>([]);
@@ -96,8 +103,14 @@ export class ItemsService {
 
       this.itemsFilterByItemName$ = combineLatest([this.fullItems$, this.searchItemNameFormService.itemName$])
       .pipe(map(([items, itemName]) => items.filter(x => this.normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(this.normalizeString(itemName)))));
+
+      const itemsFilterByDrop$ = combineLatest([this.itemsFilterByItemName$, this.dropCraftableFormService.drop$])
+      .pipe(map(([items, drop]) => items.filter(x => !drop || x.isDropable === false)));
+      
+      const itemsFilterByCraftable$ = combineLatest([itemsFilterByDrop$, this.dropCraftableFormService.craftable$])
+      .pipe(map(([items, craftable]) => items.filter(x =>  !craftable || x.isCraftable === false)));
   
-      const itemsFilterByLevelMin$ = combineLatest([this.itemsFilterByItemName$, this.itemLevelFormService.levelMin$])
+      const itemsFilterByLevelMin$ = combineLatest([itemsFilterByCraftable$, this.itemLevelFormService.levelMin$])
       .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
   
       const itemsFilterByLevelMax$ = combineLatest([itemsFilterByLevelMin$, this.itemLevelFormService.levelMax$])
@@ -244,8 +257,10 @@ export class ItemsService {
     }
 
     private initItemsList(): void {
-      this.ankamaCdnFacade.item$.pipe(take(1)).subscribe((items) => {
-        items.forEach(x => this.items.push({
+      combineLatest([this.ankamaCdnFacade.item$, this.ankamaCdnFacade.recipes$, this.wakassetCdnFacade.monsterDrops$]).pipe(
+        take(1),
+        tap(([itemsCdn, recipes, monsterDrops]) => {
+        itemsCdn.forEach(x => this.items.push({
             id: x.definition.item.id,
             level: x.definition.item.level,
             rarity: x.definition.item.baseParameters.rarity,
@@ -263,11 +278,55 @@ export class ItemsService {
             weightForSort: 0,
             weight: 0,
             maitrise: 0,
-            resistance: 0
+            resistance: 0,
+            isCraftable: false,
+            isDropable: false
         }));
-      });
+        this.items.forEach(item => this.calculItemIsCraftable(item, recipes));
+        this.items.forEach(item => this.calculItemIsDropable(item, monsterDrops));
+      })).subscribe();
     }
     
+    private calculItemIsCraftable(item: Item, recipes: RecipeResultsCdn[]): void {
+      if(item.isCraftable) {
+        return;
+      }
+      const isCraftable = recipes.find(x => x.productedItemId === item.id);
+      if(!isCraftable) {
+        return;
+      }
+      if(item.rarity === RarityItemEnum.SOUVENIR) {
+        item.isCraftable = true;
+        return;
+      }
+
+      const itemWithLessRarity = this.items.find(x => x.title.en.trim() === item.title.en.trim() && x.rarity < item.rarity && x.rarity !== RarityItemEnum.NORMAL);
+      if(itemWithLessRarity) {
+        return;
+      }
+
+      this.items.filter(x => x.title.en.trim() === item.title.en.trim()).forEach(x => x.isCraftable = true);
+        
+    }
+
+    private calculItemIsDropable(item: Item, monsterDrops: MonsterDropCdn[]): void {
+      if(item.isDropable) {
+        return;
+      }
+
+      // const itemWithLessRarity = this.items.find(x => x.title.en.trim() === item.title.en.trim() && x.rarity < item.rarity);
+      const isDropable = monsterDrops.find(x => x.drops.find(drop => drop.itemId === item.id));
+      if(!isDropable) {
+        return;
+      }
+      if(item.rarity === RarityItemEnum.SOUVENIR) {
+        item.isDropable = true;
+        return;
+      }
+
+      this.items.filter(x => x.title.en.trim() === item.title.en.trim() && x.rarity !== RarityItemEnum.SOUVENIR).forEach(x => x.isDropable = true);
+    }
+
     public searchItem(idItem : number): Observable<Item | undefined> {
       return this.fullItems$.pipe(map(x => x.find(x => x.id === idItem)));
     }

@@ -66,18 +66,18 @@ export class MaitrisesFormService extends AbstractFormService<FormGroup<TypedCon
     this.idMaitrises.next(resultId);
   }
 
-  public override setValue(value: MaitrisesForm): void {
+  public override setValue(value: MaitrisesForm | null): void {
     this.form.setValue({
-      feu: value.feu ?? false,
-      eau: value.eau ?? false,
-      terre: value.terre ?? false,
-      air: value.air ?? false,
-      critique: value.critique ?? false,
-      dos: value.dos ?? false,
-      melee: value.melee ?? false,
-      distance: value.distance ?? false,
-      soin: value.soin ?? false,
-      berzerk: value.berzerk ?? false
+      feu: value?.feu ?? false,
+      eau: value?.eau ?? false,
+      terre: value?.terre ?? false,
+      air: value?.air ?? false,
+      critique: value?.critique ?? false,
+      dos: value?.dos ?? false,
+      melee: value?.melee ?? false,
+      distance: value?.distance ?? false,
+      soin: value?.soin ?? false,
+      berzerk: value?.berzerk ?? false
     });
   }
 

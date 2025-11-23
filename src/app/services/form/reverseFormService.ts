@@ -21,7 +21,7 @@ export class ReverseFormService extends AbstractFormService<FormControl<boolean>
     protected override handleChanges(value: boolean): void {
         this.reverse.next(value ?? ReverseFormService.DEFAULT_VALUE);
     }
-    public override setValue(value: boolean): void {
+    public override setValue(value: boolean | null): void {
         this.form.setValue(value ?? ReverseFormService.DEFAULT_VALUE);
     }
     public override setDefaultValue(): void {

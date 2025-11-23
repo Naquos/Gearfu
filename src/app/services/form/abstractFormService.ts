@@ -34,12 +34,10 @@ export abstract class AbstractFormService<TControl extends FormControl | FormGro
             .subscribe()
 
         const value = this.localStorageService.getItem<FormValue<TControl>>(this.keyEnum);
-        if (value !== null) {
-            this.setValue(value);
-        }
+        this.setValue(value);
     }
 
     protected abstract handleChanges(value: FormValue<TControl>): void;
-    public abstract setValue(value: FormValue<TControl>): void;
+    public abstract setValue(value: FormValue<TControl> | null): void;
     public abstract setDefaultValue(): void;
 }

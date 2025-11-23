@@ -120,38 +120,38 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
     this.idMajor.next(result);
   }
 
-  public override setValue(value: MajorPresentForm): void {
+  public override setValue(value: MajorPresentForm | null): void {
     this.form.setValue({
-      PA: value.PA ?? false,
-      PM: value.PM ?? false,
-      PW: value.PW ?? false,
-      PO: value.PO ?? false,
-      CONTROLE: value.CONTROLE ?? false,
-      ARMURE_DONNEE: value.ARMURE_DONNEE ?? false,
-      ARMURE_RECUE: value.ARMURE_RECUE ?? false,
-      CRITIQUE: value.CRITIQUE ?? false,
-      PARADE: value.PARADE ?? false,
-      RESISTANCE_DOS: value.RESISTANCE_DOS ?? false,
-      RESISTANCE_CRITIQUE: value.RESISTANCE_CRITIQUE ?? false,
+      PA: value?.PA ?? false,
+      PM: value?.PM ?? false,
+      PW: value?.PW ?? false,
+      PO: value?.PO ?? false,
+      CONTROLE: value?.CONTROLE ?? false,
+      ARMURE_DONNEE: value?.ARMURE_DONNEE ?? false,
+      ARMURE_RECUE: value?.ARMURE_RECUE ?? false,
+      CRITIQUE: value?.CRITIQUE ?? false,
+      PARADE: value?.PARADE ?? false,
+      RESISTANCE_DOS: value?.RESISTANCE_DOS ?? false,
+      RESISTANCE_CRITIQUE: value?.RESISTANCE_CRITIQUE ?? false,
 
-      PERTE_PA: value.PERTE_PA ?? false,
-      PERTE_PM: value.PERTE_PM ?? false,
-      PERTE_PW: value.PERTE_PW ?? false,
-      PERTE_PO: value.PERTE_PO ?? false,
-      PERTE_CONTROLE: value.PERTE_CONTROLE ?? false,
-      PERTE_ARMURE_DONNEE: value.PERTE_ARMURE_DONNEE ?? false,
-      PERTE_ARMURE_RECUE: value.PERTE_ARMURE_RECUE ?? false,
-      PERTE_CRITIQUE: value.PERTE_CRITIQUE ?? false,
-      PERTE_PARADE: value.PERTE_PARADE ?? false,
-      PERTE_RESISTANCE_DOS: value.PERTE_RESISTANCE_DOS ?? false,
-      PERTE_RESISTANCE_CRITIQUE: value.PERTE_RESISTANCE_CRITIQUE ?? false,
+      PERTE_PA: value?.PERTE_PA ?? false,
+      PERTE_PM: value?.PERTE_PM ?? false,
+      PERTE_PW: value?.PERTE_PW ?? false,
+      PERTE_PO: value?.PERTE_PO ?? false,
+      PERTE_CONTROLE: value?.PERTE_CONTROLE ?? false,
+      PERTE_ARMURE_DONNEE: value?.PERTE_ARMURE_DONNEE ?? false,
+      PERTE_ARMURE_RECUE: value?.PERTE_ARMURE_RECUE ?? false,
+      PERTE_CRITIQUE: value?.PERTE_CRITIQUE ?? false,
+      PERTE_PARADE: value?.PERTE_PARADE ?? false,
+      PERTE_RESISTANCE_DOS: value?.PERTE_RESISTANCE_DOS ?? false,
+      PERTE_RESISTANCE_CRITIQUE: value?.PERTE_RESISTANCE_CRITIQUE ?? false,
 
-      PERTE_MAITRISES_MELEE: value.PERTE_MAITRISES_MELEE ?? false,
-      PERTE_MAITRISES_DISTANCE: value.PERTE_MAITRISES_DISTANCE ?? false,
-      PERTE_MAITRISES_CRITIQUE: value.PERTE_MAITRISES_CRITIQUE ?? false,
-      PERTE_MAITRISES_DOS: value.PERTE_MAITRISES_DOS ?? false,
-      PERTE_MAITRISES_SOIN: value.PERTE_MAITRISES_SOIN ?? false,
-      PERTE_MAITRISES_BERZERK: value.PERTE_MAITRISES_BERZERK ?? false
+      PERTE_MAITRISES_MELEE: value?.PERTE_MAITRISES_MELEE ?? false,
+      PERTE_MAITRISES_DISTANCE: value?.PERTE_MAITRISES_DISTANCE ?? false,
+      PERTE_MAITRISES_CRITIQUE: value?.PERTE_MAITRISES_CRITIQUE ?? false,
+      PERTE_MAITRISES_DOS: value?.PERTE_MAITRISES_DOS ?? false,
+      PERTE_MAITRISES_SOIN: value?.PERTE_MAITRISES_SOIN ?? false,
+      PERTE_MAITRISES_BERZERK: value?.PERTE_MAITRISES_BERZERK ?? false
     });
   }
 
