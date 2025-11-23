@@ -48,7 +48,7 @@
         "poids-infobulle": "Peso = Dominio + {{ ratio }}*Resistencias",
         "copier": "Copiar nombre del objeto",
         "craftable": "Puede ser craftado",
-        "droppable": "Puede ser dropeado",
+        "droppable": "Puede ser dropeado por un monstruo",
         "boss-drop": "Puede ser dropeado por un jefe",
         "archi-drop": "Puede ser dropeado por un archimonstre o un dominante"
     },
@@ -125,7 +125,7 @@
     },
     "obtention": {
         "craftable": "Puede ser craftado",
-        "droppable": "Puede ser dropeado",
+        "droppable": "Puede ser dropeado por un monstruo",
         "cacher": "Ocultar objetos obtenibles por su medio de obtención",
         "boss": "Puede ser dropeado por un jefe",
         "archi": "Puede ser dropeado por un archimonstre o un dominante"

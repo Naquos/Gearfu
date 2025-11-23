@@ -48,7 +48,7 @@
         "poids-infobulle": "Weight = Mastery + {{ ratio }}*Resistances",
         "copier": "Copy item name",
         "craftable": "Can be crafted",
-        "droppable": "Can be dropped",
+        "droppable": "Can be dropped by a monster",
         "boss-drop": "Can be dropped by a boss",
         "archi-drop": "Can be dropped by an archimonster or dominant"
     },
@@ -125,7 +125,7 @@
     },
     "obtention": {
         "craftable": "Can be crafted",
-        "droppable": "Can be dropped",
+        "droppable": "Can be dropped by a monster",
         "cacher": "Hide items obtainable by their means of obtention",
         "boss": "Can be dropped by a boss",
         "archi": "Can be dropped by an archimonster or dominant"

@@ -340,14 +340,14 @@ export class ItemsService {
       const isDropableOnBoss = dropList.drops.some(drop => this.idPierresList.includes(drop.itemId));
       const isDropableOnArchi = dropList.drops.some(drop => idSiouperes.some(idSioupere => idSioupere.definition.id === drop.itemId));
       if(item.rarity === RarityItemEnum.SOUVENIR) {
-        item.isDropable = true;
+        item.isDropable =  !isDropableOnBoss && !isDropableOnArchi;
         item.isDropableOnBoss = isDropableOnBoss;
         item.isDropableOnArchi = isDropableOnArchi;
         return;
       }
 
       this.items.filter(x => x.title.en.trim() === item.title.en.trim() && x.rarity !== RarityItemEnum.SOUVENIR).forEach(x => {
-        x.isDropable = true;
+        x.isDropable = !isDropableOnBoss && !isDropableOnArchi;
         x.isDropableOnBoss = isDropableOnBoss;
         x.isDropableOnArchi = isDropableOnArchi;
       });

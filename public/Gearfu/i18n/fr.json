@@ -48,7 +48,7 @@
         "poids-infobulle": "Poids = Maitrises + {{ ratio }}*Résistances",
         "copier":"Copier le nom de l'item",
         "craftable":"Peut être crafté",
-        "droppable":"Peut être droppé",
+        "droppable":"Peut être droppé par un monstre",
         "boss-drop":"Peut être droppé par un boss",
         "archi-drop":"Peut être droppé par un archimonstre ou un dominant"
     },
@@ -125,7 +125,7 @@
     },
     "obtention": {
         "craftable":"Pouvant être crafté",
-        "droppable":"Pouvant être droppé",
+        "droppable":"Pouvant être droppé par un monstre",
         "cacher":"Masquer les items obtenables par leur moyen d'obtention",
         "boss":"Pouvant être droppé par un boss",
         "archi":"Pouvant être droppé par un archimonstre ou un dominant"
