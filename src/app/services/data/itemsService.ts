@@ -347,7 +347,8 @@ export class ItemsService {
       }
 
       this.items.filter(x => x.title.en.trim() === item.title.en.trim() && x.rarity !== RarityItemEnum.SOUVENIR).forEach(x => {
-        x.isDropable = !isDropableOnBoss && !isDropableOnArchi;
+        // Les seuls items NORMAL dropable sont ceux de niveau <= 35
+        x.isDropable = (x.rarity !== RarityItemEnum.NORMAL || x.level <= 35)  && (!isDropableOnBoss && !isDropableOnArchi);
         x.isDropableOnBoss = isDropableOnBoss;
         x.isDropableOnArchi = isDropableOnArchi;
       });
