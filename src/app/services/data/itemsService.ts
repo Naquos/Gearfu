@@ -332,13 +332,13 @@ export class ItemsService {
         return;
       }
 
-      const dropList = monsterDrops.find(x => x.drops.find(drop => drop.itemId === item.id)); 
-      if(!dropList) {
+      const dropList = monsterDrops.filter(x => x.drops.find(drop => drop.itemId === item.id)); 
+      if(!dropList.length) {
         return;
       }
 
-      const isDropableOnBoss = dropList.drops.some(drop => this.idPierresList.includes(drop.itemId));
-      const isDropableOnArchi = dropList.drops.some(drop => idSiouperes.some(idSioupere => idSioupere.definition.id === drop.itemId));
+      const isDropableOnBoss = dropList.some(drop => drop.drops.some(d => this.idPierresList.includes(d.itemId)));
+      const isDropableOnArchi = dropList.some(drop => drop.drops.some(d => idSiouperes.some(idSioupere => idSioupere.definition.id === d.itemId)));
       if(item.rarity === RarityItemEnum.SOUVENIR) {
         item.isDropable =  !isDropableOnBoss && !isDropableOnArchi;
         item.isDropableOnBoss = isDropableOnBoss;
