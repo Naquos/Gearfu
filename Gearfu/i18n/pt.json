@@ -48,7 +48,7 @@
         "poids-infobulle": "Peso = Maestria + {{ ratio }}*Resistências",
         "copier": "Copiar nome do item",
         "craftable": "Pode ser craftado",
-        "droppable": "Pode ser dropado",
+        "droppable": "Pode ser dropado por um monstro",
         "boss-drop": "Pode ser dropado por um chefe",
         "archi-drop": "Pode ser dropado por um archimonstre ou um dominante"
     },
@@ -125,7 +125,7 @@
     },
     "obtention": {
         "craftable": "Pode ser craftado",
-        "droppable": "Pode ser dropado",
+        "droppable": "Pode ser dropado por um monstro",
         "cacher": "Ocultar itens obtidos por seu meio de obtenção",
         "boss": "Pode ser dropado por um chefe",
         "archi": "Pode ser dropado por um archimonstre ou um dominante"
