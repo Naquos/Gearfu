@@ -13,6 +13,7 @@ export class ImageService {
     public static readonly BASE_URL_ITEM_TYPE = ImageService.BASE_URL + "itemTypes/";
     public static readonly BASE_URL_ACHIEVEMENT_CATEGORIES = ImageService.BASE_URL + "achievementCategories/";
     public static readonly BASE_URL_ACHIEVEMENTS = ImageService.BASE_URL + "achievements/";
+    public static readonly BASE_URL_MONSTERS = ImageService.BASE_URL + "monsters/";
     public static readonly IMAGE_ERROR = ImageService.BASE_URL_ITEMS + "0000000.png";
 
 
@@ -134,5 +135,9 @@ export class ImageService {
 
     public getAchievementUrl(idAchievement: number): string {
         return ImageService.BASE_URL_ACHIEVEMENTS + idAchievement + ".png";
+    }
+
+    public getMonsterUrl(idMonster: number): string {
+        return ImageService.BASE_URL_MONSTERS + idMonster + ".png";
     }
 }
