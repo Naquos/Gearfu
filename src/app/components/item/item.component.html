@@ -43,6 +43,12 @@
                 @if(item.isDropable) {
                     <img [src]="imageService.getItemUrl(60625177)" alt="droppable" [matTooltip]="'item.droppable' | translate">
                 }
+                @if(item.isDropableOnBoss) {
+                    <img [src]="imageService.getAchievementCategoryUrl(670)" alt="boss drop" [matTooltip]="'item.boss-drop' | translate">
+                }
+                @if(item.isDropableOnArchi) {
+                    <img [src]="imageService.getAchievementUrl(5341)" alt="archi drop" [matTooltip]="'item.archi-drop' | translate">
+                }
             </div>
         </div>
     </div>

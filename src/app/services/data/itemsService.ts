@@ -25,8 +25,10 @@ import { EffetResistancesChassesEnum } from "../../models/enum/effetResistancesC
 import { RecipeResultsCdn } from "../../models/ankama-cdn/recipeResulsCdn";
 import { WakassetCdnFacade } from "../wakasset-cdn/wakassetCdnFacade";
 import { MonsterDropCdn } from "../../models/wakasset/monsterDropCdn";
-import { DropCraftableFormService } from "../form/dropCraftableFormService";
+import { ObtentionFormService } from "../form/obtentionFormService";
 import { RarityItemEnum } from "../../models/enum/rarityItemEnum";
+import { IdPierreDonjonEnum } from "../../models/enum/idPierreDonjonEnum";
+import { JobsItemCdn } from "../../models/ankama-cdn/jobsItemCdn";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -45,7 +47,15 @@ export class ItemsService {
     private readonly wakassetCdnFacade = inject(WakassetCdnFacade);
     private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
     private readonly reverseFormService = inject(ReverseFormService);
-    private readonly dropCraftableFormService = inject(DropCraftableFormService);
+    private readonly obtentionFormService = inject(ObtentionFormService);
+
+    private readonly idPierresList = [
+      IdPierreDonjonEnum.AVENTURE,
+      IdPierreDonjonEnum.EQUILIBRE,
+      IdPierreDonjonEnum.VITESSSE,
+      IdPierreDonjonEnum.ENTOURAGE,
+      IdPierreDonjonEnum.ULTIME
+    ]
 
     protected items: Item[] = [];
     protected readonly fullItems$ = new BehaviorSubject<Item[]>([]);
@@ -104,13 +114,19 @@ export class ItemsService {
       this.itemsFilterByItemName$ = combineLatest([this.fullItems$, this.searchItemNameFormService.itemName$])
       .pipe(map(([items, itemName]) => items.filter(x => this.normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(this.normalizeString(itemName)))));
 
-      const itemsFilterByDrop$ = combineLatest([this.itemsFilterByItemName$, this.dropCraftableFormService.drop$])
+      const itemsFilterByDrop$ = combineLatest([this.itemsFilterByItemName$, this.obtentionFormService.drop$])
       .pipe(map(([items, drop]) => items.filter(x => !drop || x.isDropable === false)));
       
-      const itemsFilterByCraftable$ = combineLatest([itemsFilterByDrop$, this.dropCraftableFormService.craftable$])
+      const itemsFilterByCraftable$ = combineLatest([itemsFilterByDrop$, this.obtentionFormService.craftable$])
       .pipe(map(([items, craftable]) => items.filter(x =>  !craftable || x.isCraftable === false)));
+
+      const itemsFilterByBoss$ = combineLatest([itemsFilterByCraftable$, this.obtentionFormService.boss$])
+      .pipe(map(([items, boss]) => items.filter(x => !boss || x.isDropableOnBoss === false)));
+
+      const itemsFilterByArchi$ = combineLatest([itemsFilterByBoss$, this.obtentionFormService.archi$])
+      .pipe(map(([items, archi]) => items.filter(x => !archi || x.isDropableOnArchi === false)));
   
-      const itemsFilterByLevelMin$ = combineLatest([itemsFilterByCraftable$, this.itemLevelFormService.levelMin$])
+      const itemsFilterByLevelMin$ = combineLatest([itemsFilterByArchi$, this.itemLevelFormService.levelMin$])
       .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
   
       const itemsFilterByLevelMax$ = combineLatest([itemsFilterByLevelMin$, this.itemLevelFormService.levelMax$])
@@ -257,9 +273,9 @@ export class ItemsService {
     }
 
     private initItemsList(): void {
-      combineLatest([this.ankamaCdnFacade.item$, this.ankamaCdnFacade.recipes$, this.wakassetCdnFacade.monsterDrops$]).pipe(
+      combineLatest([this.ankamaCdnFacade.item$, this.ankamaCdnFacade.recipes$, this.ankamaCdnFacade.idSiouperes$, this.wakassetCdnFacade.monsterDrops$]).pipe(
         take(1),
-        tap(([itemsCdn, recipes, monsterDrops]) => {
+        tap(([itemsCdn, recipes, idSiouperes, monsterDrops]) => {
         itemsCdn.forEach(x => this.items.push({
             id: x.definition.item.id,
             level: x.definition.item.level,
@@ -280,10 +296,12 @@ export class ItemsService {
             maitrise: 0,
             resistance: 0,
             isCraftable: false,
-            isDropable: false
+            isDropable: false,
+            isDropableOnBoss: false,
+            isDropableOnArchi: false,
         }));
         this.items.forEach(item => this.calculItemIsCraftable(item, recipes));
-        this.items.forEach(item => this.calculItemIsDropable(item, monsterDrops));
+        this.items.forEach(item => this.calculItemIsDropable(item, monsterDrops, idSiouperes));
       })).subscribe();
     }
     
@@ -309,22 +327,30 @@ export class ItemsService {
         
     }
 
-    private calculItemIsDropable(item: Item, monsterDrops: MonsterDropCdn[]): void {
+    private calculItemIsDropable(item: Item, monsterDrops: MonsterDropCdn[], idSiouperes: JobsItemCdn[]): void {
       if(item.isDropable) {
         return;
       }
 
-      // const itemWithLessRarity = this.items.find(x => x.title.en.trim() === item.title.en.trim() && x.rarity < item.rarity);
-      const isDropable = monsterDrops.find(x => x.drops.find(drop => drop.itemId === item.id));
-      if(!isDropable) {
-        return;
-      }
-      if(item.rarity === RarityItemEnum.SOUVENIR) {
-        item.isDropable = true;
+      const dropList = monsterDrops.find(x => x.drops.find(drop => drop.itemId === item.id)); 
+      if(!dropList) {
         return;
       }
 
-      this.items.filter(x => x.title.en.trim() === item.title.en.trim() && x.rarity !== RarityItemEnum.SOUVENIR).forEach(x => x.isDropable = true);
+      const isDropableOnBoss = dropList.drops.some(drop => this.idPierresList.includes(drop.itemId));
+      const isDropableOnArchi = dropList.drops.some(drop => idSiouperes.some(idSioupere => idSioupere.definition.id === drop.itemId));
+      if(item.rarity === RarityItemEnum.SOUVENIR) {
+        item.isDropable = true;
+        item.isDropableOnBoss = isDropableOnBoss;
+        item.isDropableOnArchi = isDropableOnArchi;
+        return;
+      }
+
+      this.items.filter(x => x.title.en.trim() === item.title.en.trim() && x.rarity !== RarityItemEnum.SOUVENIR).forEach(x => {
+        x.isDropable = true;
+        x.isDropableOnBoss = isDropableOnBoss;
+        x.isDropableOnArchi = isDropableOnArchi;
+      });
     }
 
     public searchItem(idItem : number): Observable<Item | undefined> {

@@ -28,7 +28,7 @@ import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
 import { OnlyNoElemComponent } from '../form/only-no-elem/only-no-elem.component';
 import { ReverseButtonComponent } from '../form/reverse-button/reverse-button.component';
 import { WakassetCdnFacade } from '../../services/wakasset-cdn/wakassetCdnFacade';
-import { DropCraftableComponent } from "../form/drop-craftable/drop-craftable.component";
+import { ObtentionComponent } from "../form/obtention/obtention.component";
 
 
 @Component({
@@ -57,7 +57,7 @@ import { DropCraftableComponent } from "../form/drop-craftable/drop-craftable.co
     NameBuildComponent,
     RecapStatsComponent,
     ReverseButtonComponent,
-    DropCraftableComponent
+    ObtentionComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

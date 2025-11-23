@@ -20,11 +20,6 @@
         "label": "Your builds list",
         "no-build": "You haven't saved any builds yet."
     },
-    "drop-craftable": {
-        "craftable": "Can be crafted",
-        "droppable": "Can be dropped",
-        "cacher": "Hide items obtainable by craft or drop"
-    },
     "import-build": {
         "label": "Import your build via a Gearfu or Zenith URL",
         "placeholder": "Gearfu or Zenith URL"
@@ -53,7 +48,9 @@
         "poids-infobulle": "Weight = Mastery + {{ ratio }}*Resistances",
         "copier": "Copy item name",
         "craftable": "Can be crafted",
-        "droppable": "Can be dropped"
+        "droppable": "Can be dropped",
+        "boss-drop": "Can be dropped by a boss",
+        "archi-drop": "Can be dropped by an archimonster or dominant"
     },
     "item-choose": {
         "zenith": "Export build to Zénith Wakfu",
@@ -125,6 +122,13 @@
     "name-build": {
         "label": "Save your build",
         "placeholder": "Name your build"
+    },
+    "obtention": {
+        "craftable": "Can be crafted",
+        "droppable": "Can be dropped",
+        "cacher": "Hide items obtainable by their means of obtention",
+        "boss": "Can be dropped by a boss",
+        "archi": "Can be dropped by an archimonster or dominant"
     },
     "only-no-elem": {
         "label": "Consider only items without elemental mastery",

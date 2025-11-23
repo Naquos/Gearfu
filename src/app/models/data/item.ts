@@ -27,4 +27,6 @@ export interface Item {
     resistance: number;
     isCraftable: boolean;
     isDropable: boolean;
+    isDropableOnBoss: boolean;
+    isDropableOnArchi: boolean;
 }

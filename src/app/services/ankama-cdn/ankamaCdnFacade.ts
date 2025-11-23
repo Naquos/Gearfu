@@ -1,10 +1,11 @@
 import { inject, Injectable } from "@angular/core";
 import { AnkamaCdnService } from "./ankamaCdnService";
-import { BehaviorSubject, filter, tap } from "rxjs";
+import { BehaviorSubject, filter, map, tap } from "rxjs";
 import { ActionsCdn } from "../../models/ankama-cdn/actionsCdn";
 import { ItemCdn } from "../../models/ankama-cdn/itemCdn";
 import { StatesCdn } from "../../models/ankama-cdn/statesCdn";
 import { RecipeResultsCdn } from "../../models/ankama-cdn/recipeResulsCdn";
+import { JobsItemCdn } from "../../models/ankama-cdn/jobsItemCdn";
 
 @Injectable({providedIn: 'root'})
 export class AnkamaCdnFacade {
@@ -36,6 +37,11 @@ export class AnkamaCdnFacade {
         filter(recipes => recipes.length > 0),
     );
 
+    private readonly idSiouperes = new BehaviorSubject<JobsItemCdn[]>([]);
+    public readonly idSiouperes$ = this.idSiouperes.asObservable().pipe(
+        filter(idSioupere => idSioupere.length > 0),
+    );
+
     private loadItems(config: string): void {
         this.ankamaCdnService.getItems(config).pipe(tap(items => this.item.next(items))).subscribe();
     }
@@ -52,6 +58,14 @@ export class AnkamaCdnFacade {
         this.ankamaCdnService.getRecipesResult(config).pipe(tap(recipes => this.recipes.next(recipes))).subscribe();
     }
 
+    private loadIdSioupere(config: string): void {
+        this.ankamaCdnService.getJobsItems(config)
+        .pipe(
+            map(jobsItems => jobsItems.filter(item => item.title.fr.toLowerCase().includes("sioupère"))),
+            tap(idSioupere => this.idSiouperes.next(idSioupere)))
+        .subscribe();
+    }
+
     public load(): void {
         this.ankamaCdnService.getConfig()
             .pipe(
@@ -60,6 +74,7 @@ export class AnkamaCdnFacade {
                 tap(config => this.loadActions(config.version)),
                 tap(config => this.loadStates(config.version)),
                 tap(config => this.loadRecipesResult(config.version)),
+                tap(config => this.loadIdSioupere(config.version)),
             ).subscribe();
     }
 
