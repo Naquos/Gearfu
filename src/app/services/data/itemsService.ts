@@ -68,6 +68,11 @@ export class ItemsService {
 
     private static readonly ARMURE_DONNEE_RECUE_LIST = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
 
+    private recipesByProductId = new Map<number, RecipeResultsCdn>();
+    private itemsByImage = new Map<number, Item[]>();
+    private monsterDropsByItemId = new Map<number, MonsterDropCdn[]>();
+    private archiIds = new Set<number>();
+
     public init(): void {
         this.initItemsList();
         this.initFilter();
@@ -300,59 +305,97 @@ export class ItemsService {
             isDropableOnBoss: false,
             isDropableOnArchi: false,
         }));
-        this.items.forEach(item => this.calculItemIsCraftable(item, recipes));
-        this.items.forEach(item => this.calculItemIsDropable(item, monsterDrops, idSiouperes));
+        this.buildIndexes(recipes, monsterDrops, idSiouperes);
+        this.items.forEach(item => this.calculItemIsCraftable(item));
+        this.items.forEach(item => this.calculItemIsDropable(item));
+
       })).subscribe();
     }
+
+    private buildIndexes(recipes: RecipeResultsCdn[], monsterDrops: MonsterDropCdn[], idSiouperes: JobsItemCdn[]): void {
+      for(const r of recipes) {
+        this.recipesByProductId.set(r.productedItemId, r);
+      }
+
+      for(const item of this.items) {
+        if(!this.itemsByImage.has(item.idImage)) {
+          this.itemsByImage.set(item.idImage, []);
+        }
+        this.itemsByImage.get(item.idImage)!.push(item);
+      }
+
+      for(const monster of monsterDrops) {
+        for(const drop of monster.drops) {
+          if(!this.monsterDropsByItemId.has(drop.itemId)) {
+            this.monsterDropsByItemId.set(drop.itemId, []);
+          }
+          this.monsterDropsByItemId.get(drop.itemId)!.push(monster);
+        }
+      }
+
+      for(const sioup of idSiouperes) {
+        this.archiIds.add(sioup.definition.id);
+      }
+    }
     
-    private calculItemIsCraftable(item: Item, recipes: RecipeResultsCdn[]): void {
-      if(item.isCraftable) {
-        return;
-      }
-      const isCraftable = recipes.find(x => x.productedItemId === item.id);
-      if(!isCraftable) {
-        return;
-      }
-      if(item.rarity === RarityItemEnum.SOUVENIR) {
-        item.isCraftable = true;
-        return;
-      }
+    private calculItemIsCraftable(item: Item): void {
+        if (item.isCraftable) return;
 
-      const itemWithLessRarity = this.items.find(x => x.title.en.trim() === item.title.en.trim() && x.rarity < item.rarity);
-      if(itemWithLessRarity) {
-        return;
-      }
+        const recipe = this.recipesByProductId.get(item.id);
+        if (!recipe) return;
 
-      this.items.filter(x => x.title.en.trim() === item.title.en.trim()).forEach(x => x.isCraftable = true);
-        
+        // Souvenir : directement craftable
+        if (item.rarity === RarityItemEnum.SOUVENIR) {
+          item.isCraftable = true;
+          return;
+        }
+
+        const itemsSameImage = this.itemsByImage.get(item.idImage);
+        if (!itemsSameImage) return;
+
+        // S'il existe un item avec une rareté inférieure → pas craftable
+        const hasLowerRarity = itemsSameImage.some(x => x.rarity < item.rarity);
+        if (hasLowerRarity) return;
+
+        // Tous les items partageant le même idImage deviennent craftables
+        for (const it of itemsSameImage) {
+          it.isCraftable = true;
+        }
     }
 
-    private calculItemIsDropable(item: Item, monsterDrops: MonsterDropCdn[], idSiouperes: JobsItemCdn[]): void {
-      if(item.isDropable) {
-        return;
-      }
+    private calculItemIsDropable(item: Item): void {
+        if (item.isDropable) return;
 
-      const dropList = monsterDrops.filter(x => x.drops.find(drop => drop.itemId === item.id)); 
-      if(!dropList.length) {
-        return;
-      }
+        const dropList = this.monsterDropsByItemId.get(item.id);
+        if (!dropList || dropList.length === 0) return;
 
-      const isDropableOnBoss = dropList.some(drop => drop.drops.some(d => this.idPierresList.includes(d.itemId)));
-      const isDropableOnArchi = dropList.some(drop => drop.drops.some(d => idSiouperes.some(idSioupere => idSioupere.definition.id === d.itemId)));
-      if(item.rarity === RarityItemEnum.SOUVENIR) {
-        item.isDropable =  !isDropableOnBoss && !isDropableOnArchi;
-        item.isDropableOnBoss = isDropableOnBoss;
-        item.isDropableOnArchi = isDropableOnArchi;
-        return;
-      }
+        const isDropableOnBoss = dropList.some(m => 
+          m.drops.some(d => this.idPierresList.includes(d.itemId))
+        );
 
-      this.items.filter(x => x.title.en.trim() === item.title.en.trim() && x.rarity !== RarityItemEnum.SOUVENIR).forEach(x => {
-        // Les seuls items NORMAL dropable sont ceux de niveau <= 35
-        // + Il faut traiter le cas où des items bas levels ont le même nom que des items plus hauts levels
-        x.isDropable = (x.rarity !== RarityItemEnum.NORMAL || x.level <= 35) && x.level >= item.level && (!isDropableOnBoss && !isDropableOnArchi);
-        x.isDropableOnBoss = isDropableOnBoss;
-        x.isDropableOnArchi = isDropableOnArchi;
-      });
+        const isDropableOnArchi = dropList.some(m =>
+          m.drops.some(d => this.archiIds.has(d.itemId))
+        );
+
+        if (item.rarity === RarityItemEnum.SOUVENIR) {
+          item.isDropable = !isDropableOnBoss && !isDropableOnArchi;
+          item.isDropableOnBoss = isDropableOnBoss;
+          item.isDropableOnArchi = isDropableOnArchi;
+          return;
+        }
+
+        const sameNameItems = this.itemsByImage.get(item.idImage);
+        if (!sameNameItems) return;
+
+        for (const x of sameNameItems) {
+          x.isDropable =
+            (x.rarity !== RarityItemEnum.NORMAL || x.level <= 35) &&
+            x.level >= item.level &&
+            (!isDropableOnBoss && !isDropableOnArchi);
+
+          x.isDropableOnBoss = isDropableOnBoss;
+          x.isDropableOnArchi = isDropableOnArchi;
+        }
     }
 
     public searchItem(idItem : number): Observable<Item | undefined> {
