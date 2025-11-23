@@ -20,11 +20,6 @@
         "label": "Sua lista de builds",
         "no-build": "Você ainda não salvou nenhum build."
     },
-    "drop-craftable": {
-        "craftable":"Pode ser craftado",
-        "droppable":"Pode ser dropado",
-        "cacher":"Ocultar itens obtidos por craft ou drop"
-    },
     "import-build": {
         "label": "Importe seu build através de uma URL do Gearfu ou Zénith",
         "placeholder": "URL do Gearfu ou Zénith"
@@ -53,7 +48,9 @@
         "poids-infobulle": "Peso = Maestria + {{ ratio }}*Resistências",
         "copier": "Copiar nome do item",
         "craftable": "Pode ser craftado",
-        "droppable": "Pode ser dropado"
+        "droppable": "Pode ser dropado",
+        "boss-drop": "Pode ser dropado por um chefe",
+        "archi-drop": "Pode ser dropado por um archimonstre ou um dominante"
     },
     "item-choose": {
         "zenith": "Exportar build para Zénith Wakfu",
@@ -125,6 +122,13 @@
     "name-build": {
         "label": "Salvar seu build",
         "placeholder": "Nome do seu build"
+    },
+    "obtention": {
+        "craftable": "Pode ser craftado",
+        "droppable": "Pode ser dropado",
+        "cacher": "Ocultar itens obtidos por seu meio de obtenção",
+        "boss": "Pode ser dropado por um chefe",
+        "archi": "Pode ser dropado por um archimonstre ou um dominante"
     },
     "only-no-elem": {
         "label": "Considerar apenas itens sem maestria elemental",
