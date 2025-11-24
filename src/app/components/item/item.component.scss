@@ -147,7 +147,7 @@
     }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 900px) {
     :host {
         max-width: 90%;
         margin: auto;
@@ -157,7 +157,10 @@
         }
         .craftAndDrop {
             img {
-                width: 20px;
+                width: 40px!important;
+            }
+            img:nth-of-type(n+4) {
+                display: none!important;
             }
         }
     }
