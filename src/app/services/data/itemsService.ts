@@ -23,12 +23,12 @@ import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum
 import { EffetMaitrisesChassesEnum } from "../../models/enum/effetMaitrisesChassesEnum";
 import { EffetResistancesChassesEnum } from "../../models/enum/effetResistancesChassesEnum";
 import { RecipeResultsCdn } from "../../models/ankama-cdn/recipeResulsCdn";
-import { WakassetCdnFacade } from "../wakasset-cdn/wakassetCdnFacade";
-import { MonsterDropCdn } from "../../models/wakasset/monsterDropCdn";
 import { ObtentionFormService } from "../form/obtentionFormService";
 import { RarityItemEnum } from "../../models/enum/rarityItemEnum";
 import { IdPierreDonjonEnum } from "../../models/enum/idPierreDonjonEnum";
 import { JobsItemCdn } from "../../models/ankama-cdn/jobsItemCdn";
+import { MonsterDropService } from "./monsterDropService";
+import { MonsterDrop } from "../../models/data/monsterDrop";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -44,10 +44,10 @@ export class ItemsService {
     private readonly resistanceFormService = inject(ResistancesFormService);
     private readonly maitrisesFormService = inject(MaitrisesFormService);
     private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
-    private readonly wakassetCdnFacade = inject(WakassetCdnFacade);
     private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
     private readonly reverseFormService = inject(ReverseFormService);
     private readonly obtentionFormService = inject(ObtentionFormService);
+    private readonly monsterDropService = inject(MonsterDropService);
 
     private readonly idPierresList = [
       IdPierreDonjonEnum.AVENTURE,
@@ -70,7 +70,7 @@ export class ItemsService {
 
     private recipesByProductId = new Map<number, RecipeResultsCdn>();
     private itemsByImage = new Map<number, Item[]>();
-    private monsterDropsByItemId = new Map<number, MonsterDropCdn[]>();
+    private monsterDropsByItemId = new Map<number, MonsterDrop[]>();
     private archiIds = new Set<number>();
 
     public init(): void {
@@ -100,7 +100,7 @@ export class ItemsService {
               const sortedItems = items.sort(this.sortItems());
               return reverse  ? sortedItems.reverse() : sortedItems;
             }),
-            map(items => items.slice(0,32)));
+            map(items => items.slice(0,36)));
     }
 
     private sortItems(): ((a: Item, b: Item) => number) | undefined {
@@ -120,16 +120,16 @@ export class ItemsService {
       .pipe(map(([items, itemName]) => items.filter(x => this.normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(this.normalizeString(itemName)))));
 
       const itemsFilterByDrop$ = combineLatest([this.itemsFilterByItemName$, this.obtentionFormService.drop$])
-      .pipe(map(([items, drop]) => items.filter(x => !drop || x.isDropable === false)));
+      .pipe(map(([items, drop]) => items.filter(x => !drop || !x.idMobDropable.length)));
       
       const itemsFilterByCraftable$ = combineLatest([itemsFilterByDrop$, this.obtentionFormService.craftable$])
       .pipe(map(([items, craftable]) => items.filter(x =>  !craftable || x.isCraftable === false)));
 
       const itemsFilterByBoss$ = combineLatest([itemsFilterByCraftable$, this.obtentionFormService.boss$])
-      .pipe(map(([items, boss]) => items.filter(x => !boss || x.isDropableOnBoss === false)));
+      .pipe(map(([items, boss]) => items.filter(x => !boss || !x.idBossDropable.length)));
 
       const itemsFilterByArchi$ = combineLatest([itemsFilterByBoss$, this.obtentionFormService.archi$])
-      .pipe(map(([items, archi]) => items.filter(x => !archi || x.isDropableOnArchi === false)));
+      .pipe(map(([items, archi]) => items.filter(x => !archi || !x.idArchiDropable.length)));
   
       const itemsFilterByLevelMin$ = combineLatest([itemsFilterByArchi$, this.itemLevelFormService.levelMin$])
       .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
@@ -282,7 +282,7 @@ export class ItemsService {
     }
 
     private initItemsList(): void {
-      combineLatest([this.ankamaCdnFacade.item$, this.ankamaCdnFacade.recipes$, this.ankamaCdnFacade.idSiouperes$, this.wakassetCdnFacade.monsterDrops$]).pipe(
+      combineLatest([this.ankamaCdnFacade.item$, this.ankamaCdnFacade.recipes$, this.ankamaCdnFacade.idSiouperes$, this.monsterDropService.monsterDrops$]).pipe(
         take(1),
         tap(([itemsCdn, recipes, idSiouperes, monsterDrops]) => {
         itemsCdn.forEach(x => this.items.push({
@@ -305,9 +305,9 @@ export class ItemsService {
             maitrise: 0,
             resistance: 0,
             isCraftable: false,
-            isDropable: false,
-            isDropableOnBoss: false,
-            isDropableOnArchi: false,
+            idMobDropable: [],
+            idBossDropable: [],
+            idArchiDropable: [],
         }));
         this.buildIndexes(recipes, monsterDrops, idSiouperes);
         this.items.forEach(item => this.calculItemIsCraftable(item));
@@ -316,7 +316,7 @@ export class ItemsService {
       })).subscribe();
     }
 
-    private buildIndexes(recipes: RecipeResultsCdn[], monsterDrops: MonsterDropCdn[], idSiouperes: JobsItemCdn[]): void {
+    private buildIndexes(recipes: RecipeResultsCdn[], monsterDrops: MonsterDrop[], idSiouperes: JobsItemCdn[]): void {
       for(const r of recipes) {
         this.recipesByProductId.set(r.productedItemId, r);
       }
@@ -329,11 +329,11 @@ export class ItemsService {
       }
 
       for(const monster of monsterDrops) {
-        for(const drop of monster.drops) {
-          if(!this.monsterDropsByItemId.has(drop.itemId)) {
-            this.monsterDropsByItemId.set(drop.itemId, []);
+        for(const drop of monster.idsDrop) {
+          if(!this.monsterDropsByItemId.has(drop)) {
+            this.monsterDropsByItemId.set(drop, []);
           }
-          this.monsterDropsByItemId.get(drop.itemId)!.push(monster);
+          this.monsterDropsByItemId.get(drop)!.push(monster);
         }
       }
 
@@ -368,25 +368,26 @@ export class ItemsService {
     }
 
     private calculItemIsDropable(item: Item): void {
-        if (item.isDropable) return;
+        if (item.idMobDropable.length) return;
 
         const dropList = this.monsterDropsByItemId.get(item.id);
         if (!dropList || dropList.length === 0) return;
 
-        const isDropableOnBoss = dropList.some(m => 
-          m.drops.some(d => this.idPierresList.includes(d.itemId))
+        const dropListOnBoss = dropList.filter(m => 
+          m.idsDrop.some(id => this.idPierresList.includes(id))
         );
 
-        const isDropableOnArchi = dropList.some(m =>
-          m.drops.some(d => this.archiIds.has(d.itemId))
+        const dropListOnArchi = dropList.filter(m =>
+          m.idsDrop.some(id => this.archiIds.has(id))
         );
 
         if (item.rarity === RarityItemEnum.SOUVENIR) {
-          item.isDropable = !isDropableOnBoss && !isDropableOnArchi;
-          item.isDropableOnBoss = isDropableOnBoss;
-          item.isDropableOnArchi = isDropableOnArchi;
+          if(!dropListOnBoss.length && !dropListOnArchi.length) item.idMobDropable = dropList.map(m => m.gfxId);
+          if(dropListOnBoss.length) item.idBossDropable = dropListOnBoss.map(m => m.gfxId);
+          if(dropListOnArchi.length) item.idArchiDropable = dropListOnArchi.map(m => m.gfxId);
           return;
         }
+
 
         const sameNameItems = this.itemsByImage.get(item.idImage);
         if (!sameNameItems) return;
@@ -394,12 +395,14 @@ export class ItemsService {
         for (const x of sameNameItems) {
           if (x.rarity === RarityItemEnum.SOUVENIR) continue;
 
-          x.isDropable = (x.rarity !== RarityItemEnum.NORMAL || x.level <= 35) &&
+          if((x.rarity !== RarityItemEnum.NORMAL || x.level <= 35) &&
             x.level >= item.level &&
-            (!isDropableOnBoss && !isDropableOnArchi);
+            (!dropListOnBoss.length && !dropListOnArchi.length)) {
+              item.idMobDropable = dropList.map(m => m.gfxId)
+            }
 
-          x.isDropableOnBoss = isDropableOnBoss;
-          x.isDropableOnArchi = isDropableOnArchi;
+          if(dropListOnBoss.length) item.idBossDropable = dropListOnBoss.map(m => m.gfxId);
+          if(dropListOnArchi.length) item.idArchiDropable = dropListOnArchi.map(m => m.gfxId);
         }
     }
 

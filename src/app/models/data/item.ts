@@ -26,7 +26,7 @@ export interface Item {
     maitrise: number;
     resistance: number;
     isCraftable: boolean;
-    isDropable: boolean;
-    isDropableOnBoss: boolean;
-    isDropableOnArchi: boolean;
+    idMobDropable: number[];
+    idBossDropable: number[];
+    idArchiDropable: number[];
 }

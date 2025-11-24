@@ -40,14 +40,20 @@
                 @if (item.isCraftable) {
                     <img [src]="imageService.getItemUrl(71919810)" alt="craftable" [matTooltip]="'item.craftable' | translate">
                 }
-                @if(item.isDropable) {
-                    <img [src]="imageService.getMonsterUrl(100200039)" alt="droppable" [matTooltip]="'item.droppable' | translate">
+                @if(item.idMobDropable) {
+                    @for (drop of item.idMobDropable; track $index) {
+                    <img [src]="imageService.getMonsterUrl(drop)" alt="droppable" [matTooltip]="'item.droppable' | translate" appFallback>
+                    }
                 }
-                @if(item.isDropableOnBoss) {
-                    <img [src]="imageService.getMonsterUrl(100200044)" alt="boss drop" [matTooltip]="'item.boss-drop' | translate">
+                @if(item.idBossDropable) {
+                    @for (drop of item.idBossDropable; track $index) {
+                    <img [src]="imageService.getMonsterUrl(drop)" alt="boss drop" [matTooltip]="'item.boss-drop' | translate" appFallback>
+                    }
                 }
-                @if(item.isDropableOnArchi) {
-                    <img [src]="imageService.getAchievementUrl(5341)" alt="archi drop" [matTooltip]="'item.archi-drop' | translate">
+                @if(item.idArchiDropable) {
+                    @for (drop of item.idArchiDropable; track $index) {
+                        <img [src]="imageService.getMonsterUrl(drop)" alt="archi drop" [matTooltip]="'item.archi-drop' | translate" appFallback>
+                    }
                 }
             </div>
         </div>
