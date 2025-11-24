@@ -398,11 +398,11 @@ export class ItemsService {
           if((x.rarity !== RarityItemEnum.NORMAL || x.level <= 35) &&
             x.level >= item.level &&
             (!dropListOnBoss.length && !dropListOnArchi.length)) {
-              item.idMobDropable = dropList.map(m => m.gfxId)
+              x.idMobDropable = dropList.map(m => m.gfxId)
             }
 
-          if(dropListOnBoss.length) item.idBossDropable = dropListOnBoss.map(m => m.gfxId);
-          if(dropListOnArchi.length) item.idArchiDropable = dropListOnArchi.map(m => m.gfxId);
+          if(dropListOnBoss.length) x.idBossDropable = dropListOnBoss.map(m => m.gfxId);
+          if(dropListOnArchi.length) x.idArchiDropable = dropListOnArchi.map(m => m.gfxId);
         }
     }
 
