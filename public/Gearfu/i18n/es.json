@@ -50,7 +50,8 @@
         "craftable": "Puede ser craftado",
         "droppable": "Puede ser dropeado por un monstruo",
         "boss-drop": "Puede ser dropeado por un jefe",
-        "archi-drop": "Puede ser dropeado por un archimonstre o un dominante"
+        "archi-drop": "Puede ser dropeado por un archimonstre o un dominante",
+        "pvp": "Puede ser obtenido en PvP"
     },
     "item-choose": {
         "zenith": "Exportar construcción a Zénith Wakfu",
@@ -128,7 +129,8 @@
         "droppable": "Puede ser dropeado por un monstruo",
         "cacher": "Ocultar objetos obtenibles por su medio de obtención",
         "boss": "Puede ser dropeado por un jefe",
-        "archi": "Puede ser dropeado por un archimonstre o un dominante"
+        "archi": "Puede ser dropeado por un archimonstre o un dominante",
+        "pvp": "Puede ser obtenido en PvP"
     },
     "only-no-elem": {
         "label": "Considerar solo objetos sin dominio elemental",

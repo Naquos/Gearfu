@@ -120,18 +120,21 @@ export class ItemsService {
       .pipe(map(([items, itemName]) => items.filter(x => this.normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(this.normalizeString(itemName)))));
 
       const itemsFilterByDrop$ = combineLatest([this.itemsFilterByItemName$, this.obtentionFormService.drop$])
-      .pipe(map(([items, drop]) => items.filter(x => !drop || !x.idMobDropable.length)));
+      .pipe(map(([items, drop]) => items.filter(x => !drop || !x.mobDropable.length)));
       
       const itemsFilterByCraftable$ = combineLatest([itemsFilterByDrop$, this.obtentionFormService.craftable$])
       .pipe(map(([items, craftable]) => items.filter(x =>  !craftable || x.isCraftable === false)));
 
       const itemsFilterByBoss$ = combineLatest([itemsFilterByCraftable$, this.obtentionFormService.boss$])
-      .pipe(map(([items, boss]) => items.filter(x => !boss || !x.idBossDropable.length)));
+      .pipe(map(([items, boss]) => items.filter(x => !boss || !x.bossDropable.length)));
 
       const itemsFilterByArchi$ = combineLatest([itemsFilterByBoss$, this.obtentionFormService.archi$])
-      .pipe(map(([items, archi]) => items.filter(x => !archi || !x.idArchiDropable.length)));
+      .pipe(map(([items, archi]) => items.filter(x => !archi || !x.archiDropable.length)));
+
+      const itemsFilterByPvp$ = combineLatest([itemsFilterByArchi$, this.obtentionFormService.pvp$])
+      .pipe(map(([items, pvp]) => items.filter(x => !pvp || !x.isPvP)));
   
-      const itemsFilterByLevelMin$ = combineLatest([itemsFilterByArchi$, this.itemLevelFormService.levelMin$])
+      const itemsFilterByLevelMin$ = combineLatest([itemsFilterByPvp$, this.itemLevelFormService.levelMin$])
       .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
   
       const itemsFilterByLevelMax$ = combineLatest([itemsFilterByLevelMin$, this.itemLevelFormService.levelMax$])
@@ -305,13 +308,15 @@ export class ItemsService {
             maitrise: 0,
             resistance: 0,
             isCraftable: false,
-            idMobDropable: [],
-            idBossDropable: [],
-            idArchiDropable: [],
+            mobDropable: [],
+            bossDropable: [],
+            archiDropable: [],
+            isPvP: false
         }));
         this.buildIndexes(recipes, monsterDrops, idSiouperes);
         this.items.forEach(item => this.calculItemIsCraftable(item));
         this.items.forEach(item => this.calculItemIsDropable(item));
+        this.items.forEach(item => item.isPvP = this.ankamaCdnFacade.isItemPvP(item.id));
 
       })).subscribe();
     }
@@ -368,7 +373,7 @@ export class ItemsService {
     }
 
     private calculItemIsDropable(item: Item): void {
-        if (item.idMobDropable.length) return;
+        if (item.mobDropable.length) return;
 
         const dropList = this.monsterDropsByItemId.get(item.id);
         if (!dropList || dropList.length === 0) return;
@@ -382,9 +387,9 @@ export class ItemsService {
         );
 
         if (item.rarity === RarityItemEnum.SOUVENIR) {
-          if(!dropListOnBoss.length && !dropListOnArchi.length) item.idMobDropable = dropList.map(m => m.gfxId);
-          if(dropListOnBoss.length) item.idBossDropable = dropListOnBoss.map(m => m.gfxId);
-          if(dropListOnArchi.length) item.idArchiDropable = dropListOnArchi.map(m => m.gfxId);
+          if(!dropListOnBoss.length && !dropListOnArchi.length) item.mobDropable = dropList;
+          if(dropListOnBoss.length) item.bossDropable = dropListOnBoss;
+          if(dropListOnArchi.length) item.archiDropable = dropListOnArchi;
           return;
         }
 
@@ -398,11 +403,11 @@ export class ItemsService {
           if((x.rarity !== RarityItemEnum.NORMAL || x.level <= 35) &&
             x.level >= item.level &&
             (!dropListOnBoss.length && !dropListOnArchi.length)) {
-              x.idMobDropable = dropList.map(m => m.gfxId)
+              x.mobDropable = dropList;
             }
 
-          if(dropListOnBoss.length) x.idBossDropable = dropListOnBoss.map(m => m.gfxId);
-          if(dropListOnArchi.length) x.idArchiDropable = dropListOnArchi.map(m => m.gfxId);
+          if(dropListOnBoss.length) x.bossDropable = dropListOnBoss;
+          if(dropListOnArchi.length) x.archiDropable = dropListOnArchi;
         }
     }
 

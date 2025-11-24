@@ -7,6 +7,7 @@ import { ActionsCdn } from "../../models/ankama-cdn/actionsCdn";
 import { StatesCdn } from "../../models/ankama-cdn/statesCdn";
 import { RecipeResultsCdn } from "../../models/ankama-cdn/recipeResulsCdn";
 import { JobsItemCdn } from "../../models/ankama-cdn/jobsItemCdn";
+import { RecipeIngredientCdn } from "../../models/ankama-cdn/recipeIngredient";
 
 @Injectable({providedIn: 'root'})
 export class AnkamaCdnService {
@@ -35,5 +36,9 @@ export class AnkamaCdnService {
 
     public getJobsItems(config: string): Observable<JobsItemCdn[]> {
         return this.http.get<JobsItemCdn[]>(this.baseUrl + config + "/jobsItems.json");
+    }
+
+    public getRecipeIngredients(config: string): Observable<RecipeIngredientCdn[]> {
+        return this.http.get<RecipeIngredientCdn[]>(this.baseUrl + config + "/recipeIngredients.json");
     }
 }

@@ -93,6 +93,10 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     window.open('https://www.wakfu.com/fr/mmorpg/encyclopedie/armures/' + itemId);
   }
 
+  protected openEncyclopedieForMonster(monsterId: number): void {
+    window.open('https://www.wakfu.com/fr/mmorpg/encyclopedie/monstres/' + monsterId);
+  }
+
   protected copyToClipboard(): void {
     navigator.clipboard.writeText(this.item.title[this.translateService.currentLang as keyof typeof this.item.title]);
   }

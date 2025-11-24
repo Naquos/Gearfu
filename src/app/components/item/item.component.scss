@@ -127,6 +127,10 @@
                 img {
                     width: 80px;
                 }
+
+                .monster:hover {
+                    transform: scale(1.2);
+                }
             }
         }
     }

@@ -6,11 +6,13 @@ import { ItemCdn } from "../../models/ankama-cdn/itemCdn";
 import { StatesCdn } from "../../models/ankama-cdn/statesCdn";
 import { RecipeResultsCdn } from "../../models/ankama-cdn/recipeResulsCdn";
 import { JobsItemCdn } from "../../models/ankama-cdn/jobsItemCdn";
+import { RecipeIngredientCdn } from "../../models/ankama-cdn/recipeIngredient";
 
 @Injectable({providedIn: 'root'})
 export class AnkamaCdnFacade {
 
     private readonly ankamaCdnService = inject(AnkamaCdnService);
+    private static readonly MEDAILLE_BRAVOURE_ITEM_ID = 24705; 
 
     private readonly config = new BehaviorSubject<string>("");
     public readonly config$ = this.config.asObservable().pipe(
@@ -42,6 +44,14 @@ export class AnkamaCdnFacade {
         filter(idSioupere => idSioupere.length > 0),
     );
 
+    private readonly recipeIngredients = new BehaviorSubject<RecipeIngredientCdn[]>([]);
+    public readonly recipeIngredients$ = this.recipeIngredients.asObservable().pipe(
+        filter(recipeIngredients => recipeIngredients.length > 0),
+    );
+
+    private readonly mapProductItemIdToRecipeResult = new Map<number, RecipeResultsCdn>();
+    private readonly mapRecipeIdToRecipeIngredients = new Map<number, RecipeIngredientCdn[]>();
+
     private loadItems(config: string): void {
         this.ankamaCdnService.getItems(config).pipe(tap(items => this.item.next(items))).subscribe();
     }
@@ -54,8 +64,29 @@ export class AnkamaCdnFacade {
         this.ankamaCdnService.getStates(config).pipe(tap(states => this.states.next(states))).subscribe();
     }
 
+    private loadRecipeIngredients(config: string): void {
+        this.ankamaCdnService.getRecipeIngredients(config)
+        .pipe(tap(recipeIngredients => this.recipeIngredients.next(recipeIngredients)),
+            tap(recipeIngredients => {
+                recipeIngredients.forEach(recipeIngredient => {
+                    const ingredients = this.mapRecipeIdToRecipeIngredients.get(recipeIngredient.recipeId) || [];
+                    ingredients.push(recipeIngredient);
+                    this.mapRecipeIdToRecipeIngredients.set(recipeIngredient.recipeId, ingredients);
+                });
+            })
+        ).subscribe();
+    }
+
     private loadRecipesResult(config: string): void {
-        this.ankamaCdnService.getRecipesResult(config).pipe(tap(recipes => this.recipes.next(recipes))).subscribe();
+        this.ankamaCdnService.getRecipesResult(config)
+        .pipe(
+            tap(recipes => this.recipes.next(recipes)),
+            tap(recipes => {
+                recipes.forEach(recipe => {
+                    this.mapProductItemIdToRecipeResult.set(recipe.productedItemId, recipe);
+                });
+            })
+        ).subscribe();
     }
 
     private loadIdSioupere(config: string): void {
@@ -75,6 +106,7 @@ export class AnkamaCdnFacade {
                 tap(config => this.loadStates(config.version)),
                 tap(config => this.loadRecipesResult(config.version)),
                 tap(config => this.loadIdSioupere(config.version)),
+                tap(config => this.loadRecipeIngredients(config.version)),
             ).subscribe();
     }
 
@@ -84,5 +116,14 @@ export class AnkamaCdnFacade {
 
     public getStatesList(): StatesCdn[] {
         return this.states.getValue();
+    }
+
+    public isItemPvP(itemId: number): boolean {
+        const recipe = this.mapProductItemIdToRecipeResult.get(itemId);
+        if (!recipe) {
+            return false;
+        }
+        const ingredients = this.mapRecipeIdToRecipeIngredients.get(recipe.recipeId) || [];
+        return ingredients.some(ingredient => ingredient.itemId === AnkamaCdnFacade.MEDAILLE_BRAVOURE_ITEM_ID);
     }
 }

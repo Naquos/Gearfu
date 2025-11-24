@@ -40,20 +40,23 @@
                 @if (item.isCraftable) {
                     <img [src]="imageService.getItemUrl(71919810)" alt="craftable" [matTooltip]="'item.craftable' | translate">
                 }
-                @if(item.idMobDropable) {
-                    @for (drop of item.idMobDropable; track $index) {
-                    <img [src]="imageService.getMonsterUrl(drop)" alt="droppable" [matTooltip]="'item.droppable' | translate" appFallback>
+                @if(item.mobDropable) {
+                    @for (drop of item.mobDropable; track $index) {
+                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="droppable" [matTooltip]="'item.droppable' | translate" appFallback>
                     }
                 }
-                @if(item.idBossDropable) {
-                    @for (drop of item.idBossDropable; track $index) {
-                    <img [src]="imageService.getMonsterUrl(drop)" alt="boss drop" [matTooltip]="'item.boss-drop' | translate" appFallback>
+                @if(item.bossDropable) {
+                    @for (drop of item.bossDropable; track $index) {
+                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="boss drop" [matTooltip]="'item.boss-drop' | translate" appFallback>
                     }
                 }
-                @if(item.idArchiDropable) {
-                    @for (drop of item.idArchiDropable; track $index) {
-                        <img [src]="imageService.getMonsterUrl(drop)" alt="archi drop" [matTooltip]="'item.archi-drop' | translate" appFallback>
+                @if(item.archiDropable) {
+                    @for (drop of item.archiDropable; track $index) {
+                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="archi drop" [matTooltip]="'item.archi-drop' | translate" appFallback>
                     }
+                }
+                @if (item.isPvP) {
+                    <img [src]="imageService.getItemUrl(53124705)" alt="pvp" [matTooltip]="'item.pvp' | translate">
                 }
             </div>
         </div>

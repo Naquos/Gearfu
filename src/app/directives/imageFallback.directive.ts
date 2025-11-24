@@ -7,7 +7,9 @@ import { ImageService } from '../services/imageService';
 export class ImageFallbackDirective {
 
   @HostListener('error', ['$event.target'])
-  onError(target: HTMLImageElement) {
-    target.src = ImageService.IMAGE_ERROR; // Fallback image URL
+  onError(target: EventTarget | null) {
+    if (target instanceof HTMLImageElement) {
+      target.src = ImageService.IMAGE_ERROR; // Fallback image URL
+    }
   }
 }

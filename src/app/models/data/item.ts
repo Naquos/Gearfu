@@ -1,6 +1,7 @@
 import { ItemTypeDefinitionEnum } from "../enum/itemTypeDefinitionEnum";
 import { RarityItemEnum } from "../enum/rarityItemEnum";
 import { EquipEffects } from "./equipEffects";
+import { MonsterDrop } from "./monsterDrop";
 
 export interface Item {
     id: number;
@@ -26,7 +27,8 @@ export interface Item {
     maitrise: number;
     resistance: number;
     isCraftable: boolean;
-    idMobDropable: number[];
-    idBossDropable: number[];
-    idArchiDropable: number[];
+    mobDropable: MonsterDrop[];
+    bossDropable: MonsterDrop[];
+    archiDropable: MonsterDrop[];
+    isPvP: boolean;
 }
