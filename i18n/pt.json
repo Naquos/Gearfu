@@ -50,7 +50,8 @@
         "craftable": "Pode ser craftado",
         "droppable": "Pode ser dropado por um monstro",
         "boss-drop": "Pode ser dropado por um chefe",
-        "archi-drop": "Pode ser dropado por um archimonstre ou um dominante"
+        "archi-drop": "Pode ser dropado por um archimonstre ou um dominante",
+        "pvp": "Pode ser obtido em PvP"
     },
     "item-choose": {
         "zenith": "Exportar build para Zénith Wakfu",
@@ -128,7 +129,8 @@
         "droppable": "Pode ser dropado por um monstro",
         "cacher": "Ocultar itens obtidos por seu meio de obtenção",
         "boss": "Pode ser dropado por um chefe",
-        "archi": "Pode ser dropado por um archimonstre ou um dominante"
+        "archi": "Pode ser dropado por um archimonstre ou um dominante",
+        "pvp": "Pode ser obtido em PvP"
     },
     "only-no-elem": {
         "label": "Considerar apenas itens sem maestria elemental",
