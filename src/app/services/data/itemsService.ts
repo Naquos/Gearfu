@@ -316,7 +316,7 @@ export class ItemsService {
         this.buildIndexes(recipes, monsterDrops, idSiouperes);
         this.items.forEach(item => this.calculItemIsCraftable(item));
         this.items.forEach(item => this.calculItemIsDropable(item));
-        this.items.forEach(item => item.isPvP = this.ankamaCdnFacade.isItemPvP(item.id));
+        this.items.forEach(item => this.calculIsItemPvP(item));
 
       })).subscribe();
     }
@@ -346,6 +346,16 @@ export class ItemsService {
         this.archiIds.add(sioup.definition.id);
       }
     }
+
+    private calculIsItemPvP(item: Item): void {
+      const isPvP = this.ankamaCdnFacade.isItemPvP(item.id);
+      if(!isPvP) return;
+
+      const itemsSameImage = this.itemsByImage.get(item.idImage);
+      if (!itemsSameImage) return;
+
+      itemsSameImage.forEach(x => x.isPvP = true);
+    }
     
     private calculItemIsCraftable(item: Item): void {
         if (item.isCraftable) return;
@@ -363,7 +373,10 @@ export class ItemsService {
         if (!itemsSameImage) return;
 
         // S'il existe un item avec une rareté inférieure → pas craftable
-        const hasLowerRarity = itemsSameImage.some(x => x.rarity < item.rarity);
+        const hasLowerRarity = itemsSameImage.some(x => {
+          if (item.level <= 35) return x.rarity < item.rarity;
+          return x.rarity < item.rarity && x.level >= 35;
+        });
         if (hasLowerRarity) return;
 
         // Tous les items partageant le même idImage deviennent craftables
