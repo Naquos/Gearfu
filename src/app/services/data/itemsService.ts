@@ -29,6 +29,7 @@ import { IdPierreDonjonEnum } from "../../models/enum/idPierreDonjonEnum";
 import { JobsItemCdn } from "../../models/ankama-cdn/jobsItemCdn";
 import { MonsterDropService } from "./monsterDropService";
 import { MonsterDrop } from "../../models/data/monsterDrop";
+import { isExcludeIdItem } from "../../models/enum/excludeIdItemEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -123,7 +124,7 @@ export class ItemsService {
       .pipe(map(([items, drop]) => items.filter(x => !drop || !x.mobDropable.length)));
       
       const itemsFilterByCraftable$ = combineLatest([itemsFilterByDrop$, this.obtentionFormService.craftable$])
-      .pipe(map(([items, craftable]) => items.filter(x =>  !craftable || x.isCraftable === false)));
+      .pipe(map(([items, craftable]) => items.filter(x =>  !craftable || !x.isCraftable)));
 
       const itemsFilterByBoss$ = combineLatest([itemsFilterByCraftable$, this.obtentionFormService.boss$])
       .pipe(map(([items, boss]) => items.filter(x => !boss || !x.bossDropable.length)));
@@ -288,7 +289,8 @@ export class ItemsService {
       combineLatest([this.ankamaCdnFacade.item$, this.ankamaCdnFacade.recipes$, this.ankamaCdnFacade.idSiouperes$, this.monsterDropService.monsterDrops$]).pipe(
         take(1),
         tap(([itemsCdn, recipes, idSiouperes, monsterDrops]) => {
-        itemsCdn.forEach(x => this.items.push({
+        itemsCdn.filter(x => !isExcludeIdItem(x.definition.item.id))
+          .forEach(x => this.items.push({
             id: x.definition.item.id,
             level: x.definition.item.level,
             rarity: x.definition.item.baseParameters.rarity,

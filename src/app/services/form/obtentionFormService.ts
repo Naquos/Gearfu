@@ -15,11 +15,11 @@ export interface ObtentionForm {
 @Injectable({providedIn: 'root'})
 export class ObtentionFormService extends AbstractFormService<FormGroup<TypedControls<ObtentionForm>>> {
 
-  private static readonly DEFAULT_VALUE_DROP = false;
-  private static readonly DEFAULT_VALUE_CRAFTABLE = false;
-  private static readonly DEFAULT_VALUE_BOSS = false;
-  private static readonly DEFAULT_VALUE_ARCHI = false;
-  private static readonly DEFAULT_VALUE_PVP = false;
+  private static readonly DEFAULT_VALUE_DROP = true;
+  private static readonly DEFAULT_VALUE_CRAFTABLE = true;
+  private static readonly DEFAULT_VALUE_BOSS = true;
+  private static readonly DEFAULT_VALUE_ARCHI = true;
+  private static readonly DEFAULT_VALUE_PVP = true;
 
   private readonly drop = new BehaviorSubject<boolean>(ObtentionFormService.DEFAULT_VALUE_DROP);
   public readonly drop$ = this.drop.asObservable();
@@ -33,10 +33,10 @@ export class ObtentionFormService extends AbstractFormService<FormGroup<TypedCon
   private readonly archi = new BehaviorSubject<boolean>(ObtentionFormService.DEFAULT_VALUE_ARCHI);
   public readonly archi$ = this.archi.asObservable();
 
-  private readonly pvp = new BehaviorSubject<boolean>(false);
+  private readonly pvp = new BehaviorSubject<boolean>(ObtentionFormService.DEFAULT_VALUE_PVP);
   public readonly pvp$ = this.pvp.asObservable();
 
-  protected readonly keyEnum = KeyEnum.KEY_DROP_CRAFTABLE;
+  protected readonly keyEnum = KeyEnum.KEY_OBTENTION;
   public readonly form =  new FormGroup<TypedControls<ObtentionForm>>({
         DROP: new FormControl(),
         CRAFTABLE: new FormControl(),
@@ -51,11 +51,11 @@ export class ObtentionFormService extends AbstractFormService<FormGroup<TypedCon
   }
 
   protected override handleChanges(value: ObtentionForm): void {
-    this.drop.next(value.DROP ?? ObtentionFormService.DEFAULT_VALUE_DROP);
-    this.craftable.next(value.CRAFTABLE ?? ObtentionFormService.DEFAULT_VALUE_CRAFTABLE);
-    this.boss.next(value.BOSS ?? ObtentionFormService.DEFAULT_VALUE_BOSS);
-    this.archi.next(value.ARCHI ?? ObtentionFormService.DEFAULT_VALUE_ARCHI);
-    this.pvp.next(value.PVP ?? ObtentionFormService.DEFAULT_VALUE_PVP);
+  this.drop.next(!value.DROP);
+    this.craftable.next(!value.CRAFTABLE);
+    this.boss.next(!value.BOSS);
+    this.archi.next(!value.ARCHI);
+    this.pvp.next(!value.PVP);
   }
 
   public override setValue(value: ObtentionForm | null): void {
