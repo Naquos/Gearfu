@@ -69,7 +69,7 @@ export class ItemsService {
     private static readonly ARMURE_DONNEE_RECUE_LIST = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
 
     private recipesByProductId = new Map<number, RecipeResultsCdn>();
-    private itemsByImage = new Map<number, Item[]>();
+    private itemsByName = new Map<string, Item[]>();
     private monsterDropsByItemId = new Map<number, MonsterDrop[]>();
     private archiIds = new Set<number>();
 
@@ -327,10 +327,10 @@ export class ItemsService {
       }
 
       for(const item of this.items) {
-        if(!this.itemsByImage.has(item.idImage)) {
-          this.itemsByImage.set(item.idImage, []);
+        if(!this.itemsByName.has(item.title.fr)) {
+          this.itemsByName.set(item.title.fr, []);
         }
-        this.itemsByImage.get(item.idImage)!.push(item);
+        this.itemsByName.get(item.title.fr)!.push(item);
       }
 
       for(const monster of monsterDrops) {
@@ -351,10 +351,10 @@ export class ItemsService {
       const isPvP = this.ankamaCdnFacade.isItemPvP(item.id);
       if(!isPvP) return;
 
-      const itemsSameImage = this.itemsByImage.get(item.idImage);
-      if (!itemsSameImage) return;
+      const itemsSameName = this.itemsByName.get(item.title.fr);
+      if (!itemsSameName) return;
 
-      itemsSameImage.forEach(x => x.isPvP = true);
+      itemsSameName.forEach(x => x.isPvP = true);
     }
     
     private calculItemIsCraftable(item: Item): void {
@@ -369,18 +369,18 @@ export class ItemsService {
           return;
         }
 
-        const itemsSameImage = this.itemsByImage.get(item.idImage);
-        if (!itemsSameImage) return;
+        const itemsSameName = this.itemsByName.get(item.title.fr);
+        if (!itemsSameName) return;
 
         // S'il existe un item avec une rareté inférieure → pas craftable
-        const hasLowerRarity = itemsSameImage.some(x => {
+        const hasLowerRarity = itemsSameName.some(x => {
           if (item.level <= 35) return x.rarity < item.rarity;
           return x.rarity < item.rarity && x.level >= 35;
         });
         if (hasLowerRarity) return;
 
         // Tous les items partageant le même idImage deviennent craftables
-        for (const it of itemsSameImage) {
+        for (const it of itemsSameName) {
           it.isCraftable = true;
         }
     }
@@ -407,7 +407,7 @@ export class ItemsService {
         }
 
 
-        const sameNameItems = this.itemsByImage.get(item.idImage);
+        const sameNameItems = this.itemsByName.get(item.title.fr);
         if (!sameNameItems) return;
 
         for (const x of sameNameItems) {
