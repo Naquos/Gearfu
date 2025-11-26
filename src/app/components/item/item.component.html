@@ -42,17 +42,17 @@
                 }
                 @if(item.mobDropable) {
                     @for (drop of item.mobDropable; track $index) {
-                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="droppable" [matTooltip]="'item.droppable' | translate" appFallback>
+                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="droppable" [matTooltip]="`${'item.droppable' | translate} (${nameMonster(drop)})`" appFallback>
                     }
                 }
                 @if(item.bossDropable) {
                     @for (drop of item.bossDropable; track $index) {
-                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="boss drop" [matTooltip]="'item.boss-drop' | translate" appFallback>
+                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="boss drop" [matTooltip]="`${'item.boss-drop' | translate} (${nameMonster(drop)})`" appFallback>
                     }
                 }
                 @if(item.archiDropable) {
                     @for (drop of item.archiDropable; track $index) {
-                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="archi drop" [matTooltip]="'item.archi-drop' | translate" appFallback>
+                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="archi drop" [matTooltip]="`${'item.archi-drop' | translate} (${nameMonster(drop)})`" appFallback>
                     }
                 }
                 @if (item.isPvP) {

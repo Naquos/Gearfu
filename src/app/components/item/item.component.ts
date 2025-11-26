@@ -16,6 +16,7 @@ import { ItemCondition } from '../../models/data/itemCondition';
 import { Item } from '../../models/data/item';
 import { ActionsPipe } from "../../pipe/actions/actions.pipe";
 import { ImageFallbackDirective } from '../../directives/imageFallback.directive';
+import { MonsterDrop } from '../../models/data/monsterDrop';
 
 @Component({
   selector: 'app-item',
@@ -72,6 +73,10 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
 
   protected textCondition(): Observable<string | undefined> {
     return this.condition$.pipe(map(x => x?.description[this.translateService.currentLang as keyof typeof x.description] ?? undefined));
+  }
+
+  protected nameMonster(monster: MonsterDrop): string {
+    return monster.name[this.translateService.currentLang as keyof typeof monster.name] ?? "";
   }
 
   protected openTooltip(event: MouseEvent, item: Item): void {
