@@ -36,8 +36,22 @@ export class ItemChooseDisplayComponent implements OnInit {
 
   protected openTooltip(event: MouseEvent, item: Item): void {
     if(item && window.innerWidth > 700) {
-      this.tooltipService.openTooltip(this.viewContainerRef, ItemComponent, event, {item});
+      this.tooltipService.cancelClose();
+      // Le 7ème paramètre active le comportement "garder ouvert au survol"
+      this.tooltipService.openTooltip(
+        this.viewContainerRef, 
+        ItemComponent, 
+        event, 
+        {item},
+        undefined,  // connectedPosition
+        true,       // withPush
+        true        // keepOpenOnHover - ACTIVÉ ICI
+      );
     }
+  }
+
+  protected onMouseLeave(): void {
+    this.tooltipService.closeTooltip();
   }
 
   protected setFilter():void {

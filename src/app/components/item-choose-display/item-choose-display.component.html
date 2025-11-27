@@ -5,7 +5,7 @@
     <div class="itemPresent" 
         [style.backgroundColor]="colorRarityService.mapColors.get(item.rarity)"
         (mouseenter)="openTooltip($event, item)" 
-        (mouseleave)="tooltipService.closeTooltip()"
+        (mouseleave)="onMouseLeave()"
         >
         <img [src]="imageService.getItemUrl(item.idImage)"
         (click)="setFilter()"    
@@ -15,5 +15,5 @@
         <span (click)="itemChooseService.deleteItem(itemType(), indexItem())">X</span>
     </div>
 }  @else {
-    <img class="noItem" [src]="backgroundItemType()" (mouseenter)="tooltipService.closeTooltip()" (click)="setFilter()" alt="noItem" >
+    <img class="noItem" [src]="backgroundItemType()" (mouseenter)="tooltipService.forceClose()" (click)="setFilter()" alt="noItem" >
 }
