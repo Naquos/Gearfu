@@ -27,13 +27,83 @@
   <meta property="og:description" content="Gearfu vous permet de trier et comparer les équipements de Wakfu selon leurs statistiques.">
   <meta property="og:url" content="https://naquos.github.io/Gearfu/">
   <meta property="og:type" content="website">
+
+    <style>
+    #app-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0D1B2A 0%, #1B263B 50%, #415A77 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #app-loader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    #app-loader .loader-background {
+      width: 200px;
+      height: 200px;
+      background-color: #415A77;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 0 50px rgba(65, 90, 119, 0.8);
+    }
+
+    #app-loader .loader-title {
+      width: 120px;
+      height: auto;
+    }
+
+    #app-loader .loader-spinner {
+      width: 80px;
+      height: 80px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #app-loader .loading-text {
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+
 </head>
 <body class="mat-typography">
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WH9WMVTV"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-  <app-root></app-root>
+    <div id="app-loader">
+      <div id="app-loader-content">
+        <div class="loader-background">
+          <img src="gearfu.png" alt="Gearfu" class="loader-title">
+          <img src="logo.png" alt="Loading..." class="loader-spinner" />
+        </div>
+        <div class="loading-text">Chargement de Gearfu...</div>
+      </div>
+    </div>
+  <app-root>
+  </app-root>
   <footer>WAKFU est un MMORPG édité par Ankama. Gearfu est un site non officiel sans aucun lien avec Ankama.</footer>
 </body>
 </html>

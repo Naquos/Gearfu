@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ItemTypesComponent } from '../form/item-types/item-types.component';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { ItemLevelComponent } from "../form/item-level/item-level.component";
@@ -78,14 +79,19 @@ export class AppComponent implements OnInit{
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
   }
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {
     this.translate.addLangs(['fr','en', 'es', 'pt']);
     this.translate.setDefaultLang('en');
     const lang = this.localStorageService.getItem<string>(KeyEnum.KEY_LANG);
     if(lang) {
       this.translate.use(lang);
     } else {
-      this.translate.use(navigator.language.split("-")[0] ?? "en");
+      // Vérifier si on est dans le navigateur avant d'accéder à navigator
+      if (isPlatformBrowser(this.platformId)) {
+        this.translate.use(navigator.language.split("-")[0] ?? "en");
+      } else {
+        this.translate.use("en");
+      }
     } 
   }
 
@@ -93,6 +99,35 @@ export class AppComponent implements OnInit{
     this.ankamaCdnFacade.load();
     this.wakassetCdnFacade.load();
     this.itemService.init();
+
+    // Supprimer le loader quand les items sont chargés
+    if (isPlatformBrowser(this.platformId)) {
+      // Observer le signal isLoading
+      const checkLoading = setInterval(() => {
+        if (!this.itemService.isLoading()) {
+          console.log("Items loaded, removing loader");
+          this.removeLoader();
+          clearInterval(checkLoading);
+        }
+      }, 100);
+
+      // Timeout de sécurité après 10 secondes
+      setTimeout(() => {
+        clearInterval(checkLoading);
+        this.removeLoader();
+      }, 10000);
+    }
+  }
+
+  private removeLoader(): void {
+    const loader = document.getElementById('app-loader');
+    if (loader) {
+      loader.style.opacity = '0';
+      loader.style.transition = 'opacity 0.5s ease-out';
+      setTimeout(() => {
+        loader.remove();
+      }, 500);
+    }
   }
 
   protected setLang(value: string): void {

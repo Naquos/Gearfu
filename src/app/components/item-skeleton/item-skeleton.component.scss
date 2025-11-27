@@ -1,0 +1,109 @@
+.skeleton-item {
+    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    border-radius: 15px;
+    padding: 5px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+}
+
+.skeleton-header {
+    display: flex;
+    border-bottom: 3px solid #415A77;
+    margin-bottom: 10px;
+    padding: 10px;
+    justify-content: space-around;
+
+    .skeleton-box {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 75%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.5s ease-in-out infinite;
+        border-radius: 8px;
+    }
+}
+
+.skeleton-content {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    height: 100%;
+}
+
+.skeleton-title {
+    display: flex;
+    flex-direction: column;
+    max-width: 30%;
+    gap: 10px;
+
+    .skeleton-title-text {
+        height: 24px;
+        width: 120px;
+        margin: 0 auto;
+    }
+
+    .skeleton-image {
+        width: 80px;
+        height: 80px;
+        margin: auto;
+        background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 75%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.5s ease-in-out infinite;
+        border-radius: 8px;
+    }
+
+    .skeleton-weight {
+        height: 18px;
+        width: 100px;
+    }
+}
+
+.skeleton-effects {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.skeleton-effect-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skeleton-text {
+    height: 16px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.skeleton-craft-drop {
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+    margin-top: 10px;
+
+    .skeleton-box {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 75%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.5s ease-in-out infinite;
+        border-radius: 8px;
+    }
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}

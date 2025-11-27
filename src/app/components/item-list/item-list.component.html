@@ -1,7 +1,8 @@
 @if (itemsService.isLoading()) {
-    <div class="loader-container">
-        <img src="gearfu.png" alt="Gearfu" class="loader-title">
-        <img src="logo.png" alt="Loading..." class="loader-spinner" />
+    <div class="content">
+        @for (i of skeletonArray; track i) {
+            <app-item-skeleton></app-item-skeleton>
+        }
     </div>
 } @else if (itemsService.items$ | async; as items) {
     <div class="content">
