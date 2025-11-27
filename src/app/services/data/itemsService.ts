@@ -73,7 +73,6 @@ export class ItemsService {
       IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,
       IdActionsEnum.PERTE_MAITRISES_FEU
     ];
-    private static readonly MAX_DISPLAYED_ITEMS = 36;
     private static readonly EQUILIBRE_RESISTANCE_MULTIPLIER = 1.2;
     private static readonly DEFAULT_NB_ELEMENTS = 4;
 
@@ -139,7 +138,6 @@ export class ItemsService {
               const sortedItems = items.sort(this.sortItems());
               return reverse  ? sortedItems.reverse() : sortedItems;
             }),
-            map(items => items.slice(0, ItemsService.MAX_DISPLAYED_ITEMS)),
             tap(() => this.isLoading.set(false)),
             shareReplay(1)
           );

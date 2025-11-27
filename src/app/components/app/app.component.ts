@@ -105,7 +105,6 @@ export class AppComponent implements OnInit{
       // Observer le signal isLoading
       const checkLoading = setInterval(() => {
         if (!this.itemService.isLoading()) {
-          console.log("Items loaded, removing loader");
           this.removeLoader();
           clearInterval(checkLoading);
         }

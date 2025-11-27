@@ -4,10 +4,15 @@
             <app-item-skeleton></app-item-skeleton>
         }
     </div>
-} @else if (itemsService.items$ | async; as items) {
+} @else if (displayedItems$ | async; as items) {
     <div class="content">
         @for (item of items; track item.id) {
             <app-item [item]="item"></app-item>
+        }
+        @if (currentIndex < allItems.length) {
+            <div class="load-trigger" #loadTrigger (appIntersect)="onScrollEnd()">
+                <app-item-skeleton></app-item-skeleton>
+            </div>
         }
     </div>
 }

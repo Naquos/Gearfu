@@ -1,3 +1,7 @@
+:host {
+    display: block;
+}
+
 .content {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -8,6 +12,14 @@
     app-item:hover {
         transform: scale(1.03);
     }
+}
+
+.load-trigger {
+    grid-column: 1 / -1; // Prend toute la largeur
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
 }
 
 .loader-container {
@@ -33,13 +45,10 @@
     }
 }
 
-
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-
 
 @media screen and (min-width: 1850px) and (max-width: 2250px) {
     .content {

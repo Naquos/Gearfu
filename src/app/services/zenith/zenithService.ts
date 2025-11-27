@@ -26,16 +26,44 @@ export class ZenithService {
 
     private firstRing = true;
 
+    private getMaxLevelItemInBuild(): Observable<number> {
+        return this.itemChooseService.idItems$.pipe(
+            switchMap(idItems => {
+                const items = idItems.split(',').map(s => parseInt(s, 10)).filter(n => !isNaN(n));
+                const itemLevels$ = items.map(id =>
+                    this.itemsService.searchItem(id).pipe(
+                        take(1),
+                        map(item => item ? item.level : 0)
+                    )
+                );
+                return forkJoin(itemLevels$).pipe(
+                    map(levels => Math.max(...levels))
+                );
+            })
+        );
+    }
+
+    public getLevelForBuild(): Observable<number> {
+        return this.getMaxLevelItemInBuild().pipe(
+            map(maxLevel => {
+                const levelBrackets = [20,35,50,65,80,95,110,125,140,155,170,185,200,215,230,245];
+                return levelBrackets.find(level => level >= maxLevel) || maxLevel;
+            })
+        );
+    }
+
     public createBuild(): Observable<string> {
         let build: BuildResponse = {} as BuildResponse;
         let linkBuild = "";
-        return this.zenithApiService.createBuild({
+        return this.getLevelForBuild().pipe(
+            switchMap(() => this.getLevelForBuild()),
+            switchMap(level => this.zenithApiService.createBuild({
             flags: [],
             id_job: 7,
             is_visible: true,
-            level: 245,
+            level: level,
             name: "Gearfu - Generated"
-        }).pipe(
+            })),
             tap(x => linkBuild = x.link),
             switchMap(x => this.zenithApiService.getBuildInfo(x.link)),
             combineLatestWith(this.itemChooseService.idItems$),

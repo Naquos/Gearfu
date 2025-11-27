@@ -63,7 +63,7 @@ header {
     flex-direction: column;
     justify-content: space-between;
     margin-top: $header-size;
-    
+    min-height: calc(100vh - $header-size);
 }
 
 .filter {
@@ -154,6 +154,7 @@ app-item-list {
     width: calc(100% - 500px);
     margin-top: 1%;
     margin-left: 460px;
+    padding-bottom: 50px;
 }
 
 
