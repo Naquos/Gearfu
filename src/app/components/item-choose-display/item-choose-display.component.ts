@@ -35,6 +35,7 @@ export class ItemChooseDisplayComponent implements OnInit {
   }
 
   protected openTooltip(event: MouseEvent, item: Item): void {
+    this.tooltipService.forceClose();
     if(item && window.innerWidth > 700) {
       this.tooltipService.cancelClose();
       // Le 7ème paramètre active le comportement "garder ouvert au survol"
