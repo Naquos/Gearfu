@@ -114,24 +114,23 @@
       return loadingPhrases[index];
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-      const phraseElement = document.getElementById("app-loading-phrase");
+    const phraseElement = document.getElementById("app-loading-phrase");
+    phraseElement.textContent = getRandomLoadingPhrase();
+    const intervalId = setInterval(() => {
       phraseElement.textContent = getRandomLoadingPhrase();
-
-      const intervalId = setInterval(() => {
-        phraseElement.textContent = getRandomLoadingPhrase();
-      }, 2000);
-
-      const appLoader = document.getElementById("app-loader");
-      const observer = new MutationObserver(() => {
-        if (!document.body.contains(appLoader)) {
-          clearInterval(intervalId);
-          observer.disconnect();
-        }
-      });
-
-      observer.observe(document.body, { childList: true });
+    }, 2000);
+    // Surveille la suppression du loader pour arrêter la mise à jour
+    const appLoader = document.getElementById("app-loader");
+    const observer = new MutationObserver(() => {
+      if (!document.body.contains(appLoader)) {
+        clearInterval(intervalId);
+        observer.disconnect();
+      }
     });
+
+    observer.observe(document.body, { childList: true });
+
+
   </script>
 
 </head>
