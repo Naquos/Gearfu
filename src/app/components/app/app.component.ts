@@ -28,7 +28,6 @@ import { ItemsService } from '../../services/data/itemsService';
 import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
 import { OnlyNoElemComponent } from '../form/only-no-elem/only-no-elem.component';
 import { ReverseButtonComponent } from '../form/reverse-button/reverse-button.component';
-import { WakassetCdnFacade } from '../../services/wakasset-cdn/wakassetCdnFacade';
 import { ObtentionComponent } from "../form/obtention/obtention.component";
 import { MonsterDropService } from '../../services/data/monsterDropService';
 import { ItemConditionService } from '../../services/data/itemConditionService';
@@ -73,7 +72,6 @@ export class AppComponent implements OnInit{
   private readonly localStorageService = inject(LocalStorageService);
   private readonly itemService = inject(ItemsService);
   private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
-  private readonly wakassetCdnFacade = inject(WakassetCdnFacade);
   private readonly monsterDropService = inject(MonsterDropService);
   private readonly itemConditionService = inject(ItemConditionService);
   private readonly statesDefinitionService = inject(StatesDefinitionService);
@@ -103,7 +101,6 @@ export class AppComponent implements OnInit{
 
   public ngOnInit(): void {
     this.ankamaCdnFacade.load();
-    this.wakassetCdnFacade.load();
     this.monsterDropService.load();
     this.itemConditionService.load();
     this.statesDefinitionService.load();

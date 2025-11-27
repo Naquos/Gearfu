@@ -28,7 +28,7 @@
   <meta property="og:url" content="https://naquos.github.io/Gearfu/">
   <meta property="og:type" content="website">
 
-    <style>
+  <style>
     #app-loader {
       position: fixed;
       top: 0;
@@ -93,58 +93,16 @@
       font-style: italic;
       text-align: center;
       margin-top: 10px;
+      min-height: 24px;
     }
   </style>
-  <script>
-    const loadingPhrases = [
-      "Préparer les engrenages...",
-      "Ajuster les rouages...",
-      "Lubrifier les mécanismes...",
-      "Calibrer les statistiques...",
-      "Optimiser les performances...",
-      "Assembler les composants...",
-      "Vérifier les connexions...",
-      "Charger les données...",
-      "Finaliser la configuration...",
-      "Mettre sous tension...",
-      "Polissage des gelanos...",
-      "Chargement des platipus...",
-      "Alignement des polaryoxs...",
-      "Réglage des dofus...",
-      "Tondage des bouftous..."
-    ];
-
-    function getRandomLoadingPhrase() {
-      const index = Math.floor(Math.random() * loadingPhrases.length);
-      return loadingPhrases[index];
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-      const phraseElement = document.getElementById("app-loading-phrase");
-      phraseElement.textContent = getRandomLoadingPhrase();
-
-      const intervalId = setInterval(() => {
-        phraseElement.textContent = getRandomLoadingPhrase();
-      }, 1000);
-
-      const appLoader = document.getElementById("app-loader");
-      const observer = new MutationObserver(() => {
-        if (!document.body.contains(appLoader)) {
-          clearInterval(intervalId);
-          observer.disconnect();
-        }
-      });
-
-      observer.observe(document.body, { childList: true });
-    });
-  </script>
-
 </head>
 <body class="mat-typography">
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WH9WMVTV"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    
     <div id="app-loader">
       <div id="app-loader-content">
         <div class="loader-background">
@@ -155,8 +113,56 @@
         <div class="loading-phrase" id="app-loading-phrase">Préparer les engrenages...</div>
       </div>
     </div>
-  <app-root>
-  </app-root>
+
+  <!-- Script inline qui s'exécute immédiatement -->
+  <script>
+    (function() {
+      const loadingPhrases = [
+        "Préparer les engrenages...",
+        "Ajuster les rouages...",
+        "Lubrifier les mécanismes...",
+        "Calibrer les statistiques...",
+        "Optimiser les performances...",
+        "Assembler les composants...",
+        "Vérifier les connexions...",
+        "Charger les données...",
+        "Finaliser la configuration...",
+        "Mettre sous tension...",
+        "Polissage des gelanos...",
+        "Chargement des platipus...",
+        "Alignement des polaryoxs...",
+        "Réglage des dofus...",
+        "Tondage des bouftous..."
+      ];
+
+      function getRandomLoadingPhrase() {
+        const index = Math.floor(Math.random() * loadingPhrases.length);
+        return loadingPhrases[index];
+      }
+
+      function updatePhrase() {
+        const phraseElement = document.getElementById("app-loading-phrase");
+        if (phraseElement) {
+          phraseElement.textContent = getRandomLoadingPhrase();
+        }
+      }
+
+      // Changer la phrase toutes les secondes
+      const intervalId = setInterval(updatePhrase, 500);
+
+      // Observer pour arrêter l'intervalle quand le loader est supprimé
+      const checkLoader = setInterval(function() {
+        const appLoader = document.getElementById("app-loader");
+        if (!appLoader || !document.body.contains(appLoader)) {
+          clearInterval(intervalId);
+          clearInterval(checkLoader);
+        }
+      }, 100);
+    })();
+  </script>
+
+  <app-root></app-root>
+  
   <footer>WAKFU est un MMORPG édité par Ankama. Gearfu est un site non officiel sans aucun lien avec Ankama.</footer>
 </body>
 </html>
