@@ -211,7 +211,7 @@ export class ItemsService {
 
     private normalizeString(str: string): string {
       return str.normalize("NFKD")
-        .replace(/['''´`]/g, "'")
+        .replace(/['''´’`]/g, "'")
         .replace(/\s+/g, " ")
         .trim()
         .toLowerCase();
