@@ -3,9 +3,9 @@
  @if(item) {
     <div class="header">
         <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy" (click)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
-        <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{ "item.maitrises" | translate }} {{Math.trunc(item.maitrise)}}</span>
-        <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances">{{ "item.resistances" | translate }} {{item.resistance}}</span>
-        <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
+        <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises" loading="lazy">{{ "item.maitrises" | translate }} {{Math.trunc(item.maitrise)}}</span>
+        <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances" loading="lazy">{{ "item.resistances" | translate }} {{item.resistance}}</span>
+        <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie" loading="lazy"></span>
     </div>
     @if (textCondition() | async; as condition) {
         <div class="condition">
@@ -14,16 +14,16 @@
     }
     <div class="content" (click)="setItemChoosen()">
         <div class="title">
-            <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{getTitle()}} ({{item.level}}) <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item.itemTypeId))" alt="item type logo"> </h3>
-            <img [src]="imageService.getItemUrl(item.idImage)" alt="items" appFallback>
-            <div class="poids" [matTooltip]="'item.poids-infobulle' | translate:{ratio: itemService.ratioWeightByLevel(item.level)}" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{item.weight}}</div>
+            <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{getTitle()}} ({{item.level}}) <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item.itemTypeId))" alt="item type logo" loading="lazy"> </h3>
+            <img [src]="imageService.getItemUrl(item.idImage)" alt="items" appFallback loading="lazy">
+            <div class="poids" [matTooltip]="'item.poids-infobulle' | translate:{ratio: itemService.ratioWeightByLevel(item.level)}" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids" loading="lazy">{{ "item.poids" | translate }} {{item.weight}}</div>
         </div>
         <div class="effects">
             <div>
             @for (effect of item.equipEffects; track effect.id) {
                 <p>
                     @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT) {
-                        <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ effect | actions | async }}
+                        <img [src]="getEffectPng(effect)" alt="aptitudes" loading="lazy">  {{ effect | actions | async }}
                     } @else {
                         @let state = statesService.findStates(effect.params[0]);
                         <span class="appliqueEtat" 
@@ -38,25 +38,25 @@
             </div>
             <div class="craftAndDrop">
                 @if (item.isCraftable) {
-                    <img [src]="imageService.getItemUrl(71919810)" alt="craftable" [matTooltip]="'item.craftable' | translate">
+                    <img [src]="imageService.getItemUrl(71919810)" alt="craftable" [matTooltip]="'item.craftable' | translate" loading="lazy">
                 }
                 @if(item.mobDropable) {
                     @for (drop of item.mobDropable; track $index) {
-                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="droppable" [matTooltip]="`${'item.droppable' | translate} (${nameMonster(drop)})`" appFallback>
+                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="droppable" [matTooltip]="`${'item.droppable' | translate} (${nameMonster(drop)})`" appFallback loading="lazy">
                     }
                 }
                 @if(item.bossDropable) {
                     @for (drop of item.bossDropable; track $index) {
-                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="boss drop" [matTooltip]="`${'item.boss-drop' | translate} (${nameMonster(drop)})`" appFallback>
+                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="boss drop" [matTooltip]="`${'item.boss-drop' | translate} (${nameMonster(drop)})`" appFallback loading="lazy">
                     }
                 }
                 @if(item.archiDropable) {
                     @for (drop of item.archiDropable; track $index) {
-                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="archi drop" [matTooltip]="`${'item.archi-drop' | translate} (${nameMonster(drop)})`" appFallback>
+                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="archi drop" [matTooltip]="`${'item.archi-drop' | translate} (${nameMonster(drop)})`" appFallback loading="lazy">
                     }
                 }
                 @if (item.isPvP) {
-                    <img [src]="imageService.getItemUrl(53124705)" alt="pvp" [matTooltip]="'item.pvp' | translate">
+                    <img [src]="imageService.getItemUrl(53124705)" alt="pvp" [matTooltip]="'item.pvp' | translate" loading="lazy">
                 }
             </div>
         </div>

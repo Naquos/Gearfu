@@ -17,10 +17,11 @@ import { Item } from '../../models/data/item';
 import { ActionsPipe } from "../../pipe/actions/actions.pipe";
 import { ImageFallbackDirective } from '../../directives/imageFallback.directive';
 import { MonsterDrop } from '../../models/data/monsterDrop';
+import { LazyImageDirective } from '../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-item',
-  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective],
+  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective, LazyImageDirective],
   templateUrl: './item.component.html',
   styleUrl: './item.component.scss'
 })
