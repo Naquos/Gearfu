@@ -7,6 +7,7 @@ import { StatesCdn } from "../../models/ankama-cdn/statesCdn";
 import { RecipeResultsCdn } from "../../models/ankama-cdn/recipeResulsCdn";
 import { JobsItemCdn } from "../../models/ankama-cdn/jobsItemCdn";
 import { RecipeIngredientCdn } from "../../models/ankama-cdn/recipeIngredient";
+import { isItemIdPvp } from "../../models/enum/itemIdPvpEnum";
 
 @Injectable({providedIn: 'root'})
 export class AnkamaCdnFacade {
@@ -119,6 +120,9 @@ export class AnkamaCdnFacade {
     }
 
     public isItemPvP(itemId: number): boolean {
+        if(isItemIdPvp(itemId)) {
+            return true;
+        }
         const recipe = this.mapProductItemIdToRecipeResult.get(itemId);
         if (!recipe) {
             return false;
