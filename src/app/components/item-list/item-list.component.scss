@@ -10,6 +10,36 @@
     }
 }
 
+.loader-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 400px;
+    width: 100%;
+
+    .loader-title {
+        width: 200px;
+        margin-bottom: 20px;
+    }
+    
+    .loader-spinner {
+        width: 100px;
+        height: 100px;
+        padding: 10px;
+        background-color: #415A77;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+    }
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
 
 @media screen and (min-width: 1850px) and (max-width: 2250px) {
     .content {

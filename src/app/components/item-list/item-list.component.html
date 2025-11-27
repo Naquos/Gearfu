@@ -1,5 +1,10 @@
-@if (itemsService.items$ | async; as items) {
-    <div class="content" >
+@if (itemsService.isLoading()) {
+    <div class="loader-container">
+        <img src="gearfu.png" alt="Gearfu" class="loader-title">
+        <img src="logo.png" alt="Loading..." class="loader-spinner" />
+    </div>
+} @else if (itemsService.items$ | async; as items) {
+    <div class="content">
         @for (item of items; track item.id) {
             <app-item [item]="item"></app-item>
         }

@@ -9,6 +9,6 @@ import { CommonModule } from '@angular/common';
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss'
 })
-export class ItemListComponent  {
+export class ItemListComponent {
   protected readonly itemsService = inject(ItemsService);
 }
