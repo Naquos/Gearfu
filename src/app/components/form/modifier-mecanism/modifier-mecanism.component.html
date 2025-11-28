@@ -2,8 +2,15 @@
 <mat-form-field>
     <mat-label>{{ "modifier-elem-maitrises.mecaniques" | translate }}</mat-label>
     <mat-select [formControl]="modifierMecanismFormService.form" multiple>
+      <mat-select-trigger>
+        @if (modifierMecanismFormService.form.value.length) {
+          @for (mecanism of modifierMecanismFormService.form.value; track mecanism; let isLast = $last) {
+            {{("elem-maitrises-mecanism-enum." + mecanism.valueOf()) | translate}}@if (!isLast) {, }
+          }
+        }
+      </mat-select-trigger>
       @for (mecanism of ElemMaitrisesMecanismEnumList; track mecanism) {
-        <mat-option [value]="mecanism">{{("elem-maitrises-mecanism-enum." +mecanism.valueOf()) | translate}}</mat-option>
+        <mat-option [value]="mecanism">{{("elem-maitrises-mecanism-enum." + mecanism.valueOf()) | translate}}</mat-option>
       }
     </mat-select>
   </mat-form-field>
