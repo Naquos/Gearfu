@@ -7,7 +7,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { CommonModule } from '@angular/common';
 import { ColorRarityService } from '../../../services/colorRarityService';
-import { map, Observable, take } from 'rxjs';
+import { iif, map, Observable, of, switchMap, take } from 'rxjs';
 import { SearchItemNameFormService } from '../../../services/form/searchItemNameFormService';
 import { Item } from '../../../models/data/item';
 import { ImageService } from '../../../services/imageService';
@@ -39,7 +39,11 @@ export class SearchItemNameComponent {
   protected options$?: Observable<Item[]>;
 
   constructor() {
-    this.options$ = this.itemService.itemsFilterByItemName$.pipe(map(x => x.slice(0, 10)));
+    this.options$ = this.itemService.itemsFilterByItemName$.pipe(
+      switchMap(items => iif(() => this.searchItemNameFormService.form.value.length > 2,
+      of(items), of([])
+    )),
+    map(x => x.slice(0, 10)));
   }
 
   protected getTitle(item: Item): string {
