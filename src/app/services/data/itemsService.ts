@@ -159,7 +159,7 @@ export class ItemsService {
       result = result || (item.archiDropable.length > 0 && !seeArchi);
       result = result || (item.isPvP && !seePvP);
       // Items without obtention method
-      result = result || (item.mobDropable.length === 0 && item.bossDropable.length === 0 && item.archiDropable.length === 0 && !item.isCraftable); 
+      result = result || (item.mobDropable.length === 0 && item.bossDropable.length === 0 && item.archiDropable.length === 0 && !item.isCraftable && !item.isPvP); 
       return result;
     }
 
