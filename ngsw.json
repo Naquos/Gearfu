@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1764274840654,
+  "timestamp": 1764310338881,
   "index": "/Gearfu/index.csr.html",
   "assetGroups": [
     {
@@ -44,6 +44,19 @@
         "/Gearfu/icons/icon-96x96.png",
         "/Gearfu/logo-WakFocus.png",
         "/Gearfu/logo.png",
+        "/Gearfu/néo/neo-bouftou-royal.png",
+        "/Gearfu/néo/neo-chene-mou.png",
+        "/Gearfu/néo/neo-corbeau-noir.png",
+        "/Gearfu/néo/neo-gligli-royal.png",
+        "/Gearfu/néo/neo-goel-le-golem.png",
+        "/Gearfu/néo/neo-kya-missiz-frizz.png",
+        "/Gearfu/néo/neo-moogr-royale.png",
+        "/Gearfu/néo/neo-ogrest.png",
+        "/Gearfu/néo/neo-pandore.png",
+        "/Gearfu/néo/neo-piou-royal.png",
+        "/Gearfu/néo/neo-remington-smisse.png",
+        "/Gearfu/néo/neo-vampyro.png",
+        "/Gearfu/néo/neo-wa-wabbit.png",
         "/Gearfu/zenith-logo.webp"
       ],
       "patterns": []
@@ -84,6 +97,19 @@
     "/Gearfu/icons/icon-96x96.png": "bf96900932a13186af36d1aca86a01dbe85ae7ce",
     "/Gearfu/logo-WakFocus.png": "8db839a70924a93b6d342727a32e80e15c7c0a85",
     "/Gearfu/logo.png": "eb4ca47e89051ede0f24d53970c7406224d3d83c",
+    "/Gearfu/néo/neo-bouftou-royal.png": "0cb054700b7099ae5e2cde3da3e819d676b5adf4",
+    "/Gearfu/néo/neo-chene-mou.png": "1001661fb15df182b3371df3cdd8cab68f912ed3",
+    "/Gearfu/néo/neo-corbeau-noir.png": "f8ea0f762768248de1d2782cee73d4bc32a3b87d",
+    "/Gearfu/néo/neo-gligli-royal.png": "a76fd2ab63a5d324e8b130ea14f1469bd90fa986",
+    "/Gearfu/néo/neo-goel-le-golem.png": "ea5c0209d2f5653c74eb9e14043c38244d0dec6e",
+    "/Gearfu/néo/neo-kya-missiz-frizz.png": "ce7761702d5368b99b863828680eba8ba0966177",
+    "/Gearfu/néo/neo-moogr-royale.png": "c05d12c4154d0912329bb7d5e00781acb8dbc126",
+    "/Gearfu/néo/neo-ogrest.png": "87371d227d1f0afe5bcc3ff4530dec95684a8361",
+    "/Gearfu/néo/neo-pandore.png": "ee0b21b02b6604918a15b4ccf666d2450cc79a03",
+    "/Gearfu/néo/neo-piou-royal.png": "edcbc539194ae3329fe20666c38e23e038c49a60",
+    "/Gearfu/néo/neo-remington-smisse.png": "3a81113413d7cdc25cdb2c5c108a29ab6a84ee20",
+    "/Gearfu/néo/neo-vampyro.png": "e6502265235b2bf1b68e5d5a4481897c6898415d",
+    "/Gearfu/néo/neo-wa-wabbit.png": "1fd99b6a3cbddb7cfc77e37f41d010cf28ef5554",
     "/Gearfu/zenith-logo.webp": "1bb8e4c3d82a21109a0ea8c196097c637c1cb3d6"
   },
   "navigationUrls": [
