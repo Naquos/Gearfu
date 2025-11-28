@@ -1,6 +1,7 @@
 import { Directive, HostListener } from '@angular/core';
 import { ImageService } from '../services/imageService';
 import { GfxIdNeoEnum } from '../models/enum/gfxIdNeoEnum';
+import { GfxIdMobEnum } from '../models/enum/gfxIdMobEnum';
 
 @Directive({
   selector: 'img[appFallback]'
@@ -23,13 +24,18 @@ export class ImageFallbackDirective {
     [GfxIdNeoEnum.NEO_WA_WABBIT, "néo/neo-wa-wabbit.png"],
   ]);
 
+  private imageMap = new Map<GfxIdMobEnum, string>([
+    [GfxIdMobEnum.YDALIPE, "mob/ydalipe.png"],
+  ]);
+
+
   @HostListener('error', ['$event.target'])
   onError(target: EventTarget | null) {
     if (target instanceof HTMLImageElement) {
       const idImage = target.src.split('/').pop()?.split('.').shift();
       const neoImage = idImage ? this.neoImageMap.get(+idImage) : null;
-      console.log('Image load error, applying fallback for id:', idImage);
-      target.src = neoImage ?? ImageService.IMAGE_ERROR; // Fallback image URL
+      const mobImage = idImage ? this.imageMap.get(+idImage) : null;
+      target.src = neoImage ?? mobImage ?? ImageService.IMAGE_ERROR; // Fallback image URL
     }
   }
 }
