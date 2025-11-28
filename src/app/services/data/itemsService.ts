@@ -152,6 +152,15 @@ export class ItemsService {
       return !!item.title;
     }
 
+    private filterObtention(item: Item, seeDrop: boolean, seeCraftable: boolean, seeBoss: boolean, seeArchi: boolean, seePvP: boolean): boolean {
+      let result = item.isCraftable && !seeCraftable;
+      result = result || (item.mobDropable.length > 0 && !seeDrop);
+      result = result || (item.bossDropable.length > 0 && !seeBoss);
+      result = result || (item.archiDropable.length > 0 && !seeArchi);
+      result = result || (item.isPvP && !seePvP);
+      return result;
+    }
+
     private initFilter(): void {
       this.items = this.items.filter(x => ![ItemTypeDefinitionEnum.LANTERNE, ItemTypeDefinitionEnum.STATISTIQUES, ItemTypeDefinitionEnum.SUBLIMATIONS].includes(x.itemTypeId))
         .filter(x => this.isNotWIP(x));
@@ -160,22 +169,10 @@ export class ItemsService {
       this.itemsFilterByItemName$ = combineLatest([this.fullItems$, this.searchItemNameFormService.itemName$])
       .pipe(map(([items, itemName]) => items.filter(x => this.normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(this.normalizeString(itemName)))));
 
-      const itemsFilterByDrop$ = combineLatest([this.itemsFilterByItemName$, this.obtentionFormService.drop$])
-      .pipe(map(([items, drop]) => items.filter(x => !drop || !x.mobDropable.length)));
+      const itemsFilterByObtention$ = combineLatest([this.itemsFilterByItemName$, this.obtentionFormService.drop$, this.obtentionFormService.craftable$, this.obtentionFormService.boss$, this.obtentionFormService.archi$, this.obtentionFormService.pvp$])
+      .pipe(map(([items, drop, craftable, boss, archi, pvp]) => items.filter(x => this.filterObtention(x, drop, craftable, boss, archi, pvp))));
       
-      const itemsFilterByCraftable$ = combineLatest([itemsFilterByDrop$, this.obtentionFormService.craftable$])
-      .pipe(map(([items, craftable]) => items.filter(x =>  !craftable || !x.isCraftable)));
-
-      const itemsFilterByBoss$ = combineLatest([itemsFilterByCraftable$, this.obtentionFormService.boss$])
-      .pipe(map(([items, boss]) => items.filter(x => !boss || !x.bossDropable.length)));
-
-      const itemsFilterByArchi$ = combineLatest([itemsFilterByBoss$, this.obtentionFormService.archi$])
-      .pipe(map(([items, archi]) => items.filter(x => !archi || !x.archiDropable.length)));
-
-      const itemsFilterByPvp$ = combineLatest([itemsFilterByArchi$, this.obtentionFormService.pvp$])
-      .pipe(map(([items, pvp]) => items.filter(x => !pvp || !x.isPvP)));
-  
-      const itemsFilterByLevelMin$ = combineLatest([itemsFilterByPvp$, this.itemLevelFormService.levelMin$])
+      const itemsFilterByLevelMin$ = combineLatest([itemsFilterByObtention$, this.itemLevelFormService.levelMin$])
       .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
   
       const itemsFilterByLevelMax$ = combineLatest([itemsFilterByLevelMin$, this.itemLevelFormService.levelMax$])
@@ -348,7 +345,12 @@ export class ItemsService {
                     params: equipEffect.effect.definition.params
                 };
             }),
-            title: x.title,
+            title: {
+              fr: x.title.fr.trim(),
+              en: x.title.en.trim(),
+              es: x.title.es.trim(),
+              pt: x.title.pt.trim()
+            },
             description: x.description,
             idImage: x.definition.item.graphicParameters.gfxId,
             weightForSort: 0,
@@ -433,7 +435,7 @@ export class ItemsService {
     private calculItemIsDropable(item: Item): void {
         if (item.mobDropable.length) return;
 
-        const dropList = this.monsterDropsByItemId.get(item.id);
+        let dropList = this.monsterDropsByItemId.get(item.id);
         if (!dropList || dropList.length === 0) return;
 
         const dropListOnBoss = dropList.filter(m => 
@@ -442,10 +444,14 @@ export class ItemsService {
 
         const dropListOnArchi = dropList.filter(m =>
           m.idsDrop.some(id => this.archiIds.has(id))
+        ).filter(m => !dropListOnBoss.includes(m));
+
+        dropList = dropList.filter(m => 
+          !dropListOnBoss.includes(m) && !dropListOnArchi.includes(m)
         );
 
         if (item.rarity === RarityItemEnum.SOUVENIR) {
-          if(!dropListOnBoss.length && !dropListOnArchi.length) item.mobDropable = dropList;
+          if(dropList.length) item.mobDropable = dropList;
           if(dropListOnBoss.length) item.bossDropable = dropListOnBoss;
           if(dropListOnArchi.length) item.archiDropable = dropListOnArchi;
           return;
@@ -459,7 +465,7 @@ export class ItemsService {
 
           if((x.rarity !== RarityItemEnum.NORMAL || x.level <= 35) &&
             x.level >= item.level &&
-            (!dropListOnBoss.length && !dropListOnArchi.length)) {
+            (dropList.length)) {
               x.mobDropable = dropList;
             }
 

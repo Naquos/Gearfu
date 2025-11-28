@@ -2,6 +2,7 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
  @if(item) {
     <div class="header">
+        {{item.id}}
         <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy" (click)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
         <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises" >{{ "item.maitrises" | translate }} {{Math.trunc(item.maitrise)}}</span>
         <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances" >{{ "item.resistances" | translate }} {{item.resistance}}</span>
