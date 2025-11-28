@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1764310338881,
+  "timestamp": 1764324663208,
   "index": "/Gearfu/index.csr.html",
   "assetGroups": [
     {
@@ -44,6 +44,7 @@
         "/Gearfu/icons/icon-96x96.png",
         "/Gearfu/logo-WakFocus.png",
         "/Gearfu/logo.png",
+        "/Gearfu/mob/ydalipe.png",
         "/Gearfu/néo/neo-bouftou-royal.png",
         "/Gearfu/néo/neo-chene-mou.png",
         "/Gearfu/néo/neo-corbeau-noir.png",
@@ -97,6 +98,7 @@
     "/Gearfu/icons/icon-96x96.png": "bf96900932a13186af36d1aca86a01dbe85ae7ce",
     "/Gearfu/logo-WakFocus.png": "8db839a70924a93b6d342727a32e80e15c7c0a85",
     "/Gearfu/logo.png": "eb4ca47e89051ede0f24d53970c7406224d3d83c",
+    "/Gearfu/mob/ydalipe.png": "cc823c3d9d366c8762590358b035a70e6951c93f",
     "/Gearfu/néo/neo-bouftou-royal.png": "0cb054700b7099ae5e2cde3da3e819d676b5adf4",
     "/Gearfu/néo/neo-chene-mou.png": "1001661fb15df182b3371df3cdd8cab68f912ed3",
     "/Gearfu/néo/neo-corbeau-noir.png": "f8ea0f762768248de1d2782cee73d4bc32a3b87d",
