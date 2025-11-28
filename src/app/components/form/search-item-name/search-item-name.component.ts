@@ -4,10 +4,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ItemsService } from '../../../services/data/itemsService';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { CommonModule } from '@angular/common';
 import { ColorRarityService } from '../../../services/colorRarityService';
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { SearchItemNameFormService } from '../../../services/form/searchItemNameFormService';
 import { Item } from '../../../models/data/item';
 import { ImageService } from '../../../services/imageService';
@@ -39,10 +39,21 @@ export class SearchItemNameComponent {
   protected options$?: Observable<Item[]>;
 
   constructor() {
-    this.options$ = this.itemService.itemsFilterByItemName$.pipe(map(x => x.slice(0, 10)))
+    this.options$ = this.itemService.itemsFilterByItemName$.pipe(map(x => x.slice(0, 10)));
   }
 
   protected getTitle(item: Item): string {
-    return item.title[this.translateService.currentLang as keyof typeof item.title]
+    return item.title[this.translateService.currentLang as keyof typeof item.title];
+  }
+
+  protected onOptionSelected(event: MatAutocompleteSelectedEvent): void {
+    const selectedTitle = event.option.value;
+    
+    this.options$?.pipe(take(1)).subscribe(items => {
+      const selectedItem = items.find(item => this.getTitle(item) === selectedTitle);
+      if (selectedItem) {
+        this.searchItemNameFormService.setFilter(selectedItem);
+      }
+    });
   }
 }

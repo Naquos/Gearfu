@@ -1,21 +1,29 @@
 <mat-form-field>
     <mat-label>{{ "search-item-name.label" | translate }}</mat-label>
-    <input matInput [formControl]="searchItemNameFormService.form" [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <input 
+        matInput 
+        [formControl]="searchItemNameFormService.form" 
+        [matAutocomplete]="auto" >
+    <mat-autocomplete 
+        autoActiveFirstOption 
+        #auto="matAutocomplete"
+        (optionSelected)="onOptionSelected($event)">
         @for (option of options$ | async; track option) {
-            <mat-option [value]="getTitle(option)" [style.backgroundColor]="colorRarityService.mapColors.get(option.rarity)" (click)="searchItemNameFormService.setFilter(option)">
+            <mat-option 
+                [value]="getTitle(option)" 
+                [style.backgroundColor]="colorRarityService.mapColors.get(option.rarity)">
                 <div style="display: flex; align-items: center;">
-                    <img [src]="imageService.getItemUrl(option.idImage)"
+                    <img 
+                        [src]="imageService.getItemUrl(option.idImage)"
                         alt="image item"  
                         width="50px"
                         height="50px"
-                        appFallback
-                    >
+                        appFallback>
                     <span>
                         {{getTitle(option)}} ({{option.level}})
                     </span>
                 </div>
             </mat-option>
         }
-        </mat-autocomplete>
+    </mat-autocomplete>
 </mat-form-field>

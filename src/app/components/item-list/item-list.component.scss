@@ -50,14 +50,14 @@
     100% { transform: rotate(360deg); }
 }
 
-@media screen and (min-width: 1850px) and (max-width: 2250px) {
+@media screen and (min-width: 1700px) and (max-width: 2110px) {
     .content {
         grid-template-columns: repeat(3, 1fr);
     }
 
 }
 
-@media screen and (min-width: 1450px) and (max-width: 1850px) {
+@media screen and (min-width: 1450px) and (max-width: 1700px) {
     .content {
         grid-template-columns: repeat(2, 1fr);
     }
