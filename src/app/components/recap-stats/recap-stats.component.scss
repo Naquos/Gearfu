@@ -4,10 +4,10 @@
 
     .content {
         display: grid;
-        grid-template-columns: repeat(9, 1fr);
+        grid-template-columns: repeat(14, 1fr);
         grid-template-rows: repeat(2, 1fr);
-        grid-column-gap: 20px;
-        grid-row-gap: 6px;
+        grid-column-gap: 10px;
+        grid-row-gap: 3px;
         margin-top: 3px;
 
         span {

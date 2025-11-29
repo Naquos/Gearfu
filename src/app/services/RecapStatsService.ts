@@ -15,24 +15,43 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly itemChooseService = inject(ItemChooseService);
 
   private readonly initialEffectList: RecapStats[] = [
-    { id: IdActionsEnum.POINT_DE_VIE, value: 0, params: [] },
-    { id: IdActionsEnum.PA, value: 0, params: [] },
-    { id: IdActionsEnum.PM, value: 0, params: [] },
-    { id: IdActionsEnum.BOOST_PW, value: 0, params: [] },
+    { id: IdActionsEnum.MAITRISES_FEU, value: 0, params: [] },
+    { id: IdActionsEnum.MAITRISES_EAU, value: 0, params: [] },
+    { id: IdActionsEnum.MAITRISES_TERRE, value: 0, params: [] },
+    { id: IdActionsEnum.MAITRISES_AIR, value: 0, params: [] },
+
+    { id: IdActionsEnum.MAITRISES_MELEE, value: 0, params: [] },
+    { id: IdActionsEnum.MAITRISES_DISTANCES, value: 0, params: [] },
+    { id: IdActionsEnum.MAITRISES_CRITIQUES, value: 0, params: [] },
+    { id: IdActionsEnum.MAITRISES_DOS, value: 0, params: [] },
+    { id: IdActionsEnum.MAITRISES_SOIN, value: 0, params: [] },
+    { id: IdActionsEnum.MAITRISES_BERZERK, value: 0, params: [] },
+
+
+    { id: IdActionsEnum.COUP_CRITIQUE, value: 0, params: [] },
+    { id: IdActionsEnum.PARADE, value: 0, params: [] },
+    { id: IdActionsEnum.RESISTANCES_DOS, value: 0, params: [] },
+    { id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 0, params: [] },
+
+    // ============ COUPURE GRAPHIQUE ============
     { id: IdActionsEnum.RESISTANCES_FEU, value: 0, params: [] },
     { id: IdActionsEnum.RESISTANCES_EAU, value: 0, params: [] },
     { id: IdActionsEnum.RESISTANCES_TERRE, value: 0, params: [] },
     { id: IdActionsEnum.RESISTANCES_AIR, value: 0, params: [] },
-    { id: IdActionsEnum.COUP_CRITIQUE, value: 0, params: [] },
-    { id: IdActionsEnum.PARADE, value: 0, params: [] },
+
+
+    { id: IdActionsEnum.PA, value: 0, params: [] },
+    { id: IdActionsEnum.PM, value: 0, params: [] },
+    { id: IdActionsEnum.BOOST_PW, value: 0, params: [] },
     { id: IdActionsEnum.PORTEE, value: 0, params: [] },
+    { id: IdActionsEnum.POINT_DE_VIE, value: 0, params: [] },
+    { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, value: 0, params: [] },
+    { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, value: 0, params: [] },
+
+
     { id: IdActionsEnum.ESQUIVE, value: 0, params: [] },
     { id: IdActionsEnum.TACLE, value: 0, params: [] },
     { id: IdActionsEnum.VOLONTE, value: 0, params: [] },
-    { id: IdActionsEnum.RESISTANCES_DOS, value: 0, params: [] },
-    { id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 0, params: [] },
-    { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, value: 0, params: [] },
-    { id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, value: 0, params: [] },
   ];
 
   private readonly recap = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);
@@ -97,8 +116,30 @@ export class RecapStatsService extends AbstractDestroyService {
     }
   }
 
+  
+  private applyEffectMaitrisesElementaires(effect: RecapStats): void {
+    if(effect.id === IdActionsEnum.MAITRISES_ELEMENTAIRES) {
+      this.applyEffect({id: IdActionsEnum.MAITRISES_FEU, value: effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.MAITRISES_EAU, value: effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.MAITRISES_TERRE, value: effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.MAITRISES_AIR, value: effect.value, params: effect.params});
+    } else if(effect.id === IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES) {
+      this.applyEffect({id: IdActionsEnum.MAITRISES_FEU, value: -effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.MAITRISES_EAU, value: -effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.MAITRISES_TERRE, value: -effect.value, params: effect.params});
+      this.applyEffect({id: IdActionsEnum.MAITRISES_AIR, value: -effect.value, params: effect.params});
+    } else if(effect.id === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE) {
+      const nbElements = effect.params[2];
+      if (nbElements >= 1) {this.applyEffect({id: IdActionsEnum.MAITRISES_FEU, value: effect.value, params: effect.params})}
+      if (nbElements >= 2) {this.applyEffect({id: IdActionsEnum.MAITRISES_EAU, value: effect.value, params: effect.params})}
+      if (nbElements >= 3) {this.applyEffect({id: IdActionsEnum.MAITRISES_TERRE, value: effect.value, params: effect.params})}
+      if (nbElements >= 4) {this.applyEffect({id: IdActionsEnum.MAITRISES_AIR, value: effect.value, params: effect.params})}
+    }
+  }
+
   private applyEffect(effect: RecapStats): void {
     this.applyEffectResistance(effect);
+    this.applyEffectMaitrisesElementaires(effect);
 
     const isMalus = this.actionService.isAMalus(effect.id);
     const adjustedActionId = isMalus
