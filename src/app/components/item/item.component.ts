@@ -47,6 +47,10 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     super()
   }
 
+  protected navigateToCraftku(): void {
+    window.open('https://craftkfu.waklab.fr/?' + this.item.id, '_blank');
+  }
+
   protected setItemChoosen() : void {
     const itemType = this.itemTypeService.getItemType(this.item.itemTypeId);
     if(!itemType) { return; }

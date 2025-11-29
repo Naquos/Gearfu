@@ -38,7 +38,7 @@
             </div>
             <div class="craftAndDrop">
                 @if (item.isCraftable) {
-                    <img [src]="imageService.getItemUrl(71919810)" alt="craftable" [matTooltip]="'item.craftable' | translate" >
+                    <img class="craftable" (click)="navigateToCraftku()" [src]="imageService.getItemUrl(71919810)" alt="craftable" [matTooltip]="'item.craftable' | translate" >
                 }
                 @if(item.mobDropable) {
                     @for (drop of item.mobDropable; track $index) {

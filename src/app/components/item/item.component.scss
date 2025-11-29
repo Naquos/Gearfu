@@ -150,7 +150,7 @@
                     max-width: calc(33% - 10px);
                 }
 
-                .monster:hover {
+                .monster:hover, .craftable:hover {
                     transform: scale(1.2);
                 }
             }
