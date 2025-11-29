@@ -150,7 +150,7 @@ app-recap-stats {
   min-height: 64px;
 }
 
-app-item-list {
+.content-application {
     width: calc(100% - 500px);
     margin-top: 1%;
     margin-left: 460px;
@@ -224,7 +224,7 @@ app-item-list {
       width: $item-choose-size;
     }
 
-    app-item-list {
+    .content-application {
       width: calc(100% - $item-choose-size);
       margin-left: $item-choose-size;
       font-size: 12px;

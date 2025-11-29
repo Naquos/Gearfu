@@ -1,7 +1,6 @@
 import { Component, inject, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ItemTypesComponent } from '../form/item-types/item-types.component';
-import { ItemListComponent } from '../item-list/item-list.component';
 import { ItemLevelComponent } from "../form/item-level/item-level.component";
 import { RareteItemComponent } from "../form/rarete-item/rarete-item.component";
 import { FilterMaitrisesComponent } from "../form/filter-maitrises/filter-maitrises.component";
@@ -32,6 +31,8 @@ import { ObtentionComponent } from "../form/obtention/obtention.component";
 import { MonsterDropService } from '../../services/data/monsterDropService';
 import { ItemConditionService } from '../../services/data/itemConditionService';
 import { StatesDefinitionService } from '../../services/data/statesDefinitionService';
+import { DisplayFilterService } from '../../services/displayFilterService';
+import { RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -40,7 +41,6 @@ import { StatesDefinitionService } from '../../services/data/statesDefinitionSer
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
-    ItemListComponent,
     ItemTypesComponent,
     ItemLevelComponent,
     RareteItemComponent,
@@ -60,7 +60,8 @@ import { StatesDefinitionService } from '../../services/data/statesDefinitionSer
     NameBuildComponent,
     RecapStatsComponent,
     ReverseButtonComponent,
-    ObtentionComponent
+    ObtentionComponent,
+    RouterOutlet
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -69,6 +70,7 @@ export class AppComponent implements OnInit{
   
   protected readonly resetFormServices = inject(ResetFormService);
   protected readonly translate = inject(TranslateService);
+  protected readonly displayFilterService = inject(DisplayFilterService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly itemService = inject(ItemsService);
   private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
@@ -105,6 +107,9 @@ export class AppComponent implements OnInit{
     this.itemConditionService.load();
     this.statesDefinitionService.load();
     this.itemService.init();
+    this.displayFilterService.isDisplayed$.subscribe((value: boolean) => {
+      this.displayFilter = value;
+    });
 
     // Supprimer le loader quand les items sont chargés
     if (isPlatformBrowser(this.platformId)) {
@@ -138,9 +143,5 @@ export class AppComponent implements OnInit{
   protected setLang(value: string): void {
     this.translate.use(value);
     this.localStorageService.setItem<string>(KeyEnum.KEY_LANG, value);
-  }
-
-  protected handleFilter(value?: boolean): void {
-    this.displayFilter = value !== undefined ? value : !this.displayFilter;
   }
 }
