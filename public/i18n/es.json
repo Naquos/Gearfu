@@ -127,7 +127,7 @@
     "obtention": {
         "craftable": "Puede ser craftado",
         "droppable": "Puede ser dropeado por un monstruo",
-        "cacher": "Ocultar objetos obtenibles por su medio de obtención",
+        "cacher":"Mostrar los objetos obtenibles por su medio de obtención",
         "boss": "Puede ser dropeado por un jefe",
         "archi": "Puede ser dropeado por un archimonstre o un dominante",
         "pvp": "Puede ser obtenido en PvP"
