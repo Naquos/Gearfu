@@ -127,7 +127,7 @@
     "obtention": {
         "craftable": "Can be crafted",
         "droppable": "Can be dropped by a monster",
-        "cacher": "Hide items obtainable by their means of obtention",
+        "cacher":"Display items obtainable by their means of obtainment",
         "boss": "Can be dropped by a boss",
         "archi": "Can be dropped by an archimonster or dominant",
         "pvp": "Can be obtained in PvP"
