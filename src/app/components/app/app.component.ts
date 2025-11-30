@@ -22,7 +22,6 @@ import { MajorPresentComponent } from '../form/major-present/major-present.compo
 import { BuildsListComponent } from "../builds-list/builds-list.component";
 import { ImportBuildComponent } from "../form/import-build/import-build.component";
 import { NameBuildComponent } from "../form/name-build/name-build.component";
-import { RecapStatsComponent } from "../recap-stats/recap-stats.component";
 import { ItemsService } from '../../services/data/itemsService';
 import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
 import { OnlyNoElemComponent } from '../form/only-no-elem/only-no-elem.component';
@@ -33,7 +32,9 @@ import { ItemConditionService } from '../../services/data/itemConditionService';
 import { StatesDefinitionService } from '../../services/data/statesDefinitionService';
 import { DisplayFilterService } from '../../services/displayFilterService';
 import { Router, RouterOutlet } from '@angular/router';
+import { ResumeAptitudesComponent } from "../resume-aptitudes/resume-aptitudes.component";
 
+type column = 'filter' | 'build' | 'aptitudes';
 
 @Component({
   selector: 'app-root',
@@ -58,10 +59,10 @@ import { Router, RouterOutlet } from '@angular/router';
     BuildsListComponent,
     ImportBuildComponent,
     NameBuildComponent,
-    RecapStatsComponent,
     ReverseButtonComponent,
     ObtentionComponent,
-    RouterOutlet
+    RouterOutlet,
+    ResumeAptitudesComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -80,7 +81,7 @@ export class AppComponent implements OnInit{
   private readonly router = inject(Router);
 
   protected displayFilter = false;
-  protected filterOrBuild : "filter" | "build" = "filter";
+  protected filterOrBuild : column = "filter";
 
   protected openDiscord(): void {
     window.open('https://discord.gg/fFmzBmZjSb', '_blank');
@@ -146,12 +147,13 @@ export class AppComponent implements OnInit{
     this.localStorageService.setItem<string>(KeyEnum.KEY_LANG, value);
   }
 
-  protected redirectToListItems(filterOrBuild: string): void {
-    this.filterOrBuild = filterOrBuild === 'build' ? 'build' : 'filter';
+  protected redirectToListItems(filterOrBuild: column): void {
+    this.filterOrBuild = filterOrBuild;
     this.router.navigate(["/"]);
   }
 
   protected redirectToAptitudes(): void {
+    this.filterOrBuild = 'aptitudes';
     this.router.navigate(['/aptitudes']);
   }
 

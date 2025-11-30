@@ -9,12 +9,14 @@ import { EquipEffects } from "../models/data/equipEffects";
 import { Item } from "../models/data/item";
 import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 import { AptitudesFormService } from "./form/aptitudesFormService";
+import { LevelFormService } from "./form/levelFormService";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
   private readonly actionService = inject(ActionService);
   private readonly itemChooseService = inject(ItemChooseService);
   private readonly aptitudesFormService = inject(AptitudesFormService);
+  private readonly levelFormService = inject(LevelFormService);
 
   private readonly initialEffectList: RecapStats[] = [
     { id: IdActionsEnum.MAITRISES_FEU, value: 0, params: [] },
@@ -67,16 +69,24 @@ export class RecapStatsService extends AbstractDestroyService {
   private initializeListeners(): void {
     combineLatest([
       this.itemChooseService.listItem$,
-      this.aptitudesFormService.recapStat$]).pipe(
+      this.aptitudesFormService.recapStat$,
+      this.levelFormService.level$]).pipe(
       takeUntil(this.destroy$),
       tap(() => this.resetEffects()),
-      map(([items, aptitudes]) => {
+      map(([items, aptitudes, level]) => {
         const extract = this.extractEquipEffects(items);
         const recapStat = this.mapToRecapStats(extract);
         recapStat.push(...aptitudes);
-        return recapStat;
+        return {recapStat, level, percentagePdv: aptitudes.find(a => a.id === IdActionsEnum.PERCENTAGE_PV)?.value || 0};
       }),
-      tap(mappedEffects => mappedEffects.forEach(effect => this.applyEffect(effect))),
+      tap((x => {
+        x.recapStat.forEach(effect => this.applyEffect(effect))
+        const recapPdv = this.recap.value.find(rs => rs.id === IdActionsEnum.POINT_DE_VIE);
+        if (recapPdv) {
+          const basePdv = 50 + x.level * 10;
+          recapPdv.value = Math.floor((basePdv + recapPdv.value) * (1 + x.percentagePdv / 100));
+        }
+  }   )),
       tap(() => this.emitEffects()),
     ).subscribe();
   }

@@ -9,6 +9,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 })
 export class InputAptitudesComponent implements OnInit {
   public control = input.required<FormControl<number>>();
+  public aptitudesRestantes = input.required<number>();
   private maxValue: number | null = null;
 
   public ngOnInit(): void {
@@ -46,9 +47,19 @@ export class InputAptitudesComponent implements OnInit {
   }
 
   protected incrementValue(increment: number, event?: MouseEvent): void {
+    let incrementAmount = increment;
+    if(event?.shiftKey) {
+      incrementAmount = increment > 0 ? increment * Math.min(10, this.aptitudesRestantes()) : increment * 10;
+    } else if(event?.ctrlKey) {
+      incrementAmount = increment > 0 ? this.aptitudesRestantes() : - (this.control().value || 0);
+    }
+
+    if(incrementAmount > 0 && this.aptitudesRestantes() <= 0) {
+      return;
+    }
     const currentValue = +this.control().value || 0;
-    const incrementAmount = event?.shiftKey ? increment * 10 : increment;
     const value = currentValue + incrementAmount;
+
     
     this.control().setValue(value);
   }

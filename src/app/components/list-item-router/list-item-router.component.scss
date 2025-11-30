@@ -1,0 +1,27 @@
+
+app-recap-stats {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 64px;
+  margin-bottom: 10px;
+}
+
+app-item-list {
+    width: 98%;
+    margin: auto;
+}
+
+
+
+@media screen and (max-width: 700px) {
+    app-recap-stats {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    app-recap-stats {
+        display: none!important;
+    }
+}

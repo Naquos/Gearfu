@@ -1,0 +1,187 @@
+<img class="classes" [src]="`classes/${classChoose}.jpg`" alt="class">
+<div class="level">
+    <p>{{ 'resume-aptitudes.level' | translate }}</p>
+    <input [formControl]="levelFormService.form" type="text">
+</div>
+
+<div class="block">
+    <div class="row-4">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.POINT_DE_VIE)" alt="point de vie"> {{ 'resume-aptitudes.PV' | translate }}
+            <span class="pdv">{{ getValue(IdActionsEnum.POINT_DE_VIE) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PA)" alt="PA"> {{ 'resume-aptitudes.PA' | translate }}
+            <span class="pa">{{ getValue(IdActionsEnum.PA) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="PM"> {{ 'resume-aptitudes.PM' | translate }}
+            <span class="pm">{{ getValue(IdActionsEnum.PM) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PW)" alt="PW"> {{ 'resume-aptitudes.PW' | translate }}
+            <span class="pw">{{ getValue(IdActionsEnum.PW) }}</span>
+        </div>
+    </div>
+</div>
+
+<h3>{{ 'resume-aptitudes.maitrises-resistances' | translate }}</h3>
+
+
+<div class="block">
+    <div class="row-4">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_FEU)" alt="maitrise feu"> 
+            <span class="feu">{{ getValue(IdActionsEnum.MAITRISES_FEU) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_EAU)" alt="maitrise eau">
+            <span class="eau">{{ getValue(IdActionsEnum.MAITRISES_EAU) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_TERRE)" alt="maitrise terre">
+            <span class="terre">{{ getValue(IdActionsEnum.MAITRISES_TERRE) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_AIR)" alt="maitrise air">
+            <span class="air">{{ getValue(IdActionsEnum.MAITRISES_AIR) }}</span>
+        </div>
+    </div>
+    <div class="row-4">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_FEU)" alt="resistance feu"> 
+            <span class="feu">{{ calculResistance(IdActionsEnum.RESISTANCES_FEU) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_EAU)" alt="resistance eau">
+            <span class="eau">{{ calculResistance(IdActionsEnum.RESISTANCES_EAU) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_TERRE)" alt="resistance terre">
+            <span class="terre">{{ calculResistance(IdActionsEnum.RESISTANCES_TERRE) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_AIR)" alt="resistance air">
+            <span class="air">{{ calculResistance(IdActionsEnum.RESISTANCES_AIR) }}</span>
+        </div>
+    </div>
+</div>
+
+
+<h3>{{ 'resume-aptitudes.combat' | translate }}</h3>
+<div class="block">
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.COUP_CRITIQUE)" alt="CC"> {{ 'resume-aptitudes.%-critique' | translate }}
+            <span [class]="getClass(IdActionsEnum.COUP_CRITIQUE)">{{ getValue(IdActionsEnum.COUP_CRITIQUE) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PARADE)" alt="parade"> {{ 'resume-aptitudes.%-parade' | translate }}
+            <span [class]="getClass(IdActionsEnum.PARADE)">{{ getValue(IdActionsEnum.PARADE) }}</span>
+        </div>
+    </div>
+    
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.INITIATIVE)" alt="CC"> {{ 'resume-aptitudes.initiative' | translate }}
+            <span [class]="getClass(IdActionsEnum.INITIATIVE)">{{ getValue(IdActionsEnum.INITIATIVE) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="parade"> {{ 'resume-aptitudes.po' | translate }}
+            <span [class]="getClass(IdActionsEnum.PORTEE)">{{ getValue(IdActionsEnum.PORTEE) }}</span>
+        </div>
+    </div>
+    
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.ESQUIVE)" alt="CC"> {{ 'resume-aptitudes.esquive' | translate }}
+            <span [class]="getClass(IdActionsEnum.ESQUIVE)">{{ getValue(IdActionsEnum.ESQUIVE) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.TACLE)" alt="parade"> {{ 'resume-aptitudes.tacle' | translate }}
+            <span [class]="getClass(IdActionsEnum.TACLE)">{{ getValue(IdActionsEnum.TACLE) }}</span>
+        </div>
+    </div>
+    
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.SAGESSE)" alt="CC"> {{ 'resume-aptitudes.sagesse' | translate }}
+            <span [class]="getClass(IdActionsEnum.SAGESSE)">{{ getValue(IdActionsEnum.SAGESSE) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PROSPECTION)" alt="parade"> {{ 'resume-aptitudes.prospection' | translate }}
+            <span [class]="getClass(IdActionsEnum.PROSPECTION)">{{ getValue(IdActionsEnum.PROSPECTION) }}</span>
+        </div>
+    </div>
+    
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.CONTROLE)" alt="CC"> {{ 'resume-aptitudes.controle' | translate }}
+            <span [class]="getClass(IdActionsEnum.CONTROLE)">{{ getValue(IdActionsEnum.CONTROLE) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.VOLONTE)" alt="parade"> {{ 'resume-aptitudes.volonte' | translate }}
+            <span [class]="getClass(IdActionsEnum.VOLONTE)">{{ getValue(IdActionsEnum.VOLONTE) }}</span>
+        </div>
+    </div>
+</div>
+
+
+<h3>{{ 'resume-aptitudes.secondaire' | translate }}</h3>
+
+<div class="block">
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_CRITIQUES)" alt="CC"> {{ 'resume-aptitudes.maitrises-critique' | translate }}
+            <span [class]="getClass(IdActionsEnum.MAITRISES_CRITIQUES)">{{ getValue(IdActionsEnum.MAITRISES_CRITIQUES) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_CRITIQUES)" alt="parade"> {{ 'resume-aptitudes.resistances-critique' | translate }}
+            <span [class]="getClass(IdActionsEnum.RESISTANCES_CRITIQUES)">{{ getValue(IdActionsEnum.RESISTANCES_CRITIQUES) }}</span>
+        </div>
+    </div>
+    
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_DOS)" alt="CC"> {{ 'resume-aptitudes.maitrises-dos' | translate }}
+            <span [class]="getClass(IdActionsEnum.MAITRISES_DOS)">{{ getValue(IdActionsEnum.MAITRISES_DOS) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_DOS)" alt="parade"> {{ 'resume-aptitudes.resistances-dos' | translate }}
+            <span [class]="getClass(IdActionsEnum.RESISTANCES_DOS)">{{ getValue(IdActionsEnum.RESISTANCES_DOS) }}</span>
+        </div>
+    </div>
+    
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_MELEE)" alt="CC"> {{ 'resume-aptitudes.maitrises-melee' | translate }}
+            <span [class]="getClass(IdActionsEnum.MAITRISES_MELEE)">{{ getValue(IdActionsEnum.MAITRISES_MELEE) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.ARMURE_DONNEE_RECUE)" alt="parade"> {{ 'resume-aptitudes.armure-donnee' | translate }}
+            <span [class]="getClass(IdActionsEnum.ARMURE_DONNEE_RECUE)">{{ getArmureValue(IdActionsEnum.ARMURE_DONNEE_RECUE, false) }}</span>
+        </div>
+    </div>
+    
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_DISTANCES)" alt="CC"> {{ 'resume-aptitudes.maitrises-distance' | translate }}
+            <span [class]="getClass(IdActionsEnum.MAITRISES_DISTANCES)">{{ getValue(IdActionsEnum.MAITRISES_DISTANCES) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.ARMURE_DONNEE_RECUE, true)" alt="parade"> {{ 'resume-aptitudes.armure-recue' | translate }}
+            <span [class]="getClass(IdActionsEnum.ARMURE_DONNEE_RECUE)">{{ getArmureValue(IdActionsEnum.ARMURE_DONNEE_RECUE, true) }}</span>
+        </div>
+    </div>
+    
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_SOIN)" alt="CC"> {{ 'resume-aptitudes.maitrises-soin' | translate }}
+            <span [class]="getClass(IdActionsEnum.MAITRISES_SOIN)">{{ getValue(IdActionsEnum.MAITRISES_SOIN) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_BERZERK)" alt="parade"> {{ 'resume-aptitudes.maitrises-berzerk' | translate }}
+            <span [class]="getClass(IdActionsEnum.MAITRISES_BERZERK) ">{{ getValue(IdActionsEnum.MAITRISES_BERZERK) }}</span>
+        </div>
+    </div>
+</div>

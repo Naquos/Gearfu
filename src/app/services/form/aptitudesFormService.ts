@@ -95,9 +95,53 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
     this.init();
   }
 
+  public nbPointUseInIntelligence(): number {
+    return (this.form.value.percentagePV || 0) + 
+          (this.form.value.resistancesElementaires || 0) + 
+          (this.form.value.barriere || 0) +
+          (this.form.value.soinsRecus || 0) + 
+          (this.form.value.pdvArmure || 0);
+  }
+
+  public nbPointUseInForce(): number {
+    return (this.form.value.maitriseElem || 0) + 
+          (this.form.value.maitrisesMelee || 0) + 
+          (this.form.value.maitrisesDistance || 0) +
+          (this.form.value.pdv || 0);
+  }
+
+  public nbPointUseInAgilite(): number {
+    return (this.form.value.tacle || 0) + 
+          (this.form.value.esquive || 0) + 
+          (this.form.value.initiative || 0) +
+          (this.form.value.tacleEsquive || 0) +
+          (this.form.value.volonte || 0);
+  }
+
+  public nbPointUseInChance(): number {
+    return (this.form.value.percentageCC || 0) + 
+          (this.form.value.parade || 0) +
+          (this.form.value.maitriseCritique || 0) +
+          (this.form.value.maitriseDos || 0) +
+          (this.form.value.maitriseBerzerk || 0) +
+          (this.form.value.maitriseSoins || 0) +
+          (this.form.value.resistancesDos || 0) +
+          (this.form.value.resistancesCritique || 0);
+  }
+
+  public nbPointUseInMajeur(): number {
+    return (this.form.value.pa || 0) + 
+          (this.form.value.pm || 0) +
+          (this.form.value.po || 0) +
+          (this.form.value.pw || 0) +
+          (this.form.value.controle || 0) +
+          (this.form.value.di || 0) +
+          (this.form.value.resistancesElementairesMajeur || 0);
+  }
+
   protected override handleChanges(value: AptitudesForm): void {
     const recapStatsList = [
-        // { id: IdActionsEnum.POINT_DE_VIE, value: value.percentagePV, params: [] },
+        { id: IdActionsEnum.PERCENTAGE_PV, value: 4 * value.percentagePV, params: [] },
         { id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 10 * value.resistancesElementaires, params: [] },
         { id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: 5 * value.maitriseElem, params: [] },
         { id: IdActionsEnum.MAITRISES_MELEE, value: 8 * value.maitrisesMelee, params: [] },

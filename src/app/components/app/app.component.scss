@@ -148,17 +148,9 @@ header {
     
 }
 
-app-recap-stats {
-  position: relative;
-  width: calc(100% - 400px);
-  left: 400px;
-  min-height: 64px;
-}
-
 .content-application {
-    width: calc(100% - 500px);
-    margin-top: 1%;
-    margin-left: 460px;
+    width: calc(100% - 400px);
+    margin-left: 400px;
     padding-bottom: 50px;
 }
 
@@ -259,6 +251,9 @@ app-recap-stats {
           display: flex !important;
           margin-left: 0 !important;
           width: 100%;
+          filter-aptitudes {
+            display: none;
+          }
           button {
             width: calc(50% - 20px);
             font-size: 14px;
@@ -284,14 +279,7 @@ app-recap-stats {
       }
     }
 
-    .discord, app-recap-stats {
+    .discord {
       display: none;
     }
   }
-
-  
-@media screen and (max-width: 1000px) {
-    app-recap-stats {
-        display: none!important;
-    }
-}

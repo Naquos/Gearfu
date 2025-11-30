@@ -19,6 +19,7 @@ export class ImageService {
 
     private readonly mapUrlCharacteristics = new Map<IdActionsEnum,string>([
         [IdActionsEnum.BARRIERE,ImageService.BASE_URL_CHARACTERISTICS + "BARRIER.png"],
+        [IdActionsEnum.PROSPECTION,ImageService.BASE_URL_CHARACTERISTICS + "PROSPECTION.png"],
         [IdActionsEnum.POINT_DE_VIE_EN_ARMURE,ImageService.BASE_URL_CHARACTERISTICS + "ARMOR_PERCENT.png"],
         [IdActionsEnum.SOINS_RECUE,ImageService.BASE_URL_CHARACTERISTICS + "FINAL_HEAL_IN_PERCENT.png"],
         [IdActionsEnum.DI,ImageService.BASE_URL_CHARACTERISTICS + "FINAL_DMG_IN_PERCENT.png"],
@@ -55,7 +56,6 @@ export class ImageService {
         [IdActionsEnum.COUP_CRITIQUE,ImageService.BASE_URL_CHARACTERISTICS + "FEROCITY.png"],
         [IdActionsEnum.PORTEE,ImageService.BASE_URL_CHARACTERISTICS + "RANGE.png"],
         [IdActionsEnum.PERTE_PORTEE,ImageService.BASE_URL_CHARACTERISTICS + "RANGE.png"],
-        [IdActionsEnum.PROSPECTION,ImageService.BASE_URL_CHARACTERISTICS + "PROSPECTING.png"],
         [IdActionsEnum.SAGESSE,ImageService.BASE_URL_CHARACTERISTICS + "WISDOM.png"],
         [IdActionsEnum.PERTE_COUP_CRITIQUE,ImageService.BASE_URL_CHARACTERISTICS + "FEROCITY.png"],
         [IdActionsEnum.INITIATIVE,ImageService.BASE_URL_CHARACTERISTICS + "INIT.png"],

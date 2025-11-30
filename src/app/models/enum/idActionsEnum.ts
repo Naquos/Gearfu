@@ -5,6 +5,7 @@ export enum IdActionsEnum {
     SOINS_RECUE = -4, // N'existe pas dans le jeu, mais est utilisé pour pas qu'on me pose des question sur l'affichage des actions majeures
     TACLE_ESQUIVE = -5, // N'existe pas dans le jeu, mais est utilisé pour pas qu'on me pose des question sur l'affichage des actions majeures
     DI = -6, // N'existe pas dans le jeu, mais est utilisé pour pas qu'on me pose des question sur l'affichage des actions majeures
+    PERCENTAGE_PV = -7, // N'existe pas dans le jeu, mais est utilisé pour pas qu'on me pose des question sur l'affichage des actions majeures
     POINT_DE_VIE = 20,
     PERTE_POINT_DE_VIE = 21,
     VOL_DE_VIE = 24,

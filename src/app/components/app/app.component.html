@@ -55,10 +55,13 @@
                 <app-import-build></app-import-build>
                 <app-builds-list></app-builds-list>
             </div>
+        } @else if (filterOrBuild === 'aptitudes') {
+            <div class="aptitudes-content">
+                <app-resume-aptitudes></app-resume-aptitudes>
+            </div>
         }
        
     </div>
-    <app-recap-stats></app-recap-stats>
     <div class="content-application">
         <router-outlet></router-outlet>
     </div>
