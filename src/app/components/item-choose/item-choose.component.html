@@ -42,17 +42,13 @@
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementEmblème.png" [itemType]="ItemTypeEnum.ACCESSOIRES" ></app-item-choose-display>
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementFamilier.png" [itemType]="ItemTypeEnum.FAMILIER" ></app-item-choose-display>
     <div class="totalValue">
-        @if (itemChooseService.totalMaitrises$ | async; as totalMaitrises) {
-            <span>
-                <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES)" alt="poids" class="poids"> {{ "item-choose.maitrise-total" | translate }} : {{ totalMaitrises }} 
-            </span>
-        }
+        <span>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES)" alt="poids" class="poids"> {{ "item-choose.maitrise-total" | translate }} : {{ maitrisesTotal() }} 
+        </span>
 
-        @if (itemChooseService.totalResistances$ | async; as totalResistances) {
-            <span>
-                <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt="poids" class="poids"> {{ "item-choose.resistance-total" | translate }} : {{ totalResistances }} 
-            </span>
-        }
+        <span>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt="poids" class="poids"> {{ "item-choose.resistance-total" | translate }} : {{ resistancesTotal() }} 
+        </span>
 
         @if (itemChooseService.totalWeight$ | async; as totalWeight) {
             <span>

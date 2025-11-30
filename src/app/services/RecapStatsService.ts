@@ -26,6 +26,7 @@ export class RecapStatsService extends AbstractDestroyService {
     { id: IdActionsEnum.PM, value: 3, params: [] },
     { id: IdActionsEnum.BOOST_PW, value: 6, params: [] },
     { id: IdActionsEnum.COUP_CRITIQUE, value: 3, params: [] },
+    { id: IdActionsEnum.CONTROLE, value: 1, params: [] },
   ];
 
   private readonly initialEffectList: RecapStats[] = [
@@ -73,6 +74,12 @@ export class RecapStatsService extends AbstractDestroyService {
 
   private readonly recap = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);
   public readonly recap$ = this.recap.asObservable();
+
+  private readonly maitrisesTotal = new BehaviorSubject<number>(0);
+  public readonly maitrisesTotal$ = this.maitrisesTotal.asObservable();
+
+  private readonly resistancesTotal = new BehaviorSubject<number>(0);
+  public readonly resistancesTotal$ = this.resistancesTotal.asObservable();
 
   constructor() {
     super();
@@ -235,5 +242,30 @@ export class RecapStatsService extends AbstractDestroyService {
 
   private emitEffects(): void {
     this.recap.next([...this.recap.value]);
+    const maitrisesSum = this.recap.value
+      .filter(rs => [
+        IdActionsEnum.MAITRISES_FEU,
+        IdActionsEnum.MAITRISES_EAU,
+        IdActionsEnum.MAITRISES_TERRE,
+        IdActionsEnum.MAITRISES_AIR,
+        IdActionsEnum.MAITRISES_MELEE,
+        IdActionsEnum.MAITRISES_DISTANCES,
+        IdActionsEnum.MAITRISES_CRITIQUES,
+        IdActionsEnum.MAITRISES_DOS,
+        IdActionsEnum.MAITRISES_SOIN,
+        IdActionsEnum.MAITRISES_BERZERK,
+      ].includes(rs.id))
+      .reduce((sum, current) => sum + current.value, 0);
+    this.maitrisesTotal.next(maitrisesSum);
+
+    const resistancesSum = this.recap.value
+      .filter(rs => [
+        IdActionsEnum.RESISTANCES_FEU,
+        IdActionsEnum.RESISTANCES_EAU,
+        IdActionsEnum.RESISTANCES_TERRE,
+        IdActionsEnum.RESISTANCES_AIR,
+      ].includes(rs.id))
+      .reduce((sum, current) => sum + current.value, 0);
+    this.resistancesTotal.next(resistancesSum);
   }
 }

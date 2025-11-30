@@ -1,9 +1,11 @@
 :host {
-    display: block;
+    display: flex;
     margin-top: 10px;
 
     app-aptitudes {
-        display: block;
+        width: 50%;
+    }
+    app-sorts {
         width: 50%;
     }
 }

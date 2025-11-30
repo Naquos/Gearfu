@@ -241,6 +241,10 @@
         "DEMESURE": "Démesure",
         "CHAOS": "Chaos"
     },
+    "sorts": {
+        "code-deck":"Code deck",
+        "copy-code":"Copier le code du deck"
+    },
     "sort-choice-enum" : {
         "POIDS": "Poids",
         "MAITRISES": "Maîtrises",

@@ -31,8 +31,9 @@ import { MonsterDropService } from '../../services/data/monsterDropService';
 import { ItemConditionService } from '../../services/data/itemConditionService';
 import { StatesDefinitionService } from '../../services/data/statesDefinitionService';
 import { DisplayFilterService } from '../../services/displayFilterService';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { ResumeAptitudesComponent } from "../resume-aptitudes/resume-aptitudes.component";
+import { filter } from 'rxjs';
 
 type column = 'filter' | 'build' | 'aptitudes';
 
@@ -109,8 +110,19 @@ export class AppComponent implements OnInit{
     this.itemConditionService.load();
     this.statesDefinitionService.load();
     this.itemService.init();
+
     this.displayFilterService.isDisplayed$.subscribe((value: boolean) => {
       this.displayFilter = value;
+    });
+
+    // Définir filterOrBuild en fonction de la route actuelle
+    this.updateFilterOrBuildFromRoute(this.router.url);
+
+    // Écouter les changements de route
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.updateFilterOrBuildFromRoute(event.urlAfterRedirects);
     });
 
     // Supprimer le loader quand les items sont chargés
@@ -128,6 +140,14 @@ export class AppComponent implements OnInit{
         clearInterval(checkLoading);
         this.removeLoader();
       }, 10000);
+    }
+  }
+
+  private updateFilterOrBuildFromRoute(url: string): void {
+    if (url.includes('/aptitudes')) {
+      this.filterOrBuild = 'aptitudes';
+    } else {
+      this.filterOrBuild = 'filter';
     }
   }
 

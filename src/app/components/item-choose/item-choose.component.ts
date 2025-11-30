@@ -10,6 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { ImageService } from '../../services/imageService';
 import { IdActionsEnum } from '../../models/enum/idActionsEnum';
+import { RecapStatsService } from '../../services/RecapStatsService';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-item-choose',
@@ -20,8 +22,16 @@ import { IdActionsEnum } from '../../models/enum/idActionsEnum';
 export class ItemChooseComponent {
   protected readonly itemChooseService = inject(ItemChooseService);
   private readonly zenithService = inject(ZenithService);
+  private readonly recapStatsService = inject(RecapStatsService);
   protected readonly imageService = inject(ImageService);
 
+
+  protected readonly maitrisesTotal = toSignal(this.recapStatsService.maitrisesTotal$, {
+    initialValue: 0
+  });
+  protected readonly resistancesTotal = toSignal(this.recapStatsService.resistancesTotal$, {
+    initialValue: 0
+  });
   protected readonly ItemTypeEnum = ItemTypeEnum;
   protected readonly IdActionsEnum = IdActionsEnum;
 

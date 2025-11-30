@@ -1,0 +1,27 @@
+
+<div class="code-aptitudes">
+    {{'sorts.code-deck' | translate}} :
+    <input readonly />
+    <mat-icon aria-hidden="false" fontIcon="file_copy" 
+        [matTooltip]="'sorts.copy-code' | translate"
+        [matTooltipShowDelay]="300" 
+        (click)="copyToClipboards()">
+    </mat-icon>
+</div>
+
+<div class="card">
+    <div class="header">
+        Sorts équipés
+    </div>
+    <span>Sorts neutres</span>
+    <div class="sorts-neutres">
+        @for(sort of sortNeutres; track sort) {
+            <img src="/sorts/empty-sort.png" alt="sorts">
+        }
+    </div>
+    <span>Passifs</span>
+    <div class="sorts-passifs">
+        @for(sort of sortPassifs; track sort) {
+            <img src="/sorts/empty-sort.png" alt="sorts">
+        }
+</div>

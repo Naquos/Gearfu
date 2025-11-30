@@ -242,6 +242,10 @@
         "DEMESURE": "Démesure",
         "CHAOS": "Caos"
     },
+    "sorts": {
+        "code-deck":"Deck code",
+        "copy-code":"Copy deck code"
+    },
     "sort-choice-enum": {
         "POIDS": "Peso",
         "MAITRISES": "Dominio",
