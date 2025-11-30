@@ -241,6 +241,10 @@
         "DEMESURE": "Demeanor",
         "CHAOS": "Chaos"
     },
+    "sorts": {
+        "code-deck":"Deck code",
+        "copy-code":"Copy deck code"
+    },
     "sort-choice-enum": {
         "POIDS": "Weight",
         "MAITRISES": "Mastery",
