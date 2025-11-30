@@ -10,5 +10,4 @@ import { DisplayFilterService } from '../../services/displayFilterService';
 })
 export class ListItemRouterComponent {
   protected displayFilterService = inject(DisplayFilterService);
-
 }

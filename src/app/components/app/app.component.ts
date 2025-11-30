@@ -32,7 +32,7 @@ import { MonsterDropService } from '../../services/data/monsterDropService';
 import { ItemConditionService } from '../../services/data/itemConditionService';
 import { StatesDefinitionService } from '../../services/data/statesDefinitionService';
 import { DisplayFilterService } from '../../services/displayFilterService';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -77,6 +77,7 @@ export class AppComponent implements OnInit{
   private readonly monsterDropService = inject(MonsterDropService);
   private readonly itemConditionService = inject(ItemConditionService);
   private readonly statesDefinitionService = inject(StatesDefinitionService);
+  private readonly router = inject(Router);
 
   protected displayFilter = false;
   protected filterOrBuild : "filter" | "build" = "filter";
@@ -144,4 +145,14 @@ export class AppComponent implements OnInit{
     this.translate.use(value);
     this.localStorageService.setItem<string>(KeyEnum.KEY_LANG, value);
   }
+
+  protected redirectToListItems(filterOrBuild: string): void {
+    this.filterOrBuild = filterOrBuild === 'build' ? 'build' : 'filter';
+    this.router.navigate(["/"]);
+  }
+
+  protected redirectToAptitudes(): void {
+    this.router.navigate(['/aptitudes']);
+  }
+
 }

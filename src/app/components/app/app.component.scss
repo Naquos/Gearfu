@@ -61,7 +61,6 @@ header {
 .content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     margin-top: $header-size;
     min-height: calc(100vh - $header-size);
 }
@@ -84,16 +83,22 @@ header {
       box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
     }
 
-    .filter-header  {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77);
-      padding: 10px 0px;
+    .filter-header {
+        background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77);
+        display: flex;
+        flex-direction: column;
 
-      button {
-        width: 50%;
-        border-radius: 10px;
+
+      .filter-build, .filter-aptitudes  {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0px;
+
+        button {
+          width: 50%;
+          border-radius: 10px;
+        }
       }
     }
 

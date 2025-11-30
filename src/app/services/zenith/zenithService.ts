@@ -14,6 +14,7 @@ import { Item } from "../../models/data/item";
 import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum";
 import { ActionService } from "../data/actionService";
 import { BuildResponse } from "../../models/zenith/buildResponse";
+import { MAX_LVL_TRANCHE } from "../../models/utils/utils";
 
 @Injectable({ providedIn: 'root' })
 export class ZenithService {
@@ -46,8 +47,7 @@ export class ZenithService {
     public getLevelForBuild(): Observable<number> {
         return this.getMaxLevelItemInBuild().pipe(
             map(maxLevel => {
-                const levelBrackets = [20,35,50,65,80,95,110,125,140,155,170,185,200,215,230,245];
-                return levelBrackets.find(level => level >= maxLevel) || maxLevel;
+                return MAX_LVL_TRANCHE.find(level => level >= maxLevel) || maxLevel;
             })
         );
     }

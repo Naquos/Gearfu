@@ -2,17 +2,19 @@ import { inject, Injectable } from "@angular/core";
 import { RecapStats } from "../models/data/recap-stats";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { ParameterMajorActionEnum } from "../models/enum/parameterMajorActionEnum";
-import { tap, map, BehaviorSubject, takeUntil } from "rxjs";
+import { tap, map, BehaviorSubject, takeUntil, combineLatest } from "rxjs";
 import { ActionService } from "./data/actionService";
 import { ItemChooseService } from "./itemChooseService";
 import { EquipEffects } from "../models/data/equipEffects";
 import { Item } from "../models/data/item";
 import { AbstractDestroyService } from "./abstract/abstractDestroyService";
+import { AptitudesFormService } from "./form/aptitudesFormService";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
   private readonly actionService = inject(ActionService);
   private readonly itemChooseService = inject(ItemChooseService);
+  private readonly aptitudesFormService = inject(AptitudesFormService);
 
   private readonly initialEffectList: RecapStats[] = [
     { id: IdActionsEnum.MAITRISES_FEU, value: 0, params: [] },
@@ -63,11 +65,17 @@ export class RecapStatsService extends AbstractDestroyService {
   }
 
   private initializeListeners(): void {
-    this.itemChooseService.listItem$.pipe(
+    combineLatest([
+      this.itemChooseService.listItem$,
+      this.aptitudesFormService.recapStat$]).pipe(
       takeUntil(this.destroy$),
       tap(() => this.resetEffects()),
-      map(items => this.extractEquipEffects(items)),
-      map(effects => this.mapToRecapStats(effects)),
+      map(([items, aptitudes]) => {
+        const extract = this.extractEquipEffects(items);
+        const recapStat = this.mapToRecapStats(extract);
+        recapStat.push(...aptitudes);
+        return recapStat;
+      }),
       tap(mappedEffects => mappedEffects.forEach(effect => this.applyEffect(effect))),
       tap(() => this.emitEffects()),
     ).subscribe();

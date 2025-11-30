@@ -17,8 +17,14 @@
 <div class="content">
     <div class="filter" [class.open]="displayFilter" appSwipe (swipeRight)="displayFilterService.setDisplay(false)">
         <div class="filter-header">
-            <button (click)="filterOrBuild = 'filter'">{{ "app.filter-item" | translate }}</button>
-            <button (click)="filterOrBuild = 'build'">{{ "app.build" | translate }}</button>
+            <div class="filter-build">
+                <button (click)="redirectToListItems('filter')">{{ "app.filter-item" | translate }}</button>
+                <button (click)="redirectToListItems('build')">{{ "app.build" | translate }}</button>
+            </div>
+            <div class="filter-aptitudes">
+                <button (click)="redirectToAptitudes()">{{ "app.aptitudes" | translate }}</button>
+                <div></div>
+            </div>
         </div>
 
         @if (filterOrBuild === 'filter') {

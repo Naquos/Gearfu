@@ -18,6 +18,10 @@ export class ImageService {
 
 
     private readonly mapUrlCharacteristics = new Map<IdActionsEnum,string>([
+        [IdActionsEnum.BARRIERE,ImageService.BASE_URL_CHARACTERISTICS + "BARRIER.png"],
+        [IdActionsEnum.POINT_DE_VIE_EN_ARMURE,ImageService.BASE_URL_CHARACTERISTICS + "ARMOR_PERCENT.png"],
+        [IdActionsEnum.SOINS_RECUE,ImageService.BASE_URL_CHARACTERISTICS + "FINAL_HEAL_IN_PERCENT.png"],
+        [IdActionsEnum.DI,ImageService.BASE_URL_CHARACTERISTICS + "FINAL_DMG_IN_PERCENT.png"],
         [IdActionsEnum.DOMMAGE_NEUTRE,ImageService.BASE_URL_CHARACTERISTICS + ""],
         [IdActionsEnum.POINT_DE_VIE,ImageService.BASE_URL_CHARACTERISTICS + "HP.png"],
         [IdActionsEnum.PERTE_POINT_DE_VIE,ImageService.BASE_URL_CHARACTERISTICS + "HP.png"],
