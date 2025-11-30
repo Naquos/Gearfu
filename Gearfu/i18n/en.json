@@ -48,7 +48,10 @@
         "po": "Range and damage",
         "pw": "Wakfu Points",
         "controle": "Control and damage",
-        "di": "Damage inflicted"
+        "di": "Damage inflicted",
+        "code-aptitudes": "Aptitudes code",
+        "copy-code": "Copy aptitudes code",
+        "import-code": "Import aptitudes code"
     },
     "build": {
         "zenith":"Go to Zenith"
