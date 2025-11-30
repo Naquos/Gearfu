@@ -50,7 +50,7 @@ export class InputAptitudesComponent implements OnInit {
     let incrementAmount = increment;
     if(event?.shiftKey) {
       incrementAmount = increment > 0 ? increment * Math.min(10, this.aptitudesRestantes()) : increment * 10;
-    } else if(event?.ctrlKey) {
+    } else if(event?.altKey) {
       incrementAmount = increment > 0 ? this.aptitudesRestantes() : - (this.control().value || 0);
     }
 
