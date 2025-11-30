@@ -11,17 +11,52 @@
 
 <div class="card">
     <div class="header">
-        Sorts équipés
+        {{'sorts.sorts-equipes' | translate}}
     </div>
-    <span>Sorts neutres</span>
+    <span>{{'sorts.sorts-neutres' | translate}}</span>
     <div class="sorts-neutres">
         @for(sort of sortNeutres; track sort) {
             <img src="/sorts/empty-sort.png" alt="sorts">
         }
     </div>
-    <span>Passifs</span>
+    <span>{{'sorts.passifs' | translate}}</span>
     <div class="sorts-passifs">
         @for(sort of sortPassifs; track sort) {
             <img src="/sorts/empty-sort.png" alt="sorts">
         }
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="header">
+        {{'sorts.sorts-classe' | translate}}
+    </div>
+    <span>{{'sorts.sorts-elementaires' | translate}}</span>
+    <div class="sorts-elementaires">
+        @for (sort of sortFeu; track sort) {
+            <img src="/sorts/empty-sort.png" alt="sorts">
+        }
+        @for (sort of sortEau; track sort) {
+            <img src="/sorts/empty-sort.png" alt="sorts">
+        }
+        @for (sort of sortTerre; track sort) {
+            <img src="/sorts/empty-sort.png" alt="sorts">
+        }
+        @for (sort of sortAir; track sort) {
+            <img src="/sorts/empty-sort.png" alt="sorts">
+        }
+    </div>
+    <span>{{'sorts.sorts-neutres' | translate}}</span>
+    <div class="sorts-passifs">
+        @for(sort of sortNeutreNonSelectionne; track sort) {
+            <img src="/sorts/empty-sort.png" alt="sorts">
+        }
+    </div>
+    <span>{{'sorts.passifs' | translate}}</span>
+    <div class="sorts-passifs">
+        @for(sort of sortPassifNonSelectionne; track sort) {
+            <img src="/sorts/empty-sort.png" alt="sorts">
+        }
+    </div>
 </div>

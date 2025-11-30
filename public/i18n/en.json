@@ -243,7 +243,12 @@
     },
     "sorts": {
         "code-deck":"Deck code",
-        "copy-code":"Copy deck code"
+        "copy-code":"Copy deck code",
+        "sorts-equipes":"Equipped spells",
+        "sorts-neutres":"Neutral spells",
+        "passifs":"Passives",
+        "sorts-classe":"Class spells",
+        "sorts-elementaires":"Elemental spells"
     },
     "sort-choice-enum": {
         "POIDS": "Weight",
