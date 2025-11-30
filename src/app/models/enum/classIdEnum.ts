@@ -15,6 +15,6 @@ export enum ClassIdEnum {
     Zobal = 14,
     Ouginak = 15,
     Steamer = 16,
-    Eliotrope = 17,
-    Huppermage = 18
+    Eliotrope = 18,
+    Huppermage = 19
 }

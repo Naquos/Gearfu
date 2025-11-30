@@ -15,6 +15,7 @@ import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum
 import { ActionService } from "../data/actionService";
 import { BuildResponse } from "../../models/zenith/buildResponse";
 import { MAX_LVL_TRANCHE } from "../../models/utils/utils";
+import { ClasseFormService } from "../form/classeFormService";
 
 @Injectable({ providedIn: 'root' })
 export class ZenithService {
@@ -24,6 +25,7 @@ export class ZenithService {
     private readonly itemTypeServices = inject(ItemTypeServices);
     private readonly translateService = inject(TranslateService);
     private readonly actionService = inject(ActionService);
+    private readonly classeFormService = inject(ClasseFormService);
 
     private firstRing = true;
 
@@ -59,7 +61,7 @@ export class ZenithService {
             switchMap(() => this.getLevelForBuild()),
             switchMap(level => this.zenithApiService.createBuild({
             flags: [],
-            id_job: 7,
+            id_job: this.classeFormService.getValue(),
             is_visible: true,
             level: level,
             name: "Gearfu - Generated"

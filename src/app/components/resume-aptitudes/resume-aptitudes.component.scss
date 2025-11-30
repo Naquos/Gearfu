@@ -5,7 +5,13 @@
 
     .classes {
         width: 112%;
+        height: 160px;
         margin-left: -6%;
+        cursor: pointer;
+    }
+    .classes:hover {
+        transform: scale(1.2);
+        transition: transform 0.2s;
     }
 
     .level {

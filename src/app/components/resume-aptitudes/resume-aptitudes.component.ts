@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewContainerRef } from '@angular/core';
 import { RecapStatsService } from '../../services/RecapStatsService';
 import { IdActionsEnum } from '../../models/enum/idActionsEnum';
 import { RecapStats } from '../../models/data/recap-stats';
@@ -9,6 +9,10 @@ import { ParameterMajorActionEnum } from '../../models/enum/parameterMajorAction
 import { ClassIdEnum } from '../../models/enum/classIdEnum';
 import { LevelFormService } from '../../services/form/levelFormService';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TooltipService } from '../../services/TooltipService';
+import { ClassesTooltipComponent } from '../classes-tooltip/classes-tooltip.component';
+import { ClasseFormService } from '../../services/form/classeFormService';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-resume-aptitudes',
@@ -21,8 +25,14 @@ export class ResumeAptitudesComponent {
   protected readonly imageService = inject(ImageService);
   protected readonly IdActionsEnum = IdActionsEnum;
   protected readonly levelFormService = inject(LevelFormService);
-  protected classChoose: ClassIdEnum = ClassIdEnum.Eniripsa;
   private readonly recapStats = toSignal(this.recapStatsService.recap$, { initialValue: [] as RecapStats[] });
+  private readonly tooltipService = inject(TooltipService);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly classeFormService = inject(ClasseFormService);
+
+  protected readonly idClasse = toSignal(this.classeFormService.classe$.pipe(
+    tap(() => this.tooltipService.forceClose())
+  ), { initialValue: ClassIdEnum.Eniripsa });
 
   protected getValue(id: IdActionsEnum): number {
     const recapStats = this.recapStats().filter(rs => rs.id === id);
@@ -30,6 +40,21 @@ export class ResumeAptitudesComponent {
       return 0;
     }
     return recapStats[0].value;
+  }
+
+  protected openTooltip(event: MouseEvent): void {
+    this.tooltipService.forceClose();
+    this.tooltipService.cancelClose();
+    // Le 7ème paramètre active le comportement "garder ouvert au survol"
+    this.tooltipService.openTooltip(
+      this.viewContainerRef, 
+      ClassesTooltipComponent, 
+      event, 
+      {},
+      undefined,  // connectedPosition
+      true,       // withPush
+      true        // keepOpenOnHover - ACTIVÉ ICI
+    );
   }
 
   protected getArmureValue(id: IdActionsEnum, armureRecue: boolean): number {
