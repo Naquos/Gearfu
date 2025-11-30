@@ -243,7 +243,12 @@
     },
     "sorts": {
         "code-deck":"Code deck",
-        "copy-code":"Copier le code du deck"
+        "copy-code":"Copier le code du deck",
+        "sorts-equipes":"Sorts équipés",
+        "sorts-neutres":"Sorts neutres",
+        "passifs":"Passifs",
+        "sorts-classe":"Sorts de classe",
+        "sorts-elementaires":"Sorts élémentaires"
     },
     "sort-choice-enum" : {
         "POIDS": "Poids",

@@ -243,7 +243,12 @@
     },
     "sorts": {
         "code-deck":"Código do deck",
-        "copy-code":"Copiar código do deck"
+        "copy-code":"Copiar código do deck",
+        "sorts-equipes":"Feitiços equipados",
+        "sorts-neutres":"Feitiços neutros",
+        "passifs":"Passivos",
+        "sorts-classe":"Feitiços de classe",
+        "sorts-elementaires":"Feitiços elementares"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",
