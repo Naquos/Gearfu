@@ -18,6 +18,13 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly aptitudesFormService = inject(AptitudesFormService);
   private readonly levelFormService = inject(LevelFormService);
 
+  private readonly naturalEffects: RecapStats[] = [
+    { id: IdActionsEnum.PA, value: 6, params: [] },
+    { id: IdActionsEnum.PM, value: 3, params: [] },
+    { id: IdActionsEnum.BOOST_PW, value: 6, params: [] },
+    { id: IdActionsEnum.COUP_CRITIQUE, value: 3, params: [] },
+  ];
+
   private readonly initialEffectList: RecapStats[] = [
     { id: IdActionsEnum.MAITRISES_FEU, value: 0, params: [] },
     { id: IdActionsEnum.MAITRISES_EAU, value: 0, params: [] },
@@ -87,8 +94,13 @@ export class RecapStatsService extends AbstractDestroyService {
           recapPdv.value = Math.floor((basePdv + recapPdv.value) * (1 + x.percentagePdv / 100));
         }
   }   )),
+      tap(() => this.applyNatifEffects()),
       tap(() => this.emitEffects()),
     ).subscribe();
+  }
+
+  private applyNatifEffects(): void {
+    this.naturalEffects.forEach(effect => this.applyEffect(effect));
   }
 
   private resetEffects(): void {

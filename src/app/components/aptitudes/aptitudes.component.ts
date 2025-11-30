@@ -48,7 +48,7 @@ export class AptitudesComponent {
       this.levelFormService.level$,
       this.aptitudesFormService.recapStat$
     ]).pipe(map(([level,]) => {
-      return Math.floor((+level + 1) / 4) - this.aptitudesFormService.nbPointUseInForce();  
+      return Math.floor((+level + 1) / 4) - this.aptitudesFormService.nbPointUseInForce() + (level >= 230 ? 1 : 0);  
     })), {
     initialValue: 0
   } );
@@ -58,7 +58,7 @@ export class AptitudesComponent {
       this.levelFormService.level$,
       this.aptitudesFormService.recapStat$
     ]).pipe(map(([level,]) => {
-      return Math.floor((+level) / 4) - this.aptitudesFormService.nbPointUseInAgilite();  
+      return Math.floor((+level) / 4) - this.aptitudesFormService.nbPointUseInAgilite() + (level >= 230 ? 1 : 0);  
     })), {
     initialValue: 0
   } );
@@ -68,7 +68,7 @@ export class AptitudesComponent {
       this.levelFormService.level$,
       this.aptitudesFormService.recapStat$
     ]).pipe(map(([level,]) => {
-      return Math.floor((+level - 1) / 4) - this.aptitudesFormService.nbPointUseInChance();  
+      return Math.floor((+level - 1) / 4) - this.aptitudesFormService.nbPointUseInChance() + (level >= 230 ? 1 : 0);  
     })), {
     initialValue: 0
   } );
