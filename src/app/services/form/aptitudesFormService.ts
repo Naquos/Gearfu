@@ -192,7 +192,7 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
           (Number.parseInt(`${this.form.value.di}`)) +
           (Number.parseInt(`${this.form.value.resistancesElementairesMajeur}`));
   }
-
+  
   protected override handleChanges(value: AptitudesForm): void {
     const recapStatsList = [
         { id: IdActionsEnum.PERCENTAGE_PV, value: 4 * value.percentagePV, params: [] },

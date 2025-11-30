@@ -137,6 +137,9 @@ export class RecapStatsService extends AbstractDestroyService {
           this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
         }
         break;
+        case ClassIdEnum.Xelor:
+          this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: 6, params: [] });
+        break;
     }
   }
 
