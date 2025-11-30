@@ -41,14 +41,12 @@
             display: flex;
             width: 20%;
             align-items: center;
-            img {
-                margin-right: 5px;
-            }
             span {
                 margin-left: auto;
             }
             .pdv {
                 color: red;
+                margin-left: 4px;
             }
             .pa, .pw, .eau {
                 color: #268de2;

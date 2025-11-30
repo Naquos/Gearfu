@@ -1,3 +1,14 @@
+
+<div class="code-aptitudes">
+    {{'aptitudes.code-aptitudes' | translate}} :
+    <input [value]="codeAptitudes()" readonly />
+    <mat-icon aria-hidden="false" fontIcon="file_copy" 
+        [matTooltip]="'aptitudes.copy-code' | translate"
+        [matTooltipShowDelay]="300" 
+        (click)="copyToClipboardCodeAptitudes()">
+    </mat-icon>
+</div>
+
 <div class="body">
     <!-- PREMIERE COLONNE -->
     <div class="column">
@@ -6,6 +17,7 @@
             <div class="header">
                 <span>{{'aptitudes.intelligence' | translate}}</span>
                 <span>{{'aptitudes.restant' | translate}} {{ nbPointRestantIntelligence() }}</span>
+                <button (click)="aptitudesFormService.resetIntelligence()">X</button>
             </div>
             <div class="content">
                 <div class="row">
@@ -36,6 +48,7 @@
             <div class="header">
                 <span>{{'aptitudes.force' | translate}}</span>
                 <span>{{'aptitudes.restant' | translate}} {{ nbPointRestantForce() }}</span>
+                <button (click)="aptitudesFormService.resetForce()">X</button>
             </div>
             <div class="content">
                 <div class="row">
@@ -62,6 +75,7 @@
             <div class="header">
                 <span>{{'aptitudes.agilite' | translate}}</span>
                 <span>{{'aptitudes.restant' | translate}} {{ nbPointRestantAgilite() }}</span>
+                <button (click)="aptitudesFormService.resetAgilite()">X</button>
             </div>
             <div class="content">
                 <div class="row">
@@ -94,6 +108,7 @@
             <div class="header">
                 <span>{{'aptitudes.chance' | translate}}</span>
                 <span>{{'aptitudes.restant' | translate}} {{ nbPointRestantChance() }}</span>
+                <button (click)="aptitudesFormService.resetChance()">X</button>
             </div>
             <div class="content">
                 <div class="row">
@@ -136,6 +151,7 @@
             <div class="header">
                 <span>{{'aptitudes.majeur' | translate}}</span>
                 <span>{{'aptitudes.restant' | translate}} {{ nbPointRestantMajeur() }}</span>
+                <button (click)="aptitudesFormService.resetMajeur()">X</button>
             </div>
             <div class="content">
                 <div class="row">
@@ -168,6 +184,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>

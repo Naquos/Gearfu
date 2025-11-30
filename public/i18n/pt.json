@@ -48,7 +48,10 @@
         "po": "Alcance e danos",
         "pw": "Pontos de Wakfu",
         "controle": "Controle e danos",
-        "di": "Danos infligidos"
+        "di": "Danos infligidos",
+        "code-aptitudes": "Código de aptidões",
+        "copy-code": "Copiar código de aptidões",
+        "import-code": "Importar código de aptidões"
     },
     "build": {
         "zenith":"Ir para Zénith"

@@ -95,6 +95,60 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
     this.init();
   }
 
+  public resetIntelligence(): void {
+    this.form.patchValue({
+      percentagePV: AptitudesFormService.DEFAULT_VALUE,
+      resistancesElementaires: AptitudesFormService.DEFAULT_VALUE,
+      barriere: AptitudesFormService.DEFAULT_VALUE,
+      soinsRecus: AptitudesFormService.DEFAULT_VALUE,
+      pdvArmure: AptitudesFormService.DEFAULT_VALUE
+    });
+  }
+
+  public resetForce(): void {
+    this.form.patchValue({
+      maitriseElem: AptitudesFormService.DEFAULT_VALUE,
+      maitrisesMelee: AptitudesFormService.DEFAULT_VALUE,
+      maitrisesDistance: AptitudesFormService.DEFAULT_VALUE,
+      pdv: AptitudesFormService.DEFAULT_VALUE
+    });
+  }
+
+  public resetAgilite(): void {
+    this.form.patchValue({
+      tacle: AptitudesFormService.DEFAULT_VALUE,
+      esquive: AptitudesFormService.DEFAULT_VALUE,
+      initiative: AptitudesFormService.DEFAULT_VALUE,
+      tacleEsquive: AptitudesFormService.DEFAULT_VALUE,
+      volonte: AptitudesFormService.DEFAULT_VALUE
+    });
+  }
+
+  public resetChance(): void {
+    this.form.patchValue({
+      percentageCC: AptitudesFormService.DEFAULT_VALUE,
+      parade: AptitudesFormService.DEFAULT_VALUE,
+      maitriseCritique: AptitudesFormService.DEFAULT_VALUE,
+      maitriseDos: AptitudesFormService.DEFAULT_VALUE,
+      maitriseBerzerk: AptitudesFormService.DEFAULT_VALUE,
+      maitriseSoins: AptitudesFormService.DEFAULT_VALUE,
+      resistancesDos: AptitudesFormService.DEFAULT_VALUE,
+      resistancesCritique: AptitudesFormService.DEFAULT_VALUE
+    });
+  }
+
+  public resetMajeur(): void {
+    this.form.patchValue({
+      pa: AptitudesFormService.DEFAULT_VALUE,
+      pm: AptitudesFormService.DEFAULT_VALUE,
+      po: AptitudesFormService.DEFAULT_VALUE,
+      pw: AptitudesFormService.DEFAULT_VALUE,
+      controle: AptitudesFormService.DEFAULT_VALUE,
+      di: AptitudesFormService.DEFAULT_VALUE,
+      resistancesElementairesMajeur: AptitudesFormService.DEFAULT_VALUE
+    });
+  }
+
   public nbPointUseInIntelligence(): number {
     return (this.form.value.percentagePV || 0) + 
           (this.form.value.resistancesElementaires || 0) + 
@@ -161,8 +215,10 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
         { id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 4 * value.resistancesCritique, params: [] },
         { id: IdActionsEnum.PA, value: value.pa, params: [] },
         { id: IdActionsEnum.PW, value: 2 * value.pw, params: [] },
-        { id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 50 * value.resistancesElementairesMajeur, params: [] }
     ];
+    if(value.resistancesElementairesMajeur > 0) {
+        recapStatsList.push({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES, value: 50, params: [] });
+    }
     if(value.tacleEsquive > 0) {
         recapStatsList.push({ id: IdActionsEnum.TACLE, value: 4 * value.tacleEsquive, params: [] });
         recapStatsList.push({ id: IdActionsEnum.ESQUIVE, value: 4 * value.tacleEsquive, params: [] });

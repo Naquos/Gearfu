@@ -7,18 +7,31 @@ import { AptitudesFormService } from '../../services/form/aptitudesFormService';
 import { LevelFormService } from '../../services/form/levelFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { combineLatest, map } from 'rxjs';
+import { CodeAptitudesService } from '../../services/codeAptitudesService';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-aptitudes',
-  imports: [TranslateModule, InputAptitudesComponent],
+  imports: [TranslateModule, InputAptitudesComponent, MatIconModule, MatTooltipModule],
   templateUrl: './aptitudes.component.html',
   styleUrl: './aptitudes.component.scss'
 })
 export class AptitudesComponent {
+  private readonly levelFormService = inject(LevelFormService);
+  private readonly codeAptitudesService = inject(CodeAptitudesService);
+
   protected readonly imageService = inject(ImageService);
   protected readonly aptitudesFormService = inject(AptitudesFormService);
   protected readonly IdActionsEnum = IdActionsEnum;
-  private readonly levelFormService = inject(LevelFormService);
+
+  protected codeAptitudes = toSignal(this.codeAptitudesService.code$, {
+    initialValue: ''
+  });
+
+  protected copyToClipboardCodeAptitudes() {
+    navigator.clipboard.writeText(this.codeAptitudes());
+  }
 
   protected nbPointRestantIntelligence = toSignal(
     combineLatest([
@@ -66,15 +79,15 @@ export class AptitudesComponent {
       this.aptitudesFormService.recapStat$
     ]).pipe(map(([level,]) => {
       if(+level < 25) {
-        return 0;
+        return 0 - this.aptitudesFormService.nbPointUseInMajeur();
       } else if(+level < 75) {
-        return 1;
+        return 1 - this.aptitudesFormService.nbPointUseInMajeur();
       } else if(+level < 125) {
-        return 2;
+        return 2 - this.aptitudesFormService.nbPointUseInMajeur();
       } else if(+level < 175) {
-        return 3;
+        return 3 - this.aptitudesFormService.nbPointUseInMajeur();
       }
-      return 4;
+      return 4 - this.aptitudesFormService.nbPointUseInMajeur();
   })), {
     initialValue: 0
   });

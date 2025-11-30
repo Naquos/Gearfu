@@ -131,6 +131,8 @@ export class RecapStatsService extends AbstractDestroyService {
       if (nbElements >= 2) {this.applyEffect({id: IdActionsEnum.RESISTANCES_EAU, value: effect.value, params: effect.params})}
       if (nbElements >= 3) {this.applyEffect({id: IdActionsEnum.RESISTANCES_TERRE, value: effect.value, params: effect.params})}
       if (nbElements >= 4) {this.applyEffect({id: IdActionsEnum.RESISTANCES_AIR, value: effect.value, params: effect.params})}
+    } else if(effect.id === IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES) {
+      this.applyEffect({id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 50, params: effect.params});
     }
   }
 
