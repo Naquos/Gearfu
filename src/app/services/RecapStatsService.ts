@@ -242,12 +242,8 @@ export class RecapStatsService extends AbstractDestroyService {
 
   private emitEffects(): void {
     this.recap.next([...this.recap.value]);
-    const maitrisesSum = this.recap.value
+    const sommeMaitrisesSecondaires = this.recap.value
       .filter(rs => [
-        IdActionsEnum.MAITRISES_FEU,
-        IdActionsEnum.MAITRISES_EAU,
-        IdActionsEnum.MAITRISES_TERRE,
-        IdActionsEnum.MAITRISES_AIR,
         IdActionsEnum.MAITRISES_MELEE,
         IdActionsEnum.MAITRISES_DISTANCES,
         IdActionsEnum.MAITRISES_CRITIQUES,
@@ -256,7 +252,14 @@ export class RecapStatsService extends AbstractDestroyService {
         IdActionsEnum.MAITRISES_BERZERK,
       ].includes(rs.id))
       .reduce((sum, current) => sum + current.value, 0);
-    this.maitrisesTotal.next(maitrisesSum);
+    const maxMaitrisesElem = Math.max(
+      this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_FEU)?.value || 0,
+      this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_EAU)?.value || 0,
+      this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_TERRE)?.value || 0,
+      this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_AIR)?.value || 0,
+    );
+    const sommeMaitrisesSecondairesWithElem = sommeMaitrisesSecondaires + maxMaitrisesElem;
+    this.maitrisesTotal.next(sommeMaitrisesSecondairesWithElem);
 
     const resistancesSum = this.recap.value
       .filter(rs => [
