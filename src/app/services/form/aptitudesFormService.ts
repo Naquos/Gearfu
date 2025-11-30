@@ -150,47 +150,47 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
   }
 
   public nbPointUseInIntelligence(): number {
-    return (this.form.value.percentagePV || 0) + 
-          (this.form.value.resistancesElementaires || 0) + 
-          (this.form.value.barriere || 0) +
-          (this.form.value.soinsRecus || 0) + 
-          (this.form.value.pdvArmure || 0);
+    return (Number.parseInt(`${this.form.value.percentagePV}`)) + 
+          (Number.parseInt(`${this.form.value.resistancesElementaires}`)) + 
+          (Number.parseInt(`${this.form.value.barriere}`)) +
+          (Number.parseInt(`${this.form.value.soinsRecus}`)) + 
+          (Number.parseInt(`${this.form.value.pdvArmure}`));
   }
 
   public nbPointUseInForce(): number {
-    return (this.form.value.maitriseElem || 0) + 
-          (this.form.value.maitrisesMelee || 0) + 
-          (this.form.value.maitrisesDistance || 0) +
-          (this.form.value.pdv || 0);
+    return (Number.parseInt(`${this.form.value.maitriseElem}`)) + 
+          (Number.parseInt(`${this.form.value.maitrisesMelee}`)) + 
+          (Number.parseInt(`${this.form.value.maitrisesDistance}`)) +
+          (Number.parseInt(`${this.form.value.pdv}`));
   }
 
   public nbPointUseInAgilite(): number {
-    return (this.form.value.tacle || 0) + 
-          (this.form.value.esquive || 0) + 
-          (this.form.value.initiative || 0) +
-          (this.form.value.tacleEsquive || 0) +
-          (this.form.value.volonte || 0);
+    return (Number.parseInt(`${this.form.value.tacle}`)) + 
+          (Number.parseInt(`${this.form.value.esquive}`)) + 
+          (Number.parseInt(`${this.form.value.initiative}`)) +
+          (Number.parseInt(`${this.form.value.tacleEsquive}`)) +
+          (Number.parseInt(`${this.form.value.volonte}`));
   }
 
   public nbPointUseInChance(): number {
-    return (this.form.value.percentageCC || 0) + 
-          (this.form.value.parade || 0) +
-          (this.form.value.maitriseCritique || 0) +
-          (this.form.value.maitriseDos || 0) +
-          (this.form.value.maitriseBerzerk || 0) +
-          (this.form.value.maitriseSoins || 0) +
-          (this.form.value.resistancesDos || 0) +
-          (this.form.value.resistancesCritique || 0);
+    return (Number.parseInt(`${this.form.value.percentageCC}`)) + 
+          (Number.parseInt(`${this.form.value.parade}`)) +
+          (Number.parseInt(`${this.form.value.maitriseCritique}`)) +
+          (Number.parseInt(`${this.form.value.maitriseDos}`)) +
+          (Number.parseInt(`${this.form.value.maitriseBerzerk}`)) +
+          (Number.parseInt(`${this.form.value.maitriseSoins}`)) +
+          (Number.parseInt(`${this.form.value.resistancesDos}`)) +
+          (Number.parseInt(`${this.form.value.resistancesCritique}`));
   }
 
   public nbPointUseInMajeur(): number {
-    return (this.form.value.pa || 0) + 
-          (this.form.value.pm || 0) +
-          (this.form.value.po || 0) +
-          (this.form.value.pw || 0) +
-          (this.form.value.controle || 0) +
-          (this.form.value.di || 0) +
-          (this.form.value.resistancesElementairesMajeur || 0);
+    return (Number.parseInt(`${this.form.value.pa}`)) + 
+          (Number.parseInt(`${this.form.value.pm}`)) +
+          (Number.parseInt(`${this.form.value.po}`)) +
+          (Number.parseInt(`${this.form.value.pw}`)) +
+          (Number.parseInt(`${this.form.value.controle}`)) +
+          (Number.parseInt(`${this.form.value.di}`)) +
+          (Number.parseInt(`${this.form.value.resistancesElementairesMajeur}`));
   }
 
   protected override handleChanges(value: AptitudesForm): void {

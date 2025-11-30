@@ -10,6 +10,8 @@ import { Item } from "../models/data/item";
 import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 import { AptitudesFormService } from "./form/aptitudesFormService";
 import { LevelFormService } from "./form/levelFormService";
+import { ClasseFormService } from "./form/classeFormService";
+import { ClassIdEnum } from "../models/enum/classIdEnum";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
@@ -17,6 +19,7 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly itemChooseService = inject(ItemChooseService);
   private readonly aptitudesFormService = inject(AptitudesFormService);
   private readonly levelFormService = inject(LevelFormService);
+  private readonly classeFormService = inject(ClasseFormService);
 
   private readonly naturalEffects: RecapStats[] = [
     { id: IdActionsEnum.PA, value: 6, params: [] },
@@ -43,6 +46,8 @@ export class RecapStatsService extends AbstractDestroyService {
     { id: IdActionsEnum.PARADE, value: 0, params: [] },
     { id: IdActionsEnum.RESISTANCES_DOS, value: 0, params: [] },
     { id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 0, params: [] },
+    { id: IdActionsEnum.CONTROLE, value: 0, params: [] },
+
 
     // ============ COUPURE GRAPHIQUE ============
     { id: IdActionsEnum.RESISTANCES_FEU, value: 0, params: [] },
@@ -63,6 +68,7 @@ export class RecapStatsService extends AbstractDestroyService {
     { id: IdActionsEnum.ESQUIVE, value: 0, params: [] },
     { id: IdActionsEnum.TACLE, value: 0, params: [] },
     { id: IdActionsEnum.VOLONTE, value: 0, params: [] },
+    { id: IdActionsEnum.INITIATIVE, value: 0, params: [] },
   ];
 
   private readonly recap = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);
@@ -77,10 +83,12 @@ export class RecapStatsService extends AbstractDestroyService {
     combineLatest([
       this.itemChooseService.listItem$,
       this.aptitudesFormService.recapStat$,
-      this.levelFormService.level$]).pipe(
+      this.levelFormService.level$,
+      this.classeFormService.classe$,
+    ]).pipe(
       takeUntil(this.destroy$),
       tap(() => this.resetEffects()),
-      map(([items, aptitudes, level]) => {
+      map(([items, aptitudes, level,]) => {
         const extract = this.extractEquipEffects(items);
         const recapStat = this.mapToRecapStats(extract);
         recapStat.push(...aptitudes);
@@ -95,8 +103,41 @@ export class RecapStatsService extends AbstractDestroyService {
         }
   }   )),
       tap(() => this.applyNatifEffects()),
+      tap(() => this.applyEffectByClass()),
       tap(() => this.emitEffects()),
     ).subscribe();
+  }
+
+  private applyEffectByClass(): void {
+    const classId = this.classeFormService.getValue();
+    const level = this.levelFormService.getValue();
+    switch (classId) {
+      case ClassIdEnum.Cra:
+        this.applyEffect({ id: IdActionsEnum.PORTEE, value: 1, params: [] });
+        break;
+      case ClassIdEnum.Ecaflip:
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: 20, params: [] });
+        break;
+      case ClassIdEnum.Sacrieur:
+        this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 4 * level, params: [] });
+        break;
+      case ClassIdEnum.Sram:
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_DOS, value: level, params: [] });
+        this.applyEffect({ id: IdActionsEnum.CONTROLE, value: 1, params: [] });
+        break;
+      case ClassIdEnum.Iop:
+        this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
+        break;
+      case ClassIdEnum.Eniripsa:
+        this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 2 * level, params: [] });
+        break;
+      case ClassIdEnum.Eliotrope:
+        if((this.recap.value.find(rs => rs.id === IdActionsEnum.PORTEE)?.value ?? 0) >= 2) {
+          this.applyEffect({ id: IdActionsEnum.PORTEE, value: -2, params: [] });
+          this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
+        }
+        break;
+    }
   }
 
   private applyNatifEffects(): void {

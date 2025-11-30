@@ -12,7 +12,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipService } from '../../services/TooltipService';
 import { ClassesTooltipComponent } from '../classes-tooltip/classes-tooltip.component';
 import { ClasseFormService } from '../../services/form/classeFormService';
-import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-resume-aptitudes',
@@ -30,9 +29,7 @@ export class ResumeAptitudesComponent {
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly classeFormService = inject(ClasseFormService);
 
-  protected readonly idClasse = toSignal(this.classeFormService.classe$.pipe(
-    tap(() => this.tooltipService.forceClose())
-  ), { initialValue: ClassIdEnum.Eniripsa });
+  protected readonly idClasse = toSignal(this.classeFormService.classe$, { initialValue: ClassIdEnum.Eniripsa });
 
   protected getValue(id: IdActionsEnum): number {
     const recapStats = this.recapStats().filter(rs => rs.id === id);

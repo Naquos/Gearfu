@@ -29,4 +29,8 @@ export class LevelFormService extends AbstractFormService<FormControl<number>> {
     public override setDefaultValue(): void {
         this.form.setValue(LevelFormService.DEFAULT_VALUE);
     }
+
+    public getValue(): number {
+        return this.level.getValue();
+    }
 }
