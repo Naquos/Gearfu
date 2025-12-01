@@ -12,10 +12,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipService } from '../../services/TooltipService';
 import { ClassesTooltipComponent } from '../classes-tooltip/classes-tooltip.component';
 import { ClasseFormService } from '../../services/form/classeFormService';
+import { LazyImageDirective } from '../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-resume-aptitudes',
-  imports: [TranslateModule, ReactiveFormsModule],
+  imports: [TranslateModule, ReactiveFormsModule, LazyImageDirective],
   templateUrl: './resume-aptitudes.component.html',
   styleUrl: './resume-aptitudes.component.scss'
 })
@@ -30,6 +31,12 @@ export class ResumeAptitudesComponent {
   private readonly classeFormService = inject(ClasseFormService);
 
   protected readonly idClasse = toSignal(this.classeFormService.classe$, { initialValue: ClassIdEnum.Eniripsa });
+
+  constructor() {
+    this.classeFormService.classe$.subscribe(() => {
+      this.tooltipService.forceClose();
+    });
+  }
 
   protected getValue(id: IdActionsEnum): number {
     const recapStats = this.recapStats().filter(rs => rs.id === id);

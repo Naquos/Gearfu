@@ -168,8 +168,7 @@ export class AppComponent implements OnInit{
   }
 
   protected redirectToListItems(filterOrBuild: column): void {
-    this.filterOrBuild = filterOrBuild;
-    this.router.navigate(["/"]);
+    this.router.navigate(["/"]).then(() => this.filterOrBuild = filterOrBuild);
   }
 
   protected redirectToAptitudes(): void {

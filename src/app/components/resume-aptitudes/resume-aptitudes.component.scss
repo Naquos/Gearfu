@@ -3,21 +3,31 @@
     display: block;
     margin: auto;
 
+    h3 {
+        margin: 5px 0;
+    }
+
     .classes {
         width: 112%;
-        height: 160px;
+        height: 140px;
         margin-left: -6%;
         cursor: pointer;
+        transition: opacity 0.2s ease-in-out, transform 0.2s;
     }
     .classes:hover {
         transform: scale(1.2);
-        transition: transform 0.2s;
+    }
+    .classes.lazy-loading {
+        opacity: 0.3;
     }
 
     .level {
         display: flex;
+        margin-top: -50px;
         justify-content: space-between;
         align-items: center;
+        position: relative;
+        z-index: 1;
 
         input {
             width: 60px;

@@ -1,4 +1,5 @@
-import { Directive, ElementRef, OnInit, Renderer2, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, OnInit, Renderer2, OnDestroy, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
@@ -13,6 +14,7 @@ export class LazyImageDirective implements OnInit, OnDestroy {
   isLoading = true;
   private loadListener?: () => void;
   private errorListener?: () => void;
+  private platformId = inject(PLATFORM_ID);
 
   constructor(
     private el: ElementRef<HTMLImageElement>,
@@ -20,6 +22,11 @@ export class LazyImageDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // Ne rien faire côté serveur
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     // Ajouter automatiquement loading="lazy" si non présent
     const loadingAttr = this.el.nativeElement.getAttribute('loading');
     if (!loadingAttr) {

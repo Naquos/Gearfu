@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ClassIdEnum } from '../../models/enum/classIdEnum';
 import { ClasseFormService } from '../../services/form/classeFormService';
+import { LazyImageDirective } from '../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-classes-tooltip',
-  imports: [],
+  imports: [LazyImageDirective],
   templateUrl: './classes-tooltip.component.html',
   styleUrl: './classes-tooltip.component.scss'
 })

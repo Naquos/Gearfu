@@ -1,6 +1,6 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<img class="classes" [src]="`classes/${idClasse()}.jpg`" alt="class" (click)="openTooltip($event)">
+<img class="classes" [src]="`classes/${idClasse()}.jpg`" [attr.key]="idClasse()" alt="class" (click)="openTooltip($event)">
 <div class="level">
     <p>{{ 'resume-aptitudes.level' | translate }}</p>
     <input [formControl]="levelFormService.form" type="text">
