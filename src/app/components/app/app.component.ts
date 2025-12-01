@@ -8,7 +8,6 @@ import { SortChoiceComponent } from "../form/sort-choice/sort-choice.component";
 import { OnlyNoSecondaryComponent } from "../form/only-no-secondary/only-no-secondary.component";
 import { ModifierMecanismComponent } from "../form/modifier-mecanism/modifier-mecanism.component";
 import { SearchItemNameComponent } from "../form/search-item-name/search-item-name.component";
-import { ItemChooseComponent } from "../item-choose/item-choose.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
@@ -19,7 +18,7 @@ import { LocalStorageService } from '../../services/data/localStorageService';
 import { ResetFormService } from '../../services/resetFormService';
 import { FilterResistancesComponent } from '../form/filter-resistances/filter-resistances.component';
 import { MajorPresentComponent } from '../form/major-present/major-present.component';
-import { BuildsListComponent } from "../builds-list/builds-list.component";
+import { BuildsListComponent } from "../items-pages/builds-list/builds-list.component";
 import { ImportBuildComponent } from "../form/import-build/import-build.component";
 import { NameBuildComponent } from "../form/name-build/name-build.component";
 import { ItemsService } from '../../services/data/itemsService';
@@ -32,8 +31,9 @@ import { ItemConditionService } from '../../services/data/itemConditionService';
 import { StatesDefinitionService } from '../../services/data/statesDefinitionService';
 import { DisplayFilterService } from '../../services/displayFilterService';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
-import { ResumeAptitudesComponent } from "../resume-aptitudes/resume-aptitudes.component";
+import { ResumeAptitudesComponent } from "../aptitudes-pages/resume-aptitudes/resume-aptitudes.component";
 import { filter } from 'rxjs';
+import { ItemChooseComponent } from '../items-pages/item-choose/item-choose.component';
 
 type column = 'filter' | 'build' | 'aptitudes';
 
@@ -144,7 +144,7 @@ export class AppComponent implements OnInit{
   }
 
   private updateFilterOrBuildFromRoute(url: string): void {
-    if (url.includes('/aptitudes')) {
+    if (url.includes('/aptitudes') || url.includes('/sorts')) {
       this.filterOrBuild = 'aptitudes';
     } else {
       this.filterOrBuild = 'filter';
@@ -174,6 +174,11 @@ export class AppComponent implements OnInit{
   protected redirectToAptitudes(): void {
     this.filterOrBuild = 'aptitudes';
     this.router.navigate(['/aptitudes']);
+  }
+
+  protected redirectToSorts(): void {
+    this.filterOrBuild = 'aptitudes';
+    this.router.navigate(['/sorts']);
   }
 
 }

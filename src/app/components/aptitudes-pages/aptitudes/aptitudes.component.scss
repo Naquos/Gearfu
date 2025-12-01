@@ -1,0 +1,117 @@
+.body {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    .column {
+        width: 30%;
+        .card {
+            background: linear-gradient(145deg, #0D1B2A, #415A77);
+            border-radius: 15px;
+            padding: 5px;
+            color: white;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+            position: relative;
+            margin-bottom: 15px;
+
+            .header {
+                display: flex;
+                border-bottom: 3px solid #415A77;
+                margin-bottom: 10px;
+
+                span {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    margin: auto;
+                }
+                button {
+                    margin: 5px;
+                    border: 2px solid #415A77;
+                    border-radius: 50%;
+                    box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+                    cursor: pointer;
+                    width: 30px;
+                    height: 30px;
+                    background-color: white;  
+                    font-weight: 600;
+                    font-size: 17px;
+                }
+            }
+
+            .content {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .row {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin: 5px;
+                    .aptitudes-name {
+                        display: flex;
+                        margin-right: auto;
+                        img {
+                            margin-right: 10px;
+                            width: 22px;
+                            height: 22px;
+                        }
+                    }
+                    .aptitudes-value {
+                        width: 100px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.code-aptitudes {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    margin-bottom: 20px;
+    padding: 5px 0;
+    color: white;
+    width: 90%;
+    margin-left: 5%;
+
+    
+    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    border-radius: 15px;
+    input {
+        margin-left: 10px;
+        width: 50%;
+        border: 2px solid #415A77;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 16px;
+    }
+    
+    mat-icon {
+        background-color: #DFE0E1;
+        color: #1B263B;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        align-content: center;
+        
+        cursor: pointer;
+        border-radius: 25%;
+        border: 2px solid #415A77;
+        box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+        margin-left: 5px;
+    }
+
+    mat-icon:active {
+        background-color: #1B263B;
+        color: #DFE0E1;
+        transform: translateY(2px);
+        box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #DFE0E1;
+    }
+}

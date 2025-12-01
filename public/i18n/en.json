@@ -12,7 +12,8 @@
         "filter-item": "Item filter",
         "sort-item": "Item sorting",
         "build": "My builds",
-        "aptitudes":"My aptitudes - WIP"
+        "aptitudes":"My aptitudes",
+        "sorts": "My spells"
     },
     "aptitudes": {
         "restant": "Remaining: ",

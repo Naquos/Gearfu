@@ -12,7 +12,8 @@
         "filter-item": "Filtro de objetos",
         "sort-item": "Orden de objetos",
         "build": "Mis construcciones",
-        "aptitudes":"Mis aptitudes - WIP"
+        "aptitudes":"Mis aptitudes",
+        "sorts": "Mis hechizos"
     },
     "aptitudes": {
         "restant": "Restante: ",
