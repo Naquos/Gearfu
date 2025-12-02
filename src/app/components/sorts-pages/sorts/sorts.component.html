@@ -1,7 +1,9 @@
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 
 <div class="code-aptitudes">
     {{'sorts.code-deck' | translate}} :
-    <input readonly />
+    <input [value]="codeBuild()" readonly />
     <mat-icon aria-hidden="false" fontIcon="file_copy" 
         [matTooltip]="'sorts.copy-code' | translate"
         [matTooltipShowDelay]="300" 
@@ -10,55 +12,128 @@
 </div>
 
 <div class="body">
-    <div class="card">
-        <div class="header">
-            {{'sorts.sorts-equipes' | translate}}
+    <div class="column">
+        <div class="card">
+            <div class="header">
+                {{'sorts.sorts-equipes' | translate}}
+            </div>
+            <span>{{'sorts.sorts-neutres' | translate}}</span>
+            <div class="sorts-neutres">
+                @for(sort of sortNeutres(); track $index) {
+                    <img [src]="sort ? imageService.getSortUrl(sort) : 'sorts/empty-sort.png'" alt=""
+                    [draggable]="sort !== 0"
+                    (dragstart)="onDragStartEquipped($event, sort, 'NEUTRE', $index)"
+                    (click)="selectSortById(sort, 'NEUTRE')"
+                    (dblclick)="removeSortFromBuild('NEUTRE', $index)"
+                    (contextmenu)="$event.preventDefault(); removeSortFromBuild('NEUTRE', $index)"
+                    (dragover)="onDragOver($event)"
+                    (drop)="onDrop($event, 'NEUTRE', $index)">
+                }
+            </div>
+            <span>{{'sorts.passifs' | translate}}</span>
+            <div class="sorts-passifs">
+                @for(sort of sortPassifs(); track $index) {
+                    <img [src]="sort ? imageService.getSortUrl(sort) : 'sorts/empty-sort.png'" alt=""
+                    [draggable]="sort !== 0"
+                    (dragstart)="onDragStartEquipped($event, sort, 'PASSIF', $index)"
+                    (click)="selectSortById(sort, 'PASSIF')"
+                    (dblclick)="removeSortFromBuild('PASSIF', $index)"
+                    (contextmenu)="$event.preventDefault(); removeSortFromBuild('PASSIF', $index)"
+                    (dragover)="onDragOver($event)"
+                    (drop)="onDrop($event, 'PASSIF', $index)">
+                }
+            </div>
         </div>
-        <span>{{'sorts.sorts-neutres' | translate}}</span>
-        <div class="sorts-neutres">
-            @for(sort of sortNeutres; track sort) {
-                <img src="sorts/empty-sort.png" alt="sorts">
-            }
+
+        <div class="card">
+            <div class="header">
+                {{'sorts.sort-selectionne' | translate}}          
+            </div>
+            <div class="description-sort">
+                <div class="sort-title">
+                    <img [src]="sortSelected() ? imageService.getSortUrl(sortSelected()!.gfxId) : 'sorts/empty-sort.png'" alt="">
+                    <span> {{sortSelected() ? getSortName(sortSelected()!) : ( 'sorts.no-sort-selectionne' | translate) }}</span>
+                </div>
+                <div class="description">{{sortSelected() ? getSortDescription(sortSelected()!) : ''}}</div>
+            </div>
         </div>
-        <span>{{'sorts.passifs' | translate}}</span>
-        <div class="sorts-passifs">
-            @for(sort of sortPassifs; track sort) {
-                <img src="sorts/empty-sort.png" alt="sorts">
-            }
-        </div>
+
     </div>
 
-
-    <div class="card">
-        <div class="header">
-            {{'sorts.sorts-classe' | translate}}
-        </div>
-        <span>{{'sorts.sorts-elementaires' | translate}}</span>
-        <div class="sorts-elementaires">
-            @for (sort of sortFeu; track sort) {
-                <img src="sorts/empty-sort.png" alt="sorts">
-            }
-            @for (sort of sortEau; track sort) {
-                <img src="sorts/empty-sort.png" alt="sorts">
-            }
-            @for (sort of sortTerre; track sort) {
-                <img src="sorts/empty-sort.png" alt="sorts">
-            }
-            @for (sort of sortAir; track sort) {
-                <img src="sorts/empty-sort.png" alt="sorts">
-            }
-        </div>
-        <span>{{'sorts.sorts-neutres' | translate}}</span>
-        <div class="sorts-passifs">
-            @for(sort of sortNeutreNonSelectionne; track sort) {
-                <img src="sorts/empty-sort.png" alt="sorts">
-            }
-        </div>
-        <span>{{'sorts.passifs' | translate}}</span>
-        <div class="sorts-passifs">
-            @for(sort of sortPassifNonSelectionne; track sort) {
-                <img src="sorts/empty-sort.png" alt="sorts">
-            }
+    <div class="column">
+        <div class="card">
+            <div class="header">
+                {{'sorts.sorts-classe' | translate}}
+            </div>
+            <span>{{'sorts.sorts-elementaires' | translate}}</span>
+            <div class="sorts-elementaires">
+                @if(sortService.sortsClasse() !== undefined) {
+                    @for (sort of sortService.sortsClasse()!.sortElementaires.feu; track sort.gfxId) {
+                        <img [src]="imageService.getSortUrl(sort.gfxId)"
+                            alt="" [matTooltip]="getSortName(sort)"
+                            draggable="true"
+                            (dragstart)="onDragStart($event, sort, 'NEUTRE')"
+                            (click)="selectSort(sort, 'NEUTRE')"
+                            (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                            (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
+                    }
+                    @for (sort of sortService.sortsClasse()!.sortElementaires.eau; track sort.gfxId) {
+                        <img [src]="imageService.getSortUrl(sort.gfxId)"
+                            alt="" [matTooltip]="getSortName(sort)"
+                            draggable="true"
+                            (dragstart)="onDragStart($event, sort, 'NEUTRE')"
+                            (click)="selectSort(sort, 'NEUTRE')"
+                            (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                            (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
+                    }
+                    @for (sort of sortService.sortsClasse()!.sortElementaires.terre; track sort.gfxId) {
+                        <img [src]="imageService.getSortUrl(sort.gfxId)"
+                        alt="" [matTooltip]="getSortName(sort)"
+                        draggable="true"
+                        (dragstart)="onDragStart($event, sort, 'NEUTRE')"
+                        (click)="selectSort(sort, 'NEUTRE')"
+                        (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                        (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
+                    }
+                    @for (sort of sortService.sortsClasse()!.sortElementaires.air; track sort.gfxId) {
+                        <img [src]="imageService.getSortUrl(sort.gfxId)" 
+                        alt="" [matTooltip]="getSortName(sort)"
+                        draggable="true"
+                        (dragstart)="onDragStart($event, sort, 'NEUTRE')" 
+                        (click)="selectSort(sort, 'NEUTRE')" 
+                        (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                        (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
+                    }
+                }
+            </div>
+            <span>{{'sorts.sorts-neutres' | translate}}</span>
+            <div class="sorts-passifs">
+                @if(sortService.sortsClasse() !== undefined) {
+                    @for(sort of sortService.sortsClasse()!.sortActifs; track sort.gfxId) {
+                        <img [src]="imageService.getSortUrl(sort.gfxId)" 
+                        alt="" [matTooltip]="getSortName(sort)"
+                        draggable="true"
+                        (dragstart)="onDragStart($event, sort, 'NEUTRE')" 
+                        (click)="selectSort(sort, 'NEUTRE')"
+                        (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                        (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
+                    }
+                }
+            </div>
+            <span>{{'sorts.passifs' | translate}}</span>
+            <div class="sorts-passifs">
+                @if(sortService.sortsClasse() !== undefined) {
+                    @for(sort of sortService.sortsClasse()!.sortPassifs; track sort.gfxId) {
+                        <img [src]="imageService.getSortUrl(sort.gfxId)" 
+                        alt="" [matTooltip]="getSortName(sort)"
+                        draggable="true"
+                        (dragstart)="onDragStart($event, sort, 'PASSIF')" 
+                        (click)="selectSort(sort, 'PASSIF')"
+                        (dblclick)="addSortToBuild(sort, 'PASSIF')"
+                        (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'PASSIF')">
+                    }
+                }
+            </div>
         </div>
     </div>
 </div>

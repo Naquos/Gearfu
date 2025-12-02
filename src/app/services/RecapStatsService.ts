@@ -12,6 +12,8 @@ import { AptitudesFormService } from "./form/aptitudesFormService";
 import { LevelFormService } from "./form/levelFormService";
 import { ClasseFormService } from "./form/classeFormService";
 import { ClassIdEnum } from "../models/enum/classIdEnum";
+import { SortFormService } from "./form/sortFormService";
+import { SortIdEnum } from "../models/enum/sortIdEnum";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
@@ -20,6 +22,7 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly aptitudesFormService = inject(AptitudesFormService);
   private readonly levelFormService = inject(LevelFormService);
   private readonly classeFormService = inject(ClasseFormService);
+  private readonly sortFormService = inject(SortFormService);
 
   private readonly naturalEffects: RecapStats[] = [
     { id: IdActionsEnum.PA, value: 6, params: [] },
@@ -48,6 +51,8 @@ export class RecapStatsService extends AbstractDestroyService {
     { id: IdActionsEnum.RESISTANCES_DOS, value: 0, params: [] },
     { id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 0, params: [] },
     { id: IdActionsEnum.CONTROLE, value: 0, params: [] },
+    { id: IdActionsEnum.DI, value: 0, params: [] },
+    { id: IdActionsEnum.DI_INDIRECT, value: 0, params: [] },
 
 
     // ============ COUPURE GRAPHIQUE ============
@@ -70,6 +75,8 @@ export class RecapStatsService extends AbstractDestroyService {
     { id: IdActionsEnum.TACLE, value: 0, params: [] },
     { id: IdActionsEnum.VOLONTE, value: 0, params: [] },
     { id: IdActionsEnum.INITIATIVE, value: 0, params: [] },
+    { id: IdActionsEnum.SOINS_REALISE, value: 0, params: [] },
+    { id: IdActionsEnum.PERCENTAGE_PV, value: 0, params: [] },
   ];
 
   private readonly recap = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);
@@ -92,6 +99,7 @@ export class RecapStatsService extends AbstractDestroyService {
       this.aptitudesFormService.recapStat$,
       this.levelFormService.level$,
       this.classeFormService.classe$,
+      this.sortFormService.sortPassifs$,
     ]).pipe(
       takeUntil(this.destroy$),
       tap(() => this.resetEffects()),
@@ -101,18 +109,59 @@ export class RecapStatsService extends AbstractDestroyService {
         recapStat.push(...aptitudes);
         return {recapStat, level, percentagePdv: aptitudes.find(a => a.id === IdActionsEnum.PERCENTAGE_PV)?.value || 0};
       }),
+      tap(() => this.applyNatifEffects()),
+      tap(() => this.applyEffectPassif()),
+      tap(() => this.applyEffectByClass()),
       tap((x => {
         x.recapStat.forEach(effect => this.applyEffect(effect))
         const recapPdv = this.recap.value.find(rs => rs.id === IdActionsEnum.POINT_DE_VIE);
-        if (recapPdv) {
+        const recapPercentagePdv = this.recap.value.find(rs => rs.id === IdActionsEnum.PERCENTAGE_PV);
+        if (recapPdv && recapPercentagePdv) {
           const basePdv = 50 + x.level * 10;
-          recapPdv.value = Math.floor((basePdv + recapPdv.value) * (1 + x.percentagePdv / 100));
+          recapPdv.value = Math.floor((basePdv + recapPdv.value) * (1 + (x.percentagePdv + recapPercentagePdv.value) / 100));
         }
   }   )),
-      tap(() => this.applyNatifEffects()),
-      tap(() => this.applyEffectByClass()),
       tap(() => this.emitEffects()),
     ).subscribe();
+  }
+
+  private applyEffectPassif(): void {
+    this.applyEffectPassifGenerique();
+
+  }
+
+  private applyEffectPassifGenerique(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    const level = this.levelFormService.getValue();
+    if(sortPassifsIds.find(x => x === SortIdEnum.CARNAGE)) {
+      this.applyEffect({ id: IdActionsEnum.DI, value: 15, params: [] });
+      this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: -30, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.EVASION)) {
+      this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: level, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.INSPIRATION)) {
+      this.applyEffect({ id: IdActionsEnum.INITIATIVE, value: Math.floor(level / 2), params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.INTERCEPTION)) {
+      this.applyEffect({ id: IdActionsEnum.TACLE, value: level, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.MEDECINE)) {
+      this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: 30, params: [] });
+      this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: 25, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
+      this.applyEffect({ id: IdActionsEnum.DI, value: -15, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.MOTIVATION)) {
+      this.applyEffect({ id: IdActionsEnum.PA, value: 1, params: [] });
+      this.applyEffect({ id: IdActionsEnum.DI, value: -20, params: [] });
+      this.applyEffect({ id: IdActionsEnum.VOLONTE, value: 10, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.ROCK)) {
+      this.applyEffect({ id: IdActionsEnum.PERCENTAGE_PV, value: 60, params: [] });
+      this.applyEffect({ id: IdActionsEnum.SOINS_RECUE, value: 25, params: [] });
+      this.applyEffect({ id: IdActionsEnum.DI, value: -25, params: [] });
+      this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: -50, params: [] });
+    }
   }
 
   private applyEffectByClass(): void {

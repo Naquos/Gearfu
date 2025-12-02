@@ -232,7 +232,10 @@
         "sagesse":"Sabiduría",
         "prospection":"Prospección",
         "armure-donnee":"Armadura dada",
-        "armure-recue":"Armadura recibida"
+        "armure-recue":"Armadura recibida",
+        "DI_indirect":"Daños indirectos",
+        "SR":"Curación realizada",
+        "DI":"Daños infligidos"
     },
     "search-item-name": {
         "label": "Nombre del objeto"
@@ -250,7 +253,9 @@
         "sorts-neutres":"Neutral spells",
         "passifs":"Passives",
         "sorts-classe":"Class spells",
-        "sorts-elementaires":"Elemental spells"
+        "sorts-elementaires":"Elemental spells",
+        "sort-selectionne":"Selected spell",
+        "no-sort-selectionne":"No spell selected"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",

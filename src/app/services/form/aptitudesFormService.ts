@@ -215,6 +215,7 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
         { id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 4 * value.resistancesCritique, params: [] },
         { id: IdActionsEnum.PA, value: value.pa, params: [] },
         { id: IdActionsEnum.PW, value: 2 * value.pw, params: [] },
+        { id: IdActionsEnum.DI, value: 10 * value.di, params: [] },
     ];
     if(value.resistancesElementairesMajeur > 0) {
         recapStatsList.push({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES, value: 50, params: [] });

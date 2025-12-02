@@ -250,7 +250,9 @@
         "sorts-neutres":"Neutral spells",
         "passifs":"Passives",
         "sorts-classe":"Class spells",
-        "sorts-elementaires":"Elemental spells"
+        "sorts-elementaires":"Elemental spells",
+        "sort-selectionne":"Selected spell",
+        "no-sort-selectionne":"No spell selected"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",

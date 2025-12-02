@@ -74,6 +74,17 @@
 <div class="block">
     <div class="row-2">
         <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.DI)" alt="DI"> {{ 'resume-aptitudes.DI' | translate }}
+            <span [class]="getClass(IdActionsEnum.DI)">{{ getValue(IdActionsEnum.DI) }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.SOINS_REALISE)" alt="soins"> {{ 'resume-aptitudes.SR' | translate }}
+            <span [class]="getClass(IdActionsEnum.SOINS_REALISE)">{{ getValue(IdActionsEnum.SOINS_REALISE) }}</span>
+        </div>
+    </div>
+
+    <div class="row-2">
+        <div>
             <img [src]="imageService.getActionIdUrl(IdActionsEnum.COUP_CRITIQUE)" alt="CC"> {{ 'resume-aptitudes.%-critique' | translate }}
             <span [class]="getClass(IdActionsEnum.COUP_CRITIQUE)">{{ getValue(IdActionsEnum.COUP_CRITIQUE) }}</span>
         </div>
@@ -182,8 +193,16 @@
             <span [class]="getClass(IdActionsEnum.MAITRISES_SOIN)">{{ getValue(IdActionsEnum.MAITRISES_SOIN) }}</span>
         </div>
         <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.DI_INDIRECT)" alt="parade"> {{ 'resume-aptitudes.DI_indirect' | translate }}
+            <span [class]="getClass(IdActionsEnum.DI_INDIRECT) ">{{ getValue(IdActionsEnum.DI_INDIRECT) }}</span>
+        </div>
+    </div>
+    <div class="row-2">
+        <div>
             <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_BERZERK)" alt="parade"> {{ 'resume-aptitudes.maitrises-berzerk' | translate }}
             <span [class]="getClass(IdActionsEnum.MAITRISES_BERZERK) ">{{ getValue(IdActionsEnum.MAITRISES_BERZERK) }}</span>
+        </div>
+        <div>
         </div>
     </div>
 </div>

@@ -14,6 +14,7 @@ export class ImageService {
     public static readonly BASE_URL_ACHIEVEMENT_CATEGORIES = ImageService.BASE_URL + "achievementCategories/";
     public static readonly BASE_URL_ACHIEVEMENTS = ImageService.BASE_URL + "achievements/";
     public static readonly BASE_URL_MONSTERS = ImageService.BASE_URL + "monsters/";
+    public static readonly BASE_URL_SORTS = ImageService.BASE_URL + "spells/";
     public static readonly IMAGE_ERROR = ImageService.BASE_URL_ITEMS + "0000000.png";
 
 
@@ -23,6 +24,9 @@ export class ImageService {
         [IdActionsEnum.POINT_DE_VIE_EN_ARMURE,ImageService.BASE_URL_CHARACTERISTICS + "ARMOR_PERCENT.png"],
         [IdActionsEnum.SOINS_RECUE,ImageService.BASE_URL_CHARACTERISTICS + "FINAL_HEAL_IN_PERCENT.png"],
         [IdActionsEnum.DI,ImageService.BASE_URL_CHARACTERISTICS + "FINAL_DMG_IN_PERCENT.png"],
+        [IdActionsEnum.DI_INDIRECT,ImageService.BASE_URL_CHARACTERISTICS + "INDIRECT_DMG.png"],
+        [IdActionsEnum.SOINS_REALISE,ImageService.BASE_URL_CHARACTERISTICS + "FINAL_HEAL_IN_PERCENT.png"],
+        [IdActionsEnum.PERCENTAGE_PV,ImageService.BASE_URL_CHARACTERISTICS + "FINAL_HEAL_IN_PERCENT.png"],
         [IdActionsEnum.DOMMAGE_NEUTRE,ImageService.BASE_URL_CHARACTERISTICS + ""],
         [IdActionsEnum.POINT_DE_VIE,ImageService.BASE_URL_CHARACTERISTICS + "HP.png"],
         [IdActionsEnum.PERTE_POINT_DE_VIE,ImageService.BASE_URL_CHARACTERISTICS + "HP.png"],
@@ -143,5 +147,23 @@ export class ImageService {
 
     public getMonsterUrl(idMonster: number): string {
         return ImageService.BASE_URL_MONSTERS + idMonster + ".png";
+    }
+
+    public getSortUrl(idSort: number): string {
+        switch(idSort) {
+            case -1: return "sorts/carnage.png";
+            case -2: return "sorts/charme-de-masse.png";
+            case -3: return "sorts/evasion.png";
+            case -4: return "sorts/fluctuation.png";
+            case -5: return "sorts/inspiration.png";
+            case -6: return "sorts/interception.png";
+            case -7: return "sorts/maitrises-d-armes.png";
+            case -8: return "sorts/medecine.png";
+            case -9: return "sorts/motivation.png";
+            case -10: return "sorts/os-a-moelle.png";
+            case -11: return "sorts/rock.png";
+            default: return ImageService.BASE_URL_SORTS + idSort + ".png";;
+        }
+        
     }
 }

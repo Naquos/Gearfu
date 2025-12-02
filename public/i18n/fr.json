@@ -231,7 +231,10 @@
         "sagesse": "Sagesse",
         "prospection": "Prospection",
         "armure-donnee": "Armure donnée",
-        "armure-recue": "Armure reçue"
+        "armure-recue": "Armure reçue",
+        "DI_indirect": "Dommages indirects",
+        "SR": "Soins réalisés",
+        "DI": "Dommages infligés"
     },
     "search-item-name": {
         "label": "Nom de l'item"
@@ -249,7 +252,9 @@
         "sorts-neutres":"Sorts neutres",
         "passifs":"Passifs",
         "sorts-classe":"Sorts de classe",
-        "sorts-elementaires":"Sorts élémentaires"
+        "sorts-elementaires":"Sorts élémentaires",
+        "sort-selectionne":"Sort sélectionné",
+        "no-sort-selectionne":"Aucun sort sélectionné"
     },
     "sort-choice-enum" : {
         "POIDS": "Poids",
