@@ -249,7 +249,9 @@
         "sorts-neutres":"Sorts neutres",
         "passifs":"Passifs",
         "sorts-classe":"Sorts de classe",
-        "sorts-elementaires":"Sorts élémentaires"
+        "sorts-elementaires":"Sorts élémentaires",
+        "sort-selectionne":"Sort sélectionné",
+        "no-sort-selectionne":"Aucun sort sélectionné"
     },
     "sort-choice-enum" : {
         "POIDS": "Poids",

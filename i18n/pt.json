@@ -231,7 +231,10 @@
         "sagesse": "Sabedoria",
         "prospection": "Prospecção",
         "armure-donnee": "Armadura concedida",
-        "armure-recue": "Armadura recebida"
+        "armure-recue": "Armadura recebida",
+        "DI_indirect": "Danos indiretos",
+        "SR": "Cura realizada",
+        "DI": "Danos infligidos"
     },
     "search-item-name": {
         "label": "Nome do item"
@@ -249,7 +252,9 @@
         "sorts-neutres":"Feitiços neutros",
         "passifs":"Passivos",
         "sorts-classe":"Feitiços de classe",
-        "sorts-elementaires":"Feitiços elementares"
+        "sorts-elementaires":"Feitiços elementares",
+        "sort-selectionne":"Feitiço selecionado",
+        "no-sort-selectionne":"Nenhum feitiço selecionado"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",

@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1764629195730,
+  "timestamp": 1764674461157,
   "index": "/Gearfu/index.csr.html",
   "assetGroups": [
     {
@@ -109,7 +109,18 @@
         "/Gearfu/néo/neo-remington-smisse.png",
         "/Gearfu/néo/neo-vampyro.png",
         "/Gearfu/néo/neo-wa-wabbit.png",
+        "/Gearfu/sorts/carnage.png",
+        "/Gearfu/sorts/charme-de-masse.png",
         "/Gearfu/sorts/empty-sort.png",
+        "/Gearfu/sorts/evasion.png",
+        "/Gearfu/sorts/fluctuation.png",
+        "/Gearfu/sorts/inspiration.png",
+        "/Gearfu/sorts/interception.png",
+        "/Gearfu/sorts/maitrises-d-armes.png",
+        "/Gearfu/sorts/medecine.png",
+        "/Gearfu/sorts/motivation.png",
+        "/Gearfu/sorts/os-a-moelle.png",
+        "/Gearfu/sorts/rock.png",
         "/Gearfu/zenith-logo.webp"
       ],
       "patterns": []
@@ -215,7 +226,18 @@
     "/Gearfu/néo/neo-remington-smisse.png": "3a81113413d7cdc25cdb2c5c108a29ab6a84ee20",
     "/Gearfu/néo/neo-vampyro.png": "e6502265235b2bf1b68e5d5a4481897c6898415d",
     "/Gearfu/néo/neo-wa-wabbit.png": "1fd99b6a3cbddb7cfc77e37f41d010cf28ef5554",
+    "/Gearfu/sorts/carnage.png": "b5061ae6e066c96b34cac24b9a92e53a0d7b02c5",
+    "/Gearfu/sorts/charme-de-masse.png": "b8480dd39954b917ffc34b76113c58f5d82431ae",
     "/Gearfu/sorts/empty-sort.png": "035a190a2d7f6cfca8bdb23527acd92f4e7833b5",
+    "/Gearfu/sorts/evasion.png": "f031273a9885587c63dbf7b73bb8d4fce2e5a38b",
+    "/Gearfu/sorts/fluctuation.png": "3409504ae27a3e48deaf553dfd587b35ff2e66a2",
+    "/Gearfu/sorts/inspiration.png": "c4073cd14a72d2aca3ee0460eb45d78c03b75f7c",
+    "/Gearfu/sorts/interception.png": "2715089264cc9ed8dea86f70e3bbf011a26bbf7b",
+    "/Gearfu/sorts/maitrises-d-armes.png": "b847dfe1435217e8cf54a21f58ddf7f34024108d",
+    "/Gearfu/sorts/medecine.png": "55eb73e13dd08876f5f841060da0f1ae7c7cced8",
+    "/Gearfu/sorts/motivation.png": "44c9c7a8f1bafe08bc2e16b9c7fc4a4be7421139",
+    "/Gearfu/sorts/os-a-moelle.png": "d7090e09aee2fa618d27bf8b733b313541538171",
+    "/Gearfu/sorts/rock.png": "7e81b6001c4555aae2078c7f47004453d3610bf8",
     "/Gearfu/zenith-logo.webp": "1bb8e4c3d82a21109a0ea8c196097c637c1cb3d6"
   },
   "navigationUrls": [
