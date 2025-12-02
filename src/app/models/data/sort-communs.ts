@@ -21,6 +21,26 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        effect_critical: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
         }
     },
     {
@@ -38,6 +58,26 @@ export const sortPassifCommun: DescriptionSort[] = [
             pt: "Para escapar por um momento, ou mesmo permanentemente, este passivo é ideal!"
         },
         urls: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        effect_critical: {
             fr: "",
             en: "",
             es: "",
@@ -63,6 +103,26 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        effect_critical: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
         }
     },
     {
@@ -80,6 +140,26 @@ export const sortPassifCommun: DescriptionSort[] = [
             pt: "Uma boa respiração, uma bebida fresca e começamos a luta!"
         },
         urls: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        effect_critical: {
             fr: "",
             en: "",
             es: "",
@@ -105,6 +185,26 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        effect_critical: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
         }
     },
     {
@@ -122,6 +222,26 @@ export const sortPassifCommun: DescriptionSort[] = [
             pt: "Precisa de um curandeiro na sua equipa? Estou aqui!"
         },
         urls: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        effect_critical: {
             fr: "",
             en: "",
             es: "",
@@ -147,29 +267,69 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
-        }
-    },
-        {
-        gfxId: SortIdEnum.ROCK,
-        name: {
-            fr: "Rock",
-            en: "Rock",
-            es: "Roca",
-            pt: "Rocha"
         },
-        description: {
-            fr: "Plus solide que la montagne, je prendrai les dégâts pour vous !",
-            en: "Stronger than the mountain, I will take the damage for you!",
-            es: "¡Más fuerte que la montaña, yo recibiré el daño por ti!",
-            pt: "Mais forte que a montanha, eu vou receber o dano por você!"
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
         },
-        urls: {
+        effect_critical: {
             fr: "",
             en: "",
             es: "",
             pt: ""
         }
-    }
+    },
+        {
+            gfxId: SortIdEnum.ROCK,
+            name: {
+                fr: "Rock",
+                en: "Rock",
+                es: "Roca",
+                pt: "Rocha"
+            },
+            description: {
+                fr: "Plus solide que la montagne, je prendrai les dégâts pour vous !",
+                en: "Stronger than the mountain, I will take the damage for you!",
+                es: "¡Más fuerte que la montaña, yo recibiré el daño por ti!",
+                pt: "Mais forte que a montanha, eu vou receber o dano por você!"
+            },
+            urls: {
+                fr: "",
+                en: "",
+                es: "",
+                pt: ""
+            },
+            PA: 0,
+            PW: 0,
+            PM: 0,
+            NotLDV: false,
+            POModifiable: false,
+            Ligne: false,
+            PorteeMin: 0,
+            PorteeMax: 0,
+            effect_normal: {
+                fr: "",
+                en: "",
+                es: "",
+                pt: ""
+            },
+            effect_critical: {
+                fr: "",
+                en: "",
+                es: "",
+                pt: ""
+            }
+        }
 ]
 
 export const sortNeutreCommun: DescriptionSort[] = [
@@ -188,6 +348,26 @@ export const sortNeutreCommun: DescriptionSort[] = [
             pt: "Este feitiço simula uma atração física ao seu alvo e a transfere para outros para atraí-los fatalmente em sua direção. Cuidado, este feitiço é forte em emoções."
         },
         urls: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        effect_critical: {
             fr: "",
             en: "",
             es: "",
@@ -213,6 +393,26 @@ export const sortNeutreCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        effect_critical: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
         }
     },
     {
@@ -230,6 +430,26 @@ export const sortNeutreCommun: DescriptionSort[] = [
             pt: "Os discípulos de Ouginak ensinaram-lhe a desfrutar de um bom Osso da Medula. Este feitiço invoca um obstáculo bloqueador. No final do seu turno, o Osso é roído para curar os alvos em contacto com ele."
         },
         urls: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        effect_critical: {
             fr: "",
             en: "",
             es: "",

@@ -1,6 +1,7 @@
 $header-size:80px;
 $footer-size: 38px;
 $item-choose-size: 70px;
+$width-filter: 430px;
 
 header {
     display: flex;
@@ -66,6 +67,19 @@ header {
 }
 
 .filter {
+    background: linear-gradient(to right, #213A57, #618A97);
+    opacity: 0.9;
+    color: white;
+    font-weight: 400;
+
+    position: fixed;
+    width: $width-filter;
+
+    overflow-y: scroll;
+    height: calc(100% - 85px);
+    padding-bottom: 50px;
+
+
     button {
       margin: 5px;
       border: 2px solid #415A77;
@@ -128,19 +142,6 @@ header {
       display: block;
     }
 
-
-    background: linear-gradient(to right, #213A57, #618A97);
-    opacity: 0.9;
-    color: white;
-    font-weight: 400;
-
-    position: fixed;
-    width: 400px;
-
-    overflow-y: scroll;
-    height: calc(100% - 85px);
-    padding-bottom: 50px;
-
     scrollbar-width: none;  /* Firefox */
     ::-webkit-scrollbar { 
         display: none;  /* Safari and Chrome */
@@ -149,8 +150,8 @@ header {
 }
 
 .content-application {
-    width: calc(100% - 400px);
-    margin-left: 400px;
+    width: calc(100% - $width-filter);
+    margin-left: $width-filter;
     padding-bottom: 50px;
 }
 

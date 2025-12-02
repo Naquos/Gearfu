@@ -1,5 +1,5 @@
 :host {
-    width: 90%;
+    width: 95%;
     display: block;
     margin: auto;
 
@@ -49,6 +49,7 @@
     }
 
     .row-4 {
+        font-size: 14px;
         display: flex;
         background-color: #0D1B2A;
         justify-content: space-around;
@@ -87,6 +88,7 @@
         background-color: #0D1B2A;
         justify-content: space-around;
         padding: 2px 0;
+        font-size: 14px;
         div {
             width: 45%;
             display:flex;

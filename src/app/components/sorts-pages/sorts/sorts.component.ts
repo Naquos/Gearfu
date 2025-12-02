@@ -9,8 +9,10 @@ import { DescriptionSort } from '../../../models/data/descriptionSort';
 import { ClasseFormService } from '../../../services/form/classeFormService';
 import { SortFormService } from '../../../services/form/sortFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 
 type TypeSort = 'NEUTRE' | 'PASSIF';
+type EffectDisplay = 'NORMAL' | 'CRITIQUE';
 
 @Component({
   selector: 'app-sorts',
@@ -26,11 +28,13 @@ export class SortsComponent {
   protected readonly imageService = inject(ImageService);
   protected readonly sortFormService = inject(SortFormService);
 
+  protected readonly IdActionsEnum = IdActionsEnum;
   protected readonly sortSelected = signal<DescriptionSort | undefined>(undefined)
   protected readonly typeSortSelected = signal<TypeSort | undefined>(undefined);
   protected readonly codeBuild = toSignal(this.sortFormService.codeBuild$, {
     initialValue: ''
   });
+  protected readonly effectDisplay = signal<EffectDisplay>('NORMAL');
   
   private currentDragSource: 'list' | 'equipped' | null = null;
 
@@ -161,5 +165,13 @@ export class SortsComponent {
       }
     }
     this.currentDragSource = null;
+  }
+
+  protected getEffect(): string[] {
+    if(!this.sortSelected()) {
+      return [];
+    }
+    const effect = this.effectDisplay() === 'NORMAL' ? this.sortSelected()!.effect_normal : this.sortSelected()!.effect_critical;
+    return effect[this.translateService.currentLang as keyof typeof effect].split('\n').map(x => x.charAt(0).toUpperCase() + x.slice(1)) || [];
   }
 }
