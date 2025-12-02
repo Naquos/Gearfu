@@ -1,5 +1,5 @@
 import { Component, inject, ViewContainerRef } from '@angular/core';
-import { RecapStatsService } from '../../../services/RecapStatsService';
+import { RecapStatsService } from '../../../services/recapStatsService';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { RecapStats } from '../../../models/data/recap-stats';
 import { ImageService } from '../../../services/imageService';

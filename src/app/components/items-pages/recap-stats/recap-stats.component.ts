@@ -5,7 +5,7 @@ import { RecapStats } from '../../../models/data/recap-stats';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { ParameterMajorActionEnum } from '../../../models/enum/parameterMajorActionEnum';
 import { ImageService } from '../../../services/imageService';
-import { RecapStatsService } from '../../../services/RecapStatsService';
+import { RecapStatsService } from '../../../services/recapStatsService';
 
 @Component({
   selector: 'app-recap-stats',

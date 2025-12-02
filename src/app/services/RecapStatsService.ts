@@ -110,9 +110,9 @@ export class RecapStatsService extends AbstractDestroyService {
         return {recapStat, level};
       }),
       tap(() => this.applyNatifEffects()),
-      tap(() => this.applyEffectPassif()),
       tap(() => this.applyEffectByClass()),
       tap((x => x.recapStat.forEach(effect => this.applyEffect(effect)))),
+      tap(() => this.applyEffectPassif()),
       tap(() => this.applyPdv()),
       tap(() => this.emitEffects()),
     ).subscribe();
@@ -130,7 +130,260 @@ export class RecapStatsService extends AbstractDestroyService {
 
   private applyEffectPassif(): void {
     this.applyEffectPassifGenerique();
+    this.applyEffectPassifClasse();
+  }
 
+  private applyEffectPassifClasse(): void {
+    const classId = this.classeFormService.getValue();
+    switch (classId) {
+      case ClassIdEnum.Feca:
+        this.applyEffectPassifFeca();
+        break;
+      case ClassIdEnum.Osamodas:
+        this.applyEffectPassifOsamodas();
+        break;
+      case ClassIdEnum.Sram:
+        this.applyEffectPassifSram();
+        break;
+      case ClassIdEnum.Xelor:
+        this.applyEffectPassifXelor();
+        break;
+      case ClassIdEnum.Eniripsa:
+        this.applyEffectPassifEniripsa();
+        break;
+      case ClassIdEnum.Iop:
+        this.applyEffectPassifIop();
+        break;
+      case ClassIdEnum.Cra:
+        this.applyEffectPassifCra();
+        break;
+      case ClassIdEnum.Sadida:
+        this.applyEffectPassifSadida();
+        break;
+      case ClassIdEnum.Sacrieur:
+        this.applyEffectPassifSacrieur();
+        break;
+      case ClassIdEnum.Pandawa:
+        this.applyEffectPassifPandawa();
+        break;
+      case ClassIdEnum.Zobal:
+        this.applyEffectPassifZobal();
+        break;
+    }
+  }
+
+  private applyEffectPassifZobal(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    const level = this.levelFormService.getValue();
+
+    if(sortPassifsIds.find(x => x === SortIdEnum.REGARD_MASQUE)) {
+      this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
+    }
+    
+    if(sortPassifsIds.find(x => x === SortIdEnum.JEU_DE_JAMBES)) {
+      this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: 2 * level, params: [] });
+    }
+
+    if (sortPassifsIds.find(x => x === SortIdEnum.LE_IOP_DE_WAZEMMES)) { // ART DE LA FUITE
+      const esquive = this.recap.value.find(rs => rs.id === IdActionsEnum.ESQUIVE)?.value ?? 0;
+      if(esquive >= 0) {
+        const value = Math.min(Math.floor(esquive / 2), 2*level);
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_DISTANCES, value: value, params: [] });
+      }
+    }
+    
+    if(sortPassifsIds.find(x => x === SortIdEnum.EROSION)) {
+      this.applyEffect({ id: IdActionsEnum.DI, value: -25, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.BRUTE)) {
+      this.applyEffect({ id: IdActionsEnum.DI, value: 25, params: [] });
+      this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -40, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
+      this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -40, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.ANCRE)) {
+      const tacle = this.recap.value.find(rs => rs.id === IdActionsEnum.TACLE)?.value ?? 0;
+      if(tacle >= 0) {
+        this.applyEffect({ id: IdActionsEnum.TACLE, value: tacle, params: [] });
+      }
+      this.applyEffect({ id: IdActionsEnum.PM, value: -1, params: [] });
+    }
+    
+    if (sortPassifsIds.find(x => x === SortIdEnum.ART_DE_LA_VENGEANCE)) { // ART DE LA FUITE
+      const tacle = this.recap.value.find(rs => rs.id === IdActionsEnum.TACLE)?.value ?? 0;
+      if(tacle >= 0) {
+        const value = Math.min(Math.floor(tacle / 2), 2*level);
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_MELEE, value: value, params: [] });
+      }
+    }
+
+    if(sortPassifsIds.find(x => x === SortIdEnum.POUSSEES_D_ENTRAVE)) {
+      this.applyEffect({ id: IdActionsEnum.VOLONTE, value: 10, params: [] });
+    }
+  }
+
+  private applyEffectPassifPandawa(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    if(sortPassifsIds.find(x => x === SortIdEnum.COCKTAIL)) {
+      this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: 20, params: [] });
+      this.applyEffect({ id: IdActionsEnum.DI, value: -10, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.CYANOSE)) {
+      this.applyEffect({ id: IdActionsEnum.DI, value: 15, params: [] });
+      this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: -50, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.PANDEMIE)) {
+      this.applyEffect({ id: IdActionsEnum.DI, value: 10, params: [] });
+    }
+  }
+
+  private applyEffectPassifSacrieur(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    const level = this.levelFormService.getValue();
+
+    if(sortPassifsIds.find(x => x === SortIdEnum.COEUR_DE_SACRIEUR)) {
+      this.applyEffect({ id: IdActionsEnum.PORTEE, value: -2, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.CIRCULATION_SANGUINE)) {
+      this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -50, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.MOBILITE)) {
+      const tacle = this.recap.value.find(rs => rs.id === IdActionsEnum.TACLE)?.value ?? 0;
+      if(tacle >= 0) {
+        this.applyEffect({ id: IdActionsEnum.TACLE, value: -tacle, params: [] });
+      }
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.SANG_TATOUE)) {
+      this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 8 * level, params: [] });
+    }
+  }
+
+  private applyEffectPassifSadida(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    if(sortPassifsIds.find(x => x === SortIdEnum.CHAINE_DE_LA_NATURE)) {
+      this.applyEffect({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
+    }
+  }
+
+  private applyEffectPassifCra(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    if(sortPassifsIds.find(x => x === SortIdEnum.ECLAIREUR_INTOUCHABLE)) {
+      const esquive = this.recap.value.find(rs => rs.id === IdActionsEnum.ESQUIVE)?.value ?? 0;
+      this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: -esquive, params: [] });
+      this.applyEffect({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
+    }
+  }
+
+  private applyEffectPassifIop(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    const level = this.levelFormService.getValue();
+
+    if(sortPassifsIds.find(x => x === SortIdEnum.VIRILITE)) {
+      this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 3 * level, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.LE_IOP_DE_WAZEMMES)) {
+      this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -20, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE ,params: [] });
+    }
+  }
+
+  private applyEffectPassifEniripsa(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    const level = this.levelFormService.getValue();
+   
+    if(sortPassifsIds.find(x => x === SortIdEnum.TOUS_POUR_MOI)) {
+      this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 8 * level, params: [] });
+    }
+  }
+
+  private applyEffectPassifXelor(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    if(sortPassifsIds.find(x => x === SortIdEnum.MEMOIRE)) {
+      this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: 6, params: [] });
+      this.applyEffect({ id: IdActionsEnum.PM, value: -2, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.ASSIMILATION)) {
+      this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: -6, params: [] });
+    }
+  }
+
+  private applyEffectPassifSram(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    const level = this.levelFormService.getValue();
+
+    if(sortPassifsIds.find(x => x === SortIdEnum.MAITRE_DES_PIEGES)) {
+      this.applyEffect({ id: IdActionsEnum.CONTROLE, value: 4, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.EMBUSCADE)) {
+      this.applyEffect({ id: IdActionsEnum.MAITRISES_DISTANCES, value: Math.floor(level * 1.5), params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.DUPERIE)) {
+      this.applyEffect({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.SRAM_DANS_L_AME)) {
+      const esquive = this.recap.value.find(rs => rs.id === IdActionsEnum.ESQUIVE)?.value ?? 0;
+      if(esquive >= 0) {
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: Math.min(Math.floor(esquive / 20), 15), params: [] });
+      }
+      const tacle = this.recap.value.find(rs => rs.id === IdActionsEnum.TACLE)?.value ?? 0;
+      if(tacle >= 0) {
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: Math.min(Math.floor(tacle / 20), 15), params: [] });
+      }
+    }
+  }
+
+  private applyEffectPassifOsamodas(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+
+    if(sortPassifsIds.find(x => x === SortIdEnum.SACRIFICE_ANIMAL)) {
+      this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: 3, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.PUISSANCE_DRACONIQUE)) {
+      this.applyEffect({ id: IdActionsEnum.DI, value: 25, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.GUERRIER_INVOCATEUR)) {
+      this.applyEffect({ id: IdActionsEnum.DI, value: 20, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.VISION_DU_CORBAC)) {
+      this.applyEffect({ id: IdActionsEnum.PORTEE, value: 2, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.PARTAGE_ANIMAL)) {
+      this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: -100, params: [] });
+    }
+  }
+
+  private applyEffectPassifFeca(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    const level = this.levelFormService.getValue();
+
+    if (sortPassifsIds.find(x => x === SortIdEnum.PEAU_ROCHEUSE)) {
+      this.applyEffect({ id: IdActionsEnum.PARADE, value: 30, params: [] });
+    }
+    if (sortPassifsIds.find(x => x === SortIdEnum.COMPREHENSION_DU_WAKFU)) {
+      this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: 100, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
+    }
+    if (sortPassifsIds.find(x => x === SortIdEnum.ARMURE_DE_COMBAT)) {
+      this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -100, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
+    }
+    if (sortPassifsIds.find(x => x === SortIdEnum.LA_MEILLEURE_DEFENSE_EST_L_ATTAQUE)) {
+      this.applyEffect({ id: IdActionsEnum.DI, value: 10, params: [] });
+    }
+    if (sortPassifsIds.find(x => x === SortIdEnum.MARCHE_PACIFISTE)) {
+      const parade = this.recap.value.find(rs => rs.id === IdActionsEnum.PARADE);
+      if (parade && parade.value <= 100) {
+        this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: parade.value, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
+        this.applyEffect({ id: IdActionsEnum.PARADE, value: -parade.value, params: [] });
+      }
+    }
+    if (sortPassifsIds.find(x => x === SortIdEnum.QUI_VEUT_LA_PAIX_PREPARE_LA_GUERRE)) {
+      this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -100, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
+      this.applyEffect({ id: IdActionsEnum.DI, value: 25, params: [] });
+    }
+    if (sortPassifsIds.find(x => x === SortIdEnum.LIGNE)) {
+      this.applyEffect({ id: IdActionsEnum.PORTEE, value: 1, params: [] });
+    }
+    if (sortPassifsIds.find(x => x === SortIdEnum.PROTECTEUR_DU_TROUPEAU)) {
+      this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 3 * level, params: [] });
+      this.applyEffect({ id: IdActionsEnum.DI, value: -20, params: [] });
+    }
   }
 
   private applyEffectPassifGenerique(): void {

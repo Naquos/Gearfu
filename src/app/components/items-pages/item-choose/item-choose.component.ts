@@ -10,7 +10,7 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
 import { ImageService } from '../../../services/imageService';
 import { ItemChooseService } from '../../../services/itemChooseService';
-import { RecapStatsService } from '../../../services/RecapStatsService';
+import { RecapStatsService } from '../../../services/recapStatsService';
 import { ZenithService } from '../../../services/zenith/zenithService';
 
 @Component({
