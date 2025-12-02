@@ -107,22 +107,25 @@ export class RecapStatsService extends AbstractDestroyService {
         const extract = this.extractEquipEffects(items);
         const recapStat = this.mapToRecapStats(extract);
         recapStat.push(...aptitudes);
-        return {recapStat, level, percentagePdv: aptitudes.find(a => a.id === IdActionsEnum.PERCENTAGE_PV)?.value || 0};
+        return {recapStat, level};
       }),
       tap(() => this.applyNatifEffects()),
       tap(() => this.applyEffectPassif()),
       tap(() => this.applyEffectByClass()),
-      tap((x => {
-        x.recapStat.forEach(effect => this.applyEffect(effect))
-        const recapPdv = this.recap.value.find(rs => rs.id === IdActionsEnum.POINT_DE_VIE);
-        const recapPercentagePdv = this.recap.value.find(rs => rs.id === IdActionsEnum.PERCENTAGE_PV);
-        if (recapPdv && recapPercentagePdv) {
-          const basePdv = 50 + x.level * 10;
-          recapPdv.value = Math.floor((basePdv + recapPdv.value) * (1 + (x.percentagePdv + recapPercentagePdv.value) / 100));
-        }
-  }   )),
+      tap((x => x.recapStat.forEach(effect => this.applyEffect(effect)))),
+      tap(() => this.applyPdv()),
       tap(() => this.emitEffects()),
     ).subscribe();
+  }
+
+  private applyPdv(): void {
+    const recapPdv = this.recap.value.find(rs => rs.id === IdActionsEnum.POINT_DE_VIE);
+    const recapPercentagePdv = this.recap.value.find(rs => rs.id === IdActionsEnum.PERCENTAGE_PV);
+    if (recapPdv && recapPercentagePdv) {
+      const level = this.levelFormService.getValue();
+      const basePdv = 50 + level * 10;
+      recapPdv.value = Math.floor((basePdv + recapPdv.value) * (1 + (recapPercentagePdv.value) / 100));
+    }
   }
 
   private applyEffectPassif(): void {
