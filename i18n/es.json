@@ -255,7 +255,9 @@
         "sorts-classe":"Class spells",
         "sorts-elementaires":"Elemental spells",
         "sort-selectionne":"Selected spell",
-        "no-sort-selectionne":"No spell selected"
+        "no-sort-selectionne":"No spell selected",
+        "effet-normal":"Normal effect",
+        "effet-critique":"Critical effect"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",

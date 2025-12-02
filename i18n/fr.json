@@ -254,7 +254,9 @@
         "sorts-classe":"Sorts de classe",
         "sorts-elementaires":"Sorts élémentaires",
         "sort-selectionne":"Sort sélectionné",
-        "no-sort-selectionne":"Aucun sort sélectionné"
+        "no-sort-selectionne":"Aucun sort sélectionné",
+        "effet-normal":"Effet normal",
+        "effet-critique":"Effet critique"
     },
     "sort-choice-enum" : {
         "POIDS": "Poids",
