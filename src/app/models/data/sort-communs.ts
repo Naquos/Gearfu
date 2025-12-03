@@ -31,10 +31,10 @@ export const sortPassifCommun: DescriptionSort[] = [
         PorteeMin: 0,
         PorteeMax: 0,
         effect_normal: {
-            fr: "",
-            en: "",
-            es: "",
-            pt: ""
+            fr: "15% Dommages infligés.\n10% Dommages infligés aux cibles ayant de l'armure.\n-30% Soins réalisés",
+            en: "15% Damage dealt.\n10% Damage dealt to targets with armor.\n-30% Healing done",
+            es: "15% de daño infligido.\n10% de daño infligido a objetivos con armadura.\n-30% de curación realizada",
+            pt: "15% de dano causado.\n10% de dano causado a alvos com armadura.\n-30% de cura realizada"
         },
         effect_critical: {
             fr: "",
@@ -72,10 +72,10 @@ export const sortPassifCommun: DescriptionSort[] = [
         PorteeMin: 0,
         PorteeMax: 0,
         effect_normal: {
-            fr: "",
-            en: "",
-            es: "",
-            pt: ""
+            fr: "100% du niveau en Esquive\nAprés avoir esquivé (avec pertes) :\n35% du niveau en Esquive (3 tours)",
+            en: "100% of level in Evasion\nAfter evading (with losses):\n35% of level in Evasion (3 turns)",
+            es: "100% del nivel en Evasión\nDespués de evadir (con pérdidas):\n35% del nivel en Evasión (3 turnos)",
+            pt: "100% do nível em Evasão\nApós evadir (com perdas):\n35% do nível em Evasão (3 turnos)"
         },
         effect_critical: {
             fr: "",
@@ -113,10 +113,10 @@ export const sortPassifCommun: DescriptionSort[] = [
         PorteeMin: 0,
         PorteeMax: 0,
         effect_normal: {
-            fr: "",
-            en: "",
-            es: "",
-            pt: ""
+            fr: "Lorsque vous esquivez une cible :\nAvec pertes : Sur la cible Fluctuation (+10Niv)\n Sans perte : Sur la cible Fluctuation (+15Niv)\nLorsque vous taclez une cible: Fluctuation (+15 Niv)\nAux cibles terminant leur tour à votre contact : Fulctuation (+20 Niv.)",
+            en: "When you evade a target:\nWith losses: On the target Fluctuation (+10Lvl)\n Without loss: On the target Fluctuation (+15Lvl)\nWhen you tackle a target: Fluctuation (+15 Lvl)\nTo targets ending their turn in your contact: Fluctuation (+20 Lvl.)",
+            es: "Cuando evades un objetivo:\nCon pérdidas: En el objetivo Fluctuación (+10Niv)\n Sin pérdida: En el objetivo Fluctuación (+15Niv)\nCuando tacleas a un objetivo: Fluctuación (+15 Niv)\nA los objetivos que terminan su turno en tu contacto: Fluctuación (+20 Niv.)",
+            pt: "Quando você evade um alvo:\nCom perdas: No alvo Flutuação (+10Niv)\n Sem perda: No alvo Flutuação (+15Niv)\nQuando você tacleia um alvo: Flutuação (+15 Niv)\nPara alvos que terminam seu turno em seu contato: Flutuação (+20 Niv.)"
         },
         effect_critical: {
             fr: "",
@@ -154,10 +154,10 @@ export const sortPassifCommun: DescriptionSort[] = [
         PorteeMin: 0,
         PorteeMax: 0,
         effect_normal: {
-            fr: "",
-            en: "",
-            es: "",
-            pt: ""
+            fr: "50% du niveau en Initiative\n 10% Dommages infligés aux cibles ayant plus d'Initiative",
+            en: "50% of level in Initiative\n 10% Damage dealt to targets with more Initiative",
+            es: "50% del nivel en Iniciativa\n 10% de daño infligido a objetivos con más Iniciativa",
+            pt: "50% do nível em Iniciativa\n 10% de dano causado a alvos com mais Iniciativa"
         },
         effect_critical: {
             fr: "",
@@ -195,10 +195,10 @@ export const sortPassifCommun: DescriptionSort[] = [
         PorteeMin: 0,
         PorteeMax: 0,
         effect_normal: {
-            fr: "",
-            en: "",
-            es: "",
-            pt: ""
+            fr: "100% du niveau en Tacle\nAprès avoir taclé :\n35% du niveau en Tacle (3 tours)",
+            en: "100% of level in Tackle\nAfter tackling:\n35% of level in Tackle (3 turns)",
+            es: "100% del nivel en Tacle\nDespués de taclear:\n35% del nivel en Tacle (3 turnos)",
+            pt: "100% do nível em Tackle\nApós tackle:\n35% do nível em Tackle (3 turnos)"
         },
         effect_critical: {
             fr: "",
@@ -236,10 +236,10 @@ export const sortPassifCommun: DescriptionSort[] = [
         PorteeMin: 0,
         PorteeMax: 0,
         effect_normal: {
-            fr: "",
-            en: "",
-            es: "",
-            pt: ""
+            fr: "30% Soins réalisés\n25% Armure donnée\n-15% Dommages infligés",
+            en: "30% Healing done\n25% Armor given\n-15% Damage dealt",
+            es: "30% de curación realizada\n25% de armadura dada\n-15% de daño infligido",
+            pt: "30% de cura realizada\n25% de armadura dada\n-15% de dano causado"
         },
         effect_critical: {
             fr: "",
@@ -277,10 +277,10 @@ export const sortPassifCommun: DescriptionSort[] = [
         PorteeMin: 0,
         PorteeMax: 0,
         effect_normal: {
-            fr: "",
-            en: "",
-            es: "",
-            pt: ""
+            fr: "1PA\n-20% Dommages infligés\n10 Volonté",
+            en: "1AP\n-20% Damage dealt\n10 Willpower",
+            es: "1PA\n-20% de daño infligido\n10 Voluntad",
+            pt: "1PA\n-20% de dano causado\n10 Vontade"
         },
         effect_critical: {
             fr: "",
@@ -318,10 +318,10 @@ export const sortPassifCommun: DescriptionSort[] = [
             PorteeMin: 0,
             PorteeMax: 0,
             effect_normal: {
-                fr: "",
-                en: "",
-                es: "",
-                pt: ""
+                fr: "60% Points de Vie\n25% Soins reçus\n-25% DOmmages infligés\n-50% Soins réalisés",
+                en: "60% Health Points\n25% Healing received\n-25% Damage dealt\n-50% Healing done",
+                es: "60% Puntos de vida\n25% de curación recibida\n-25% de daño infligido\n-50% de curación realizada",
+                pt: "60% Pontos de Vida\n25% Cura recebida\n-25% de Dano causado\n-50% de Cura realizada"
             },
             effect_critical: {
                 fr: "",
@@ -353,19 +353,19 @@ export const sortNeutreCommun: DescriptionSort[] = [
             es: "",
             pt: ""
         },
-        PA: 0,
+        PA: 2,
         PW: 0,
         PM: 0,
-        NotLDV: false,
-        POModifiable: false,
+        NotLDV: true,
+        POModifiable: true,
         Ligne: false,
         PorteeMin: 0,
         PorteeMax: 0,
         effect_normal: {
-            fr: "",
-            en: "",
-            es: "",
-            pt: ""
+            fr: "Sur la cible 150 Tacle\n Attire de 2 cases en croix vers la cible",
+            en: "On the target 150 Tackle\n Draws 2 squares in a cross towards the target",
+            es: "En el objetivo 150 Tacle\n Atrae 2 casillas en cruz hacia el objetivo",
+            pt: "No alvo 150 Tackle\n Atrai 2 quadrados em cruz em direção ao alvo"
         },
         effect_critical: {
             fr: "",
@@ -394,7 +394,7 @@ export const sortNeutreCommun: DescriptionSort[] = [
             es: "",
             pt: ""
         },
-        PA: 0,
+        PA: 2,
         PW: 0,
         PM: 0,
         NotLDV: false,
@@ -403,10 +403,10 @@ export const sortNeutreCommun: DescriptionSort[] = [
         PorteeMin: 0,
         PorteeMax: 0,
         effect_normal: {
-            fr: "",
-            en: "",
-            es: "",
-            pt: ""
+            fr: "Matrise d'Armes (Niv 100)\nPasse son tour",
+            en: "Weapon Mastery (Lvl 100)\nSkips its turn",
+            es: "Maestría con armas (Niv 100)\nOmite su turno",
+            pt: "Domínio de armas (Niv 100)\nOmite seu turno"
         },
         effect_critical: {
             fr: "",
@@ -435,19 +435,19 @@ export const sortNeutreCommun: DescriptionSort[] = [
             es: "",
             pt: ""
         },
-        PA: 0,
+        PA: 3,
         PW: 0,
         PM: 0,
         NotLDV: false,
-        POModifiable: false,
+        POModifiable: true,
         Ligne: false,
-        PorteeMin: 0,
-        PorteeMax: 0,
+        PorteeMin: 1,
+        PorteeMax: 4,
         effect_normal: {
-            fr: "",
-            en: "",
-            es: "",
-            pt: ""
+            fr: "Invoque un Os à Moelle\nEn fin de tour du lanceur : \n L'Os à Moelle perd 1% PV max\nSoin eau : 33 autour de l'Os à Moelle en zone 1-1",
+            en: "Summons a Marrow Bone\nAt the end of the caster's turn:\n The Marrow Bone loses 1% max HP\nWater healing: 33 around the Marrow Bone in area 1-1",
+            es: "Invoca un Hueso de Médula\nAl final del turno del lanzador:\n El Hueso de Médula pierde 1% de PV máx\nCuración de agua: 33 alrededor del Hueso de Médula en área 1-1",
+            pt: "Invoca um Osso da Medula\nNo final do turno do lançador:\n O Osso da Medula perde 1% de PV máx\nCura de água: 33 ao redor do Osso da Medula na área 1-1"
         },
         effect_critical: {
             fr: "",
