@@ -69,5 +69,31 @@ export enum SortIdEnum {
     ANCRE = 3363,
     JEU_DE_JAMBES = 7093,
     ART_DE_LA_VENGEANCE = 7094,
-    POUSSEES_D_ENTRAVE = 7113
+    POUSSEES_D_ENTRAVE = 7113,
+
+    //Sorts passif ouginak
+    EPUISEMENT = 6276,
+    CROCS_FUTES = 6278,
+    PISTAGE = 5103,
+    ART_CANIN = 6275,
+    ENERGIE_CANINE = 7343,
+    FUREUR = 7557,
+    PILLAGE = 6277,
+    ARDEUR = 7328,
+    DIGESTION = 6272,
+    // ACHARNE = 7193, // Duplicate ID with CHAINE_DE_LA_NATURE
+    CANIN_OS = 7596,
+
+    //Sorts passifs steamer
+    MECANIQUE_AVANCEE = 7181,
+    // REVETEMENT_A_TOUTE_EPREUVE = 7344, // Duplicate ID with PARTAGE_ANIMAL
+    ALLIAGE_LEGER = 2819,
+    ASSISTANCE_TELLURIQUE = 2816,
+    STRATEGIE_ROBOTIQUE = 5462,
+
+    //Sorts passifs eliotrope
+    EPEE_DU_DEBUT = 7208,
+
+    //Sorts passifs huppermage
+    // ABSORPTION_QUADRAMENTALE = 7193 // Duplicate ID with CHAINE_DE_LA_NATURE
 }

@@ -171,17 +171,23 @@ export class AppComponent implements OnInit{
   }
 
   protected redirectToListItems(filterOrBuild: column): void {
-    this.router.navigate(["/"]).then(() => this.filterOrBuild = filterOrBuild);
+    this.router.navigate(["/"], {
+      queryParamsHandling: 'preserve'
+    }).then(() => this.filterOrBuild = filterOrBuild);
   }
 
   protected redirectToAptitudes(): void {
     this.filterOrBuild = 'aptitudes';
-    this.router.navigate(['/aptitudes']);
+    this.router.navigate(['/aptitudes'], {
+      queryParamsHandling: 'preserve'
+    });
   }
 
   protected redirectToSorts(): void {
     this.filterOrBuild = 'aptitudes';
-    this.router.navigate(['/sorts']);
+    this.router.navigate(['/sorts'], {
+      queryParamsHandling: 'preserve'
+    });
   }
 
 }

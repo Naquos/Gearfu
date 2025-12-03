@@ -169,6 +169,97 @@ export class RecapStatsService extends AbstractDestroyService {
       case ClassIdEnum.Zobal:
         this.applyEffectPassifZobal();
         break;
+      case ClassIdEnum.Ouginak:
+        this.applyEffectPassifOuginak();
+        break;
+      case ClassIdEnum.Steamer:
+        this.applyEffectPassifSteamer();
+        break;
+      case ClassIdEnum.Eliotrope:
+        this.applyEffectPassifEliotrope();
+        break;
+      case ClassIdEnum.Huppermage:
+        this.applyEffectPassifHuppermage();
+        break;
+    }
+  }
+
+  private applyEffectPassifHuppermage(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    if(sortPassifsIds.find(x => x === SortIdEnum.CHAINE_DE_LA_NATURE)) { // ABSORPTION QUADRAMENTALE
+      this.applyEffect({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
+    }
+  }
+
+  private applyEffectPassifEliotrope(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+
+    if(sortPassifsIds.find(x => x === SortIdEnum.EPEE_DU_DEBUT)) {
+      this.applyEffect({ id: IdActionsEnum.PORTEE, value: -1, params: [] });
+    }
+  }
+
+  private applyEffectPassifSteamer(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    const level = this.levelFormService.getValue();
+
+    if(sortPassifsIds.find(x => x === SortIdEnum.MECANIQUE_AVANCEE)) {
+      this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: -30, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.PARTAGE_ANIMAL)) { // REVETEMENT_A_TOUTE_EPREUVE
+      this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 6 * level, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.ALLIAGE_LEGER)) {
+      this.applyEffect({ id: IdActionsEnum.PM, value: -1, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.ASSISTANCE_TELLURIQUE)) {
+      this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -30, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.STRATEGIE_ROBOTIQUE)) {
+      this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: -20, params: [] });
+    }
+  }
+
+  private applyEffectPassifOuginak(): void {
+    const sortPassifsIds = this.sortFormService.getSortPassifs();
+    const level = this.levelFormService.getValue();
+
+    if(sortPassifsIds.find(x => x === SortIdEnum.EPUISEMENT)) {
+      this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: 50, params: [] });
+      this.applyEffect({ id: IdActionsEnum.PORTEE, value: -2, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.CROCS_FUTES)) {
+      this.applyEffect({ id: IdActionsEnum.PARADE, value: 30, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.PISTAGE)) {
+      this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.ART_CANIN)) {
+      this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: -15, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.ENERGIE_CANINE)) {
+      this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: 3, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.FUREUR)) {
+      this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: -1, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.PILLAGE)) {
+      this.applyEffect({ id: IdActionsEnum.DI, value: -10, params: [] });
+      this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: 30, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
+      this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 4 * level, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.ARDEUR)) {
+      this.applyEffect({ id: IdActionsEnum.PM, value: -1, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.DIGESTION)) {
+      this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: -15, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.CHAINE_DE_LA_NATURE)) { // ACHARNE
+      this.applyEffect({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
+      this.applyEffect({ id: IdActionsEnum.DI, value: -10, params: [] });
+    }
+    if(sortPassifsIds.find(x => x === SortIdEnum.CANIN_OS)) {
+      this.applyEffect({ id: IdActionsEnum.TACLE, value: 3 * level, params: [] });
     }
   }
 
