@@ -79,7 +79,8 @@
         "tacle": "Bloqueo",
         "esquive": "Evasión",
         "initiative": "Iniciativa",
-        "effets": "Efectos"
+        "effets": "Efectos",
+        "sublimations": "Sublimaciones"
     },
     "import-build": {
         "label": "Importa tu build mediante una URL de Gearfu o Zénith",

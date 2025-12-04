@@ -79,7 +79,8 @@
         "vie": "Pontos de vida",
         "tacle": "Bloqueio",
         "esquive": "Evasão",
-        "initiative": "Iniciativa"
+        "initiative": "Iniciativa",
+        "sublimations": "Sublimações"
     },
     "import-build": {
         "label": "Importe seu build através de uma URL do Gearfu ou Zénith",
