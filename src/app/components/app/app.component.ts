@@ -147,7 +147,7 @@ export class AppComponent implements OnInit{
   }
 
   private updateFilterOrBuildFromRoute(url: string): void {
-    if (url.includes('/aptitudes') || url.includes('/sorts')) {
+    if (url.includes('/aptitudes') || url.includes('/sorts') || url.includes('/enchantements')) {
       this.filterOrBuild = 'aptitudes';
     } else {
       this.filterOrBuild = 'filter';
@@ -186,6 +186,13 @@ export class AppComponent implements OnInit{
   protected redirectToSorts(): void {
     this.filterOrBuild = 'aptitudes';
     this.router.navigate(['/sorts'], {
+      queryParamsHandling: 'preserve'
+    });
+  }
+
+  protected redirectToEnchantements(): void {
+    this.filterOrBuild = 'aptitudes';
+    this.router.navigate(['/enchantements'], {
       queryParamsHandling: 'preserve'
     });
   }

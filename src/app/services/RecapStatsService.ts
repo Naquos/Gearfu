@@ -14,6 +14,7 @@ import { ClasseFormService } from "./form/classeFormService";
 import { ClassIdEnum } from "../models/enum/classIdEnum";
 import { SortFormService } from "./form/sortFormService";
 import { SortIdEnum } from "../models/enum/sortIdEnum";
+import { ChasseFormService } from "./form/chasseFormService";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
@@ -23,6 +24,7 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly levelFormService = inject(LevelFormService);
   private readonly classeFormService = inject(ClasseFormService);
   private readonly sortFormService = inject(SortFormService);
+  private readonly chasseFormService = inject(ChasseFormService);
 
   private readonly naturalEffects: RecapStats[] = [
     { id: IdActionsEnum.PA, value: 6, params: [] },
@@ -98,15 +100,16 @@ export class RecapStatsService extends AbstractDestroyService {
       this.itemChooseService.listItem$,
       this.aptitudesFormService.recapStat$,
       this.levelFormService.level$,
+      this.chasseFormService.recapChassesEffect$,
       this.classeFormService.classe$,
       this.sortFormService.sortPassifs$,
     ]).pipe(
       takeUntil(this.destroy$),
       tap(() => this.resetEffects()),
-      map(([items, aptitudes, level,]) => {
+      map(([items, aptitudes, level, chasses]) => {
         const extract = this.extractEquipEffects(items);
         const recapStat = this.mapToRecapStats(extract);
-        recapStat.push(...aptitudes);
+        recapStat.push(...aptitudes, ...chasses);
         return {recapStat, level};
       }),
       tap(() => this.applyNatifEffects()),

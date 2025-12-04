@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { RarityItemEnum } from "../models/enum/rarityItemEnum";
 import { ItemTypeEnum } from "../models/enum/itemTypeEnum";
+import { Chasse } from "../models/data/chasse";
+import { IdChassesEnum } from "../models/enum/idChassesEnum";
 
 @Injectable({providedIn: 'root'})
 export class ImageService {
@@ -164,6 +166,34 @@ export class ImageService {
             case -11: return "sorts/rock.png";
             default: return ImageService.BASE_URL_SORTS + idSort + ".png";;
         }
-        
+    }
+
+    public getChasseColorUrl(chasse: Chasse): string {
+        if(chasse.joker) {
+            return chasse.lvl > 0 ? "chasses/shardWhiteFull.png" : "chasses/shardWhiteEmpty.png";
+        }
+        if(chasse.lvl === 0) {
+            switch(chasse.color) {
+                case IdChassesEnum.ROUGE:
+                    return "chasses/shardRedEmpty.png";
+                case IdChassesEnum.VERT:
+                    return "chasses/shardGreenEmpty.png";
+                case IdChassesEnum.BLEU:
+                    return "chasses/shardBlueEmpty.png";
+                default:
+                    return "chasses/shardMultiEmpty.png";
+            }
+        } else {
+            switch(chasse.color) {
+                case IdChassesEnum.ROUGE:
+                    return "chasses/shardRedFull.png";
+                case IdChassesEnum.VERT:
+                    return "chasses/shardGreenFull.png";
+                case IdChassesEnum.BLEU:
+                    return "chasses/shardBlueFull.png";
+                default:
+                    return "chasses/shardMultiEmpty.png";
+            }
+        }
     }
 }

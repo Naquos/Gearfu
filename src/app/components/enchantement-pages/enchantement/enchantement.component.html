@@ -1,0 +1,54 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+ <div class="container" 
+    [style.cursor]="effectToApply() ? 'url(cursor/' + imageService.getChasseColorUrl(effectToApply()!.chasse) + ') 16 16, auto' : 'default'">
+    @if (chasses()) {
+        <div class="column">
+            <div class="card">
+                <div class="header">
+                    {{ 'enchantement.chasses' | translate }}
+                </div>
+                <div class="body">
+                        @for (chasse of chasses(); track $index) {
+                            @let indexParent = $index;
+                            <div class="group-item-chasses">
+                                <app-image-item
+                                    [itemType]="displayTypeItem[$index].itemType" 
+                                    [indexItem]="displayTypeItem[$index].indexItem"
+                                    [backgroundItemType]="displayTypeItem[$index].background"
+                                ></app-image-item>
+                                @for (c of chasse.chasses; track $index) {
+                                    <img [src]="imageService.getChasseColorUrl(c)" [alt]=""
+                                    (click)="applyEffet($index, indexParent)"
+                                    (contextmenu)="$event.preventDefault(); changeJokerState($index, indexParent);"
+                                    [style.cursor]="cursorDestructStyle(c, effectToApply())"
+                                    >
+                                }
+                            </div>
+                        }
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+                <div class="header">
+                    {{ 'enchantement.effets' | translate }}
+                </div>
+                <div class="body">
+                    @for(effet of effetsDescription; track $index) {
+                        <button class="effets-description" (click)="chooseEffet(effet)" [class.selected]="effectToApply() && effectToApply()?.id === effet.id">
+                            <img [src]="imageService.getChasseColorUrl(effet.chasse)" [alt]="">
+                            <span>{{ effet.libelle | translate }}</span>
+                            <div class="logos">
+                                @for(logo of effet.logos; track $index) {
+                                    <img [src]="itemTypeService.getLogo(logo)" [alt]="">
+                                }
+                            </div>
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

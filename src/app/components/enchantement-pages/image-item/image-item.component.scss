@@ -1,0 +1,21 @@
+@use '../../../../styles/mixin' as *;
+$size: 30px;
+
+.noItem {
+    width: $size;
+    height: $size;
+}
+
+.itemPresent {
+    width: $size;
+    height: $size;
+    position: relative;
+    img {
+        width: $size;
+        height: $size;
+        margin-right: 10px;
+    }
+}
+
+
+

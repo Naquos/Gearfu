@@ -11,9 +11,10 @@
     "app": {
         "filter-item": "Filtro de objetos",
         "sort-item": "Orden de objetos",
-        "build": "Mis construcciones",
-        "aptitudes":"Mis aptitudes",
-        "sorts": "Mis hechizos"
+        "build": "Construcciones",
+        "aptitudes":"Aptitudes",
+        "sorts": "Hechizos",
+        "enchantement": "Encantamiento"
     },
     "aptitudes": {
         "restant": "Restante: ",
@@ -60,6 +61,25 @@
     "builds-list": {
         "label": "Tu lista de builds",
         "no-build": "Aún no has guardado ningún build."
+    },
+    "enchantement": {
+        "chasses": "Chasses",
+        "resistance-feu": "Resistencia al fuego",
+        "resistance-eau": "Resistencia al agua",
+        "resistance-terre": "Resistencia a la tierra",
+        "resistance-air": "Resistencia al aire",
+        "vie": "Puntos de vida",
+        "maitrise-elementaire": "Dominio elemental",
+        "maitrise-melee": "Dominio cuerpo a cuerpo",
+        "maitrise-distance": "Dominio a distancia",
+        "maitrise-critique": "Dominio crítico",
+        "maitrise-dos": "Dominio de espalda",
+        "maitrise-soin": "Dominio de curación",
+        "maitrise-berserk": "Dominio berserker",
+        "tacle": "Bloqueo",
+        "esquive": "Evasión",
+        "initiative": "Iniciativa",
+        "effets": "Efectos"
     },
     "import-build": {
         "label": "Importa tu build mediante una URL de Gearfu o Zénith",

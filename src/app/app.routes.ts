@@ -12,5 +12,9 @@ export const routes: Routes = [
     {
         path: 'sorts',
         loadComponent: () => import('./components/sorts-pages/sorts-router/sorts-router.component').then(m => m.SortsRouterComponent)
+    },
+    {
+        path: 'enchantements',
+        loadComponent: () => import('./components/enchantement-pages/enchantement-router/enchantement-router.component').then(m => m.EnchantementRouterComponent)
     }
 ];

@@ -1,0 +1,98 @@
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 97%;
+    margin: auto;
+    .column {
+        display: flex;
+        flex-direction: column;
+        width: 48%;
+        .card {
+            width: 100%;
+            background: linear-gradient(145deg, #0D1B2A, #415A77);
+            border-radius: 15px;
+            padding: 5px;
+            color: white;
+            min-width: 300px;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+            position: relative;
+            margin-bottom: 15px;
+            
+            .header {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-bottom: 3px solid #415A77;
+                margin-bottom: 10px;
+                padding: 5px 0;
+            }
+
+            .body {
+                .group-item-chasses {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 10px;
+                    app-image-item {
+                        margin-right: 10px;
+                    }
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        margin: 0 5px;
+                    }
+                    img:hover {
+                        transform: scale(1.2);
+                    }
+                }
+
+                
+                button {
+                    width: 300px;
+                    margin: 5px;
+                    border: 2px solid #415A77;
+                    box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+                    cursor: pointer;
+                    background-color: white;
+                    color: #213A57;
+                    font-weight: 600;
+                    font-size: 17px;
+                    height: 35px;
+                    border-radius: 10px;
+                }
+
+                button:active, .selected {
+                    transform: translateY(2px);
+                    box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
+                    background-color: #213A57;
+                    color: white;
+                }
+
+                .effets-description {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                    img {
+                        width: 26px;
+                        height: 26px;
+                    }
+                    span {
+                        margin: 0 10px;
+                    }
+                    .logos {
+                        display: flex;
+                        align-items: center;
+                        img {
+                            margin-right: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

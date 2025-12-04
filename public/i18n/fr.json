@@ -12,8 +12,9 @@
         "filter-item":"Filtre des items",
         "sort-item":"Tri des items",
         "build": "Mes builds",
-        "aptitudes":"Mes aptitudes",
-        "sorts": "Mes sorts"
+        "aptitudes":"Aptitudes",
+        "sorts": "Sorts",
+        "enchantement": "Enchantement"
     },
     "aptitudes": {
         "restant" : "Restant : ",
@@ -60,6 +61,25 @@
     "builds-list": {
         "label": "Votre liste de builds",
         "no-build":"Vous n'avez pas encore de builds sauvegardés."
+    },
+    "enchantement": {
+        "chasses": "Chasses",
+        "effets": "Effets",
+        "maitrise-elementaire": "Maitrise élémentaire",
+        "maitrise-soin": "Maitrise soin",
+        "maitrise-melee": "Maitrise mêlée",
+        "maitrise-distance": "Maitrise distance",
+        "maitrise-critique": "Maitrise critique",
+        "maitrise-dos": "Maitrise dos",
+        "maitrise-berserk": "Maitrise berzerk",
+        "resistance-feu": "Résistance feu",
+        "resistance-eau": "Résistance eau",
+        "resistance-terre": "Résistance terre",
+        "resistance-air": "Résistance air",
+        "vie": "Points de vie",
+        "esquive": "Esquive",
+        "tacle": "Tacle",
+        "initiative": "Initiative"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Maitrises élémentaires",

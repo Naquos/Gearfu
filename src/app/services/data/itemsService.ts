@@ -363,7 +363,12 @@ export class ItemsService {
             mobDropable: [],
             bossDropable: [],
             archiDropable: [],
-            isPvP: false
+            isPvP: false,
+            enchantement: {
+              slotColorPattern: x.definition.item.sublimationParameters?.slotColorPattern ?? [],
+              isEpic: x.definition.item.sublimationParameters?.isEpic ?? false,
+              isRelic: x.definition.item.sublimationParameters?.isRelic ?? false,
+            }
         }));
         this.buildIndexes(recipes, monsterDrops, idSiouperes);
         this.items.forEach(item => this.calculItemIsCraftable(item));

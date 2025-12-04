@@ -1,0 +1,15 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+ @if(item())
+ {
+    <div class="itemPresent" 
+        [style.backgroundColor]="colorRarityService.mapColors.get(item()!.rarity)"
+        >
+        <img [src]="imageService.getItemUrl(item()!.idImage)"
+        alt="items"
+        appFallback
+        >
+    </div>
+}  @else {
+    <img class="noItem" [src]="backgroundItemType()" alt="noItem" >
+}

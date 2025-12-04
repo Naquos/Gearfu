@@ -14,6 +14,11 @@ export interface ItemCdn {
             graphicParameters: {
                 gfxId: number;
             };
+            sublimationParameters: {
+                slotColorPattern: number[];
+                isEpic: boolean;
+                isRelic: boolean;
+            }
         };
         equipEffects: {
             effect: {

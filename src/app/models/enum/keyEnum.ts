@@ -21,5 +21,6 @@ export enum KeyEnum {
     KEY_APTITUDES = "KEY_APTITUDES",
     KEY_LEVEL = "KEY_LEVEL",
     KEY_CLASSE = "KEY_CLASSE",
-    KEY_SORT = "KEY_SORT"
+    KEY_SORT = "KEY_SORT",
+    KEY_CHASSES = "KEY_CHASSES"
 }

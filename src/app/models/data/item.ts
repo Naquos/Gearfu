@@ -1,3 +1,4 @@
+import { IdChassesEnum } from "../enum/idChassesEnum";
 import { ItemTypeDefinitionEnum } from "../enum/itemTypeDefinitionEnum";
 import { RarityItemEnum } from "../enum/rarityItemEnum";
 import { EquipEffects } from "./equipEffects";
@@ -9,6 +10,11 @@ export interface Item {
     rarity: RarityItemEnum;
     itemTypeId: ItemTypeDefinitionEnum;
     equipEffects: EquipEffects[];
+    enchantement: {
+        slotColorPattern: IdChassesEnum[];
+        isEpic: boolean;
+        isRelic: boolean;
+    }
     description: {
         fr: string;
         en: string;
