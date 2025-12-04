@@ -129,7 +129,12 @@ export class ImageService {
         [ItemTypeEnum.BOUCLIER, ImageService.BASE_URL_ITEM_TYPE + "520.png"],
         [ItemTypeEnum.DAGUE, ImageService.BASE_URL_ITEM_TYPE + "571.png"],
         [ItemTypeEnum.FAMILIER, ImageService.BASE_URL_ITEM_TYPE + "582.png"],
+        [ItemTypeEnum.SUBLIMATIONS, ImageService.BASE_URL_ITEM_TYPE + "719.png"],
     ]);
+
+    public getItemTypeUrl(itemType: ItemTypeEnum): string {
+        return this.mapUrlItemType.get(itemType) || "";
+    }
 
     public getActionIdUrl(idAction: IdActionsEnum, armureRecue?: boolean): string {
         return armureRecue ? ImageService.BASE_URL_CHARACTERISTICS + "ARMOR_RECEIVED.png" : this.mapUrlCharacteristics.get(idAction) || "";
@@ -165,6 +170,20 @@ export class ImageService {
             case -10: return "sorts/os-a-moelle.png";
             case -11: return "sorts/rock.png";
             default: return ImageService.BASE_URL_SORTS + idSort + ".png";;
+        }
+    }
+
+
+    public getChasseColorUrlById(idChasse: IdChassesEnum): string {
+        switch(idChasse) {
+            case IdChassesEnum.ROUGE:
+                return "chasses/shardRedEmpty.png";
+            case IdChassesEnum.VERT:
+                return "chasses/shardGreenEmpty.png";
+            case IdChassesEnum.BLEU:
+                return "chasses/shardBlueEmpty.png";
+            default:
+                return "chasses/shardMultiEmpty.png";
         }
     }
 

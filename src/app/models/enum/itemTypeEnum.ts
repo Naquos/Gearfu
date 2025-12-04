@@ -12,5 +12,6 @@ export enum ItemTypeEnum {
     ACCESSOIRES = 11,
     BOUCLIER = 12,
     DAGUE = 13,
-    FAMILIER = 14
+    FAMILIER = 14,
+    SUBLIMATIONS = 719
 }

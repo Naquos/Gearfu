@@ -79,7 +79,8 @@
         "vie": "Points de vie",
         "esquive": "Esquive",
         "tacle": "Tacle",
-        "initiative": "Initiative"
+        "initiative": "Initiative",
+        "sublimations": "Sublimations"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Maitrises élémentaires",

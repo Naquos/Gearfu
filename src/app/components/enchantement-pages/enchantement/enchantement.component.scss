@@ -116,7 +116,44 @@
                                 height: 15px;
                             }
                         }
-                    }   
+                    }
+                    .sublimations {
+                        display: flex;
+                        align-items: center;
+                        vertical-align: middle;
+                        margin-left: 10px;
+                        width: 100px;
+                        position: relative;
+                        img {
+                            width: 30px;
+                            height: 30px;
+                            cursor: pointer;
+                        }
+                        span {
+                            display: contents;
+                            margin-left: 5px;
+                            width: 50px;
+                            font-size: 11px;
+                            height: 40px;
+                            overflow: hidden;
+                        }
+                    }
+                    .sublimations.invalid::after {
+                        content: "✖";
+                        color: red;
+                        font-weight: bold;
+                        font-size: 24px;
+                        position: absolute;
+                        top: 47%;
+                        left: 20px;
+                        transform: translate(-50%, -50%);
+                        text-shadow: 1px 1px 2px black, -1px -1px 2px black;
+                        pointer-events: none;
+                    }
+                }
+
+                .selected {
+                    background-color: orange;
                 }
 
                 .effets-description {
@@ -142,6 +179,76 @@
                 
                 .double {
                     background-color: orange;
+                }
+
+                input {
+                    width: 80%;
+                    margin: 10px auto 0;
+                    height: 30px;
+                }
+
+                .slider-container {
+                    width: 350px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    grid-row-gap: 5px;
+                    height: 250px;
+                    overflow-y: scroll;
+
+                    background-color: white;
+                    border: 1px solid #0D1B2A;
+                    border-radius: 10px;
+
+                    color:#0D1B2A;
+                    padding: 10px;
+                    margin-top: 20px;
+
+                    img {
+                        width: 30px;
+                        height: 30px;
+                    }
+
+                    .subli-container {
+                        cursor: pointer;
+                        width: 45%;
+                        margin: 0 auto;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        margin-bottom: 10px; 
+                        background-color: #618A97;
+                        height: fit-content;
+
+                        border-radius: 5px;
+                        border: 2px solid #0D1B2A;
+                        text-align: center;
+                    }
+                    .subli-container:hover {
+                        transform: scale(1.1);
+                    }
+                    .selected {
+                        background-color: orange;
+                    }
+                }
+                .epique-relique {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-around;
+                    margin-top: 10px;
+                    .epique, .relique {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        img {
+                            width: 30px;
+                            height: 30px;
+                        }
+                        span {
+                            margin-top: 5px;
+                            font-size: 12px;
+                            width: 100px;
+                        }
+                    }
                 }
             }
         }

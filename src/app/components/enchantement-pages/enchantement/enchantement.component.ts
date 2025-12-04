@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { ChasseFormService } from '../../../services/form/chasseFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -7,11 +7,16 @@ import { ImageItemComponent } from "../image-item/image-item.component";
 import { Chasse } from '../../../models/data/chasse';
 import { IdChassesEnum } from '../../../models/enum/idChassesEnum';
 import { ItemTypeServices } from '../../../services/data/ItemTypesServices';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import {MatSliderModule} from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { ItemsService } from '../../../services/data/itemsService';
+import { map } from 'rxjs';
+import { Item } from '../../../models/data/item';
+import { Sublimation } from '../../../models/data/sublimation';
+import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqueRelique';
 
 interface DisplayTypeItem {
   indexItem: number;
@@ -28,20 +33,44 @@ interface EffetDescription {
 
 @Component({
   selector: 'app-enchantement',
-  imports: [ImageItemComponent, TranslateModule, MatSliderModule,
-    MatInputModule,
-    FormsModule],
+  imports: [ImageItemComponent, TranslateModule, MatSliderModule, MatInputModule, FormsModule],
   templateUrl: './enchantement.component.html',
   styleUrl: './enchantement.component.scss'
 })
 export class EnchantementComponent {
 
+  private readonly itemsService = inject(ItemsService);
+  private readonly translateService = inject(TranslateService);
   protected readonly imageService = inject(ImageService);
   protected readonly chasseFormService = inject(ChasseFormService);
-  protected readonly chasses = toSignal(this.chasseFormService.chasse$);
+  protected readonly chasses = toSignal(this.chasseFormService.enchantement$.pipe(map(enchantement => enchantement.chasseCombinaison)));
+  protected readonly enchantement = toSignal(this.chasseFormService.enchantement$);
   protected readonly itemTypeService = inject(ItemTypeServices);
+  protected readonly sublimations = toSignal(this.itemsService.sublimations$.pipe(map(items => items.filter(subli => !subli.enchantement.isEpic && !subli.enchantement.isRelic))));
+  protected readonly sublimationsEpiqueRelique = toSignal(this.itemsService.sublimations$.pipe(map(items => items.filter(subli => subli.enchantement.isEpic || subli.enchantement.isRelic))));
+  protected searchSubli = signal("");
+  protected readonly ItemTypeEnum = ItemTypeEnum;
   protected readonly effectToApply = signal<EffetDescription | undefined>(undefined);
   protected readonly itemTypeSelected = signal<ItemTypeEnum | undefined>(undefined);
+  protected readonly sublimationToApply = signal<Item | undefined>(undefined);
+  protected readonly indexItemTypeSelected = signal<number>(-1);
+
+  protected readonly sublimationsList = computed(() => {
+    this.chasses();
+    const search = this.searchSubli().toLowerCase();
+    return this.sublimations()?.filter(subli => this.nameItem(subli).toLowerCase().includes(search))
+    .filter(x => this.indexItemTypeSelected() === -1 
+        || this.chasseFormService.canApplySublimationWithItem(this.chasses()![this.indexItemTypeSelected()], x) );
+  })
+
+  protected readonly sublimationsEpiqueReliqueList = computed(() => {
+    const search = this.searchSubli().toLowerCase();
+    return this.sublimationsEpiqueRelique()?.filter(subli => this.nameItem(subli).toLowerCase().includes(search));
+  });
+
+  
+  
+
   protected level = 11;
 
   protected readonly displayTypeItem: DisplayTypeItem[] = [
@@ -75,7 +104,59 @@ export class EnchantementComponent {
     {id: 14, chasse: {color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.POINT_DE_VIE}, libelle: "enchantement.vie", logos: [ItemTypeEnum.CASQUE, ItemTypeEnum.UNE_MAIN]},
   ]
 
+  protected applySublimationEpicRelic() {
+    if(!this.sublimationToApply() || (!this.sublimationToApply()!.enchantement.isEpic && !this.sublimationToApply()!.enchantement.isRelic)) {
+      return;
+    }
+    this.chasseFormService.applySublimationEpicRelic({
+      id: this.sublimationToApply()!.id,
+      idImage: this.sublimationToApply()!.idImage,
+      title: this.sublimationToApply()!.title,
+      epique: this.sublimationToApply()!.enchantement.isEpic,
+      relique: this.sublimationToApply()!.enchantement.isRelic
+    });
+  }
+
+  protected applySublimation(posY: number) {
+    if(!this.sublimationToApply() || this.sublimationToApply()!.enchantement.isEpic || this.sublimationToApply()!.enchantement.isRelic) {
+      return;
+    }
+    this.chasseFormService.applySumblimation(posY, {
+      id: this.sublimationToApply()!.id,
+      title: this.sublimationToApply()!.title,
+      slotColorPattern: this.sublimationToApply()!.enchantement.slotColorPattern,
+      isValid: false
+    });
+  }
+
+  protected nameItem(item: Item | undefined): string {
+    if(!item) {
+      return "";
+    }
+    return item.title[this.translateService.currentLang as keyof typeof item.title];
+  }
+
+  protected nameSublimation(sublimation: Sublimation | undefined): string {
+    if(!sublimation) {
+      return "";
+    }
+    return sublimation.title[this.translateService.currentLang as keyof typeof sublimation.title];
+  }
+
+  protected nameSublimationEpicRelic(sublimation: SublimationsEpiqueRelique | undefined): string {
+    if(!sublimation) {
+      return "";
+    }
+    return sublimation.title[this.translateService.currentLang as keyof typeof sublimation.title];
+  }
+
+  protected chooseSublimation(item: Item) {
+    this.effectToApply.set(undefined);
+    this.sublimationToApply.set(item);
+  }
+
   protected chooseEffet(effet: EffetDescription) {
+    this.sublimationToApply.set(undefined);
     this.effectToApply.set(effet);
   }
 
@@ -92,7 +173,6 @@ export class EnchantementComponent {
   }
 
   protected applyEffet(posX: number, posY: number) {
-    console.log(this.level)
     if(!this.effectToApply()) {
       return;
     }
@@ -120,10 +200,12 @@ export class EnchantementComponent {
     return !!this.itemTypeSelected() &&  effet.logos.includes(this.itemTypeSelected()!);
   }
 
-  protected selectItemType(itemType: ItemTypeEnum) {
+  protected selectItemType(itemType: ItemTypeEnum, index: number) {
     if(this.itemTypeSelected() === itemType) {
+      this.indexItemTypeSelected.set(-1);
       this.itemTypeSelected.set(undefined);
     } else {
+      this.indexItemTypeSelected.set(index);
       this.itemTypeSelected.set(itemType);
     }
   }

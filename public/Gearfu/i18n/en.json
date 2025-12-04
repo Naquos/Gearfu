@@ -79,7 +79,8 @@
         "tacle": "Lock",
         "esquive": "Dodge",
         "initiative": "Initiative",
-        "effets": "Effects"
+        "effets": "Effects",
+        "sublimations": "Sublimations"
     },
     "import-build": {
         "label": "Import your build via a Gearfu or Zenith URL",

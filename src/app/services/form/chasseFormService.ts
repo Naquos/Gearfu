@@ -14,25 +14,30 @@ import { getValueVieByLevel } from "../../models/enum/effetVieChassesEnum";
 import { getValueMaitriseElemByLevel } from "../../models/enum/effetMaitriseElemChassesEnum";
 import { getValueResistancesByLevel } from "../../models/enum/effetResistancesChassesEnum";
 import { getValueMaitrisesByLevel } from "../../models/enum/effetMaitrisesChassesEnum";
+import { Sublimation } from "../../models/data/sublimation";
+import { IdChassesEnum } from "../../models/enum/idChassesEnum";
+import { Enchantement } from "../../models/data/enchantement";
+import { SublimationsEpiqueRelique } from "../../models/data/sublimationEpiqueRelique";
+import { Item } from "../../models/data/item";
 
 @Injectable({providedIn: 'root'})
-export class ChasseFormService extends AbstractFormService<FormControl<ChasseCombinaison[]>> {
+export class ChasseFormService extends AbstractFormService<FormControl<Enchantement>> {
     public static readonly DEFAULT_VALUE = () => {
         const initialChasses: ChasseCombinaison[] = [];
         for (let i = 0; i < 10; i++) {
           initialChasses.push(createEmptyChasseCombinaison());
         }
-        return initialChasses;
+        return { chasseCombinaison: initialChasses };
     };
 
     private readonly recapChassesEffect = new BehaviorSubject<RecapStats[]>([]);
     public readonly recapChassesEffect$ = this.recapChassesEffect.asObservable();
 
-    private readonly chasse = new BehaviorSubject<ChasseCombinaison[]>(ChasseFormService.DEFAULT_VALUE());
-    public readonly chasse$ = this.chasse.asObservable();
+    private readonly enchantement = new BehaviorSubject<Enchantement>(ChasseFormService.DEFAULT_VALUE());
+    public readonly enchantement$ = this.enchantement.asObservable();
 
-    protected readonly keyEnum = KeyEnum.KEY_CHASSES;
-    public readonly form =  new FormControl<ChasseCombinaison[]>(ChasseFormService.DEFAULT_VALUE(), { nonNullable: true });
+    protected readonly keyEnum = KeyEnum.KEY_ENCHANTEMENT;
+    public readonly form =  new FormControl<Enchantement>(ChasseFormService.DEFAULT_VALUE(), { nonNullable: true });
 
     private readonly indexToItemType = new Map<number, ItemTypeEnum>([
         [0, ItemTypeEnum.CASQUE],
@@ -75,37 +80,103 @@ export class ChasseFormService extends AbstractFormService<FormControl<ChasseCom
         return c1.color === c2.color && c1.lvl === c2.lvl && c1.idAction === c2.idAction;
     }
 
+    public removeEpic(): void {
+        const enchantement = this.getValue();
+        enchantement.epique = undefined;
+        this.setValue(enchantement);
+    }
+
+    public removeRelic(): void {
+        const enchantement = this.getValue();
+        enchantement.relique = undefined;
+        this.setValue(enchantement);
+    }
+
+    public applySublimationEpicRelic(sublimation: SublimationsEpiqueRelique): void {
+        const enchantement = this.getValue();
+        if(sublimation.epique) {
+            enchantement.epique = {
+                id: sublimation.id,
+                idImage: sublimation.idImage,
+                title: {...sublimation.title},
+                epique: true,
+                relique: false
+            };
+            this.setValue(enchantement);
+        } else if(sublimation.relique) {
+            enchantement.relique = {
+                id: sublimation.id,
+                idImage: sublimation.idImage,
+                title: {...sublimation.title},
+                epique: false,
+                relique: true
+            };
+            this.setValue(enchantement);
+        }
+    }
+
+    public applySumblimation(posY: number, sublimation: Sublimation): void {
+        const enchantement = this.getValue();
+        const currentChasses = enchantement.chasseCombinaison;
+        const chasseToUpdate = currentChasses[posY];
+        chasseToUpdate.sublimation = sublimation;
+        chasseToUpdate.sublimation.isValid = this.canApplySublimation(chasseToUpdate, sublimation);
+        this.setValue(enchantement);
+    }
+
+    public removeSublimation(posY: number): void {
+        const enchantement = this.getValue();
+        const currentChasses = enchantement.chasseCombinaison;
+        const chasseToUpdate = currentChasses[posY];
+        chasseToUpdate.sublimation = undefined;
+        this.setValue(enchantement);
+    }
+
     public applyEffect(posX: number, posY: number, chasse: Chasse): void {
-        const currentChasses = this.getValue();
+        const enchantement = this.getValue();
+        const currentChasses = enchantement.chasseCombinaison;
         const chasseToUpdate = currentChasses[posY];
         if (this.equalChasses(chasseToUpdate.chasses[posX], chasse)) {
             this.clearEffect(posX, posY);
         } else {
             chasseToUpdate.chasses[posX] = chasse;
         }
-        this.setValue(currentChasses);
+        if (chasseToUpdate.sublimation) {
+            chasseToUpdate.sublimation.isValid = this.canApplySublimation(chasseToUpdate, chasseToUpdate.sublimation);
+        }
+        this.setValue(enchantement);
     }
 
     public clearChasseCombinaison(posY: number): void {
-        const currentChasses = this.getValue();
+        const enchantement = this.getValue();
+        const currentChasses = enchantement.chasseCombinaison;
         currentChasses[posY] = createEmptyChasseCombinaison();
-        this.setValue(currentChasses);
+        this.setValue(enchantement);
     }
 
     public clearEffect(posX: number, posY: number): void {
-        const currentChasses = this.getValue();
+        const enchantement = this.getValue();
+        const currentChasses = enchantement.chasseCombinaison;
         const chasseToUpdate = currentChasses[posY];
         chasseToUpdate.chasses[posX] = createEmptyChasseCombinaison().chasses[0];
-        this.setValue(currentChasses);
+        if (chasseToUpdate.sublimation) {
+            chasseToUpdate.sublimation.isValid = this.canApplySublimation(chasseToUpdate, chasseToUpdate.sublimation);
+        }
+        this.setValue(enchantement);
     }
 
     public changeJokerState(posX: number, posY: number): void {
-        const currentChasses = this.getValue();
-        const chasseToUpdate = currentChasses[posY];
-        const chasse = chasseToUpdate.chasses[posX];
+        const enchantement = this.getValue();
+        const currentChasses = [...enchantement.chasseCombinaison];
+        const chasseToUpdate = {...currentChasses[posY]};
+        const chasses = [...chasseToUpdate.chasses];
+        const chasse = {...chasses[posX]};
         if (!chasse.idAction) { return; }
         chasse.joker = !chasse.joker;
-        this.setValue(currentChasses);
+        chasses[posX] = chasse;
+        chasseToUpdate.chasses = chasses;
+        currentChasses[posY] = chasseToUpdate;
+        this.setValue({...enchantement, chasseCombinaison: currentChasses});
     }
 
     private getChasseEffectValue(chasse: Chasse): number {
@@ -129,10 +200,10 @@ export class ChasseFormService extends AbstractFormService<FormControl<ChasseCom
         return 0;
     }
 
-    protected override handleChanges(value: ChasseCombinaison[]): void {
+    protected override handleChanges(value: Enchantement): void {
         const recapStats: RecapStats[] = [];
 
-        value.forEach((chasseCombinaison, indexCombinaison) => {
+        value.chasseCombinaison.forEach((chasseCombinaison, indexCombinaison) => {
             chasseCombinaison.chasses.forEach((chasse) => {
                 if (!chasse.idAction) { return; }
                 const itemType = this.indexToItemType.get(indexCombinaison);
@@ -146,18 +217,90 @@ export class ChasseFormService extends AbstractFormService<FormControl<ChasseCom
             });
         });
 
-        this.chasse.next(value);
+        this.enchantement.next(value);
         this.recapChassesEffect.next(recapStats);
     }
     
-    public override setValue(value: ChasseCombinaison[] | null): void {
-        this.form.setValue(value ?? ChasseFormService.DEFAULT_VALUE());
+    public override setValue(value: Enchantement | null): void {
+        const val = value ?? ChasseFormService.DEFAULT_VALUE();
+        this.form.setValue(val);
+        this.enchantement.next(val);
     }
     public override setDefaultValue(): void {
         this.form.setValue(ChasseFormService.DEFAULT_VALUE());
     }
 
-    public getValue(): ChasseCombinaison[] {
-        return this.chasse.getValue();
+    public getValue(): Enchantement {
+        return this.enchantement.getValue();
+    }
+
+    public canApplySublimationWithItem(chasseCombinaison: ChasseCombinaison, item: Item): boolean {
+        return this.canApplySublimation(chasseCombinaison, {
+            id: item.id,
+            title: {...item.title},
+            slotColorPattern: item.enchantement.slotColorPattern,
+            isValid: false
+        });
+    }
+
+    /**
+     * Vérifie si une sublimation peut être appliquée sur une combinaison de chasses
+     * @param chasseCombinaison La combinaison de chasses de l'item
+     * @param sublimation La sublimation à vérifier
+     * @returns true si la sublimation peut être appliquée, false sinon
+     */
+    public canApplySublimation(chasseCombinaison: ChasseCombinaison, sublimation: Sublimation): boolean {
+        const chasses = chasseCombinaison.chasses;
+        const pattern = sublimation.slotColorPattern;
+        
+        // Si le pattern est plus long que le nombre de chasses, impossible
+        if (pattern.length > chasses.length) {
+            return false;
+        }
+
+        // Essayer de faire correspondre le pattern à chaque position possible
+        for (let startPos = 0; startPos <= chasses.length - pattern.length; startPos++) {
+            if (this.matchPattern(chasses, pattern, startPos)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Vérifie si le pattern correspond aux chasses à partir d'une position donnée
+     */
+    private matchPattern(chasses: Chasse[], pattern: IdChassesEnum[], startPos: number): boolean {
+        for (let i = 0; i < pattern.length; i++) {
+            const chasse = chasses[startPos + i];
+            const requiredColor = pattern[i];
+
+            // Si la chasse est vide (NON_CHASSE), elle ne peut pas matcher
+            if (chasse.color === IdChassesEnum.NON_CHASSE) {
+                return false;
+            }
+
+            // Si c'est un joker, il peut remplacer n'importe quelle couleur (sauf NON_CHASSE et JAUNE)
+            if (chasse.joker && this.isValidJokerReplacement(requiredColor)) {
+                continue;
+            }
+
+            // Sinon, la couleur doit correspondre exactement
+            if (chasse.color !== requiredColor) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Vérifie si une couleur peut être remplacée par un joker
+     */
+    private isValidJokerReplacement(color: IdChassesEnum): boolean {
+        return color === IdChassesEnum.BLEU || 
+               color === IdChassesEnum.ROUGE || 
+               color === IdChassesEnum.VERT;
     }
 }

@@ -2,7 +2,7 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
  <div class="container" 
     [style.cursor]="effectToApply() ? 'url(cursor/' + imageService.getChasseColorUrl(effectToApply()!.chasse) + ') 16 16, auto' : 'default'">
-    @if (chasses()) {
+    @if (chasses() && enchantement()) {
         <div class="column">
             <div class="card">
                 <div class="header">
@@ -16,12 +16,14 @@
 
                     @for (chasse of chasses(); track $index) {
                         @let indexParent = $index;
-                        <div class="group-item-chasses">
+                        <div class="group-item-chasses"
+                            [class.selected]="indexItemTypeSelected() === $index"
+                        >
                             <app-image-item
                                 [itemType]="displayTypeItem[$index].itemType" 
                                 [indexItem]="displayTypeItem[$index].indexItem"
                                 [backgroundItemType]="displayTypeItem[$index].background"
-                                (click)="selectItemType(displayTypeItem[$index].itemType)"
+                                (click)="selectItemType(displayTypeItem[$index].itemType, $index)"
                             ></app-image-item>
                             @for (c of chasse.chasses; track $index) {
                                 <div class="container-image"
@@ -39,8 +41,35 @@
                                 </div>
                             }
                             <button class="delete" (click)="chasseFormService.clearChasseCombinaison(indexParent)">X</button>
+                            <div class="sublimations"
+                                [class.invalid]="chasse.sublimation && !chasse.sublimation.isValid"
+                                (click)="applySublimation(indexParent)"
+                                (contextmenu)="$event.preventDefault();chasseFormService.removeSublimation(indexParent);">
+                                <img [src]="imageService.getItemTypeUrl(ItemTypeEnum.SUBLIMATIONS)" alt="">
+                                <span>{{ nameSublimation(chasse.sublimation) }}</span>
+                            </div>
                         </div>
                     }
+                    <div class="epique-relique">
+                        <div class="epique" 
+                            (contextmenu)="$event.preventDefault();chasseFormService.removeEpic();">
+                            @if(enchantement()?.epique) {
+                                <img [src]="imageService.getItemUrl(enchantement()!.epique!.idImage)" alt="">
+                                <span>{{ nameSublimationEpicRelic(enchantement()!.epique) }}</span>
+                            } @else {
+                                <img src="chasses/shardEpique.png" alt="">
+                            }
+                        </div>
+                        <div class="relique"
+                            (contextmenu)="$event.preventDefault();chasseFormService.removeRelic();">
+                            @if(enchantement()?.relique) {
+                                <img [src]="imageService.getItemUrl(enchantement()!.relique!.idImage)" alt="">
+                                <span>{{ nameSublimationEpicRelic(enchantement()!.relique) }}</span>
+                            } @else {
+                                <img src="chasses/shardRelique.png" alt="">
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -66,5 +95,45 @@
                 </div>
             </div>
         </div>
+
+        
+        <div class="column">
+            <div class="card">
+                <div class="header">
+                    Sublimations
+                </div>
+                <div class="body">
+                    <input matInput [ngModel]="searchSubli()" (ngModelChange)="searchSubli.set($event)">
+
+                    <div class="slider-container">
+                        @for(sublimation of sublimationsList(); track $index) {
+                            <div class="subli-container" (click)="chooseSublimation(sublimation)"
+                                [class.selected]="sublimationToApply() && sublimationToApply()!.id === sublimation.id">
+                                <span>{{nameItem(sublimation)}}</span>
+                                <div>
+                                    @for(chasse of sublimation.enchantement.slotColorPattern; track $index) {
+                                        <img [src]="imageService.getChasseColorUrlById(chasse)" [alt]="">
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="slider-container">
+                        @for(sublimation of sublimationsEpiqueReliqueList(); track $index) {
+                            <div class="subli-container" (click)="chooseSublimation(sublimation)"
+                                [class.selected]="sublimationToApply() && sublimationToApply()!.id === sublimation.id"
+                                (click)="applySublimationEpicRelic()">
+                                <span>{{nameItem(sublimation)}}</span>
+                                <div>
+                                    <img [src]="imageService.getItemUrl(sublimation.idImage)" [alt]="">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
     }
 </div>

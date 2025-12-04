@@ -109,6 +109,9 @@ export class ItemsService {
     private monsterDropsByItemId = new Map<number, MonsterDrop[]>();
     private archiIds = new Set<number>();
 
+    private readonly sublimations = new BehaviorSubject<Item[]>([]);
+    public readonly sublimations$ = this.sublimations.asObservable();
+
     public readonly isLoading = signal<boolean>(true);
 
     public init(): void {
@@ -164,6 +167,7 @@ export class ItemsService {
     }
 
     private initFilter(): void {
+      this.sublimations.next(this.items.filter(x => x.itemTypeId === ItemTypeDefinitionEnum.SUBLIMATIONS).sort((a, b) => a.title.fr.localeCompare(b.title.fr)));
       this.items = this.items.filter(x => ![ItemTypeDefinitionEnum.LANTERNE, ItemTypeDefinitionEnum.STATISTIQUES, ItemTypeDefinitionEnum.SUBLIMATIONS].includes(x.itemTypeId))
         .filter(x => this.isNotWIP(x));
       this.fullItems$.next(this.items);
