@@ -201,7 +201,7 @@ export class EnchantementComponent {
   }
 
   protected selectItemType(itemType: ItemTypeEnum, index: number) {
-    if(this.itemTypeSelected() === itemType) {
+    if(this.itemTypeSelected() === itemType && this.indexItemTypeSelected() === index) {
       this.indexItemTypeSelected.set(-1);
       this.itemTypeSelected.set(undefined);
     } else {
