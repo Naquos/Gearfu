@@ -13,6 +13,7 @@ import { getValueInitiativesByLevel } from "../../models/enum/effetInitiavesChas
 import { getValueVieByLevel } from "../../models/enum/effetVieChassesEnum";
 import { getValueMaitriseElemByLevel } from "../../models/enum/effetMaitriseElemChassesEnum";
 import { getValueResistancesByLevel } from "../../models/enum/effetResistancesChassesEnum";
+import { getValueMaitrisesByLevel } from "../../models/enum/effetMaitrisesChassesEnum";
 
 @Injectable({providedIn: 'root'})
 export class ChasseFormService extends AbstractFormService<FormControl<ChasseCombinaison[]>> {
@@ -85,6 +86,12 @@ export class ChasseFormService extends AbstractFormService<FormControl<ChasseCom
         this.setValue(currentChasses);
     }
 
+    public clearChasseCombinaison(posY: number): void {
+        const currentChasses = this.getValue();
+        currentChasses[posY] = createEmptyChasseCombinaison();
+        this.setValue(currentChasses);
+    }
+
     public clearEffect(posX: number, posY: number): void {
         const currentChasses = this.getValue();
         const chasseToUpdate = currentChasses[posY];
@@ -114,7 +121,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<ChasseCom
         } else if([IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES,
                     IdActionsEnum.MAITRISES_BERZERK, IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS
                 ].includes(chasse.idAction)) {
-            return getValueMaitriseElemByLevel(chasse.lvl);
+            return getValueMaitrisesByLevel(chasse.lvl);
         } else if([IdActionsEnum.RESISTANCES_FEU, IdActionsEnum.RESISTANCES_EAU, IdActionsEnum.RESISTANCES_AIR,
              IdActionsEnum.RESISTANCES_TERRE].includes(chasse.idAction)) {
             return getValueResistancesByLevel(chasse.lvl);

@@ -6,7 +6,8 @@
         <div class="column">
             <div class="card">
                 <div class="header">
-                    {{ 'enchantement.chasses' | translate }}
+                    <span>{{ 'enchantement.chasses' | translate }}</span>
+                    <button (click)="chasseFormService.setDefaultValue()">X</button>
                 </div>
                 <div class="body">
                         @for (chasse of chasses(); track $index) {
@@ -16,14 +17,21 @@
                                     [itemType]="displayTypeItem[$index].itemType" 
                                     [indexItem]="displayTypeItem[$index].indexItem"
                                     [backgroundItemType]="displayTypeItem[$index].background"
+                                    (click)="selectItemType(displayTypeItem[$index].itemType)"
                                 ></app-image-item>
                                 @for (c of chasse.chasses; track $index) {
-                                    <img [src]="imageService.getChasseColorUrl(c)" [alt]=""
-                                    (click)="applyEffet($index, indexParent)"
-                                    (contextmenu)="$event.preventDefault(); changeJokerState($index, indexParent);"
-                                    [style.cursor]="cursorDestructStyle(c, effectToApply())"
-                                    >
+                                    <div class="container-image"
+                                        (click)="applyEffet($index, indexParent)"
+                                        (contextmenu)="$event.preventDefault(); changeJokerState($index, indexParent);"
+                                        [style.cursor]="cursorDestructStyle(c, effectToApply())"
+                                        >
+                                        <img [src]="imageService.getChasseColorUrl(c)" [alt]="">
+                                        @if(c.idAction) {
+                                            <img class="action-image" [src]="imageService.getActionIdUrl(c.idAction)" [alt]="">
+                                        }
+                                    </div>
                                 }
+                                <button class="delete" (click)="chasseFormService.clearChasseCombinaison(indexParent)">X</button>
                             </div>
                         }
                 </div>
@@ -37,7 +45,8 @@
                 </div>
                 <div class="body">
                     @for(effet of effetsDescription; track $index) {
-                        <button class="effets-description" (click)="chooseEffet(effet)" [class.selected]="effectToApply() && effectToApply()?.id === effet.id">
+                        <button class="effets-description" (click)="chooseEffet(effet)" [class.selected]="effectToApply() && effectToApply()?.id === effet.id"
+                            [class.double]="effectIsDouble(effet)">
                             <img [src]="imageService.getChasseColorUrl(effet.chasse)" [alt]="">
                             <span>{{ effet.libelle | translate }}</span>
                             <div class="logos">

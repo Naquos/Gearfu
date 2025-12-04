@@ -36,6 +36,7 @@ export class EnchantementComponent {
   protected readonly chasses = toSignal(this.chasseFormService.chasse$);
   protected readonly itemTypeService = inject(ItemTypeServices);
   protected readonly effectToApply = signal<EffetDescription | undefined>(undefined);
+  protected readonly itemTypeSelected = signal<ItemTypeEnum | undefined>(undefined);
 
   protected readonly displayTypeItem: DisplayTypeItem[] = [
     {indexItem: 0, itemType: ItemTypeEnum.CASQUE, background: './aptitudes/EmplacementCoiffe.png'},
@@ -106,6 +107,18 @@ export class EnchantementComponent {
 
   private equalChasses(c1: Chasse, c2: Chasse): boolean {
     return c1.color === c2.color && c1.lvl === c2.lvl && c1.idAction === c2.idAction;
+  }
+
+  protected effectIsDouble(effet: EffetDescription): boolean {
+    return !!this.itemTypeSelected() &&  effet.logos.includes(this.itemTypeSelected()!);
+  }
+
+  protected selectItemType(itemType: ItemTypeEnum) {
+    if(this.itemTypeSelected() === itemType) {
+      this.itemTypeSelected.set(undefined);
+    } else {
+      this.itemTypeSelected.set(itemType);
+    }
   }
 
 }

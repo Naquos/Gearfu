@@ -2,20 +2,41 @@
 .container {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 97%;
+    justify-content: space-around;
+    width: 100%;
     margin: auto;
     .column {
         display: flex;
         flex-direction: column;
-        width: 48%;
+        align-items: center;
+        
+        width: fit-content;
+        
+        button {
+            width: 270px;
+            border: 2px solid #415A77;
+            box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+            cursor: pointer;
+            background-color: white;
+            color: #213A57;
+            font-weight: 600;
+            font-size: 13px;
+            height: 35px;
+            border-radius: 10px;
+        }
+        button:active, .selected {
+            transform: translateY(2px);
+            box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
+            color: white;
+            background-color: #1B263B;
+        }
+
         .card {
-            width: 100%;
+            width: fit-content;
             background: linear-gradient(145deg, #0D1B2A, #415A77);
             border-radius: 15px;
-            padding: 5px;
+            padding: 15px;
             color: white;
-            min-width: 300px;
             height: fit-content;
             display: flex;
             flex-direction: column;
@@ -30,9 +51,22 @@
                 border-bottom: 3px solid #415A77;
                 margin-bottom: 10px;
                 padding: 5px 0;
+                span {
+                    margin-left: auto;
+                }
+
+                button {
+                    margin-left: auto;
+                    width: 50px;
+                }
+                
             }
 
             .body {
+                display: flex;
+                flex-direction: column;
+                vertical-align: middle;
+                align-items: center;
                 .group-item-chasses {
                     display: flex;
                     align-items: center;
@@ -41,35 +75,29 @@
                         margin-right: 10px;
                     }
                     img {
-                        width: 40px;
-                        height: 40px;
+                        width: 30px;
+                        height: 30px;
                         margin: 0 5px;
                     }
                     img:hover {
                         transform: scale(1.2);
                     }
-                }
 
-                
-                button {
-                    width: 300px;
-                    margin: 5px;
-                    border: 2px solid #415A77;
-                    box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
-                    cursor: pointer;
-                    background-color: white;
-                    color: #213A57;
-                    font-weight: 600;
-                    font-size: 17px;
-                    height: 35px;
-                    border-radius: 10px;
-                }
+                    .delete {
+                        width: 50px;
+                    }
 
-                button:active, .selected {
-                    transform: translateY(2px);
-                    box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
-                    background-color: #213A57;
-                    color: white;
+                    .container-image {
+                        position: relative;
+                        
+                        .action-image {
+                            width: 15px;
+                            height: 15px;
+                            position: absolute;
+                            bottom: 0px;
+                            right: 0px;
+                        }
+                    }   
                 }
 
                 .effets-description {
@@ -78,8 +106,8 @@
                     justify-content: space-between;
                     margin-bottom: 10px;
                     img {
-                        width: 26px;
-                        height: 26px;
+                        width: 20px;
+                        height: 20px;
                     }
                     span {
                         margin: 0 10px;
@@ -91,6 +119,10 @@
                             margin-right: 5px;
                         }
                     }
+                }
+                
+                .double {
+                    background-color: orange;
                 }
             }
         }

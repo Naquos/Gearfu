@@ -1,19 +1,25 @@
 @use '../../../../styles/mixin' as *;
 $size: 30px;
-
-.noItem {
-    width: $size;
-    height: $size;
-}
-
-.itemPresent {
-    width: $size;
-    height: $size;
-    position: relative;
-    img {
+:host {
+    
+    cursor: pointer;
+    &:hover {
+        transform: scale(1.2);
+    }
+    .noItem {
         width: $size;
         height: $size;
-        margin-right: 10px;
+    }
+
+    .itemPresent {
+        width: $size;
+        height: $size;
+        position: relative;
+        img {
+            width: $size;
+            height: $size;
+            margin-right: 10px;
+        }
     }
 }
 

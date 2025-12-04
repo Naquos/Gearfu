@@ -650,12 +650,14 @@ export class RecapStatsService extends AbstractDestroyService {
         IdActionsEnum.MAITRISES_SOIN,
         IdActionsEnum.MAITRISES_BERZERK,
       ].includes(rs.id))
+      .filter(x => x.value > 0)
       .reduce((sum, current) => sum + current.value, 0);
     const maxMaitrisesElem = Math.max(
       this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_FEU)?.value || 0,
       this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_EAU)?.value || 0,
       this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_TERRE)?.value || 0,
       this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_AIR)?.value || 0,
+      0
     );
     const sommeMaitrisesSecondairesWithElem = sommeMaitrisesSecondaires + maxMaitrisesElem;
     this.maitrisesTotal.next(sommeMaitrisesSecondairesWithElem);
