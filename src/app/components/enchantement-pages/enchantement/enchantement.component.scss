@@ -67,6 +67,9 @@
                 flex-direction: column;
                 vertical-align: middle;
                 align-items: center;
+                mat-slider {
+                    width: 100%;
+                }
                 .group-item-chasses {
                     display: flex;
                     align-items: center;
@@ -91,11 +94,27 @@
                         position: relative;
                         
                         .action-image {
-                            width: 15px;
-                            height: 15px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-around;
                             position: absolute;
                             bottom: 0px;
                             right: 0px;
+                            span {
+                                font-size: 11px;
+                                color:#0D1B2A;
+                                background-color: white;
+                                border: 1px solid #415A77;
+                                border-radius: 50%;
+                                width: 15px;
+                                height: 15px;
+                                text-align: center;
+                            }
+                            
+                            img {
+                                width: 15px;
+                                height: 15px;
+                            }
                         }
                     }   
                 }

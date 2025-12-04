@@ -10,30 +10,37 @@
                     <button (click)="chasseFormService.setDefaultValue()">X</button>
                 </div>
                 <div class="body">
-                        @for (chasse of chasses(); track $index) {
-                            @let indexParent = $index;
-                            <div class="group-item-chasses">
-                                <app-image-item
-                                    [itemType]="displayTypeItem[$index].itemType" 
-                                    [indexItem]="displayTypeItem[$index].indexItem"
-                                    [backgroundItemType]="displayTypeItem[$index].background"
-                                    (click)="selectItemType(displayTypeItem[$index].itemType)"
-                                ></app-image-item>
-                                @for (c of chasse.chasses; track $index) {
-                                    <div class="container-image"
-                                        (click)="applyEffet($index, indexParent)"
-                                        (contextmenu)="$event.preventDefault(); changeJokerState($index, indexParent);"
-                                        [style.cursor]="cursorDestructStyle(c, effectToApply())"
-                                        >
-                                        <img [src]="imageService.getChasseColorUrl(c)" [alt]="">
-                                        @if(c.idAction) {
-                                            <img class="action-image" [src]="imageService.getActionIdUrl(c.idAction)" [alt]="">
-                                        }
-                                    </div>
-                                }
-                                <button class="delete" (click)="chasseFormService.clearChasseCombinaison(indexParent)">X</button>
-                            </div>
-                        }
+                    <mat-slider min="1" max="11" step="1" showTickMarks discrete >
+                        <input matSliderThumb [(ngModel)]="level">
+                    </mat-slider>
+
+                    @for (chasse of chasses(); track $index) {
+                        @let indexParent = $index;
+                        <div class="group-item-chasses">
+                            <app-image-item
+                                [itemType]="displayTypeItem[$index].itemType" 
+                                [indexItem]="displayTypeItem[$index].indexItem"
+                                [backgroundItemType]="displayTypeItem[$index].background"
+                                (click)="selectItemType(displayTypeItem[$index].itemType)"
+                            ></app-image-item>
+                            @for (c of chasse.chasses; track $index) {
+                                <div class="container-image"
+                                    (click)="applyEffet($index, indexParent)"
+                                    (contextmenu)="$event.preventDefault(); changeJokerState($index, indexParent);"
+                                    [style.cursor]="cursorDestructStyle(c, effectToApply())"
+                                    >
+                                    <img [src]="imageService.getChasseColorUrl(c)" [alt]="">
+                                    @if(c.idAction) {
+                                        <div class="action-image"> 
+                                            <span>{{c.lvl}}</span>
+                                            <img [src]="imageService.getActionIdUrl(c.idAction)" [alt]="">
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            <button class="delete" (click)="chasseFormService.clearChasseCombinaison(indexParent)">X</button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

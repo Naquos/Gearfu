@@ -9,6 +9,9 @@ import { IdChassesEnum } from '../../../models/enum/idChassesEnum';
 import { ItemTypeServices } from '../../../services/data/ItemTypesServices';
 import { TranslateModule } from '@ngx-translate/core';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
+import {MatSliderModule} from '@angular/material/slider';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 interface DisplayTypeItem {
   indexItem: number;
@@ -25,7 +28,9 @@ interface EffetDescription {
 
 @Component({
   selector: 'app-enchantement',
-  imports: [ImageItemComponent, TranslateModule],
+  imports: [ImageItemComponent, TranslateModule, MatSliderModule,
+    MatInputModule,
+    FormsModule],
   templateUrl: './enchantement.component.html',
   styleUrl: './enchantement.component.scss'
 })
@@ -37,6 +42,7 @@ export class EnchantementComponent {
   protected readonly itemTypeService = inject(ItemTypeServices);
   protected readonly effectToApply = signal<EffetDescription | undefined>(undefined);
   protected readonly itemTypeSelected = signal<ItemTypeEnum | undefined>(undefined);
+  protected level = 11;
 
   protected readonly displayTypeItem: DisplayTypeItem[] = [
     {indexItem: 0, itemType: ItemTypeEnum.CASQUE, background: './aptitudes/EmplacementCoiffe.png'},
@@ -86,12 +92,13 @@ export class EnchantementComponent {
   }
 
   protected applyEffet(posX: number, posY: number) {
+    console.log(this.level)
     if(!this.effectToApply()) {
       return;
     }
     this.chasseFormService.applyEffect(posX, posY, {
       color: this.effectToApply()!.chasse.color,
-      lvl: this.effectToApply()!.chasse.lvl,
+      lvl: this.level,
       idAction: this.effectToApply()!.chasse.idAction,
       joker: false
     });
