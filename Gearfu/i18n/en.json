@@ -11,9 +11,10 @@
     "app": {
         "filter-item": "Item filter",
         "sort-item": "Item sorting",
-        "build": "My builds",
-        "aptitudes":"My aptitudes",
-        "sorts": "My spells"
+        "build": "Builds",
+        "aptitudes":"Aptitudes",
+        "sorts": "Spells",
+        "enchantement": "Enchanting"
     },
     "aptitudes": {
         "restant": "Remaining: ",
@@ -60,6 +61,25 @@
     "builds-list": {
         "label": "Your builds list",
         "no-build": "You haven't saved any builds yet."
+    },
+    "enchantement": {
+        "chasses": "Chases",
+        "resistance-feu": "Fire Resistance",
+        "resistance-eau": "Water Resistance",
+        "resistance-terre": "Earth Resistance",
+        "resistance-air": "Air Resistance",
+        "vie": "Health Points",
+        "maitrise-elementaire": "Elemental Mastery",
+        "maitrise-melee": "Melee Mastery",
+        "maitrise-distance": "Distance Mastery",
+        "maitrise-critique": "Critical Mastery",
+        "maitrise-dos": "Back Mastery",
+        "maitrise-soin": "Healing Mastery",
+        "maitrise-berserk": "Berserk Mastery",
+        "tacle": "Lock",
+        "esquive": "Dodge",
+        "initiative": "Initiative",
+        "effets": "Effects"
     },
     "import-build": {
         "label": "Import your build via a Gearfu or Zenith URL",
@@ -231,7 +251,10 @@
         "sagesse": "Wisdom",
         "prospection": "Prospecting",
         "armure-donnee": "Armor given",
-        "armure-recue": "Armor received"
+        "armure-recue": "Armor received",
+        "DI_indirect": "Indirect Damage",
+        "SR": "Healing done",
+        "DI": "Damage inflicted"
     },
     "search-item-name": {
         "label": "Item name"
@@ -251,7 +274,9 @@
         "sorts-classe":"Class spells",
         "sorts-elementaires":"Elemental spells",
         "sort-selectionne":"Selected spell",
-        "no-sort-selectionne":"No spell selected"
+        "no-sort-selectionne":"No spell selected",
+        "effet-normal":"Normal effect",
+        "effet-critique":"Critical effect"
     },
     "sort-choice-enum": {
         "POIDS": "Weight",

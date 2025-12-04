@@ -11,9 +11,10 @@
     "app": {
         "filter-item": "Filtro de itens",
         "sort-item": "Ordenação de itens",
-        "build": "Minhas construções",
-        "aptitudes":"Minhas aptidões",
-        "sorts": "Meus feitiços"
+        "build": "Construções",
+        "aptitudes":"Aptidões",
+        "sorts": "Feitiços",
+        "enchantement": "Encantamento"
     },
     "aptitudes": {
         "restant": "Restante: ",
@@ -60,6 +61,25 @@
     "builds-list": {
         "label": "Sua lista de builds",
         "no-build": "Você ainda não salvou nenhum build."
+    },
+    "enchantement": {
+        "chasses": "Chasses",
+        "effets": "Efeitos",
+        "resistance-feu": "Resistência ao fogo",
+        "resistance-eau": "Resistência à água",
+        "resistance-terre": "Resistência à terra",
+        "resistance-air": "Resistência ao ar",
+        "maitrise-elementaire": "Maestria elemental",
+        "maitrise-melee": "Maestria corpo a corpo",
+        "maitrise-distance": "Maestria à distância",
+        "maitrise-critique": "Maestria crítica",
+        "maitrise-dos": "Maestria pelas costas",
+        "maitrise-berserk": "Maestria berserker",
+        "soin": "Cura",
+        "vie": "Pontos de vida",
+        "tacle": "Bloqueio",
+        "esquive": "Evasão",
+        "initiative": "Iniciativa"
     },
     "import-build": {
         "label": "Importe seu build através de uma URL do Gearfu ou Zénith",
@@ -231,7 +251,10 @@
         "sagesse": "Sabedoria",
         "prospection": "Prospecção",
         "armure-donnee": "Armadura concedida",
-        "armure-recue": "Armadura recebida"
+        "armure-recue": "Armadura recebida",
+        "DI_indirect": "Danos indiretos",
+        "SR": "Cura realizada",
+        "DI": "Danos infligidos"
     },
     "search-item-name": {
         "label": "Nome do item"
@@ -251,7 +274,9 @@
         "sorts-classe":"Feitiços de classe",
         "sorts-elementaires":"Feitiços elementares",
         "sort-selectionne":"Feitiço selecionado",
-        "no-sort-selectionne":"Nenhum feitiço selecionado"
+        "no-sort-selectionne":"Nenhum feitiço selecionado",
+        "effet-normal":"Efeito normal",
+        "effet-critique":"Efeito crítico"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",
