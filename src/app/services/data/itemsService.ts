@@ -30,8 +30,7 @@ import { JobsItemCdn } from "../../models/ankama-cdn/jobsItemCdn";
 import { MonsterDropService } from "./monsterDropService";
 import { MonsterDrop } from "../../models/data/monsterDrop";
 import { isExcludeIdItem } from "../../models/enum/excludeIdItemEnum";
-import { RecapStats } from "../../models/data/recap-stats";
-import { SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
+import { BaseEffect, SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -213,7 +212,7 @@ export class ItemsService {
          maxLevel = Number.parseInt(tempMaxLevel || "0");
         }
         const isEpicOrRelic = sublimation.enchantement.isEpic || sublimation.enchantement.isRelic;
-        const baseEffects: RecapStats[] = [];
+        const baseEffects: BaseEffect[] = [];
         result.push({
           linkSublimation: linkSublimation,
           title: {

@@ -67,6 +67,21 @@ export class DescriptionSublimationComponent {
       return "";
     }
     const description = this.sublimationsDescriptionsSignal()!.description;
-    return description[this.translateService.currentLang as keyof typeof description];
+    const trad = description[this.translateService.currentLang as keyof typeof description];
+    return this.formatDescription(trad);
+  }
+
+  private formatDescription(description: string): string {
+    if(!this.sublimationsDescriptionsSignal()) {
+      return "";
+    } 
+    const baseEffects = this.sublimationsDescriptionsSignal()!.baseEffect;
+    let formattedDescription = description;
+    baseEffects.forEach((effect, index) => {
+      const value = effect.baseValue + effect.pas * (this.levelSignal() - 1);
+      const regex = new RegExp(`\\$\\{${index}\\}`, 'g');
+      formattedDescription = formattedDescription.replace(regex, value.toString());
+    });
+    return formattedDescription;
   }
 }

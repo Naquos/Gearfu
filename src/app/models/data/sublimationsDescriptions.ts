@@ -1,9 +1,13 @@
 import { IdChassesEnum } from "../enum/idChassesEnum";
-import { RecapStats } from "./recap-stats";
 
 export interface LinkSublimation {
     id: number;
     level: number;
+}
+
+export interface BaseEffect {
+    baseValue: number;
+    pas: number;
 }
 
 export interface SublimationsDescriptions {
@@ -22,7 +26,7 @@ export interface SublimationsDescriptions {
         es: string;
     };
     levelMax: number;
-    baseEffect: RecapStats[];
+    baseEffect: BaseEffect[];
     gfxId: number;
     isEpic: boolean;
     isRelic: boolean;
