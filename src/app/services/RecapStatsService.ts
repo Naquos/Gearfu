@@ -15,6 +15,7 @@ import { ClassIdEnum } from "../models/enum/classIdEnum";
 import { SortFormService } from "./form/sortFormService";
 import { SortIdEnum } from "../models/enum/sortIdEnum";
 import { ChasseFormService } from "./form/chasseFormService";
+import { IdSublimationEnum } from "../models/enum/idSublimationEnum";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
@@ -25,6 +26,15 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly classeFormService = inject(ClasseFormService);
   private readonly sortFormService = inject(SortFormService);
   private readonly chasseFormService = inject(ChasseFormService);
+
+  private readonly maitrisesSecondairesList: IdActionsEnum[] = [
+    IdActionsEnum.MAITRISES_CRITIQUES,
+    IdActionsEnum.MAITRISES_DOS,
+    IdActionsEnum.MAITRISES_SOIN,
+    IdActionsEnum.MAITRISES_BERZERK,
+    IdActionsEnum.MAITRISES_MELEE,
+    IdActionsEnum.MAITRISES_DISTANCES
+  ];
 
   private readonly naturalEffects: RecapStats[] = [
     { id: IdActionsEnum.PA, value: 6, params: [] },
@@ -101,21 +111,23 @@ export class RecapStatsService extends AbstractDestroyService {
       this.aptitudesFormService.recapStat$,
       this.levelFormService.level$,
       this.chasseFormService.recapChassesEffect$,
+      this.chasseFormService.sublimationsIdToLevel$,
       this.classeFormService.classe$,
       this.sortFormService.sortPassifs$,
     ]).pipe(
       takeUntil(this.destroy$),
       tap(() => this.resetEffects()),
-      map(([items, aptitudes, level, chasses]) => {
+      map(([items, aptitudes, level, chasses, sublimationsIdToLevel]) => {
         const extract = this.extractEquipEffects(items);
         const recapStat = this.mapToRecapStats(extract);
         recapStat.push(...aptitudes, ...chasses);
-        return {recapStat, level};
+        return {recapStat, level, sublimationsIdToLevel};
       }),
       tap(() => this.applyNatifEffects()),
       tap(() => this.applyEffectByClass()),
       tap((x => x.recapStat.forEach(effect => this.applyEffect(effect)))),
       tap(() => this.applyEffectPassif()),
+      tap(x => this.applyEffectSublimation(x.sublimationsIdToLevel)),
       tap(() => this.applyPdv()),
       tap(() => this.emitEffects()),
     ).subscribe();
@@ -128,6 +140,267 @@ export class RecapStatsService extends AbstractDestroyService {
       const level = this.levelFormService.getValue();
       const basePdv = 50 + level * 10;
       recapPdv.value = Math.floor((basePdv + recapPdv.value) * (1 + (recapPercentagePdv.value) / 100));
+    }
+  }
+
+  private allMaitrisesSecondairesNull(): boolean {
+    return this.maitrisesSecondairesList.every(id => {
+      const recap = this.recap.value.find(rs => rs.id === id);
+      return recap ? recap.value <= 0 : true;
+    });
+  }
+
+  private applyEffectSublimation(sublimationsIdToLevel: Map<number, number>): void {
+    const level = this.levelFormService.getValue();
+    sublimationsIdToLevel.forEach((levelSubli, id) => {
+      if(id === IdSublimationEnum.ABANDON && this.allMaitrisesSecondairesNull()) {
+        this.applyEffect({ id: IdActionsEnum.PORTEE, value: Math.floor(0.5 * levelSubli), params: [] });
+        this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: Math.floor(0.5 * levelSubli), params: [] });
+        this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: levelSubli * -5, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
+        this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: levelSubli * -5, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
+      } else if(id === IdSublimationEnum.ACCUMULATION) {
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: -20, params: [] });
+      } else if(id === IdSublimationEnum.AGILITE_VITALE) {
+        this.applyEffect({ id: IdActionsEnum.PM, value: Math.floor(0.5 * levelSubli), params: [] });
+      } else if(id === IdSublimationEnum.ALLOCENTRISME) {
+        this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: levelSubli * 5, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
+      } else if(id === IdSublimationEnum.AMBITION && this.allMaitrisesSecondairesNull()) {
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: levelSubli * 5, params: [] });
+      } else if(id === IdSublimationEnum.ARME_EMPOISONNEE) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: -20, params: [] });
+      } else if(id === IdSublimationEnum.ARMURE_LOURDE) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: 10, params: [] });
+        this.applyEffect({ id: IdActionsEnum.PM, value: -3 + levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.BOUCLIER_CRITIQUE) {
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_CRITIQUES, value: levelSubli * 5, params: [] });
+      } else if(id === IdSublimationEnum.BOUCLIER_DORSAL) {
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_DOS, value: levelSubli * 5, params: [] });
+      } else if(id === IdSublimationEnum.CARAPACE) {
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 75, params: [] });
+        this.applyEffect({ id: IdActionsEnum.PA, value: -3 + levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.CARNAGE) {
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: Math.floor(0.15 * level * levelSubli), params: [] });
+      } else if(id === IdSublimationEnum.CICATRISATION) {
+        this.applyEffect({ id: IdActionsEnum.PERCENTAGE_PV, value: levelSubli * 5, params: [] });
+      } else if(id === IdSublimationEnum.CLAMEUR) {
+        this.applyEffect({ id: IdActionsEnum.VOLONTE, value: -20, params: []});
+      } else if(id === IdSublimationEnum.COMBAT_RAPPROCHE) {
+        this.applyEffect({ id: IdActionsEnum.PORTEE, value: -1, params: [] });
+        this.applyEffect({ id: IdActionsEnum.TACLE, value: Math.floor(0.5 * level * levelSubli), params: [] });
+        this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: Math.floor(0.5 * level * levelSubli), params: [] });
+      } else if(id === IdSublimationEnum.CONSERVATION) {
+        this.applyEffect({ id: IdActionsEnum.PARADE, value: 10 * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.CRITIQUE_BERSERK) {
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: 5 * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.DEROBADE_CONTINUE) {
+        this.applyEffect({ id: IdActionsEnum.PARADE, value: 3 * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.DEVASTATION) {
+        this.applyEffect({ id: IdActionsEnum.PW, value: 1, params: [] });
+        this.applyEffect({ id: IdActionsEnum.VOLONTE, value: -40 + 10 * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.ECAILLES_DE_LUNE) {
+        this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: 3 * levelSubli, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
+      } else if(id === IdSublimationEnum.ENVELOPPE_ROCHEUSE) {
+        this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: 5 * levelSubli, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
+      } else if(id === IdSublimationEnum.ESQUIVE_BERSERK) {
+        this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: Math.floor(0.5 * level * levelSubli), params: [] });
+      } else if(id === IdSublimationEnum.EVASION) {
+        this.applyEffect({ id: IdActionsEnum.ESQUIVE, value:  Math.floor(0.5 * level * levelSubli), params: [] });
+      } else if(id === IdSublimationEnum.EXPERT_DES_ARMES_LEGERES) {
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: Math.floor(0.25 * level * levelSubli), params: [] });
+      } else if(id === IdSublimationEnum.EXPERT_DES_PARADES) {
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: -50, params: [] });
+      } else if(id === IdSublimationEnum.FOCALISATION) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: -15, params: [] });
+      } else if(id === IdSublimationEnum.FORCE_LEGERE) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: 3 * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.FUREUR) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: -15, params: [] });
+      } else if(id === IdSublimationEnum.INFLUENCE_DU_WAKFU) {
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: 10 * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.INFLUENCE) {
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: 3 * levelSubli, params: []});
+      } else if(id === IdSublimationEnum.INFLUENCE_VITALE) {
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: 4 * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.INTERCEPTION) {
+        this.applyEffect({ id: IdActionsEnum.TACLE, value: Math.floor(0.5 * level), params: [] });
+      } else if(id === IdSublimationEnum.NEUTRALITE && this.allMaitrisesSecondairesNull()) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: 8 * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.PARADE_BERSERK) {
+        this.applyEffect({ id: IdActionsEnum.PARADE, value: 5 * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.POIDS_PLUME) {
+        const pm = this.recap.value.find(rs => rs.id === IdActionsEnum.PM)?.value ?? 0;
+        const nbPm = Math.max(0, pm - 4);
+        this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: 2 * nbPm * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.PRETENTION) {
+        this.applyEffect({ id: IdActionsEnum.PARADE, value: 5 * levelSubli, params: [] });
+      } else if (id === IdSublimationEnum.PUISSANCE_BRUTE) {
+        this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: -1 * levelSubli, params: [] });
+      } else if (id === IdSublimationEnum.RAVAGE) {
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_BERZERK, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_CRITIQUES, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_DOS, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_MELEE, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_DISTANCES, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_SOIN, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 3 * levelSubli, params: [] });
+      } else if (id === IdSublimationEnum.REPROBATION) {
+        this.applyEffect({ id: IdActionsEnum.VOLONTE, value: -20, params: [] });
+      } else if (id === IdSublimationEnum.REVIGORATION) {
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: -10, params: [] });
+      } else if (id === IdSublimationEnum.RUINE) {
+        this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: 5 * levelSubli, params: [] });
+      } else if (id === IdSublimationEnum.SAUVEGARDE_DU_WAKFU) {
+        this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: -1, params: [] });
+      } else if (id === IdSublimationEnum.SECRET_DE_LA_VIE) {
+        const maitriseSoin = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_SOIN)?.value ?? 0;
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: - maitriseSoin, params: [] });
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: 10, params: [] });
+      } else if( id === IdSublimationEnum.TACLE_BERSERK) {
+        this.applyEffect({ id: IdActionsEnum.TACLE, value: 50 * levelSubli * level, params: [] });
+      } else if( id === IdSublimationEnum.THEORIE_DE_LA_MATIERE) {
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: 50 * levelSubli, params: [] });
+        this.applyEffect({ id: IdActionsEnum.DI, value: -50, params: [] });
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: -50, params: [] });
+      } else if( id === IdSublimationEnum.TOPOLOGIE) {
+        const esquive = this.recap.value.find(rs => rs.id === IdActionsEnum.ESQUIVE)?.value ?? 0;
+        this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: -esquive, params: []  });
+      } else if (id === IdSublimationEnum.VELOCITE) {
+        this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: []});
+        this.applyEffect({ id: IdActionsEnum.DI, value: -30 + 10 * levelSubli, params: []});
+      } else if (id === IdSublimationEnum.VISIBILITE) {
+        this.applyEffect({ id: IdActionsEnum.PORTEE, value: 1, params: []});
+        this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: -450 + 150 * levelSubli, params: []});
+        this.applyEffect({ id: IdActionsEnum.TACLE, value: -450 + 150 * levelSubli, params: []});
+      } else if (id === IdSublimationEnum.ABNEGATION) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: -15, params: [] });
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: 30, params: [] });
+      } else if (id === IdSublimationEnum.ANATOMIE) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: -20, params: []  });
+      } else if (id === IdSublimationEnum.APLOMB_NATUREL) {
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 50, params: [] });
+      } else if (id === IdSublimationEnum.ARROGANCE) {
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: -100, params: [] });
+      } else if (id === IdSublimationEnum.ASSIMILATION) {
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: -50, params: [] });
+      } else if (id === IdSublimationEnum.CHAOS) {
+        const elemFeu = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_FEU)?.value ?? 0;
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_FEU, value: -elemFeu, params: [] });
+        const elemEau = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_EAU)?.value ?? 0;
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_EAU, value: -elemEau, params: [] });
+        const elemTerre = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_TERRE)?.value ?? 0;
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_TERRE, value: -elemTerre, params: [] });
+        const elemAir = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_AIR)?.value ?? 0;
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_AIR, value: -elemAir, params: [] });
+
+        this.applyEffect({ id: IdActionsEnum.DI, value: 20, params: [] });
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: 20, params: [] });
+      } else if (id === IdSublimationEnum.CONCENTRATION_ELEMENTAIRE) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: 20, params: [] });
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: 20, params: [] });
+        this.applyNerfConcentrationElementaire();
+      } else if (id === IdSublimationEnum.CONSTANCE) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: 20, params: [] });
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: 50, params: [] });
+      } else if (id === IdSublimationEnum.CONSTANCE_II) {
+        this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: 40, params: [] });
+      } else if (id === IdSublimationEnum.CONTROLE_DE_L_ESPACE_II) {
+        this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: 30, params: [] });
+      } else if (id === IdSublimationEnum.DENOUEMENT) {
+        const maitriseCrit = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_CRITIQUES)?.value ?? 0;
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_CRITIQUES, value: -maitriseCrit, params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: maitriseCrit, params: [] });
+      } else if (id === IdSublimationEnum.ELEMENTALISME) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: 20, params: [] });
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: 20, params: [] });
+      } else if (id === IdSublimationEnum.ENGAGEMENT) {
+        const maitriseSoin = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_SOIN)?.value ?? 0;
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_SOIN, value: -maitriseSoin, params: [] });
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: 30, params: [] });
+      } else if (id === IdSublimationEnum.EXCES) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: -10, params: [] });
+      } else if (id === IdSublimationEnum.EXCES_II) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: -10, params: []  });
+      } else if (id === IdSublimationEnum.FORCE_HERCULEENNE) {
+        this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: Math.floor(2.5 * level), params: [] });
+      } else if (id === IdSublimationEnum.FURIE) {
+        const esquive = this.recap.value.find(rs => rs.id === IdActionsEnum.ESQUIVE)?.value ?? 0;
+        if(esquive > level) {
+          this.applyEffect({ id: IdActionsEnum.TACLE, value: level , params: [] });
+        }
+      } else if( id === IdSublimationEnum.FURIE_II ) {
+        this.applyEffect({ id: IdActionsEnum.PORTEE, value: 1, params: [] });
+      } else if(id === IdSublimationEnum.INFLEXIBILITE) {
+        this.applyEffect({ id: IdActionsEnum.DI, value: 15, params: [] });
+        if(level >= 100) {
+          this.applyEffect({ id: IdActionsEnum.DI, value: 10, params: [] });
+        }
+      } else if (id === IdSublimationEnum.MANIEMENT_BOUCLIER) {
+        const po = this.recap.value.find(rs => rs.id === IdActionsEnum.PORTEE)?.value ?? 0;
+        if(po > 0) {
+          this.applyEffect({ id: IdActionsEnum.PORTEE, value: -po, params: [] });
+        }
+        this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
+      } else if (id === IdSublimationEnum.MANIEMENT_DEUX_MAINS) {
+        this.applyEffect({ id: IdActionsEnum.PM, value: -2, params: [] });
+        this.applyEffect({ id: IdActionsEnum.PA, value: 2, params: [] });
+      } else if(id === IdSublimationEnum.MESURE) {
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: 10, params: [] });
+      } else if(id === IdSublimationEnum.MESURE_II) {
+        this.applyEffect({ id: IdActionsEnum.PARADE, value: 20, params: [] });
+        this.applyEffect({ id: IdActionsEnum.VOLONTE, value: 10, params: [] });
+      } else if(id === IdSublimationEnum.PACTE_WAKFU) {
+        this.applyEffect({ id: IdActionsEnum.VOLONTE, value: 10, params: [] });
+        this.applyEffect({ id: IdActionsEnum.PARADE, value: 15, params: [] });
+      } else if(id === IdSublimationEnum.PILLIER) {
+        this.applyEffect({ id: IdActionsEnum.PERCENTAGE_PV, value: 30, params: [] });
+        this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -50, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
+      } else if(id === IdSublimationEnum.PILLIER_II) {
+        this.applyEffect({ id: IdActionsEnum.PERCENTAGE_PV, value: -30, params: [] });
+        this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, value: 30, params: [] });
+      } else if (id === IdSublimationEnum.PRECISION_CHIRURGICALE) {
+        this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: 20, params: [] });
+        this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: 15, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
+      } else if( id === IdSublimationEnum.RENAISSANCE) {
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: -50, params: [] } );
+      } else if( id === IdSublimationEnum.SANTE_DE_FER) {
+        this.applyEffect({ id: IdActionsEnum.PERCENTAGE_PV, value: -30, params: [] } );
+        this.applyEffect({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, value: 30, params: [] } );
+      } else if( id === IdSublimationEnum.SCIENCE_DU_PLACEMENT) {
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 50, params: [] } );
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_DOS, value: -200, params: [] } );
+      } else if( id === IdSublimationEnum.SENTINELLE) {
+        this.applyEffect({ id: IdActionsEnum.PORTEE, value: 3, params: [] });
+      } else if( id === IdSublimationEnum.VOLONTE_DE_FER) {
+        this.applyEffect({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
+      }
+    });
+  }
+
+  private applyNerfConcentrationElementaire(): void {
+    const elemFeu = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_FEU)?.value ?? 0;
+    const elemEau = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_EAU)?.value ?? 0;
+    const elemTerre = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_TERRE)?.value ?? 0;
+    const elemAir = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_AIR)?.value ?? 0;
+    const elemMaitriseList: {id: number, value: number}[] = [
+      { id: IdActionsEnum.MAITRISES_FEU, value: elemFeu },
+      { id: IdActionsEnum.MAITRISES_EAU, value: elemEau },
+      { id: IdActionsEnum.MAITRISES_TERRE, value: elemTerre },
+      { id: IdActionsEnum.MAITRISES_AIR, value: elemAir },
+    ];
+    const sortedMaitrise = elemMaitriseList.sort((a, b) => b.value - a.value);
+    const highestMaitriseValue = sortedMaitrise[0].id;
+    if(IdActionsEnum.MAITRISES_FEU !== highestMaitriseValue) {
+      this.applyEffect({ id: IdActionsEnum.MAITRISES_FEU, value: Math.floor(0.3 * -elemFeu), params: [] });
+    }
+    if(IdActionsEnum.MAITRISES_EAU !== highestMaitriseValue) {
+      this.applyEffect({ id: IdActionsEnum.MAITRISES_EAU, value: Math.floor(0.3 * -elemEau), params: [] });
+    }
+    if(IdActionsEnum.MAITRISES_TERRE !== highestMaitriseValue) {
+      this.applyEffect({ id: IdActionsEnum.MAITRISES_TERRE, value: Math.floor(0.3 * -elemTerre), params: [] });
+    }
+    if(IdActionsEnum.MAITRISES_AIR !== highestMaitriseValue) {
+      this.applyEffect({ id: IdActionsEnum.MAITRISES_AIR, value: Math.floor(0.3 * -elemAir), params: [] });
     }
   }
 

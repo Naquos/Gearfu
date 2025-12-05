@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { FormControl } from "@angular/forms";
 import { AbstractFormService } from "./abstractFormService";
@@ -19,6 +19,7 @@ import { IdChassesEnum } from "../../models/enum/idChassesEnum";
 import { Enchantement } from "../../models/data/enchantement";
 import { SublimationsEpiqueRelique } from "../../models/data/sublimationEpiqueRelique";
 import { SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
+import { SublimationService } from "../data/sublimationService";
 
 @Injectable({providedIn: 'root'})
 export class ChasseFormService extends AbstractFormService<FormControl<Enchantement>> {
@@ -36,8 +37,13 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     private readonly enchantement = new BehaviorSubject<Enchantement>(ChasseFormService.DEFAULT_VALUE());
     public readonly enchantement$ = this.enchantement.asObservable();
 
+    private readonly sublimationsIdToLevel = new BehaviorSubject<Map<number, number>>(new Map());
+    public readonly sublimationsIdToLevel$ = this.sublimationsIdToLevel.asObservable();
+
     protected readonly keyEnum = KeyEnum.KEY_ENCHANTEMENT;
     public readonly form =  new FormControl<Enchantement>(ChasseFormService.DEFAULT_VALUE(), { nonNullable: true });
+
+    private readonly sublimationService = inject(SublimationService);
 
     private readonly indexToItemType = new Map<number, ItemTypeEnum>([
         [0, ItemTypeEnum.CASQUE],
@@ -217,8 +223,38 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
             });
         });
 
+        const sublimationList = value.chasseCombinaison.filter(x => !!x.sublimation).map(x => x.sublimation) as Sublimation[];
+
+        const mapIdToLevel = this.calculMaxSublimationLevel(sublimationList);
+        if(value.epique) {
+            mapIdToLevel.set(value.epique.id, 1);
+        }
+        if(value.relique) {
+            mapIdToLevel.set(value.relique.id, 1);
+        }
+
+        this.sublimationsIdToLevel.next(mapIdToLevel);
         this.enchantement.next(value);
         this.recapChassesEffect.next(recapStats);
+    }
+
+    private calculMaxSublimationLevel(sublimationList: Sublimation[]): Map<number, number> {
+        const mapIdToMaxLevel = new Map<number, number>();
+        sublimationList.forEach(sublimation => {
+            const current = mapIdToMaxLevel.get(sublimation.id);
+            if (current === undefined) {
+                mapIdToMaxLevel.set(sublimation.id, sublimation.level);
+            } else {
+                mapIdToMaxLevel.set(sublimation.id, current + sublimation.level);
+            }
+        });
+        mapIdToMaxLevel.forEach((level, id) => {
+            const levelMax = this.sublimationService.getSublimationById(id)?.levelMax;
+            if (levelMax !== undefined && level > levelMax) {
+                mapIdToMaxLevel.set(id, Math.min(level, levelMax));
+            }
+        });
+        return mapIdToMaxLevel;
     }
     
     public override setValue(value: Enchantement | null): void {

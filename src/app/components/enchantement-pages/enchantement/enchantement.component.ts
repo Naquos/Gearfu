@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { map } from 'rxjs';
 import { Sublimation } from '../../../models/data/sublimation';
 import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqueRelique';
-import { SublimationService } from '../../../services/data/sublimationsService';
+import { SublimationService } from '../../../services/data/sublimationService';
 import { LinkSublimation, SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { TooltipService } from '../../../services/TooltipService';
 import { DescriptionSublimationComponent, DescriptionSublimationType } from '../description-sublimation/description-sublimation.component';

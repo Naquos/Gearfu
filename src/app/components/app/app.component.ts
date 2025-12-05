@@ -35,7 +35,7 @@ import { ResumeAptitudesComponent } from "../aptitudes-pages/resume-aptitudes/re
 import { filter } from 'rxjs';
 import { ItemChooseComponent } from '../items-pages/item-choose/item-choose.component';
 import { SortService } from '../../services/data/sortService';
-import { SublimationService } from '../../services/data/sublimationsService';
+import { SublimationService } from '../../services/data/sublimationService';
 
 type column = 'filter' | 'build' | 'aptitudes';
 
