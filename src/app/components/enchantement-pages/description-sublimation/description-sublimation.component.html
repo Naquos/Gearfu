@@ -3,11 +3,13 @@
 <div class="header">
     <img [src]="getUrlSublimationImage()" alt="" />
     <span>{{ getSublimationTitle() }}</span>
+    <div class="chasses">
+        @for(chasse of sublimationsDescriptionsSignal()?.slotColorPattern; track $index) {
+            <img [src]="imageService.getChasseColorUrlById(chasse)" [alt]="">
+        }
+    </div>
 </div>
 <div class="content">
-    <div>
-        <!-- CODE SUBLI -->
-    </div>
     <div>
         {{ getSublimationDescription() }}
     </div>

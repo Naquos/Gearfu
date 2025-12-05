@@ -46,4 +46,13 @@ export class SublimationService {
     public getSublimationsEpiqueRelique(): SublimationsDescriptions[] {
         return this.sublimationsEpiqueRelique;
     }
+
+    public getSublimationById(id: number): SublimationsDescriptions | undefined {
+        for (const sublimation of this.sublimations.values()) {
+            if (sublimation.id === id) {
+                return sublimation;
+            }
+        }
+        return undefined;
+    }
 }

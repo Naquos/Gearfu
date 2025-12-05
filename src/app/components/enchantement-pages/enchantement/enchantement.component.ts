@@ -61,7 +61,14 @@ export class EnchantementComponent {
   protected readonly levelSublimationToApply = signal<number | undefined>(undefined);
   protected readonly indexItemTypeSelected = signal<number>(-1);
 
-  protected openTooltip(event: MouseEvent, sublimationDescriptions: SublimationsDescriptions, level: number): void {
+  protected openTooltip(event: MouseEvent, sublimationDescriptions: SublimationsDescriptions | Sublimation | undefined, level: number): void {
+    if(!sublimationDescriptions) {
+      return;
+    }
+    let description = sublimationDescriptions;
+    if('isValid' in description) {
+      description = this.sublimationService.getSublimationById(sublimationDescriptions.id)!;
+    }
     this.tooltipService.forceClose();
     if(sublimationDescriptions) {
       this.tooltipService.cancelClose();
@@ -70,7 +77,7 @@ export class EnchantementComponent {
         this.viewContainerRef, 
         DescriptionSublimationComponent, 
         event, 
-        {sublimationsDescriptions: sublimationDescriptions, level},
+        {sublimationsDescriptions: description, level},
         [{
           originX: 'end', originY: 'top',
           overlayX: 'end', overlayY: 'bottom',
@@ -129,6 +136,10 @@ export class EnchantementComponent {
     {id: 13, chasse: {color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.RESISTANCES_AIR}, libelle: "enchantement.resistance-air", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.CAPE]},
     {id: 14, chasse: {color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.POINT_DE_VIE}, libelle: "enchantement.vie", logos: [ItemTypeEnum.CASQUE, ItemTypeEnum.UNE_MAIN]},
   ]
+
+  protected onMouseLeave(): void {
+    this.tooltipService.closeTooltip();
+  }
 
   protected getUrlSublimationImage(linkSublimation: LinkSublimation): string {
     let id = -1;

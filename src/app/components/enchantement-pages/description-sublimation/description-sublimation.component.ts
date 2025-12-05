@@ -33,8 +33,11 @@ export class DescriptionSublimationComponent {
   }
 
   protected getUrlSublimationImage(): string {
-    if(this.levelSignal() === undefined) {
+    if(!this.levelSignal() || !this.sublimationsDescriptionsSignal()) {
       return "";
+    }
+    if(this.sublimationsDescriptionsSignal()?.isEpic || this.sublimationsDescriptionsSignal()?.isRelic) {
+      return this.imageService.getItemUrl(this.sublimationsDescriptionsSignal()!.gfxId);
     }
     let id = 81228822;
     switch(this.levelSignal()) {
