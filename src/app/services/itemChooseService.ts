@@ -14,6 +14,7 @@ import { Item } from "../models/data/item";
 import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
+import { UrlServices } from "./urlServices";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService extends AbstractDestroyService {
@@ -27,6 +28,7 @@ export class ItemChooseService extends AbstractDestroyService {
     private readonly maitrisesFormService = inject(MaitrisesFormService);
     private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
     private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
+    private readonly urlServices = inject(UrlServices);
 
 
     private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>(
@@ -123,10 +125,11 @@ export class ItemChooseService extends AbstractDestroyService {
     }
 
     private initItemChooses(): void {
-        this.activatedRoute.queryParams.pipe(
-            takeUntil(this.destroy$),
-            filter(x => x !== undefined),
-            map(x => x["itemsId"] ? x["itemsId"] as string : this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD)),
+        // this.activatedRoute.queryParams.pipe(
+        //     takeUntil(this.destroy$),
+        //     filter(x => x !== undefined),
+        //     map(x => x["itemsId"] ? x["itemsId"] as string : this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD)),
+    this.urlServices.itemsId$.pipe(
             filter(x => x !== undefined && x !== null),
             take(1),
             map(x => x.split(",")),

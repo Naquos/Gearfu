@@ -182,6 +182,9 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         chasses[posX] = chasse;
         chasseToUpdate.chasses = chasses;
         currentChasses[posY] = chasseToUpdate;
+        if (chasseToUpdate.sublimation) {
+            chasseToUpdate.sublimation.isValid = this.canApplySublimation(chasseToUpdate, chasseToUpdate.sublimation!);
+        } 
         this.setValue({...enchantement, chasseCombinaison: currentChasses});
     }
 
