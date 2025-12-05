@@ -3376,16 +3376,16 @@
       "pt": "Esquiva Berserk"
     },
     "description": {
-      "fr": "Lorsque les PV sont inférieurs à 50% :${0} % Esquive.",
-      "en": "When HP is less than 50%: ${0} % Dodge.",
-      "es": "Cuando HP es inferior al 50%: ${0} % de esquiva.",
-      "pt": "Quando o HP é inferior a 50%: ${0} % de esquiva."
+      "fr": "Lorsque les PV sont inférieurs à 50% :${0} % du niveau en Esquive.",
+      "en": "When HP is less than 50%: ${0} % of level in Dodge.",
+      "es": "Cuando HP es inferior al 50%: ${0} %  de nivel en Esquivar.",
+      "pt": "Quando o HP é inferior a 50%: ${0} %  de nível em Esquiva."
     },
     "levelMax": 6,
     "baseEffect": [
       {
-        "baseValue": 10,
-        "pas": 10
+        "baseValue": 50,
+        "pas": 50
       }
     ],
     "id": 28858,
@@ -4606,7 +4606,7 @@
       "pt": "Interceptação"
     },
     "description": {
-      "fr": "En début de combat : ${0} % du niveau en Esquive.",
+      "fr": "En début de combat : ${0} % du niveau en Tacle.",
       "en": "At the start of the fight: ${0} % of the level in Tackle.",
       "es": "Al inicio del combate: ${0} % del nivel en Tackle.",
       "pt": "No início da luta: ${0} % do nível em Tackle."
@@ -4650,9 +4650,10 @@
       "pt": "Interposição"
     },
     "description": {
-      "fr": "Après avoir taclé un ennemi : ${0} en Armure.",
-      "es": "Después de atacar a un enemigo: ${0} de Armadura.",
-      "pt": "Depois de enfrentar um inimigo: ${0} de armadura."
+      "fr": "Après avoir taclé un ennemi : ${0}% du niveau en Armure.",
+      "en": "After tackling an enemy: ${0}% of the level in Armor.",
+      "es": "Después de atacar a un enemigo: ${0}% del nivel en Armadura.",
+      "pt": "Depois de enfrentar um inimigo: ${0}% do nível em Armadura."
     },
     "levelMax": 6,
     "baseEffect": [
@@ -6166,13 +6167,17 @@
       "pt": "Potência Bruta"
     },
     "description": {
-      "fr": "En début de combat :-1 PW max.Pour chaque PW dépensé au cours du tour :${0} % Dommages infligés (1 tour) (max 16).",
-      "en": "At the start of the fight: -1 PW max. For each PW spent during the turn: ${0} % Damage inflicted (1 turn) (max 16).",
-      "es": "Al inicio de la pelea: -1 PW máx. Por cada PW gastada durante el turno: ${0} % de daño infligido (1 turno) (máximo 16).",
-      "pt": "No início da luta: -1 PW máx. Para cada PW gasto durante o turno: ${0} % de dano infligido (1 turno) (máx. 16)."
+      "fr": "En début de combat : ${0} PW max.Pour chaque PW dépensé au cours du tour :${1} % Dommages infligés (1 tour) (max 16).",
+      "en": "At the start of the fight: ${0} PW max. For each PW spent during the turn: ${1} % Damage inflicted (1 turn) (max 16).",
+      "es": "Al inicio de la pelea: ${0} PW máx. Por cada PW gastada durante el turno: ${1} % de daño infligido (1 turno) (máximo 16).",
+      "pt": "No início da luta: ${0} PW máx. Para cada PW gasto durante o turno: ${1} % de dano infligido (1 turno) (máx. 16)."
     },
     "levelMax": 4,
     "baseEffect": [
+      {
+        "baseValue": -1,
+        "pas": -1
+      },
       {
         "baseValue": 2,
         "pas": 2
@@ -6254,16 +6259,20 @@
       "pt": "Assolação"
     },
     "description": {
-      "fr": "En début de combat :Toutes les Maîtrises : ${0} % du niveau.Toutes les Résistances : +3.",
-      "en": "At the start of the fight: All Masteries: ${0} % of the level. All Resistances: +3.",
-      "es": "Al inicio del combate: Todas las Maestrías: ${0} % del nivel. Todas las resistencias: +3.",
-      "pt": "No início da luta: Todas as Maestrias: ${0} % do nível. Todas as resistências: +3."
+      "fr": "En début de combat :Toutes les Maîtrises : ${0} % du niveau.Toutes les Résistances : +${1}.",
+      "en": "At the start of the fight: All Masteries: ${0} % of the level. All Resistances: +${1}.",
+      "es": "Al inicio del combate: Todas las Maestrías: ${0} % del nivel. Todas las resistencias: +${1}.",
+      "pt": "No início da luta: Todas as Maestrias: ${0} % do nível. Todas as resistências: +${1}."
     },
     "levelMax": 4,
     "baseEffect": [
       {
         "baseValue": 5,
         "pas": 5
+      },
+      {
+        "baseValue": 3,
+        "pas": 3
       }
     ],
     "id": 28826,
@@ -6290,20 +6299,20 @@
       "pt": "Assolação Secundária"
     },
     "description": {
-      "fr": "En début de combat :${1} % Coup Critique, ${0} % Parade, 3 Volonté.",
-      "en": "At the start of the fight: ${1} % Critical Hit, ${0} % Parry, 3 Willpower.",
-      "es": "Al inicio de la pelea: ${1} % de golpe crítico, ${0} % de parada, 3 de fuerza de voluntad.",
-      "pt": "No início da luta: ${1} % de acerto crítico, ${0} % de aparar, 3 de força de vontade."
+      "fr": "En début de combat :${1} % Coup Critique, ${0} % Parade, ${0} Volonté.",
+      "en": "At the start of the fight: ${1} % Critical Hit, ${0} % Parry, ${0} Willpower.",
+      "es": "Al inicio de la pelea: ${1} % de golpe crítico, ${0} % de parada, ${0} de fuerza de voluntad.",
+      "pt": "No início da luta: ${1} % de acerto crítico, ${0} % de aparar, ${0} de força de vontade."
     },
     "levelMax": 6,
     "baseEffect": [
       {
-        "baseValue": 3,
-        "pas": 3
+        "baseValue": 1.5,
+        "pas": 1.5
       },
       {
-        "baseValue": 3,
-        "pas": 3
+        "baseValue": 1.5,
+        "pas": 1.5
       }
     ],
     "id": 27140,
@@ -7362,13 +7371,16 @@
       "pt": "Bloqueio Berserk"
     },
     "description": {
-      "fr": "Lorsque les PV sont inférieurs à 50 % : vole 10 % du niveau en Tacle.",
-      "en": "When HP is below 50%: steals 10% of the level in Tackle.",
-      "es": "Cuando HP está por debajo del 50%: roba 10% del nivel de placaje.",
-      "pt": "Quando o HP está abaixo de 50%: rouba 10% do nível de tackle."
+      "fr": "Lorsque les PV sont inférieurs à 50 % : ${0}% du niveau en Tacle.",
+      "en": "When HP is below 50%: ${0}% of the level in Tackle.",
+      "es": "Cuando HP está por debajo del 50%: ${0}% del nivel de placaje.",
+      "pt": "Quando o HP está abaixo de 50%: ${0}% do nível de tackle."
     },
     "levelMax": 6,
-    "baseEffect": [],
+    "baseEffect": [{
+      "baseValue": 50,
+      "pas": 50
+    }],
     "id": 28852,
     "gfxId": 81228822,
     "isEpic": false,
