@@ -30,6 +30,8 @@ import { JobsItemCdn } from "../../models/ankama-cdn/jobsItemCdn";
 import { MonsterDropService } from "./monsterDropService";
 import { MonsterDrop } from "../../models/data/monsterDrop";
 import { isExcludeIdItem } from "../../models/enum/excludeIdItemEnum";
+import { RecapStats } from "../../models/data/recap-stats";
+import { SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -166,8 +168,82 @@ export class ItemsService {
       return result;
     }
 
+    private loadSublimations(): void {
+
+      const sublimations = this.items.filter(x => x.itemTypeId === ItemTypeDefinitionEnum.SUBLIMATIONS);
+      //Nettoyage des sublimations
+      const sublimationsCleaned: Item[] = sublimations.filter(x => x.enchantement.isEpic || x.enchantement.isRelic 
+        || ["I", "II", "III"].includes(x.title.fr.split(' ').pop() || ""))
+        .sort((a, b) => a.title.fr.localeCompare(b.title.fr));
+      this.sublimations.next(sublimationsCleaned);
+      console.log(`Loaded ${sublimationsCleaned.length} sublimations`, sublimationsCleaned);
+      this.prepareJsonSublimations(sublimationsCleaned);
+    }
+
+    private prepareJsonSublimations(sublimations: Item[]): void {
+      const result: SublimationsDescriptions[] = [];
+
+      const mapSublimations = new Map<string, Item[]>();
+      sublimations.forEach(sublimation => {
+        if(sublimation.enchantement.isEpic || sublimation.enchantement.isRelic) {
+          mapSublimations.set(sublimation.title.fr, [sublimation]);
+        } else {
+          const baseTitle = sublimation.title.fr.replace(/ I{1,3}$| II$| III$/,'').trim();
+          if(!mapSublimations.has(baseTitle)) {
+            mapSublimations.set(baseTitle, []);
+          }
+          mapSublimations.get(baseTitle)?.push(sublimation);
+        }
+      });
+      mapSublimations.forEach((sublimationList) => {
+        const linkSublimation: {id: number; level: 1 | 2 | 3}[] = [];
+        sublimationList.forEach(sublimation => {
+          if(sublimation.enchantement.isEpic || sublimation.enchantement.isRelic) {
+            linkSublimation.push({id: sublimation.id, level: 1});
+          } else {
+            const level = sublimation.title.fr.endsWith(' III') ? 3 : sublimation.title.fr.endsWith(' II') ? 2 : 1;
+            linkSublimation.push({id: sublimation.id, level: level as 1 | 2 | 3});
+          }
+        });
+        let maxLevel = 0;
+        const sublimation = sublimationList[0];
+
+        if(!sublimation.enchantement.isEpic && !sublimation.enchantement.isRelic) {
+          const tempMaxLevel = sublimation.description.fr.slice(sublimation.description.fr.length - 2, sublimation.description.fr.length -1);
+         maxLevel = Number.parseInt(tempMaxLevel || "0");
+        }
+        const isEpicOrRelic = sublimation.enchantement.isEpic || sublimation.enchantement.isRelic;
+        const baseEffects: RecapStats[] = [];
+        result.push({
+          linkSublimation: linkSublimation,
+          title: {
+            fr: isEpicOrRelic ? sublimationList[0].title.fr : sublimationList[0].title.fr.replace(/ I{1,3}$| II$| III$/,'').trim(),
+            en: isEpicOrRelic ? sublimationList[0].title.en : sublimationList[0].title.en.replace(/ I{1,3}$| II$| III$/,'').trim(),
+            es: isEpicOrRelic ? sublimationList[0].title.es : sublimationList[0].title.es.replace(/ I{1,3}$| II$| III$/,'').trim(),
+            pt: isEpicOrRelic ? sublimationList[0].title.pt : sublimationList[0].title.pt.replace(/ I{1,3}$| II$| III$/,'').trim(),
+          },
+          description: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+          },
+          levelMax: maxLevel,
+          baseEffect: baseEffects,
+          id: linkSublimation[0].id,
+          gfxId: sublimation.idImage,
+          isEpic: sublimation.enchantement.isEpic,
+          isRelic: sublimation.enchantement.isRelic,
+          slotColorPattern: sublimation.enchantement.slotColorPattern
+        });
+      });
+
+      console.log(result);
+
+    }
+
     private initFilter(): void {
-      this.sublimations.next(this.items.filter(x => x.itemTypeId === ItemTypeDefinitionEnum.SUBLIMATIONS).sort((a, b) => a.title.fr.localeCompare(b.title.fr)));
+      // this.loadSublimations();
       this.items = this.items.filter(x => ![ItemTypeDefinitionEnum.LANTERNE, ItemTypeDefinitionEnum.STATISTIQUES, ItemTypeDefinitionEnum.SUBLIMATIONS].includes(x.itemTypeId))
         .filter(x => this.isNotWIP(x));
       this.fullItems$.next(this.items);

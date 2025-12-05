@@ -222,6 +222,32 @@
                         border-radius: 5px;
                         border: 2px solid #0D1B2A;
                         text-align: center;
+
+                        .row {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin: 5px 0;
+                            width: 100%;
+
+                            div {
+                                width: 49%;
+                                display: flex;
+                            }
+                        }
+
+                        img {
+                            width: 25px;
+                            height: 25px;
+                        }
+
+                        .parchemins:hover {
+                            transform: scale(1.4);
+                        }
+                        .parchemins-selected {
+                            background-color: #14385f;
+                            border-radius: 5px;
+                        }
                     }
                     .subli-container:hover {
                         transform: scale(1.1);

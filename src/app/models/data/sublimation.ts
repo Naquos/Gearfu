@@ -10,4 +10,5 @@ export interface Sublimation {
     },
     slotColorPattern: IdChassesEnum[];
     isValid: boolean;
+    level: number;
 }

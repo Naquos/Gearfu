@@ -35,6 +35,7 @@ import { ResumeAptitudesComponent } from "../aptitudes-pages/resume-aptitudes/re
 import { filter } from 'rxjs';
 import { ItemChooseComponent } from '../items-pages/item-choose/item-choose.component';
 import { SortService } from '../../services/data/sortService';
+import { SublimationService } from '../../services/data/sublimationsService';
 
 type column = 'filter' | 'build' | 'aptitudes';
 
@@ -80,6 +81,7 @@ export class AppComponent implements OnInit{
   private readonly monsterDropService = inject(MonsterDropService);
   private readonly itemConditionService = inject(ItemConditionService);
   private readonly statesDefinitionService = inject(StatesDefinitionService);
+  private readonly sublimationService = inject(SublimationService);
   private readonly sortService = inject(SortService);
   private readonly router = inject(Router);
 
@@ -113,6 +115,7 @@ export class AppComponent implements OnInit{
     this.statesDefinitionService.load();
     this.sortService.load();
     this.itemService.init();
+    this.sublimationService.load();
 
     this.displayFilterService.isDisplayed$.subscribe((value: boolean) => {
       this.displayFilter = value;

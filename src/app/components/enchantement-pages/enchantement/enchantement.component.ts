@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ViewContainerRef } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { ChasseFormService } from '../../../services/form/chasseFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -12,11 +12,13 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import {MatSliderModule} from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { ItemsService } from '../../../services/data/itemsService';
 import { map } from 'rxjs';
-import { Item } from '../../../models/data/item';
 import { Sublimation } from '../../../models/data/sublimation';
 import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqueRelique';
+import { SublimationService } from '../../../services/data/sublimationsService';
+import { LinkSublimation, SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
+import { TooltipService } from '../../../services/TooltipService';
+import { DescriptionSublimationComponent, DescriptionSublimationType } from '../description-sublimation/description-sublimation.component';
 
 interface DisplayTypeItem {
   indexItem: number;
@@ -39,37 +41,61 @@ interface EffetDescription {
 })
 export class EnchantementComponent {
 
-  private readonly itemsService = inject(ItemsService);
+  private readonly sublimationService = inject(SublimationService);
   private readonly translateService = inject(TranslateService);
+  private readonly tooltipService = inject(TooltipService<DescriptionSublimationType>);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  
   protected readonly imageService = inject(ImageService);
   protected readonly chasseFormService = inject(ChasseFormService);
   protected readonly chasses = toSignal(this.chasseFormService.enchantement$.pipe(map(enchantement => enchantement.chasseCombinaison)));
   protected readonly enchantement = toSignal(this.chasseFormService.enchantement$);
   protected readonly itemTypeService = inject(ItemTypeServices);
-  protected readonly sublimations = toSignal(this.itemsService.sublimations$.pipe(map(items => items.filter(subli => !subli.enchantement.isEpic && !subli.enchantement.isRelic))));
-  protected readonly sublimationsEpiqueRelique = toSignal(this.itemsService.sublimations$.pipe(map(items => items.filter(subli => subli.enchantement.isEpic || subli.enchantement.isRelic))));
+  protected readonly sublimations = signal(this.sublimationService.getSublimations());
+  protected readonly sublimationsEpiqueRelique = signal(this.sublimationService.getSublimationsEpiqueRelique());
   protected searchSubli = signal("");
   protected readonly ItemTypeEnum = ItemTypeEnum;
   protected readonly effectToApply = signal<EffetDescription | undefined>(undefined);
   protected readonly itemTypeSelected = signal<ItemTypeEnum | undefined>(undefined);
-  protected readonly sublimationToApply = signal<Item | undefined>(undefined);
+  protected readonly sublimationToApply = signal<SublimationsDescriptions | undefined>(undefined);
+  protected readonly levelSublimationToApply = signal<number | undefined>(undefined);
   protected readonly indexItemTypeSelected = signal<number>(-1);
+
+  protected openTooltip(event: MouseEvent, sublimationDescriptions: SublimationsDescriptions, level: number): void {
+    this.tooltipService.forceClose();
+    if(sublimationDescriptions) {
+      this.tooltipService.cancelClose();
+      // Le 7ème paramètre active le comportement "garder ouvert au survol"
+      this.tooltipService.openTooltip(
+        this.viewContainerRef, 
+        DescriptionSublimationComponent, 
+        event, 
+        {sublimationsDescriptions: sublimationDescriptions, level},
+        [{
+          originX: 'end', originY: 'top',
+          overlayX: 'end', overlayY: 'bottom',
+          offsetY: -10
+        }],  // connectedPosition
+        true,       // withPush
+        false        // keepOpenOnHover
+      );
+    }
+  }
 
   protected readonly sublimationsList = computed(() => {
     this.chasses();
     const search = this.searchSubli().toLowerCase();
-    return this.sublimations()?.filter(subli => this.nameItem(subli).toLowerCase().includes(search))
+    return this.sublimations()?.filter(subli => (this.nameItem(subli).toLowerCase().includes(search)
+       || this.descriptionSublimation(subli).toLowerCase().includes(search)))
     .filter(x => this.indexItemTypeSelected() === -1 
         || this.chasseFormService.canApplySublimationWithItem(this.chasses()![this.indexItemTypeSelected()], x) );
   })
 
   protected readonly sublimationsEpiqueReliqueList = computed(() => {
     const search = this.searchSubli().toLowerCase();
-    return this.sublimationsEpiqueRelique()?.filter(subli => this.nameItem(subli).toLowerCase().includes(search));
+    return this.sublimationsEpiqueRelique()?.filter(subli => this.nameItem(subli).toLowerCase().includes(search) 
+      || this.descriptionSublimation(subli).toLowerCase().includes(search));
   });
-
-  
-  
 
   protected level = 11;
 
@@ -104,43 +130,72 @@ export class EnchantementComponent {
     {id: 14, chasse: {color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.POINT_DE_VIE}, libelle: "enchantement.vie", logos: [ItemTypeEnum.CASQUE, ItemTypeEnum.UNE_MAIN]},
   ]
 
+  protected getUrlSublimationImage(linkSublimation: LinkSublimation): string {
+    let id = -1;
+    switch(linkSublimation.level) {
+      case 1:
+        id = 81228822;
+        break;
+      case 2:
+        id = 81228823;
+        break;
+      default:
+        id = 81227111;
+        break;
+    }
+    return this.imageService.getItemUrl(id);
+  }
+
   protected applySublimationEpicRelic() {
-    if(!this.sublimationToApply() || (!this.sublimationToApply()!.enchantement.isEpic && !this.sublimationToApply()!.enchantement.isRelic)) {
+    if(!this.sublimationToApply() || (!this.sublimationToApply()!.isEpic && !this.sublimationToApply()!.isRelic)) {
       return;
     }
     this.chasseFormService.applySublimationEpicRelic({
       id: this.sublimationToApply()!.id,
-      idImage: this.sublimationToApply()!.idImage,
+      idImage: this.sublimationToApply()!.gfxId,
       title: this.sublimationToApply()!.title,
-      epique: this.sublimationToApply()!.enchantement.isEpic,
-      relique: this.sublimationToApply()!.enchantement.isRelic
+      epique: this.sublimationToApply()!.isEpic,
+      relique: this.sublimationToApply()!.isRelic
     });
   }
 
   protected applySublimation(posY: number) {
-    if(!this.sublimationToApply() || this.sublimationToApply()!.enchantement.isEpic || this.sublimationToApply()!.enchantement.isRelic) {
+    if(!this.sublimationToApply()) {
+      this.chasseFormService.removeSublimation(posY);
+      return;
+    }
+    if(this.sublimationToApply()!.isEpic || this.sublimationToApply()!.isRelic) {
       return;
     }
     this.chasseFormService.applySumblimation(posY, {
       id: this.sublimationToApply()!.id,
       title: this.sublimationToApply()!.title,
-      slotColorPattern: this.sublimationToApply()!.enchantement.slotColorPattern,
-      isValid: false
+      slotColorPattern: this.sublimationToApply()!.slotColorPattern,
+      isValid: false,
+      level: this.levelSublimationToApply() || 1
     });
   }
 
-  protected nameItem(item: Item | undefined): string {
-    if(!item) {
+  protected nameItem(sublimation: SublimationsDescriptions | undefined): string {
+    if(!sublimation) {
       return "";
     }
-    return item.title[this.translateService.currentLang as keyof typeof item.title];
+    return sublimation.title[this.translateService.currentLang as keyof typeof sublimation.title];
+  }
+
+  protected descriptionSublimation(sublimation: SublimationsDescriptions | undefined): string {
+    if(!sublimation) {
+      return "";
+    }
+    return sublimation.description[this.translateService.currentLang as keyof typeof sublimation.description];
   }
 
   protected nameSublimation(sublimation: Sublimation | undefined): string {
     if(!sublimation) {
       return "";
     }
-    return sublimation.title[this.translateService.currentLang as keyof typeof sublimation.title];
+    const levelSublimation = sublimation.level === 1 ? "I" : sublimation.level === 2 ? "II" : sublimation.level === 3 ? "III" : "";
+    return `${sublimation.title[this.translateService.currentLang as keyof typeof sublimation.title]} ${levelSublimation} `;
   }
 
   protected nameSublimationEpicRelic(sublimation: SublimationsEpiqueRelique | undefined): string {
@@ -150,12 +205,14 @@ export class EnchantementComponent {
     return sublimation.title[this.translateService.currentLang as keyof typeof sublimation.title];
   }
 
-  protected chooseSublimation(item: Item) {
+  protected chooseSublimation(sublimation: SublimationsDescriptions, level: number) {
     this.effectToApply.set(undefined);
-    this.sublimationToApply.set(item);
+    this.sublimationToApply.set(sublimation);
+    this.levelSublimationToApply.set(level);
   }
 
   protected chooseEffet(effet: EffetDescription) {
+    this.levelSublimationToApply.set(undefined);
     this.sublimationToApply.set(undefined);
     this.effectToApply.set(effet);
   }

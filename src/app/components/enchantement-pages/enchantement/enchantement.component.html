@@ -33,7 +33,7 @@
                                     >
                                     <img [src]="imageService.getChasseColorUrl(c)" [alt]="">
                                     @if(c.idAction) {
-                                        <div class="action-image"> 
+                                        <div class="action-image" (dblclick)="chasseFormService.clearEffect(indexParent, $index)"> 
                                             <span>{{c.lvl}}</span>
                                             <img [src]="imageService.getActionIdUrl(c.idAction)" [alt]="">
                                         </div>
@@ -52,6 +52,7 @@
                     }
                     <div class="epique-relique">
                         <div class="epique" 
+                            (click)="chasseFormService.removeEpic()"
                             (contextmenu)="$event.preventDefault();chasseFormService.removeEpic();">
                             @if(enchantement()?.epique) {
                                 <img [src]="imageService.getItemUrl(enchantement()!.epique!.idImage)" alt="">
@@ -61,6 +62,7 @@
                             }
                         </div>
                         <div class="relique"
+                            (click)="chasseFormService.removeRelic()"
                             (contextmenu)="$event.preventDefault();chasseFormService.removeRelic();">
                             @if(enchantement()?.relique) {
                                 <img [src]="imageService.getItemUrl(enchantement()!.relique!.idImage)" alt="">
@@ -107,25 +109,37 @@
 
                     <div class="slider-container">
                         @for(sublimation of sublimationsList(); track $index) {
-                            <div class="subli-container" (click)="chooseSublimation(sublimation)"
+                            <div class="subli-container"
                                 [class.selected]="sublimationToApply() && sublimationToApply()!.id === sublimation.id">
                                 <span>{{nameItem(sublimation)}}</span>
-                                <div>
-                                    @for(chasse of sublimation.enchantement.slotColorPattern; track $index) {
-                                        <img [src]="imageService.getChasseColorUrlById(chasse)" [alt]="">
-                                    }
+                                <div class="row">
+                                    <div>
+                                        @for(chasse of sublimation.slotColorPattern; track $index) {
+                                            <img [src]="imageService.getChasseColorUrlById(chasse)" [alt]="">
+                                        }
+                                    </div>
+                                    <div>
+                                        @for(linkSublimation of sublimation.linkSublimation; track $index) {
+                                            <img class="parchemins" (click)="chooseSublimation(sublimation, linkSublimation.level)"
+                                                (mouseenter)="openTooltip($event, sublimation, linkSublimation.level)" 
+                                                [src]="getUrlSublimationImage(linkSublimation)" [alt]=""
+                                                [class.parchemins-selected]="sublimationToApply() && sublimationToApply()!.id === sublimation.id
+                                                    && levelSublimationToApply() === linkSublimation.level">
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         }
                     </div>
                     <div class="slider-container">
                         @for(sublimation of sublimationsEpiqueReliqueList(); track $index) {
-                            <div class="subli-container" (click)="chooseSublimation(sublimation)"
+                            <div class="subli-container" (click)="chooseSublimation(sublimation, 1)"
                                 [class.selected]="sublimationToApply() && sublimationToApply()!.id === sublimation.id"
+                                (mouseenter)="openTooltip($event, sublimation, 1)" 
                                 (click)="applySublimationEpicRelic()">
                                 <span>{{nameItem(sublimation)}}</span>
                                 <div>
-                                    <img [src]="imageService.getItemUrl(sublimation.idImage)" [alt]="">
+                                    <img [src]="imageService.getItemUrl(sublimation.gfxId)" [alt]="">
                                 </div>
                             </div>
                         }

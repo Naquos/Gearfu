@@ -18,7 +18,7 @@ import { Sublimation } from "../../models/data/sublimation";
 import { IdChassesEnum } from "../../models/enum/idChassesEnum";
 import { Enchantement } from "../../models/data/enchantement";
 import { SublimationsEpiqueRelique } from "../../models/data/sublimationEpiqueRelique";
-import { Item } from "../../models/data/item";
+import { SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
 
 @Injectable({providedIn: 'root'})
 export class ChasseFormService extends AbstractFormService<FormControl<Enchantement>> {
@@ -234,12 +234,13 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         return this.enchantement.getValue();
     }
 
-    public canApplySublimationWithItem(chasseCombinaison: ChasseCombinaison, item: Item): boolean {
+    public canApplySublimationWithItem(chasseCombinaison: ChasseCombinaison, sublimation: SublimationsDescriptions): boolean {
         return this.canApplySublimation(chasseCombinaison, {
-            id: item.id,
-            title: {...item.title},
-            slotColorPattern: item.enchantement.slotColorPattern,
-            isValid: false
+            id: sublimation.id,
+            title: {...sublimation.title},
+            slotColorPattern: sublimation.slotColorPattern,
+            isValid: false,
+            level: sublimation.linkSublimation[0].level
         });
     }
 
