@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -24,6 +25,7 @@ export class SortsComponent {
 
   private readonly translateService = inject(TranslateService);
   private readonly classeFormService = inject(ClasseFormService);
+  private readonly sanitizer = inject(DomSanitizer);
   protected readonly sortService = inject(SortService);
   protected readonly imageService = inject(ImageService);
   protected readonly sortFormService = inject(SortFormService);
@@ -167,11 +169,12 @@ export class SortsComponent {
     this.currentDragSource = null;
   }
 
-  protected getEffect(): string[] {
+  protected getEffect(): SafeHtml[] {
     if(!this.sortSelected()) {
       return [];
     }
     const effect = this.effectDisplay() === 'NORMAL' ? this.sortSelected()!.effect_normal : this.sortSelected()!.effect_critical;
-    return effect[this.translateService.currentLang as keyof typeof effect].split('\n').map(x => x.charAt(0).toUpperCase() + x.slice(1)) || [];
+    const lines = effect[this.translateService.currentLang as keyof typeof effect].split('\n').map(x => x.charAt(0).toUpperCase() + x.slice(1)) || [];
+    return lines.map(line => this.sanitizer.bypassSecurityTrustHtml(line));
   }
 }

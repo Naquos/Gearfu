@@ -67,7 +67,6 @@
                     <div class="sort-title">
                         <img [src]="imageService.getSortUrl(sortSelected()!.gfxId)" alt="">
                         <span> {{getSortName(sortSelected()!) }}</span>
-                        {{sortSelected()!.gfxId}}
                         <span class="cout-sort">
                             @if (sortSelected()!.PorteeMax) {
                                 {{ sortSelected()!.PorteeMin }} - {{ sortSelected()!.PorteeMax }} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="">
@@ -99,7 +98,7 @@
                         </div>
                         <div class="effet">
                             @for(effectLine of getEffect(); track $index) {
-                                <span>{{effectLine}}</span>
+                                <span [innerHTML]="effectLine"></span>
                             }
                         </div>
                     </div>
