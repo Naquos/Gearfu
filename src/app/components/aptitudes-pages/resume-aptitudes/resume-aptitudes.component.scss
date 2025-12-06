@@ -3,8 +3,22 @@
     display: block;
     margin: auto;
 
+    app-bonus {
+        bottom: 90px;
+        display: flex;
+        margin-top: -50px;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+
     h3 {
         margin: 5px 0;
+    }
+
+    #first-block {
+        margin-top: 10px;
     }
 
     .classes {

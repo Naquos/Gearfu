@@ -16,6 +16,7 @@ import { SortFormService } from "./form/sortFormService";
 import { SortIdEnum } from "../models/enum/sortIdEnum";
 import { ChasseFormService } from "./form/chasseFormService";
 import { IdSublimationEnum } from "../models/enum/idSublimationEnum";
+import { BonusFormService } from "./form/bonusFormService";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
@@ -26,6 +27,7 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly classeFormService = inject(ClasseFormService);
   private readonly sortFormService = inject(SortFormService);
   private readonly chasseFormService = inject(ChasseFormService);
+  private readonly bonusFormService = inject(BonusFormService);
 
   private readonly maitrisesSecondairesList: IdActionsEnum[] = [
     IdActionsEnum.MAITRISES_CRITIQUES,
@@ -65,6 +67,7 @@ export class RecapStatsService extends AbstractDestroyService {
     { id: IdActionsEnum.CONTROLE, value: 0, params: [] },
     { id: IdActionsEnum.DI, value: 0, params: [] },
     { id: IdActionsEnum.DI_INDIRECT, value: 0, params: [] },
+    { id: IdActionsEnum.PROSPECTION, value: 0, params: [] },
 
 
     // ============ COUPURE GRAPHIQUE ============
@@ -89,6 +92,7 @@ export class RecapStatsService extends AbstractDestroyService {
     { id: IdActionsEnum.INITIATIVE, value: 0, params: [] },
     { id: IdActionsEnum.SOINS_REALISE, value: 0, params: [] },
     { id: IdActionsEnum.PERCENTAGE_PV, value: 0, params: [] },
+    { id: IdActionsEnum.SAGESSE, value: 0, params: [] },
   ];
 
   private readonly recap = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);
@@ -112,15 +116,16 @@ export class RecapStatsService extends AbstractDestroyService {
       this.levelFormService.level$,
       this.chasseFormService.recapChassesEffect$,
       this.chasseFormService.sublimationsIdToLevel$,
+      this.bonusFormService.recapStats$,
       this.classeFormService.classe$,
       this.sortFormService.sortPassifs$,
     ]).pipe(
       takeUntil(this.destroy$),
       tap(() => this.resetEffects()),
-      map(([items, aptitudes, level, chasses, sublimationsIdToLevel]) => {
+      map(([items, aptitudes, level, chasses, sublimationsIdToLevel, bonus]) => {
         const extract = this.extractEquipEffects(items);
         const recapStat = this.mapToRecapStats(extract);
-        recapStat.push(...aptitudes, ...chasses);
+        recapStat.push(...aptitudes, ...chasses, ...bonus);
         return {recapStat, level, sublimationsIdToLevel};
       }),
       tap(() => this.applyNatifEffects()),

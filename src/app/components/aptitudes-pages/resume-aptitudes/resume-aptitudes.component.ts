@@ -13,10 +13,11 @@ import { TooltipService } from '../../../services/TooltipService';
 import { ClassesTooltipComponent } from '../classes-tooltip/classes-tooltip.component';
 import { ClasseFormService } from '../../../services/form/classeFormService';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
+import { BonusComponent } from "../bonus/bonus.component";
 
 @Component({
   selector: 'app-resume-aptitudes',
-  imports: [TranslateModule, ReactiveFormsModule, LazyImageDirective],
+  imports: [TranslateModule, ReactiveFormsModule, LazyImageDirective, BonusComponent],
   templateUrl: './resume-aptitudes.component.html',
   styleUrl: './resume-aptitudes.component.scss'
 })

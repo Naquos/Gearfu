@@ -1,12 +1,13 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <img class="classes" [src]="`classes/${idClasse()}.jpg`" [attr.key]="idClasse()" alt="class" (click)="openTooltip($event)">
+<app-bonus></app-bonus>
 <div class="level">
     <p>{{ 'resume-aptitudes.level' | translate }}</p>
     <input [formControl]="levelFormService.form" type="text">
 </div>
 
-<div class="block">
+<div class="block" id="first-block">
     <div class="row-4">
         <div>
             <img [src]="imageService.getActionIdUrl(IdActionsEnum.POINT_DE_VIE)" alt="point de vie"> {{ 'resume-aptitudes.PV' | translate }}

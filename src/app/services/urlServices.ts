@@ -141,9 +141,18 @@ export class UrlServices extends AbstractDestroyService {
      * Décompresse une chaîne si elle a été compressée
      * Tente d'abord la décompression, sinon retourne la chaîne telle quelle
      * Gère la rétrocompatibilité avec l'ancien format EncodedURIComponent
+     * Détecte automatiquement si les données sont compressées même sans flag
      */
     private decompressIfNeeded(data: string, isCompressed: boolean): string {
-        if (!data || !isCompressed) {
+        if (!data) {
+            return data;
+        }
+
+        // Si le flag indique que c'est compressé OU si la longueur suggère une compression
+        // (les données compressées sont généralement plus courtes et contiennent des caractères Base64)
+        const looksLikeCompressed = data.length < this.COMPRESSION_THRESHOLD && /^[A-Za-z0-9+/=]+$/.test(data);
+        
+        if (!isCompressed && !looksLikeCompressed) {
             return data;
         }
 
@@ -156,6 +165,7 @@ export class UrlServices extends AbstractDestroyService {
                 decompressed = LZString.decompressFromEncodedURIComponent(data);
             }
             
+            // Si la décompression réussit, retourner le résultat, sinon retourner l'original
             return decompressed || data;
         } catch (error) {
             console.error('Error decompressing data:', error);
