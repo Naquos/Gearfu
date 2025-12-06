@@ -73,7 +73,7 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
     return `${neutres}-${passifs}`;
   }
 
-  private decodeAndSaveCodeBuild(codeBuild: string): void {
+  public decodeAndSaveCodeBuild(codeBuild: string): void {
     const parts = codeBuild.split('-');
     const neutres = parts.slice(0, 12).map(part => parseInt(part, 10));
     const passifs = parts.slice(12).map(part => parseInt(part, 10));

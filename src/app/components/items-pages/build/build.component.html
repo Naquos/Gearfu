@@ -10,7 +10,7 @@
 </div>
 <div 
     class="content"
-    (click)="itemChooseService.setIdItemsFromBuild(build()?.codeBuild || '')"
+    (click)="loadBuild()"
     [style.border-top-right-radius]="build()?.codeZenith ? '0' : '10px'">
     <div class="row">
         <img [src]="mapImageItems.get(ItemTypeBuild.CASQUE)" alt="image">

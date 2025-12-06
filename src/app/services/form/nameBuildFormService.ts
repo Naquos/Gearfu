@@ -1,15 +1,12 @@
 import { inject, Injectable } from "@angular/core";
-import { take, tap } from "rxjs";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { FormControl } from "@angular/forms";
 import { AbstractFormService } from "./abstractFormService";
 import { SaveBuildService } from "../saveBuildService";
-import { ItemChooseService } from "../itemChooseService";
 
 @Injectable({providedIn: 'root'})
 export class NameBuildFormService extends AbstractFormService<FormControl<string>> {
     private readonly saveBuildService = inject(SaveBuildService);
-    private readonly itemChooseService = inject(ItemChooseService);
 
     public static readonly DEFAULT_VALUE = "";
     
@@ -32,9 +29,6 @@ export class NameBuildFormService extends AbstractFormService<FormControl<string
     }
 
     public addBuild(): void {
-        this.itemChooseService.idItems$.pipe(
-            take(1),
-            tap(ids => this.saveBuildService.addBuild({codeBuild: ids, nameBuild: this.form.value}))
-        ).subscribe();
+        this.saveBuildService.saveCurrentBuild(this.form.value || undefined);
     }
 }

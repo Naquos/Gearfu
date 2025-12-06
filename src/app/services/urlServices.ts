@@ -101,6 +101,20 @@ export class UrlServices extends AbstractDestroyService {
     }
 
     /**
+     * Récupère l'itemsId depuis l'URL
+     */
+    public getItemsIdFromUrl(): string | undefined {
+        return this.initialParams?.itemsId;
+    }
+
+    /**
+     * Vérifie si les données sont compressées
+     */
+    public isCompressed(): boolean {
+        return this.initialParams?.c === '1';
+    }
+
+    /**
      * Compresse une chaîne si elle dépasse le seuil de compression
      * Retourne la chaîne compressée et indique si une compression a été appliquée
      */

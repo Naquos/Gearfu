@@ -64,7 +64,7 @@ export class BuildComponent implements OnInit {
   private firstAnneau = true;
 
   ngOnInit(): void {
-    const idItemList = this.build()?.codeBuild.split(",");
+    const idItemList = this.build()?.itemsId?.split(",");
     if(idItemList && idItemList.length) {
       idItemList.forEach(idItem => {
         const item = this.itemService.getItem(parseInt(idItem));
@@ -86,7 +86,14 @@ export class BuildComponent implements OnInit {
 
   protected removeBuild(event : MouseEvent): void {
     event.stopPropagation();
-    this.saveBuildService.removeBuild(this.build()?.codeBuild ?? "");
+    this.saveBuildService.removeBuild(this.build()!);
+  }
+
+  protected loadBuild(): void {
+    const buildData = this.build();
+    if (buildData) {
+      this.saveBuildService.loadBuild(buildData);
+    }
   }
 
   private getItemType(item: Item): ItemTypeBuild[] {

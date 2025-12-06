@@ -143,7 +143,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     /**
      * Décode un code build depuis l'URL et l'applique au formulaire
      */
-    private decodeAndSaveCodeBuild(codeBuild: string): void {
+    public decodeAndSaveCodeBuild(codeBuild: string): void {
         try {
             const enchantement: Enchantement = {
                 chasseCombinaison: [],

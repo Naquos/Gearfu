@@ -6,7 +6,7 @@
             <p>{{ "builds-list.no-build" | translate }}</p>
         </div>
     } @else {
-        @for (build of buildList; track build.codeBuild) {
+        @for (build of buildList; track build.createdAt) {
             <app-build [build]="build"></app-build>
         }
     }
