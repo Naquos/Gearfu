@@ -80,7 +80,8 @@
         "tacle": "Bloqueio",
         "esquive": "Evasão",
         "initiative": "Iniciativa",
-        "sublimations": "Sublimações"
+        "sublimations": "Sublimações",
+        "recherche-sublimation":"Pesquisa de sublimação..."
     },
     "import-build": {
         "label": "Importe seu build através de uma URL do Gearfu ou Zénith",

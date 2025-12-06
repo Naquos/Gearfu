@@ -61,12 +61,12 @@ export class EnchantementComponent {
   protected readonly levelSublimationToApply = signal<number | undefined>(undefined);
   protected readonly indexItemTypeSelected = signal<number>(-1);
 
-  protected openTooltip(event: MouseEvent, sublimationDescriptions: SublimationsDescriptions | Sublimation | undefined, level: number): void {
+  protected openTooltip(event: MouseEvent, sublimationDescriptions: SublimationsDescriptions | Sublimation | SublimationsEpiqueRelique | undefined, level: number): void {
     if(!sublimationDescriptions) {
       return;
     }
     let description = sublimationDescriptions;
-    if('isValid' in description) {
+    if('isValid' in description || 'epique' in description) {
       description = this.sublimationService.getSublimationById(sublimationDescriptions.id)!;
     }
     this.tooltipService.forceClose();

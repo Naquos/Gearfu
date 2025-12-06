@@ -80,7 +80,8 @@
         "esquive": "Dodge",
         "initiative": "Initiative",
         "effets": "Effects",
-        "sublimations": "Sublimations"
+        "sublimations": "Sublimations",
+        "recherche-sublimation":"Search for sublimation..."
     },
     "import-build": {
         "label": "Import your build via a Gearfu or Zenith URL",

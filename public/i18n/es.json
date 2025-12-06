@@ -80,7 +80,8 @@
         "esquive": "Evasión",
         "initiative": "Iniciativa",
         "effets": "Efectos",
-        "sublimations": "Sublimaciones"
+        "sublimations": "Sublimaciones",
+        "recherche-sublimation":"Buscar sublimación..."
     },
     "import-build": {
         "label": "Importa tu build mediante una URL de Gearfu o Zénith",

@@ -57,7 +57,8 @@
                             (click)="chasseFormService.removeEpic()"
                             (contextmenu)="$event.preventDefault();chasseFormService.removeEpic();">
                             @if(enchantement()?.epique) {
-                                <img [src]="imageService.getItemUrl(enchantement()!.epique!.idImage)" alt="">
+                                <img [src]="imageService.getItemUrl(enchantement()!.epique!.idImage)"
+                                    (mouseenter)="openTooltip($event, enchantement()?.epique, 1)" alt="">
                                 <span>{{ nameSublimationEpicRelic(enchantement()!.epique) }}</span>
                             } @else {
                                 <img src="chasses/shardEpique.png" alt="">
@@ -67,7 +68,8 @@
                             (click)="chasseFormService.removeRelic()"
                             (contextmenu)="$event.preventDefault();chasseFormService.removeRelic();">
                             @if(enchantement()?.relique) {
-                                <img [src]="imageService.getItemUrl(enchantement()!.relique!.idImage)" alt="">
+                                <img [src]="imageService.getItemUrl(enchantement()!.relique!.idImage)"
+                                    (mouseenter)="openTooltip($event, enchantement()?.relique, 1)" alt="">
                                 <span>{{ nameSublimationEpicRelic(enchantement()!.relique) }}</span>
                             } @else {
                                 <img src="chasses/shardRelique.png" alt="">
@@ -107,7 +109,7 @@
                     Sublimations
                 </div>
                 <div class="body">
-                    <input matInput [ngModel]="searchSubli()" (ngModelChange)="searchSubli.set($event)">
+                    <input matInput [ngModel]="searchSubli()" (ngModelChange)="searchSubli.set($event)" [placeholder]="'enchantement.recherche-sublimation' | translate">
 
                     <div class="slider-container">
                         @for(sublimation of sublimationsList(); track $index) {

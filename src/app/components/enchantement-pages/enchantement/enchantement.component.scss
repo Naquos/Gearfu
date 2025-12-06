@@ -195,7 +195,7 @@
                     height: 250px;
                     overflow-y: scroll;
 
-                    background-color: white;
+                    background-color: #81AAB7;
                     border: 1px solid #0D1B2A;
                     border-radius: 10px;
 
@@ -210,13 +210,14 @@
 
                     .subli-container {
                         cursor: pointer;
+                        color: white;
                         width: 45%;
                         margin: 0 auto;
                         display: flex;
                         flex-direction: column;
                         align-items: center;
                         margin-bottom: 10px; 
-                        background-color: #618A97;
+                        background: linear-gradient(145deg, #0D1B2A, #415A77);
                         height: fit-content;
 
                         border-radius: 5px;
@@ -224,6 +225,9 @@
                         text-align: center;
 
                         .row {
+                            border-top: 3px solid #415A77;
+                            border-radius: 10px;
+
                             display: flex;
                             justify-content: center;
                             align-items: center;
@@ -245,7 +249,7 @@
                             transform: scale(1.4);
                         }
                         .parchemins-selected {
-                            background-color: #14385f;
+                            background-color: #7eb3ec;
                             border-radius: 5px;
                         }
                     }

@@ -80,7 +80,8 @@
         "esquive": "Esquive",
         "tacle": "Tacle",
         "initiative": "Initiative",
-        "sublimations": "Sublimations"
+        "sublimations": "Sublimations",
+        "recherche-sublimation":"Recherche de sublimation..."
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Maitrises élémentaires",
