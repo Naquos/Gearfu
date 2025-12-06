@@ -20,6 +20,7 @@ import { Enchantement } from "../../models/data/enchantement";
 import { SublimationsEpiqueRelique } from "../../models/data/sublimationEpiqueRelique";
 import { SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
 import { SublimationService } from "../data/sublimationService";
+import { UrlServices } from "../urlServices";
 
 @Injectable({providedIn: 'root'})
 export class ChasseFormService extends AbstractFormService<FormControl<Enchantement>> {
@@ -44,6 +45,9 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     public readonly form =  new FormControl<Enchantement>(ChasseFormService.DEFAULT_VALUE(), { nonNullable: true });
 
     private readonly sublimationService = inject(SublimationService);
+    private readonly urlServices = inject(UrlServices);
+
+    private isLoadingFromUrl = false;
 
     private readonly indexToItemType = new Map<number, ItemTypeEnum>([
         [0, ItemTypeEnum.CASQUE],
@@ -78,7 +82,167 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     
     constructor() {
         super();
+        const codeEnchantement = this.urlServices.getEnchantementFromUrl();
         this.init();
+        if (codeEnchantement) {
+            // Attendre que les sublimations soient chargées avant de décoder
+            this.sublimationService.load().then(() => {
+                this.isLoadingFromUrl = true;
+                this.decodeAndSaveCodeBuild(codeEnchantement);
+                this.isLoadingFromUrl = false;
+            });
+        }
+    }
+
+    /**
+     * Génère un code compact pour l'URL représentant l'enchantement
+     * Format: c0-c1-c2-c3_s|c0-c1-c2-c3_s|...|E123|R456
+     * c = chasse (color.level.idAction.joker), s = sublimation ID.level, E = épique, R = relique
+     */
+    private generateCodeBuild(value: Enchantement): string {
+        const parts: string[] = [];
+        
+        // Encoder chaque combinaison de chasses
+        value.chasseCombinaison.forEach(combinaison => {
+            const chassesParts: string[] = [];
+            
+            // Encoder les 4 chasses
+            combinaison.chasses.forEach(chasse => {
+                if (chasse.color === IdChassesEnum.NON_CHASSE) {
+                    chassesParts.push('0');
+                } else {
+                    const jokerFlag = chasse.joker ? '1' : '0';
+                    const idAction = chasse.idAction || 0;
+                    chassesParts.push(`${chasse.color}.${chasse.lvl}.${idAction}.${jokerFlag}`);
+                }
+            });
+            
+            let combinaisonStr = chassesParts.join('-');
+            
+            // Ajouter la sublimation si présente
+            if (combinaison.sublimation) {
+                combinaisonStr += `_${combinaison.sublimation.id}.${combinaison.sublimation.level}`;
+            }
+            
+            parts.push(combinaisonStr);
+        });
+        
+        let result = parts.join('|');
+        
+        // Ajouter l'épique et la relique
+        if (value.epique) {
+            result += `|E${value.epique.id}`;
+        }
+        if (value.relique) {
+            result += `|R${value.relique.id}`;
+        }
+        
+        return result;
+    }
+
+    /**
+     * Décode un code build depuis l'URL et l'applique au formulaire
+     */
+    private decodeAndSaveCodeBuild(codeBuild: string): void {
+        try {
+            const enchantement: Enchantement = {
+                chasseCombinaison: [],
+                epique: undefined,
+                relique: undefined
+            };
+            
+            // Initialiser les 10 combinaisons vides
+            for (let i = 0; i < 10; i++) {
+                enchantement.chasseCombinaison.push(createEmptyChasseCombinaison());
+            }
+            
+            const mainParts = codeBuild.split('|');
+            
+            // Parcourir les parties pour les combinaisons de chasses
+            let combinaisonIndex = 0;
+            for (let i = 0; i < mainParts.length && combinaisonIndex < 10; i++) {
+                const part = mainParts[i];
+                
+                // Ignorer les parties épiques/reliques
+                if (part.startsWith('E') || part.startsWith('R')) {
+                    continue;
+                }
+                
+                const [chassesPart, sublimationPart] = part.split('_');
+                const chassesData = chassesPart.split('-');
+                
+                const combinaison = createEmptyChasseCombinaison();
+                
+                // Décoder les chasses
+                for (let j = 0; j < Math.min(4, chassesData.length); j++) {
+                    const chasseData = chassesData[j];
+                    if (chasseData === '0') {
+                        continue;
+                    }
+                    
+                    const [color, lvl, idAction, joker] = chasseData.split('.').map(x => parseInt(x, 10));
+                    combinaison.chasses[j] = {
+                        color: color as IdChassesEnum,
+                        lvl: lvl,
+                        idAction: idAction as IdActionsEnum,
+                        joker: joker === 1
+                    };
+                }
+                
+                // Décoder la sublimation si présente
+                if (sublimationPart) {
+                    const [subId, subLevel] = sublimationPart.split('.').map(x => parseInt(x, 10));
+                    const sublimation = this.sublimationService.getSublimationById(subId);
+                    if (sublimation) {
+                        combinaison.sublimation = {
+                            id: subId,
+                            title: {...sublimation.title},
+                            slotColorPattern: sublimation.slotColorPattern,
+                            level: subLevel,
+                            isValid: true
+                        };
+                    } else {
+                        console.warn(`Sublimation ${subId} not found in database`);
+                    }
+                }
+                
+                enchantement.chasseCombinaison[combinaisonIndex] = combinaison;
+                combinaisonIndex++;
+            }
+            
+            // Décoder l'épique et la relique
+            for (const part of mainParts) {
+                if (part.startsWith('E')) {
+                    const epiqueId = parseInt(part.substring(1), 10);
+                    const epiqueSub = this.sublimationService.getSublimationById(epiqueId);
+                    if (epiqueSub) {
+                        enchantement.epique = {
+                            id: epiqueSub.id,
+                            idImage: epiqueSub.gfxId,
+                            title: {...epiqueSub.title},
+                            epique: true,
+                            relique: false
+                        };
+                    }
+                } else if (part.startsWith('R')) {
+                    const reliqueId = parseInt(part.substring(1), 10);
+                    const reliqueSub = this.sublimationService.getSublimationById(reliqueId);
+                    if (reliqueSub) {
+                        enchantement.relique = {
+                            id: reliqueSub.id,
+                            idImage: reliqueSub.gfxId,
+                            title: {...reliqueSub.title},
+                            epique: false,
+                            relique: true
+                        };
+                    }
+                }
+            }
+
+            this.setValue(enchantement);
+        } catch (error) {
+            console.error('Error decoding enchantement from URL:', error);
+        }
     }
 
     
@@ -239,6 +403,12 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         this.sublimationsIdToLevel.next(mapIdToLevel);
         this.enchantement.next(value);
         this.recapChassesEffect.next(recapStats);
+        
+        // Synchroniser avec l'URL seulement si on ne charge pas depuis l'URL
+        if (!this.isLoadingFromUrl) {
+            const codeBuild = this.generateCodeBuild(value);
+            this.urlServices.setEnchantementInUrl(codeBuild);
+        }
     }
 
     private calculMaxSublimationLevel(sublimationList: Sublimation[]): Map<number, number> {
@@ -261,9 +431,18 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     }
     
     public override setValue(value: Enchantement | null): void {
-        const val = value ?? ChasseFormService.DEFAULT_VALUE();
-        this.form.setValue(val);
-        this.enchantement.next(val);
+        const val: Enchantement = value ?? ChasseFormService.DEFAULT_VALUE() as Enchantement;
+        // Important: créer une copie profonde pour éviter les références partagées
+        const cleanValue: Enchantement = {
+            chasseCombinaison: val.chasseCombinaison.map(combo => ({
+                chasses: [...combo.chasses],
+                sublimation: combo.sublimation ? { ...combo.sublimation } : undefined
+            })),
+            epique: val.epique ? { ...val.epique } : undefined,
+            relique: val.relique ? { ...val.relique } : undefined
+        };
+        this.form.setValue(cleanValue);
+        this.enchantement.next(cleanValue);
     }
     public override setDefaultValue(): void {
         this.form.setValue(ChasseFormService.DEFAULT_VALUE());

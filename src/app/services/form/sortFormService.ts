@@ -4,6 +4,7 @@ import { BehaviorSubject } from "rxjs";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 import { ClasseFormService } from "./classeFormService";
+import { UrlServices } from "../urlServices";
 
 export interface SortForm {
     sortNeutres: number[];
@@ -13,6 +14,7 @@ export interface SortForm {
 @Injectable({providedIn: 'root'})
 export class SortFormService extends AbstractFormService<FormGroup<TypedControls<SortForm>>> {
   private readonly classeFormService = inject(ClasseFormService);
+  private readonly urlServices = inject(UrlServices);
 
   public static readonly DEFAULT_SORT_NEUTRE: number[] = [0,0,0,0,0,0,0,0,0,0,0,0];
   public static readonly DEFAULT_SORT_PASSIF: number[] = [0,0,0,0,0,0];
@@ -37,19 +39,25 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
 
   constructor() {
     super();
+    const codeSort = this.urlServices.getSortsFromUrl();
     this.init();
     this.classeFormService.classe$.subscribe(() => {
       if (!this.firstLoad) {
         this.setDefaultValue();
       }
       this.firstLoad = false;
+      if (codeSort) {
+        this.decodeAndSaveCodeBuild(codeSort);
+      }
     });
   }
 
   protected override handleChanges(value: SortForm): void {
     this.sortNeutres.next(value.sortNeutres ?? SortFormService.DEFAULT_SORT_NEUTRE);
     this.sortPassifs.next(value.sortPassifs ?? SortFormService.DEFAULT_SORT_PASSIF);
-    this.codeBuild.next(this.generateCodeBuild(value));
+    const codeBuild = this.generateCodeBuild(value);
+    this.codeBuild.next(codeBuild);
+    this.urlServices.setSortsInUrl(codeBuild);
   }
 
   public override setValue(value: SortForm | null): void {
@@ -63,7 +71,16 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
     const neutres = value.sortNeutres?.join('-') || '';
     const passifs = value.sortPassifs?.join('-') || '';
     return `${neutres}-${passifs}`;
+  }
 
+  private decodeAndSaveCodeBuild(codeBuild: string): void {
+    const parts = codeBuild.split('-');
+    const neutres = parts.slice(0, 12).map(part => parseInt(part, 10));
+    const passifs = parts.slice(12).map(part => parseInt(part, 10));
+    this.setValue({
+      sortNeutres: neutres,
+      sortPassifs: passifs
+    });
   }
 
   private sortAlreadySet(sortId: number): boolean {

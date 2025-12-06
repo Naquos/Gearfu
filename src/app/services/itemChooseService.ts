@@ -65,10 +65,13 @@ export class ItemChooseService extends AbstractDestroyService {
 
     constructor() {
         super();
-        setTimeout(() => {
-            this.initItemChooses();
-            this.updateUrl();
-        });
+        this.initItemChooses().subscribe(
+            () => this.updateUrl()
+        );
+        // setTimeout(() => {
+        //     this.initItemChooses();
+        //     this.updateUrl();
+        // });
 
         this.handleCalculTotal();
     }
@@ -113,28 +116,29 @@ export class ItemChooseService extends AbstractDestroyService {
             tap(x => this.setIdItems(x))
         ).subscribe(x => {
             this.localStorageService.setItem<string>(KeyEnum.KEY_BUILD, x);
-            this.router.navigate(
-                [],
-                {
-                    relativeTo: this.activatedRoute,
-                    queryParams: { itemsId: x },
-                    queryParamsHandling: 'merge',
-                }
-            );
+            this.urlServices.setItemsIdInUrl(x);
+            // this.router.navigate(
+            //     [],
+            //     {
+            //         relativeTo: this.activatedRoute,
+            //         queryParams: { itemsId: x },
+            //         queryParamsHandling: 'merge',
+            //     }
+            // );
         });
     }
 
-    private initItemChooses(): void {
+    private initItemChooses(): Observable<string[] | null> {
         // this.activatedRoute.queryParams.pipe(
         //     takeUntil(this.destroy$),
         //     filter(x => x !== undefined),
         //     map(x => x["itemsId"] ? x["itemsId"] as string : this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD)),
-    this.urlServices.itemsId$.pipe(
+    return this.urlServices.itemsId$.pipe(
             filter(x => x !== undefined && x !== null),
             take(1),
             map(x => x.split(",")),
             tap(x => x.forEach(id => this.setItemWithIdItem(parseInt(id))))
-        ).subscribe();
+        );
     }
 
     private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean, chaos: boolean): void {

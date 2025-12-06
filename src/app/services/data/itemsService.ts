@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from "@angular/core";
-import { BehaviorSubject, combineLatest, map, Observable, take, tap, shareReplay } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable, take, tap, shareReplay, filter } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../../models/enum/sortChoiceEnum";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { ItemTypeFormServices } from "../form/itemTypeFormServices";
@@ -175,7 +175,6 @@ export class ItemsService {
         || ["I", "II", "III"].includes(x.title.fr.split(' ').pop() || ""))
         .sort((a, b) => a.title.fr.localeCompare(b.title.fr));
       this.sublimations.next(sublimationsCleaned);
-      console.log(`Loaded ${sublimationsCleaned.length} sublimations`, sublimationsCleaned);
       this.prepareJsonSublimations(sublimationsCleaned);
     }
 
@@ -236,9 +235,6 @@ export class ItemsService {
           slotColorPattern: sublimation.enchantement.slotColorPattern
         });
       });
-
-      console.log(result);
-
     }
 
     private initFilter(): void {
@@ -561,7 +557,9 @@ export class ItemsService {
     }
 
     public searchItem(idItem : number): Observable<Item | undefined> {
-      return this.fullItems$.pipe(map(x => x.find(x => x.id === idItem)));
+      return this.fullItems$.pipe(
+        filter(items => items.length > 0),
+        map(x => x.find(x => x.id === idItem)));
     }
 
     public getItem(idItem : number): Item | undefined {

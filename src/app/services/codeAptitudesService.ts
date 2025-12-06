@@ -2,10 +2,12 @@ import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { AptitudesForm, AptitudesFormService } from "./form/aptitudesFormService";
+import { UrlServices } from "./urlServices";
 
 @Injectable({providedIn: 'root'})
 export class CodeAptitudesService {
     private aptitudesFormService = inject(AptitudesFormService);
+    private readonly urlServices = inject(UrlServices);
     private readonly code = new BehaviorSubject<string>('');
     public readonly code$ = this.code.asObservable();
 
@@ -42,9 +44,14 @@ export class CodeAptitudesService {
     ]);
 
     constructor() {
+        const initialCode = this.urlServices.getAptitudesFromUrl();
         this.aptitudesFormService.recapStat$.subscribe(() => {
             this.updateCode();
         });
+        if(initialCode !== undefined) {
+            this.saveCode(initialCode);
+            this.code.next(initialCode);
+        }
     }
 
     private updateCode() {
@@ -145,6 +152,8 @@ export class CodeAptitudesService {
         if(codeAptitudes.endsWith('-')) {
             codeAptitudes = codeAptitudes.slice(0, -1);
         }
+
+        this.urlServices.setAptitudesInUrl(codeAptitudes);
         this.code.next(codeAptitudes);
     }
 
@@ -248,7 +257,7 @@ export class CodeAptitudesService {
                 }
             }
         });
-        this.aptitudesFormService.form.setValue(formValue);
+        this.aptitudesFormService.setValue(formValue);
     }
 
 }

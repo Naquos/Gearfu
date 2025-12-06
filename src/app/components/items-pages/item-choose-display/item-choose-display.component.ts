@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, input, OnInit, ViewContainerRef } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, filter, map, startWith } from 'rxjs';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
 import { Item } from '../../../models/data/item';
 import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
@@ -15,7 +15,10 @@ import { ItemComponent } from '../item/item.component';
   selector: 'app-item-choose-display',
   imports: [CommonModule, ImageFallbackDirective],
   templateUrl: './item-choose-display.component.html',
-  styleUrl: './item-choose-display.component.scss'
+  styleUrl: './item-choose-display.component.scss',
+  host: {
+    ngSkipHydration: 'true'
+  }
 })
 export class ItemChooseDisplayComponent implements OnInit {
   protected readonly colorRarityService = inject(ColorRarityService);
@@ -31,7 +34,11 @@ export class ItemChooseDisplayComponent implements OnInit {
   protected $item!: Observable<Item | undefined>;
 
   ngOnInit(): void {
-    this.$item = this.itemChooseService.getObsItem(this.itemType()).pipe(map(x => x[this.indexItem()]));
+    this.$item = this.itemChooseService.getObsItem(this.itemType()).pipe(
+      filter(x => x !== undefined),
+      map(x => x[this.indexItem()]!),
+      startWith(undefined)
+    );
   }
 
   protected openTooltip(event: MouseEvent, item: Item): void {
