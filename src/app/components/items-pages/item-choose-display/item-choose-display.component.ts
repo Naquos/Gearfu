@@ -10,6 +10,7 @@ import { ImageService } from '../../../services/imageService';
 import { ItemChooseService } from '../../../services/itemChooseService';
 import { TooltipService } from '../../../services/TooltipService';
 import { ItemComponent } from '../item/item.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-item-choose-display',
@@ -27,6 +28,7 @@ export class ItemChooseDisplayComponent implements OnInit {
   protected readonly tooltipService = inject(TooltipService<{item: Item}>);
   private readonly viewContainerRef = inject(ViewContainerRef);
   protected readonly imageService = inject(ImageService);
+  private readonly router = inject(Router);
 
   public readonly backgroundItemType = input.required<string>();
   public readonly itemType = input.required<ItemTypeEnum>();
@@ -63,6 +65,9 @@ export class ItemChooseDisplayComponent implements OnInit {
   }
 
   protected setFilter():void {
+    this.router.navigate(["/"], {
+            queryParamsHandling: 'merge'
+    });
     if(this.itemType() === ItemTypeEnum.BOUCLIER) {
       this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DAGUE)
     } else if(this.itemType() === ItemTypeEnum.UNE_MAIN) {

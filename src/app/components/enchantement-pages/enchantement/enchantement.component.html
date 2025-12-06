@@ -58,7 +58,8 @@
                             (contextmenu)="$event.preventDefault();chasseFormService.removeEpic();">
                             @if(enchantement()?.epique) {
                                 <img [src]="imageService.getItemUrl(enchantement()!.epique!.idImage)"
-                                    (mouseenter)="openTooltip($event, enchantement()?.epique, 1)" alt="">
+                                    (mouseenter)="openTooltip($event, enchantement()?.epique, 1)"
+                                    (mouseleave)="onMouseLeave()" alt="">
                                 <span>{{ nameSublimationEpicRelic(enchantement()!.epique) }}</span>
                             } @else {
                                 <img src="chasses/shardEpique.png" alt="">
@@ -69,7 +70,8 @@
                             (contextmenu)="$event.preventDefault();chasseFormService.removeRelic();">
                             @if(enchantement()?.relique) {
                                 <img [src]="imageService.getItemUrl(enchantement()!.relique!.idImage)"
-                                    (mouseenter)="openTooltip($event, enchantement()?.relique, 1)" alt="">
+                                    (mouseenter)="openTooltip($event, enchantement()?.relique, 1)"
+                                    (mouseleave)="onMouseLeave()" alt="">
                                 <span>{{ nameSublimationEpicRelic(enchantement()!.relique) }}</span>
                             } @else {
                                 <img src="chasses/shardRelique.png" alt="">
