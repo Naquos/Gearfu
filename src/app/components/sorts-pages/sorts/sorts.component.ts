@@ -14,6 +14,7 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { SpellEffectService } from '../../../services/spellEffectService';
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from "@angular/material/slider";
+import { LevelFormService } from '../../../services/form/levelFormService';
 
 type TypeSort = 'NEUTRE' | 'PASSIF';
 type EffectDisplay = 'NORMAL' | 'CRITIQUE';
@@ -29,6 +30,7 @@ export class SortsComponent {
   private readonly translateService = inject(TranslateService);
   private readonly classeFormService = inject(ClasseFormService);
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly levelFormService = inject(LevelFormService);
   protected readonly sortService = inject(SortService);
   protected readonly imageService = inject(ImageService);
   protected readonly sortFormService = inject(SortFormService);
@@ -59,6 +61,14 @@ export class SortsComponent {
         this.sortSelected.set(undefined);
         this.typeSortSelected.set(undefined);
       }
+    });
+    this.levelFormService.level$.subscribe(level => {
+      if(Number.isNaN(Number.parseInt(`${level}`))) {
+        this.spellLevel.set(1);
+        return;
+      }
+      const value = Number.parseInt(`${level}`) > 245 ? 245 : Number.parseInt(`${level}`);
+      this.spellLevel.set(value + 1);
     });
   }
 
