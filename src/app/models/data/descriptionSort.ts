@@ -38,4 +38,17 @@ export interface DescriptionSort {
         es: string;
         pt: string;
     };
+    // Format RLE: [[valeurs, start, end], ...]
+    normalEffect: {
+        fr: [number[], number, number][];
+        en: [number[], number, number][];
+        es: [number[], number, number][];
+        pt: [number[], number, number][];
+    };
+    criticalEffect: {
+        fr: [number[], number, number][];
+        en: [number[], number, number][];
+        es: [number[], number, number][];
+        pt: [number[], number, number][];
+    };
 }

@@ -41,6 +41,18 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
         }
     },
     {
@@ -82,6 +94,18 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
         }
     },
     {
@@ -123,6 +147,18 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
         }
     },
     {
@@ -164,6 +200,18 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
         }
     },
     {
@@ -205,6 +253,18 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
         }
     },
     {
@@ -246,6 +306,18 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
         }
     },
     {
@@ -287,6 +359,18 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
         }
     },
         {
@@ -328,6 +412,18 @@ export const sortPassifCommun: DescriptionSort[] = [
                 en: "",
                 es: "",
                 pt: ""
+            },
+            normalEffect: {
+                fr: [],
+                en: [],
+                es: [],
+                pt: []
+            },
+            criticalEffect: {
+                fr: [],
+                en: [],
+                es: [],
+                pt: []
             }
         }
 ]
@@ -372,6 +468,18 @@ export const sortNeutreCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
         }
     },
     {
@@ -413,6 +521,18 @@ export const sortNeutreCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
         }
     },
     {
@@ -454,6 +574,18 @@ export const sortNeutreCommun: DescriptionSort[] = [
             en: "",
             es: "",
             pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
         }
     }
 ]

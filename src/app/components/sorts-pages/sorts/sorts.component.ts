@@ -11,13 +11,16 @@ import { ClasseFormService } from '../../../services/form/classeFormService';
 import { SortFormService } from '../../../services/form/sortFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
+import { SpellEffectService } from '../../../services/spellEffectService';
+import { FormsModule } from '@angular/forms';
+import { MatSliderModule } from "@angular/material/slider";
 
 type TypeSort = 'NEUTRE' | 'PASSIF';
 type EffectDisplay = 'NORMAL' | 'CRITIQUE';
 
 @Component({
   selector: 'app-sorts',
-  imports: [TranslateModule, MatIconModule, MatTooltipModule, LazyImageDirective],
+  imports: [TranslateModule, MatIconModule, MatTooltipModule, LazyImageDirective, FormsModule, MatSliderModule],
   templateUrl: './sorts.component.html',
   styleUrl: './sorts.component.scss'
 })
@@ -29,6 +32,7 @@ export class SortsComponent {
   protected readonly sortService = inject(SortService);
   protected readonly imageService = inject(ImageService);
   protected readonly sortFormService = inject(SortFormService);
+  protected readonly spellEffectService = inject(SpellEffectService);
 
   protected readonly IdActionsEnum = IdActionsEnum;
   protected readonly sortSelected = signal<DescriptionSort | undefined>(undefined)
@@ -37,6 +41,7 @@ export class SortsComponent {
     initialValue: ''
   });
   protected readonly effectDisplay = signal<EffectDisplay>('NORMAL');
+  protected readonly spellLevel = signal<number>(246); // Niveau par défaut: 246
   
   private currentDragSource: 'list' | 'equipped' | null = null;
 
@@ -56,6 +61,11 @@ export class SortsComponent {
       }
     });
   }
+
+  protected displayLevelSelector(): (value: number) => string {
+    return (value: number) => `${value - 1}`;
+  }
+
 
   protected selectSort(sort: DescriptionSort, typeSort: TypeSort): void {
     this.sortSelected.set(sort);
@@ -173,8 +183,27 @@ export class SortsComponent {
     if(!this.sortSelected()) {
       return [];
     }
-    const effect = this.effectDisplay() === 'NORMAL' ? this.sortSelected()!.effect_normal : this.sortSelected()!.effect_critical;
-    const lines = effect[this.translateService.currentLang as keyof typeof effect].split('\n').map(x => x.charAt(0).toUpperCase() + x.slice(1)) || [];
+    
+    const sort = this.sortSelected()!;
+    const lang = this.translateService.currentLang as 'fr' | 'en' | 'es' | 'pt';
+    const level = this.spellLevel() - 1; // Les index commencent à 0
+    
+    // Choisir le bon effet selon le mode d'affichage
+    const isNormal = this.effectDisplay() === 'NORMAL';
+    const template = isNormal ? sort.effect_normal[lang] : sort.effect_critical[lang];
+    const rleData = isNormal ? sort.normalEffect[lang] : sort.criticalEffect[lang];
+    
+    // Si pas de données RLE (sorts passifs sans effet critique par exemple)
+    if (!rleData || rleData.length === 0) {
+      const lines = template.split('\n').map(x => x.charAt(0).toUpperCase() + x.slice(1)) || [];
+      return lines.map(line => this.sanitizer.bypassSecurityTrustHtml(line));
+    }
+    
+    // Générer l'effet avec le niveau actuel
+    const formattedEffect = this.spellEffectService.getFormattedEffect(template, rleData, level);
+    
+    // Diviser par lignes et capitaliser
+    const lines = formattedEffect.split('\n').map(x => x.charAt(0).toUpperCase() + x.slice(1)) || [];
     return lines.map(line => this.sanitizer.bypassSecurityTrustHtml(line));
   }
 }

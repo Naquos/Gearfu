@@ -6,12 +6,14 @@ import { ClasseFormService } from "../form/classeFormService";
 import { Sort } from "../../models/data/sort";
 import { DescriptionSort } from "../../models/data/descriptionSort";
 import { sortNeutreCommun, sortPassifCommun } from "../../models/data/sort-communs";
+import { SpellEffectService } from "../spellEffectService";
 
 @Injectable({providedIn: 'root'})
 export class SortService {
 
     private readonly http = inject(HttpClient);
-    private readonly classeFormService = inject(ClasseFormService)
+    private readonly classeFormService = inject(ClasseFormService);
+    private readonly spellEffectService = inject(SpellEffectService);
     private readonly sorts = new BehaviorSubject<Sort[]>([]);
     public readonly sorts$ = this.sorts.asObservable();
     public readonly sortsClasse = toSignal(combineLatest([this.sorts$, this.classeFormService.classe$]).pipe(
@@ -46,9 +48,12 @@ export class SortService {
         }
 
         this.loadPromise = new Promise((resolve,) => {
-            this.http.get<Sort[]>('/sorts.json')
+            this.http.get<{imageDict: Record<string, string>, classes: Sort[]}>('/sorts.json')
                 .pipe(
-                    tap(sorts => this.sorts.next(sorts)),
+                    tap(data => {
+                        this.spellEffectService.setImageDictionary(data.imageDict);
+                        this.sorts.next(data.classes);
+                    }),
                     shareReplay(1)
                 )
                 .subscribe({

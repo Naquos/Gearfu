@@ -164,6 +164,12 @@
                             }
                         }
                     }
+                    .level-select {
+                        width: 90%;
+                        mat-slider {
+                            width: 100%;
+                        }
+                    }
                 }
             }
 

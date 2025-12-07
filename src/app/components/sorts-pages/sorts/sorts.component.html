@@ -89,6 +89,7 @@
                         </span>
                     </div>
                     <div class="description">{{getSortDescription(sortSelected()!) }}</div>
+                    
                     <div class="effet-sort">
                         <div class="button-group">
                             <button (click)="effectDisplay.set('NORMAL')">{{'sorts.effet-normal' | translate}}</button>
@@ -100,6 +101,11 @@
                             @for(effectLine of getEffect(); track $index) {
                                 <span [innerHTML]="effectLine"></span>
                             }
+                        </div>
+                        <div class="level-select or">
+                            <mat-slider min="2" max="246" step="1" showTickMarks discrete [displayWith]="displayLevelSelector()" >
+                                <input matSliderThumb [(ngModel)]="spellLevel" >
+                            </mat-slider>
                         </div>
                     </div>
                 </div>

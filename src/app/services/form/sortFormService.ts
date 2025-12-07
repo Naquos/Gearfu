@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, distinctUntilChanged } from "rxjs";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 import { ClasseFormService } from "./classeFormService";
@@ -41,14 +41,15 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
     super();
     const codeSort = this.urlServices.getSortsFromUrl();
     this.init();
-    this.classeFormService.classe$.subscribe(() => {
+    this.classeFormService.classe$.pipe(distinctUntilChanged()).subscribe(() => {
       if (!this.firstLoad) {
         this.setDefaultValue();
+      } else {
+        if (codeSort) {
+          this.decodeAndSaveCodeBuild(codeSort);
+        }
       }
       this.firstLoad = false;
-      if (codeSort) {
-        this.decodeAndSaveCodeBuild(codeSort);
-      }
     });
   }
 
