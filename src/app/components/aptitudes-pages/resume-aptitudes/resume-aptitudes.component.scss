@@ -68,32 +68,8 @@
         background-color: #0D1B2A;
         justify-content: space-around;
         padding: 2px 0;
-        div {
-            display: flex;
+        app-input-resume-aptitudes {
             width: 20%;
-            align-items: center;
-            span {
-                margin-left: auto;
-            }
-            .pdv {
-                color: red;
-                margin-left: 4px;
-            }
-            .pa, .pw, .eau {
-                color: #268de2;
-            }
-            .pm {
-                color: green;
-            }
-            .feu {
-                color: orange;
-            }
-            .terre {
-                color: rgb(6, 209, 6);
-            }
-            .air {
-                color: rgb(191, 121, 224);
-            }
         }
     }
 
@@ -103,22 +79,8 @@
         justify-content: space-around;
         padding: 2px 0;
         font-size: 14px;
-        div {
+        div, app-input-resume-aptitudes {
             width: 45%;
-            display:flex;
-            span {
-                margin-left: auto;
-            }
-            img {
-                margin-right: 5px;
-            }
-
-            .positif {
-                color: #4CAF50;
-            }
-            .negatif {
-                color: #F44336;
-            }
         }
     }
 }

@@ -14,10 +14,12 @@ import { ClassesTooltipComponent } from '../classes-tooltip/classes-tooltip.comp
 import { ClasseFormService } from '../../../services/form/classeFormService';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { BonusComponent } from "../bonus/bonus.component";
+import { InputResumeAptitudesComponent } from "../input-resume-aptitudes/input-resume-aptitudes.component";
+import { AptitudesManualFormService } from '../../../services/form/aptitudesManualFormServices';
 
 @Component({
   selector: 'app-resume-aptitudes',
-  imports: [TranslateModule, ReactiveFormsModule, LazyImageDirective, BonusComponent],
+  imports: [TranslateModule, ReactiveFormsModule, LazyImageDirective, BonusComponent, InputResumeAptitudesComponent],
   templateUrl: './resume-aptitudes.component.html',
   styleUrl: './resume-aptitudes.component.scss'
 })
@@ -26,6 +28,7 @@ export class ResumeAptitudesComponent {
   protected readonly imageService = inject(ImageService);
   protected readonly IdActionsEnum = IdActionsEnum;
   protected readonly levelFormService = inject(LevelFormService);
+  protected readonly aptitudesManualFormService = inject(AptitudesManualFormService);
   private readonly recapStats = toSignal(this.recapStatsService.recap$, { initialValue: [] as RecapStats[] });
   private readonly tooltipService = inject(TooltipService);
   private readonly viewContainerRef = inject(ViewContainerRef);
@@ -77,11 +80,5 @@ export class ResumeAptitudesComponent {
       return 'positif';
     }
     return value < 0 ? 'negatif' : '';
-  }
-
-  protected calculResistance(id: IdActionsEnum): string {
-    const resistance = this.getValue(id);
-    const percentage = Math.floor((1 - Math.pow(0.8, resistance / 100)) * 100);
-    return `${percentage}% (${resistance})`;
   }
 }

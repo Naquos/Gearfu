@@ -1,0 +1,15 @@
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<div (click)="displayInput.set(true); $event.stopPropagation()">
+    <img [src]="imageService.getActionIdUrl(idActionEnum())" alt=""> 
+    @if(displayInput()){
+        <input [formControl]="controlValue()">
+    } @else {
+        {{ label() | translate }}
+        @if(displayResistance()){
+            <span [class]="getClass(idActionEnum())" [style.color]="color()">{{ calculResistance(idActionEnum()) }}</span>
+        } @else {
+            <span [class]="getClass(idActionEnum())" [style.color]="color()">{{ getValue(idActionEnum()) }}</span>
+        }
+    }
+</div>

@@ -17,6 +17,7 @@ import { SortIdEnum } from "../models/enum/sortIdEnum";
 import { ChasseFormService } from "./form/chasseFormService";
 import { IdSublimationEnum } from "../models/enum/idSublimationEnum";
 import { BonusFormService } from "./form/bonusFormService";
+import { AptitudesManualFormService } from "./form/aptitudesManualFormServices";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
@@ -28,6 +29,7 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly sortFormService = inject(SortFormService);
   private readonly chasseFormService = inject(ChasseFormService);
   private readonly bonusFormService = inject(BonusFormService);
+  private readonly aptitudesManualFormService = inject(AptitudesManualFormService);
 
   private readonly maitrisesSecondairesList: IdActionsEnum[] = [
     IdActionsEnum.MAITRISES_CRITIQUES,
@@ -117,15 +119,16 @@ export class RecapStatsService extends AbstractDestroyService {
       this.chasseFormService.recapChassesEffect$,
       this.chasseFormService.sublimationsIdToLevel$,
       this.bonusFormService.recapStats$,
+      this.aptitudesManualFormService.recapStat$,
       this.classeFormService.classe$,
       this.sortFormService.sortPassifs$,
     ]).pipe(
       takeUntil(this.destroy$),
       tap(() => this.resetEffects()),
-      map(([items, aptitudes, level, chasses, sublimationsIdToLevel, bonus]) => {
+      map(([items, aptitudes, level, chasses, sublimationsIdToLevel, bonus, aptitudesManual]) => {
         const extract = this.extractEquipEffects(items);
         const recapStat = this.mapToRecapStats(extract);
-        recapStat.push(...aptitudes, ...chasses, ...bonus);
+        recapStat.push(...aptitudes, ...chasses, ...bonus, ...aptitudesManual);
         return {recapStat, level, sublimationsIdToLevel};
       }),
       tap(() => this.applyNatifEffects()),

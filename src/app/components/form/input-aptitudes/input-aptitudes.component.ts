@@ -10,6 +10,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 export class InputAptitudesComponent implements OnInit {
   public control = input.required<FormControl<number>>();
   public aptitudesRestantes = input.required<number>();
+
   private maxValue: number | null = null;
 
   public ngOnInit(): void {

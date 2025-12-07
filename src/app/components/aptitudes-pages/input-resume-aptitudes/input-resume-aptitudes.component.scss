@@ -1,0 +1,25 @@
+div {
+    display:flex;
+    align-items: center;
+    width: 100%;
+
+    input {
+        width: 100%;
+    }
+    
+    span {
+        margin-left: auto;
+    }
+    img {
+        margin-right: 5px;
+        width: 22px;
+        height: 22px;
+    }
+
+    .positif {
+        color: #4CAF50;
+    }
+    .negatif {
+        color: #F44336;
+    }
+}

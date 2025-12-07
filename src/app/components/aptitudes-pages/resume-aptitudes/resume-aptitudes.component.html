@@ -9,22 +9,10 @@
 
 <div class="block" id="first-block">
     <div class="row-4">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.POINT_DE_VIE)" alt="point de vie"> {{ 'resume-aptitudes.PV' | translate }}
-            <span class="pdv">{{ getValue(IdActionsEnum.POINT_DE_VIE) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PA)" alt="PA"> {{ 'resume-aptitudes.PA' | translate }}
-            <span class="pa">{{ getValue(IdActionsEnum.PA) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="PM"> {{ 'resume-aptitudes.PM' | translate }}
-            <span class="pm">{{ getValue(IdActionsEnum.PM) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.BOOST_PW)" alt="PW"> {{ 'resume-aptitudes.PW' | translate }}
-            <span class="pw">{{ getValue(IdActionsEnum.BOOST_PW) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.pointDeVie" [idActionEnum]="IdActionsEnum.POINT_DE_VIE" [label]="'resume-aptitudes.PV'" [color]="'red'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.pa" [idActionEnum]="IdActionsEnum.PA" [label]="'resume-aptitudes.PA'" [color]="'#268de2'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.pm" [idActionEnum]="IdActionsEnum.PM" [label]="'resume-aptitudes.PM'" [color]="'green'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.pw" [idActionEnum]="IdActionsEnum.BOOST_PW" [label]="'resume-aptitudes.PW'" [color]="'#268de2'"></app-input-resume-aptitudes>
     </div>
 </div>
 
@@ -33,40 +21,17 @@
 
 <div class="block">
     <div class="row-4">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_FEU)" alt="maitrise feu"> 
-            <span class="feu">{{ getValue(IdActionsEnum.MAITRISES_FEU) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_EAU)" alt="maitrise eau">
-            <span class="eau">{{ getValue(IdActionsEnum.MAITRISES_EAU) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_TERRE)" alt="maitrise terre">
-            <span class="terre">{{ getValue(IdActionsEnum.MAITRISES_TERRE) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_AIR)" alt="maitrise air">
-            <span class="air">{{ getValue(IdActionsEnum.MAITRISES_AIR) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseFeu" [idActionEnum]="IdActionsEnum.MAITRISES_FEU" [label]="''" [color]="'orange'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseEau" [idActionEnum]="IdActionsEnum.MAITRISES_EAU" [label]="''" [color]="'#268de2'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseTerre" [idActionEnum]="IdActionsEnum.MAITRISES_TERRE" [label]="''" [color]="'rgb(6, 209, 6)'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseAir" [idActionEnum]="IdActionsEnum.MAITRISES_AIR" [label]="''" [color]="'rgb(191, 121, 224)'"></app-input-resume-aptitudes>
     </div>
+
     <div class="row-4">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_FEU)" alt="resistance feu"> 
-            <span class="feu">{{ calculResistance(IdActionsEnum.RESISTANCES_FEU) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_EAU)" alt="resistance eau">
-            <span class="eau">{{ calculResistance(IdActionsEnum.RESISTANCES_EAU) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_TERRE)" alt="resistance terre">
-            <span class="terre">{{ calculResistance(IdActionsEnum.RESISTANCES_TERRE) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_AIR)" alt="resistance air">
-            <span class="air">{{ calculResistance(IdActionsEnum.RESISTANCES_AIR) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesFeu" [idActionEnum]="IdActionsEnum.RESISTANCES_FEU" [label]="''" [color]="'orange'" [displayResistance]="true"></app-input-resume-aptitudes> 
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesEau" [idActionEnum]="IdActionsEnum.RESISTANCES_EAU" [label]="''" [color]="'#268de2'" [displayResistance]="true"></app-input-resume-aptitudes> 
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesTerre" [idActionEnum]="IdActionsEnum.RESISTANCES_TERRE" [label]="''" [color]="'rgb(6, 209, 6)'" [displayResistance]="true"></app-input-resume-aptitudes> 
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesAir" [idActionEnum]="IdActionsEnum.RESISTANCES_AIR" [label]="''" [color]="'rgb(191, 121, 224)'" [displayResistance]="true"></app-input-resume-aptitudes>
     </div>
 </div>
 
@@ -74,69 +39,33 @@
 <h3>{{ 'resume-aptitudes.combat' | translate }}</h3>
 <div class="block">
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.DI)" alt="DI"> {{ 'resume-aptitudes.DI' | translate }}
-            <span [class]="getClass(IdActionsEnum.DI)">{{ getValue(IdActionsEnum.DI) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.SOINS_REALISE)" alt="soins"> {{ 'resume-aptitudes.SR' | translate }}
-            <span [class]="getClass(IdActionsEnum.SOINS_REALISE)">{{ getValue(IdActionsEnum.SOINS_REALISE) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.di" [idActionEnum]="IdActionsEnum.DI" [label]="'resume-aptitudes.DI'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.soinsRealises" [idActionEnum]="IdActionsEnum.SOINS_REALISE" [label]="'resume-aptitudes.SR'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.COUP_CRITIQUE)" alt="CC"> {{ 'resume-aptitudes.%-critique' | translate }}
-            <span [class]="getClass(IdActionsEnum.COUP_CRITIQUE)">{{ getValue(IdActionsEnum.COUP_CRITIQUE) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PARADE)" alt="parade"> {{ 'resume-aptitudes.%-parade' | translate }}
-            <span [class]="getClass(IdActionsEnum.PARADE)">{{ getValue(IdActionsEnum.PARADE) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.cc" [idActionEnum]="IdActionsEnum.COUP_CRITIQUE" [label]="'resume-aptitudes.%-critique'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.parade" [idActionEnum]="IdActionsEnum.PARADE" [label]="'resume-aptitudes.%-parade'"></app-input-resume-aptitudes>
+    </div>
+
+    <div class="row-2">
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.initiative" [idActionEnum]="IdActionsEnum.INITIATIVE" [label]="'resume-aptitudes.initiative'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.portee" [idActionEnum]="IdActionsEnum.PORTEE" [label]="'resume-aptitudes.po'"></app-input-resume-aptitudes>
     </div>
     
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.INITIATIVE)" alt="CC"> {{ 'resume-aptitudes.initiative' | translate }}
-            <span [class]="getClass(IdActionsEnum.INITIATIVE)">{{ getValue(IdActionsEnum.INITIATIVE) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="parade"> {{ 'resume-aptitudes.po' | translate }}
-            <span [class]="getClass(IdActionsEnum.PORTEE)">{{ getValue(IdActionsEnum.PORTEE) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.esquive" [idActionEnum]="IdActionsEnum.ESQUIVE" [label]="'resume-aptitudes.esquive'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.tacle" [idActionEnum]="IdActionsEnum.TACLE" [label]="'resume-aptitudes.tacle'"></app-input-resume-aptitudes>
     </div>
     
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.ESQUIVE)" alt="CC"> {{ 'resume-aptitudes.esquive' | translate }}
-            <span [class]="getClass(IdActionsEnum.ESQUIVE)">{{ getValue(IdActionsEnum.ESQUIVE) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.TACLE)" alt="parade"> {{ 'resume-aptitudes.tacle' | translate }}
-            <span [class]="getClass(IdActionsEnum.TACLE)">{{ getValue(IdActionsEnum.TACLE) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.sagesse" [idActionEnum]="IdActionsEnum.SAGESSE" [label]="'resume-aptitudes.sagesse'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.prospection" [idActionEnum]="IdActionsEnum.PROSPECTION" [label]="'resume-aptitudes.prospection'"></app-input-resume-aptitudes>
     </div>
     
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.SAGESSE)" alt="CC"> {{ 'resume-aptitudes.sagesse' | translate }}
-            <span [class]="getClass(IdActionsEnum.SAGESSE)">{{ getValue(IdActionsEnum.SAGESSE) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PROSPECTION)" alt="parade"> {{ 'resume-aptitudes.prospection' | translate }}
-            <span [class]="getClass(IdActionsEnum.PROSPECTION)">{{ getValue(IdActionsEnum.PROSPECTION) }}</span>
-        </div>
-    </div>
-    
-    <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.CONTROLE)" alt="CC"> {{ 'resume-aptitudes.controle' | translate }}
-            <span [class]="getClass(IdActionsEnum.CONTROLE)">{{ getValue(IdActionsEnum.CONTROLE) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.VOLONTE)" alt="parade"> {{ 'resume-aptitudes.volonte' | translate }}
-            <span [class]="getClass(IdActionsEnum.VOLONTE)">{{ getValue(IdActionsEnum.VOLONTE) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.controle" [idActionEnum]="IdActionsEnum.CONTROLE" [label]="'resume-aptitudes.controle'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.volonte" [idActionEnum]="IdActionsEnum.VOLONTE" [label]="'resume-aptitudes.volonte'"></app-input-resume-aptitudes>
     </div>
 </div>
 
@@ -145,65 +74,31 @@
 
 <div class="block">
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_CRITIQUES)" alt="CC"> {{ 'resume-aptitudes.maitrises-critique' | translate }}
-            <span [class]="getClass(IdActionsEnum.MAITRISES_CRITIQUES)">{{ getValue(IdActionsEnum.MAITRISES_CRITIQUES) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_CRITIQUES)" alt="parade"> {{ 'resume-aptitudes.resistances-critique' | translate }}
-            <span [class]="getClass(IdActionsEnum.RESISTANCES_CRITIQUES)">{{ getValue(IdActionsEnum.RESISTANCES_CRITIQUES) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseCritique" [idActionEnum]="IdActionsEnum.MAITRISES_CRITIQUES" [label]="'resume-aptitudes.maitrises-critique'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesCritique" [idActionEnum]="IdActionsEnum.RESISTANCES_CRITIQUES" [label]="'resume-aptitudes.resistances-critique'"></app-input-resume-aptitudes>
     </div>
     
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_DOS)" alt="CC"> {{ 'resume-aptitudes.maitrises-dos' | translate }}
-            <span [class]="getClass(IdActionsEnum.MAITRISES_DOS)">{{ getValue(IdActionsEnum.MAITRISES_DOS) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_DOS)" alt="parade"> {{ 'resume-aptitudes.resistances-dos' | translate }}
-            <span [class]="getClass(IdActionsEnum.RESISTANCES_DOS)">{{ getValue(IdActionsEnum.RESISTANCES_DOS) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseDos" [idActionEnum]="IdActionsEnum.MAITRISES_DOS" [label]="'resume-aptitudes.maitrises-dos'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesDos" [idActionEnum]="IdActionsEnum.RESISTANCES_DOS" [label]="'resume-aptitudes.resistances-dos'"></app-input-resume-aptitudes>
     </div>
     
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_MELEE)" alt="CC"> {{ 'resume-aptitudes.maitrises-melee' | translate }}
-            <span [class]="getClass(IdActionsEnum.MAITRISES_MELEE)">{{ getValue(IdActionsEnum.MAITRISES_MELEE) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.ARMURE_DONNEE_RECUE)" alt="parade"> {{ 'resume-aptitudes.armure-donnee' | translate }}
-            <span [class]="getClass(IdActionsEnum.ARMURE_DONNEE_RECUE)">{{ getArmureValue(IdActionsEnum.ARMURE_DONNEE_RECUE, false) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseMelee" [idActionEnum]="IdActionsEnum.MAITRISES_MELEE" [label]="'resume-aptitudes.maitrises-melee'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.armureDonnee" [idActionEnum]="IdActionsEnum.ARMURE_DONNEE_RECUE" [label]="'resume-aptitudes.armure-donnee'"></app-input-resume-aptitudes>
     </div>
     
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_DISTANCES)" alt="CC"> {{ 'resume-aptitudes.maitrises-distance' | translate }}
-            <span [class]="getClass(IdActionsEnum.MAITRISES_DISTANCES)">{{ getValue(IdActionsEnum.MAITRISES_DISTANCES) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.ARMURE_DONNEE_RECUE, true)" alt="parade"> {{ 'resume-aptitudes.armure-recue' | translate }}
-            <span [class]="getClass(IdActionsEnum.ARMURE_DONNEE_RECUE)">{{ getArmureValue(IdActionsEnum.ARMURE_DONNEE_RECUE, true) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseDistance" [idActionEnum]="IdActionsEnum.MAITRISES_DISTANCES" [label]="'resume-aptitudes.maitrises-distance'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.armureRecue" [idActionEnum]="IdActionsEnum.ARMURE_DONNEE_RECUE" [label]="'resume-aptitudes.armure-recue'"></app-input-resume-aptitudes>
     </div>
     
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_SOIN)" alt="CC"> {{ 'resume-aptitudes.maitrises-soin' | translate }}
-            <span [class]="getClass(IdActionsEnum.MAITRISES_SOIN)">{{ getValue(IdActionsEnum.MAITRISES_SOIN) }}</span>
-        </div>
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.DI_INDIRECT)" alt="parade"> {{ 'resume-aptitudes.DI_indirect' | translate }}
-            <span [class]="getClass(IdActionsEnum.DI_INDIRECT) ">{{ getValue(IdActionsEnum.DI_INDIRECT) }}</span>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseSoins" [idActionEnum]="IdActionsEnum.MAITRISES_SOIN" [label]="'resume-aptitudes.maitrises-soin'"></app-input-resume-aptitudes>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.DIindirect" [idActionEnum]="IdActionsEnum.DI_INDIRECT" [label]="'resume-aptitudes.DI_indirect'"></app-input-resume-aptitudes>
     </div>
     <div class="row-2">
-        <div>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_BERZERK)" alt="parade"> {{ 'resume-aptitudes.maitrises-berzerk' | translate }}
-            <span [class]="getClass(IdActionsEnum.MAITRISES_BERZERK) ">{{ getValue(IdActionsEnum.MAITRISES_BERZERK) }}</span>
-        </div>
-        <div>
-        </div>
+        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseBerzerk" [idActionEnum]="IdActionsEnum.MAITRISES_BERZERK" [label]="'resume-aptitudes.maitrises-berzerk'"></app-input-resume-aptitudes>
+        <div></div>
     </div>
 </div>
