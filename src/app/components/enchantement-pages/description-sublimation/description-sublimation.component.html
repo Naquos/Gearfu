@@ -18,7 +18,9 @@
             <img class="craftable" (click)="navigateToCraftku()" [src]="imageService.getItemUrl(71919810)" alt="craftable" [matTooltip]="'item.craftable' | translate" >
         }
         @for(bossDropable of sublimationsDescriptionsSignal()!.bossDropable; track bossDropable.idMob) {
-            <img [class.breche]="bossDropable.idMob === -1" (click)="openEncyclopedieForMonster(bossDropable.idMob)" [src]="getUrlMonster(bossDropable)" [alt]="''"  [matTooltip]="`${'item.boss-drop' | translate} (${nameMonster(bossDropable)})`" />
+            <img appFallback [class.breche]="bossDropable.idMob === -1"
+            (click)="openEncyclopedieForMonster(bossDropable.idMob)" [src]="getUrlMonster(bossDropable)"
+            [alt]="''"  [matTooltip]="`${'item.boss-drop' | translate} (${nameMonster(bossDropable)})`" />
         }
     </div>
 </div>
