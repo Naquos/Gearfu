@@ -1,9 +1,9 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<div (click)="displayInput.set(true); $event.stopPropagation()">
+<div (click)="showInput(); $event.stopPropagation()" [class.change]="controlValue().value">
     <img [src]="imageService.getActionIdUrl(idActionEnum())" alt=""> 
     @if(displayInput()){
-        <input [formControl]="controlValue()">
+        <input #inputField [formControl]="controlValue()" (keydown)="onKeyDown($event)">
     } @else {
         {{ label() | translate }}
         @if(displayResistance()){

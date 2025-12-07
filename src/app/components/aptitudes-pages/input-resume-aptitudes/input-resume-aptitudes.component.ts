@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, input, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, signal, viewChild, effect } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -17,9 +17,28 @@ export class InputResumeAptitudesComponent {
   private readonly recapStatsService = inject(RecapStatsService);
   private readonly recapStats = toSignal(this.recapStatsService.recap$, { initialValue: [] as RecapStats[] });
   private readonly elementRef = inject(ElementRef);
+  private readonly inputElement = viewChild<ElementRef<HTMLInputElement>>('inputField');
 
   protected readonly imageService = inject(ImageService);
   protected readonly displayInput = signal<boolean>(false);
+
+  constructor() {
+    effect(() => {
+      if (this.displayInput() && this.inputElement()) {
+        setTimeout(() => this.inputElement()?.nativeElement.focus(), 0);
+      }
+    });
+  }
+
+  protected showInput(): void {
+    this.displayInput.set(true);
+  }
+
+  protected onKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      this.displayInput.set(false);
+    }
+  }
 
   @HostListener('document:click', ['$event'])
   public onClickOutside(event: MouseEvent): void {
