@@ -34,11 +34,18 @@ export class DescriptionSublimationComponent {
     this.sublimationsDescriptionsSignal.set(value);
   }
 
+  protected openEncyclopedieForMonster(monsterId: number): void {
+    if(monsterId === -1) {
+      return;
+    }
+    window.open('https://www.wakfu.com/fr/mmorpg/encyclopedie/monstres/' + monsterId);
+  }
+
   protected getUrlMonster(monsterDrop: MonsterDrop): string {
-    if(monsterDrop.idMob !== -1 && monsterDrop.idMob !== -2) {
+    if(monsterDrop.idMob !== -1 && monsterDrop.idMob !== 4189) {
       return this.imageService.getMonsterUrl(monsterDrop.gfxId);
     }
-    if(monsterDrop.idMob === -2) {
+    if(monsterDrop.idMob === 4189) {
       return "breche/mimic.png";
     }
     switch(monsterDrop.name.fr) {

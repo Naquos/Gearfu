@@ -1,6 +1,7 @@
 export enum GfxIdMobEnum {
     BILBYGIRL = -1, // 10 => Se partage avec le multimonk
     BILBYBOY = 11,
+    MIMIC_RUNIQUE = 4189,
     RATCHITIK = 107700210,
     RATAGASD_LE_MARRON = 107702129,
     LELA = 1111105445,

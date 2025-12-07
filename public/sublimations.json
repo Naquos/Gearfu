@@ -6208,7 +6208,7 @@
       2
     ],
     "bossDropable": [{
-        "idMob": -2,
+        "idMob": 4189,
         "idsDrop": [],
         "gfxId": -2,
         "name": {
@@ -7076,7 +7076,7 @@
       1
     ],
     "bossDropable": [{
-        "idMob": -2,
+        "idMob": 4189,
         "idsDrop": [],
         "gfxId": -2,
         "name": {
@@ -8788,7 +8788,7 @@
       2
     ],
     "bossDropable": [{
-        "idMob": -2,
+        "idMob": 4189,
         "idsDrop": [],
         "gfxId": -2,
         "name": {
