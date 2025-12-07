@@ -57,7 +57,7 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
   private readonly recapStat = new BehaviorSubject<RecapStats[]>([]);
   public readonly recapStat$ = this.recapStat.asObservable();
 
-  protected readonly keyEnum = KeyEnum.KEY_APTITUDES;
+  protected readonly keyEnum = KeyEnum.KEY_APTITUDES_MANUAL;
 
   public readonly form = new FormGroup<TypedControls<AptitudesManualForm>>({
     pointDeVie: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
