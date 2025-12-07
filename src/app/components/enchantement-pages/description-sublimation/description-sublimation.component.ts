@@ -1,7 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MonsterDrop } from '../../../models/data/monsterDrop';
 
 export interface DescriptionSublimationType {
   level: number;
@@ -10,7 +12,7 @@ export interface DescriptionSublimationType {
 
 @Component({
   selector: 'app-description-sublimation',
-  imports: [],
+  imports: [MatTooltipModule, TranslateModule],
   templateUrl: './description-sublimation.component.html',
   styleUrls: ['./description-sublimation.component.scss']
 })
@@ -21,15 +23,56 @@ export class DescriptionSublimationComponent {
   
   // Signals for reactive template usage
   protected readonly levelSignal = signal<number>(1);
-  public readonly sublimationsDescriptionsSignal = signal<SublimationsDescriptions | undefined>(undefined);
+  protected readonly sublimationsDescriptionsSignal = signal<SublimationsDescriptions | undefined>(undefined);
 
   // Setters to update signals when properties are assigned by TooltipService
-  set level(value: number) {
+  public set level(value: number) {
     this.levelSignal.set(value);
   }
   
-  set sublimationsDescriptions(value: SublimationsDescriptions | undefined) {
+  public set sublimationsDescriptions(value: SublimationsDescriptions | undefined) {
     this.sublimationsDescriptionsSignal.set(value);
+  }
+
+  protected getUrlMonster(monsterDrop: MonsterDrop): string {
+    if(monsterDrop.idMob !== -1 && monsterDrop.idMob !== -2) {
+      return this.imageService.getMonsterUrl(monsterDrop.gfxId);
+    }
+    if(monsterDrop.idMob === -2) {
+      return "breche/mimic.png";
+    }
+    switch(monsterDrop.name.fr) {
+      case 'Brèche Tainela':
+        return "breche/tainela.png";
+      case 'Brèche Sufokia':
+        return "breche/sufokia.png";
+      case 'Brèche Amakna':
+        return "breche/amakna.png";
+      case 'Brèche Bonta':
+        return "breche/bonta.png";
+      case 'Brèche Moon':
+        return "breche/moon.png";
+      case 'Brèche Osamosa':
+        return "breche/osamosa.png";
+      case 'Brèche Shukrute':
+        return "breche/shukrute.png";
+      case 'Brèche Shukrute Ultime':
+        return "breche/shukrute-ultime.png";
+      case 'Brèche Zinit Ultime':
+        return "breche/zinit-ultime.png";
+      case 'Brèche Frigost Ultime':
+        return "breche/frigost-ultime.png";
+    }
+    return "";
+  }
+
+  
+  protected navigateToCraftku(): void {
+    window.open('https://craftkfu.waklab.fr/?' + this.sublimationsDescriptionsSignal()?.id, '_blank');
+  }
+
+  protected nameMonster(monster: MonsterDrop): string {
+    return monster.name[this.translateService.currentLang as keyof typeof monster.name] ?? "";
   }
 
   protected getUrlSublimationImage(): string {

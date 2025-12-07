@@ -150,6 +150,10 @@
                     max-width: calc(33% - 10px);
                 }
 
+                .craftable {
+                    filter: drop-shadow(0px 0px 5px gold);
+                }
+
                 .monster:hover, .craftable:hover {
                     transform: scale(1.2);
                 }

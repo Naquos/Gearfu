@@ -215,10 +215,10 @@ export class ItemsService {
         result.push({
           linkSublimation: linkSublimation,
           title: {
-            fr: isEpicOrRelic ? sublimationList[0].title.fr : sublimationList[0].title.fr.replace(/ I{1,3}$| II$| III$/,'').trim(),
-            en: isEpicOrRelic ? sublimationList[0].title.en : sublimationList[0].title.en.replace(/ I{1,3}$| II$| III$/,'').trim(),
-            es: isEpicOrRelic ? sublimationList[0].title.es : sublimationList[0].title.es.replace(/ I{1,3}$| II$| III$/,'').trim(),
-            pt: isEpicOrRelic ? sublimationList[0].title.pt : sublimationList[0].title.pt.replace(/ I{1,3}$| II$| III$/,'').trim(),
+            fr: isEpicOrRelic ? sublimationList[0].title.fr : sublimationList[0].title.fr.replace(/ I{1,3}$| II$| III$/, '').trim(),
+            en: isEpicOrRelic ? sublimationList[0].title.en : sublimationList[0].title.en.replace(/ I{1,3}$| II$| III$/, '').trim(),
+            es: isEpicOrRelic ? sublimationList[0].title.es : sublimationList[0].title.es.replace(/ I{1,3}$| II$| III$/, '').trim(),
+            pt: isEpicOrRelic ? sublimationList[0].title.pt : sublimationList[0].title.pt.replace(/ I{1,3}$| II$| III$/, '').trim(),
           },
           description: {
             fr: "",
@@ -232,7 +232,9 @@ export class ItemsService {
           gfxId: sublimation.idImage,
           isEpic: sublimation.enchantement.isEpic,
           isRelic: sublimation.enchantement.isRelic,
-          slotColorPattern: sublimation.enchantement.slotColorPattern
+          slotColorPattern: sublimation.enchantement.slotColorPattern,
+          bossDropable: [],
+          isCraftable: false
         });
       });
     }

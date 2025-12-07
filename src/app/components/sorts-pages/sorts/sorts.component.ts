@@ -44,6 +44,9 @@ export class SortsComponent {
   });
   protected readonly effectDisplay = signal<EffectDisplay>('NORMAL');
   protected readonly spellLevel = signal<number>(246); // Niveau par défaut: 246
+  protected readonly level = toSignal(this.levelFormService.level$, {
+    initialValue: 246
+  });
   
   private currentDragSource: 'list' | 'equipped' | null = null;
 
@@ -54,6 +57,7 @@ export class SortsComponent {
   protected readonly sortPassifs = toSignal(this.sortFormService.sortPassifs$, {
     initialValue: []
   });
+
 
   constructor() {
     this.classeFormService.classe$.subscribe(classe => {

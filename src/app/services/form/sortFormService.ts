@@ -5,6 +5,7 @@ import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 import { ClasseFormService } from "./classeFormService";
 import { UrlServices } from "../urlServices";
+import { LevelFormService } from "./levelFormService";
 
 export interface SortForm {
     sortNeutres: number[];
@@ -15,6 +16,7 @@ export interface SortForm {
 export class SortFormService extends AbstractFormService<FormGroup<TypedControls<SortForm>>> {
   private readonly classeFormService = inject(ClasseFormService);
   private readonly urlServices = inject(UrlServices);
+  private readonly levelFormService = inject(LevelFormService);
 
   public static readonly DEFAULT_SORT_NEUTRE: number[] = [0,0,0,0,0,0,0,0,0,0,0,0];
   public static readonly DEFAULT_SORT_PASSIF: number[] = [0,0,0,0,0,0];
@@ -30,6 +32,8 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
 
   private firstLoad = true;
 
+  public readonly unlockedEmplacementSortNeutre = [0,0,0,0,0,0,10,20,30,40,60,80];
+  public readonly unlockedEmplacementSortPassif = [10,30,50,100,150,200];
 
   protected readonly keyEnum = KeyEnum.KEY_SORT;
   public readonly form = new FormGroup<TypedControls<SortForm>>({
@@ -102,6 +106,9 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
       this.removeSortNeutre(sortId);
     }
     const current = this.sortNeutres.getValue();
+    if(this.unlockedEmplacementSortNeutre[index] > this.levelFormService.getValue()) {
+      return;
+    }
     current[index] = sortId;
     this.form.controls.sortNeutres.setValue(current);
   }
@@ -112,7 +119,7 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
     }
     const current = this.sortNeutres.getValue();
     const emptyIndex = current.indexOf(0);
-    if (emptyIndex !== -1) {
+    if (emptyIndex !== -1 && this.unlockedEmplacementSortNeutre[emptyIndex] <= this.levelFormService.getValue()) {
       current[emptyIndex] = sortId;
       this.form.controls.sortNeutres.setValue(current);
     }
@@ -121,6 +128,9 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
   public addSortPassifAt(index: number, sortId: number): void {
     if (this.sortAlreadySet(sortId)) {
       this.removeSortPassif(sortId);
+    }
+    if(this.unlockedEmplacementSortPassif[index] > this.levelFormService.getValue()) {
+      return;
     }
     const current = this.sortPassifs.getValue();
     current[index] = sortId;
@@ -133,7 +143,7 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
     }
     const current = this.sortPassifs.getValue();
     const emptyIndex = current.indexOf(0);
-    if (emptyIndex !== -1) {
+    if (emptyIndex !== -1 && this.unlockedEmplacementSortPassif[emptyIndex] <= this.levelFormService.getValue()) {
       current[emptyIndex] = sortId;
       this.form.controls.sortPassifs.setValue(current);
     }

@@ -84,7 +84,7 @@ export class EnchantementComponent {
           offsetY: -10
         }],  // connectedPosition
         true,       // withPush
-        false        // keepOpenOnHover
+        true        // keepOpenOnHover
       );
     }
   }

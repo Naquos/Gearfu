@@ -21,6 +21,7 @@
             <div class="sorts-neutres">
                 @for(sort of sortNeutres(); track $index) {
                     <img [src]="sort ? imageService.getSortUrl(sort) : 'sorts/empty-sort.png'" alt=""
+                    [class.sort-locked]="level() < sortFormService.unlockedEmplacementSortNeutre[$index]"
                     [draggable]="sort !== 0"
                     (dragstart)="onDragStartEquipped($event, sort, 'NEUTRE', $index)"
                     (click)="selectSortById(sort, 'NEUTRE')"
@@ -34,6 +35,7 @@
             <div class="sorts-passifs">
                 @for(sort of sortPassifs(); track $index) {
                     <img [src]="sort ? imageService.getSortUrl(sort) : 'sorts/empty-sort.png'" alt=""
+                    [class.sort-locked]="level() < sortFormService.unlockedEmplacementSortPassif[$index]"
                     [draggable]="sort !== 0"
                     (dragstart)="onDragStartEquipped($event, sort, 'PASSIF', $index)"
                     (click)="selectSortById(sort, 'PASSIF')"

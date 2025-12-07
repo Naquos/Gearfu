@@ -1,4 +1,5 @@
 import { IdChassesEnum } from "../enum/idChassesEnum";
+import { MonsterDrop } from "./monsterDrop";
 
 export interface LinkSublimation {
     id: number;
@@ -31,4 +32,6 @@ export interface SublimationsDescriptions {
     isEpic: boolean;
     isRelic: boolean;
     slotColorPattern: IdChassesEnum[];
+    bossDropable: MonsterDrop[],
+    isCraftable: boolean;
 }
