@@ -111,15 +111,13 @@ export class ItemChooseService extends AbstractDestroyService {
             map(list => list.flat()),
             tap(list => console.log("Flattened list:", list)),
             map(list => list.filter(x => x !== undefined && x !== null)),
-            tap(list => console.log("Filtered list:", list)),
-            tap(list => this.listItem.next([...new Set<Item>(list)])),
-            tap(() => console.log("Updated listItem BehaviorSubject:", this.listItem.getValue())),
-            map(list => list.map(items => items?.id)),
-            tap(list => console.log("Mapped to IDs:", list)),
-            map(list => list.filter(x => x).join(",")),
-            tap(list => console.log("Joined IDs string:", list)),
-            tap(x => this.setIdItems(x)),
-            tap(x => console.log("Final itemsId string to store and update URL:", x))
+            tap(list => {console.log("Updated listItem BehaviorSubject:", list); this.listItem.next([...new Set<Item>(list)])}),
+            map(list => {
+                console.log("Mapping to item IDs...");
+                return  list.map(items => items?.id)}),
+            map(list => 
+                { console.log("Filtering and joining item IDs..."); return list.filter(x => x).join(",")}),
+            tap(x => {console.log("Setting ID items:", x); this.setIdItems(x)}),
         ).subscribe(x => {
             console.log("Storing itemsId in local storage and updating URL:", x);
             this.localStorageService.setItem<string>(KeyEnum.KEY_BUILD, x);
