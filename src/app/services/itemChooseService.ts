@@ -142,7 +142,6 @@ export class ItemChooseService extends AbstractDestroyService {
 
     private initItemChooses(): Observable<string[] | null> {
     return this.urlServices.itemsId$.pipe(
-            tap(() => console.log("Init items choisies")),
             take(1),
             map(x => x && x.trim() !== "" ? x.split(",") : []),
             tap(x => x.forEach(id => {

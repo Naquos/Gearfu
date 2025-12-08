@@ -31,6 +31,7 @@ import { MonsterDropService } from "./monsterDropService";
 import { MonsterDrop } from "../../models/data/monsterDrop";
 import { isExcludeIdItem } from "../../models/enum/excludeIdItemEnum";
 import { BaseEffect, SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
+import { LEVEL_RATIOS_CHASSE, truncate2 } from "../../models/utils/utils";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -85,18 +86,7 @@ export class ItemsService {
       IdPierreDonjonEnum.ULTIME
     ];
 
-    private readonly LEVEL_RATIOS = [
-      { maxLevel: 36, ratio: this.truncate2(EffetMaitrisesChassesEnum.LEVEL_1 / EffetResistancesChassesEnum.LEVEL_1) },
-      { maxLevel: 51, ratio: this.truncate2(EffetMaitrisesChassesEnum.LEVEL_2 / EffetResistancesChassesEnum.LEVEL_2) },
-      { maxLevel: 66, ratio: this.truncate2(EffetMaitrisesChassesEnum.LEVEL_3 / EffetResistancesChassesEnum.LEVEL_3) },
-      { maxLevel: 81, ratio: this.truncate2(EffetMaitrisesChassesEnum.LEVEL_4 / EffetResistancesChassesEnum.LEVEL_4) },
-      { maxLevel: 96, ratio: this.truncate2(EffetMaitrisesChassesEnum.LEVEL_5 / EffetResistancesChassesEnum.LEVEL_5) },
-      { maxLevel: 126, ratio: this.truncate2(EffetMaitrisesChassesEnum.LEVEL_6 / EffetResistancesChassesEnum.LEVEL_6) },
-      { maxLevel: 141, ratio: this.truncate2(EffetMaitrisesChassesEnum.LEVEL_7 / EffetResistancesChassesEnum.LEVEL_7) },
-      { maxLevel: 171, ratio: this.truncate2(EffetMaitrisesChassesEnum.LEVEL_8 / EffetResistancesChassesEnum.LEVEL_8) },
-      { maxLevel: 186, ratio: this.truncate2(EffetMaitrisesChassesEnum.LEVEL_9 / EffetResistancesChassesEnum.LEVEL_9) },
-      { maxLevel: 216, ratio: this.truncate2(EffetMaitrisesChassesEnum.LEVEL_10 / EffetResistancesChassesEnum.LEVEL_10) }
-    ];
+
 
     protected items: Item[] = [];
     protected readonly fullItems$ = new BehaviorSubject<Item[]>([]);
@@ -399,12 +389,8 @@ export class ItemsService {
     }
 
     public ratioWeightByLevel(level: number): number {
-      const levelConfig = this.LEVEL_RATIOS.find(config => level < config.maxLevel);
-      return levelConfig?.ratio ?? this.truncate2(EffetMaitrisesChassesEnum.LEVEL_11 / EffetResistancesChassesEnum.LEVEL_11);
-    }
-
-    private truncate2(num: number): number {
-      return Math.trunc(num * 100) / 100;
+      const levelConfig = LEVEL_RATIOS_CHASSE.find(config => level < config.maxLevel);
+      return levelConfig?.ratio ?? truncate2(EffetMaitrisesChassesEnum.LEVEL_11 / EffetResistancesChassesEnum.LEVEL_11);
     }
 
     private initItemsList(): void {

@@ -6,6 +6,8 @@ import { BehaviorSubject } from "rxjs";
 import { RecapStats } from "../../models/data/recap-stats";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { ParameterMajorActionEnum } from "../../models/enum/parameterMajorActionEnum";
+import { inject } from "@angular/core";
+import { UrlServices } from "../urlServices";
 
 
 export interface AptitudesManualForm {
@@ -59,6 +61,9 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
 
   protected readonly keyEnum = KeyEnum.KEY_APTITUDES_MANUAL;
 
+  private readonly urlServices = inject(UrlServices);
+  private isLoadingFromUrl = false;
+
   public readonly form = new FormGroup<TypedControls<AptitudesManualForm>>({
     pointDeVie: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
     pa: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
@@ -103,7 +108,139 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
 
   constructor() {
     super();
+    const codeAptitudesManual = this.urlServices.getAptitudesManualFromUrl();
     this.init();
+    if (codeAptitudesManual) {
+      this.isLoadingFromUrl = true;
+      this.decodeAndSaveCodeBuild(codeAptitudesManual);
+      this.isLoadingFromUrl = false;
+    }
+  }
+
+  /**
+   * Génère un code compact pour l'URL représentant les aptitudes manuelles
+   * Format: pv,pa,pm,pw,mFeu,mEau,mTerre,mAir,rFeu,rEau,rTerre,rAir,di,soins,cc,parade,init,portee,esq,tacle,sag,prosp,ctrl,vol,mCrit,rCrit,mDos,rDos,mMelee,armD,mDist,armR,mSoins,diInd,mBerz
+   * Seules les valeurs non-nulles sont encodées avec leur index
+   */
+  private generateCodeBuild(value: AptitudesManualForm): string {
+    const values = [
+      value.pointDeVie,
+      value.pa,
+      value.pm,
+      value.pw,
+      value.maitriseFeu,
+      value.maitriseEau,
+      value.maitriseTerre,
+      value.maitriseAir,
+      value.resistancesFeu,
+      value.resistancesEau,
+      value.resistancesTerre,
+      value.resistancesAir,
+      value.di,
+      value.soinsRealises,
+      value.cc,
+      value.parade,
+      value.initiative,
+      value.portee,
+      value.esquive,
+      value.tacle,
+      value.sagesse,
+      value.prospection,
+      value.controle,
+      value.volonte,
+      value.maitriseCritique,
+      value.resistancesCritique,
+      value.maitriseDos,
+      value.resistancesDos,
+      value.maitriseMelee,
+      value.armureDonnee,
+      value.maitriseDistance,
+      value.armureRecue,
+      value.maitriseSoins,
+      value.DIindirect,
+      value.maitriseBerzerk
+    ];
+
+    // Encoder uniquement les valeurs non-nulles avec leur index
+    const parts: string[] = [];
+    values.forEach((val, index) => {
+      if (val !== 0) {
+        parts.push(`${index}:${val}`);
+      }
+    });
+
+    return parts.join(',');
+  }
+
+  /**
+   * Décode un code build depuis l'URL et l'applique au formulaire
+   */
+  public decodeAndSaveCodeBuild(codeBuild: string): void {
+    try {
+      const aptitudesManual: AptitudesManualForm = {
+        pointDeVie: 0,
+        pa: 0,
+        pm: 0,
+        pw: 0,
+        maitriseFeu: 0,
+        maitriseEau: 0,
+        maitriseTerre: 0,
+        maitriseAir: 0,
+        resistancesFeu: 0,
+        resistancesEau: 0,
+        resistancesTerre: 0,
+        resistancesAir: 0,
+        di: 0,
+        soinsRealises: 0,
+        cc: 0,
+        parade: 0,
+        initiative: 0,
+        portee: 0,
+        esquive: 0,
+        tacle: 0,
+        sagesse: 0,
+        prospection: 0,
+        controle: 0,
+        volonte: 0,
+        maitriseCritique: 0,
+        resistancesCritique: 0,
+        maitriseDos: 0,
+        resistancesDos: 0,
+        maitriseMelee: 0,
+        armureDonnee: 0,
+        maitriseDistance: 0,
+        armureRecue: 0,
+        maitriseSoins: 0,
+        DIindirect: 0,
+        maitriseBerzerk: 0
+      };
+
+      const keys: (keyof AptitudesManualForm)[] = [
+        'pointDeVie', 'pa', 'pm', 'pw',
+        'maitriseFeu', 'maitriseEau', 'maitriseTerre', 'maitriseAir',
+        'resistancesFeu', 'resistancesEau', 'resistancesTerre', 'resistancesAir',
+        'di', 'soinsRealises', 'cc', 'parade', 'initiative', 'portee',
+        'esquive', 'tacle', 'sagesse', 'prospection', 'controle', 'volonte',
+        'maitriseCritique', 'resistancesCritique', 'maitriseDos', 'resistancesDos',
+        'maitriseMelee', 'armureDonnee', 'maitriseDistance', 'armureRecue',
+        'maitriseSoins', 'DIindirect', 'maitriseBerzerk'
+      ];
+
+      const parts = codeBuild.split(',');
+      parts.forEach(part => {
+        const [indexStr, valueStr] = part.split(':');
+        const index = parseInt(indexStr, 10);
+        const value = parseInt(valueStr, 10);
+        
+        if (!isNaN(index) && !isNaN(value) && index >= 0 && index < keys.length) {
+          aptitudesManual[keys[index]] = value;
+        }
+      });
+
+      this.setValue(aptitudesManual);
+    } catch (error) {
+      console.error('Error decoding aptitudes manual from URL:', error);
+    }
   }
   
   protected override handleChanges(value: AptitudesManualForm): void {
@@ -152,6 +289,12 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
 
     ];
     this.recapStat.next(recapStatsList);
+    
+    // Synchroniser avec l'URL seulement si on ne charge pas depuis l'URL
+    if (!this.isLoadingFromUrl) {
+      const codeBuild = this.generateCodeBuild(value);
+      this.urlServices.setAptitudesManualInUrl(codeBuild);
+    }
   }
 
   public override setValue(value: AptitudesManualForm | null): void {

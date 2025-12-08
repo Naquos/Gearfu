@@ -12,13 +12,16 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import {MatSliderModule} from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { map } from 'rxjs';
+import { map, takeUntil } from 'rxjs';
 import { Sublimation } from '../../../models/data/sublimation';
 import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqueRelique';
 import { SublimationService } from '../../../services/data/sublimationService';
 import { LinkSublimation, SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { TooltipService } from '../../../services/TooltipService';
 import { DescriptionSublimationComponent, DescriptionSublimationType } from '../description-sublimation/description-sublimation.component';
+import { LevelFormService } from '../../../services/form/levelFormService';
+import { maxChasseLevel } from '../../../models/utils/utils';
+import { AbstractDestroyService } from '../../../services/abstract/abstractDestroyService';
 
 interface DisplayTypeItem {
   indexItem: number;
@@ -39,7 +42,7 @@ interface EffetDescription {
   templateUrl: './enchantement.component.html',
   styleUrl: './enchantement.component.scss'
 })
-export class EnchantementComponent {
+export class EnchantementComponent extends AbstractDestroyService {
 
   private readonly sublimationService = inject(SublimationService);
   private readonly translateService = inject(TranslateService);
@@ -60,6 +63,18 @@ export class EnchantementComponent {
   protected readonly sublimationToApply = signal<SublimationsDescriptions | undefined>(undefined);
   protected readonly levelSublimationToApply = signal<number | undefined>(undefined);
   protected readonly indexItemTypeSelected = signal<number>(-1);
+  protected readonly levelFormService = inject(LevelFormService);
+  protected level = 11;
+  protected maxLevel = 11;
+  private itemLevels = new Map<number, number>();
+
+  constructor() {
+    super();
+    this.levelFormService.level$.pipe(takeUntil(this.destroy$)).subscribe(level => {
+      this.maxLevel = maxChasseLevel(level);
+      this.level = Math.min(this.level, this.maxLevel);
+    });
+  }
 
   protected openTooltip(event: MouseEvent, sublimationDescriptions: SublimationsDescriptions | Sublimation | SublimationsEpiqueRelique | undefined, level: number): void {
     if(!sublimationDescriptions) {
@@ -104,7 +119,6 @@ export class EnchantementComponent {
       || this.descriptionSublimation(subli).toLowerCase().includes(search));
   });
 
-  protected level = 11;
 
   protected readonly displayTypeItem: DisplayTypeItem[] = [
     {indexItem: 0, itemType: ItemTypeEnum.CASQUE, background: './aptitudes/EmplacementCoiffe.png'},
@@ -240,13 +254,13 @@ export class EnchantementComponent {
     this.chasseFormService.changeJokerState(posX, posY);
   }
 
-  protected applyEffet(posX: number, posY: number) {
+  protected applyEffet(posX: number, posY: number, levelItem: number) {
     if(!this.effectToApply()) {
       return;
     }
     this.chasseFormService.applyEffect(posX, posY, {
       color: this.effectToApply()!.chasse.color,
-      lvl: this.level,
+      lvl: Math.min(this.level, maxChasseLevel(levelItem)),
       idAction: this.effectToApply()!.chasse.idAction,
       joker: false
     });
@@ -276,6 +290,14 @@ export class EnchantementComponent {
       this.indexItemTypeSelected.set(index);
       this.itemTypeSelected.set(itemType);
     }
+  }
+
+  protected setLevelItem(level: number, index: number): void {
+    this.itemLevels.set(index, level);
+  }
+
+  protected getLevelItem(index: number): number {
+    return this.itemLevels.get(index) || 0;
   }
 
 }

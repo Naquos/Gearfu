@@ -14,6 +14,7 @@ interface UrlParams {
     aptitudes?: string;
     sorts?: string;
     enchantement?: string;
+    aptitudesManual?: string;
     // Paramètre indiquant si les données sont compressées
     c?: '1';
 }
@@ -98,6 +99,15 @@ export class UrlServices extends AbstractDestroyService {
     public getEnchantementFromUrl(): string | undefined {
         const isCompressed = this.initialParams?.c === '1';
         return this.decompressIfNeeded(this.initialParams?.enchantement || '', isCompressed);
+    }
+
+    public setAptitudesManualInUrl(aptitudesManual: string): void {
+        this.updateUrlParams({ aptitudesManual });
+    }
+
+    public getAptitudesManualFromUrl(): string | undefined {
+        const isCompressed = this.initialParams?.c === '1';
+        return this.decompressIfNeeded(this.initialParams?.aptitudesManual || '', isCompressed);
     }
 
     /**
@@ -200,6 +210,12 @@ export class UrlServices extends AbstractDestroyService {
             needsCompression = needsCompression || result.isCompressed;
         }
 
+        if (newParams.aptitudesManual) {
+            const result = this.compressIfNeeded(newParams.aptitudesManual);
+            compressedParams.aptitudesManual = result.compressed;
+            needsCompression = needsCompression || result.isCompressed;
+        }
+
         // Ajouter le flag de compression si nécessaire
         if (needsCompression) {
             compressedParams.c = '1';
@@ -221,7 +237,7 @@ export class UrlServices extends AbstractDestroyService {
      * Vérifie si d'autres paramètres sont encore compressés
      */
     private hasOtherCompressedParams(excludeParams: Partial<UrlParams>): boolean {
-        const keysToCheck: (keyof UrlParams)[] = ['sorts', 'aptitudes', 'enchantement'];
+        const keysToCheck: (keyof UrlParams)[] = ['sorts', 'aptitudes', 'enchantement', 'aptitudesManual'];
         
         for (const key of keysToCheck) {
             if (!(key in excludeParams) && this.initialParams[key]) {
@@ -282,6 +298,11 @@ export class UrlServices extends AbstractDestroyService {
             const enchantement = urlParams.get('enchantement');
             if (enchantement) {
                 params.enchantement = this.decompressIfNeeded(enchantement, isCompressed);
+            }
+
+            const aptitudesManual = urlParams.get('aptitudesManual');
+            if (aptitudesManual) {
+                params.aptitudesManual = this.decompressIfNeeded(aptitudesManual, isCompressed);
             }
             
             return params;
