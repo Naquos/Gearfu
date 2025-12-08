@@ -3,7 +3,6 @@ import { ItemTypeEnum } from "../models/enum/itemTypeEnum";
 import { BehaviorSubject, combineLatest, filter, first, iif, map, Observable, of, switchMap, take, takeUntil, tap } from "rxjs";
 import { ItemTypeServices } from "./data/ItemTypesServices";
 import { RarityItemEnum } from "../models/enum/rarityItemEnum";
-import { ActivatedRoute, Router } from "@angular/router";
 import { ItemsService } from "./data/itemsService";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { LocalStorageService } from "./data/localStorageService";
@@ -20,8 +19,6 @@ import { UrlServices } from "./urlServices";
 export class ItemChooseService extends AbstractDestroyService {
     private readonly itemTypeService = inject(ItemTypeServices);
     private readonly itemService = inject(ItemsService);
-    private readonly router = inject(Router);
-    private readonly activatedRoute = inject(ActivatedRoute);
     private readonly localStorageService = inject(LocalStorageService);
     private readonly modifierElemMaitrisesFormService = inject(ModifierMecanismFormService);
     private readonly resistancesFormService = inject(ResistancesFormService);
@@ -65,8 +62,9 @@ export class ItemChooseService extends AbstractDestroyService {
 
     constructor() {
         super();
+        console.log("ItemChooseService created");
         this.initItemChooses().subscribe(
-            () => this.updateUrl()
+            () => {this.updateUrl(); console.log("ItemChooseService initialized from URL or local storage");}
         );
         // setTimeout(() => {
         //     this.initItemChooses();
@@ -88,6 +86,7 @@ export class ItemChooseService extends AbstractDestroyService {
             this.onlyNoSecondaryFormService.onlyNoSecondary$,
             this.modifierElemMaitrisesFormService.chaos$
         ]).pipe(
+            tap(() => console.log("Recalculating totals...")),
             takeUntil(this.destroy$),
             tap(([list, nbElements, idMaitrises, multiplicateurElem, denouement, idResistances, noElem, noSecondary, chaos]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances, denouement, noElem, noSecondary, chaos))
         ).subscribe();
