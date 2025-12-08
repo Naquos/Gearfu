@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { ItemTypeEnum } from "../models/enum/itemTypeEnum";
-import { BehaviorSubject, combineLatest, filter, first, iif, map, Observable, of, switchMap, take, takeUntil, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, filter, first, iif, map, Observable, of, startWith, switchMap, take, takeUntil, tap } from "rxjs";
 import { ItemTypeServices } from "./data/ItemTypesServices";
 import { RarityItemEnum } from "../models/enum/rarityItemEnum";
 import { ItemsService } from "./data/itemsService";
@@ -14,6 +14,7 @@ import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 import { UrlServices } from "./urlServices";
+import { Router } from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService extends AbstractDestroyService {
@@ -26,7 +27,7 @@ export class ItemChooseService extends AbstractDestroyService {
     private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
     private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
     private readonly urlServices = inject(UrlServices);
-
+    private readonly router = inject(Router);
 
     private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>(
         [
@@ -51,7 +52,7 @@ export class ItemChooseService extends AbstractDestroyService {
     public readonly totalWeight$ = this.totalWeight.asObservable();
 
     private readonly listItem = new BehaviorSubject<Item[]>([]);
-    public readonly listItem$ = this.listItem.asObservable().pipe(tap(x => console.log("listItem$", x)));
+    public readonly listItem$ = this.listItem.asObservable();
     
     private readonly totalMaitrises = new BehaviorSubject<number>(0);
     public readonly totalMaitrises$ = this.totalMaitrises.asObservable();
@@ -62,14 +63,8 @@ export class ItemChooseService extends AbstractDestroyService {
 
     constructor() {
         super();
-        console.log("ItemChooseService created");
-        this.initItemChooses().subscribe(
-            () => {this.updateUrl(); console.log("ItemChooseService initialized from URL or local storage");}
-        );
-        // setTimeout(() => {
-        //     this.initItemChooses();
-        //     this.updateUrl();
-        // });
+        // Initialiser directement sans attendre les observables
+        this.initItemsDirectly();
 
         this.handleCalculTotal();
     }
@@ -86,7 +81,6 @@ export class ItemChooseService extends AbstractDestroyService {
             this.onlyNoSecondaryFormService.onlyNoSecondary$,
             this.modifierElemMaitrisesFormService.chaos$
         ]).pipe(
-            tap(() => console.log("Recalculating totals...")),
             takeUntil(this.destroy$),
             tap(([list, nbElements, idMaitrises, multiplicateurElem, denouement, idResistances, noElem, noSecondary, chaos]) => this.calculTotal(list, nbElements, idMaitrises, multiplicateurElem, idResistances, denouement, noElem, noSecondary, chaos))
         ).subscribe();
@@ -107,42 +101,57 @@ export class ItemChooseService extends AbstractDestroyService {
         this.getObsItem(ItemTypeEnum.FAMILIER),
         ]).pipe(
             takeUntil(this.destroy$),
-            tap(() => console.log("Updating URL with items...")),
             map(list => list.flat()),
-            tap(list => console.log("Flattened list:", list)),
             map(list => list.filter(x => x !== undefined && x !== null)),
-            tap(list => {console.log("Updated listItem BehaviorSubject:", list); this.listItem.next([...new Set<Item>(list)])}),
-            map(list => {
-                console.log("Mapping to item IDs...");
-                return  list.map(items => items?.id)}),
-            map(list => 
-                { console.log("Filtering and joining item IDs..."); return list.filter(x => x).join(",")}),
-            tap(x => {console.log("Setting ID items:", x); this.setIdItems(x)}),
+            tap(list => this.listItem.next([...new Set<Item>(list)])),
+            map(list => list.map(items => items?.id)),
+            map(list => list.filter(x => x).join(",")),
+            tap(x => this.setIdItems(x))
         ).subscribe(x => {
-            console.log("Storing itemsId in local storage and updating URL:", x);
             this.localStorageService.setItem<string>(KeyEnum.KEY_BUILD, x);
             this.urlServices.setItemsIdInUrl(x);
-            // this.router.navigate(
-            //     [],
-            //     {
-            //         relativeTo: this.activatedRoute,
-            //         queryParams: { itemsId: x },
-            //         queryParamsHandling: 'merge',
-            //     }
-            // );
         });
     }
 
+    private initItemsDirectly(): void {
+        // Récupérer les items depuis l'URL ou localStorage de manière synchrone
+        let itemsId = '';
+        
+        if (typeof window !== 'undefined') {
+            const urlParams = new URLSearchParams(window.location.search);
+            itemsId = urlParams.get('itemsId') || '';
+        }
+        
+        if (!itemsId) {
+            itemsId = this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD) || '';
+        }
+        
+        if (itemsId && itemsId.trim() !== '') {
+            const ids = itemsId.split(',');
+            ids.forEach(id => {
+                const numId = parseInt(id);
+                if (!isNaN(numId)) {
+                    this.setItemWithIdItem(numId);
+                }
+            });
+        }
+        
+        // Lancer l'écoute des changements pour mettre à jour l'URL
+        this.updateUrl();
+    }
+
     private initItemChooses(): Observable<string[] | null> {
-        // this.activatedRoute.queryParams.pipe(
-        //     takeUntil(this.destroy$),
-        //     filter(x => x !== undefined),
-        //     map(x => x["itemsId"] ? x["itemsId"] as string : this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD)),
     return this.urlServices.itemsId$.pipe(
-            filter(x => x !== undefined && x !== null),
+            tap(() => console.log("Init items choisies")),
             take(1),
-            map(x => x.split(",")),
-            tap(x => x.forEach(id => this.setItemWithIdItem(parseInt(id))))
+            map(x => x && x.trim() !== "" ? x.split(",") : []),
+            tap(x => x.forEach(id => {
+                const numId = parseInt(id);
+                if (!isNaN(numId)) {
+                    this.setItemWithIdItem(numId);
+                }
+            })),
+            map(() => null)
         );
     }
 

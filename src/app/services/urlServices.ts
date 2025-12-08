@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 import { ActivatedRoute, Router } from "@angular/router";
-import { filter, map, startWith, takeUntil } from "rxjs";
+import { map, startWith, takeUntil } from "rxjs";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { LocalStorageService } from "./data/localStorageService";
 import { ClassIdEnum } from "../models/enum/classIdEnum";
@@ -26,19 +26,19 @@ export class UrlServices extends AbstractDestroyService {
     private readonly localStorageService = inject(LocalStorageService);
     private readonly activatedRoute = inject(ActivatedRoute);
     private readonly router = inject(Router);
-    private readonly queryParams$ = this.activatedRoute.queryParams.pipe(
-                startWith(this.initialParams),
-                takeUntil(this.destroy$),
-                filter(x => x !== undefined));
 
     // Seuil de longueur à partir duquel on compresse (en caractères)
     private readonly COMPRESSION_THRESHOLD = 50;
         
 
-    public readonly itemsId$ = this.queryParams$.pipe(
-        map(x => x["itemsId"] ? x["itemsId"] as string : this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD)),
-        startWith(this.initialParams.itemsId ? this.initialParams.itemsId 
-            : this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD))
+    public readonly itemsId$ = this.activatedRoute.queryParams.pipe(
+        startWith(this.initialParams),
+        map(x => {
+            const fromUrl = x["itemsId"] as string | undefined;
+            const fromStorage = this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD);
+            return fromUrl || fromStorage || "";
+        }),
+        takeUntil(this.destroy$)
     );
 
     public setItemsIdInUrl(itemsId: string): void {
