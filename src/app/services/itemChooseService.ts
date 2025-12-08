@@ -51,7 +51,7 @@ export class ItemChooseService extends AbstractDestroyService {
     public readonly totalWeight$ = this.totalWeight.asObservable();
 
     private readonly listItem = new BehaviorSubject<Item[]>([]);
-    public readonly listItem$ = this.listItem.asObservable();
+    public readonly listItem$ = this.listItem.asObservable().pipe(tap(x => console.log("listItem$", x)));
     
     private readonly totalMaitrises = new BehaviorSubject<number>(0);
     public readonly totalMaitrises$ = this.totalMaitrises.asObservable();
@@ -107,13 +107,21 @@ export class ItemChooseService extends AbstractDestroyService {
         this.getObsItem(ItemTypeEnum.FAMILIER),
         ]).pipe(
             takeUntil(this.destroy$),
+            tap(() => console.log("Updating URL with items...")),
             map(list => list.flat()),
+            tap(list => console.log("Flattened list:", list)),
             map(list => list.filter(x => x !== undefined && x !== null)),
+            tap(list => console.log("Filtered list:", list)),
             tap(list => this.listItem.next([...new Set<Item>(list)])),
+            tap(() => console.log("Updated listItem BehaviorSubject:", this.listItem.getValue())),
             map(list => list.map(items => items?.id)),
+            tap(list => console.log("Mapped to IDs:", list)),
             map(list => list.filter(x => x).join(",")),
-            tap(x => this.setIdItems(x))
+            tap(list => console.log("Joined IDs string:", list)),
+            tap(x => this.setIdItems(x)),
+            tap(x => console.log("Final itemsId string to store and update URL:", x))
         ).subscribe(x => {
+            console.log("Storing itemsId in local storage and updating URL:", x);
             this.localStorageService.setItem<string>(KeyEnum.KEY_BUILD, x);
             this.urlServices.setItemsIdInUrl(x);
             // this.router.navigate(
