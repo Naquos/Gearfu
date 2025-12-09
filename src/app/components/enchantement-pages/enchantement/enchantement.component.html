@@ -46,7 +46,8 @@
                                 [class.invalid]="chasse.sublimation && !chasse.sublimation.isValid"
                                 (click)="applySublimation(indexParent)"
                                 (contextmenu)="$event.preventDefault();chasseFormService.removeSublimation(indexParent);">
-                                <img [src]="imageService.getItemTypeUrl(ItemTypeEnum.SUBLIMATIONS)" 
+                                <img [src]="imageService.getItemTypeUrl(ItemTypeEnum.SUBLIMATIONS)"
+                                        (click)=" selectItemType(displayTypeItem[$index].itemType, $index)" 
                                         (mouseenter)="openTooltip($event, chasse.sublimation, chasse.sublimation?.level || 1)" 
                                         (mouseleave)="onMouseLeave()" alt="">
                                 <span>{{ nameSublimation(chasse.sublimation) }}</span>
