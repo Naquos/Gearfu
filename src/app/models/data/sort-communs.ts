@@ -53,7 +53,8 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: [],
             es: [],
             pt: []
-        }
+        },
+        levelUnlock: 0
     },
     {
         gfxId: SortIdEnum.EVASION,
@@ -106,7 +107,8 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: [],
             es: [],
             pt: []
-        }
+        },
+        levelUnlock: 0
     },
     {
         gfxId: SortIdEnum.FLUCTUATION,
@@ -159,7 +161,8 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: [],
             es: [],
             pt: []
-        }
+        },
+        levelUnlock: 0
     },
     {
         gfxId: SortIdEnum.INSPIRATION,
@@ -212,7 +215,8 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: [],
             es: [],
             pt: []
-        }
+        },
+        levelUnlock: 0
     },
     {
         gfxId: SortIdEnum.INTERCEPTION,
@@ -265,7 +269,8 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: [],
             es: [],
             pt: []
-        }
+        },
+        levelUnlock: 0
     },
     {
         gfxId: SortIdEnum.MEDECINE,
@@ -318,7 +323,8 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: [],
             es: [],
             pt: []
-        }
+        },
+        levelUnlock: 0
     },
     {
         gfxId: SortIdEnum.MOTIVATION,
@@ -371,7 +377,8 @@ export const sortPassifCommun: DescriptionSort[] = [
             en: [],
             es: [],
             pt: []
-        }
+        },
+        levelUnlock: 0
     },
         {
             gfxId: SortIdEnum.ROCK,
@@ -424,7 +431,8 @@ export const sortPassifCommun: DescriptionSort[] = [
                 en: [],
                 es: [],
                 pt: []
-            }
+            },
+            levelUnlock: 0
         }
 ]
 
@@ -480,7 +488,8 @@ export const sortNeutreCommun: DescriptionSort[] = [
             en: [],
             es: [],
             pt: []
-        }
+        },
+        levelUnlock: 0
     },
     {
         gfxId: SortIdEnum.MAITRISES_D_ARMES,
@@ -533,7 +542,8 @@ export const sortNeutreCommun: DescriptionSort[] = [
             en: [],
             es: [],
             pt: []
-        }
+        },
+        levelUnlock: 0
     },
     {
         gfxId: SortIdEnum.OS_A_MOELLE,
@@ -586,6 +596,7 @@ export const sortNeutreCommun: DescriptionSort[] = [
             en: [],
             es: [],
             pt: []
-        }
+        },
+        levelUnlock: 0
     }
 ]

@@ -38,6 +38,7 @@ export interface DescriptionSort {
         es: string;
         pt: string;
     };
+    levelUnlock: number;
     // Format RLE: [[valeurs, start, end], ...]
     normalEffect: {
         fr: [number[], number, number][];

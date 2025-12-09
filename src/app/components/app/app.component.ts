@@ -37,6 +37,7 @@ import { ItemChooseComponent } from '../items-pages/item-choose/item-choose.comp
 import { SortService } from '../../services/data/sortService';
 import { SublimationService } from '../../services/data/sublimationService';
 import { FamiliersService } from '../../services/data/familiersService';
+import { SortLevelService } from '../../services/data/sortLevelService';
 
 type column = 'filter' | 'build' | 'aptitudes';
 
@@ -86,6 +87,7 @@ export class AppComponent implements OnInit{
   private readonly sortService = inject(SortService);
   private readonly router = inject(Router);
   private readonly familierService = inject(FamiliersService);
+  private readonly sortLevelService = inject(SortLevelService);
 
   protected displayFilter = false;
   protected filterOrBuild : column = "filter";
@@ -118,6 +120,7 @@ export class AppComponent implements OnInit{
     this.sortService.load();
     this.sublimationService.load();
     this.familierService.load();
+    this.sortLevelService.load();
 
     this.itemService.init();
 

@@ -7,6 +7,9 @@ import { Sort } from "../../models/data/sort";
 import { DescriptionSort } from "../../models/data/descriptionSort";
 import { sortNeutreCommun, sortPassifCommun } from "../../models/data/sort-communs";
 import { SpellEffectService } from "../spellEffectService";
+import { SortLevelService } from "./sortLevelService";
+import { LevelUnlockSort } from "../../models/data/levelUnlockSort";
+import { SortLevel } from "../../models/data/sortLevel";
 
 @Injectable({providedIn: 'root'})
 export class SortService {
@@ -14,26 +17,41 @@ export class SortService {
     private readonly http = inject(HttpClient);
     private readonly classeFormService = inject(ClasseFormService);
     private readonly spellEffectService = inject(SpellEffectService);
+    private readonly sortLevelService = inject(SortLevelService);
     private readonly sorts = new BehaviorSubject<Sort[]>([]);
     public readonly sorts$ = this.sorts.asObservable();
-    public readonly sortsClasse = toSignal(combineLatest([this.sorts$, this.classeFormService.classe$]).pipe(
-        map(([sorts, idClasse]) => sorts.filter(sort => sort.idClasse === idClasse)[0]),
-        map(sorts => {
+    public readonly sortsClasse = toSignal(combineLatest([this.sorts$, this.classeFormService.classe$, this.sortLevelService.sortsLevel$]).pipe(
+        map(([sorts, idClasse, sortLevel]): [Sort | undefined, SortLevel | undefined] => {
+            const _sorts = sorts.filter(sort => sort.idClasse === idClasse)[0]
+            const _sortLevel = sortLevel.filter(sort => sort.idClasse === idClasse)[0];
+            return [_sorts, _sortLevel]
+        }),
+        map(([sorts, sortLevel]) => {
             return sorts ? {
                 ...sorts,
-                sortActifs: [...sorts.sortActifs],
-                sortPassifs: [...sorts.sortPassifs],
+                sortActifs: [...this.setUnlockedSortLevels([...sorts.sortActifs, ...sortNeutreCommun], sortLevel?.sortActifs || [])],
+                sortPassifs: [...this.setUnlockedSortLevels([...sorts.sortPassifs, ...sortPassifCommun], sortLevel?.sortPassifs || [])],
                 sortElementaires: {
-                    feu: [...sorts.sortElementaires.feu],
-                    eau: [...sorts.sortElementaires.eau],
-                    air: [...sorts.sortElementaires.air],
-                    terre: [...sorts.sortElementaires.terre]
+                    feu: [...this.setUnlockedSortLevels([...sorts.sortElementaires.feu], sortLevel?.sortElementaires.feu || [])],
+                    eau: [...this.setUnlockedSortLevels([...sorts.sortElementaires.eau], sortLevel?.sortElementaires.eau || [])],
+                    air: [...this.setUnlockedSortLevels([...sorts.sortElementaires.air], sortLevel?.sortElementaires.air || [])],
+                    terre: [...this.setUnlockedSortLevels([...sorts.sortElementaires.terre], sortLevel?.sortElementaires.terre || [])]
                 }
             } : undefined
         }),
-        tap(sorts => sorts?.sortActifs.push(...sortNeutreCommun)),
-        tap(sorts => sorts?.sortPassifs.push(...sortPassifCommun))
     ), {initialValue: undefined});
+
+    private getUnlockedSortLevels(sortId: number, levelUnlockSort: LevelUnlockSort[]): number {
+        const level = levelUnlockSort.find(s => s.idSort == sortId);
+        return level ? level.levelUnlockSort : 1;
+    }
+
+    private setUnlockedSortLevels(descriptionSorts: DescriptionSort[], levelUnlockSort: LevelUnlockSort[]): DescriptionSort[] {
+        return descriptionSorts.map(sort => ({
+            ...sort,
+            levelUnlock: this.getUnlockedSortLevels(sort.gfxId, levelUnlockSort)
+        })).sort((a, b) => a.levelUnlock - b.levelUnlock);
+    }
 
     
     private loadPromise?: Promise<void>;

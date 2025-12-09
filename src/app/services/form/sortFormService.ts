@@ -6,6 +6,7 @@ import { AbstractFormService, TypedControls } from "./abstractFormService";
 import { ClasseFormService } from "./classeFormService";
 import { UrlServices } from "../urlServices";
 import { LevelFormService } from "./levelFormService";
+import { SortService } from "../data/sortService";
 
 export interface SortForm {
     sortNeutres: number[];
@@ -17,6 +18,7 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
   private readonly classeFormService = inject(ClasseFormService);
   private readonly urlServices = inject(UrlServices);
   private readonly levelFormService = inject(LevelFormService);
+  private readonly sortService = inject(SortService);
 
   public static readonly DEFAULT_SORT_NEUTRE: number[] = [0,0,0,0,0,0,0,0,0,0,0,0];
   public static readonly DEFAULT_SORT_PASSIF: number[] = [0,0,0,0,0,0];
@@ -105,6 +107,10 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
     if (this.sortAlreadySet(sortId)) {
       this.removeSortNeutre(sortId);
     }
+    const sort = this.sortService.getDescriptionSortActifById(sortId) || this.sortService.getDescriptionSortElementaireById(sortId);
+    if(!sort || this.levelFormService.getValue() < sort.levelUnlock) {
+      return;
+    }
     const current = this.sortNeutres.getValue();
     if(this.unlockedEmplacementSortNeutre[index] > this.levelFormService.getValue()) {
       return;
@@ -117,6 +123,12 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
     if (this.sortAlreadySet(sortId)) {
       return;
     }
+    
+    const sort = this.sortService.getDescriptionSortActifById(sortId) || this.sortService.getDescriptionSortElementaireById(sortId);
+    if(!sort || this.levelFormService.getValue() < sort.levelUnlock) {
+      return;
+    }
+
     const current = this.sortNeutres.getValue();
     const emptyIndex = current.indexOf(0);
     if (emptyIndex !== -1 && this.unlockedEmplacementSortNeutre[emptyIndex] <= this.levelFormService.getValue()) {
@@ -129,6 +141,11 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
     if (this.sortAlreadySet(sortId)) {
       this.removeSortPassif(sortId);
     }
+    
+    const sort = this.sortService.getDescriptionSortPassifById(sortId);
+    if(!sort || this.levelFormService.getValue() < sort.levelUnlock) {
+      return;
+    }
     if(this.unlockedEmplacementSortPassif[index] > this.levelFormService.getValue()) {
       return;
     }
@@ -139,6 +156,11 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
 
   public addSortPassif(sortId: number): void {
     if (this.sortAlreadySet(sortId)) {
+      return;
+    }
+    
+    const sort = this.sortService.getDescriptionSortPassifById(sortId);
+    if(!sort || this.levelFormService.getValue() < sort.levelUnlock) {
       return;
     }
     const current = this.sortPassifs.getValue();

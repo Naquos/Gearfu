@@ -126,6 +126,7 @@
                 @if(sortService.sortsClasse() !== undefined) {
                     @for (sort of sortService.sortsClasse()!.sortElementaires.feu; track sort.gfxId) {
                         <img [src]="imageService.getSortUrl(sort.gfxId)"
+                            [class.sort-locked]="level() < sort.levelUnlock"
                             alt="" [matTooltip]="getSortName(sort)"
                             draggable="true"
                             (dragstart)="onDragStart($event, sort, 'NEUTRE')"
@@ -135,6 +136,7 @@
                     }
                     @for (sort of sortService.sortsClasse()!.sortElementaires.eau; track sort.gfxId) {
                         <img [src]="imageService.getSortUrl(sort.gfxId)"
+                            [class.sort-locked]="level() < sort.levelUnlock"
                             alt="" [matTooltip]="getSortName(sort)"
                             draggable="true"
                             (dragstart)="onDragStart($event, sort, 'NEUTRE')"
@@ -144,21 +146,23 @@
                     }
                     @for (sort of sortService.sortsClasse()!.sortElementaires.terre; track sort.gfxId) {
                         <img [src]="imageService.getSortUrl(sort.gfxId)"
-                        alt="" [matTooltip]="getSortName(sort)"
-                        draggable="true"
-                        (dragstart)="onDragStart($event, sort, 'NEUTRE')"
-                        (click)="selectSort(sort, 'NEUTRE')"
-                        (dblclick)="addSortToBuild(sort, 'NEUTRE')"
-                        (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
+                            [class.sort-locked]="level() < sort.levelUnlock"
+                            alt="" [matTooltip]="getSortName(sort)"
+                            draggable="true"
+                            (dragstart)="onDragStart($event, sort, 'NEUTRE')"
+                            (click)="selectSort(sort, 'NEUTRE')"
+                            (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                            (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
                     }
                     @for (sort of sortService.sortsClasse()!.sortElementaires.air; track sort.gfxId) {
                         <img [src]="imageService.getSortUrl(sort.gfxId)" 
-                        alt="" [matTooltip]="getSortName(sort)"
-                        draggable="true"
-                        (dragstart)="onDragStart($event, sort, 'NEUTRE')" 
-                        (click)="selectSort(sort, 'NEUTRE')" 
-                        (dblclick)="addSortToBuild(sort, 'NEUTRE')"
-                        (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
+                            [class.sort-locked]="level() < sort.levelUnlock"
+                            alt="" [matTooltip]="getSortName(sort)"
+                            draggable="true"
+                            (dragstart)="onDragStart($event, sort, 'NEUTRE')" 
+                            (click)="selectSort(sort, 'NEUTRE')" 
+                            (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                            (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
                     }
                 }
             </div>
@@ -167,6 +171,7 @@
                 @if(sortService.sortsClasse() !== undefined) {
                     @for(sort of sortService.sortsClasse()!.sortActifs; track sort.gfxId) {
                         <img [src]="imageService.getSortUrl(sort.gfxId)" 
+                        [class.sort-locked]="level() < sort.levelUnlock"
                         alt="" [matTooltip]="getSortName(sort)"
                         draggable="true"
                         (dragstart)="onDragStart($event, sort, 'NEUTRE')" 
@@ -181,6 +186,7 @@
                 @if(sortService.sortsClasse() !== undefined) {
                     @for(sort of sortService.sortsClasse()!.sortPassifs; track sort.gfxId) {
                         <img [src]="imageService.getSortUrl(sort.gfxId)" 
+                        [class.sort-locked]="level() < sort.levelUnlock"
                         alt="" [matTooltip]="getSortName(sort)"
                         draggable="true"
                         (dragstart)="onDragStart($event, sort, 'PASSIF')" 
