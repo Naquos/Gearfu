@@ -1,0 +1,3923 @@
+[
+  {
+    "idClasse": 1,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "2338",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2258",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "2288",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "2289",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "2290",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [
+        {
+          "idSort": "2282",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "6973",
+          "levelUnlockSort": 2
+        },
+        {
+          "idSort": "2329",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "6975",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "682",
+          "levelUnlockSort": 23
+        }
+      ],
+      "terre": [
+        {
+          "idSort": "661",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2372",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "6979",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "6980",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "2373",
+          "levelUnlockSort": 25
+        }
+      ],
+      "air": []
+    },
+    "sortActifs": [
+      {
+        "idSort": "5243",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "665",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "2274",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "2273",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "634",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "1824",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "5244",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "6989",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "2269",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "6691",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "2295",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "866",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5104",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5245",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "2374",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "6997",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "2324",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "6999",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7000",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "2272",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "7002",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "685",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "7004",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "7005",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 2,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "7307",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "7308",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "7309",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "7310",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "7311",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [],
+      "terre": [
+        {
+          "idSort": "7312",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "7313",
+          "levelUnlockSort": 2
+        },
+        {
+          "idSort": "7314",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "7315",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "7316",
+          "levelUnlockSort": 23
+        }
+      ],
+      "air": [
+        {
+          "idSort": "7317",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "7318",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "7319",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "7320",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "7321",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "7322",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "7323",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "7324",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7325",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "7326",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7327",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "7328",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "7329",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "7330",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "7331",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "7332",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "7333",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7334",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "7335",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "7336",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "7337",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "7338",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "7339",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7340",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "7341",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "7342",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "7343",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "7344",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 3,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "2021",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2019",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "2018",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "2037",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "2022",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [
+        {
+          "idSort": "2015",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2032",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "2014",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "2016",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "2017",
+          "levelUnlockSort": 23
+        }
+      ],
+      "terre": [
+        {
+          "idSort": "693",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2010",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "2011",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "2012",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "2013",
+          "levelUnlockSort": 25
+        }
+      ],
+      "air": []
+    },
+    "sortActifs": [
+      {
+        "idSort": "848",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "696",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "8240",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "2064",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "2026",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "8242",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "7093",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "2028",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "5076",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "2039",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5059",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5075",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "6326",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "5071",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "4300",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "7596",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "5126",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "7330",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "845",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "2009",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "1420",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "7184",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "727",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 4,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "2423",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2424",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "2422",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "2425",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "2426",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [
+        {
+          "idSort": "2418",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2417",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "2421",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "2420",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "2419",
+          "levelUnlockSort": 23
+        }
+      ],
+      "terre": [],
+      "air": [
+        {
+          "idSort": "4594",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2427",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "4595",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "2428",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "2431",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "2432",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "2435",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "2433",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "2434",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "579",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "2436",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "2439",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "5123",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "2440",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "2441",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "4609",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "2438",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "5122",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "5124",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "5126",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "2437",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 5,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "750",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "7156",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "752",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "754",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "753",
+          "levelUnlockSort": 25
+        }
+      ],
+      "eau": [
+        {
+          "idSort": "749",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "775",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "763",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "783",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "1417",
+          "levelUnlockSort": 21
+        }
+      ],
+      "terre": [],
+      "air": [
+        {
+          "idSort": "767",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "765",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "1418",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "772",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "771",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "2839",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "776",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "777",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "766",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "757",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "5344",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "758",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "5352",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "5351",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "5353",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "764",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "761",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "756",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "785",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "7184",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "7185",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "7186",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "7187",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7188",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "7189",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "7190",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "7191",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "7192",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "7193",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "7195",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "7196",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 6,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "2045",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2042",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "2050",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "2048",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "2046",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [
+        {
+          "idSort": "2065",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2066",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "2067",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "2072",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "2073",
+          "levelUnlockSort": 23
+        }
+      ],
+      "terre": [
+        {
+          "idSort": "2041",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2047",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "2049",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "2043",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "2044",
+          "levelUnlockSort": 25
+        }
+      ],
+      "air": []
+    },
+    "sortActifs": [
+      {
+        "idSort": "859",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "2075",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "2061",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "2078",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "850",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "861",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "2068",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "7931",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "5246",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "2080",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "5456",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "4959",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5250",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5249",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "852",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "5463",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "7928",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5466",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "5251",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "7935",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "2059",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5101",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "5461",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "2062",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "866",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "8000",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 7,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "645",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "1539",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "638",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "636",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "1534",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [
+        {
+          "idSort": "649",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "779",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "1532",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "780",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "625",
+          "levelUnlockSort": 23
+        }
+      ],
+      "terre": [],
+      "air": [
+        {
+          "idSort": "630",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "1540",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "623",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "1542",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "1541",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "624",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "782",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "781",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "627",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "1538",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7985",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "646",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "1537",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "5454",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "567",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "5463",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "7987",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7330",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "628",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "1415",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "7344",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "5245",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5451",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "959",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "2040",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "877",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5101",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "5453",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "5055",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "525",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "1420",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 8,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "518",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "514",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "516",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "515",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "519",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [],
+      "terre": [
+        {
+          "idSort": "492",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "495",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "505",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "507",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "508",
+          "levelUnlockSort": 23
+        }
+      ],
+      "air": [
+        {
+          "idSort": "509",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "501",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "500",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "513",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "4789",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "1397",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "4791",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "1398",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "4794",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "520",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "5130",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "525",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "521",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "522",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "5103",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "523",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "7096",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5132",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "1399",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "5101",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "5102",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "5131",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "5100",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "7105",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "7186",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "5104",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "7107",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "5352",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "7111",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5454",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "6997",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 9,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "601",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "604",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "4821",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "600",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "606",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [],
+      "terre": [
+        {
+          "idSort": "593",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "597",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "607",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "599",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "598",
+          "levelUnlockSort": 23
+        }
+      ],
+      "air": [
+        {
+          "idSort": "594",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "612",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "899",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "608",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "890",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "617",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "4805",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4806",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7753",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "4808",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "654",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "4801",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "1420",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "615",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "5122",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "852",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "6930",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5077",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "615",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "620",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "2076",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "588",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5073",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "610",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5072",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "7330",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "3362",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "6997",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "619",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "586",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 10,
+    "sortElementaires": {
+      "feu": [],
+      "eau": [
+        {
+          "idSort": "921",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "918",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "930",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "931",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "922",
+          "levelUnlockSort": 21
+        }
+      ],
+      "terre": [
+        {
+          "idSort": "925",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "929",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "927",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "935",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "937",
+          "levelUnlockSort": 23
+        }
+      ],
+      "air": [
+        {
+          "idSort": "938",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "919",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "928",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "934",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "932",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "915",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "920",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "2210",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7054",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "8139",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "4308",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "4959",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "917",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "933",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "5055",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "588",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "916",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "912",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5104",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "5463",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "1420",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "4300",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5234",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "6997",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "7193",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "2118",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "7053",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "913",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "2324",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "7195",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "5058",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 11,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "895",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "887",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "898",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "2104",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "900",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [],
+      "terre": [
+        {
+          "idSort": "889",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "5039",
+          "levelUnlockSort": 6
+        },
+        {
+          "idSort": "5035",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "2116",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "892",
+          "levelUnlockSort": 23
+        }
+      ],
+      "air": [
+        {
+          "idSort": "2099",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "883",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "847",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "5034",
+          "levelUnlockSort": 20
+        },
+        {
+          "idSort": "2101",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "844",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "878",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "888",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "2117",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "7211",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7212",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "5050",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "5051",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "7208",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "5192",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "877",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5193",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5194",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5101",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "5195",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "845",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "7213",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "7214",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7215",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "7216",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "7207",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "7218",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "7219",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "880",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "7224",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "5054",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 12,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "2194",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2199",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "2196",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "2200",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "2256",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [
+        {
+          "idSort": "944",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2203",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "2204",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "2205",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "2207",
+          "levelUnlockSort": 23
+        }
+      ],
+      "terre": [
+        {
+          "idSort": "2190",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2193",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "2197",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "2198",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "2201",
+          "levelUnlockSort": 25
+        }
+      ],
+      "air": []
+    },
+    "sortActifs": [
+      {
+        "idSort": "2192",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "664",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "978",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "2208",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "2209",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "949",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "7987",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "2212",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "2213",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "2214",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "2211",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "5148",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "5149",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "5150",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "5151",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "2215",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 13,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "1800",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "6464",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "6465",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "6466",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "6467",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [],
+      "terre": [
+        {
+          "idSort": "1807",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2337",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "6470",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "6471",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "1804",
+          "levelUnlockSort": 23
+        }
+      ],
+      "air": [
+        {
+          "idSort": "1811",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2331",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "4824",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "1814",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "6476",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "1817",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "1820",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "6475",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "1810",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "1824",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "1823",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "5192",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "5357",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "7065",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "6482",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "2334",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5050",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7090",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "1816",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "4311",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "2332",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "6480",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "2339",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "4300",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5123",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "7064",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "6933",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "6485",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "7092",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "2335",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "7063",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 14,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "7066",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "3303",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "3304",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "3305",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "3307",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [
+        {
+          "idSort": "7071",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "3309",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "3310",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "3312",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "7075",
+          "levelUnlockSort": 23
+        }
+      ],
+      "terre": [],
+      "air": [
+        {
+          "idSort": "7076",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "3313",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "3315",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "3316",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "3317",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "7084",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "7085",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "7086",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7087",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "7088",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7089",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "7093",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "3364",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "7095",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "7096",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "7097",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "3357",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7099",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "3363",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "3356",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "5348",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "7103",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "7104",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7105",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "7106",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "7107",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5347",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "7111",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "5359",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "7113",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 15,
+    "sortElementaires": {
+      "feu": [],
+      "eau": [
+        {
+          "idSort": "6260",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "6257",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "6258",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "6256",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "6259",
+          "levelUnlockSort": 21
+        }
+      ],
+      "terre": [
+        {
+          "idSort": "6261",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "6263",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "6265",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "6262",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "6264",
+          "levelUnlockSort": 23
+        }
+      ],
+      "air": [
+        {
+          "idSort": "6266",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "6267",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "6268",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "6269",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "6270",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "6284",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "7552",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "6287",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "6288",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "6285",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7088",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "6274",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "6280",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "7596",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "7193",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "7554",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "6272",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7343",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "7328",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "6277",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "7557",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "6276",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5103",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "6279",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "6275",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "6271",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "6278",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "7558",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "7185",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "6273",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 16,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "2833",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2832",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "2835",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "2831",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "2834",
+          "levelUnlockSort": 21
+        }
+      ],
+      "eau": [
+        {
+          "idSort": "923",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "942",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "4102",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "4101",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "5862",
+          "levelUnlockSort": 25
+        }
+      ],
+      "terre": [
+        {
+          "idSort": "2826",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "2827",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "2830",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "2828",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "2829",
+          "levelUnlockSort": 23
+        }
+      ],
+      "air": []
+    },
+    "sortActifs": [
+      {
+        "idSort": "2814",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "3571",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "2815",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "3984",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "4297",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "2822",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "6931",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "2817",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4689",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "6691",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "5462",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "6930",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "2816",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5461",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "6939",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "2819",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "4300",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "7344",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "5456",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "6925",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "2820",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "6933",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "5245",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "5351",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "7181",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "7107",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 18,
+    "sortElementaires": {
+      "feu": [],
+      "eau": [
+        {
+          "idSort": "4691",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "4692",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "4693",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "4680",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "4694",
+          "levelUnlockSort": 21
+        }
+      ],
+      "terre": [
+        {
+          "idSort": "4669",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "4668",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "4670",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "4695",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "4671",
+          "levelUnlockSort": 23
+        }
+      ],
+      "air": [
+        {
+          "idSort": "4697",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "4698",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "4699",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "4700",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "4701",
+          "levelUnlockSort": 25
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "4684",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "4843",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4683",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7199",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "4685",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7200",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "4690",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4687",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4689",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4686",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "5352",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "7185",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5143",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5348",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "5132",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "5101",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "5104",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "880",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "4688",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "7206",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "7207",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "7208",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "5454",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "7343",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5131",
+        "levelUnlockSort": 95
+      },
+      {
+        "idSort": "6925",
+        "levelUnlockSort": 100
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  },
+  {
+    "idClasse": 19,
+    "sortElementaires": {
+      "feu": [
+        {
+          "idSort": "5562",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "5571",
+          "levelUnlockSort": 5
+        },
+        {
+          "idSort": "5561",
+          "levelUnlockSort": 13
+        },
+        {
+          "idSort": "5563",
+          "levelUnlockSort": 21
+        },
+        {
+          "idSort": "5591",
+          "levelUnlockSort": 29
+        }
+      ],
+      "eau": [
+        {
+          "idSort": "5564",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "5565",
+          "levelUnlockSort": 7
+        },
+        {
+          "idSort": "5594",
+          "levelUnlockSort": 15
+        },
+        {
+          "idSort": "5566",
+          "levelUnlockSort": 23
+        },
+        {
+          "idSort": "5593",
+          "levelUnlockSort": 31
+        }
+      ],
+      "terre": [
+        {
+          "idSort": "5567",
+          "levelUnlockSort": 1
+        },
+        {
+          "idSort": "6400",
+          "levelUnlockSort": 9
+        },
+        {
+          "idSort": "5597",
+          "levelUnlockSort": 17
+        },
+        {
+          "idSort": "5568",
+          "levelUnlockSort": 25
+        },
+        {
+          "idSort": "5595",
+          "levelUnlockSort": 33
+        }
+      ],
+      "air": [
+        {
+          "idSort": "5570",
+          "levelUnlockSort": 3
+        },
+        {
+          "idSort": "5572",
+          "levelUnlockSort": 11
+        },
+        {
+          "idSort": "5590",
+          "levelUnlockSort": 19
+        },
+        {
+          "idSort": "5596",
+          "levelUnlockSort": 27
+        },
+        {
+          "idSort": "5592",
+          "levelUnlockSort": 35
+        }
+      ]
+    },
+    "sortActifs": [
+      {
+        "idSort": "5575",
+        "levelUnlockSort": 3
+      },
+      {
+        "idSort": "7755",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "5576",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "7754",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "5577",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "7809",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "5622",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5623",
+        "levelUnlockSort": 130
+      },
+      {
+        "idSort": "6327",
+        "levelUnlockSort": 56
+      }
+    ],
+    "sortPassifs": [
+      {
+        "idSort": "5579",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "5581",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "5347",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "7107",
+        "levelUnlockSort": 20
+      },
+      {
+        "idSort": "5585",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5583",
+        "levelUnlockSort": 30
+      },
+      {
+        "idSort": "5584",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5586",
+        "levelUnlockSort": 40
+      },
+      {
+        "idSort": "7193",
+        "levelUnlockSort": 45
+      },
+      {
+        "idSort": "5588",
+        "levelUnlockSort": 50
+      },
+      {
+        "idSort": "5455",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5582",
+        "levelUnlockSort": 60
+      },
+      {
+        "idSort": "5454",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "7191",
+        "levelUnlockSort": 70
+      },
+      {
+        "idSort": "4300",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5132",
+        "levelUnlockSort": 80
+      },
+      {
+        "idSort": "5348",
+        "levelUnlockSort": 85
+      },
+      {
+        "idSort": "5587",
+        "levelUnlockSort": 90
+      },
+      {
+        "idSort": "4957",
+        "levelUnlockSort": 10
+      },
+      {
+        "idSort": "4958",
+        "levelUnlockSort": 15
+      },
+      {
+        "idSort": "4956",
+        "levelUnlockSort": 25
+      },
+      {
+        "idSort": "5237",
+        "levelUnlockSort": 35
+      },
+      {
+        "idSort": "5146",
+        "levelUnlockSort": 55
+      },
+      {
+        "idSort": "5145",
+        "levelUnlockSort": 65
+      },
+      {
+        "idSort": "5144",
+        "levelUnlockSort": 75
+      },
+      {
+        "idSort": "5621",
+        "levelUnlockSort": 80
+      }
+    ]
+  }
+]
