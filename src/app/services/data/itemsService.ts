@@ -32,6 +32,7 @@ import { MonsterDrop } from "../../models/data/monsterDrop";
 import { isExcludeIdItem } from "../../models/enum/excludeIdItemEnum";
 import { BaseEffect, SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
 import { LEVEL_RATIOS_CHASSE, truncate2 } from "../../models/utils/utils";
+import { FamiliersService } from "./familiersService";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -51,6 +52,7 @@ export class ItemsService {
     private readonly reverseFormService = inject(ReverseFormService);
     private readonly obtentionFormService = inject(ObtentionFormService);
     private readonly monsterDropService = inject(MonsterDropService);
+    private readonly familiersService = inject(FamiliersService);
 
     // Constants
     private static readonly ARMURE_DONNEE_RECUE_LIST = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
@@ -136,6 +138,27 @@ export class ItemsService {
             shareReplay(1)
           );
           this.items$.pipe(take(1)).subscribe();
+    }
+
+    private initFamiliers(): void {
+      this.familiersService.familiers$.pipe(take(1)).subscribe((familiers) => {
+        const mapItem = new Map<number, Item>();
+        this.items.forEach(item => {
+          mapItem.set(item.id, item);
+        });
+        familiers.forEach(familier => {
+          const item = mapItem.get(familier.id);
+          if(item) {
+            familier.statsList.forEach((stat, index) => {
+              if(index < item.equipEffects.length) {
+                item.equipEffects[index].params[0] = stat;
+              }
+            });
+          }
+        });
+
+
+      });
     }
 
     private sortItems(): ((a: Item, b: Item) => number) | undefined {
@@ -233,6 +256,7 @@ export class ItemsService {
       // this.loadSublimations();
       this.items = this.items.filter(x => ![ItemTypeDefinitionEnum.LANTERNE, ItemTypeDefinitionEnum.STATISTIQUES, ItemTypeDefinitionEnum.SUBLIMATIONS].includes(x.itemTypeId))
         .filter(x => this.isNotWIP(x));
+      this.initFamiliers();
       this.fullItems$.next(this.items);
 
       this.itemsFilterByItemName$ = combineLatest([this.fullItems$, this.searchItemNameFormService.itemName$])

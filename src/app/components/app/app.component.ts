@@ -36,6 +36,7 @@ import { filter } from 'rxjs';
 import { ItemChooseComponent } from '../items-pages/item-choose/item-choose.component';
 import { SortService } from '../../services/data/sortService';
 import { SublimationService } from '../../services/data/sublimationService';
+import { FamiliersService } from '../../services/data/familiersService';
 
 type column = 'filter' | 'build' | 'aptitudes';
 
@@ -84,6 +85,7 @@ export class AppComponent implements OnInit{
   private readonly sublimationService = inject(SublimationService);
   private readonly sortService = inject(SortService);
   private readonly router = inject(Router);
+  private readonly familierService = inject(FamiliersService);
 
   protected displayFilter = false;
   protected filterOrBuild : column = "filter";
@@ -114,8 +116,10 @@ export class AppComponent implements OnInit{
     this.itemConditionService.load();
     this.statesDefinitionService.load();
     this.sortService.load();
-    this.itemService.init();
     this.sublimationService.load();
+    this.familierService.load();
+
+    this.itemService.init();
 
     this.displayFilterService.isDisplayed$.subscribe((value: boolean) => {
       this.displayFilter = value;
