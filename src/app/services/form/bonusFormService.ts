@@ -46,6 +46,9 @@ export class BonusFormService extends AbstractFormService<FormGroup<TypedControl
     constructor() {
         super();
         this.init();
+        this.levelFormService?.level$.subscribe(() => {
+            this.handleChanges(this.form.value as BonusForm);
+        });
     }
 
     protected override handleChanges(value: BonusForm): void {
