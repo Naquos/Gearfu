@@ -1,11 +1,11 @@
 import { Component, inject, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { TranslateService } from '@ngx-translate/core';
 import { StatesDefinitionService } from '../../../services/data/statesDefinitionService';
 
 @Component({
   selector: 'app-states',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './states.component.html',
   styleUrl: './states.component.scss'
 })

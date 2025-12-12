@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, input, OnInit } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
@@ -30,7 +30,7 @@ export enum ItemTypeBuild  {
 
 @Component({
   selector: 'app-build',
-  imports: [CommonModule, MatTooltipModule, TranslateModule],
+  imports: [MatTooltipModule, TranslateModule],
   templateUrl: './build.component.html',
   styleUrl: './build.component.scss'
 })
