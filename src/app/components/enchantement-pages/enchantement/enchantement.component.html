@@ -14,8 +14,7 @@
                         <input matSliderThumb [(ngModel)]="level">
                     </mat-slider>
 
-                    @for (chasse of chasses(); track $index) {
-                        @let indexParent = $index;
+                    @for (chasse of chasses(); let indexParent = $index; track 'chasse-' + $index) {
                         <div class="group-item-chasses"
                             [class.selected]="indexItemTypeSelected() === $index"
                         >
@@ -26,7 +25,7 @@
                                 (level)="setLevelItem($any($event), indexParent)"
                                 (click)="selectItemType(displayTypeItem[$index].itemType, $index)"
                             ></app-image-item>
-                            @for (c of chasse.chasses; track $index) {
+                            @for (c of chasse.chasses; track c.color + '-' + c.idAction + '-' + $index) {
                                 <div class="container-image"
                                     (click)="applyEffet($index, indexParent, getLevelItem(indexParent))"
                                     (contextmenu)="$event.preventDefault(); changeJokerState($index, indexParent);"

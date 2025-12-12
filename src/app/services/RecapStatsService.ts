@@ -18,6 +18,7 @@ import { ChasseFormService } from "./form/chasseFormService";
 import { IdSublimationEnum } from "../models/enum/idSublimationEnum";
 import { BonusFormService } from "./form/bonusFormService";
 import { AptitudesManualFormService } from "./form/aptitudesManualFormServices";
+import { CodeAptitudesService } from "./codeAptitudesService";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
@@ -30,6 +31,7 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly chasseFormService = inject(ChasseFormService);
   private readonly bonusFormService = inject(BonusFormService);
   private readonly aptitudesManualFormService = inject(AptitudesManualFormService);
+  private readonly codeAptitudesService = inject(CodeAptitudesService);
 
   private readonly maitrisesSecondairesList: IdActionsEnum[] = [
     IdActionsEnum.MAITRISES_CRITIQUES,
@@ -122,6 +124,7 @@ export class RecapStatsService extends AbstractDestroyService {
       this.aptitudesManualFormService.recapStat$,
       this.classeFormService.classe$,
       this.sortFormService.sortPassifs$,
+      this.codeAptitudesService.code$,
     ]).pipe(
       takeUntil(this.destroy$),
       tap(() => this.resetEffects()),

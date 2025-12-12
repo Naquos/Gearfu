@@ -90,6 +90,10 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                 this.isLoadingFromUrl = true;
                 this.decodeAndSaveCodeBuild(codeEnchantement);
                 this.isLoadingFromUrl = false;
+                // Émettre l'enchantement chargé une seule fois
+                this.enchantement.next(this.form.value);
+                // Forcer un recalcul après le chargement
+                this.handleChanges(this.form.value);
             });
         }
     }
@@ -158,16 +162,21 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
             
             const mainParts = codeBuild.split('|');
             
-            // Parcourir les parties pour les combinaisons de chasses
-            let combinaisonIndex = 0;
-            for (let i = 0; i < mainParts.length && combinaisonIndex < 10; i++) {
-                const part = mainParts[i];
-                
-                // Ignorer les parties épiques/reliques
+            // Séparer les combinaisons des épiques/reliques
+            const combinaisonParts: string[] = [];
+            const specialParts: string[] = [];
+            
+            for (const part of mainParts) {
                 if (part.startsWith('E') || part.startsWith('R')) {
-                    continue;
+                    specialParts.push(part);
+                } else if (part.trim()) {
+                    combinaisonParts.push(part);
                 }
-                
+            }
+            
+            // Décoder toutes les combinaisons de chasses
+            for (let i = 0; i < Math.min(10, combinaisonParts.length); i++) {
+                const part = combinaisonParts[i];
                 const [chassesPart, sublimationPart] = part.split('_');
                 const chassesData = chassesPart.split('-');
                 
@@ -176,17 +185,20 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                 // Décoder les chasses
                 for (let j = 0; j < Math.min(4, chassesData.length); j++) {
                     const chasseData = chassesData[j];
-                    if (chasseData === '0') {
+                    if (chasseData === '0' || !chasseData) {
                         continue;
                     }
                     
-                    const [color, lvl, idAction, joker] = chasseData.split('.').map(x => parseInt(x, 10));
-                    combinaison.chasses[j] = {
-                        color: color as IdChassesEnum,
-                        lvl: lvl,
-                        idAction: idAction as IdActionsEnum,
-                        joker: joker === 1
-                    };
+                    const parts = chasseData.split('.');
+                    if (parts.length >= 4) {
+                        const [color, lvl, idAction, joker] = parts.map(x => parseInt(x, 10));
+                        combinaison.chasses[j] = {
+                            color: color as IdChassesEnum,
+                            lvl: lvl,
+                            idAction: idAction as IdActionsEnum,
+                            joker: joker === 1
+                        };
+                    }
                 }
                 
                 // Décoder la sublimation si présente
@@ -206,12 +218,11 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                     }
                 }
                 
-                enchantement.chasseCombinaison[combinaisonIndex] = combinaison;
-                combinaisonIndex++;
+                enchantement.chasseCombinaison[i] = combinaison;
             }
             
             // Décoder l'épique et la relique
-            for (const part of mainParts) {
+            for (const part of specialParts) {
                 if (part.startsWith('E')) {
                     const epiqueId = parseInt(part.substring(1), 10);
                     const epiqueSub = this.sublimationService.getSublimationById(epiqueId);
@@ -374,6 +385,11 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     }
 
     protected override handleChanges(value: Enchantement): void {
+        // Éviter les calculs et émissions pendant le chargement depuis l'URL
+        if (this.isLoadingFromUrl) {
+            return;
+        }
+
         const recapStats: RecapStats[] = [];
 
         value.chasseCombinaison.forEach((chasseCombinaison, indexCombinaison) => {
@@ -404,11 +420,8 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         this.enchantement.next(value);
         this.recapChassesEffect.next(recapStats);
         
-        // Synchroniser avec l'URL seulement si on ne charge pas depuis l'URL
-        if (!this.isLoadingFromUrl) {
-            const codeBuild = this.generateCodeBuild(value);
-            this.urlServices.setEnchantementInUrl(codeBuild);
-        }
+        const codeBuild = this.generateCodeBuild(value);
+        this.urlServices.setEnchantementInUrl(codeBuild);
     }
 
     private calculMaxSublimationLevel(sublimationList: Sublimation[]): Map<number, number> {
@@ -441,8 +454,12 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
             epique: val.epique ? { ...val.epique } : undefined,
             relique: val.relique ? { ...val.relique } : undefined
         };
-        this.form.setValue(cleanValue);
-        this.enchantement.next(cleanValue);
+        // emitEvent: false pendant le chargement pour éviter les doublons
+        this.form.setValue(cleanValue, {emitEvent: !this.isLoadingFromUrl});
+        // Émettre manuellement uniquement si pas en chargement
+        if (!this.isLoadingFromUrl) {
+            this.enchantement.next(cleanValue);
+        }
     }
     public override setDefaultValue(): void {
         this.form.setValue(ChasseFormService.DEFAULT_VALUE());

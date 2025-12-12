@@ -1,10 +1,11 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 import { BehaviorSubject } from "rxjs";
 import { RecapStats } from "../../models/data/recap-stats";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
+import { UrlServices } from "../urlServices";
 
 
 export interface AptitudesForm {
@@ -51,11 +52,44 @@ export interface AptitudesForm {
 @Injectable({providedIn: 'root'})
 export class AptitudesFormService extends AbstractFormService<FormGroup<TypedControls<AptitudesForm>>> {
   public static readonly DEFAULT_VALUE = 0;
+  private readonly urlServices = inject(UrlServices);
 
   private readonly recapStat = new BehaviorSubject<RecapStats[]>([]);
   public readonly recapStat$ = this.recapStat.asObservable();
 
   protected readonly keyEnum = KeyEnum.KEY_APTITUDES;
+
+  private mapCode = new Map<number, IdActionsEnum>([
+    [1, IdActionsEnum.PERCENTAGE_PV],
+    [16, IdActionsEnum.RESISTANCES_ELEMENTAIRE],
+    [17, IdActionsEnum.BARRIERE],
+    [27, IdActionsEnum.SOINS_RECUE],
+    [36, IdActionsEnum.POINT_DE_VIE_EN_ARMURE],
+    [23, IdActionsEnum.MAITRISES_ELEMENTAIRES],
+    [26, IdActionsEnum.MAITRISES_MELEE],
+    [30, IdActionsEnum.MAITRISES_DISTANCES],
+    [31, IdActionsEnum.POINT_DE_VIE],
+    [18, IdActionsEnum.TACLE],
+    [19, IdActionsEnum.ESQUIVE],
+    [20, IdActionsEnum.INITIATIVE],
+    [21, IdActionsEnum.TACLE_ESQUIVE],
+    [37, IdActionsEnum.VOLONTE],
+    [9, IdActionsEnum.COUP_CRITIQUE],
+    [10, IdActionsEnum.PARADE],
+    [11, IdActionsEnum.MAITRISES_CRITIQUES],
+    [12, IdActionsEnum.MAITRISES_DOS],
+    [13, IdActionsEnum.MAITRISES_BERZERK],
+    [14, IdActionsEnum.MAITRISES_SOIN],
+    [15, IdActionsEnum.RESISTANCES_DOS],
+    [34, IdActionsEnum.RESISTANCES_CRITIQUES],
+    [2, IdActionsEnum.PA],
+    [3, IdActionsEnum.PM],
+    [4, IdActionsEnum.PORTEE],
+    [5, IdActionsEnum.BOOST_PW],
+    [6, IdActionsEnum.CONTROLE],
+    [8, IdActionsEnum.DI],
+    [35, IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES]
+  ]);
 
   public readonly form = new FormGroup<TypedControls<AptitudesForm>>({
         percentagePV: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
@@ -92,7 +126,121 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
 
   constructor() {
     super();
+    const codeFromUrl = this.urlServices.getAptitudesFromUrl();
     this.init();
+    if (codeFromUrl !== undefined) {
+      this.decodeFromUrl(codeFromUrl);
+    }
+  }
+
+  /**
+   * Décode le code d'aptitudes depuis l'URL et l'applique au formulaire
+   */
+  private decodeFromUrl(code: string): void {
+    const parts = code.split('-');
+    const formValue: Partial<AptitudesForm> = {};
+    
+    parts.forEach(part => {
+      const [idStr, valueStr] = part.split(':');
+      const id = parseInt(idStr, 10);
+      const value = parseInt(valueStr, 10);
+      const actionEnum = this.mapCode.get(id);
+      
+      if (actionEnum !== undefined) {
+        switch(actionEnum) {
+          case IdActionsEnum.PERCENTAGE_PV:
+            formValue.percentagePV = value;
+            break;
+          case IdActionsEnum.RESISTANCES_ELEMENTAIRE:
+            formValue.resistancesElementaires = value;
+            break;
+          case IdActionsEnum.BARRIERE:
+            formValue.barriere = value;
+            break;
+          case IdActionsEnum.SOINS_RECUE:
+            formValue.soinsRecus = value;
+            break;
+          case IdActionsEnum.POINT_DE_VIE_EN_ARMURE:
+            formValue.pdvArmure = value;
+            break;
+          case IdActionsEnum.MAITRISES_ELEMENTAIRES:
+            formValue.maitriseElem = value;
+            break;
+          case IdActionsEnum.MAITRISES_MELEE:
+            formValue.maitrisesMelee = value;
+            break;
+          case IdActionsEnum.MAITRISES_DISTANCES:
+            formValue.maitrisesDistance = value;
+            break;
+          case IdActionsEnum.POINT_DE_VIE:
+            formValue.pdv = value;
+            break;
+          case IdActionsEnum.TACLE:
+            formValue.tacle = value;
+            break;
+          case IdActionsEnum.ESQUIVE:
+            formValue.esquive = value;
+            break;
+          case IdActionsEnum.INITIATIVE:
+            formValue.initiative = value;
+            break;
+          case IdActionsEnum.TACLE_ESQUIVE:
+            formValue.tacleEsquive = value;
+            break;
+          case IdActionsEnum.VOLONTE:
+            formValue.volonte = value;
+            break;
+          case IdActionsEnum.COUP_CRITIQUE:
+            formValue.percentageCC = value;
+            break;
+          case IdActionsEnum.PARADE:
+            formValue.parade = value;
+            break;
+          case IdActionsEnum.MAITRISES_CRITIQUES:
+            formValue.maitriseCritique = value;
+            break;
+          case IdActionsEnum.MAITRISES_DOS:
+            formValue.maitriseDos = value;
+            break;
+          case IdActionsEnum.MAITRISES_BERZERK:
+            formValue.maitriseBerzerk = value;
+            break;
+          case IdActionsEnum.MAITRISES_SOIN:
+            formValue.maitriseSoins = value;
+            break;
+          case IdActionsEnum.RESISTANCES_DOS:
+            formValue.resistancesDos = value;
+            break;
+          case IdActionsEnum.RESISTANCES_CRITIQUES:
+            formValue.resistancesCritique = value;
+            break;
+          case IdActionsEnum.PA:
+            formValue.pa = value;
+            break;
+          case IdActionsEnum.PM:
+            formValue.pm = value;
+            break;
+          case IdActionsEnum.PORTEE:
+            formValue.po = value;
+            break;
+          case IdActionsEnum.BOOST_PW:
+            formValue.pw = value;
+            break;
+          case IdActionsEnum.CONTROLE:
+            formValue.controle = value;
+            break;
+          case IdActionsEnum.DI:
+            formValue.di = value;
+            break;
+          case IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES:
+            formValue.resistancesElementairesMajeur = value;
+            break;
+        }
+      }
+    });
+    
+    // Appliquer les valeurs décodées au formulaire
+    this.setValue(formValue as AptitudesForm);
   }
 
   public resetIntelligence(): void {

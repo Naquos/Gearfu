@@ -181,29 +181,33 @@ export class AppComponent implements OnInit{
   }
 
   protected redirectToListItems(filterOrBuild: column): void {
+    const currentFragment = window.location.hash.substring(1);
     this.router.navigate(["/"], {
-      queryParamsHandling: 'preserve'
+      fragment: currentFragment || undefined
     }).then(() => this.filterOrBuild = filterOrBuild);
   }
 
   protected redirectToAptitudes(): void {
     this.filterOrBuild = 'aptitudes';
+    const currentFragment = window.location.hash.substring(1);
     this.router.navigate(['/aptitudes'], {
-      queryParamsHandling: 'preserve'
+      fragment: currentFragment || undefined
     });
   }
 
   protected redirectToSorts(): void {
     this.filterOrBuild = 'aptitudes';
+    const currentFragment = window.location.hash.substring(1);
     this.router.navigate(['/sorts'], {
-      queryParamsHandling: 'preserve'
+      fragment: currentFragment || undefined
     });
   }
 
   protected redirectToEnchantements(): void {
     this.filterOrBuild = 'aptitudes';
+    const currentFragment = window.location.hash.substring(1);
     this.router.navigate(['/enchantements'], {
-      queryParamsHandling: 'preserve'
+      fragment: currentFragment || undefined
     });
   }
 

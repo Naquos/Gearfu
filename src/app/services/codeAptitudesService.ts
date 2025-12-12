@@ -44,14 +44,10 @@ export class CodeAptitudesService {
     ]);
 
     constructor() {
-        const initialCode = this.urlServices.getAptitudesFromUrl();
+        // Le chargement depuis l'URL est maintenant géré dans aptitudesFormService
         this.aptitudesFormService.recapStat$.subscribe(() => {
             this.updateCode();
         });
-        if(initialCode !== undefined) {
-            this.saveCode(initialCode);
-            this.code.next(initialCode);
-        }
     }
 
     private updateCode() {

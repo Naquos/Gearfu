@@ -51,7 +51,9 @@ export class EnchantementComponent extends AbstractDestroyService {
   
   protected readonly imageService = inject(ImageService);
   protected readonly chasseFormService = inject(ChasseFormService);
-  protected readonly chasses = toSignal(this.chasseFormService.enchantement$.pipe(map(enchantement => enchantement.chasseCombinaison)));
+  protected readonly chasses = toSignal(this.chasseFormService.enchantement$.pipe(
+    map(enchantement => enchantement.chasseCombinaison)
+  ));
   protected readonly enchantement = toSignal(this.chasseFormService.enchantement$);
   protected readonly itemTypeService = inject(ItemTypeServices);
   protected readonly sublimations = signal(this.sublimationService.getSublimations());

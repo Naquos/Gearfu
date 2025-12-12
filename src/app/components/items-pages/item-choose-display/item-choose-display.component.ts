@@ -65,8 +65,9 @@ export class ItemChooseDisplayComponent implements OnInit {
   }
 
   protected setFilter():void {
+    const currentFragment = typeof window !== 'undefined' ? window.location.hash.substring(1) : '';
     this.router.navigate(["/"], {
-            queryParamsHandling: 'merge'
+            fragment: currentFragment || undefined
     });
     if(this.itemType() === ItemTypeEnum.BOUCLIER) {
       this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DAGUE)

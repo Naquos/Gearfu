@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { ItemTypeEnum } from "../models/enum/itemTypeEnum";
-import { BehaviorSubject, combineLatest, filter, first, iif, map, Observable, of, startWith, switchMap, take, takeUntil, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, distinctUntilChanged, filter, first, iif, map, Observable, of, switchMap, take, takeUntil, tap } from "rxjs";
 import { ItemTypeServices } from "./data/ItemTypesServices";
 import { RarityItemEnum } from "../models/enum/rarityItemEnum";
 import { ItemsService } from "./data/itemsService";
@@ -14,7 +14,6 @@ import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 import { UrlServices } from "./urlServices";
-import { Router } from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService extends AbstractDestroyService {
@@ -27,7 +26,6 @@ export class ItemChooseService extends AbstractDestroyService {
     private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
     private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
     private readonly urlServices = inject(UrlServices);
-    private readonly router = inject(Router);
 
     private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>(
         [
@@ -106,6 +104,7 @@ export class ItemChooseService extends AbstractDestroyService {
             tap(list => this.listItem.next([...new Set<Item>(list)])),
             map(list => list.map(items => items?.id)),
             map(list => list.filter(x => x).join(",")),
+            distinctUntilChanged(),
             tap(x => this.setIdItems(x))
         ).subscribe(x => {
             this.localStorageService.setItem<string>(KeyEnum.KEY_BUILD, x);
@@ -114,14 +113,23 @@ export class ItemChooseService extends AbstractDestroyService {
     }
 
     private initItemsDirectly(): void {
-        // Récupérer les items depuis l'URL ou localStorage de manière synchrone
+        // Récupérer les items depuis l'URL (hash) ou localStorage de manière synchrone
         let itemsId = '';
         
         if (typeof window !== 'undefined') {
-            const urlParams = new URLSearchParams(window.location.search);
+            // Vérifier d'abord le hash (format: #itemsId=...)
+            let searchString = window.location.hash.substring(1); // Enlever le #
+            
+            // Si pas de hash, essayer les query params (rétrocompatibilité)
+            if (!searchString && window.location.search) {
+                searchString = window.location.search.substring(1); // Enlever le ?
+            }
+            
+            const urlParams = new URLSearchParams(searchString);
             itemsId = urlParams.get('itemsId') || '';
         }
         
+        // Seulement si rien dans l'URL, utiliser le localStorage
         if (!itemsId) {
             itemsId = this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD) || '';
         }

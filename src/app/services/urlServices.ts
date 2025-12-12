@@ -1,7 +1,8 @@
-import { inject, Injectable } from "@angular/core";
+import { inject, Injectable, PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
 import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 import { ActivatedRoute, Router } from "@angular/router";
-import { map, startWith, takeUntil } from "rxjs";
+import { map, takeUntil, distinctUntilChanged } from "rxjs";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { LocalStorageService } from "./data/localStorageService";
 import { ClassIdEnum } from "../models/enum/classIdEnum";
@@ -22,40 +23,76 @@ interface UrlParams {
 @Injectable({providedIn: 'root'})
 export class UrlServices extends AbstractDestroyService {
 
-    private initialParams: UrlParams = this.getInitialQueryParams();
+    private _initialParams: UrlParams | null = null;
 
     private readonly localStorageService = inject(LocalStorageService);
     private readonly activatedRoute = inject(ActivatedRoute);
     private readonly router = inject(Router);
+    private readonly platformId = inject(PLATFORM_ID);
+    private readonly isBrowser = isPlatformBrowser(this.platformId);
 
     // Seuil de longueur à partir duquel on compresse (en caractères)
     private readonly COMPRESSION_THRESHOLD = 50;
+
+    constructor() {
+        super();
+        // Écouter les changements de hash pour mettre à jour les paramètres
+        if (this.isBrowser) {
+            window.addEventListener('hashchange', () => {
+                this._initialParams = this.getInitialHashParams();
+            });
+        }
+    }
+
+    /**
+     * Getter paresseux pour les paramètres initiaux
+     * Parse les paramètres uniquement quand ils sont demandés pour la première fois
+     */
+    private get initialParams(): UrlParams {
+        if (this._initialParams === null) {
+            this._initialParams = this.getInitialHashParams();
+        }
+        return this._initialParams;
+    }
+
+    /**
+     * Setter pour les paramètres initiaux
+     */
+    private set initialParams(value: UrlParams) {
+        this._initialParams = value;
+    }
         
 
-    public readonly itemsId$ = this.activatedRoute.queryParams.pipe(
-        startWith(this.initialParams),
-        map(x => {
-            const fromUrl = x["itemsId"] as string | undefined;
+    public readonly itemsId$ = this.activatedRoute.fragment.pipe(
+        map(() => {
+            const fromUrl = this.getItemsIdFromUrl();
             const fromStorage = this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD);
             return fromUrl || fromStorage || "";
         }),
+        distinctUntilChanged(),
         takeUntil(this.destroy$)
     );
 
     public setItemsIdInUrl(itemsId: string): void {
+        if (!this.isBrowser) {
+            return; // Ne pas naviguer côté serveur
+        }
+        if (this.initialParams.itemsId === itemsId) {
+            return; // Éviter les navigations inutiles
+        }
         this.initialParams.itemsId = itemsId;
-        this.router.navigate([], {
-            queryParams: this.initialParams,
-            queryParamsHandling: 'merge'
-        });
+        this.updateHash();
     }
 
     public setLevelInUrl(level: number): void {
+        if (!this.isBrowser) {
+            return; // Ne pas naviguer côté serveur
+        }
+        if (this.initialParams.level === level) {
+            return; // Éviter les navigations inutiles
+        }
         this.initialParams.level = level;
-        this.router.navigate([], {
-            queryParams: this.initialParams,
-            queryParamsHandling: 'merge'
-        });
+        this.updateHash();
     }
 
     public getLevelFromUrl(): number | undefined {
@@ -63,11 +100,14 @@ export class UrlServices extends AbstractDestroyService {
     }
 
     public setClasseInUrl(classe: ClassIdEnum): void {
+        if (!this.isBrowser) {
+            return; // Ne pas naviguer côté serveur
+        }
+        if (this.initialParams.classe === classe) {
+            return; // Éviter les navigations inutiles
+        }
         this.initialParams.classe = classe;
-        this.router.navigate([], {
-            queryParams: this.initialParams,
-            queryParamsHandling: 'merge'
-        });
+        this.updateHash();
     }
 
     public getClasseFromUrl(): ClassIdEnum | undefined {
@@ -134,8 +174,8 @@ export class UrlServices extends AbstractDestroyService {
         }
 
         try {
-            // Utiliser compressToBase64 pour éviter les problèmes d'encodage URL
-            const compressed = LZString.compressToBase64(data);
+            // Utiliser compressToEncodedURIComponent pour être compatible avec les hash URLs
+            const compressed = LZString.compressToEncodedURIComponent(data);
             // Ne compresser que si cela réduit significativement la taille (au moins 20%)
             if (compressed && compressed.length < data.length * 0.8) {
                 return { compressed, isCompressed: true };
@@ -150,7 +190,7 @@ export class UrlServices extends AbstractDestroyService {
     /**
      * Décompresse une chaîne si elle a été compressée
      * Tente d'abord la décompression, sinon retourne la chaîne telle quelle
-     * Gère la rétrocompatibilité avec l'ancien format EncodedURIComponent
+     * Gère la rétrocompatibilité avec l'ancien format Base64
      * Détecte automatiquement si les données sont compressées même sans flag
      */
     private decompressIfNeeded(data: string, isCompressed: boolean): string {
@@ -158,21 +198,26 @@ export class UrlServices extends AbstractDestroyService {
             return data;
         }
 
-        // Si le flag indique que c'est compressé OU si la longueur suggère une compression
-        // (les données compressées sont généralement plus courtes et contiennent des caractères Base64)
-        const looksLikeCompressed = data.length < this.COMPRESSION_THRESHOLD && /^[A-Za-z0-9+/=]+$/.test(data);
-        
-        if (!isCompressed && !looksLikeCompressed) {
-            return data;
+        // Si le flag indique que c'est compressé, on tente la décompression
+        if (!isCompressed) {
+            // Vérifier si ça ressemble à des données compressées
+            const looksLikeCompressed = data.length > 20 && (
+                /^[A-Za-z0-9\-_]+$/.test(data) || // EncodedURIComponent format
+                /^[A-Za-z0-9+/=]+$/.test(data)    // Base64 format
+            );
+            
+            if (!looksLikeCompressed) {
+                return data;
+            }
         }
 
         try {
-            // Essayer d'abord Base64 (nouveau format)
-            let decompressed = LZString.decompressFromBase64(data);
+            // Essayer d'abord EncodedURIComponent (nouveau format pour hash URLs)
+            let decompressed = LZString.decompressFromEncodedURIComponent(data);
             
-            // Si échec, essayer EncodedURIComponent (ancien format pour rétrocompatibilité)
+            // Si échec, essayer Base64 (ancien format pour rétrocompatibilité avec query params)
             if (!decompressed) {
-                decompressed = LZString.decompressFromEncodedURIComponent(data);
+                decompressed = LZString.decompressFromBase64(data);
             }
             
             // Si la décompression réussit, retourner le résultat, sinon retourner l'original
@@ -187,50 +232,65 @@ export class UrlServices extends AbstractDestroyService {
      * Met à jour les paramètres URL en appliquant la compression si nécessaire
      */
     private updateUrlParams(newParams: Partial<UrlParams>): void {
+        if (!this.isBrowser) {
+            return; // Ne pas naviguer côté serveur
+        }
+        
         let needsCompression = false;
+        let hasChanges = false;
 
         // Vérifier si on doit compresser les paramètres
-        const compressedParams: Partial<UrlParams> = { ...newParams };
-
-        if (newParams.sorts) {
+        if (newParams.sorts !== undefined) {
             const result = this.compressIfNeeded(newParams.sorts);
-            compressedParams.sorts = result.compressed;
+            if (this.initialParams.sorts !== result.compressed) {
+                this.initialParams.sorts = result.compressed;
+                hasChanges = true;
+            }
             needsCompression = needsCompression || result.isCompressed;
         }
 
-        if (newParams.aptitudes) {
+        if (newParams.aptitudes !== undefined) {
             const result = this.compressIfNeeded(newParams.aptitudes);
-            compressedParams.aptitudes = result.compressed;
+            if (this.initialParams.aptitudes !== result.compressed) {
+                this.initialParams.aptitudes = result.compressed;
+                hasChanges = true;
+            }
             needsCompression = needsCompression || result.isCompressed;
         }
 
-        if (newParams.enchantement) {
+        if (newParams.enchantement !== undefined) {
             const result = this.compressIfNeeded(newParams.enchantement);
-            compressedParams.enchantement = result.compressed;
+            if (this.initialParams.enchantement !== result.compressed) {
+                this.initialParams.enchantement = result.compressed;
+                hasChanges = true;
+            }
             needsCompression = needsCompression || result.isCompressed;
         }
 
-        if (newParams.aptitudesManual) {
+        if (newParams.aptitudesManual !== undefined) {
             const result = this.compressIfNeeded(newParams.aptitudesManual);
-            compressedParams.aptitudesManual = result.compressed;
+            if (this.initialParams.aptitudesManual !== result.compressed) {
+                this.initialParams.aptitudesManual = result.compressed;
+                hasChanges = true;
+            }
             needsCompression = needsCompression || result.isCompressed;
+        }
+
+        // Ne mettre à jour que si des changements ont été détectés
+        if (!hasChanges) {
+            return;
         }
 
         // Ajouter le flag de compression si nécessaire
         if (needsCompression) {
-            compressedParams.c = '1';
-        } else if (!this.hasOtherCompressedParams(newParams)) {
+            this.initialParams.c = '1';
+        } else if (!this.hasOtherCompressedParams({})) {
             // Retirer le flag si plus rien n'est compressé
-            compressedParams.c = undefined;
+            this.initialParams.c = undefined;
         }
 
-        // Mettre à jour les paramètres
-        Object.assign(this.initialParams, compressedParams);
-
-        this.router.navigate([], {
-            queryParams: this.initialParams,
-            queryParamsHandling: 'merge'
-        });
+        // Mettre à jour le hash
+        this.updateHash();
     }
 
     /**
@@ -252,16 +312,69 @@ export class UrlServices extends AbstractDestroyService {
     }
 
     /**
-     * Extrait les query params depuis window.location au chargement initial
-     * Utile pour le SSR et le premier chargement
+     * Met à jour le hash de l'URL avec tous les paramètres actuels
      */
-    private getInitialQueryParams(): UrlParams {
+    private updateHash(): void {
+        if (!this.isBrowser) {
+            return;
+        }
+
+        const params = new URLSearchParams();
+        
+        if (this.initialParams.itemsId) {
+            params.set('itemsId', this.initialParams.itemsId);
+        }
+        if (this.initialParams.level) {
+            params.set('level', this.initialParams.level.toString());
+        }
+        if (this.initialParams.classe) {
+            params.set('classe', this.initialParams.classe.toString());
+        }
+        if (this.initialParams.aptitudes) {
+            params.set('aptitudes', this.initialParams.aptitudes);
+        }
+        if (this.initialParams.sorts) {
+            params.set('sorts', this.initialParams.sorts);
+        }
+        if (this.initialParams.enchantement) {
+            params.set('enchantement', this.initialParams.enchantement);
+        }
+        if (this.initialParams.aptitudesManual) {
+            params.set('aptitudesManual', this.initialParams.aptitudesManual);
+        }
+        if (this.initialParams.c) {
+            params.set('c', this.initialParams.c);
+        }
+
+        const hash = params.toString();
+        if (hash) {
+            window.location.hash = hash;
+        } else {
+            window.location.hash = '';
+        }
+    }
+
+    /**
+     * Extrait les paramètres depuis le hash de l'URL au chargement initial
+     * Le hash n'est pas envoyé au serveur, évitant ainsi les problèmes SSR
+     * IMPORTANT: On garde les valeurs compressées telles quelles pour éviter les boucles
+     */
+    private getInitialHashParams(): UrlParams {
         if (typeof window === 'undefined') {
             return {};
         }
         
         try {
-            const urlParams = new URLSearchParams(window.location.search);
+            let searchString = window.location.hash.substring(1); // Enlever le #
+            let needsConversion = false;
+            
+            // Si pas de hash, essayer les query params (rétrocompatibilité)
+            if (!searchString && window.location.search) {
+                searchString = window.location.search.substring(1); // Enlever le ?
+                needsConversion = true; // Marquer pour conversion
+            }
+            
+            const urlParams = new URLSearchParams(searchString);
             const params: UrlParams = {};
             
             // Vérifier si les données sont compressées
@@ -285,29 +398,38 @@ export class UrlServices extends AbstractDestroyService {
                 params.classe = parseInt(classe, 10) as ClassIdEnum;
             }
 
+            // IMPORTANT: On garde les valeurs compressées telles quelles
+            // La décompression se fait uniquement dans les getters
             const aptitudes = urlParams.get('aptitudes');
             if (aptitudes) {
-                params.aptitudes = this.decompressIfNeeded(aptitudes, isCompressed);
+                params.aptitudes = aptitudes;
             }
 
             const sorts = urlParams.get('sorts');
             if (sorts) {
-                params.sorts = this.decompressIfNeeded(sorts, isCompressed);
+                params.sorts = sorts;
             }
 
             const enchantement = urlParams.get('enchantement');
             if (enchantement) {
-                params.enchantement = this.decompressIfNeeded(enchantement, isCompressed);
+                params.enchantement = enchantement;
             }
 
             const aptitudesManual = urlParams.get('aptitudesManual');
             if (aptitudesManual) {
-                params.aptitudesManual = this.decompressIfNeeded(aptitudesManual, isCompressed);
+                params.aptitudesManual = aptitudesManual;
+            }
+            
+            // Si on a détecté une ancienne URL avec query params, la convertir en hash
+            if (needsConversion && searchString) {
+                // Remplacer l'URL actuelle par la version avec hash (sans rechargement)
+                const newUrl = window.location.pathname + '#' + searchString;
+                window.history.replaceState(null, '', newUrl);
             }
             
             return params;
         } catch (error) {
-            console.error("Error parsing query params:", error);
+            console.error("Error parsing hash params:", error);
             return {};
         }
     }
