@@ -15,6 +15,8 @@ import { SpellEffectService } from '../../../services/spellEffectService';
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from "@angular/material/slider";
 import { LevelFormService } from '../../../services/form/levelFormService';
+import { RecapStatsService } from '../../../services/recapStatsService';
+import { filter, map } from 'rxjs';
 
 type TypeSort = 'NEUTRE' | 'PASSIF';
 type EffectDisplay = 'NORMAL' | 'CRITIQUE';
@@ -31,6 +33,8 @@ export class SortsComponent {
   private readonly classeFormService = inject(ClasseFormService);
   private readonly sanitizer = inject(DomSanitizer);
   private readonly levelFormService = inject(LevelFormService);
+  private readonly recapStatsService = inject(RecapStatsService);
+
   protected readonly sortService = inject(SortService);
   protected readonly imageService = inject(ImageService);
   protected readonly sortFormService = inject(SortFormService);
@@ -57,6 +61,15 @@ export class SortsComponent {
   protected readonly sortPassifs = toSignal(this.sortFormService.sortPassifs$, {
     initialValue: []
   });
+
+  protected readonly PO = toSignal(this.recapStatsService.recap$.pipe(
+    map(x => x.filter(x => x.id === IdActionsEnum.PORTEE)[0]),
+    filter(x => x !== undefined),
+    map(x => x.value)
+  ), {
+    initialValue: 0
+  });
+
 
 
   constructor() {

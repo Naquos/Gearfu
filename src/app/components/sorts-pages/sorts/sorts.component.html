@@ -71,7 +71,7 @@
                         <span> {{getSortName(sortSelected()!) }}</span>
                         <span class="cout-sort">
                             @if (sortSelected()!.PorteeMax) {
-                                {{ sortSelected()!.PorteeMin }} - {{ sortSelected()!.PorteeMax }} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="">
+                                {{ sortSelected()!.PorteeMin }} - {{ sortSelected()!.PorteeMax + (sortSelected()!.POModifiable ? PO() : 0) }} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="">
                             }
                             @if (sortSelected()?.NotLDV) {
                                 <img src="aptitudes/ligne_not_vu.png" class="ligne-not-vu" alt="">
