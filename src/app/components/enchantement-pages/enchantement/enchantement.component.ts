@@ -74,7 +74,7 @@ export class EnchantementComponent extends AbstractDestroyService {
     super();
     this.levelFormService.level$.pipe(takeUntil(this.destroy$)).subscribe(level => {
       this.maxLevel = maxChasseLevel(level);
-      this.level = Math.min(this.level, this.maxLevel);
+      this.level = Math.max(this.level, this.maxLevel);
     });
   }
 
