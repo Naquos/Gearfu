@@ -62,6 +62,9 @@
         "label": "Your builds list",
         "no-build": "You haven't saved any builds yet."
     },
+    "description-sublimation": {
+        "level-max": "Max lvl"
+    },
     "enchantement": {
         "chasses": "Chases",
         "resistance-feu": "Fire Resistance",
