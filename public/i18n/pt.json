@@ -62,6 +62,9 @@
         "label": "Sua lista de builds",
         "no-build": "Você ainda não salvou nenhum build."
     },
+    "description-sublimation": {
+        "level-max": "Nível máximo"
+    },
     "enchantement": {
         "chasses": "Chasses",
         "effets": "Efeitos",

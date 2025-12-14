@@ -62,6 +62,9 @@
         "label": "Votre liste de builds",
         "no-build":"Vous n'avez pas encore de builds sauvegardés."
     },
+    "description-sublimation": {
+        "level-max": "Lvl max"
+    },
     "enchantement": {
         "chasses": "Chasses",
         "effets": "Effets",

@@ -62,6 +62,9 @@
         "label": "Tu lista de builds",
         "no-build": "Aún no has guardado ningún build."
     },
+    "description-sublimation": {
+        "level-max": "Nivel máximo"
+    },
     "enchantement": {
         "chasses": "Chasses",
         "resistance-feu": "Resistencia al fuego",

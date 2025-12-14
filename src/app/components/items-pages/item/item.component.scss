@@ -132,6 +132,10 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+
+            app-maitrise-selector {
+                margin: 10px 0;
+            }
             
             .craftAndDrop {
                 display: flex;

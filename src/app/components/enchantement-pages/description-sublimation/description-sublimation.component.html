@@ -8,6 +8,9 @@
             <img [src]="imageService.getChasseColorUrlById(chasse)" [alt]="">
         }
     </div>
+    @if(sublimationsDescriptionsSignal()!.levelMax > 0) {
+        <span> ({{ 'description-sublimation.level-max' | translate }} {{ sublimationsDescriptionsSignal()!.levelMax }})</span>
+    } 
 </div>
 <div class="content">
     <div>

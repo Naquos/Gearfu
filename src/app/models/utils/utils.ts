@@ -25,3 +25,11 @@ export function maxChasseLevel(level: number): number {
 export function truncate2(num: number): number {
     return Math.trunc(num * 100) / 100;
 }
+
+export function normalizeString(str: string): string {
+    return str.normalize("NFKD")
+    .replace(/['''´’`]/g, "'")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}

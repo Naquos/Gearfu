@@ -493,6 +493,12 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         if (pattern.length > chasses.length) {
             return false;
         }
+        
+        // S'il y a au moins deux chasses vides alors on return true pour afficher toutes les sublimations
+        const emptyChasses = chasses.filter(c => c.color === IdChassesEnum.NON_CHASSE);
+        if (emptyChasses.length >= 2) {
+            return true;
+        }
 
         // Essayer de faire correspondre le pattern à chaque position possible
         for (let startPos = 0; startPos <= chasses.length - pattern.length; startPos++) {

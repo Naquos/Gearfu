@@ -31,7 +31,7 @@ import { MonsterDropService } from "./monsterDropService";
 import { MonsterDrop } from "../../models/data/monsterDrop";
 import { isExcludeIdItem } from "../../models/enum/excludeIdItemEnum";
 import { BaseEffect, SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
-import { LEVEL_RATIOS_CHASSE, truncate2 } from "../../models/utils/utils";
+import { LEVEL_RATIOS_CHASSE, normalizeString, truncate2 } from "../../models/utils/utils";
 import { FamiliersService } from "./familiersService";
 
 @Injectable({providedIn: 'root'})
@@ -260,7 +260,7 @@ export class ItemsService {
       this.fullItems$.next(this.items);
 
       this.itemsFilterByItemName$ = combineLatest([this.fullItems$, this.searchItemNameFormService.itemName$])
-      .pipe(map(([items, itemName]) => items.filter(x => this.normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(this.normalizeString(itemName)))));
+      .pipe(map(([items, itemName]) => items.filter(x => normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(normalizeString(itemName)))));
 
       const itemsFilterByObtention$ = combineLatest([this.itemsFilterByItemName$, this.obtentionFormService.drop$, this.obtentionFormService.craftable$, this.obtentionFormService.boss$, this.obtentionFormService.archi$, this.obtentionFormService.pvp$])
       .pipe(map(([items, drop, craftable, boss, archi, pvp]) => items.filter(x => this.filterObtention(x, drop, craftable, boss, archi, pvp))));
@@ -297,13 +297,7 @@ export class ItemsService {
       .pipe(map(([items, itemTypeIds]) => items.filter(x => itemTypeIds.length === 0 || itemTypeIds.includes(x.itemTypeId))));
     }
 
-    private normalizeString(str: string): string {
-      return str.normalize("NFKD")
-        .replace(/['''´’`]/g, "'")
-        .replace(/\s+/g, " ")
-        .trim()
-        .toLowerCase();
-    }
+
 
     private fillItemWeightMap(items: Item[], nbElements: number, idMaitrises: number[], sort: SortChoiceEnum, multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean, chaos: boolean): void {
       let maxMaistrises = 0;

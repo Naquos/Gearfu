@@ -20,7 +20,7 @@ import { LinkSublimation, SublimationsDescriptions } from '../../../models/data/
 import { TooltipService } from '../../../services/TooltipService';
 import { DescriptionSublimationComponent, DescriptionSublimationType } from '../description-sublimation/description-sublimation.component';
 import { LevelFormService } from '../../../services/form/levelFormService';
-import { maxChasseLevel } from '../../../models/utils/utils';
+import { maxChasseLevel, normalizeString } from '../../../models/utils/utils';
 import { AbstractDestroyService } from '../../../services/abstract/abstractDestroyService';
 
 interface DisplayTypeItem {
@@ -108,17 +108,17 @@ export class EnchantementComponent extends AbstractDestroyService {
 
   protected readonly sublimationsList = computed(() => {
     this.chasses();
-    const search = this.searchSubli().toLowerCase();
-    return this.sublimations()?.filter(subli => (this.nameItem(subli).toLowerCase().includes(search)
-       || this.descriptionSublimation(subli).toLowerCase().includes(search)))
+    const search = normalizeString(this.searchSubli());
+    return this.sublimations()?.filter(subli => (normalizeString(this.nameItem(subli)).includes(search)
+       || normalizeString(this.descriptionSublimation(subli)).includes(search)))
     .filter(x => this.indexItemTypeSelected() === -1 
         || this.chasseFormService.canApplySublimationWithItem(this.chasses()![this.indexItemTypeSelected()], x) );
   })
 
   protected readonly sublimationsEpiqueReliqueList = computed(() => {
-    const search = this.searchSubli().toLowerCase();
-    return this.sublimationsEpiqueRelique()?.filter(subli => this.nameItem(subli).toLowerCase().includes(search) 
-      || this.descriptionSublimation(subli).toLowerCase().includes(search));
+    const search = normalizeString(this.searchSubli());
+    return this.sublimationsEpiqueRelique()?.filter(subli => normalizeString(this.nameItem(subli)).includes(search) 
+      || normalizeString(this.descriptionSublimation(subli)).includes(search));
   });
 
 
