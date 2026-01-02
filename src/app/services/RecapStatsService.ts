@@ -505,6 +505,9 @@ export class RecapStatsService extends AbstractDestroyService {
     if(sortPassifsIds.find(x => x === SortIdEnum.STRATEGIE_ROBOTIQUE)) {
       this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: -20, params: [] });
     }
+    if(sortPassifsIds.find(x => x === SortIdEnum.LA_MEILLEURE_DEFENSE_EST_L_ATTAQUE)) {
+      this.applyEffect({ id: IdActionsEnum.PARADE, value: 50, params: [] });
+    }
   }
 
   private applyEffectPassifOuginak(): void {

@@ -90,6 +90,7 @@ export enum SortIdEnum {
     ALLIAGE_LEGER = 2819,
     ASSISTANCE_TELLURIQUE = 2816,
     STRATEGIE_ROBOTIQUE = 5462,
+    // CONQUETE_SEREINE = 5245,  // Duplicate ID with LA_MEILLEURE_DEFENSE_EST_L_ATTAQUE
 
     //Sorts passifs eliotrope
     EPEE_DU_DEBUT = 7208,
