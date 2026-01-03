@@ -17,4 +17,16 @@ export class ButtonCheckboxComponent {
   public readonly control = input<FormControl<boolean>>();
   public readonly tooltip = input<string>("");
   public readonly crossedOut = input<boolean>(false);
+
+  protected getValue(): boolean {
+    const ctrl = this.control();
+    if (!ctrl) return false;
+    return ctrl.value;
+  }
+
+  protected setValue(value: boolean): void {
+    const ctrl = this.control();
+    if (!ctrl) return;
+    ctrl.setValue(value);
+  }
 }

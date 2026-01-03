@@ -2,10 +2,10 @@
     [matTooltip]="tooltip() | translate"
     [matTooltipShowDelay]="300"
     [class.crossed-out]="crossedOut()"
-    [class.background-color-blue]="control()?.value"
-    mat-mini-fab (click)="control()?.setValue(!control()?.value)">
+    [class.background-color-blue]="getValue()"
+    mat-mini-fab (click)="setValue(!getValue())">
     @if(matIcon()) {
-        <mat-icon [fontIcon]="matIcon()" [style.color]="control()?.value ? 'white' : '#213A57'"></mat-icon>
+        <mat-icon [fontIcon]="matIcon()" [style.color]="getValue() ? 'white' : '#213A57'"></mat-icon>
     }
     @if(srcImg()) {
         <img [src]="srcImg()" alt="logo">
