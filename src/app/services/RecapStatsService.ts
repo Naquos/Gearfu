@@ -636,6 +636,9 @@ export class RecapStatsService extends AbstractDestroyService {
     if(sortPassifsIds.find(x => x === SortIdEnum.SANG_TATOUE)) {
       this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 8 * level, params: [] });
     }
+    if(sortPassifsIds.find(x => x === SortIdEnum.PACTE_DE_WAKFU)) {
+      this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 4 * level, params: [] });
+    }
   }
 
   private applyEffectPassifSadida(): void {

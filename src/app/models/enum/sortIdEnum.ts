@@ -55,6 +55,7 @@ export enum SortIdEnum {
     CIRCULATION_SANGUINE = 7213,
     MOBILITE = 5192,
     SANG_TATOUE = 5051,
+    PACTE_DE_WAKFU = 7207,
 
     //Sorts passifs pandawa
     COCKTAIL = 7987,
