@@ -1,13 +1,17 @@
-<button
+<label class="checkbox-wrapper"
     [matTooltip]="tooltip() | translate"
     [matTooltipShowDelay]="300"
     [class.crossed-out]="crossedOut()"
-    [class.background-color-blue]="control()?.value"
-    mat-mini-fab (click)="control()?.setValue(!control()?.value)">
+    [class.background-color-blue]="control()?.value">
+    
+    <input type="checkbox" 
+        [formControl]="control()!" 
+        class="checkbox-input"
+    />
+    
     @if(matIcon()) {
         <mat-icon [fontIcon]="matIcon()" [style.color]="control()?.value ? 'white' : '#213A57'"></mat-icon>
+    } @else if(srcImg()) {
+        <img [src]="srcImg()" alt="image">
     }
-    @if(srcImg()) {
-        <img [src]="srcImg()" alt="logo">
-    }
-</button>
+</label>
