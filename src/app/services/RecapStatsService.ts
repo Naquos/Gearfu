@@ -519,7 +519,7 @@ export class RecapStatsService extends AbstractDestroyService {
       this.applyEffect({ id: IdActionsEnum.PORTEE, value: -2, params: [] });
     }
     if(sortPassifsIds.find(x => x === SortIdEnum.CROCS_FUTES)) {
-      this.applyEffect({ id: IdActionsEnum.PARADE, value: 30, params: [] });
+      this.applyEffect({ id: IdActionsEnum.PARADE, value: 20, params: [] });
     }
     if(sortPassifsIds.find(x => x === SortIdEnum.PISTAGE)) {
       this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
