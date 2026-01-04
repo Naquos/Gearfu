@@ -27,9 +27,12 @@ export function truncate2(num: number): number {
 }
 
 export function normalizeString(str: string): string {
-    return str.normalize("NFKD")
+    return str
     .replace(/['''´’`]/g, "'")
+    .replace(/[ûù]/g,"u")
+    .replace(/[ô]/g,"o")
     .replace(/\s+/g, " ")
+    .normalize("NFKD")
     .trim()
     .toLowerCase();
 }
