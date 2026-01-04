@@ -259,6 +259,14 @@ header {
           button {
             width: calc(50% - 20px);
             font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+        .filter-aptitudes {
+          button {
+            width: calc(33% - 20px);
           }
         }
         z-index: 100;

@@ -71,7 +71,9 @@
                         <span> {{getSortName(sortSelected()!) }}</span>
                         <span class="cout-sort">
                             @if (sortSelected()!.PorteeMax) {
-                                {{ sortSelected()!.PorteeMin }} - {{ sortSelected()!.PorteeMax + (sortSelected()!.POModifiable ? PO() : 0) }} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="">
+                                <div>
+                                    {{ sortSelected()!.PorteeMin }} - {{ sortSelected()!.PorteeMax + (sortSelected()!.POModifiable ? PO() : 0) }} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="">
+                                </div>
                             }
                             @if (sortSelected()?.NotLDV) {
                                 <img src="aptitudes/ligne_not_vu.png" class="ligne-not-vu" alt="">
@@ -80,13 +82,19 @@
                                 <img src="aptitudes/picto_spell_line.png" class="ligne" alt="">
                             }
                             @if(sortSelected()!.PA) {
+                                <div>
                                 {{sortSelected()!.PA}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PA)" alt="">
+                                </div>
                             }
                             @if(sortSelected()!.PM) {
-                                {{sortSelected()!.PM}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="">
+                                <div>
+                                    {{sortSelected()!.PM}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="">
+                                </div>
                             }
                             @if (sortSelected()!.PW) {
-                                {{sortSelected()!.PW}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PW)" alt="">
+                                <div>
+                                    {{sortSelected()!.PW}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PW)" alt="">
+                                </div>
                             }
                         </span>
                     </div>

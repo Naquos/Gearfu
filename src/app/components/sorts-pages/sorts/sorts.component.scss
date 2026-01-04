@@ -143,6 +143,10 @@
                         display: flex;
                         font-size: 14px;
                         margin-left: auto;
+                        div {
+                            display: flex;
+                            align-items: center;
+                        }
 
                         img {
                             margin-left: 10px;
@@ -231,3 +235,40 @@
         }
     } 
 }
+
+ @media screen and (max-width: 700px) {
+    .body {
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+
+        img {
+            width: 30px!important;
+            height: 30px!important;
+        }
+
+        
+
+        .column {
+            width: 90%;
+
+            .card {
+                min-width: unset;
+
+                .cout-sort {
+                    flex-wrap: wrap!important;
+                    margin-left: 3px!important;
+                    img {
+                        margin-left: 3px!important;
+                        width: 16px!important;
+                        height: 16px!important;
+                    }
+                }
+            }
+            
+            .sorts-neutres, .sorts-passifs, .sorts-elementaires {
+                grid-column-gap: 0px!important;
+            }
+        }
+    }
+  }

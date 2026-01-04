@@ -16,6 +16,7 @@ import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { BonusComponent } from "../bonus/bonus.component";
 import { InputResumeAptitudesComponent } from "../input-resume-aptitudes/input-resume-aptitudes.component";
 import { AptitudesManualFormService } from '../../../services/form/aptitudesManualFormServices';
+import { ConnectedPosition } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-resume-aptitudes',
@@ -53,13 +54,21 @@ export class ResumeAptitudesComponent {
   protected openTooltip(event: MouseEvent): void {
     this.tooltipService.forceClose();
     this.tooltipService.cancelClose();
+    let connectedPosition: ConnectedPosition[] | undefined = undefined;
+    if(window.innerWidth <= 700) {
+      connectedPosition = [{ 
+        originX: 'start', originY: 'bottom',
+        overlayX: 'start', overlayY: 'bottom',
+        offsetY: 0, offsetX: -300
+      }] as ConnectedPosition[];
+    }
     // Le 7ème paramètre active le comportement "garder ouvert au survol"
     this.tooltipService.openTooltip(
       this.viewContainerRef, 
       ClassesTooltipComponent, 
       event, 
       {},
-      undefined,  // connectedPosition
+      connectedPosition,  // connectedPosition
       true,       // withPush
       true        // keepOpenOnHover - ACTIVÉ ICI
     );

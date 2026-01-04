@@ -284,3 +284,56 @@
         }
     }
 }
+
+ @media screen and (max-width: 700px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        .column {
+            width: 80%;
+
+            .card {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .delete {
+                display: none;
+            }
+            
+            .sublimations {
+                flex-direction: column;
+                width: 50px!important;
+            }
+
+            .group-item-chasses {
+                img {
+                    width: 24px!important;
+                    height: 24px!important;
+                }
+                .action-image {
+                    img {
+                        width: 10px!important;
+                        height: 10px!important;
+                    }
+                }
+            }
+
+            .card {
+                width: 100%;
+
+                .slider-container {
+                    width: 80%!important;
+                    .subli-container {
+                        width: 100%!important;
+                    }
+                }
+            }
+
+            .effets-description {
+                width: 100%;
+            }
+        }
+    }
+  }

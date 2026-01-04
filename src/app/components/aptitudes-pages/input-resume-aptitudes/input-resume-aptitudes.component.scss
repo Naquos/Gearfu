@@ -27,3 +27,19 @@ div {
         color: #F44336;
     }
 }
+
+
+@media screen and (max-width: 700px) {
+    :host {
+        font-size: 11px!important;
+    }
+
+    .change {
+        width: fit-content;
+    }
+
+    img {
+        width: 16px!important;
+        height: 16px!important;
+    }
+}

@@ -22,6 +22,7 @@ import { DescriptionSublimationComponent, DescriptionSublimationType } from '../
 import { LevelFormService } from '../../../services/form/levelFormService';
 import { maxChasseLevel, normalizeString } from '../../../models/utils/utils';
 import { AbstractDestroyService } from '../../../services/abstract/abstractDestroyService';
+import { ConnectedPosition } from '@angular/cdk/overlay';
 
 interface DisplayTypeItem {
   indexItem: number;
@@ -88,6 +89,21 @@ export class EnchantementComponent extends AbstractDestroyService {
     }
     this.tooltipService.forceClose();
     if(sublimationDescriptions) {
+
+      let connectedPosition: ConnectedPosition[] = [{
+          originX: 'end', originY: 'top',
+          overlayX: 'end', overlayY: 'bottom',
+          offsetY: -10
+        }];
+      if(window.innerWidth <= 700) {
+        connectedPosition = [{ 
+          originX: 'start', originY: 'bottom',
+          overlayX: 'start', overlayY: 'bottom',
+          offsetY: 0, offsetX: 0
+        }] as ConnectedPosition[];
+      }
+
+
       this.tooltipService.cancelClose();
       // Le 7ème paramètre active le comportement "garder ouvert au survol"
       this.tooltipService.openTooltip(
@@ -95,11 +111,7 @@ export class EnchantementComponent extends AbstractDestroyService {
         DescriptionSublimationComponent, 
         event, 
         {sublimationsDescriptions: description, level},
-        [{
-          originX: 'end', originY: 'top',
-          overlayX: 'end', overlayY: 'bottom',
-          offsetY: -10
-        }],  // connectedPosition
+        connectedPosition,  // connectedPosition
         true,       // withPush
         true        // keepOpenOnHover
       );

@@ -113,12 +113,4 @@ export class TooltipService<T extends Record<string, any>> {
       this.overlayRefs.push(overlayRef);
       return overlayRef;
     }
-
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
-        this.mouseEnter$.complete();
-        this.mouseLeave$.complete();
-        this.forceClose();
-    }
 }
