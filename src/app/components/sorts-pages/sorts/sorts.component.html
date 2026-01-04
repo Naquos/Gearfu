@@ -47,25 +47,18 @@
             </div>
         </div>
 
-        @if(!sortSelected()) {
-            <div class="card">
-                <div class="header">
-                    {{'sorts.sort-selectionne' | translate}}          
-                </div>
-                <div class="description-sort">
+        <div class="card">
+            <div class="header">
+                {{'sorts.sort-selectionne' | translate}}          
+            </div>
+            <div class="description-sort">
+                @if(!sortSelected()) {
                     <div class="sort-title">
                         <img src="sorts/empty-sort.png" alt="">
                         <span> {{  'sorts.no-sort-selectionne' | translate }}</span>
                     </div>
                     <div class="description"></div>
-                </div>
-            </div>
-        } @else {
-            <div class="card">
-                <div class="header">
-                    {{'sorts.sort-selectionne' | translate}}          
-                </div>
-                <div class="description-sort">
+                } @else {
                     <div class="sort-title">
                         <img [src]="imageService.getSortUrl(sortSelected()!.gfxId)" alt="">
                         <span> {{getSortName(sortSelected()!) }}</span>
@@ -118,10 +111,9 @@
                             </mat-slider>
                         </div>
                     </div>
-                </div>
+                }
             </div>
-        }
-
+        </div>
     </div>
 
     <div class="column">

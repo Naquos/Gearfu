@@ -1,6 +1,7 @@
 .change {
     border: 2px #5e758e dashed;
     border-radius: 5px;   
+    min-width: fit-content;
 }
 div {
     display:flex;
@@ -32,10 +33,6 @@ div {
 @media screen and (max-width: 700px) {
     :host {
         font-size: 11px!important;
-    }
-
-    .change {
-        width: fit-content;
     }
 
     img {

@@ -202,13 +202,13 @@ header {
     }
   }
 
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 1000px) {
     .menu {
       display: none;
     }
   }
 
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 1000px) {
     
     app-item-choose {
       z-index: 50;

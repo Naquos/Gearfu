@@ -52,7 +52,7 @@ $size: 56px;
     }
 }
 
-@media screen and (min-width: 701px) and (max-width: 1700px) {
+@media screen and (min-width: 1001px) and (max-width: 1700px) {
     $size: 36px;
     .noItem {
         width: $size;
