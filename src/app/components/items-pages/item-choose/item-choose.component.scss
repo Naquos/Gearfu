@@ -105,8 +105,14 @@
 }
 
 @media screen and (max-width: 1000px) {
+    
+    app-item-choose-display {
+        margin-left: unset!important;
+        margin: 0 auto!important;
+    }
     .content{
         flex-wrap: wrap;
+        height: 100%;
     }
     
     span {

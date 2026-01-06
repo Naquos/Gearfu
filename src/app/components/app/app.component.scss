@@ -216,7 +216,7 @@ header {
       top: $header-size;
       left: 0px;
 
-      height: calc(100vh - $header-size - $footer-size);
+      height: calc(100vh - $header-size);
       overflow-y: scroll;
       
       background: #1B263B;
