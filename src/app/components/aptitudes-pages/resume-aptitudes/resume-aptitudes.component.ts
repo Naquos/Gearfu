@@ -59,7 +59,7 @@ export class ResumeAptitudesComponent {
       connectedPosition = [{ 
         originX: 'start', originY: 'bottom',
         overlayX: 'start', overlayY: 'bottom',
-        offsetY: 0, offsetX: -300
+        offsetY: 0, offsetX: 0
       }] as ConnectedPosition[];
     }
     // Le 7ème paramètre active le comportement "garder ouvert au survol"
