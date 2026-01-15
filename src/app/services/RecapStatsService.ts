@@ -163,6 +163,37 @@ export class RecapStatsService extends AbstractDestroyService {
 
   private applyEffectSublimation(sublimationsIdToLevel: Map<number, number>): void {
     const level = this.levelFormService.getValue();
+
+    // Les sublimations devant être appliquées dans un certain ordre, on traite un premier groupe de subli "prioritaires"
+    // Puis on traite le reste des sublimations
+
+    sublimationsIdToLevel.forEach((levelSubli, id) => {
+       if (id === IdSublimationEnum.RAVAGE) {
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_BERZERK, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_CRITIQUES, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_DOS, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_MELEE, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_DISTANCES, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_SOIN, value: Math.floor(0.05 * levelSubli * level), params: [] });
+        this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 3 * levelSubli, params: [] });
+      }
+ 
+    });
+    
+    sublimationsIdToLevel.forEach((levelSubli, id) => {
+       if (id === IdSublimationEnum.DENOUEMENT) {
+        const maitriseCrit = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_CRITIQUES)?.value ?? 0;
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_CRITIQUES, value: -maitriseCrit, params: [] });
+        this.applyEffect({ id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: maitriseCrit, params: [] });
+      } else if(id === IdSublimationEnum.POIDS_PLUME) {
+        const pm = this.recap.value.find(rs => rs.id === IdActionsEnum.PM)?.value ?? 0;
+        const nbPm = Math.max(0, pm - 4);
+        this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: 2 * nbPm * levelSubli, params: [] });
+      } 
+    });
+
+
     sublimationsIdToLevel.forEach((levelSubli, id) => {
       if(id === IdSublimationEnum.ABANDON && this.allMaitrisesSecondairesNull()) {
         this.applyEffect({ id: IdActionsEnum.PORTEE, value: Math.floor(0.5 * levelSubli), params: [] });
@@ -238,23 +269,10 @@ export class RecapStatsService extends AbstractDestroyService {
         this.applyEffect({ id: IdActionsEnum.DI, value: 8 * levelSubli, params: [] });
       } else if(id === IdSublimationEnum.PARADE_BERSERK) {
         this.applyEffect({ id: IdActionsEnum.PARADE, value: 5 * levelSubli, params: [] });
-      } else if(id === IdSublimationEnum.POIDS_PLUME) {
-        const pm = this.recap.value.find(rs => rs.id === IdActionsEnum.PM)?.value ?? 0;
-        const nbPm = Math.max(0, pm - 4);
-        this.applyEffect({ id: IdActionsEnum.ESQUIVE, value: 2 * nbPm * levelSubli, params: [] });
       } else if(id === IdSublimationEnum.PRETENTION) {
         this.applyEffect({ id: IdActionsEnum.PARADE, value: 5 * levelSubli, params: [] });
       } else if (id === IdSublimationEnum.PUISSANCE_BRUTE) {
         this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: -1 * levelSubli, params: [] });
-      } else if (id === IdSublimationEnum.RAVAGE) {
-        this.applyEffect({ id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: Math.floor(0.05 * levelSubli * level), params: [] });
-        this.applyEffect({ id: IdActionsEnum.MAITRISES_BERZERK, value: Math.floor(0.05 * levelSubli * level), params: [] });
-        this.applyEffect({ id: IdActionsEnum.MAITRISES_CRITIQUES, value: Math.floor(0.05 * levelSubli * level), params: [] });
-        this.applyEffect({ id: IdActionsEnum.MAITRISES_DOS, value: Math.floor(0.05 * levelSubli * level), params: [] });
-        this.applyEffect({ id: IdActionsEnum.MAITRISES_MELEE, value: Math.floor(0.05 * levelSubli * level), params: [] });
-        this.applyEffect({ id: IdActionsEnum.MAITRISES_DISTANCES, value: Math.floor(0.05 * levelSubli * level), params: [] });
-        this.applyEffect({ id: IdActionsEnum.MAITRISES_SOIN, value: Math.floor(0.05 * levelSubli * level), params: [] });
-        this.applyEffect({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 3 * levelSubli, params: [] });
       } else if (id === IdSublimationEnum.REPROBATION) {
         this.applyEffect({ id: IdActionsEnum.VOLONTE, value: -20, params: [] });
       } else if (id === IdSublimationEnum.REVIGORATION) {
@@ -317,10 +335,6 @@ export class RecapStatsService extends AbstractDestroyService {
         this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: 40, params: [] });
       } else if (id === IdSublimationEnum.CONTROLE_DE_L_ESPACE_II) {
         this.applyEffect({ id: IdActionsEnum.DI_INDIRECT, value: 30, params: [] });
-      } else if (id === IdSublimationEnum.DENOUEMENT) {
-        const maitriseCrit = this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_CRITIQUES)?.value ?? 0;
-        this.applyEffect({ id: IdActionsEnum.MAITRISES_CRITIQUES, value: -maitriseCrit, params: [] });
-        this.applyEffect({ id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: maitriseCrit, params: [] });
       } else if (id === IdSublimationEnum.ELEMENTALISME) {
         this.applyEffect({ id: IdActionsEnum.DI, value: 20, params: [] });
         this.applyEffect({ id: IdActionsEnum.SOINS_REALISE, value: 20, params: [] });
