@@ -16,6 +16,8 @@ import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 import { UrlServices } from "./urlServices";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { ID_MAITRISES_MODIFIABLES, ID_RESISTANCES_MODIFIABLES } from "../models/utils/utils";
+import { ElementSelectorService } from "./elementSelectorService";
+import { ElementSelectorEnum } from "../models/enum/elementSelectorEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService extends AbstractDestroyService {
@@ -28,6 +30,7 @@ export class ItemChooseService extends AbstractDestroyService {
     private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
     private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
     private readonly urlServices = inject(UrlServices);
+    private readonly elementSelectorService = inject(ElementSelectorService);
 
     private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>(
         [
@@ -214,11 +217,16 @@ export class ItemChooseService extends AbstractDestroyService {
             switchMap(x => 
                 iif(() => x !== undefined && !!x[0]?.itemTypeId && this.itemTypeService.getItemType(x[0]?.itemTypeId) === ItemTypeEnum.DEUX_MAINS,
                 of(x).pipe(tap(() => {
+                    this.deleteElementItem(ItemTypeEnum.BOUCLIER);
+                    this.deleteElementItem(ItemTypeEnum.UNE_MAIN);
                     this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]);
                     this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]);
                 })),
                 of(x).pipe(
-                    map(x => {x[indexItem] = undefined; return x}),
+                    map(x => {
+                        this.deleteElementItem(itemType, indexItem);
+                        x[indexItem] = undefined; return x
+                    }),
                     tap(x => this.mapItem.get(itemType)?.next(x))))
             )
         ).subscribe();
@@ -254,10 +262,15 @@ export class ItemChooseService extends AbstractDestroyService {
     
         return this.getObsItem(ItemTypeEnum.UNE_MAIN).pipe(
             first(),
-            tap(() => this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([item])),
+            tap(() => {
+                this.deleteElementItem(ItemTypeEnum.BOUCLIER);
+                this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([item])}),
             map(x => x[0]),
             filter(x => x !== undefined && this.itemTypeService.getItemType(x.itemTypeId) === ItemTypeEnum.DEUX_MAINS),
-            tap(() => this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined])),
+            tap(() => {
+                this.deleteElementItem(ItemTypeEnum.UNE_MAIN);
+                this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined])
+            }),
             map(() => null)
         );
     }
@@ -269,10 +282,16 @@ export class ItemChooseService extends AbstractDestroyService {
     
         return this.getObsItem(ItemTypeEnum.BOUCLIER).pipe(
             first(),
-            tap(() => this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([item])),
+            tap(() => {
+                this.deleteElementItem(ItemTypeEnum.UNE_MAIN);
+                this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([item])
+            }),
             map(x => x[0]),
             filter(x => x !== undefined && this.itemTypeService.getItemType(x.itemTypeId) === ItemTypeEnum.DEUX_MAINS),
-            tap(() => this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined])),
+            tap(() => {
+                this.deleteElementItem(ItemTypeEnum.BOUCLIER);
+                this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined])
+                }),
             map(() => null)
         );
     }
@@ -285,17 +304,22 @@ export class ItemChooseService extends AbstractDestroyService {
         return this.getObsItem(ItemTypeEnum.ANNEAU).pipe(
             first(),
             switchMap(list =>
-                !list.find(anneau => anneau?.title === item.title)
+                !list.find(anneau => anneau?.title.fr === item.title.fr)
                     ? of(list).pipe(
                         map(oldList => {
                             const newList = [...oldList];
+                            this.deleteElementItem(ItemTypeEnum.ANNEAU, this.indexAnneau);
                             newList[this.indexAnneau] = item;
                             return newList;
                         }),
                         tap(updatedList => this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(updatedList)),
                         tap(() => this.indexAnneau = this.indexAnneau === 0 ? 1 : 0)
                     )
-                    : of(null)
+                    : of(null).pipe(tap(() => {
+                        const anneaux = this.mapItem.get(ItemTypeEnum.ANNEAU)?.value;
+
+                        this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(anneaux!);
+                    }))
             ),
             map(() => null)
         );
@@ -308,6 +332,9 @@ export class ItemChooseService extends AbstractDestroyService {
     
         return of(null).pipe(
             tap(() => {
+                this.deleteElementItem(ItemTypeEnum.BOUCLIER);
+                this.deleteElementItem(ItemTypeEnum.UNE_MAIN);
+
                 this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([item]);
                 this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([item]);
             })
@@ -320,7 +347,10 @@ export class ItemChooseService extends AbstractDestroyService {
         }
     
         return of(null).pipe(
-            tap(() => this.mapItem.get(itemType)?.next([item]))
+            tap(() => {
+                this.deleteElementItem(itemType);
+                this.mapItem.get(itemType)?.next([item])
+            })
         );
     }
 
@@ -341,10 +371,14 @@ export class ItemChooseService extends AbstractDestroyService {
                 item.equipEffects.splice(index, 1);
             }
             // Ajout des éléments fixes
-            const elements = this.maitrisesFormService.orderMaitrises();
+            let elements = this.elementSelectorService.getElementsForItem(item.id, ElementSelectorEnum.Maitrise);
+            if(elements.length === 0) {
+                elements = this.maitrisesFormService.orderMaitrises();
+            }
             for (let i = 0; i < nbElements; i++) {
                 item.equipEffects.push({id: ID_MAITRISES_MODIFIABLES, actionId: elements[i], params: elementsVariable.params});
             }
+            this.elementSelectorService.setElementsForItem(item.id, elements.slice(0, nbElements), ElementSelectorEnum.Maitrise);
         }
     }
 
@@ -358,10 +392,14 @@ export class ItemChooseService extends AbstractDestroyService {
                 item.equipEffects.splice(index, 1);
             }
             // Ajout des éléments fixes
-            const elements = this.resistancesFormService.orderResistances();
+            let elements = this.elementSelectorService.getElementsForItem(item.id, ElementSelectorEnum.Resistance);
+            if(elements.length === 0) {
+                elements = this.resistancesFormService.orderResistances();
+            }
             for (let i = 0; i < nbElements; i++) {
                 item.equipEffects.push({id: ID_RESISTANCES_MODIFIABLES, actionId: elements[i], params: elementsVariable.params});
             }
+            this.elementSelectorService.setElementsForItem(item.id, elements.slice(0, nbElements), ElementSelectorEnum.Resistance);
         }
     }
     
@@ -387,19 +425,46 @@ export class ItemChooseService extends AbstractDestroyService {
                 if(!itemTypeId) { return; }
                 const itemType = this.itemTypeService.getItemType(itemTypeId); 
 
-                if( itemType === ItemTypeEnum.DEUX_MAINS) { this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]); this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) } 
-                else if(itemType === ItemTypeEnum.DAGUE) { this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) } 
+                if( itemType === ItemTypeEnum.DEUX_MAINS) { 
+                    const uneMain = this.mapItem.get(ItemTypeEnum.UNE_MAIN);
+                    this.elementSelectorService.deleteItem(uneMain?.value[0]?.id ?? 0);
+
+                    const bouclier = this.mapItem.get(ItemTypeEnum.BOUCLIER);
+                    this.elementSelectorService.deleteItem(bouclier?.value[0]?.id ?? 0);
+
+                    this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]);
+                    this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined])
+                } 
+                else if(itemType === ItemTypeEnum.DAGUE) { 
+                    const bouclier = this.mapItem.get(ItemTypeEnum.BOUCLIER);
+                    this.elementSelectorService.deleteItem(bouclier?.value[0]?.id ?? 0);
+
+                    this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) 
+                } 
                 else if (itemType === ItemTypeEnum.ANNEAU) {
                     const indexRarity = list.findIndex(x => x?.rarity === rarity);
                     this.indexAnneau = indexRarity;
+
+                    const anneauId = list[indexRarity]?.id ?? 0;
+                    this.elementSelectorService.deleteItem(anneauId);
+
                     list[indexRarity] = undefined;
                     this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(list);
                 } else if(itemType !== undefined) {
+                    const item = this.mapItem.get(itemType);
+                    this.elementSelectorService.deleteItem(item?.value[0]?.id ?? 0);
+
                     this.mapItem.get(itemType)?.next([undefined])
                 }
             })),
             map(() => null)
         )
+    }
+
+    private deleteElementItem(itemType: ItemTypeEnum, index = 0): void {
+        const itemInMap = this.mapItem.get(itemType);
+        if(!itemInMap) { return; }
+        this.elementSelectorService.deleteItem(itemInMap?.value[index]?.id ?? 0);
     }
 
     private deleteItemInBuild(newItem: Item):Observable<boolean> {
@@ -425,14 +490,27 @@ export class ItemChooseService extends AbstractDestroyService {
                 itemFind = true;
                 const itemType = this.itemTypeService.getItemType(itemTypeId); 
 
-                if (itemType === ItemTypeEnum.DEUX_MAINS) { this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]); this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) }
-                else if (itemType === ItemTypeEnum.DAGUE) { this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) }
+                if (itemType === ItemTypeEnum.DEUX_MAINS) {
+                    this.deleteElementItem(ItemTypeEnum.UNE_MAIN);
+                    this.deleteElementItem(ItemTypeEnum.BOUCLIER);
+                    
+                    this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]);
+                    this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined])
+                }
+                else if (itemType === ItemTypeEnum.DAGUE) { 
+                    this.deleteElementItem(ItemTypeEnum.BOUCLIER);
+                    this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) 
+                }
                 else if (itemType === ItemTypeEnum.ANNEAU) {
                     const index = list.findIndex(x => x?.id === newItem.id);
+                    this.deleteElementItem(ItemTypeEnum.ANNEAU, index);
+
                     list[index] = undefined;
                     this.indexAnneau = index;
                     this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(list);
                 } else if(itemType !== undefined) {
+                    console.log('Deleting item', newItem.id, 'of type', itemType);
+                    this.deleteElementItem(itemType);
                     this.mapItem.get(itemType)?.next([undefined])
                 }
             })),

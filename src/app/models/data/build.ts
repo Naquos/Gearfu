@@ -8,6 +8,7 @@ export interface Build {
     aptitudes?: string;
     sorts?: string;
     enchantement?: string;
+    elementSelector?: string;
     // Flag indiquant si les données sont compressées
     compressed?: boolean;
     // Timestamp de création pour trier les builds

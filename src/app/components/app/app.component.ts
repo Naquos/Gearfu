@@ -38,6 +38,8 @@ import { SortService } from '../../services/data/sortService';
 import { SublimationService } from '../../services/data/sublimationService';
 import { FamiliersService } from '../../services/data/familiersService';
 import { SortLevelService } from '../../services/data/sortLevelService';
+import { ElementSelectorService } from '../../services/elementSelectorService';
+import { UrlServices } from '../../services/urlServices';
 
 type column = 'filter' | 'build' | 'aptitudes';
 
@@ -88,6 +90,8 @@ export class AppComponent implements OnInit{
   private readonly router = inject(Router);
   private readonly familierService = inject(FamiliersService);
   private readonly sortLevelService = inject(SortLevelService);
+  private readonly elementSelectorService = inject(ElementSelectorService);
+  private readonly urlServices = inject(UrlServices);
 
   protected displayFilter = false;
   protected filterOrBuild : column = "filter";
@@ -113,6 +117,14 @@ export class AppComponent implements OnInit{
   }
 
   public ngOnInit(): void {
+    this.elementSelectorService.init();
+// Charger les données de l'element selector depuis l'URL
+    const elementSelectorFromUrl = this.urlServices.getElementSelectorFromUrl();
+    if (elementSelectorFromUrl) {
+      this.elementSelectorService.decodeAndApplyFromBuild(elementSelectorFromUrl);
+    }
+
+    
     this.ankamaCdnFacade.load();
     this.monsterDropService.load();
     this.itemConditionService.load();

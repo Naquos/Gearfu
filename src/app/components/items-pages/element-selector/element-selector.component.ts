@@ -7,11 +7,8 @@ import { Item } from '../../../models/data/item';
 import { ID_MAITRISES_MODIFIABLES, ID_RESISTANCES_MODIFIABLES } from '../../../models/utils/utils';
 import { ItemChooseService } from '../../../services/itemChooseService';
 import { ItemTypeServices } from '../../../services/data/ItemTypesServices';
-
-export enum ElementSelectorEnum {
-  Maitrise = 'maitrise',
-  Resistance = 'resistance'
-}
+import { ElementSelectorService } from '../../../services/elementSelectorService';
+import { ElementSelectorEnum } from '../../../models/enum/elementSelectorEnum';
 
 @Component({
   selector: 'app-element-selector',
@@ -22,6 +19,12 @@ export enum ElementSelectorEnum {
 export class ElementSelectorComponent {
   public readonly item = input<Item>();
   public readonly selector = input<ElementSelectorEnum>(ElementSelectorEnum.Maitrise);
+
+  protected readonly imageService = inject(ImageService);
+  protected readonly IdActionsEnum = IdActionsEnum;
+  private readonly itemTypeService = inject(ItemTypeServices);
+  private readonly itemChooseService = inject(ItemChooseService);
+  private readonly elementSelectorService = inject(ElementSelectorService);
   
   protected readonly nbElements = computed(() => {
     const item = this.item();
@@ -50,12 +53,7 @@ export class ElementSelectorComponent {
     } else {
       return this.imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE);
     }
-  })
-  
-  protected readonly imageService = inject(ImageService);
-  protected readonly IdActionsEnum = IdActionsEnum;
-  private readonly itemTypeService = inject(ItemTypeServices);
-  private readonly itemChooseService = inject(ItemChooseService);
+  });
 
   private mapElementMaitriseToActionId = new Map<string, IdActionsEnum>([
     ['feu', IdActionsEnum.MAITRISES_FEU],
@@ -140,6 +138,11 @@ export class ElementSelectorComponent {
 
     item.equipEffects = equipEffects;
     this.setItem();
+    this.elementSelectorService.setElementsForItem(
+      item.id,
+      listeElementsToAdd.slice(0, nbElements).map(x => x.actionId),
+      selector
+    );
   }
 
   private updateForm(): void {
@@ -153,7 +156,7 @@ export class ElementSelectorComponent {
       if (index < nbElements) {
         const isSelected = item.equipEffects.some(effect => effect.actionId === actionId);
         control.setValue(isSelected, { emitEvent: false });
-        index++;
+        index+= isSelected ? 1 : 0;
       } else {
         control.setValue(false, { emitEvent: false });
       }

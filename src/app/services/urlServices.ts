@@ -16,6 +16,7 @@ interface UrlParams {
     sorts?: string;
     enchantement?: string;
     aptitudesManual?: string;
+    elementSelector?: string;
     // Paramètre indiquant si les données sont compressées
     c?: '1';
 }
@@ -150,6 +151,15 @@ export class UrlServices extends AbstractDestroyService {
         return this.decompressIfNeeded(this.initialParams?.aptitudesManual || '', isCompressed);
     }
 
+    public setElementSelectorInUrl(elementSelector: string): void {
+        this.updateUrlParams({ elementSelector });
+    }
+
+    public getElementSelectorFromUrl(): string | undefined {
+        const isCompressed = this.initialParams?.c === '1';
+        return this.decompressIfNeeded(this.initialParams?.elementSelector || '', isCompressed);
+    }
+
     /**
      * Récupère l'itemsId depuis l'URL
      */
@@ -276,6 +286,15 @@ export class UrlServices extends AbstractDestroyService {
             needsCompression = needsCompression || result.isCompressed;
         }
 
+        if (newParams.elementSelector !== undefined) {
+            const result = this.compressIfNeeded(newParams.elementSelector);
+            if (this.initialParams.elementSelector !== result.compressed) {
+                this.initialParams.elementSelector = result.compressed;
+                hasChanges = true;
+            }
+            needsCompression = needsCompression || result.isCompressed;
+        }
+
         // Ne mettre à jour que si des changements ont été détectés
         if (!hasChanges) {
             return;
@@ -297,7 +316,7 @@ export class UrlServices extends AbstractDestroyService {
      * Vérifie si d'autres paramètres sont encore compressés
      */
     private hasOtherCompressedParams(excludeParams: Partial<UrlParams>): boolean {
-        const keysToCheck: (keyof UrlParams)[] = ['sorts', 'aptitudes', 'enchantement', 'aptitudesManual'];
+        const keysToCheck: (keyof UrlParams)[] = ['sorts', 'aptitudes', 'enchantement', 'aptitudesManual', 'elementSelector'];
         
         for (const key of keysToCheck) {
             if (!(key in excludeParams) && this.initialParams[key]) {
@@ -341,6 +360,9 @@ export class UrlServices extends AbstractDestroyService {
         }
         if (this.initialParams.aptitudesManual) {
             params.set('aptitudesManual', this.initialParams.aptitudesManual);
+        }
+        if (this.initialParams.elementSelector) {
+            params.set('elementSelector', this.initialParams.elementSelector);
         }
         if (this.initialParams.c) {
             params.set('c', this.initialParams.c);
@@ -418,6 +440,11 @@ export class UrlServices extends AbstractDestroyService {
             const aptitudesManual = urlParams.get('aptitudesManual');
             if (aptitudesManual) {
                 params.aptitudesManual = aptitudesManual;
+            }
+
+            const elementSelector = urlParams.get('elementSelector');
+            if (elementSelector) {
+                params.elementSelector = elementSelector;
             }
             
             // Si on a détecté une ancienne URL avec query params, la convertir en hash

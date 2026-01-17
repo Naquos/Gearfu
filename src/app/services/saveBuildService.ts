@@ -10,6 +10,7 @@ import { ClasseFormService } from "./form/classeFormService";
 import { CodeAptitudesService } from "./codeAptitudesService";
 import { SortFormService } from "./form/sortFormService";
 import { ChasseFormService } from "./form/chasseFormService";
+import { ElementSelectorService } from "./elementSelectorService";
 
 @Injectable({providedIn: 'root'})
 export class SaveBuildService {
@@ -22,6 +23,7 @@ export class SaveBuildService {
     private readonly codeAptitudesService = inject(CodeAptitudesService);
     private readonly sortFormService = inject(SortFormService);
     private readonly chasseFormService = inject(ChasseFormService);
+    private readonly elementSelectorService = inject(ElementSelectorService);
     
     private readonly buildList = new BehaviorSubject<Build[]>([]);
     public readonly buildList$ = this.buildList.asObservable();
@@ -43,10 +45,10 @@ export class SaveBuildService {
             aptitudes: this.urlServices.getAptitudesFromUrl(),
             sorts: this.urlServices.getSortsFromUrl(),
             enchantement: this.urlServices.getEnchantementFromUrl(),
+            elementSelector: this.urlServices.getElementSelectorFromUrl(),
             compressed: this.urlServices.isCompressed(),
             createdAt: Date.now()
         };
-        
         this.addBuild(build);
     }
 
@@ -55,7 +57,7 @@ export class SaveBuildService {
      */
     public addBuild(build: Build): void {
         // Vérifier qu'il y a au moins des items ou des paramètres valides
-        if (!build.itemsId && !build.aptitudes && !build.sorts && !build.enchantement) {
+        if (!build.itemsId && !build.aptitudes && !build.sorts && !build.enchantement && !build.elementSelector) {
             return; // Éviter d'ajouter des builds vides
         }
         
@@ -68,7 +70,8 @@ export class SaveBuildService {
             b.classe === build.classe &&
             b.aptitudes === build.aptitudes &&
             b.sorts === build.sorts &&
-            b.enchantement === build.enchantement
+            b.enchantement === build.enchantement &&
+            b.elementSelector === build.elementSelector
         );
         
         if (!isDuplicate) {
@@ -88,6 +91,9 @@ export class SaveBuildService {
     public loadBuild(build: Build): void {
         if (build.level !== undefined) {
             this.levelFormService.setValue(build.level);
+        }
+        if (build.elementSelector) {
+            this.elementSelectorService.decodeAndApplyFromBuild(build.elementSelector);
         }
         if (build.itemsId) {
             this.itemChooseService.setIdItemsFromBuild(build.itemsId);
@@ -130,6 +136,7 @@ export class SaveBuildService {
             b.aptitudes === build.aptitudes &&
             b.sorts === build.sorts &&
             b.enchantement === build.enchantement &&
+            b.elementSelector === build.elementSelector &&
             b.createdAt === build.createdAt
         );
         

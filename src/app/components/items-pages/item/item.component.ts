@@ -18,13 +18,14 @@ import { TooltipService } from '../../../services/TooltipService';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
 import { ItemsTooltipComponent } from '../items-tooltip/items-tooltip.component';
 import { StatesComponent } from '../states/states.component';
-import { ElementSelectorComponent, ElementSelectorEnum } from "../element-selector/element-selector.component";
+import { ElementSelectorComponent } from "../element-selector/element-selector.component";
+import { ElementSelectorEnum } from '../../../models/enum/elementSelectorEnum';
 
 @Component({
   selector: 'app-item',
   imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective, LazyImageDirective, ElementSelectorComponent],
   templateUrl: './item.component.html',
-  styleUrl: './item.component.scss'
+  styleUrls: ['./item.component.scss']
 })
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
   
