@@ -26,6 +26,13 @@ export class ResistancesFormService extends AbstractFormService<FormGroup<TypedC
         air: new FormControl()
     });
 
+  private readonly mapFormToIdResistances = new Map([
+    ['feu', IdActionsEnum.RESISTANCES_FEU],
+    ['eau', IdActionsEnum.RESISTANCES_EAU],
+    ['terre', IdActionsEnum.RESISTANCES_TERRE],
+    ['air', IdActionsEnum.RESISTANCES_AIR],
+  ]);
+
   constructor() {
     super();
     this.init();
@@ -61,5 +68,25 @@ export class ResistancesFormService extends AbstractFormService<FormGroup<TypedC
 
   public setDefaultValue(): void {
       this.setResistances();
+  }
+
+  /**
+   * Retourne une liste ordonnées des maitrises élémentaires en mettant au début celles sélectionnées dans le formulaire.
+   * @returns IdActionsEnum[]
+   */
+  public orderResistances(): IdActionsEnum[] {
+    const elements = [IdActionsEnum.RESISTANCES_FEU, IdActionsEnum.RESISTANCES_EAU, IdActionsEnum.RESISTANCES_TERRE, IdActionsEnum.RESISTANCES_AIR];
+    const selectedElements: IdActionsEnum[] = [];
+    const unselectedElements: IdActionsEnum[] = [];
+    elements.forEach(elem => {
+      const controlName = Array.from(this.mapFormToIdResistances.entries())
+        .find(([, value]) => value === elem)?.[0];
+      if (controlName && this.form.controls[controlName as keyof RareteItemForm].value) {
+        selectedElements.push(elem);
+      } else {
+        unselectedElements.push(elem);
+      }
+    });
+    return [...selectedElements, ...unselectedElements];
   }
 }

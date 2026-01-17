@@ -27,6 +27,13 @@ export class MaitrisesFormService extends AbstractFormService<FormGroup<TypedCon
   private readonly idMaitrises = new BehaviorSubject<number[]>([]);
   public readonly idMaitrises$ = this.idMaitrises.asObservable();
 
+  private readonly mapFormToIdMaitrisesElementaire = new Map([
+    ['feu', IdActionsEnum.MAITRISES_FEU],
+    ['eau', IdActionsEnum.MAITRISES_EAU],
+    ['terre', IdActionsEnum.MAITRISES_TERRE],
+    ['air', IdActionsEnum.MAITRISES_AIR],
+  ]);
+
   protected readonly keyEnum = KeyEnum.KEY_MAITRISES;
   public readonly form = new FormGroup<TypedControls<MaitrisesForm>>({
         feu: new FormControl(),
@@ -98,5 +105,27 @@ export class MaitrisesFormService extends AbstractFormService<FormGroup<TypedCon
         soin: maitrises.includes(IdActionsEnum.MAITRISES_SOIN),
         berzerk: maitrises.includes(IdActionsEnum.MAITRISES_BERZERK)
       });
+  }
+
+  /**
+   * Retourne une liste ordonnées des maitrises élémentaires en mettant au début celles sélectionnées dans le formulaire.
+   * @returns IdActionsEnum[]
+   */
+  public orderMaitrises(): IdActionsEnum[] {
+    const elements = [IdActionsEnum.MAITRISES_FEU, IdActionsEnum.MAITRISES_EAU, IdActionsEnum.MAITRISES_TERRE, IdActionsEnum.MAITRISES_AIR];
+    const selectedElements: IdActionsEnum[] = [];
+    const unselectedElements: IdActionsEnum[] = [];
+    elements.forEach(elem => {
+      const controlName = Array.from(this.mapFormToIdMaitrisesElementaire.entries())
+        .find(([, value]) => value === elem)?.[0];
+      if (controlName && this.form.controls[controlName as keyof MaitrisesForm].value) {
+        selectedElements.push(elem);
+      } else {
+        unselectedElements.push(elem);
+      }
+    });
+
+
+    return [...selectedElements, ...unselectedElements];
   }
 }

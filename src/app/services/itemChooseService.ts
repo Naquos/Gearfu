@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { ItemTypeEnum } from "../models/enum/itemTypeEnum";
-import { BehaviorSubject, combineLatest, distinctUntilChanged, filter, first, iif, map, Observable, of, switchMap, take, takeUntil, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, distinctUntilChanged, filter, first, iif, map, Observable, of, switchMap, takeUntil, tap } from "rxjs";
 import { ItemTypeServices } from "./data/ItemTypesServices";
 import { RarityItemEnum } from "../models/enum/rarityItemEnum";
 import { ItemsService } from "./data/itemsService";
@@ -14,6 +14,7 @@ import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 import { UrlServices } from "./urlServices";
+import { IdActionsEnum } from "../models/enum/idActionsEnum";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService extends AbstractDestroyService {
@@ -148,20 +149,6 @@ export class ItemChooseService extends AbstractDestroyService {
         this.updateUrl();
     }
 
-    private initItemChooses(): Observable<string[] | null> {
-    return this.urlServices.itemsId$.pipe(
-            take(1),
-            map(x => x && x.trim() !== "" ? x.split(",") : []),
-            tap(x => x.forEach(id => {
-                const numId = parseInt(id);
-                if (!isNaN(numId)) {
-                    this.setItemWithIdItem(numId);
-                }
-            })),
-            map(() => null)
-        );
-    }
-
     private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean, chaos: boolean): void {
         let weight = 0;
         let resistance = 0;
@@ -237,18 +224,19 @@ export class ItemChooseService extends AbstractDestroyService {
         
     }
     public setItem(itemType: ItemTypeEnum, item: Item, deleteItem = true): void {
+        const changedItem = this.changeElements(item);
         of(null).pipe(
             first(),
             switchMap(() => 
                 iif(() => deleteItem, 
-                    this.deleteItemInBuild(item).pipe(filter(itemFound => !itemFound)),
+                    this.deleteItemInBuild(changedItem).pipe(filter(itemFound => !itemFound)),
                     of(null))),
-            switchMap(() => this.ensureUniqueRelic(item)),
-            switchMap(() => this.ensureCompatibleWithSecondHand(itemType, item)),
-            switchMap(() => this.ensureCompatibleWithFirstHand(itemType, item)),
-            switchMap(() => this.handleRings(itemType, item)),
-            switchMap(() => this.handleDeuxMains(itemType, item)),
-            switchMap(() => this.finalEquip(itemType, item))
+            switchMap(() => this.ensureUniqueRelic(changedItem)),
+            switchMap(() => this.ensureCompatibleWithSecondHand(itemType, changedItem)),
+            switchMap(() => this.ensureCompatibleWithFirstHand(itemType, changedItem)),
+            switchMap(() => this.handleRings(itemType, changedItem)),
+            switchMap(() => this.handleDeuxMains(itemType, changedItem)),
+            switchMap(() => this.finalEquip(itemType, changedItem))
         ).subscribe();
     }
 
@@ -333,6 +321,47 @@ export class ItemChooseService extends AbstractDestroyService {
         return of(null).pipe(
             tap(() => this.mapItem.get(itemType)?.next([item]))
         );
+    }
+
+    private changeElements(item: Item): Item {
+        const itemCopy = structuredClone(item);
+        this.changeElementsMaitrise(itemCopy);
+        this.changeElementsResistance(itemCopy);
+        return itemCopy;
+    }
+
+    private changeElementsMaitrise(item: Item): void {
+        const elementsVariable = item.equipEffects.find(eff => eff.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE);
+        if(elementsVariable) {
+            const nbElements = elementsVariable.params[2];
+            // Suppression des éléments variables
+            const index = item.equipEffects.indexOf(elementsVariable);
+            if (index > -1) {
+                item.equipEffects.splice(index, 1);
+            }
+            // Ajout des éléments fixes
+            const elements = this.maitrisesFormService.orderMaitrises();
+            for (let i = 0; i < nbElements; i++) {
+                item.equipEffects.push({id: i, actionId: elements[i], params: elementsVariable.params});
+            }
+        }
+    }
+
+    private changeElementsResistance(item: Item): void {
+        const elementsVariable = item.equipEffects.find(eff => eff.actionId === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE);
+        if(elementsVariable) {
+            const nbElements = elementsVariable.params[2];
+            // Suppression des éléments variables
+            const index = item.equipEffects.indexOf(elementsVariable);
+            if (index > -1) {
+                item.equipEffects.splice(index, 1);
+            }
+            // Ajout des éléments fixes
+            const elements = this.resistancesFormService.orderResistances();
+            for (let i = 0; i < nbElements; i++) {
+                item.equipEffects.push({id: i, actionId: elements[i], params: elementsVariable.params});
+            }
+        }
     }
     
 
