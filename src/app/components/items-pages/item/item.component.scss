@@ -194,3 +194,11 @@
         }
     }
 }
+
+
+@media screen and (max-width: 500px) {
+    :host {
+        max-width: min(280px, 90%);
+        margin: auto;
+    }
+}

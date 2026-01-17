@@ -27,3 +27,16 @@
         }
     }
 }
+
+@media screen and (max-width: 900px) {
+    .content {
+        height: auto;
+        .elements {
+            display: grid!important;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-column-gap: 2px;
+            grid-row-gap: 2px;
+        }
+    }
+}

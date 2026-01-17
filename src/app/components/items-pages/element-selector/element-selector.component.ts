@@ -4,7 +4,7 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ButtonCheckboxComponent } from "../../form/button-checkbox/button-checkbox.component";
 import { Item } from '../../../models/data/item';
-import { ID_MAITRISES_MODIFIABLES, ID_RESISTANCES_MODIFIABLES } from '../../../models/utils/utils';
+import { ID_MAITRISES_MODIFIABLES, ID_RESISTANCES_MODIFIABLES, mapSortAction } from '../../../models/utils/utils';
 import { ItemChooseService } from '../../../services/itemChooseService';
 import { ItemTypeServices } from '../../../services/data/ItemTypesServices';
 import { ElementSelectorService } from '../../../services/elementSelectorService';
@@ -135,6 +135,7 @@ export class ElementSelectorComponent {
         break;
       }
     }
+    equipEffects.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999))
 
     item.equipEffects = equipEffects;
     this.setItem();

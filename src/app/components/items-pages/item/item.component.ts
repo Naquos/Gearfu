@@ -20,6 +20,7 @@ import { ItemsTooltipComponent } from '../items-tooltip/items-tooltip.component'
 import { StatesComponent } from '../states/states.component';
 import { ElementSelectorComponent } from "../element-selector/element-selector.component";
 import { ElementSelectorEnum } from '../../../models/enum/elementSelectorEnum';
+import { mapSortAction } from '../../../models/utils/utils';
 
 @Component({
   selector: 'app-item',
@@ -69,7 +70,7 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   ngAfterViewInit(): void {
     const item = this.item();
     if(item) {
-      item.equipEffects = item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
+      item.equipEffects = item.equipEffects.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999));
  
       this.initItemChoosen(item);
       const condition = this.itemConditionService.findCondition(item.id);

@@ -11,6 +11,7 @@ import { ActionsPipe } from '../../../pipe/actions/actions.pipe';
 import { ColorRarityService } from '../../../services/colorRarityService';
 import { ItemsService } from '../../../services/data/itemsService';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
+import { mapSortAction } from '../../../models/utils/utils';
 
 @Component({
   selector: 'app-item-tooltip',
@@ -48,7 +49,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
         this.listDifferentsStatsItem = [];
         this.fillListCurrentItem();
         listItems.forEach(items => items ?this.fillMapDifferentStatsItem(items!): "")}),
-      map(() => this.listDifferentsStatsItem.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999))));
+      map(() => this.listDifferentsStatsItem.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999))));
 
      constructor() {
         super();
@@ -59,7 +60,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
 
     public ngAfterViewInit(): void {
       if(this.item) {
-        this.item.equipEffects = this.item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
+        this.item.equipEffects = this.item.equipEffects.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999));
         this.loaded$ = this.itemSelected$.pipe(
           takeUntil(this.destroy$),
           map((itemSelected) => 
