@@ -21,6 +21,7 @@ import { SublimationsEpiqueRelique } from "../../models/data/sublimationEpiqueRe
 import { SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
 import { SublimationService } from "../data/sublimationService";
 import { UrlServices } from "../urlServices";
+import { coutEclat } from "../../models/utils/utils";
 
 @Injectable({providedIn: 'root'})
 export class ChasseFormService extends AbstractFormService<FormControl<Enchantement>> {
@@ -40,6 +41,9 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
 
     private readonly sublimationsIdToLevel = new BehaviorSubject<Map<number, number>>(new Map());
     public readonly sublimationsIdToLevel$ = this.sublimationsIdToLevel.asObservable();
+
+    private readonly coutEclatTotal = new BehaviorSubject<number>(0);
+    public readonly coutEclatTotal$ = this.coutEclatTotal.asObservable();
 
     protected readonly keyEnum = KeyEnum.KEY_ENCHANTEMENT;
     public readonly form =  new FormControl<Enchantement>(ChasseFormService.DEFAULT_VALUE(), { nonNullable: true });
@@ -391,9 +395,11 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         }
 
         const recapStats: RecapStats[] = [];
+        let coutEclatTotal = 0;
 
         value.chasseCombinaison.forEach((chasseCombinaison, indexCombinaison) => {
             chasseCombinaison.chasses.forEach((chasse) => {
+
                 if (!chasse.idAction) { return; }
                 const itemType = this.indexToItemType.get(indexCombinaison);
                 if (!itemType) { return; }
@@ -403,6 +409,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                     value: multiplicateur * this.getChasseEffectValue(chasse),
                     params: []
                 });
+                coutEclatTotal += coutEclat(chasse.lvl);
             });
         });
 
@@ -419,7 +426,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         this.sublimationsIdToLevel.next(mapIdToLevel);
         this.enchantement.next(value);
         this.recapChassesEffect.next(recapStats);
-        
+        this.coutEclatTotal.next(coutEclatTotal);
         const codeBuild = this.generateCodeBuild(value);
         this.urlServices.setEnchantementInUrl(codeBuild);
     }

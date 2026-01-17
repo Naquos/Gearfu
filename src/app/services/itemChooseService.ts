@@ -509,7 +509,6 @@ export class ItemChooseService extends AbstractDestroyService {
                     this.indexAnneau = index;
                     this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(list);
                 } else if(itemType !== undefined) {
-                    console.log('Deleting item', newItem.id, 'of type', itemType);
                     this.deleteElementItem(itemType);
                     this.mapItem.get(itemType)?.next([undefined])
                 }

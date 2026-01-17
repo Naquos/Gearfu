@@ -38,3 +38,20 @@ export function normalizeString(str: string): string {
     .trim()
     .toLowerCase();
 }
+
+export function coutEclat(levelChasse: number) : number {
+    switch(levelChasse) {
+        case 1: return 1;
+        case 2: return 3;
+        case 3: return 7;
+        case 4: return 15;
+        case 5: return 31;
+        case 6: return 63;
+        case 7: return 127;
+        case 8: return 319;
+        case 9: return 895;
+        case 10: return 3199;
+        case 11: return 12415;
+        default: return 0;
+    }
+}

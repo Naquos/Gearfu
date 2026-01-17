@@ -91,7 +91,6 @@ export class BuildComponent implements OnInit {
 
   protected loadBuild(): void {
     const buildData = this.build();
-    console.log('Loading build data:', buildData);
     if (buildData) {
       this.saveBuildService.loadBuild(buildData);
     }

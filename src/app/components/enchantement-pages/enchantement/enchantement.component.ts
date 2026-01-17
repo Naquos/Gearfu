@@ -23,6 +23,7 @@ import { LevelFormService } from '../../../services/form/levelFormService';
 import { maxChasseLevel, normalizeString } from '../../../models/utils/utils';
 import { AbstractDestroyService } from '../../../services/abstract/abstractDestroyService';
 import { ConnectedPosition } from '@angular/cdk/overlay';
+import { FormatNumberPipe } from "../../../pipe/formatNumber/formatNumber.pipe";
 
 interface DisplayTypeItem {
   indexItem: number;
@@ -39,7 +40,7 @@ interface EffetDescription {
 
 @Component({
   selector: 'app-enchantement',
-  imports: [ImageItemComponent, TranslateModule, MatSliderModule, MatInputModule, FormsModule],
+  imports: [ImageItemComponent, TranslateModule, MatSliderModule, MatInputModule, FormsModule, FormatNumberPipe],
   templateUrl: './enchantement.component.html',
   styleUrl: './enchantement.component.scss'
 })
@@ -56,6 +57,7 @@ export class EnchantementComponent extends AbstractDestroyService {
     map(enchantement => enchantement.chasseCombinaison)
   ));
   protected readonly enchantement = toSignal(this.chasseFormService.enchantement$);
+  protected readonly coutEclatTotal = toSignal(this.chasseFormService.coutEclatTotal$, {initialValue: 0});
   protected readonly itemTypeService = inject(ItemTypeServices);
   protected readonly sublimations = signal(this.sublimationService.getSublimations());
   protected readonly sublimationsEpiqueRelique = signal(this.sublimationService.getSublimationsEpiqueRelique());

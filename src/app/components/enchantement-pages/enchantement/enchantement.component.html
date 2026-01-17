@@ -6,7 +6,12 @@
         <div class="column">
             <div class="card">
                 <div class="header">
-                    <span>{{ 'enchantement.chasses' | translate }}</span>
+                    <div>
+                        {{ 'enchantement.chasses' | translate }}
+                        <div>
+                            <img [src]="imageService.getItemUrl(81127083)" alt="eclats"> x {{ coutEclatTotal() | formatNumber }}
+                        </div>
+                    </div>
                     <button (click)="chasseFormService.setDefaultValue()">X</button>
                 </div>
                 <div class="body">

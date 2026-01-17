@@ -51,8 +51,22 @@
                 border-bottom: 3px solid #415A77;
                 margin-bottom: 10px;
                 padding: 5px 0;
-                span {
+                span, div {
                     margin-left: auto;
+                }
+
+                div {
+                    display: flex;
+                    justify-content: space-around;
+                    width: 50%;
+                    div {
+                        width: auto;
+                    }
+                    img {
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 5px;
+                    }
                 }
 
                 button {
