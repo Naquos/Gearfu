@@ -52,7 +52,7 @@ export class ItemChooseDisplayComponent implements OnInit {
         this.viewContainerRef, 
         ItemComponent, 
         event, 
-        {item},
+        {item, isTooltip: true},
         undefined,  // connectedPosition
         true,       // withPush
         true        // keepOpenOnHover - ACTIVÉ ICI

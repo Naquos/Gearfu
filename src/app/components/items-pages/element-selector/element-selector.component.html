@@ -1,0 +1,15 @@
+@if (nbElements() > 0) {
+    <div class="content">
+        <div class="nbElements">
+            <span>{{ nbElements() }}</span>
+
+            <img [src]="imageUrl()" alt="Nombre variable">
+        </div>
+        <div class="elements">
+            <app-button-checkbox [control]="form.controls.feu" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_FEU)"></app-button-checkbox>
+            <app-button-checkbox [control]="form.controls.eau" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_EAU)"></app-button-checkbox>
+            <app-button-checkbox [control]="form.controls.terre" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_TERRE)"></app-button-checkbox>
+            <app-button-checkbox [control]="form.controls.air" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_AIR)"></app-button-checkbox>
+        </div>
+    </div>
+}

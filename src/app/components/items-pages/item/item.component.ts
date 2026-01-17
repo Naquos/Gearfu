@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component,ElementRef,inject,Input, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component,ElementRef,inject,input, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,10 +18,11 @@ import { TooltipService } from '../../../services/TooltipService';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
 import { ItemsTooltipComponent } from '../items-tooltip/items-tooltip.component';
 import { StatesComponent } from '../states/states.component';
+import { ElementSelectorComponent, ElementSelectorEnum } from "../element-selector/element-selector.component";
 
 @Component({
   selector: 'app-item',
-  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective, LazyImageDirective],
+  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective, LazyImageDirective, ElementSelectorComponent],
   templateUrl: './item.component.html',
   styleUrl: './item.component.scss'
 })
@@ -35,10 +36,11 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   protected readonly stateTooltipService = inject(TooltipService<{statesDefinitionId: number, nameStates: string}>);
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly itemConditionService = inject(ItemConditionService);
+  protected readonly ElementSelectorEnum = ElementSelectorEnum;
 
 
-  @Input()
-  public item!: Item;
+  public item = input.required<Item>();
+  public isTooltip = input<boolean>(false);
 
   private readonly condition = new BehaviorSubject<ItemCondition | undefined>(undefined);
   protected readonly condition$ = this.condition.asObservable();
@@ -48,26 +50,28 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   }
 
   protected navigateToCraftku(): void {
-    window.open('https://craftkfu.waklab.fr/?' + this.item.id, '_blank');
+    window.open('https://craftkfu.waklab.fr/?' + this.item().id, '_blank');
   }
 
   protected setItemChoosen() : void {
-    const itemType = this.itemTypeService.getItemType(this.item.itemTypeId);
+    if(this.isTooltip()) { return; }
+    const itemType = this.itemTypeService.getItemType(this.item().itemTypeId);
     if(!itemType) { return; }
-    this.itemChooseService.setItem(itemType, this.item)
+    this.itemChooseService.setItem(itemType, this.item())
   }
 
 
   protected itemIsPresentAndNotChoosen(itemsList: (Item | undefined)[][]): boolean {
-    return !!itemsList.find(items =>items.find(x => x !== undefined) && !items.find(item => item?.id === this.item.id));
+    return !!itemsList.find(items =>items.find(x => x !== undefined) && !items.find(item => item?.id === this.item().id));
   }
 
   ngAfterViewInit(): void {
-    if(this.item) {
-      this.item.equipEffects = this.item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
+    const item = this.item();
+    if(item) {
+      item.equipEffects = item.equipEffects.sort((a, b) => (this.mapSortAction.get(a.actionId) ?? 999) - (this.mapSortAction.get(b.actionId) ?? 999));
  
-      this.initItemChoosen(this.item);
-      const condition = this.itemConditionService.findCondition(this.item.id);
+      this.initItemChoosen(item);
+      const condition = this.itemConditionService.findCondition(item.id);
       if(condition) {
         this.condition.next(condition);
       }
@@ -108,7 +112,8 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   }
 
   protected copyToClipboard(): void {
-    navigator.clipboard.writeText(this.item.title[this.translateService.currentLang as keyof typeof this.item.title]);
+    const item = this.item();
+    navigator.clipboard.writeText(item.title[this.translateService.currentLang as keyof typeof item.title]);
   }
 
   protected getStatesTranslate(state?: States | null): string {
@@ -119,7 +124,8 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   }
 
   protected getTitle(): string {
-    return this.item.title[this.translateService.currentLang as keyof typeof this.item.title];
+    const item = this.item();
+    return item.title[this.translateService.currentLang as keyof typeof item.title];
   }
 
   protected openStatesTooltip(event: MouseEvent, statesDefinitionId: number, nameStates: string): void {

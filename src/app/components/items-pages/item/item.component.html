@@ -1,11 +1,11 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
- @if(item) {
+ @if(item()) {
     <div class="header">
         <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy" (click)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
-        <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises" >{{ "item.maitrises" | translate }} {{Math.trunc(item.maitrise)}}</span>
-        <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances" >{{ "item.resistances" | translate }} {{item.resistance}}</span>
-        <span class="imgContainer" (click)="openEncyclopedie(item.id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie" ></span>
+        <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises" >{{ "item.maitrises" | translate }} {{Math.trunc(item().maitrise)}}</span>
+        <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances" >{{ "item.resistances" | translate }} {{item().resistance}}</span>
+        <span class="imgContainer" (click)="openEncyclopedie(item().id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie" ></span>
     </div>
     @if (textCondition() | async; as condition) {
         <div class="condition">
@@ -14,13 +14,13 @@
     }
     <div class="content" (click)="setItemChoosen()">
         <div class="title">
-            <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{getTitle()}} ({{item.level}}) <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item.itemTypeId))" alt="item type logo" > </h3>
-            <img [src]="imageService.getItemUrl(item.idImage)" alt="items" appFallback >
-            <div class="poids" [matTooltip]="'item.poids-infobulle' | translate:{ratio: itemService.ratioWeightByLevel(item.level)}" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids" >{{ "item.poids" | translate }} {{item.weight}}</div>
+            <h3 [style.color]="colorRarityService.mapColors.get(item().rarity)">{{getTitle()}} ({{item().level}}) <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item().itemTypeId))" alt="item type logo" > </h3>
+            <img [src]="imageService.getItemUrl(item().idImage)" alt="items" appFallback >
+            <div class="poids" [matTooltip]="'item.poids-infobulle' | translate:{ratio: itemService.ratioWeightByLevel(item().level)}" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids" >{{ "item.poids" | translate }} {{item().weight}}</div>
         </div>
         <div class="effects">
             <div>
-            @for (effect of item.equipEffects; track effect.id) {
+            @for (effect of item().equipEffects; track effect.actionId) {
                 <p>
                     @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT) {
                         <img [src]="getEffectPng(effect)" alt="aptitudes" >  {{ effect | actions | async }}
@@ -36,27 +36,28 @@
                 </p>
             }
             </div>
-            <!-- <app-maitrise-selector></app-maitrise-selector> -->
+            <app-element-selector [item]="item()" [selector]="ElementSelectorEnum.Maitrise"></app-element-selector>
+            <app-element-selector [item]="item()" [selector]="ElementSelectorEnum.Resistance"></app-element-selector>
             <div class="craftAndDrop">
-                @if (item.isCraftable) {
+                @if (item().isCraftable) {
                     <img class="craftable" (click)="navigateToCraftku()" [src]="imageService.getItemUrl(71919810)" alt="craftable" [matTooltip]="'item.craftable' | translate" >
                 }
-                @if(item.mobDropable) {
-                    @for (drop of item.mobDropable; track $index) {
+                @if(item().mobDropable) {
+                    @for (drop of item().mobDropable; track $index) {
                         <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="droppable" [matTooltip]="`${'item.droppable' | translate} (${nameMonster(drop)})`" appFallback >
                     }
                 }
-                @if(item.bossDropable) {
-                    @for (drop of item.bossDropable; track $index) {
+                @if(item().bossDropable) {
+                    @for (drop of item().bossDropable; track $index) {
                         <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="boss drop" [matTooltip]="`${'item.boss-drop' | translate} (${nameMonster(drop)})`" appFallback >
                     }
                 }
-                @if(item.archiDropable) {
-                    @for (drop of item.archiDropable; track $index) {
+                @if(item().archiDropable) {
+                    @for (drop of item().archiDropable; track $index) {
                         <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="archi drop" [matTooltip]="`${'item.archi-drop' | translate} (${nameMonster(drop)})`" appFallback >
                     }
                 }
-                @if (item.isPvP) {
+                @if (item().isPvP) {
                     <img [src]="imageService.getItemUrl(53124705)" alt="pvp" [matTooltip]="'item.pvp' | translate" >
                 }
             </div>
@@ -69,7 +70,7 @@
         <mat-icon
             class="iconComparator"
             fontIcon="swap_horiz"
-            (mouseenter)="openTooltip($event, item)" 
+            (mouseenter)="openTooltip($event, item())" 
             (mouseleave)="tooltipService.closeTooltip()"
         ></mat-icon>
     }

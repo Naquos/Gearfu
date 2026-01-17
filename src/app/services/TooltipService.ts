@@ -83,7 +83,9 @@ export class TooltipService<T extends Record<string, any>> {
       const tooltipRef: ComponentRef<T> = overlayRef.attach(tooltipPortal);
 
       if(tooltipRef.instance) {
-        Object.assign(tooltipRef.instance, value);
+        Object.keys(value).forEach(key => {
+          tooltipRef.setInput(key, value[key]);
+        });
       }
 
       // Ajouter les listeners seulement si keepOpenOnHover est true

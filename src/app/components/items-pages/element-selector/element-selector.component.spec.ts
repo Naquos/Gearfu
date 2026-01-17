@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MaitriseSelectorComponent } from './maitrise-selector.component';
+import { ElementSelectorComponent } from './element-selector.component';
 
 describe('MaitriseSelectorComponent', () => {
-  let component: MaitriseSelectorComponent;
-  let fixture: ComponentFixture<MaitriseSelectorComponent>;
+  let component: ElementSelectorComponent;
+  let fixture: ComponentFixture<ElementSelectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MaitriseSelectorComponent]
+      imports: [ElementSelectorComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MaitriseSelectorComponent);
+    fixture = TestBed.createComponent(ElementSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

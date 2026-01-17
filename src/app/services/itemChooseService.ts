@@ -15,6 +15,7 @@ import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 import { UrlServices } from "./urlServices";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
+import { ID_MAITRISES_MODIFIABLES, ID_RESISTANCES_MODIFIABLES } from "../models/utils/utils";
 
 @Injectable({providedIn: 'root'})
 export class ItemChooseService extends AbstractDestroyService {
@@ -342,7 +343,7 @@ export class ItemChooseService extends AbstractDestroyService {
             // Ajout des éléments fixes
             const elements = this.maitrisesFormService.orderMaitrises();
             for (let i = 0; i < nbElements; i++) {
-                item.equipEffects.push({id: i, actionId: elements[i], params: elementsVariable.params});
+                item.equipEffects.push({id: ID_MAITRISES_MODIFIABLES, actionId: elements[i], params: elementsVariable.params});
             }
         }
     }
@@ -359,7 +360,7 @@ export class ItemChooseService extends AbstractDestroyService {
             // Ajout des éléments fixes
             const elements = this.resistancesFormService.orderResistances();
             for (let i = 0; i < nbElements; i++) {
-                item.equipEffects.push({id: i, actionId: elements[i], params: elementsVariable.params});
+                item.equipEffects.push({id: ID_RESISTANCES_MODIFIABLES, actionId: elements[i], params: elementsVariable.params});
             }
         }
     }
