@@ -4,12 +4,12 @@
     <img [src]="getUrlSublimationImage()" alt="" />
     <span>{{ getSublimationTitle() }}</span>
     <div class="chasses">
-        @for(chasse of sublimationsDescriptionsSignal()?.slotColorPattern; track $index) {
+        @for(chasse of sublimationsDescriptions()?.slotColorPattern; track $index) {
             <img [src]="imageService.getChasseColorUrlById(chasse)" [alt]="">
         }
     </div>
-    @if(sublimationsDescriptionsSignal()!.levelMax > 0) {
-        <span> ({{ 'description-sublimation.level-max' | translate }} {{ sublimationsDescriptionsSignal()!.levelMax }})</span>
+    @if(sublimationsDescriptions()!.levelMax > 0) {
+        <span> ({{ 'description-sublimation.level-max' | translate }} {{ sublimationsDescriptions()!.levelMax }})</span>
     } 
 </div>
 <div class="content">
@@ -17,10 +17,10 @@
         {{ getSublimationDescription() }}
     </div>
     <div class="craftAndDrop">
-        @if (sublimationsDescriptionsSignal()!.isCraftable) {
+        @if (sublimationsDescriptions()!.isCraftable) {
             <img class="craftable" (click)="navigateToCraftku()" [src]="imageService.getItemUrl(71919810)" alt="craftable" [matTooltip]="'item.craftable' | translate" >
         }
-        @for(bossDropable of sublimationsDescriptionsSignal()!.bossDropable; track bossDropable.idMob) {
+        @for(bossDropable of sublimationsDescriptions()!.bossDropable; track bossDropable.idMob) {
             <img appFallback [class.breche]="bossDropable.idMob === -1"
             (click)="openEncyclopedieForMonster(bossDropable.idMob)" [src]="getUrlMonster(bossDropable)"
             [alt]="''"  [matTooltip]="`${'item.boss-drop' | translate} (${nameMonster(bossDropable)})`" />

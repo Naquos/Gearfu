@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -23,17 +23,8 @@ export class DescriptionSublimationComponent {
   protected readonly imageService = inject(ImageService);
   
   // Signals for reactive template usage
-  protected readonly levelSignal = signal<number>(1);
-  protected readonly sublimationsDescriptionsSignal = signal<SublimationsDescriptions | undefined>(undefined);
-
-  // Setters to update signals when properties are assigned by TooltipService
-  public set level(value: number) {
-    this.levelSignal.set(value);
-  }
-  
-  public set sublimationsDescriptions(value: SublimationsDescriptions | undefined) {
-    this.sublimationsDescriptionsSignal.set(value);
-  }
+  protected readonly level = input<number>(1);
+  protected readonly sublimationsDescriptions = input<SublimationsDescriptions | undefined>(undefined);
 
   protected openEncyclopedieForMonster(monsterId: number): void {
     if(monsterId === -1) {
@@ -76,7 +67,7 @@ export class DescriptionSublimationComponent {
 
   
   protected navigateToCraftku(): void {
-    window.open('https://craftkfu.waklab.fr/?' + this.sublimationsDescriptionsSignal()?.id, '_blank');
+    window.open('https://craftkfu.waklab.fr/?' + this.sublimationsDescriptions()?.id, '_blank');
   }
 
   protected nameMonster(monster: MonsterDrop): string {
@@ -84,14 +75,14 @@ export class DescriptionSublimationComponent {
   }
 
   protected getUrlSublimationImage(): string {
-    if(!this.levelSignal() || !this.sublimationsDescriptionsSignal()) {
+    if(!this.level() || !this.sublimationsDescriptions()) {
       return "";
     }
-    if(this.sublimationsDescriptionsSignal()?.isEpic || this.sublimationsDescriptionsSignal()?.isRelic) {
-      return this.imageService.getItemUrl(this.sublimationsDescriptionsSignal()!.gfxId);
+    if(this.sublimationsDescriptions()?.isEpic || this.sublimationsDescriptions()?.isRelic) {
+      return this.imageService.getItemUrl(this.sublimationsDescriptions()!.gfxId);
     }
     let id = 81228822;
-    switch(this.levelSignal()) {
+    switch(this.level()) {
       case 1:
         id = 81228822;
         break;
@@ -106,30 +97,30 @@ export class DescriptionSublimationComponent {
   }
 
   protected getSublimationTitle() : string {
-    if(!this.sublimationsDescriptionsSignal()) {
+    if(!this.sublimationsDescriptions()) {
       return "";
     }
-    const title = this.sublimationsDescriptionsSignal()!.title;
+    const title = this.sublimationsDescriptions()!.title;
     return title[this.translateService.currentLang as keyof typeof title];
   }
 
   protected getSublimationDescription() : string {
-    if(!this.sublimationsDescriptionsSignal()) {
+    if(!this.sublimationsDescriptions()) {
       return "";
     }
-    const description = this.sublimationsDescriptionsSignal()!.description;
+    const description = this.sublimationsDescriptions()!.description;
     const trad = description[this.translateService.currentLang as keyof typeof description];
     return this.formatDescription(trad);
   }
 
   private formatDescription(description: string): string {
-    if(!this.sublimationsDescriptionsSignal()) {
+    if(!this.sublimationsDescriptions()) {
       return "";
     } 
-    const baseEffects = this.sublimationsDescriptionsSignal()!.baseEffect;
+    const baseEffects = this.sublimationsDescriptions()!.baseEffect;
     let formattedDescription = description;
     baseEffects.forEach((effect, index) => {
-      const value = effect.baseValue + effect.pas * (this.levelSignal() - 1);
+      const value = effect.baseValue + effect.pas * (this.level() - 1);
       const regex = new RegExp(`\\$\\{${index}\\}`, 'g');
       formattedDescription = formattedDescription.replace(regex, value.toString());
     });
