@@ -16,7 +16,7 @@
         <div class="title">
             <h3 [style.color]="colorRarityService.mapColors.get(item().rarity)">{{getTitle()}} ({{item().level}}) <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item().itemTypeId))" alt="item type logo" > </h3>
             <img [src]="imageService.getItemUrl(item().idImage)" alt="items" appFallback >
-            <div class="poids" [matTooltip]="'item.poids-infobulle' | translate:{ratio: itemService.ratioWeightByLevel(item().level)}" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids" >{{ "item.poids" | translate }} {{item().weight}}</div>
+            <div class="poids" [matTooltip]="'item.poids-infobulle' | translate:{ratio: ratioWeight()}" [matTooltipShowDelay]="300" ><img [src]="'aptitudes/poids.png'" alt="poids" >{{ "item.poids" | translate }} {{item().weight}}</div>
         </div>
         <div class="effects">
             <div>

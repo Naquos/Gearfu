@@ -50,10 +50,8 @@
             <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt="poids" class="poids"> {{ "item-choose.resistance-total" | translate }} : {{ resistancesTotal() }} 
         </span>
 
-        @if (itemChooseService.totalWeight$ | async; as totalWeight) {
-            <span>
-                <img [src]="'aptitudes/poids.png'" alt="poids" class="poids"> {{ "item-choose.poids-total" | translate }} : {{ totalWeight }} 
-            </span>
-        }
+        <span>
+            <img [src]="'aptitudes/poids.png'" alt="poids" class="poids"> {{ "item-choose.poids-total" | translate }} : {{ poidsTotal() }} 
+        </span>
     </div>
 </div>

@@ -20,8 +20,6 @@ import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
 import { OnlyNoElemFormService } from "../form/onlyNoElemFormService";
 import { ReverseFormService } from "../form/reverseFormService";
 import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum";
-import { EffetMaitrisesChassesEnum } from "../../models/enum/effetMaitrisesChassesEnum";
-import { EffetResistancesChassesEnum } from "../../models/enum/effetResistancesChassesEnum";
 import { RecipeResultsCdn } from "../../models/ankama-cdn/recipeResulsCdn";
 import { ObtentionFormService } from "../form/obtentionFormService";
 import { RarityItemEnum } from "../../models/enum/rarityItemEnum";
@@ -31,7 +29,7 @@ import { MonsterDropService } from "./monsterDropService";
 import { MonsterDrop } from "../../models/data/monsterDrop";
 import { isExcludeIdItem } from "../../models/enum/excludeIdItemEnum";
 import { BaseEffect, SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
-import { LEVEL_RATIOS_CHASSE, normalizeString, truncate2 } from "../../models/utils/utils";
+import { calculWeight, normalizeString } from "../../models/utils/utils";
 import { FamiliersService } from "./familiersService";
 
 @Injectable({providedIn: 'root'})
@@ -306,7 +304,7 @@ export class ItemsService {
       items.forEach(item => {
         item.resistance = Math.trunc(this.calculResistancesForAnItem(item, idResistances));
         item.maitrise = Math.trunc(this.calculMaitrisesForAnItem(item, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary, chaos));
-        item.weight = this.calculWeight(item.resistance, item.maitrise, item.level);
+        item.weight = calculWeight(item.resistance, item.maitrise, item.level);
         item.weightForSort = 0;
       })
 
@@ -402,14 +400,6 @@ export class ItemsService {
       return this.getEffectValue(effectsMap, positiveId) - this.getEffectValue(effectsMap, negativeId);
     }
 
-    public calculWeight(resistance: number, maitrises: number, level: number): number {
-      return Math.trunc(this.ratioWeightByLevel(level) * resistance + maitrises);
-    }
-
-    public ratioWeightByLevel(level: number): number {
-      const levelConfig = LEVEL_RATIOS_CHASSE.find(config => level < config.maxLevel);
-      return levelConfig?.ratio ?? truncate2(EffetMaitrisesChassesEnum.LEVEL_11 / EffetResistancesChassesEnum.LEVEL_11);
-    }
 
     private initItemsList(): void {
       combineLatest([this.ankamaCdnFacade.item$, this.ankamaCdnFacade.recipes$, this.ankamaCdnFacade.idSiouperes$, this.monsterDropService.monsterDrops$]).pipe(

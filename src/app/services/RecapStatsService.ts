@@ -20,6 +20,7 @@ import { CodeAptitudesService } from "./codeAptitudesService";
 import { EffectApplicationService } from "./recap-stats/effect-application.service";
 import { SublimationEffectsService } from "./recap-stats/sublimation-effects.service";
 import { PassiveEffectsService } from "./recap-stats/passive-effects.service";
+import { calculWeight } from "../models/utils/utils";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
@@ -111,6 +112,9 @@ export class RecapStatsService extends AbstractDestroyService {
 
   private readonly resistancesTotal = new BehaviorSubject<number>(0);
   public readonly resistancesTotal$ = this.resistancesTotal.asObservable();
+
+  private readonly poidsTotal = new BehaviorSubject<number>(0);
+  public readonly poidsTotal$ = this.poidsTotal.asObservable();
 
   constructor() {
     super();
@@ -300,5 +304,9 @@ export class RecapStatsService extends AbstractDestroyService {
       ].includes(rs.id))
       .reduce((sum, current) => sum + current.value, 0);
     this.resistancesTotal.next(resistancesSum);
+
+    const level = this.levelFormService.getValue();
+    const poids = calculWeight(resistancesSum, sommeMaitrisesSecondairesWithElem, level);
+    this.poidsTotal.next(poids);
   }
 }

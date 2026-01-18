@@ -86,6 +86,16 @@ export function truncate2(num: number): number {
     return Math.trunc(num * 100) / 100;
 }
 
+
+export function calculWeight(resistance: number, maitrises: number, level: number): number {
+    return Math.trunc(ratioWeightByLevel(level) * resistance + maitrises);
+}
+
+export function ratioWeightByLevel(level: number): number {
+    const levelConfig = LEVEL_RATIOS_CHASSE.find(config => level < config.maxLevel);
+    return levelConfig?.ratio ?? truncate2(EffetMaitrisesChassesEnum.LEVEL_11 / EffetResistancesChassesEnum.LEVEL_11);
+}
+
 export function normalizeString(str: string): string {
     return str
     .replace(/['''´’`]/g, "'")

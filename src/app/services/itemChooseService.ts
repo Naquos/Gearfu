@@ -15,7 +15,7 @@ import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
 import { UrlServices } from "./urlServices";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
-import { ID_MAITRISES_MODIFIABLES, ID_RESISTANCES_MODIFIABLES } from "../models/utils/utils";
+import { calculWeight, ID_MAITRISES_MODIFIABLES, ID_RESISTANCES_MODIFIABLES } from "../models/utils/utils";
 import { ElementSelectorService } from "./elementSelectorService";
 import { ElementSelectorEnum } from "../models/enum/elementSelectorEnum";
 
@@ -162,7 +162,7 @@ export class ItemChooseService extends AbstractDestroyService {
             const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary, chaos);
             resistance+= tempResis;
             maitrise+= tempMaitrise;
-            weight+= this.itemService.calculWeight(tempResis, tempMaitrise, x.level)
+            weight+= calculWeight(tempResis, tempMaitrise, x.level)
         })
         this.totalWeight.next(Math.trunc(weight));
         this.totalMaitrises.next(Math.trunc(maitrise));

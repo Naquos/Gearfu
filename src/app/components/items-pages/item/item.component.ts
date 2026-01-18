@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component,ElementRef,inject,input, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component,computed,ElementRef,inject,input, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +20,7 @@ import { ItemsTooltipComponent } from '../items-tooltip/items-tooltip.component'
 import { StatesComponent } from '../states/states.component';
 import { ElementSelectorComponent } from "../element-selector/element-selector.component";
 import { ElementSelectorEnum } from '../../../models/enum/elementSelectorEnum';
-import { mapSortAction } from '../../../models/utils/utils';
+import { mapSortAction, ratioWeightByLevel } from '../../../models/utils/utils';
 
 @Component({
   selector: 'app-item',
@@ -39,6 +39,10 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly itemConditionService = inject(ItemConditionService);
   protected readonly ElementSelectorEnum = ElementSelectorEnum;
+  protected readonly ratioWeight = computed(() => {
+    const level = this.item().level;
+    return ratioWeightByLevel(level);
+  });
 
 
   public item = input.required<Item>();

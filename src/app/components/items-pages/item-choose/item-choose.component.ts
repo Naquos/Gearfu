@@ -32,6 +32,9 @@ export class ItemChooseComponent {
   protected readonly resistancesTotal = toSignal(this.recapStatsService.resistancesTotal$, {
     initialValue: 0
   });
+  protected readonly poidsTotal = toSignal(this.recapStatsService.poidsTotal$, {
+    initialValue: 0
+  });
   protected readonly ItemTypeEnum = ItemTypeEnum;
   protected readonly IdActionsEnum = IdActionsEnum;
 
