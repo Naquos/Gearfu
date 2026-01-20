@@ -111,6 +111,8 @@ export class SublimationEffectsService {
         applyEffectFn({ id: IdActionsEnum.DI, value: -15, params: [] });
       } else if(id === IdSublimationEnum.FORCE_LEGERE) {
         applyEffectFn({ id: IdActionsEnum.DI, value: 3 * levelSubli, params: [] });
+      } else if(id === IdSublimationEnum.FORCE_VITALE) {
+        applyEffectFn({ id: IdActionsEnum.PA, value: 1, params: [] });
       } else if(id === IdSublimationEnum.FUREUR) {
         applyEffectFn({ id: IdActionsEnum.DI, value: -15, params: [] });
       } else if(id === IdSublimationEnum.INFLUENCE_DU_WAKFU) {
