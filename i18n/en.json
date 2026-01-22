@@ -49,8 +49,10 @@
         "pm": "Movement Points and damage",
         "po": "Range and damage",
         "pw": "Wakfu Points",
-        "controle": "Control and damage",
         "di": "Damage inflicted",
+        "armure-recue": "% Armor given",
+        "soins-realise": "% Healing done",
+        "di-indirect": "% Indirect damage",
         "code-aptitudes": "Aptitudes code",
         "copy-code": "Copy aptitudes code",
         "import-code": "Import aptitudes code"
