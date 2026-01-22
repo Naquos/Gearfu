@@ -38,9 +38,11 @@ export class CodeAptitudesService {
         [3, IdActionsEnum.PM],
         [4, IdActionsEnum.PORTEE],
         [5, IdActionsEnum.BOOST_PW],
-        [6, IdActionsEnum.CONTROLE],
         [8, IdActionsEnum.DI],
-        [35, IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES]
+        [35, IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES],
+        [6, IdActionsEnum.ARMURE_DONNEE_RECUE],
+        [38, IdActionsEnum.SOINS_REALISE],
+        [39, IdActionsEnum.DI_INDIRECT],
     ]);
 
     constructor() {
@@ -136,14 +138,20 @@ export class CodeAptitudesService {
         if(formValue.pw) {
             codeAptitudes += `5:${formValue.pw}-`;
         }
-        if(formValue.controle) {
-            codeAptitudes += `6:${formValue.controle}-`;
-        }
         if(formValue.di) {
             codeAptitudes += `8:${formValue.di}-`;
         }
         if(formValue.resistancesElementairesMajeur) {
             codeAptitudes += `35:${formValue.resistancesElementairesMajeur}-`;
+        }
+        if(formValue.armureDonnee) {
+            codeAptitudes += `6:${formValue.armureDonnee}-`;
+        }
+        if(formValue.soinsRealise) {
+            codeAptitudes += `38:${formValue.soinsRealise}-`;
+        }
+        if(formValue.diIndirect) {
+            codeAptitudes += `39:${formValue.diIndirect}-`;
         }
         if(codeAptitudes.endsWith('-')) {
             codeAptitudes = codeAptitudes.slice(0, -1);
@@ -241,14 +249,20 @@ export class CodeAptitudesService {
                     case IdActionsEnum.BOOST_PW:
                         formValue.pw = value;
                         break;
-                    case IdActionsEnum.CONTROLE:
-                        formValue.controle = value;
-                        break;
                     case IdActionsEnum.DI:
                         formValue.di = value;
                         break;
                     case IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES:
                         formValue.resistancesElementairesMajeur = value;
+                        break;
+                    case IdActionsEnum.ARMURE_DONNEE_RECUE:
+                        formValue.armureDonnee = value;
+                        break;
+                    case IdActionsEnum.SOINS_REALISE:
+                        formValue.soinsRealise = value;
+                        break;
+                    case IdActionsEnum.DI_INDIRECT:
+                        formValue.diIndirect = value;
                         break;
                 }
             }

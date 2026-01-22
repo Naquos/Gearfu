@@ -86,8 +86,10 @@ export class AptitudesComponent {
         return 2 - this.aptitudesFormService.nbPointUseInMajeur();
       } else if(+level < 175) {
         return 3 - this.aptitudesFormService.nbPointUseInMajeur();
+      } else if (+level < 225) {
+        return 4 - this.aptitudesFormService.nbPointUseInMajeur();
       }
-      return 4 - this.aptitudesFormService.nbPointUseInMajeur();
+      return 5 - this.aptitudesFormService.nbPointUseInMajeur();
   })), {
     initialValue: 0
   });

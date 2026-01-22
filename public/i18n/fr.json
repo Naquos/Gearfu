@@ -49,8 +49,10 @@
         "pm": "Points de mouvement et dégats",
         "po": "Portée et dégats",
         "pw": "Points de Wakfu",
-        "controle": "Contrôle et dégâts",
         "di": "Dommages infligés",
+        "armure-recue": "% Armure donnée",
+        "soins-realise": "% Soins réalisés",
+        "di-indirect": "% Dommages indirects",
         "code-aptitudes":"Code aptitudes",
         "copy-code":"Copier le code des aptitudes",
         "import-code":"Importer le code des aptitudes"

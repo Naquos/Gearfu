@@ -48,6 +48,7 @@ export class InputResumeAptitudesComponent {
   }
 
   public idActionEnum = input.required<IdActionsEnum>();
+  public isArmureDonnee = input<boolean>(false);
   public label = input.required<string>();
   public color = input<string>('');
   public displayResistance = input<boolean>(false);
@@ -74,6 +75,9 @@ export class InputResumeAptitudesComponent {
     if (!recapStats.length) {
       return 0;
     }
-    return recapStats[0].value;
+    if(id !== IdActionsEnum.ARMURE_DONNEE_RECUE) {
+      return recapStats[0].value;
+    }
+    return recapStats[this.isArmureDonnee() ? 0 : 1].value;
   }
 }

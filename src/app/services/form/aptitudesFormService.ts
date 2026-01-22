@@ -6,6 +6,7 @@ import { BehaviorSubject } from "rxjs";
 import { RecapStats } from "../../models/data/recap-stats";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { UrlServices } from "../urlServices";
+import { ParameterMajorActionEnum } from "../../models/enum/parameterMajorActionEnum";
 
 
 export interface AptitudesForm {
@@ -44,9 +45,11 @@ export interface AptitudesForm {
     pm: number;
     po: number;
     pw: number;
-    controle: number;
     di: number;
     resistancesElementairesMajeur: number;
+    armureDonnee: number;
+    soinsRealise: number;
+    diIndirect: number;
 }
 
 @Injectable({providedIn: 'root'})
@@ -88,7 +91,10 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
     [5, IdActionsEnum.BOOST_PW],
     [6, IdActionsEnum.CONTROLE],
     [8, IdActionsEnum.DI],
-    [35, IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES]
+    [35, IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES],
+    [6, IdActionsEnum.ARMURE_DONNEE_RECUE],
+    [38, IdActionsEnum.SOINS_REALISE],
+    [39, IdActionsEnum.DI_INDIRECT],
   ]);
 
   public readonly form = new FormGroup<TypedControls<AptitudesForm>>({
@@ -119,9 +125,11 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
         pm: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
         po: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
         pw: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
-        controle: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
         di: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
-        resistancesElementairesMajeur: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] })
+        resistancesElementairesMajeur: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
+        armureDonnee: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
+        soinsRealise: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
+        diIndirect: new FormControl(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] })
       });
 
   constructor() {
@@ -226,14 +234,20 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
           case IdActionsEnum.BOOST_PW:
             formValue.pw = value;
             break;
-          case IdActionsEnum.CONTROLE:
-            formValue.controle = value;
-            break;
           case IdActionsEnum.DI:
             formValue.di = value;
             break;
           case IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES:
             formValue.resistancesElementairesMajeur = value;
+            break;
+          case IdActionsEnum.ARMURE_DONNEE_RECUE:
+            formValue.armureDonnee = value;
+            break;
+          case IdActionsEnum.SOINS_REALISE:
+            formValue.soinsRealise = value;
+            break;
+          case IdActionsEnum.DI_INDIRECT:
+            formValue.diIndirect = value;
             break;
         }
       }
@@ -291,9 +305,11 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
       pm: AptitudesFormService.DEFAULT_VALUE,
       po: AptitudesFormService.DEFAULT_VALUE,
       pw: AptitudesFormService.DEFAULT_VALUE,
-      controle: AptitudesFormService.DEFAULT_VALUE,
       di: AptitudesFormService.DEFAULT_VALUE,
-      resistancesElementairesMajeur: AptitudesFormService.DEFAULT_VALUE
+      resistancesElementairesMajeur: AptitudesFormService.DEFAULT_VALUE,
+      armureDonnee: AptitudesFormService.DEFAULT_VALUE,
+      soinsRealise: AptitudesFormService.DEFAULT_VALUE,
+      diIndirect: AptitudesFormService.DEFAULT_VALUE
     });
   }
 
@@ -336,13 +352,15 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
           (Number.parseInt(`${this.form.value.pm}`)) +
           (Number.parseInt(`${this.form.value.po}`)) +
           (Number.parseInt(`${this.form.value.pw}`)) +
-          (Number.parseInt(`${this.form.value.controle}`)) +
           (Number.parseInt(`${this.form.value.di}`)) +
-          (Number.parseInt(`${this.form.value.resistancesElementairesMajeur}`));
+          (Number.parseInt(`${this.form.value.resistancesElementairesMajeur}`)) +
+          (Number.parseInt(`${this.form.value.armureDonnee}`)) +
+          (Number.parseInt(`${this.form.value.soinsRealise}`)) +
+          (Number.parseInt(`${this.form.value.diIndirect}`));
   }
   
   protected override handleChanges(value: AptitudesForm): void {
-    const recapStatsList = [
+    const recapStatsList: RecapStats[] = [
         { id: IdActionsEnum.PERCENTAGE_PV, value: 4 * value.percentagePV, params: [] },
         { id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 10 * value.resistancesElementaires, params: [] },
         { id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: 5 * value.maitriseElem, params: [] },
@@ -380,10 +398,18 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
         recapStatsList.push({ id: IdActionsEnum.PORTEE, value: value.po, params: [] });
         recapStatsList.push({ id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: 40, params: [] });
     }
-    if(value.controle > 0) {
-        recapStatsList.push({ id: IdActionsEnum.CONTROLE, value: 2, params: [] });
+    if(value.armureDonnee > 0) {
+        recapStatsList.push({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: 20,
+           parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
+    }
+    if(value.soinsRealise > 0) {
+        recapStatsList.push({ id: IdActionsEnum.SOINS_REALISE, value: 10, params: [] });
+    }
+    if(value.diIndirect > 0) {
+        recapStatsList.push({ id: IdActionsEnum.DI_INDIRECT, value: 10, params: [] });
         recapStatsList.push({ id: IdActionsEnum.MAITRISES_ELEMENTAIRES, value: 40, params: [] });
     }
+
     this.recapStat.next(recapStatsList);
   }
 
@@ -415,9 +441,11 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
         pm: value?.pm ?? AptitudesFormService.DEFAULT_VALUE,
         po: value?.po ?? AptitudesFormService.DEFAULT_VALUE,
         pw: value?.pw ?? AptitudesFormService.DEFAULT_VALUE,
-        controle: value?.controle ?? AptitudesFormService.DEFAULT_VALUE,
         di: value?.di ?? AptitudesFormService.DEFAULT_VALUE,
-        resistancesElementairesMajeur: value?.resistancesElementairesMajeur ?? AptitudesFormService.DEFAULT_VALUE
+        resistancesElementairesMajeur: value?.resistancesElementairesMajeur ?? AptitudesFormService.DEFAULT_VALUE,
+        armureDonnee: value?.armureDonnee ?? AptitudesFormService.DEFAULT_VALUE,
+        soinsRealise: value?.soinsRealise ?? AptitudesFormService.DEFAULT_VALUE,
+        diIndirect: value?.diIndirect ?? AptitudesFormService.DEFAULT_VALUE
     });
   }
   
@@ -450,9 +478,11 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
         pm: AptitudesFormService.DEFAULT_VALUE,
         po: AptitudesFormService.DEFAULT_VALUE,
         pw: AptitudesFormService.DEFAULT_VALUE,
-        controle: AptitudesFormService.DEFAULT_VALUE,
         di: AptitudesFormService.DEFAULT_VALUE,
-        resistancesElementairesMajeur: AptitudesFormService.DEFAULT_VALUE
+        resistancesElementairesMajeur: AptitudesFormService.DEFAULT_VALUE,
+        armureDonnee: AptitudesFormService.DEFAULT_VALUE,
+        soinsRealise: AptitudesFormService.DEFAULT_VALUE,
+        diIndirect: AptitudesFormService.DEFAULT_VALUE
     });
   }
 }

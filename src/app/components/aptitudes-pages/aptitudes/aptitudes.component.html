@@ -177,8 +177,8 @@
                     <div class="aptitudes-value"><app-input-aptitudes [control]="aptitudesFormService.form.controls.pw" [aptitudesRestantes]="nbPointRestantMajeur()"></app-input-aptitudes></div>
                 </div>
                 <div class="row">
-                    <div class="aptitudes-name"><img [src]="imageService.getActionIdUrl(IdActionsEnum.CONTROLE)" alt="Contrôle"> {{'aptitudes.controle' | translate}}</div>
-                    <div class="aptitudes-value"><app-input-aptitudes [control]="aptitudesFormService.form.controls.controle" [aptitudesRestantes]="nbPointRestantMajeur()"></app-input-aptitudes></div>
+                    <div class="aptitudes-name"><img [src]="imageService.getActionIdUrl(IdActionsEnum.ARMURE_DONNEE_RECUE, true)" alt="ARMURE_DONNEE_RECUE"> {{'aptitudes.armure-recue' | translate}}</div>
+                    <div class="aptitudes-value"><app-input-aptitudes [control]="aptitudesFormService.form.controls.armureDonnee" [aptitudesRestantes]="nbPointRestantMajeur()"></app-input-aptitudes></div>
                 </div>
                 <div class="row">
                     <div class="aptitudes-name"><img [src]="imageService.getActionIdUrl(IdActionsEnum.DI)" alt="Dommages infligés"> {{'aptitudes.di' | translate}}</div>
@@ -187,6 +187,14 @@
                 <div class="row">
                     <div class="aptitudes-name"><img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt="RESISTANCES_ELEMENTAIRE"> {{'aptitudes.resistances-elem' | translate}}</div>
                     <div class="aptitudes-value"><app-input-aptitudes [control]="aptitudesFormService.form.controls.resistancesElementairesMajeur" [aptitudesRestantes]="nbPointRestantMajeur()"></app-input-aptitudes></div>
+                </div>
+                <div class="row">
+                    <div class="aptitudes-name"><img [src]="imageService.getActionIdUrl(IdActionsEnum.SOINS_REALISE)" alt="SOINS_REALISE"> {{'aptitudes.soins-realise' | translate}}</div>
+                    <div class="aptitudes-value"><app-input-aptitudes [control]="aptitudesFormService.form.controls.soinsRealise" [aptitudesRestantes]="nbPointRestantMajeur()"></app-input-aptitudes></div>
+                </div>
+                <div class="row">
+                    <div class="aptitudes-name"><img [src]="imageService.getActionIdUrl(IdActionsEnum.DI_INDIRECT)" alt="DI_INDIRECT"> {{'aptitudes.di-indirect' | translate}}</div>
+                    <div class="aptitudes-value"><app-input-aptitudes [control]="aptitudesFormService.form.controls.diIndirect" [aptitudesRestantes]="nbPointRestantMajeur()"></app-input-aptitudes></div>
                 </div>
             </div>
         </div>

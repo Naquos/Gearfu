@@ -244,7 +244,7 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
   }
   
   protected override handleChanges(value: AptitudesManualForm): void {
-    const recapStatsList = [
+    const recapStatsList: RecapStats[] = [
         { id: IdActionsEnum.POINT_DE_VIE, value: value.pointDeVie, params: [] },
         { id: IdActionsEnum.PA, value: value.pa, params: [] },
         { id: IdActionsEnum.PM, value: value.pm, params: [] },
@@ -280,9 +280,9 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
         { id: IdActionsEnum.MAITRISES_DOS, value: value.maitriseDos, params: [] },
         { id: IdActionsEnum.RESISTANCES_DOS, value: value.resistancesDos, params: [] },
         { id: IdActionsEnum.MAITRISES_MELEE, value: value.maitriseMelee, params: [] },
-        { id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: value.armureDonnee, ParameterMajorActionEnum: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] },
+        { id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: value.armureDonnee, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] },
         { id: IdActionsEnum.MAITRISES_DISTANCES, value: value.maitriseDistance, params: [] },
-        { id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: value.armureRecue, ParameterMajorActionEnum: ParameterMajorActionEnum.ARMURE_RECUE, params: [] },
+        { id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: value.armureRecue, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] },
         { id: IdActionsEnum.MAITRISES_SOIN, value: value.maitriseSoins, params: [] },
         { id: IdActionsEnum.DI_INDIRECT, value: value.DIindirect, params: [] },
         { id: IdActionsEnum.MAITRISES_BERZERK, value: value.maitriseBerzerk, params: [] },

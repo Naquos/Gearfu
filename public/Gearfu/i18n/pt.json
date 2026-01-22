@@ -49,8 +49,10 @@
         "pm": "Pontos de movimento e danos",
         "po": "Alcance e danos",
         "pw": "Pontos de Wakfu",
-        "controle": "Controle e danos",
         "di": "Danos infligidos",
+        "armure-recue": "% Armadura concedida",
+        "soins-realise": "% Curas realizadas",
+        "di-indirect": "% Danos indiretos",
         "code-aptitudes": "Código de aptidões",
         "copy-code": "Copiar código de aptidões",
         "import-code": "Importar código de aptidões"
@@ -61,6 +63,9 @@
     "builds-list": {
         "label": "Sua lista de builds",
         "no-build": "Você ainda não salvou nenhum build."
+    },
+    "description-sublimation": {
+        "level-max": "Nível máximo"
     },
     "enchantement": {
         "chasses": "Chasses",
