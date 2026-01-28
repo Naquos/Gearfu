@@ -166,6 +166,8 @@
         "parade": "Block",
         "resistance-dos": "Back resistance",
         "resistance-critique": "Critical resistance",
+        "tacle":"Lock",
+        "esquive":"Dodge",
         "PERTE_PA": "AP Loss",
         "PERTE_PM": "MP Loss",
         "PERTE_PW": "WP Loss",
@@ -182,7 +184,9 @@
         "PERTE_MAITRISES_CRITIQUE": "Critical Mastery Loss",
         "PERTE_MAITRISES_DOS": "Back Mastery Loss",
         "PERTE_MAITRISES_SOIN": "Healing Mastery Loss",
-        "PERTE_MAITRISES_BERZERK": "Berserk Mastery Loss"
+        "PERTE_MAITRISES_BERZERK": "Berserk Mastery Loss",
+        "PERTE_TACLE": "Lock Loss",
+        "PERTE_ESQUIVE": "Dodge Loss"
     },
     "modifier-elem-maitrises": {
         "label": "Mechanics activation",

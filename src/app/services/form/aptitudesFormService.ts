@@ -384,7 +384,6 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
         { id: IdActionsEnum.DI, value: 10 * value.di, params: [] },
     ];
     if(value.resistancesElementairesMajeur > 0) {
-        console.log('Adding resistances elementaires majeures');
         recapStatsList.push({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 50, params: [] });
     }
     if(value.tacleEsquive > 0) {

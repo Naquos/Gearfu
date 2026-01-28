@@ -19,6 +19,8 @@ export interface MajorPresentForm {
   PARADE: boolean;
   RESISTANCE_DOS: boolean;
   RESISTANCE_CRITIQUE: boolean;
+  TACLE: boolean;
+  ESQUIVE: boolean;
 
   PERTE_PA: boolean;
   PERTE_PM: boolean;
@@ -38,6 +40,8 @@ export interface MajorPresentForm {
   PERTE_MAITRISES_DOS: boolean;
   PERTE_MAITRISES_SOIN: boolean;
   PERTE_MAITRISES_BERZERK: boolean;
+  PERTE_TACLE: boolean;
+  PERTE_ESQUIVE: boolean;
 
 }
 
@@ -60,6 +64,8 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
         PARADE: new FormControl(),
         RESISTANCE_DOS: new FormControl(),
         RESISTANCE_CRITIQUE: new FormControl(),
+        TACLE: new FormControl(),
+        ESQUIVE: new FormControl(),
         PERTE_PA: new FormControl(),
         PERTE_PM: new FormControl(),
         PERTE_PW: new FormControl(),
@@ -76,7 +82,9 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
         PERTE_MAITRISES_CRITIQUE: new FormControl(),
         PERTE_MAITRISES_DOS: new FormControl(),
         PERTE_MAITRISES_SOIN: new FormControl(),
-        PERTE_MAITRISES_BERZERK: new FormControl()
+        PERTE_MAITRISES_BERZERK: new FormControl(),
+        PERTE_TACLE: new FormControl(),
+        PERTE_ESQUIVE: new FormControl()
       });
 
   constructor() {
@@ -97,7 +105,9 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
     if(value.PARADE) {result.push({id:IdActionsEnum.PARADE})}
     if(value.RESISTANCE_DOS) {result.push({id:IdActionsEnum.RESISTANCES_DOS})}
     if(value.RESISTANCE_CRITIQUE) {result.push({id:IdActionsEnum.RESISTANCES_CRITIQUES})}
-    
+    if(value.TACLE) {result.push({id:IdActionsEnum.TACLE})}
+    if(value.ESQUIVE) {result.push({id:IdActionsEnum.ESQUIVE})}
+
     if(value.PERTE_PA) {result.push({id:IdActionsEnum.PERTE_PA})}
     if(value.PERTE_PM) {result.push({id:IdActionsEnum.PERTE_PM})}
     if(value.PERTE_PW) {result.push({id:IdActionsEnum.DEBOOST_PW})}
@@ -116,6 +126,8 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
     if(value.PERTE_MAITRISES_DOS) {result.push({id:IdActionsEnum.PERTE_MAITRISES_DOS})}
     if(value.PERTE_MAITRISES_SOIN) {result.push({id:IdActionsEnum.PERTE_MAITRISES_SOIN})}
     if(value.PERTE_MAITRISES_BERZERK) {result.push({id:IdActionsEnum.PERTE_MAITRISES_BERZERK})}
+    if(value.PERTE_TACLE) {result.push({id:IdActionsEnum.PERTE_TACLE})}
+    if(value.PERTE_ESQUIVE) {result.push({id:IdActionsEnum.PERTE_ESQUIVE})}
     
     this.idMajor.next(result);
   }
@@ -133,6 +145,8 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
       PARADE: value?.PARADE ?? false,
       RESISTANCE_DOS: value?.RESISTANCE_DOS ?? false,
       RESISTANCE_CRITIQUE: value?.RESISTANCE_CRITIQUE ?? false,
+      TACLE: value?.TACLE ?? false,
+      ESQUIVE: value?.ESQUIVE ?? false,
 
       PERTE_PA: value?.PERTE_PA ?? false,
       PERTE_PM: value?.PERTE_PM ?? false,
@@ -151,7 +165,9 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
       PERTE_MAITRISES_CRITIQUE: value?.PERTE_MAITRISES_CRITIQUE ?? false,
       PERTE_MAITRISES_DOS: value?.PERTE_MAITRISES_DOS ?? false,
       PERTE_MAITRISES_SOIN: value?.PERTE_MAITRISES_SOIN ?? false,
-      PERTE_MAITRISES_BERZERK: value?.PERTE_MAITRISES_BERZERK ?? false
+      PERTE_MAITRISES_BERZERK: value?.PERTE_MAITRISES_BERZERK ?? false,
+      PERTE_TACLE: value?.PERTE_TACLE ?? false,
+      PERTE_ESQUIVE: value?.PERTE_ESQUIVE ?? false
     });
   }
 
@@ -172,6 +188,8 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
       PARADE: major.some(x => x.id === IdActionsEnum.PARADE),
       RESISTANCE_DOS: major.some(x => x.id === IdActionsEnum.RESISTANCES_DOS),
       RESISTANCE_CRITIQUE: major.some(x => x.id === IdActionsEnum.RESISTANCES_CRITIQUES),
+      TACLE: major.some(x => x.id === IdActionsEnum.TACLE),
+      ESQUIVE: major.some(x => x.id === IdActionsEnum.ESQUIVE),
 
       PERTE_PA: major.some(x => x.id === IdActionsEnum.PERTE_PA),
       PERTE_PM: major.some(x => x.id === IdActionsEnum.PERTE_PM),
@@ -190,7 +208,9 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
       PERTE_MAITRISES_CRITIQUE: major.some(x => x.id === IdActionsEnum.PERTE_MAITRISES_CRITIQUE),
       PERTE_MAITRISES_DOS: major.some(x => x.id === IdActionsEnum.PERTE_MAITRISES_DOS),
       PERTE_MAITRISES_SOIN: major.some(x => x.id === IdActionsEnum.PERTE_MAITRISES_SOIN),
-      PERTE_MAITRISES_BERZERK: major.some(x => x.id === IdActionsEnum.PERTE_MAITRISES_BERZERK)
+      PERTE_MAITRISES_BERZERK: major.some(x => x.id === IdActionsEnum.PERTE_MAITRISES_BERZERK),
+      PERTE_TACLE: major.some(x => x.id === IdActionsEnum.PERTE_TACLE),
+      PERTE_ESQUIVE: major.some(x => x.id === IdActionsEnum.PERTE_ESQUIVE)
     });
   }
 }
