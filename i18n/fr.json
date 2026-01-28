@@ -166,6 +166,8 @@
         "parade": "Parade",
         "resistance-dos":"Résistance dos",
         "resistance-critique": "Résistance critique",
+        "tacle":"Tacle",
+        "esquive":"Esquive",
         "PERTE_PA": "Perte PA",
         "PERTE_PM": "Perte PM",
         "PERTE_PW": "Perte PW",
@@ -182,7 +184,9 @@
         "PERTE_MAITRISES_CRITIQUE": "Perte maitrises critique",
         "PERTE_MAITRISES_DOS": "Perte maitrises dos",
         "PERTE_MAITRISES_SOIN": "Perte maitrises soin",
-        "PERTE_MAITRISES_BERZERK": "Perte maitrises berzerk"
+        "PERTE_MAITRISES_BERZERK": "Perte maitrises berzerk",
+        "PERTE_TACLE": "Perte tacle",
+        "PERTE_ESQUIVE": "Perte esquive"
     },
     "modifier-elem-maitrises": {
         "label":"Activation de mécaniques",

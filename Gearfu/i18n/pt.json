@@ -166,6 +166,8 @@
         "parade": "Parada",
         "resistance-dos": "Resistência das costas",
         "resistance-critique": "Resistência crítica",
+        "tacle":"Bloqueio",
+        "esquive":"Evasão",
         "PERTE_PA": "Perda de PA",
         "PERTE_PM": "Perda de PM",
         "PERTE_PW": "Perda de PW",
@@ -182,7 +184,9 @@
         "PERTE_MAITRISES_CRITIQUE": "Perda de maestria crítica",
         "PERTE_MAITRISES_DOS": "Perda de maestria pelas costas",
         "PERTE_MAITRISES_SOIN": "Perda de maestria de cura",
-        "PERTE_MAITRISES_BERZERK": "Perda de maestria berserker"
+        "PERTE_MAITRISES_BERZERK": "Perda de maestria berserker",
+        "PERTE_TACLE": "Perda de bloqueio",
+        "PERTE_ESQUIVE": "Perda de evasão"
     },
     "modifier-elem-maitrises": {
         "label": "Ativação de mecânicas",
