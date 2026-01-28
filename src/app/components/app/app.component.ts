@@ -32,7 +32,7 @@ import { StatesDefinitionService } from '../../services/data/statesDefinitionSer
 import { DisplayFilterService } from '../../services/displayFilterService';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { ResumeAptitudesComponent } from "../aptitudes-pages/resume-aptitudes/resume-aptitudes.component";
-import { filter } from 'rxjs';
+import { filter, take } from 'rxjs';
 import { ItemChooseComponent } from '../items-pages/item-choose/item-choose.component';
 import { SortService } from '../../services/data/sortService';
 import { SublimationService } from '../../services/data/sublimationService';
@@ -40,6 +40,7 @@ import { FamiliersService } from '../../services/data/familiersService';
 import { SortLevelService } from '../../services/data/sortLevelService';
 import { ElementSelectorService } from '../../services/elementSelectorService';
 import { UrlServices } from '../../services/urlServices';
+import { ZenithService } from '../../services/zenith/zenithService';
 
 type column = 'filter' | 'build' | 'aptitudes';
 
@@ -92,13 +93,10 @@ export class AppComponent implements OnInit{
   private readonly sortLevelService = inject(SortLevelService);
   private readonly elementSelectorService = inject(ElementSelectorService);
   private readonly urlServices = inject(UrlServices);
+  private readonly zenithService = inject(ZenithService);
 
   protected displayFilter = false;
   protected filterOrBuild : column = "filter";
-
-  protected openDiscord(): void {
-    window.open('https://discord.gg/fFmzBmZjSb', '_blank');
-  }
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {
     this.translate.addLangs(['fr','en', 'es', 'pt']);
@@ -166,6 +164,14 @@ export class AppComponent implements OnInit{
         this.removeLoader();
       }, 10000);
     }
+  }
+
+  protected openDiscord(): void {
+    window.open('https://discord.gg/fFmzBmZjSb', '_blank');
+  }
+
+  protected generateBuild(): void {
+    this.zenithService.createBuild().pipe(take(1)).subscribe(linkBuild => window.open('https://www.zenithwakfu.com/builder/' + linkBuild, '_blank'));
   }
 
   private updateFilterOrBuildFromRoute(url: string): void {
