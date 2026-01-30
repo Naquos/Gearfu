@@ -1,5 +1,3 @@
-<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-@for (id of idClasses; track id) {
-    <img [src]="`classes/icon/${id}.jpg`" alt="" (click)="changeClasses(id)">
+@for (id of idClasses; track id; let first = $first) {
+    <img [src]="`classes/icon/${id}.jpg`" alt="" (appActivate)="changeClasses(id)" [tabindex]="0" [attr.data-first]="first ? '' : null" #firstImage>
 }

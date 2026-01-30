@@ -16,7 +16,7 @@
     <mat-icon fontIcon="menu" class="menu" (click)="displayFilterService.toggleDisplay()"></mat-icon>
   </header>
 <div class="content">
-    <div class="filter" [class.open]="displayFilter" appSwipe (swipeRight)="displayFilterService.setDisplay(false)">
+    <div class="filter" [tabIndex]="-1" [class.open]="displayFilter" appSwipe (swipeRight)="displayFilterService.setDisplay(false)">
         <div class="filter-header">
             <div class="filter-build">
                 <button (click)="redirectToListItems('filter')">{{ "app.filter-item" | translate }}</button>

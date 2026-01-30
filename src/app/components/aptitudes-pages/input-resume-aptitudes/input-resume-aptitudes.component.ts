@@ -6,10 +6,11 @@ import { RecapStats } from '../../../models/data/recap-stats';
 import { RecapStatsService } from '../../../services/recapStatsService';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivateDirective } from "../../../directives/activate.directive";
 
 @Component({
   selector: 'app-input-resume-aptitudes',
-  imports: [TranslateModule, ReactiveFormsModule],
+  imports: [TranslateModule, ReactiveFormsModule, ActivateDirective],
   templateUrl: './input-resume-aptitudes.component.html',
   styleUrl: './input-resume-aptitudes.component.scss'
 })
@@ -37,6 +38,7 @@ export class InputResumeAptitudesComponent {
   protected onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
       this.displayInput.set(false);
+      event.stopPropagation();
     }
   }
 

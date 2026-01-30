@@ -17,13 +17,14 @@ import { MatSliderModule } from "@angular/material/slider";
 import { LevelFormService } from '../../../services/form/levelFormService';
 import { RecapStatsService } from '../../../services/recapStatsService';
 import { filter, map } from 'rxjs';
+import { ActivateDirective } from "../../../directives/activate.directive";
 
 type TypeSort = 'NEUTRE' | 'PASSIF';
 type EffectDisplay = 'NORMAL' | 'CRITIQUE';
 
 @Component({
   selector: 'app-sorts',
-  imports: [TranslateModule, MatIconModule, MatTooltipModule, LazyImageDirective, FormsModule, MatSliderModule],
+  imports: [TranslateModule, MatIconModule, MatTooltipModule, LazyImageDirective, FormsModule, MatSliderModule, ActivateDirective],
   templateUrl: './sorts.component.html',
   styleUrl: './sorts.component.scss'
 })

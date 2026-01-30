@@ -7,7 +7,7 @@
     <mat-icon aria-hidden="false" fontIcon="file_copy" 
         [matTooltip]="'sorts.copy-code' | translate"
         [matTooltipShowDelay]="300" 
-        (click)="copyToClipboards()">
+        (appActivate)="copyToClipboards()">
     </mat-icon>
 </div>
 
@@ -25,7 +25,8 @@
                     [draggable]="sort !== 0"
                     (dragstart)="onDragStartEquipped($event, sort, 'NEUTRE', $index)"
                     (click)="selectSortById(sort, 'NEUTRE')"
-                    (dblclick)="removeSortFromBuild('NEUTRE', $index)"
+                    (appActivate)="removeSortFromBuild('NEUTRE', $index)"
+                    appActivateTrigger="dblclick"
                     (contextmenu)="$event.preventDefault(); removeSortFromBuild('NEUTRE', $index)"
                     (dragover)="onDragOver($event)"
                     (drop)="onDrop($event, 'NEUTRE', $index)">
@@ -39,7 +40,8 @@
                     [draggable]="sort !== 0"
                     (dragstart)="onDragStartEquipped($event, sort, 'PASSIF', $index)"
                     (click)="selectSortById(sort, 'PASSIF')"
-                    (dblclick)="removeSortFromBuild('PASSIF', $index)"
+                    (appActivate)="removeSortFromBuild('PASSIF', $index)"
+                    appActivateTrigger="dblclick"
                     (contextmenu)="$event.preventDefault(); removeSortFromBuild('PASSIF', $index)"
                     (dragover)="onDragOver($event)"
                     (drop)="onDrop($event, 'PASSIF', $index)">
@@ -95,9 +97,9 @@
                     
                     <div class="effet-sort">
                         <div class="button-group">
-                            <button (click)="effectDisplay.set('NORMAL')">{{'sorts.effet-normal' | translate}}</button>
+                            <button (appActivate)="effectDisplay.set('NORMAL')">{{'sorts.effet-normal' | translate}}</button>
                             @if(sortSelected()!.effect_critical.fr) {
-                                <button (click)="effectDisplay.set('CRITIQUE')">{{'sorts.effet-critique' | translate}}</button>
+                                <button (appActivate)="effectDisplay.set('CRITIQUE')">{{'sorts.effet-critique' | translate}}</button>
                             }
                         </div>
                         <div class="effet">
@@ -131,7 +133,8 @@
                             draggable="true"
                             (dragstart)="onDragStart($event, sort, 'NEUTRE')"
                             (click)="selectSort(sort, 'NEUTRE')"
-                            (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                            (appActivate)="addSortToBuild(sort, 'NEUTRE')"
+                            appActivateTrigger="dblclick"
                             (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
                     }
                     @for (sort of sortService.sortsClasse()!.sortElementaires.eau; track sort.gfxId) {
@@ -141,7 +144,8 @@
                             draggable="true"
                             (dragstart)="onDragStart($event, sort, 'NEUTRE')"
                             (click)="selectSort(sort, 'NEUTRE')"
-                            (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                            (appActivate)="addSortToBuild(sort, 'NEUTRE')"
+                            appActivateTrigger="dblclick"
                             (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
                     }
                     @for (sort of sortService.sortsClasse()!.sortElementaires.terre; track sort.gfxId) {
@@ -151,7 +155,8 @@
                             draggable="true"
                             (dragstart)="onDragStart($event, sort, 'NEUTRE')"
                             (click)="selectSort(sort, 'NEUTRE')"
-                            (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                            (appActivate)="addSortToBuild(sort, 'NEUTRE')"
+                            appActivateTrigger="dblclick"
                             (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
                     }
                     @for (sort of sortService.sortsClasse()!.sortElementaires.air; track sort.gfxId) {
@@ -161,7 +166,8 @@
                             draggable="true"
                             (dragstart)="onDragStart($event, sort, 'NEUTRE')" 
                             (click)="selectSort(sort, 'NEUTRE')" 
-                            (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                            (appActivate)="addSortToBuild(sort, 'NEUTRE')"
+                            appActivateTrigger="dblclick"
                             (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
                     }
                 }
@@ -176,7 +182,8 @@
                         draggable="true"
                         (dragstart)="onDragStart($event, sort, 'NEUTRE')" 
                         (click)="selectSort(sort, 'NEUTRE')"
-                        (dblclick)="addSortToBuild(sort, 'NEUTRE')"
+                        (appActivate)="addSortToBuild(sort, 'NEUTRE')"
+                        appActivateTrigger="dblclick"
                         (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'NEUTRE')">
                     }
                 }
@@ -191,7 +198,8 @@
                         draggable="true"
                         (dragstart)="onDragStart($event, sort, 'PASSIF')" 
                         (click)="selectSort(sort, 'PASSIF')"
-                        (dblclick)="addSortToBuild(sort, 'PASSIF')"
+                        (appActivate)="addSortToBuild(sort, 'PASSIF')"
+                        appActivateTrigger="dblclick"
                         (contextmenu)="$event.preventDefault(); addSortToBuild(sort, 'PASSIF')">
                     }
                 }

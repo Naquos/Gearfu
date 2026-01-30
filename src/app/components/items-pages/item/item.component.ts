@@ -21,10 +21,11 @@ import { StatesComponent } from '../states/states.component';
 import { ElementSelectorComponent } from "../element-selector/element-selector.component";
 import { ElementSelectorEnum } from '../../../models/enum/elementSelectorEnum';
 import { mapSortAction, ratioWeightByLevel } from '../../../models/utils/utils';
+import { ActivateDirective } from "../../../directives/activate.directive";
 
 @Component({
   selector: 'app-item',
-  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective, LazyImageDirective, ElementSelectorComponent],
+  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective, LazyImageDirective, ElementSelectorComponent, ActivateDirective],
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss']
 })

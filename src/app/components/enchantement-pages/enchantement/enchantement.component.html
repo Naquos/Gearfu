@@ -12,7 +12,7 @@
                             <img [src]="imageService.getItemUrl(81127083)" alt="eclats"> x {{ coutEclatTotal() | formatNumber }}
                         </div>
                     </div>
-                    <button (click)="chasseFormService.setDefaultValue()">X</button>
+                    <button (appActivate)="chasseFormService.setDefaultValue()">X</button>
                 </div>
                 <div class="body">
                     <mat-slider min="1" [max]="maxLevel" step="1" showTickMarks discrete >
@@ -28,11 +28,11 @@
                                 [indexItem]="displayTypeItem[$index].indexItem"
                                 [backgroundItemType]="displayTypeItem[$index].background"
                                 (level)="setLevelItem($any($event), indexParent)"
-                                (click)="selectItemType(displayTypeItem[$index].itemType, $index)"
+                                (appActivate)="selectItemType(displayTypeItem[$index].itemType, $index)"
                             ></app-image-item>
                             @for (c of chasse.chasses; track c.color + '-' + c.idAction + '-' + $index) {
                                 <div class="container-image"
-                                    (click)="applyEffet($index, indexParent, getLevelItem(indexParent))"
+                                    (appActivate)="applyEffet($index, indexParent, getLevelItem(indexParent))"
                                     (contextmenu)="$event.preventDefault(); changeJokerState($index, indexParent);"
                                     [style.cursor]="cursorDestructStyle(c, effectToApply())"
                                     >
@@ -45,13 +45,13 @@
                                     }
                                 </div>
                             }
-                            <button class="delete" (click)="chasseFormService.clearChasseCombinaison(indexParent)">X</button>
+                            <button class="delete" (appActivate)="chasseFormService.clearChasseCombinaison(indexParent)">X</button>
                             <div class="sublimations"
                                 [class.invalid]="chasse.sublimation && !chasse.sublimation.isValid"
-                                (click)="applySublimation(indexParent)"
+                                (appActivate)="applySublimation(indexParent)"
                                 (contextmenu)="$event.preventDefault();chasseFormService.removeSublimation(indexParent);">
                                 <img [src]="imageService.getItemTypeUrl(ItemTypeEnum.SUBLIMATIONS)"
-                                        (click)=" selectItemType(displayTypeItem[$index].itemType, $index)" 
+                                        (appActivate)=" selectItemType(displayTypeItem[$index].itemType, $index)" 
                                         (mouseenter)="openTooltip($event, chasse.sublimation, chasse.sublimation?.level || 1)" 
                                         (mouseleave)="onMouseLeave()" alt="">
                                 <span>{{ nameSublimation(chasse.sublimation) }}</span>
@@ -60,7 +60,7 @@
                     }
                     <div class="epique-relique">
                         <div class="epique" 
-                            (click)="chasseFormService.removeEpic()"
+                            (appActivate)="chasseFormService.removeEpic()"
                             (contextmenu)="$event.preventDefault();chasseFormService.removeEpic();"
                             (mouseenter)="openTooltip($event, enchantement()?.epique, 1)"
                             (mouseleave)="onMouseLeave()">
@@ -72,7 +72,7 @@
                             }
                         </div>
                         <div class="relique"
-                            (click)="chasseFormService.removeRelic()"
+                            (appActivate)="chasseFormService.removeRelic()"
                             (contextmenu)="$event.preventDefault();chasseFormService.removeRelic();"
                             (mouseenter)="openTooltip($event, enchantement()?.relique, 1)"
                             (mouseleave)="onMouseLeave()">
@@ -95,7 +95,7 @@
                 </div>
                 <div class="body">
                     @for(effet of effetsDescription; track $index) {
-                        <button class="effets-description" (click)="chooseEffet(effet)" [class.selected]="effectToApply() && effectToApply()?.id === effet.id"
+                        <button class="effets-description" (appActivate)="chooseEffet(effet)" [class.selected]="effectToApply() && effectToApply()?.id === effet.id"
                             [class.double]="effectIsDouble(effet)">
                             <img [src]="imageService.getChasseColorUrl(effet.chasse)" [alt]="">
                             <span>{{ effet.libelle | translate }}</span>
@@ -132,7 +132,7 @@
                                     </div>
                                     <div>
                                         @for(linkSublimation of sublimation.linkSublimation; track $index) {
-                                            <img class="parchemins" (click)="chooseSublimation(sublimation, linkSublimation.level)"
+                                            <img class="parchemins" (appActivate)="chooseSublimation(sublimation, linkSublimation.level)"
                                                 (mouseenter)="openTooltip($event, sublimation, linkSublimation.level)" 
                                                 (mouseleave)="onMouseLeave()"
                                                 [src]="getUrlSublimationImage(linkSublimation)" [alt]=""
@@ -146,9 +146,9 @@
                     </div>
                     <div class="slider-container">
                         @for(sublimation of sublimationsEpiqueReliqueList(); track $index) {
-                            <div class="subli-container" (click)="chooseSublimation(sublimation, 1)"
+                            <div class="subli-container" (appActivate)="chooseSublimation(sublimation, 1)"
                                 [class.selected]="sublimationToApply() && sublimationToApply()!.id === sublimation.id"
-                                (click)="applySublimationEpicRelic()">
+                                (appActivate)="applySublimationEpicRelic()">
                                 <span>{{nameItem(sublimation)}}</span>
                                 <div>
                                     <img

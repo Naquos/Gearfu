@@ -4,10 +4,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
+import { ActivateDirective } from '../../../directives/activate.directive';
 
 @Component({
   selector: 'app-button-checkbox',
-  imports: [MatTooltipModule, MatIconModule, TranslateModule, MatIconModule, ReactiveFormsModule],
+  imports: [MatTooltipModule, MatIconModule, TranslateModule, MatIconModule, ReactiveFormsModule, ActivateDirective],
   templateUrl: './button-checkbox.component.html',
   styleUrl: './button-checkbox.component.scss',
 })

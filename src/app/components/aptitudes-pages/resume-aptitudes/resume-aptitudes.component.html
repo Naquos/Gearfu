@@ -1,6 +1,4 @@
-<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<img class="classes" [src]="`classes/${idClasse()}.jpg`" [attr.key]="idClasse()" alt="class" (click)="openTooltip($event)">
+<img class="classes" [src]="`classes/${idClasse()}.jpg`" [attr.key]="idClasse()" alt="class" (appActivate)="openTooltip($event)">
 <app-bonus></app-bonus>
 <div class="level">
     <p>{{ 'resume-aptitudes.level' | translate }}</p>

@@ -12,10 +12,11 @@ import { ImageService } from '../../../services/imageService';
 import { ItemChooseService } from '../../../services/itemChooseService';
 import { RecapStatsService } from '../../../services/recapStatsService';
 import { ZenithService } from '../../../services/zenith/zenithService';
+import { ActivateDirective } from "../../../directives/activate.directive";
 
 @Component({
   selector: 'app-item-choose',
-  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule, CommonModule],
+  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule, CommonModule, ActivateDirective],
   templateUrl: './item-choose.component.html',
   styleUrl: './item-choose.component.scss'
 })

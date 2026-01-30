@@ -2,29 +2,30 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="content">
     <div class="buttonGroupe">
-        <div class="firstLine" (click)="generateBuild()" [matTooltip]="'item-choose.zenith' | translate">
+        <div class="firstLine" (appActivate)="generateBuild()" [matTooltip]="'item-choose.zenith' | translate">
             <img src="./zenith-logo.webp" alt="zenith" id="zenithButton">
             <span>{{"item-choose.zenith-export" | translate}}</span>
         </div>
         
         <div class="secondLine">
-            <img matTooltip="Wakfu Index"  src="./WakfuIndex.png" (click)="navigateToWakfuIndex()" alt="wakfu-index" id="wakfuIndexButton">
-            <mat-icon aria-hidden="false" fontIcon="gavel" 
+            <img matTooltip="Wakfu Index"  src="./WakfuIndex.png" (appActivate)="navigateToWakfuIndex()" alt="wakfu-index" id="wakfuIndexButton">
+            <mat-icon aria-hidden="false" fontIcon="gavel"
                 matTooltip="Craftku"
                 [matTooltipShowDelay]="300" 
-                (click)="navigateToCraftku()"
+                (appActivate)="navigateToCraftku()"
+                 alt="craftku"
                 id="craftkuButton">
             </mat-icon>
-            <img matTooltip="Wakfocus"  src="./logo-WakFocus.png" (click)="navigateToWakfocus()" alt="wakfocus" id="WakfocusButton">
+            <img matTooltip="Wakfocus"  src="./logo-WakFocus.png" (appActivate)="navigateToWakfocus()" alt="wakfocus" id="WakfocusButton">
             <mat-icon aria-hidden="false" fontIcon="file_copy" 
                 [matTooltip]="'item-choose.copy' | translate"
-                [matTooltipShowDelay]="300" 
-                (click)="copyToClipboard()">
+                [matTooltipShowDelay]="300"
+                (appActivate)="copyToClipboard()">
             </mat-icon>
             <mat-icon aria-hidden="false" fontIcon="delete" 
                 [matTooltip]="'item-choose.delete' | translate"
-                [matTooltipShowDelay]="300" 
-                (click)="itemChooseService.cleanItemChoosen()">
+                [matTooltipShowDelay]="300"
+                (appActivate)="itemChooseService.cleanItemChoosen()">
             </mat-icon>
         </div>
     </div>

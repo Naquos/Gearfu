@@ -2,17 +2,17 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
  @if(item()) {
     <div class="header">
-        <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy" (click)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
+        <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy" (appActivate)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
         <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises" >{{ "item.maitrises" | translate }} {{Math.trunc(item().maitrise)}}</span>
         <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances" >{{ "item.resistances" | translate }} {{item().resistance}}</span>
-        <span class="imgContainer" (click)="openEncyclopedie(item().id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie" ></span>
+        <span class="imgContainer" (appActivate)="openEncyclopedie(item().id)"><img src="aptitudes/Encyclopédie.png" alt="Encyclopédie" ></span>
     </div>
     @if (textCondition() | async; as condition) {
         <div class="condition">
             [ {{ condition }} ]
         </div>
     }
-    <div class="content" (click)="setItemChoosen()">
+    <div class="content" (appActivate)="setItemChoosen()">
         <div class="title">
             <h3 [style.color]="colorRarityService.mapColors.get(item().rarity)">{{getTitle()}} ({{item().level}}) <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item().itemTypeId))" alt="item type logo" > </h3>
             <img [src]="imageService.getItemUrl(item().idImage)" alt="items" appFallback >

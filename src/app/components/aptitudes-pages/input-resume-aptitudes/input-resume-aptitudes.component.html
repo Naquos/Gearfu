@@ -1,6 +1,4 @@
-<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<div (click)="showInput(); $event.stopPropagation()" [class.change]="controlValue().value">
+<div (appActivate)="showInput();" [class.change]="controlValue().value">
     <img [src]="imageService.getActionIdUrl(idActionEnum())" alt=""> 
     @if(displayInput()){
         <input #inputField [formControl]="controlValue()" (keydown)="onKeyDown($event)">

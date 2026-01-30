@@ -11,10 +11,11 @@ import { ItemChooseService } from '../../../services/itemChooseService';
 import { TooltipService } from '../../../services/TooltipService';
 import { ItemComponent } from '../item/item.component';
 import { Router } from '@angular/router';
+import { ActivateDirective } from "../../../directives/activate.directive";
 
 @Component({
   selector: 'app-item-choose-display',
-  imports: [CommonModule, ImageFallbackDirective],
+  imports: [CommonModule, ImageFallbackDirective, ActivateDirective],
   templateUrl: './item-choose-display.component.html',
   styleUrl: './item-choose-display.component.scss',
   host: {

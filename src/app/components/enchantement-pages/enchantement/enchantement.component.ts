@@ -24,6 +24,7 @@ import { maxChasseLevel, normalizeString } from '../../../models/utils/utils';
 import { AbstractDestroyService } from '../../../services/abstract/abstractDestroyService';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { FormatNumberPipe } from "../../../pipe/formatNumber/formatNumber.pipe";
+import { ActivateDirective } from "../../../directives/activate.directive";
 
 interface DisplayTypeItem {
   indexItem: number;
@@ -40,7 +41,7 @@ interface EffetDescription {
 
 @Component({
   selector: 'app-enchantement',
-  imports: [ImageItemComponent, TranslateModule, MatSliderModule, MatInputModule, FormsModule, FormatNumberPipe],
+  imports: [ImageItemComponent, TranslateModule, MatSliderModule, MatInputModule, FormsModule, FormatNumberPipe, ActivateDirective],
   templateUrl: './enchantement.component.html',
   styleUrl: './enchantement.component.scss'
 })

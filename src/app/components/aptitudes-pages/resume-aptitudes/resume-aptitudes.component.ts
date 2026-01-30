@@ -17,10 +17,11 @@ import { BonusComponent } from "../bonus/bonus.component";
 import { InputResumeAptitudesComponent } from "../input-resume-aptitudes/input-resume-aptitudes.component";
 import { AptitudesManualFormService } from '../../../services/form/aptitudesManualFormServices';
 import { ConnectedPosition } from '@angular/cdk/overlay';
+import { ActivateDirective } from "../../../directives/activate.directive";
 
 @Component({
   selector: 'app-resume-aptitudes',
-  imports: [TranslateModule, ReactiveFormsModule, LazyImageDirective, BonusComponent, InputResumeAptitudesComponent],
+  imports: [TranslateModule, ReactiveFormsModule, LazyImageDirective, BonusComponent, InputResumeAptitudesComponent, ActivateDirective],
   templateUrl: './resume-aptitudes.component.html',
   styleUrl: './resume-aptitudes.component.scss'
 })
@@ -51,7 +52,7 @@ export class ResumeAptitudesComponent {
     return recapStats[0].value;
   }
 
-  protected openTooltip(event: MouseEvent): void {
+  protected openTooltip(event: Event): void {
     this.tooltipService.forceClose();
     this.tooltipService.cancelClose();
     let connectedPosition: ConnectedPosition[] | undefined = undefined;
@@ -66,7 +67,7 @@ export class ResumeAptitudesComponent {
     this.tooltipService.openTooltip(
       this.viewContainerRef, 
       ClassesTooltipComponent, 
-      event, 
+      event as MouseEvent, 
       {},
       connectedPosition,  // connectedPosition
       true,       // withPush

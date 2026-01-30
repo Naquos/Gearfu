@@ -5,8 +5,9 @@
     [class.background-color-blue]="control()?.value">
     
     <input type="checkbox" 
-        [formControl]="control()!" 
+        [formControl]="control()!"
         class="checkbox-input"
+        (appActivate)="toggle()"
     />
     
     @if(matIcon()) {
