@@ -13,3 +13,8 @@ export enum GfxIdNeoEnum {
     NEO_PANDORE = 1115705805,
     NEO_OGREST = 1115705806,
 }
+
+export const listGfxIdNeo = Object.values(GfxIdNeoEnum) as number[];
+export function isGfxIdNeo(value: number): boolean {
+    return listGfxIdNeo.includes(value);
+}
