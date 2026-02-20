@@ -41,6 +41,7 @@ import { SortLevelService } from '../../services/data/sortLevelService';
 import { ElementSelectorService } from '../../services/elementSelectorService';
 import { UrlServices } from '../../services/urlServices';
 import { ZenithService } from '../../services/zenith/zenithService';
+// import { SupabaseService } from '../../services/supabase/supabaseService';
 
 type column = 'filter' | 'build' | 'aptitudes';
 
@@ -94,6 +95,7 @@ export class AppComponent implements OnInit{
   private readonly elementSelectorService = inject(ElementSelectorService);
   private readonly urlServices = inject(UrlServices);
   private readonly zenithService = inject(ZenithService);
+  // private readonly supabaseService = inject(SupabaseService);
 
   protected displayFilter = false;
   protected filterOrBuild : column = "filter";
@@ -133,6 +135,15 @@ export class AppComponent implements OnInit{
     this.sortLevelService.load();
 
     this.itemService.init();
+
+    // this.supabaseService.getBuildsList().subscribe({
+    //   next: (builds) => {
+    //     console.log(`Loaded ${builds.length} builds from Supabase.`);
+    //   },
+    //   error: (error) => {
+    //     console.error('Error loading builds from Supabase:', error);
+    //   }
+    // });
 
     this.displayFilterService.isDisplayed$.subscribe((value: boolean) => {
       this.displayFilter = value;
