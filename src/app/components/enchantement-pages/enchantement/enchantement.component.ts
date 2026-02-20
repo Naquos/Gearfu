@@ -60,8 +60,8 @@ export class EnchantementComponent extends AbstractDestroyService {
   protected readonly enchantement = toSignal(this.chasseFormService.enchantement$);
   protected readonly coutEclatTotal = toSignal(this.chasseFormService.coutEclatTotal$, {initialValue: 0});
   protected readonly itemTypeService = inject(ItemTypeServices);
-  protected readonly sublimations = signal(this.sublimationService.getSublimations());
-  protected readonly sublimationsEpiqueRelique = signal(this.sublimationService.getSublimationsEpiqueRelique());
+  protected readonly sublimations = toSignal(this.sublimationService.sublimationsClassique$, {initialValue: []});
+  protected readonly sublimationsEpiqueRelique = toSignal(this.sublimationService.sublimationsEpiqueRelique$, {initialValue: []});
   protected searchSubli = signal("");
   protected readonly ItemTypeEnum = ItemTypeEnum;
   protected readonly effectToApply = signal<EffetDescription | undefined>(undefined);

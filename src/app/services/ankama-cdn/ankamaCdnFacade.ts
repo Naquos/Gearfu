@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { AnkamaCdnService } from "./ankamaCdnService";
-import { BehaviorSubject, filter, map, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, filter, map, Observable, take, tap } from "rxjs";
 import { ActionsCdn } from "../../models/ankama-cdn/actionsCdn";
 import { ItemCdn } from "../../models/ankama-cdn/itemCdn";
 import { StatesCdn } from "../../models/ankama-cdn/statesCdn";
@@ -53,6 +53,8 @@ export class AnkamaCdnFacade {
     private readonly mapProductItemIdToRecipeResult = new Map<number, RecipeResultsCdn>();
     private readonly mapRecipeIdToRecipeIngredients = new Map<number, RecipeIngredientCdn[]>();
 
+    private loadStarted = false;
+
     private loadItems(config: string): void {
         this.ankamaCdnService.getItems(config).pipe(tap(items => this.item.next(items))).subscribe();
     }
@@ -99,6 +101,11 @@ export class AnkamaCdnFacade {
     }
 
     public load(): void {
+        if (this.loadStarted) {
+            return;
+        }
+        this.loadStarted = true;
+
         this.ankamaCdnService.getConfig()
             .pipe(
                 tap(config => this.config.next(config.version)),
@@ -109,6 +116,20 @@ export class AnkamaCdnFacade {
                 tap(config => this.loadIdSioupere(config.version)),
                 tap(config => this.loadRecipeIngredients(config.version)),
             ).subscribe();
+    }
+
+    public ready$(): Observable<void> {
+        return combineLatest([
+            this.item$,
+            this.recipes$,
+            this.idSiouperes$,
+            this.action$,
+            this.states$,
+            this.recipeIngredients$
+        ]).pipe(
+            take(1),
+            map(() => undefined)
+        );
     }
 
     public getActionList(): ActionsCdn[] {

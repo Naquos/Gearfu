@@ -30,27 +30,51 @@
         </div>
 
         @if (filterOrBuild === 'filter') {
-            <div class="filter-content">
-                <div class="filter-title">
-                    <h2>{{ "app.filter-item" | translate }}</h2>
-                    <app-reverse-button></app-reverse-button>
-                    <button (click)="resetFormServices.resetAllForms()">X</button>
+            @if (itemsShellService.isReady()) {
+                <div class="filter-content">
+                    <div class="filter-title">
+                        <h2>{{ "app.filter-item" | translate }}</h2>
+                        <app-reverse-button></app-reverse-button>
+                        <button (click)="resetFormServices.resetAllForms()">X</button>
+                    </div>
+                    <app-search-item-name></app-search-item-name>
+                    <app-obtention></app-obtention>
+                    <app-item-types></app-item-types>
+                    <app-item-level></app-item-level>
+                    <app-rarete-item></app-rarete-item>
+                    <app-filter-maitrises></app-filter-maitrises>
+                    <app-major-present></app-major-present>
+                    <app-filter-resistances></app-filter-resistances>
+                    
+                    <h2>{{ "app.sort-item" | translate }}</h2>
+                    <app-sort-choice></app-sort-choice>
+                    <app-modifier-mecanism></app-modifier-mecanism>
+                    <app-only-no-elem></app-only-no-elem>
+                    <app-only-no-secondary></app-only-no-secondary>
                 </div>
-                <app-search-item-name></app-search-item-name>
-                <app-obtention></app-obtention>
-                <app-item-types></app-item-types>
-                <app-item-level></app-item-level>
-                <app-rarete-item></app-rarete-item>
-                <app-filter-maitrises></app-filter-maitrises>
-                <app-major-present></app-major-present>
-                <app-filter-resistances></app-filter-resistances>
-                
-                <h2>{{ "app.sort-item" | translate }}</h2>
-                <app-sort-choice></app-sort-choice>
-                <app-modifier-mecanism></app-modifier-mecanism>
-                <app-only-no-elem></app-only-no-elem>
-                <app-only-no-secondary></app-only-no-secondary>
-            </div>
+            } @else {
+                <div class="filter-skeleton">
+                    <div class="skeleton-section">
+                        <div class="skeleton-title"></div>
+                        <div class="skeleton-row"></div>
+                        <div class="skeleton-row"></div>
+                        <div class="skeleton-row"></div>
+                    </div>
+                    <div class="skeleton-section">
+                        <div class="skeleton-row wide"></div>
+                        <div class="skeleton-row"></div>
+                        <div class="skeleton-row"></div>
+                        <div class="skeleton-row"></div>
+                    </div>
+                    <div class="skeleton-section">
+                        <div class="skeleton-title"></div>
+                        <div class="skeleton-row"></div>
+                        <div class="skeleton-row"></div>
+                        <div class="skeleton-row"></div>
+                        <div class="skeleton-row"></div>
+                    </div>
+                </div>
+            }
         } @else if (filterOrBuild === 'build') {
             <div class="build-content">
                 <app-name-build></app-name-build>

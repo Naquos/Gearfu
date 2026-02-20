@@ -58,10 +58,18 @@ export class BonusFormService extends AbstractFormService<FormGroup<TypedControl
         this.recapStats.next(result);
     }
     
+    // les form.setValue ont été modifié pour éviter les plantages dues aux localStorage 
+    // qui contenait les valeurs liés aux néo-serveurs
     public override setValue(value: BonusForm | null): void {
-        this.form.setValue(value ?? BonusFormService.DEFAULT_VALUE);
+        this.form.setValue({
+            dragodinde: value?.dragodinde ?? BonusFormService.DEFAULT_VALUE.dragodinde,
+            guilde: value?.guilde ?? BonusFormService.DEFAULT_VALUE.guilde
+        });
     }
     public override setDefaultValue(): void {
-        this.form.setValue(BonusFormService.DEFAULT_VALUE);
+        this.form.setValue({
+            dragodinde: BonusFormService.DEFAULT_VALUE.dragodinde,
+            guilde: BonusFormService.DEFAULT_VALUE.guilde
+        });
     }
 }

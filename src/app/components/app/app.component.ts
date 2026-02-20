@@ -21,25 +21,17 @@ import { MajorPresentComponent } from '../form/major-present/major-present.compo
 import { BuildsListComponent } from "../items-pages/builds-list/builds-list.component";
 import { ImportBuildComponent } from "../form/import-build/import-build.component";
 import { NameBuildComponent } from "../form/name-build/name-build.component";
-import { ItemsService } from '../../services/data/itemsService';
-import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
 import { OnlyNoElemComponent } from '../form/only-no-elem/only-no-elem.component';
 import { ReverseButtonComponent } from '../form/reverse-button/reverse-button.component';
 import { ObtentionComponent } from "../form/obtention/obtention.component";
-import { MonsterDropService } from '../../services/data/monsterDropService';
-import { ItemConditionService } from '../../services/data/itemConditionService';
-import { StatesDefinitionService } from '../../services/data/statesDefinitionService';
 import { DisplayFilterService } from '../../services/displayFilterService';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { ResumeAptitudesComponent } from "../aptitudes-pages/resume-aptitudes/resume-aptitudes.component";
 import { filter, take } from 'rxjs';
 import { ItemChooseComponent } from '../items-pages/item-choose/item-choose.component';
-import { SortService } from '../../services/data/sortService';
-import { SublimationService } from '../../services/data/sublimationService';
-import { FamiliersService } from '../../services/data/familiersService';
-import { SortLevelService } from '../../services/data/sortLevelService';
 import { ElementSelectorService } from '../../services/elementSelectorService';
 import { ZenithService } from '../../services/zenith/zenithService';
+import { ItemsShellService } from '../../services/itemsShellService';
 import { SupabaseService } from '../../services/supabase/supabaseService';
 import { SaveBuildService } from '../../services/saveBuildService';
 import { NO_BUILD } from '../../models/utils/utils';
@@ -83,18 +75,10 @@ export class AppComponent implements OnInit{
   protected readonly translate = inject(TranslateService);
   protected readonly displayFilterService = inject(DisplayFilterService);
   private readonly localStorageService = inject(LocalStorageService);
-  private readonly itemService = inject(ItemsService);
-  private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
-  private readonly monsterDropService = inject(MonsterDropService);
-  private readonly itemConditionService = inject(ItemConditionService);
-  private readonly statesDefinitionService = inject(StatesDefinitionService);
-  private readonly sublimationService = inject(SublimationService);
-  private readonly sortService = inject(SortService);
   private readonly router = inject(Router);
-  private readonly familierService = inject(FamiliersService);
-  private readonly sortLevelService = inject(SortLevelService);
   private readonly elementSelectorService = inject(ElementSelectorService);
   private readonly zenithService = inject(ZenithService);
+  protected readonly itemsShellService = inject(ItemsShellService);
   private readonly supabaseService = inject(SupabaseService);
   private readonly saveBuildService = inject(SaveBuildService); 
 
@@ -119,16 +103,6 @@ export class AppComponent implements OnInit{
 
   public ngOnInit(): void {
     this.elementSelectorService.init();
-    this.ankamaCdnFacade.load();
-    this.monsterDropService.load();
-    this.itemConditionService.load();
-    this.statesDefinitionService.load();
-    this.sortService.load();
-    this.sublimationService.load();
-    this.familierService.load();
-    this.sortLevelService.load();
-
-    this.itemService.init();
     if (isPlatformBrowser(this.platformId)) {
       this.verifyToken();
       this.saveBuildService.createBuildIfNotExists(this.getBuildIdFromUrl(window.location.href));
@@ -151,22 +125,6 @@ export class AppComponent implements OnInit{
       this.updateFilterOrBuildFromRoute(event.urlAfterRedirects);
     });
 
-    // Supprimer le loader quand les items sont chargés
-    if (isPlatformBrowser(this.platformId)) {
-      // Observer le signal isLoading
-      const checkLoading = setInterval(() => {
-        if (!this.itemService.isLoading()) {
-          this.removeLoader();
-          clearInterval(checkLoading);
-        }
-      }, 100);
-
-      // Timeout de sécurité après 10 secondes
-      setTimeout(() => {
-        clearInterval(checkLoading);
-        this.removeLoader();
-      }, 10000);
-    }
   }
 
   /**
@@ -210,17 +168,6 @@ export class AppComponent implements OnInit{
       this.filterOrBuild = 'aptitudes';
     } else {
       this.filterOrBuild = 'filter';
-    }
-  }
-
-  private removeLoader(): void {
-    const loader = document.getElementById('app-loader');
-    if (loader) {
-      loader.style.opacity = '0';
-      loader.style.transition = 'opacity 0.5s ease-out';
-      setTimeout(() => {
-        loader.remove();
-      }, 500);
     }
   }
 

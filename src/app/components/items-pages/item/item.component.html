@@ -49,7 +49,9 @@
                 }
                 @if(item().bossDropable) {
                     @for (drop of item().bossDropable; track $index) {
-                        <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="boss drop" [matTooltip]="`${'item.boss-drop' | translate} (${nameMonster(drop)})`" appFallback >
+                        @if(isNotGfxIdNeo(drop.gfxId)) {
+                            <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)" (click)="openEncyclopedieForMonster(drop.idMob)" alt="boss drop" [matTooltip]="`${'item.boss-drop' | translate} (${nameMonster(drop)})`" appFallback >
+                        }
                     }
                 }
                 @if(item().archiDropable) {

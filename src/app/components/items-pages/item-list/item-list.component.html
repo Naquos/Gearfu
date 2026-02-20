@@ -1,6 +1,6 @@
 @if (itemsService.isLoading()) {
     <div class="content">
-        @for (i of skeletonArray; track i) {
+        @for (i of skeletonArray; track $index) {
             <app-item-skeleton></app-item-skeleton>
         }
     </div>

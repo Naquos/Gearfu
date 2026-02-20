@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from "@angular/core";
-import { BehaviorSubject, combineLatest, map, Observable, take, tap, shareReplay, filter } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable, take, tap, shareReplay, filter, of } from "rxjs";
 import { SortChoiceEnum as SortChoiceEnum } from "../../models/enum/sortChoiceEnum";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { ItemTypeFormServices } from "../form/itemTypeFormServices";
@@ -34,6 +34,7 @@ import { FamiliersService } from "./familiersService";
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
+  private initialized = false;
     private readonly itemTypeFormServices = inject(ItemTypeFormServices);
     private readonly translateService = inject(TranslateService);
     private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
@@ -91,8 +92,9 @@ export class ItemsService {
     protected items: Item[] = [];
     protected readonly fullItems$ = new BehaviorSubject<Item[]>([]);
 
-    public items$?: Observable<Item[]>;
-    public itemsFilterByItemName$!: Observable<Item[]>;
+    private _item$ = new BehaviorSubject<Item[]>([]);
+    public items$ = this._item$.asObservable();
+    public itemsFilterByItemName$: Observable<Item[]> = of([]);
     protected itemsFilters$!: Observable<Item[]>;
 
     private recipesByProductId = new Map<number, RecipeResultsCdn>();
@@ -106,6 +108,11 @@ export class ItemsService {
     public readonly isLoading = signal<boolean>(true);
 
     public init(): void {
+        if (this.initialized) {
+          return;
+        }
+        this.initialized = true;
+
         this.initItemsList();
         this.initFilter();
 
@@ -126,7 +133,7 @@ export class ItemsService {
             this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement, onlyNoElem, onlyNoSecondary, chaos)),
           map(([items,]) => items));
 
-          this.items$ = combineLatest([itemsFilters$, this.reverseFormService.reverse$])
+          combineLatest([itemsFilters$, this.reverseFormService.reverse$])
           .pipe(
             map(([items, reverse]) => {
               const sortedItems = items.sort(this.sortItems());
@@ -134,8 +141,7 @@ export class ItemsService {
             }),
             tap(() => this.isLoading.set(false)),
             shareReplay(1)
-          );
-          this.items$.pipe(take(1)).subscribe();
+          ).subscribe(items => this._item$.next(items));
     }
 
     private initFamiliers(): void {

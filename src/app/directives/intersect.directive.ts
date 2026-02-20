@@ -1,4 +1,5 @@
-import { Directive, ElementRef, EventEmitter, OnDestroy, OnInit, Output, Input } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, OnDestroy, OnInit, Output, Input, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
   selector: '[appIntersect]',
@@ -10,9 +11,13 @@ export class IntersectDirective implements OnInit, OnDestroy {
   
   private observer?: IntersectionObserver;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef, @Inject(PLATFORM_ID) private platformId: object) {}
 
   ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId) || typeof IntersectionObserver === 'undefined') {
+      return;
+    }
+
     this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {

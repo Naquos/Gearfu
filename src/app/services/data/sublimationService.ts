@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { tap, shareReplay } from "rxjs";
+import { BehaviorSubject, shareReplay, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
 
@@ -7,8 +7,10 @@ import { SublimationsDescriptions } from "../../models/data/sublimationsDescript
 export class SublimationService {
 
     private readonly sublimations = new Map<string, SublimationsDescriptions>();
-    private readonly sublimationsClassique: SublimationsDescriptions[] = [];
-    private readonly sublimationsEpiqueRelique: SublimationsDescriptions[] = [];
+    private readonly sublimationsClassiqueSubject = new BehaviorSubject<SublimationsDescriptions[]>([]);
+    private readonly sublimationsEpiqueReliqueSubject = new BehaviorSubject<SublimationsDescriptions[]>([]);
+    public readonly sublimationsClassique$ = this.sublimationsClassiqueSubject.asObservable();
+    public readonly sublimationsEpiqueRelique$ = this.sublimationsEpiqueReliqueSubject.asObservable();
     private readonly http = inject(HttpClient);
 
     private loadPromise?: Promise<void>;
@@ -19,11 +21,18 @@ export class SublimationService {
         }
 
         this.loadPromise = new Promise((resolve,) => {
-            this.http.get<SublimationsDescriptions[]>('/sublimations.json')
+            this.http.get<SublimationsDescriptions[]>('/Gearfu/sublimations.json')
                 .pipe(
-                    tap(sublimations => sublimations.forEach(x => this.sublimations.set(x.title.fr, x))),
-                    tap(sublimations => this.sublimationsClassique.push(...sublimations.filter(sublimation => !sublimation.isEpic && !sublimation.isRelic))),
-                    tap(sublimations => this.sublimationsEpiqueRelique.push(...sublimations.filter(sublimation => sublimation.isEpic || sublimation.isRelic))),
+                    tap(sublimations => {
+                        this.sublimations.clear();
+                        sublimations.forEach(x => this.sublimations.set(x.title.fr, x));
+
+                        const classique = sublimations.filter(sublimation => !sublimation.isEpic && !sublimation.isRelic);
+                        const epiqueRelique = sublimations.filter(sublimation => sublimation.isEpic || sublimation.isRelic);
+
+                        this.sublimationsClassiqueSubject.next(classique);
+                        this.sublimationsEpiqueReliqueSubject.next(epiqueRelique);
+                    }),
                     shareReplay(1)
                 )
                 .subscribe({
@@ -40,11 +49,11 @@ export class SublimationService {
     }
     
     public getSublimations(): SublimationsDescriptions[] {
-        return this.sublimationsClassique;
+        return this.sublimationsClassiqueSubject.value;
     }
 
     public getSublimationsEpiqueRelique(): SublimationsDescriptions[] {
-        return this.sublimationsEpiqueRelique;
+        return this.sublimationsEpiqueReliqueSubject.value;
     }
 
     public getSublimationById(id: number): SublimationsDescriptions | undefined {

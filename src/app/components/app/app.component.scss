@@ -139,6 +139,42 @@ header {
       }
     }
 
+    .filter-skeleton {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .skeleton-section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 10px;
+        background: rgba(13, 27, 42, 0.35);
+      }
+
+      .skeleton-title {
+        height: 18px;
+        width: 55%;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.12);
+        animation: skeleton-pulse 1.4s ease-in-out infinite;
+      }
+
+      .skeleton-row {
+        height: 14px;
+        width: 80%;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.12);
+        animation: skeleton-pulse 1.4s ease-in-out infinite;
+      }
+
+      .skeleton-row.wide {
+        width: 95%;
+      }
+    }
+
     .build-content {
       padding: 10px;
     }
@@ -334,5 +370,17 @@ header {
 
     .discord {
       display: none;
+    }
+  }
+
+  @keyframes skeleton-pulse {
+    0% {
+      opacity: 0.45;
+    }
+    50% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0.45;
     }
   }

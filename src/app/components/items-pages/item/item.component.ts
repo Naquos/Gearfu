@@ -22,6 +22,7 @@ import { ElementSelectorComponent } from "../element-selector/element-selector.c
 import { ElementSelectorEnum } from '../../../models/enum/elementSelectorEnum';
 import { mapSortAction, ratioWeightByLevel } from '../../../models/utils/utils';
 import { ActivateDirective } from "../../../directives/activate.directive";
+import { isGfxIdNeo } from '../../../models/enum/gfxIdNeoEnum';
 
 @Component({
   selector: 'app-item',
@@ -30,7 +31,6 @@ import { ActivateDirective } from "../../../directives/activate.directive";
   styleUrls: ['./item.component.scss']
 })
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
-  
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly el = inject(ElementRef);
   protected readonly itemService = inject(ItemsService);
@@ -56,6 +56,9 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     super()
   }
 
+  protected isNotGfxIdNeo(gfxId: number): boolean {
+    return !isGfxIdNeo(gfxId);
+  }
   protected navigateToCraftku(): void {
     window.open('https://craftkfu.waklab.fr/?' + this.item().id, '_blank');
   }
