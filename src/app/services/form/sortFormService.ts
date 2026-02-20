@@ -4,7 +4,6 @@ import { BehaviorSubject, distinctUntilChanged } from "rxjs";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 import { ClasseFormService } from "./classeFormService";
-import { UrlServices } from "../urlServices";
 import { LevelFormService } from "./levelFormService";
 import { SortService } from "../data/sortService";
 
@@ -16,7 +15,6 @@ export interface SortForm {
 @Injectable({providedIn: 'root'})
 export class SortFormService extends AbstractFormService<FormGroup<TypedControls<SortForm>>> {
   private readonly classeFormService = inject(ClasseFormService);
-  private readonly urlServices = inject(UrlServices);
   private readonly levelFormService = inject(LevelFormService);
   private readonly sortService = inject(SortService);
 
@@ -45,15 +43,10 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
 
   constructor() {
     super();
-    const codeSort = this.urlServices.getSortsFromUrl();
     this.init();
     this.classeFormService.classe$.pipe(distinctUntilChanged()).subscribe(() => {
       if (!this.firstLoad) {
         this.setDefaultValue();
-      } else {
-        if (codeSort) {
-          this.decodeAndSaveCodeBuild(codeSort);
-        }
       }
       this.firstLoad = false;
     });
@@ -64,7 +57,6 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
     this.sortPassifs.next(value.sortPassifs ?? SortFormService.DEFAULT_SORT_PASSIF);
     const codeBuild = this.generateCodeBuild(value);
     this.codeBuild.next(codeBuild);
-    this.urlServices.setSortsInUrl(codeBuild);
   }
 
   public override setValue(value: SortForm | null): void {
@@ -78,6 +70,10 @@ export class SortFormService extends AbstractFormService<FormGroup<TypedControls
     const neutres = value.sortNeutres?.join('-') || '';
     const passifs = value.sortPassifs?.join('-') || '';
     return `${neutres}-${passifs}`;
+  }
+
+  public getCodeBuild(): string {
+    return this.codeBuild.getValue();
   }
 
   public decodeAndSaveCodeBuild(codeBuild: string): void {

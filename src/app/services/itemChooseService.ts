@@ -13,7 +13,6 @@ import { Item } from "../models/data/item";
 import { AbstractDestroyService } from "./abstract/abstractDestroyService";
 import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
 import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
-import { UrlServices } from "./urlServices";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { calculWeight, ID_MAITRISES_MODIFIABLES, ID_RESISTANCES_MODIFIABLES } from "../models/utils/utils";
 import { ElementSelectorService } from "./elementSelectorService";
@@ -29,7 +28,6 @@ export class ItemChooseService extends AbstractDestroyService {
     private readonly maitrisesFormService = inject(MaitrisesFormService);
     private readonly onlyNoElemFormService = inject(OnlyNoElemFormService);
     private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
-    private readonly urlServices = inject(UrlServices);
     private readonly elementSelectorService = inject(ElementSelectorService);
 
     private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>(
@@ -113,33 +111,15 @@ export class ItemChooseService extends AbstractDestroyService {
             tap(x => this.setIdItems(x))
         ).subscribe(x => {
             this.localStorageService.setItem<string>(KeyEnum.KEY_BUILD, x);
-            this.urlServices.setItemsIdInUrl(x);
         });
     }
 
     private initItemsDirectly(): void {
-        // Récupérer les items depuis l'URL (hash) ou localStorage de manière synchrone
-        let itemsId = '';
-        
-        if (typeof window !== 'undefined') {
-            // Vérifier d'abord le hash (format: #itemsId=...)
-            let searchString = window.location.hash.substring(1); // Enlever le #
-            
-            // Si pas de hash, essayer les query params (rétrocompatibilité)
-            if (!searchString && window.location.search) {
-                searchString = window.location.search.substring(1); // Enlever le ?
-            }
-            
-            const urlParams = new URLSearchParams(searchString);
-            itemsId = urlParams.get('itemsId') || '';
-        }
-        
-        // Seulement si rien dans l'URL, utiliser le localStorage
-        if (!itemsId) {
-            itemsId = this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD) || '';
-        }
+        // Récupérer les items depuis le localStorage de manière synchrone
+        const itemsId = this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD) || '';
         
         if (itemsId && itemsId.trim() !== '') {
+            this.idItems.next(itemsId);
             const ids = itemsId.split(',');
             ids.forEach(id => {
                 const numId = parseInt(id);
@@ -149,7 +129,7 @@ export class ItemChooseService extends AbstractDestroyService {
             });
         }
         
-        // Lancer l'écoute des changements pour mettre à jour l'URL
+        // Lancer l'ecoute des changements pour mettre a jour le localStorage
         this.updateUrl();
     }
 
@@ -205,6 +185,10 @@ export class ItemChooseService extends AbstractDestroyService {
 
     public setIdItems(idItems: string): void {
         this.idItems.next(idItems);
+    }
+
+    public getIdItems(): string {
+        return this.idItems.getValue();
     }
 
     public getObsItem(itemType: ItemTypeEnum): Observable<(Item|undefined)[]> {

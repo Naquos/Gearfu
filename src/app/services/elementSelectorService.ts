@@ -3,14 +3,12 @@ import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { ElementSelectorEnum } from "../models/enum/elementSelectorEnum";
 import { LocalStorageService } from "./data/localStorageService";
 import { KeyEnum } from "../models/enum/keyEnum";
-import { UrlServices } from "./urlServices";
 
 @Injectable({providedIn: 'root'})
 export class ElementSelectorService {
     private readonly mapIdItemToElementsMaitrises = new Map<number, IdActionsEnum[]>()
     private readonly mapIdItemToElementsResistances = new Map<number, IdActionsEnum[]>()
     private readonly localStorageService = inject(LocalStorageService);
-    private readonly urlServices = inject(UrlServices);
     
     public init(): void {
         const savedMaitrises = this.localStorageService.getItem<[number, IdActionsEnum[]][]>(KeyEnum.KEY_ELEMENT_SELECTOR_MAITRISE);
@@ -34,7 +32,6 @@ export class ElementSelectorService {
         const map = this.getMapByType(type);
         map.set(idItem, elements);
         this.saveToLocalStorage(type);
-        this.updateUrl();
     }
 
     public getElementsForItem(idItem: number, type: ElementSelectorEnum): IdActionsEnum[] {
@@ -50,7 +47,6 @@ export class ElementSelectorService {
         const map = this.getMapByType(type);
         map.delete(idItem);
         this.saveToLocalStorage(type);
-        this.updateUrl();
     }
 
     private getMapByType(type: ElementSelectorEnum): Map<number, IdActionsEnum[]> {
@@ -144,11 +140,4 @@ export class ElementSelectorService {
         }
     }
 
-    /**
-     * Met à jour l'URL avec les données actuelles de l'element selector
-     */
-    private updateUrl(): void {
-        const code = this.encodeForBuild();
-        this.urlServices.setElementSelectorInUrl(code);
-    }
 }

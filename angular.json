@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "baseHref": "/Gearfu/",
             "outputPath": "dist/wakfu-builder",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -60,7 +61,6 @@
               "serviceWorker": "ngsw-config.json"
             },
             "development": {
-              "baseHref": "/Gearfu/",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true

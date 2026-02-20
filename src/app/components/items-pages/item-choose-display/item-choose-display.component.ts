@@ -67,8 +67,9 @@ export class ItemChooseDisplayComponent implements OnInit {
 
   protected setFilter():void {
     const currentFragment = typeof window !== 'undefined' ? window.location.hash.substring(1) : '';
-    this.router.navigate(["/"], {
-            fragment: currentFragment || undefined
+    const buildId = this.getBuildIdFromUrl(this.router.url);
+    this.router.navigate(["/", buildId], {
+      fragment: currentFragment || undefined
     });
     if(this.itemType() === ItemTypeEnum.BOUCLIER) {
       this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DAGUE)
@@ -77,5 +78,10 @@ export class ItemChooseDisplayComponent implements OnInit {
     } else {
       this.itemTypeFormServices.setItemType(this.itemType())
     }
+  }
+
+  private getBuildIdFromUrl(url: string): string {
+    const match = url.match(/^\/([^\/\?#]+)/);
+    return match?.[1] ?? 'local';
   }
 }

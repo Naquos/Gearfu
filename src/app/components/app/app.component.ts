@@ -39,9 +39,10 @@ import { SublimationService } from '../../services/data/sublimationService';
 import { FamiliersService } from '../../services/data/familiersService';
 import { SortLevelService } from '../../services/data/sortLevelService';
 import { ElementSelectorService } from '../../services/elementSelectorService';
-import { UrlServices } from '../../services/urlServices';
 import { ZenithService } from '../../services/zenith/zenithService';
-// import { SupabaseService } from '../../services/supabase/supabaseService';
+import { SupabaseService } from '../../services/supabase/supabaseService';
+import { SaveBuildService } from '../../services/saveBuildService';
+import { NO_BUILD } from '../../models/utils/utils';
 
 type column = 'filter' | 'build' | 'aptitudes';
 
@@ -93,9 +94,9 @@ export class AppComponent implements OnInit{
   private readonly familierService = inject(FamiliersService);
   private readonly sortLevelService = inject(SortLevelService);
   private readonly elementSelectorService = inject(ElementSelectorService);
-  private readonly urlServices = inject(UrlServices);
   private readonly zenithService = inject(ZenithService);
-  // private readonly supabaseService = inject(SupabaseService);
+  private readonly supabaseService = inject(SupabaseService);
+  private readonly saveBuildService = inject(SaveBuildService); 
 
   protected displayFilter = false;
   protected filterOrBuild : column = "filter";
@@ -118,13 +119,6 @@ export class AppComponent implements OnInit{
 
   public ngOnInit(): void {
     this.elementSelectorService.init();
-// Charger les données de l'element selector depuis l'URL
-    const elementSelectorFromUrl = this.urlServices.getElementSelectorFromUrl();
-    if (elementSelectorFromUrl) {
-      this.elementSelectorService.decodeAndApplyFromBuild(elementSelectorFromUrl);
-    }
-
-    
     this.ankamaCdnFacade.load();
     this.monsterDropService.load();
     this.itemConditionService.load();
@@ -135,15 +129,13 @@ export class AppComponent implements OnInit{
     this.sortLevelService.load();
 
     this.itemService.init();
+    if (isPlatformBrowser(this.platformId)) {
+      this.verifyToken();
+      this.saveBuildService.createBuildIfNotExists(this.getBuildIdFromUrl(window.location.href));
+      this.localStorageService.setItem<string>(KeyEnum.KEY_BUILD_ID, this.getBuildIdFromUrl(window.location.href));
+      this.saveBuildService.listenBuildChanges();
+    }
 
-    // this.supabaseService.getBuildsList().subscribe({
-    //   next: (builds) => {
-    //     console.log(`Loaded ${builds.length} builds from Supabase.`);
-    //   },
-    //   error: (error) => {
-    //     console.error('Error loading builds from Supabase:', error);
-    //   }
-    // });
 
     this.displayFilterService.isDisplayed$.subscribe((value: boolean) => {
       this.displayFilter = value;
@@ -177,12 +169,40 @@ export class AppComponent implements OnInit{
     }
   }
 
+  /**
+   * Vérifie si l'utilisateur a un token UUID, sinon en génère un et le stocke dans le localStorage
+   */
+  private verifyToken(): void {
+    const token = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN);
+    if (!token) {
+      const newToken = this.generateUuid();
+      this.localStorageService.setItem<string>(KeyEnum.KEY_TOKEN, newToken);
+    }
+  }
+
+  private generateUuid(): string {
+    if (globalThis.crypto?.randomUUID) {
+      return globalThis.crypto.randomUUID();
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (char) => {
+      const random = Math.floor(Math.random() * 16);
+      const value = char === 'x' ? random : (random & 0x3) | 0x8;
+      return value.toString(16);
+    });
+  }
+
   protected openDiscord(): void {
-    window.open('https://discord.gg/fFmzBmZjSb', '_blank');
+    if (isPlatformBrowser(this.platformId)) {
+      window.open('https://discord.gg/fFmzBmZjSb', '_blank');
+    }
   }
 
   protected generateBuild(): void {
-    this.zenithService.createBuild().pipe(take(1)).subscribe(linkBuild => window.open('https://www.zenithwakfu.com/builder/' + linkBuild, '_blank'));
+    this.zenithService.createBuild().pipe(take(1)).subscribe(linkBuild => {
+      if (isPlatformBrowser(this.platformId)) {
+        window.open('https://www.zenithwakfu.com/builder/' + linkBuild, '_blank');
+      }
+    });
   }
 
   private updateFilterOrBuildFromRoute(url: string): void {
@@ -210,34 +230,43 @@ export class AppComponent implements OnInit{
   }
 
   protected redirectToListItems(filterOrBuild: column): void {
-    const currentFragment = window.location.hash.substring(1);
-    this.router.navigate(["/"], {
+    const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
+    const buildId = this.getBuildIdFromUrl(window.location.href);
+    this.router.navigate(["/", buildId], {
       fragment: currentFragment || undefined
     }).then(() => this.filterOrBuild = filterOrBuild);
   }
 
   protected redirectToAptitudes(): void {
     this.filterOrBuild = 'aptitudes';
-    const currentFragment = window.location.hash.substring(1);
-    this.router.navigate(['/aptitudes'], {
+    const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
+    const buildId = this.getBuildIdFromUrl(window.location.href);
+    this.router.navigate(['/', buildId, 'aptitudes'], {
       fragment: currentFragment || undefined
     });
   }
 
   protected redirectToSorts(): void {
     this.filterOrBuild = 'aptitudes';
-    const currentFragment = window.location.hash.substring(1);
-    this.router.navigate(['/sorts'], {
+    const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
+    const buildId = this.getBuildIdFromUrl(window.location.href);
+    this.router.navigate(['/', buildId, 'sorts'], {
       fragment: currentFragment || undefined
     });
   }
 
   protected redirectToEnchantements(): void {
     this.filterOrBuild = 'aptitudes';
-    const currentFragment = window.location.hash.substring(1);
-    this.router.navigate(['/enchantements'], {
+    const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
+    const buildId = this.getBuildIdFromUrl(window.location.href);
+    this.router.navigate(['/', buildId, 'enchantements'], {
       fragment: currentFragment || undefined
     });
+  }
+
+  private getBuildIdFromUrl(url: string): string {
+    const match = url.match(/\/Gearfu\/(.*)/);
+    return match?.[1].split('/')[0] ?? NO_BUILD;
   }
 
 }

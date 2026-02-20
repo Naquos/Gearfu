@@ -13,6 +13,7 @@ import { ItemChooseService } from '../../../services/itemChooseService';
 import { RecapStatsService } from '../../../services/recapStatsService';
 import { ZenithService } from '../../../services/zenith/zenithService';
 import { ActivateDirective } from "../../../directives/activate.directive";
+import { SaveBuildService } from '../../../services/saveBuildService';
 
 @Component({
   selector: 'app-item-choose',
@@ -25,6 +26,8 @@ export class ItemChooseComponent {
   private readonly zenithService = inject(ZenithService);
   private readonly recapStatsService = inject(RecapStatsService);
   protected readonly imageService = inject(ImageService);
+  protected readonly saveBuildService = inject(SaveBuildService);
+  
 
 
   protected readonly maitrisesTotal = toSignal(this.recapStatsService.maitrisesTotal$, {
