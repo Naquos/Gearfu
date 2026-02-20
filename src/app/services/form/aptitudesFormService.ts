@@ -1,11 +1,10 @@
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
 import { BehaviorSubject } from "rxjs";
 import { RecapStats } from "../../models/data/recap-stats";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
-import { UrlServices } from "../urlServices";
 import { ParameterMajorActionEnum } from "../../models/enum/parameterMajorActionEnum";
 
 
@@ -55,7 +54,6 @@ export interface AptitudesForm {
 @Injectable({providedIn: 'root'})
 export class AptitudesFormService extends AbstractFormService<FormGroup<TypedControls<AptitudesForm>>> {
   public static readonly DEFAULT_VALUE = 0;
-  private readonly urlServices = inject(UrlServices);
 
   private readonly recapStat = new BehaviorSubject<RecapStats[]>([]);
   public readonly recapStat$ = this.recapStat.asObservable();
@@ -134,11 +132,7 @@ export class AptitudesFormService extends AbstractFormService<FormGroup<TypedCon
 
   constructor() {
     super();
-    const codeFromUrl = this.urlServices.getAptitudesFromUrl();
     this.init();
-    if (codeFromUrl !== undefined) {
-      this.decodeFromUrl(codeFromUrl);
-    }
   }
 
   /**

@@ -8,7 +8,6 @@
         </div>
         
         <div class="secondLine">
-            <img matTooltip="Wakfu Index"  src="./WakfuIndex.png" (appActivate)="navigateToWakfuIndex()" alt="wakfu-index" id="wakfuIndexButton">
             <mat-icon aria-hidden="false" fontIcon="gavel"
                 matTooltip="Craftku"
                 [matTooltipShowDelay]="300" 
@@ -16,17 +15,9 @@
                  alt="craftku"
                 id="craftkuButton">
             </mat-icon>
-            <img matTooltip="Wakfocus"  src="./logo-WakFocus.png" (appActivate)="navigateToWakfocus()" alt="wakfocus" id="WakfocusButton">
-            <mat-icon aria-hidden="false" fontIcon="file_copy" 
-                [matTooltip]="'item-choose.copy' | translate"
-                [matTooltipShowDelay]="300"
-                (appActivate)="copyToClipboard()">
-            </mat-icon>
-            <mat-icon aria-hidden="false" fontIcon="delete" 
-                [matTooltip]="'item-choose.delete' | translate"
-                [matTooltipShowDelay]="300"
-                (appActivate)="itemChooseService.cleanItemChoosen()">
-            </mat-icon>
+            <div class="nouveauBuild" (appActivate)="saveBuildService.createAndNavigate()">
+                Nouveau build
+            </div>
         </div>
     </div>
     <app-item-choose-display backgroundItemType="./aptitudes/EmplacementCoiffe.png" [itemType]="ItemTypeEnum.CASQUE" ></app-item-choose-display>

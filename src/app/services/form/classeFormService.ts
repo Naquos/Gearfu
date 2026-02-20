@@ -1,15 +1,13 @@
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { FormControl } from "@angular/forms";
 import { AbstractFormService } from "./abstractFormService";
 import { ClassIdEnum } from "../../models/enum/classIdEnum";
 import { BehaviorSubject } from "rxjs";
-import { UrlServices } from "../urlServices";
 
 @Injectable({providedIn: 'root'})
 export class ClasseFormService extends AbstractFormService<FormControl<ClassIdEnum>> {
     public static readonly DEFAULT_VALUE = ClassIdEnum.Eniripsa;
-    private readonly urlServices = inject(UrlServices);
 
     private readonly classe = new BehaviorSubject<ClassIdEnum>(ClasseFormService.DEFAULT_VALUE);
     public readonly classe$ = this.classe.asObservable();
@@ -20,16 +18,11 @@ export class ClasseFormService extends AbstractFormService<FormControl<ClassIdEn
     
     constructor() {
         super();
-        const classeFromUrl = this.urlServices.getClasseFromUrl();
         this.init();
-        if(classeFromUrl !== undefined) {
-            this.setValue(classeFromUrl as ClassIdEnum);
-        }
     }
 
     protected override handleChanges(value: ClassIdEnum): void {
         this.classe.next(value);
-        this.urlServices.setClasseInUrl(value);
     }
     
     public override setValue(value: ClassIdEnum | null): void {

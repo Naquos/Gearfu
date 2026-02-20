@@ -1,9 +1,8 @@
 import { inject, Injectable } from "@angular/core";
 import { LocalStorageService } from "./data/localStorageService";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, catchError, combineLatest, take, tap } from "rxjs";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { Build } from "../models/data/build";
-import { UrlServices } from "./urlServices";
 import { LevelFormService } from "./form/levelFormService";
 import { ItemChooseService } from "./itemChooseService";
 import { ClasseFormService } from "./form/classeFormService";
@@ -11,12 +10,14 @@ import { CodeAptitudesService } from "./codeAptitudesService";
 import { SortFormService } from "./form/sortFormService";
 import { ChasseFormService } from "./form/chasseFormService";
 import { ElementSelectorService } from "./elementSelectorService";
+import { SupabaseService } from "./supabase/supabaseService";
+import { Router } from "@angular/router";
+import { ClassIdEnum } from "../models/enum/classIdEnum";
 
 @Injectable({providedIn: 'root'})
 export class SaveBuildService {
     
     private readonly localStorageService = inject(LocalStorageService);
-    private readonly urlServices = inject(UrlServices);
     private readonly levelFormService = inject(LevelFormService);
     private readonly itemChooseService = inject(ItemChooseService);
     private readonly classeFormService = inject(ClasseFormService);
@@ -24,9 +25,13 @@ export class SaveBuildService {
     private readonly sortFormService = inject(SortFormService);
     private readonly chasseFormService = inject(ChasseFormService);
     private readonly elementSelectorService = inject(ElementSelectorService);
+    private readonly supabaseService = inject(SupabaseService);
+    private readonly router = inject(Router);
     
     private readonly buildList = new BehaviorSubject<Build[]>([]);
     public readonly buildList$ = this.buildList.asObservable();
+    private readonly currentBuildId = new BehaviorSubject<string | null>(null);
+    private readonly currentTokenBuild = new BehaviorSubject<string | null>(null);
     
     constructor() {
         const savedBuilds = this.localStorageService.getItem<Build[]>(KeyEnum.KEY_SAVE_BUILD_ALL) || [];
@@ -34,82 +39,147 @@ export class SaveBuildService {
     }
 
     /**
-     * Sauvegarde le build actuel depuis l'URL
+     * Regarde si le build existe, sinon le crée et navigue vers ce build
+     * Si le build existe on charge les données de ce build
+     * @param buildId
+     */
+    public createBuildIfNotExists(buildId: string): void {
+        if (buildId === "no-build") {
+            this.createAndNavigate();
+        } else {
+            this.supabaseService.getBuildById(buildId)
+            .pipe(take(1),
+            tap(build => {
+                if (build) {
+                    this.loadBuild(build);
+                }
+            }),
+            catchError(() => {
+                this.createAndNavigate();
+                return [];
+            })).subscribe();
+        }
+    }
+
+    /**
+     * Crée un nouveau build vide et navigue vers la page d'accueil avec ce build dans l'url
+     */
+    public createAndNavigate(): void {
+        this.supabaseService.createEmptyBuild().subscribe(newBuild => {
+            if (!newBuild?.id) {
+                return;
+            }
+            this.loadBuild(newBuild);
+            this.router.navigate(["/", newBuild.id]);
+        });
+    }
+
+    /**
+     * Ecoute les changements sur les différents services et sauvegarde le build à chaque changement sur Supabase
+     * et dans le localStorage pour la liste des builds sauvegardés
+     */
+    public listenBuildChanges(): void {
+        combineLatest([
+            this.levelFormService.level$,
+            this.itemChooseService.idItems$,
+            this.classeFormService.classe$,
+            this.codeAptitudesService.code$,
+            this.sortFormService.codeBuild$,
+            this.chasseFormService.enchantement$,
+        ]).pipe(
+            tap(() => {
+                const token_build = this.currentTokenBuild.getValue();
+                const token_user = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN);
+                if(token_build && token_user && token_build !== token_user) {
+                    return; // Ne pas sauvegarder si le token du build actuel ne correspond pas au token de l'utilisateur (sécurité pour éviter d'écraser un build qui ne nous appartient pas)
+                }
+                this.saveCurrentBuild();
+                this.saveBuildToSupabase();
+            })
+        ).subscribe();
+    }
+
+    private saveBuildToSupabase(): void {
+        const build: Build = {
+            id: this.currentBuildId.getValue() || '',
+            nameBuild: this.getNameFromBuild(),
+            level: this.levelFormService.getValue(),
+            itemsId: this.itemChooseService.getIdItems(),
+            classe: this.classeFormService.getValue(),
+            aptitudes: this.codeAptitudesService.getCode(),
+            sorts: this.sortFormService.getCodeBuild(),
+            enchantement: this.chasseFormService.getCodeBuild(),
+            elementSelector: this.elementSelectorService.encodeForBuild(),
+            compressed: false
+        };
+        this.supabaseService.updateBuild(build).subscribe();
+    }
+
+    /**
+     * Recupère le nom du builds s'il existe
+     * @returns 
+     */
+    private getNameFromBuild(): string {
+        const id = this.currentBuildId.getValue() || '';
+        const currentBuilds = this.buildList.getValue();
+        const build = currentBuilds.find(b => b.id === id);
+        return build?.nameBuild || this.generateDefaultName();
+    }
+
+
+    /**
+     * Sauvegarde le build actuel depuis l'etat des services
      */
     public saveCurrentBuild(nameBuild?: string): void {
         const build: Build = {
-            nameBuild: nameBuild || this.generateDefaultName(),
-            level: this.urlServices.getLevelFromUrl(),
-            itemsId: this.urlServices.getItemsIdFromUrl(),
-            classe: this.urlServices.getClasseFromUrl(),
-            aptitudes: this.urlServices.getAptitudesFromUrl(),
-            sorts: this.urlServices.getSortsFromUrl(),
-            enchantement: this.urlServices.getEnchantementFromUrl(),
-            elementSelector: this.urlServices.getElementSelectorFromUrl(),
-            compressed: this.urlServices.isCompressed(),
+            id: this.currentBuildId.getValue() || '',
+            nameBuild: nameBuild || this.getNameFromBuild(),
+            level: this.levelFormService.getValue(),
+            itemsId: this.itemChooseService.getIdItems(),
+            classe: this.classeFormService.getValue(),
+            aptitudes: this.codeAptitudesService.getCode(),
+            sorts: this.sortFormService.getCodeBuild(),
+            enchantement: this.chasseFormService.getCodeBuild(),
+            elementSelector: this.elementSelectorService.encodeForBuild(),
+            compressed: false,
             createdAt: Date.now()
         };
-        this.addBuild(build);
+        this.addBuildToLocalStorage(build);
     }
 
     /**
      * Ajoute un build à la liste
      */
-    public addBuild(build: Build): void {
+    public addBuildToLocalStorage(build: Build): void {
         // Vérifier qu'il y a au moins des items ou des paramètres valides
         if (!build.itemsId && !build.aptitudes && !build.sorts && !build.enchantement && !build.elementSelector) {
             return; // Éviter d'ajouter des builds vides
         }
-        
-        const currentBuilds = this.buildList.getValue();
-        
-        // Vérifier si ce build existe déjà (comparaison par contenu)
-        const isDuplicate = currentBuilds.some(b => 
-            b.itemsId === build.itemsId &&
-            b.level === build.level &&
-            b.classe === build.classe &&
-            b.aptitudes === build.aptitudes &&
-            b.sorts === build.sorts &&
-            b.enchantement === build.enchantement &&
-            b.elementSelector === build.elementSelector
-        );
-        
-        if (!isDuplicate) {
-            currentBuilds.unshift(build);
-            // Limiter à 50 builds max pour éviter de surcharger le localStorage
-            if (currentBuilds.length > 50) {
-                currentBuilds.pop();
-            }
-            this.buildList.next(currentBuilds);
-            this.localStorageService.setItem(KeyEnum.KEY_SAVE_BUILD_ALL, currentBuilds);
+
+        // On enlève le build actuel s'il existe déjà pour éviter les doublons
+        const currentBuilds = this.buildList.getValue().filter(b => b.id !== build.id); 
+        currentBuilds.unshift(build);
+        // Limiter à 50 builds max pour éviter de surcharger le localStorage
+        if (currentBuilds.length > 50) {
+            currentBuilds.pop();
         }
+        this.buildList.next(currentBuilds);
+        this.localStorageService.setItem(KeyEnum.KEY_SAVE_BUILD_ALL, currentBuilds);
     }
 
     /**
      * Charge un build et met à jour l'URL
      */
     public loadBuild(build: Build): void {
-        if (build.level !== undefined) {
-            this.levelFormService.setValue(build.level);
-        }
-        if (build.elementSelector) {
-            this.elementSelectorService.decodeAndApplyFromBuild(build.elementSelector);
-        }
-        if (build.itemsId) {
-            this.itemChooseService.setIdItemsFromBuild(build.itemsId);
-        }
-        if (build.classe !== undefined) {
-            this.classeFormService.setValue(build.classe);
-        }
-        if (build.aptitudes) {
-            this.codeAptitudesService.saveCode(build.aptitudes);
-        }
-        if (build.sorts) {
-            this.sortFormService.decodeAndSaveCodeBuild(build.sorts);
-        }
-        if (build.enchantement) {
-            this.chasseFormService.decodeAndSaveCodeBuild(build.enchantement);
-        }
+        this.levelFormService.setValue(build.level ?? LevelFormService.DEFAULT_VALUE);
+        this.elementSelectorService.decodeAndApplyFromBuild(build.elementSelector ?? "");
+        this.itemChooseService.setIdItemsFromBuild(build.itemsId ?? "");
+        this.classeFormService.setValue(build.classe ?? ClassIdEnum.Eniripsa);
+        this.codeAptitudesService.saveCode(build.aptitudes ?? "");
+        this.sortFormService.decodeAndSaveCodeBuild(build.sorts ?? "0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
+        this.chasseFormService.decodeAndSaveCodeBuild(build.enchantement ?? "");
+        this.currentBuildId.next(build.id ?? '');
+        this.currentTokenBuild.next(build.token || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '');
     }
 
     /**
@@ -125,19 +195,12 @@ export class SaveBuildService {
     }
 
     /**
-     * Supprime un build (pour compatibilité)
+     * Supprime un build
      */
     public removeBuild(build: Build): void {
         const currentBuilds = this.buildList.getValue();
         const index = currentBuilds.findIndex(b => 
-            b.itemsId === build.itemsId &&
-            b.level === build.level &&
-            b.classe === build.classe &&
-            b.aptitudes === build.aptitudes &&
-            b.sorts === build.sorts &&
-            b.enchantement === build.enchantement &&
-            b.elementSelector === build.elementSelector &&
-            b.createdAt === build.createdAt
+            b.itemsId === build.itemsId
         );
         
         if (index !== -1) {

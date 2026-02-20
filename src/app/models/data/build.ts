@@ -1,6 +1,7 @@
 import { ClassIdEnum } from "../enum/classIdEnum";
 
 export interface Build {
+    id?: string;
     nameBuild?: string;
     level?: number;
     itemsId?: string;
@@ -14,4 +15,5 @@ export interface Build {
     // Timestamp de création pour trier les builds
     createdAt?: number;
     codeZenith?: string;
+    token?: string;
 }

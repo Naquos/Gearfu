@@ -6,8 +6,6 @@ import { BehaviorSubject } from "rxjs";
 import { RecapStats } from "../../models/data/recap-stats";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { ParameterMajorActionEnum } from "../../models/enum/parameterMajorActionEnum";
-import { inject } from "@angular/core";
-import { UrlServices } from "../urlServices";
 
 
 export interface AptitudesManualForm {
@@ -61,8 +59,6 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
 
   protected readonly keyEnum = KeyEnum.KEY_APTITUDES_MANUAL;
 
-  private readonly urlServices = inject(UrlServices);
-  private isLoadingFromUrl = false;
 
   public readonly form = new FormGroup<TypedControls<AptitudesManualForm>>({
     pointDeVie: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
@@ -108,13 +104,7 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
 
   constructor() {
     super();
-    const codeAptitudesManual = this.urlServices.getAptitudesManualFromUrl();
     this.init();
-    if (codeAptitudesManual) {
-      this.isLoadingFromUrl = true;
-      this.decodeAndSaveCodeBuild(codeAptitudesManual);
-      this.isLoadingFromUrl = false;
-    }
   }
 
   /**
@@ -290,11 +280,6 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
     ];
     this.recapStat.next(recapStatsList);
     
-    // Synchroniser avec l'URL seulement si on ne charge pas depuis l'URL
-    if (!this.isLoadingFromUrl) {
-      const codeBuild = this.generateCodeBuild(value);
-      this.urlServices.setAptitudesManualInUrl(codeBuild);
-    }
   }
 
   public override setValue(value: AptitudesManualForm | null): void {

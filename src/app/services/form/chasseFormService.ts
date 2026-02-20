@@ -20,7 +20,6 @@ import { Enchantement } from "../../models/data/enchantement";
 import { SublimationsEpiqueRelique } from "../../models/data/sublimationEpiqueRelique";
 import { SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
 import { SublimationService } from "../data/sublimationService";
-import { UrlServices } from "../urlServices";
 import { coutEclat } from "../../models/utils/utils";
 
 @Injectable({providedIn: 'root'})
@@ -49,7 +48,6 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     public readonly form =  new FormControl<Enchantement>(ChasseFormService.DEFAULT_VALUE(), { nonNullable: true });
 
     private readonly sublimationService = inject(SublimationService);
-    private readonly urlServices = inject(UrlServices);
 
     private isLoadingFromUrl = false;
 
@@ -86,20 +84,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     
     constructor() {
         super();
-        const codeEnchantement = this.urlServices.getEnchantementFromUrl();
         this.init();
-        if (codeEnchantement) {
-            // Attendre que les sublimations soient chargées avant de décoder
-            this.sublimationService.load().then(() => {
-                this.isLoadingFromUrl = true;
-                this.decodeAndSaveCodeBuild(codeEnchantement);
-                this.isLoadingFromUrl = false;
-                // Émettre l'enchantement chargé une seule fois
-                this.enchantement.next(this.form.value);
-                // Forcer un recalcul après le chargement
-                this.handleChanges(this.form.value);
-            });
-        }
     }
 
     /**
@@ -428,7 +413,10 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         this.recapChassesEffect.next(recapStats);
         this.coutEclatTotal.next(coutEclatTotal);
         const codeBuild = this.generateCodeBuild(value);
-        this.urlServices.setEnchantementInUrl(codeBuild);
+    }
+
+    public getCodeBuild(): string {
+        return this.generateCodeBuild(this.enchantement.getValue());
     }
 
     private calculMaxSublimationLevel(sublimationList: Sublimation[]): Map<number, number> {

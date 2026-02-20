@@ -23,7 +23,7 @@ export class ImportBuildFormService extends AbstractFormService<FormControl<stri
     private importBuildFromUrlGearfu(): void {
         const itemsId = this.form.value.split("itemsId=")[1];
         if(itemsId) {
-            this.saveBuildService.addBuild({itemsId, nameBuild: "Gearfu - Build import"});
+            this.saveBuildService.addBuildToLocalStorage({itemsId, nameBuild: "Gearfu - Build import"});
         }
     }
 
@@ -32,7 +32,7 @@ export class ImportBuildFormService extends AbstractFormService<FormControl<stri
         if(itemsId) {
             this.zenithApiService.getBuild(itemsId).pipe(tap(response => {
                 const ids = response.equipments.map(x => x.id_equipment);
-                this.saveBuildService.addBuild(
+                this.saveBuildService.addBuildToLocalStorage(
                     {
                         itemsId: ids.join(","),
                         nameBuild: response.name_build,

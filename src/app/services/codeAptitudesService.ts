@@ -2,12 +2,10 @@ import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { AptitudesForm, AptitudesFormService } from "./form/aptitudesFormService";
-import { UrlServices } from "./urlServices";
 
 @Injectable({providedIn: 'root'})
 export class CodeAptitudesService {
     private aptitudesFormService = inject(AptitudesFormService);
-    private readonly urlServices = inject(UrlServices);
     private readonly code = new BehaviorSubject<string>('');
     public readonly code$ = this.code.asObservable();
 
@@ -157,8 +155,11 @@ export class CodeAptitudesService {
             codeAptitudes = codeAptitudes.slice(0, -1);
         }
 
-        this.urlServices.setAptitudesInUrl(codeAptitudes);
         this.code.next(codeAptitudes);
+    }
+
+    public getCode(): string {
+        return this.code.getValue();
     }
 
     public saveCode(code: string) {
