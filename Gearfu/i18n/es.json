@@ -128,7 +128,8 @@
         "poids-total": "Peso total",
         "maitrise-total": "Dominio total",
         "resistance-total": "Resistencias total",
-        "delete": "Eliminar construcción"
+        "delete": "Eliminar construcción",
+        "nouveau-build": "Nueva construcción"
     },
     "item-level": {
         "level": "Rango de nivel",

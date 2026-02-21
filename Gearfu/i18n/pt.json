@@ -128,7 +128,8 @@
         "poids-total": "Peso total",
         "maitrise-total": "Maestria total",
         "resistance-total": "Resistências total",
-        "delete": "Excluir build"
+        "delete": "Excluir build",
+        "nouveau-build": "Novo build"
     },
     "item-level": {
         "level": "Faixa de nível",

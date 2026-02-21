@@ -128,7 +128,8 @@
         "poids-total": "Poids total",
         "maitrise-total": "Maitrises total",
         "resistance-total": "Résistances total",
-        "delete": "Supprimer le build"
+        "delete": "Supprimer le build",
+        "nouveau-build": "Nouveau build"
     },
     "item-level": {
         "level": "Tranche de level",
