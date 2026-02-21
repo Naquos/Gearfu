@@ -9,11 +9,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        
+        min-width: 30%;
         width: fit-content;
         
         button {
-            width: 270px;
+            width: 100%;
             border: 2px solid #415A77;
             box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
             cursor: pointer;
@@ -32,7 +32,7 @@
         }
 
         .card {
-            width: fit-content;
+            width: 100%;
             background: linear-gradient(145deg, #0D1B2A, #415A77);
             border-radius: 15px;
             padding: 15px;
