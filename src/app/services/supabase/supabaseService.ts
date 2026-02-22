@@ -74,6 +74,13 @@ export class SupabaseService {
         if (!this.isBrowser) {
             return of([]);
         }
+        // Si jamais l'utilisateur ne souhaite pas filtrer sur une statistique, on met une valeur très basse pour ne pas exclure de résultats
+        const _PA = PA <= 0 ? -100 : PA;
+        const _PM = PM <= 0 ? -100 : PM;
+        const _PW = PW <= 0 ? -100 : PW;
+        const _PO = PO <= 0 ? -100 : PO;
+        const _CC = CC <= 0 ? -100 : CC;
+        const _parade = parade <= 0 ? -100 : parade;
 
         // On part de statistics pour trier directement sur la colonne maitrises,
         // puis on récupère le build lié via jointure.
@@ -83,12 +90,12 @@ export class SupabaseService {
             .gte('build.level', lvlMin)
             .lte('build.level', lvlMax)
             .gt('maitrises', 40) // On filtre pour n'avoir que les builds avec au moins 40 maitrise qui est la valeur par défaut donnée par la guilde
-            .gte('PA', PA)
-            .gte('PM', PM)
-            .gte('PW', PW)
-            .gte('PO', PO)
-            .gte('CC', CC)
-            .gte('parade', parade)
+            .gte('PA', _PA)
+            .gte('PM', _PM)
+            .gte('PW', _PW)
+            .gte('PO', _PO)
+            .gte('CC', _CC)
+            .gte('parade', _parade)
             .order(orderBy, { ascending: false })
             .limit(100)
         ).pipe(
