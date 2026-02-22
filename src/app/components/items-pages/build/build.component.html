@@ -11,7 +11,9 @@
 <div 
     class="content"
     (click)="loadBuild()"
-    [style.border-top-right-radius]="build()?.codeZenith ? '0' : '10px'">
+    [style.border-top-right-radius]="build()?.codeZenith ? '0' : '10px'"
+    [style.background-image]="`url(classes/icon/${build()?.classe}.jpg)`"
+    >
     <div class="row">
         <img [src]="mapImageItems.get(ItemTypeBuild.CASQUE)" alt="image">
         <img [src]="mapImageItems.get(ItemTypeBuild.AMULETTE)" alt="image">
@@ -29,6 +31,6 @@
         <img [src]="mapImageItems.get(ItemTypeBuild.PREMIERE_MAIN)" alt="image">
         <img [src]="mapImageItems.get(ItemTypeBuild.ACCESSOIRES)" alt="image">
         <img [src]="mapImageItems.get(ItemTypeBuild.FAMILIER)" alt="image">
-        <button (click)="removeBuild($event)">X</button>
+        <button (click)="removeBuild($event)" [style.visibility]="displayRemove() ? 'visible' : 'hidden'">X</button>
     </div>
 </div>

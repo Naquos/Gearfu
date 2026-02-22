@@ -43,6 +43,7 @@ export class BuildComponent implements OnInit {
   protected readonly itemChooseService = inject(ItemChooseService);
 
   public readonly build = input<Build |  undefined>(undefined);
+  public readonly displayRemove = input<boolean>(true);
 
   protected readonly ItemTypeBuild = ItemTypeBuild;
   protected readonly mapImageItems = new Map<ItemTypeBuild, string>([

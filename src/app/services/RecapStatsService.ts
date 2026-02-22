@@ -21,6 +21,7 @@ import { EffectApplicationService } from "./recap-stats/effect-application.servi
 import { SublimationEffectsService } from "./recap-stats/sublimation-effects.service";
 import { PassiveEffectsService } from "./recap-stats/passive-effects.service";
 import { calculWeight } from "../models/utils/utils";
+import { Statistics } from "../models/data/statistics";
 
 @Injectable({ providedIn: 'root' })
 export class RecapStatsService extends AbstractDestroyService {
@@ -116,6 +117,10 @@ export class RecapStatsService extends AbstractDestroyService {
   private readonly poidsTotal = new BehaviorSubject<number>(0);
   public readonly poidsTotal$ = this.poidsTotal.asObservable();
 
+  // Statistiques du builds calculées avant la prise en compte des aptitudes manuelles
+  private readonly statistics = new BehaviorSubject<Statistics | null>(null);
+  public readonly statistics$ = this.statistics.asObservable();
+
   constructor() {
     super();
     this.initializeListeners();
@@ -139,17 +144,50 @@ export class RecapStatsService extends AbstractDestroyService {
       map(([items, aptitudes, level, chasses, sublimationsIdToLevel, bonus, aptitudesManual]) => {
         const extract = this.extractEquipEffects(items);
         const recapStat = this.mapToRecapStats(extract);
-        recapStat.push(...aptitudes, ...chasses, ...bonus, ...aptitudesManual);
-        return {recapStat, level, sublimationsIdToLevel};
+        recapStat.push(...aptitudes, ...chasses, ...bonus);
+        return {recapStat, level, sublimationsIdToLevel, aptitudesManual};
       }),
       tap(() => this.applyNatifEffects()),
       tap(() => this.applyEffectByClass()),
       tap((x => x.recapStat.forEach(effect => this.applyEffect(effect)))),
       tap(() => this.applyEffectPassif()),
       tap(x => this.applyEffectSublimation(x.sublimationsIdToLevel)),
+      tap(() => this.updateStatistics()),
+      tap(x => x.aptitudesManual.forEach((effect: RecapStats) => this.applyEffect(effect))),
       tap(() => this.applyPdv()),
       tap(() => this.emitEffects()),
     ).subscribe();
+  }
+
+  /**
+   * Récupère les statistiques courantes du build, calculées à partir des effets appliqués
+   * @returns 
+   */
+  public getCurrentStatistics(): Statistics | null {
+    return this.statistics.value;
+  }
+
+  /**
+   * Calcule les statistiques du build à partir des effets appliqués et émet un objet Statistics
+   */
+  private updateStatistics(): void {
+    const maitrises = this.calculMaitrisesTotal();
+    const resistances = this.calculateResistancesTotal();
+    const statistiques: Statistics = {
+      id: "",
+      buildId: "",
+      token: "",
+      PA: this.recap.value.find(rs => rs.id === IdActionsEnum.PA)?.value || 0,
+      PM: this.recap.value.find(rs => rs.id === IdActionsEnum.PM)?.value || 0,
+      PW: this.recap.value.find(rs => rs.id === IdActionsEnum.BOOST_PW)?.value || 0,
+      PO: this.recap.value.find(rs => rs.id === IdActionsEnum.PORTEE)?.value || 0,
+      CC: this.recap.value.find(rs => rs.id === IdActionsEnum.COUP_CRITIQUE)?.value || 0,
+      parade: this.recap.value.find(rs => rs.id === IdActionsEnum.PARADE)?.value || 0,
+      maitrises: maitrises,
+      resistances: resistances,
+      poids: this.calculatePoidsTotal(resistances, maitrises),
+    }
+    this.statistics.next(statistiques);
   }
 
   private applyPdv(): void {
@@ -272,8 +310,12 @@ export class RecapStatsService extends AbstractDestroyService {
     }
   }
 
-  private emitEffects(): void {
-    this.recap.next([...this.recap.value]);
+  /**
+   * Calcule le total des maitrises en prenant le maximum des maitrises élémentaires 
+   * et en ajoutant les maitrises secondaires
+   * @returns 
+   */
+  private calculMaitrisesTotal(): number {
     const sommeMaitrisesSecondaires = this.recap.value
       .filter(rs => [
         IdActionsEnum.MAITRISES_MELEE,
@@ -292,10 +334,15 @@ export class RecapStatsService extends AbstractDestroyService {
       this.recap.value.find(rs => rs.id === IdActionsEnum.MAITRISES_AIR)?.value || 0,
       0
     );
-    const sommeMaitrisesSecondairesWithElem = sommeMaitrisesSecondaires + maxMaitrisesElem;
-    this.maitrisesTotal.next(sommeMaitrisesSecondairesWithElem);
+    return sommeMaitrisesSecondaires + maxMaitrisesElem;
+  }
 
-    const resistancesSum = this.recap.value
+  /**
+   * Calcule le total des résistances en sommant les résistances élémentaires
+   * @returns 
+   */
+  private calculateResistancesTotal(): number {
+    return this.recap.value
       .filter(rs => [
         IdActionsEnum.RESISTANCES_FEU,
         IdActionsEnum.RESISTANCES_EAU,
@@ -303,10 +350,23 @@ export class RecapStatsService extends AbstractDestroyService {
         IdActionsEnum.RESISTANCES_AIR,
       ].includes(rs.id))
       .reduce((sum, current) => sum + current.value, 0);
-    this.resistancesTotal.next(resistancesSum);
+  }
 
+  /**
+   * Calcule le poids total en fonction des résistances, maitrises et du niveau
+   * @param resistances 
+   * @param maitrises 
+   * @returns 
+   */
+  private calculatePoidsTotal(resistances: number, maitrises: number): number {
     const level = this.levelFormService.getValue();
-    const poids = calculWeight(resistancesSum, sommeMaitrisesSecondairesWithElem, level);
-    this.poidsTotal.next(poids);
+    return calculWeight(resistances, maitrises, level);
+  }
+
+  private emitEffects(): void {
+    this.recap.next([...this.recap.value]);
+    this.maitrisesTotal.next(this.calculMaitrisesTotal());
+    this.resistancesTotal.next(this.calculateResistancesTotal());
+    this.poidsTotal.next(this.calculatePoidsTotal(this.resistancesTotal.value, this.maitrisesTotal.value));
   }
 }

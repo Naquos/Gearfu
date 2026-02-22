@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { LocalStorageService } from "./data/localStorageService";
-import { BehaviorSubject, catchError, combineLatest, take, tap } from "rxjs";
+import { BehaviorSubject, catchError, combineLatest, map, switchMap, take, tap } from "rxjs";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { Build } from "../models/data/build";
 import { LevelFormService } from "./form/levelFormService";
@@ -13,6 +13,9 @@ import { ElementSelectorService } from "./elementSelectorService";
 import { SupabaseService } from "./supabase/supabaseService";
 import { Router } from "@angular/router";
 import { ClassIdEnum } from "../models/enum/classIdEnum";
+import { Statistics } from "../models/data/statistics";
+import { RecapStatsService } from "./recapStatsService";
+import { NO_BUILD } from "../models/utils/utils";
 
 @Injectable({providedIn: 'root'})
 export class SaveBuildService {
@@ -27,11 +30,13 @@ export class SaveBuildService {
     private readonly elementSelectorService = inject(ElementSelectorService);
     private readonly supabaseService = inject(SupabaseService);
     private readonly router = inject(Router);
+    private readonly recapStatsService = inject(RecapStatsService);
     
     private readonly buildList = new BehaviorSubject<Build[]>([]);
     public readonly buildList$ = this.buildList.asObservable();
     private readonly currentBuildId = new BehaviorSubject<string | null>(null);
     private readonly currentTokenBuild = new BehaviorSubject<string | null>(null);
+    private readonly statisticsId = new BehaviorSubject<string | null>(null);
     
     constructor() {
         const savedBuilds = this.localStorageService.getItem<Build[]>(KeyEnum.KEY_SAVE_BUILD_ALL) || [];
@@ -43,8 +48,8 @@ export class SaveBuildService {
      * Si le build existe on charge les données de ce build
      * @param buildId
      */
-    public createBuildIfNotExists(buildId: string): void {
-        if (buildId === "no-build") {
+    public createBuildIfNotExistsElseLoadIt(buildId: string): void {
+        if (buildId === NO_BUILD || !buildId) {
             this.createAndNavigate();
         } else {
             this.supabaseService.getBuildById(buildId)
@@ -54,6 +59,18 @@ export class SaveBuildService {
                     this.loadBuild(build);
                 }
             }),
+            switchMap(build => {
+                if (build) {
+                    return this.supabaseService.getStatisticsByBuildId(build.id || '').pipe(
+                        tap(statistics => {
+                            if (statistics) {
+                                this.statisticsId.next(statistics.id || null);
+                            }
+                        })
+                    );
+                }
+                return [];
+             }),
             catchError(() => {
                 this.createAndNavigate();
                 return [];
@@ -65,7 +82,16 @@ export class SaveBuildService {
      * Crée un nouveau build vide et navigue vers la page d'accueil avec ce build dans l'url
      */
     public createAndNavigate(): void {
-        this.supabaseService.createEmptyBuild().subscribe(newBuild => {
+        this.supabaseService.createEmptyBuild()
+        .pipe(
+            switchMap(newBuild => 
+                this.supabaseService.createEmptyStatistics(newBuild?.id || '').pipe(
+                    tap(newStatistics => this.statisticsId.next(newStatistics?.id || null)),
+                    map(() => newBuild)
+                )
+            )
+        )
+        .subscribe(newBuild => {
             if (!newBuild?.id) {
                 return;
             }
@@ -100,8 +126,12 @@ export class SaveBuildService {
     }
 
     private saveBuildToSupabase(): void {
+        const id = this.currentBuildId.getValue();
+        if(!id || id === NO_BUILD) {
+            return; // Si on n'a pas d'id de build, on ne peut pas sauvegarder sur Supabase
+        }
         const build: Build = {
-            id: this.currentBuildId.getValue() || '',
+            id,
             nameBuild: this.getNameFromBuild(),
             level: this.levelFormService.getValue(),
             itemsId: this.itemChooseService.getIdItems(),
@@ -113,6 +143,13 @@ export class SaveBuildService {
             compressed: false
         };
         this.supabaseService.updateBuild(build).subscribe();
+        const statsistics: Statistics = {
+            ...this.recapStatsService.getCurrentStatistics(),
+            id: this.statisticsId.getValue() || undefined,
+            buildId: build.id,
+            token: this.currentTokenBuild.getValue() || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || ''
+        } as Statistics;
+        this.supabaseService.updateOrCreateStatistics(statsistics).subscribe();
     }
 
     /**
