@@ -1,7 +1,7 @@
 import { inject, Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { from, map, Observable, of } from "rxjs";
+import { catchError, from, map, Observable, of } from "rxjs";
 import { Build } from "../../models/data/build";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { LocalStorageService } from "../data/localStorageService";
@@ -245,8 +245,18 @@ export class SupabaseService {
             return of(undefined);
         }
         if(!statistics.id) {
-            return this.createStatistics(statistics).pipe(
-                map(() => undefined)
+            return this.getStatisticsByBuildId(statistics?.buildId ?? "").pipe(
+                map(existingStats => {
+                    if (existingStats) {
+                        // Si les statistiques existent déjà, on les met à jour
+                        this.updateOrCreateStatistics({ ...statistics, id: existingStats.id }).subscribe();
+                    }
+                }),
+                catchError(() => {// Si une erreur survient (par exemple si les statistiques n'existent pas), on les crée
+                    return this.createStatistics(statistics).pipe(
+                        map(() => undefined)
+                    );
+                })
             );
         }
         return from(this.supabase.from('statistics').update(statistics).eq('id', statistics.id)).pipe(
