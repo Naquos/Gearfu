@@ -133,6 +133,7 @@ export class AppComponent implements OnInit{
       this.verifyToken();
       this.saveBuildService.createBuildIfNotExistsElseLoadIt(this.getBuildIdFromUrl(window.location.href));
       this.saveBuildService.listenBuildChanges();
+      // this.supabaseService.getBuildsListOrderByStatistiquesMaitrises().subscribe(console.log); // Précharger les builds triés par maitrises pour la page d'accueil
     }
 
 

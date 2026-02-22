@@ -52,6 +52,37 @@ export class SupabaseService {
         );
     }
 
+    /**
+     * Récupère la liste des builds triée par le nombre de maitrises décroissant
+     * avec leur statistiques associées
+     * @returns 
+     */
+    public getBuildsListOrderByStatistiquesMaitrises(): Observable<{ build: Build, statistics: Statistics | null }[]> {
+        if (!this.isBrowser) {
+            return of([]);
+        }
+
+        // On a une table build et une table statistics où on doit faire une jointure sur
+        // build.id = statistics.buildId et trier par statistics.maitrises
+        return from(this.supabase.from('build')
+            .select('*, statistics!inner(*)')
+            .order('maitrises', { ascending: false, foreignTable: 'statistics' }).limit(100)
+        ).pipe(
+            map(({ data, error }) => {
+                if (error) {
+                    throw error;
+                }
+                // On doit extraire les builds de la réponse
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                return (data ?? []).map((item: any) => {
+                    const { statistics, ...build } = item;
+                    console.log('Build récupéré :', build, statistics.maitrises);
+                    return { build: build as Build, statistics: statistics as Statistics | null };
+                });
+            })
+        );
+    }
+
     public getBuildById(id: string): Observable<Build | null> {
         if (!this.isBrowser) {
             return of(null);

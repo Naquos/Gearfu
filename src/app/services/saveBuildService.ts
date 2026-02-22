@@ -181,6 +181,9 @@ export class SaveBuildService {
             compressed: false,
             createdAt: Date.now()
         };
+        if(!build.id || build.id === NO_BUILD) {
+            return; // Si on n'a pas d'id de build, on ne peut pas sauvegarder dans le localStorage
+        }
         this.addBuildToLocalStorage(build);
     }
 
