@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { LocalStorageService } from "./data/localStorageService";
-import { BehaviorSubject, catchError, combineLatest, map, switchMap, take, tap } from "rxjs";
+import { BehaviorSubject, catchError, combineLatest, filter, map, switchMap, take, tap } from "rxjs";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { Build } from "../models/data/build";
 import { LevelFormService } from "./form/levelFormService";
@@ -37,6 +37,9 @@ export class SaveBuildService {
     private readonly currentBuildId = new BehaviorSubject<string | null>(null);
     private readonly currentTokenBuild = new BehaviorSubject<string | null>(null);
     private readonly statisticsId = new BehaviorSubject<string | null>(null);
+
+    private readonly buildLoading = new BehaviorSubject<boolean>(false);
+    public readonly buildLoading$ = this.buildLoading.asObservable();
     
     constructor() {
         const savedBuilds = this.localStorageService.getItem<Build[]>(KeyEnum.KEY_SAVE_BUILD_ALL) || [];
@@ -112,7 +115,9 @@ export class SaveBuildService {
             this.codeAptitudesService.code$,
             this.sortFormService.codeBuild$,
             this.chasseFormService.enchantement$,
+            this.buildLoading$
         ]).pipe(
+            filter(([, , , , , ,  buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
             tap(() => {
                 const token_build = this.currentTokenBuild.getValue();
                 const token_user = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN);
@@ -211,6 +216,9 @@ export class SaveBuildService {
      * Charge un build et met à jour l'URL
      */
     public loadBuild(build: Build): void {
+        this.buildLoading.next(true);
+        this.currentBuildId.next(build.id ?? '');
+        this.currentTokenBuild.next(build.token || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '');
         this.levelFormService.setValue(build.level ?? LevelFormService.DEFAULT_VALUE);
         this.elementSelectorService.decodeAndApplyFromBuild(build.elementSelector ?? "");
         this.itemChooseService.setIdItemsFromBuild(build.itemsId ?? "");
@@ -218,8 +226,7 @@ export class SaveBuildService {
         this.codeAptitudesService.saveCode(build.aptitudes ?? "");
         this.sortFormService.decodeAndSaveCodeBuild(build.sorts ?? "0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
         this.chasseFormService.decodeAndSaveCodeBuild(build.enchantement ?? "");
-        this.currentBuildId.next(build.id ?? '');
-        this.currentTokenBuild.next(build.token || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '');
+        this.buildLoading.next(false);
     }
 
     /**
