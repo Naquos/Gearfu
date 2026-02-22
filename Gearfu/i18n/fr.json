@@ -14,7 +14,8 @@
         "build": "Mes builds",
         "aptitudes":"Aptitudes",
         "sorts": "Sorts",
-        "enchantement": "Enchantement"
+        "enchantement": "Enchantement",
+        "search-builds":"Rechercher des builds"
     },
     "aptitudes": {
         "restant" : "Restant : ",
@@ -104,6 +105,31 @@
     },
     "filter-resistances": {
         "resistances-elementaires": "Résistances élémentaires"
+    },
+    "filter-search-build": {
+        "classe": "Sélection de la classe",
+        "level": "Sélection de la tranche de level",
+        "level-min": "Level min",
+        "level-max": "Level max",
+        "order-by": "Trier par",
+        "majeurs": "Majeurs devant être présents sur le build",
+        "PA": "PA min",
+        "PM": "PM min",
+        "PW": "PW min",
+        "PO": "PO min",
+        "CC": "% Critique min",
+        "parade": "% Parade min",
+        "order-by-label": {
+            "maitrises": "Maitrises",
+            "resistances": "Résistances",
+            "poids": "Poids",
+            "CC":"% Critique",
+            "parade": "% Parade",
+            "PA": "PA",
+            "PM": "PM",
+            "PO": "PO",
+            "PW": "PW"
+        }
     },
     "import-build": {
         "label": "Importer votre build via une url Gearfu ou Zénith",

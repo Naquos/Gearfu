@@ -14,7 +14,8 @@
         "build": "Construcciones",
         "aptitudes":"Aptitudes",
         "sorts": "Hechizos",
-        "enchantement": "Encantamiento"
+        "enchantement": "Encantamiento",
+        "search-builds":"Buscar construcciones"
     },
     "aptitudes": {
         "restant": "Restante: ",
@@ -108,6 +109,31 @@
     },
     "filter-resistances": {
         "resistances-elementaires": "Resistencias elementales"
+    },
+    "filter-search-build": {
+        "classe": "Selección de clase",
+        "level": "Selección del rango de nivel",
+        "level-min": "Nivel mín.",
+        "level-max": "Nivel máx.",
+        "order-by": "Ordenar por",
+        "majeurs": "Atributos mayores que deben estar presentes en la construcción",
+        "PA": "PA mín.",
+        "PM": "PM mín.",
+        "PW": "PW mín.",
+        "PO": "Alcance mín.",
+        "CC": "% Crítico mín.",
+        "parade": "% Anticipación mín.",
+        "order-by-label": {
+            "maitrises": "Dominio",
+            "resistances": "Resistencias",
+            "poids": "Peso",
+            "CC": "% Crítico",
+            "parade": "% Anticipación",
+            "PA": "PA",
+            "PM": "PM",
+            "PO": "Alcance",
+            "PW": "PW"
+        }
     },
     "item": {
         "maitrises": "Dominio",

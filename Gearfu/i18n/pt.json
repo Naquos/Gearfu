@@ -14,7 +14,8 @@
         "build": "Construções",
         "aptitudes":"Aptidões",
         "sorts": "Feitiços",
-        "enchantement": "Encantamento"
+        "enchantement": "Encantamento",
+        "search-builds":"Pesquisar construções"
     },
     "aptitudes": {
         "restant": "Restante: ",
@@ -108,6 +109,31 @@
     },
     "filter-resistances": {
         "resistances-elementaires": "Resistências elementares"
+    },
+    "filter-search-build": {
+        "classe": "Seleção da classe",
+        "level": "Seleção da faixa de nível",
+        "level-min": "Nível mín.",
+        "level-max": "Nível máx.",
+        "order-by": "Ordenar por",
+        "majeurs": "Atributos maiores que devem estar presentes na construção",
+        "PA": "PA mín.",
+        "PM": "PM mín.",
+        "PW": "PW mín.",
+        "PO": "Alcance mín.",
+        "CC": "% Crítico mín.",
+        "parade": "% Parada mín.",
+        "order-by-label": {
+            "maitrises": "Maestria",
+            "resistances": "Resistências",
+            "poids": "Peso",
+            "CC": "% Crítico",
+            "parade": "% Parada",
+            "PA": "PA",
+            "PM": "PM",
+            "PO": "Alcance",
+            "PW": "PW"
+        }
     },
     "item": {
         "maitrises": "Maestria",
