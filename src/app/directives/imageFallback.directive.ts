@@ -49,8 +49,12 @@ export class ImageFallbackDirective {
     if (target instanceof HTMLImageElement) {
       const idImage = target.src.split('/').pop()?.split('.').shift();
       const neoImage = idImage ? this.neoImageMap.get(+idImage) : null;
+      if(neoImage) {
+        target.style.display = 'none'; // Masquer l'image cassée
+        return;
+      }
       const mobImage = idImage ? this.imageMap.get(+idImage) : null;
-      target.src = neoImage ?? mobImage ?? ImageService.IMAGE_ERROR; // Fallback image URL
+      target.src = mobImage ?? ImageService.IMAGE_ERROR; // Fallback image URL
     }
   }
 }
