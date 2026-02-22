@@ -107,15 +107,20 @@ header {
         flex-direction: column;
 
 
-      .filter-build, .filter-aptitudes  {
+      .filter-build, .filter-aptitudes, .filter-search  {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 0px;
 
         button {
           width: 50%;
           border-radius: 10px;
+        }
+      }
+
+      .filter-search {
+        button {
+          width: 100%;
         }
       }
     }

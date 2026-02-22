@@ -1,0 +1,5 @@
+<div class="content">
+    @for(build of builds(); track build.build.id) {
+        <app-build [build]="build.build" [statistics]="build.statistics" [displayRemove]="false"></app-build>
+    }
+</div>

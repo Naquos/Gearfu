@@ -27,6 +27,10 @@ export const routes: Routes = [
             {
                 path: 'enchantements',
                 loadComponent: () => import('./components/enchantement-pages/enchantement-router/enchantement-router.component').then(m => m.EnchantementRouterComponent)
+            },
+            {
+                path: 'search',
+                loadComponent: () => import('./components/search-pages/search-pages-router/search-pages-router.component').then(m => m.SearchPagesRouterComponent)
             }
         ]
     }

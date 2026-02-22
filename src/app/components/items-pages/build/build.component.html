@@ -8,10 +8,52 @@
         </div>
     }
 </div>
+@if (statistics()) {
+    <div class="statistics">
+        <div class="values">
+            <div class="cell">
+                <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES)" alt="maitrises">
+                <span>{{statistics()?.maitrises}}</span>
+            </div>
+            <div class="cell">
+                <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt="resistances">
+                <span>{{statistics()?.resistances}}</span>
+            </div>
+            <div class="cell">
+                <img src="aptitudes/poids.png" alt="poids">
+                <span>{{statistics()?.poids}}</span>
+            </div>
+        </div>
+        <div class="majors">
+            <div class="cell">
+                <img [src]="imageService.getActionIdUrl(IdActionsEnum.PA)" alt="PA">
+                <span>{{statistics()?.PA}}</span>
+            </div>
+            <div class="cell">
+                <img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="PM">
+                <span>{{statistics()?.PM}}</span>
+            </div>
+            <div class="cell">
+                <img [src]="imageService.getActionIdUrl(IdActionsEnum.PW)" alt="PW">
+                <span>{{statistics()?.PW}}</span>
+            </div>
+            <div class="cell">
+                <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="PO">
+                <span>{{statistics()?.PO}}</span>
+            </div>
+            <div class="cell">
+                <img [src]="imageService.getActionIdUrl(IdActionsEnum.COUP_CRITIQUE)" alt="CC">
+                <span>{{statistics()?.CC}}</span>
+            </div>
+            <div class="cell">
+                <img [src]="imageService.getActionIdUrl(IdActionsEnum.PARADE)" alt="parade">
+                <span>{{statistics()?.parade}}</span>
+            </div></div>
+    </div>
+}
 <div 
     class="content"
     (click)="loadBuild()"
-    [style.border-top-right-radius]="build()?.codeZenith ? '0' : '10px'"
     [style.background-image]="`url(classes/icon/${build()?.classe}.jpg)`"
     >
     <div class="row">

@@ -6,6 +6,8 @@ import { Build } from "../../models/data/build";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { LocalStorageService } from "../data/localStorageService";
 import { Statistics } from "../../models/data/statistics";
+import { ClassIdEnum } from "../../models/enum/classIdEnum";
+import { OrderBySearchBuildEnum } from "../../models/enum/orderBySearchBuildEnum";
 
 let browserSupabaseClient: SupabaseClient | null = null;
 
@@ -57,27 +59,50 @@ export class SupabaseService {
      * avec leur statistiques associées
      * @returns 
      */
-    public getBuildsListOrderByStatistiquesMaitrises(): Observable<{ build: Build, statistics: Statistics | null }[]> {
+    public getBuildsListByFilter(
+        lvlMin = 200,
+        lvlMax = 245,
+        classe: ClassIdEnum = ClassIdEnum.Feca,
+        orderBy: OrderBySearchBuildEnum = OrderBySearchBuildEnum.maitrises,
+        PA = 6,
+        PM = 3,
+        PW = 6,
+        PO = 0,
+        CC = 0,
+        parade = 0
+    ): Observable<{ build: Build, statistics: Statistics | null }[]> {
         if (!this.isBrowser) {
             return of([]);
         }
 
-        // On a une table build et une table statistics où on doit faire une jointure sur
-        // build.id = statistics.buildId et trier par statistics.maitrises
-        return from(this.supabase.from('build')
-            .select('*, statistics!inner(*)')
-            .order('maitrises', { ascending: false, foreignTable: 'statistics' }).limit(100)
+        // On part de statistics pour trier directement sur la colonne maitrises,
+        // puis on récupère le build lié via jointure.
+        return from(this.supabase.from('statistics')
+            .select('*, build!inner(*)')
+            .eq('build.classe', classe)
+            .gte('build.level', lvlMin)
+            .lte('build.level', lvlMax)
+            .gt('maitrises', 40) // On filtre pour n'avoir que les builds avec au moins 40 maitrise qui est la valeur par défaut donnée par la guilde
+            .gte('PA', PA)
+            .gte('PM', PM)
+            .gte('PW', PW)
+            .gte('PO', PO)
+            .gte('CC', CC)
+            .gte('parade', parade)
+            .order(orderBy, { ascending: false })
+            .limit(100)
         ).pipe(
             map(({ data, error }) => {
                 if (error) {
                     throw error;
                 }
-                // On doit extraire les builds de la réponse
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 return (data ?? []).map((item: any) => {
-                    const { statistics, ...build } = item;
-                    console.log('Build récupéré :', build, statistics.maitrises);
-                    return { build: build as Build, statistics: statistics as Statistics | null };
+                    const { build, ...statistics } = item;
+                    return {
+                        build: Array.isArray(build) ? (build[0] as Build) : (build as Build),
+                        statistics: statistics as Statistics,
+                    };
                 });
             })
         );

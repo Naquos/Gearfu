@@ -14,7 +14,8 @@
         "build": "Builds",
         "aptitudes":"Aptitudes",
         "sorts": "Spells",
-        "enchantement": "Enchanting"
+        "enchantement": "Enchanting",
+        "search-builds":"Search builds"
     },
     "aptitudes": {
         "restant": "Remaining: ",
@@ -108,6 +109,31 @@
     },
     "filter-resistances": {
         "resistances-elementaires": "Elemental Resistances"
+    },
+    "filter-search-build": {
+        "classe": "Class selection",
+        "level": "Level range selection",
+        "level-min": "Min level",
+        "level-max": "Max level",
+        "order-by": "Sort by",
+        "majeurs": "Major attributes required on the build",
+        "PA": "Min AP",
+        "PM": "Min MP",
+        "PW": "Min WP",
+        "PO": "Min Range",
+        "CC": "Min % Critical",
+        "parade": "Min % Block",
+        "order-by-label": {
+            "maitrises": "Mastery",
+            "resistances": "Resistances",
+            "poids": "Weight",
+            "CC": "% Critical",
+            "parade": "% Block",
+            "PA": "AP",
+            "PM": "MP",
+            "PO": "Range",
+            "PW": "WP"
+        }
     },
     "item": {
         "maitrises": "Mastery",

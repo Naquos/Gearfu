@@ -43,8 +43,9 @@ import { ZenithService } from '../../services/zenith/zenithService';
 import { SupabaseService } from '../../services/supabase/supabaseService';
 import { SaveBuildService } from '../../services/saveBuildService';
 import { NO_BUILD } from '../../models/utils/utils';
+import { FilterSearchBuildComponent } from "../search-pages/filter-search-build/filter-search-build.component";
 
-type column = 'filter' | 'build' | 'aptitudes';
+type column = 'filter' | 'build' | 'aptitudes' | 'search';
 
 @Component({
   selector: 'app-root',
@@ -72,7 +73,8 @@ type column = 'filter' | 'build' | 'aptitudes';
     ReverseButtonComponent,
     ObtentionComponent,
     RouterOutlet,
-    ResumeAptitudesComponent
+    ResumeAptitudesComponent,
+    FilterSearchBuildComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -133,7 +135,6 @@ export class AppComponent implements OnInit{
       this.verifyToken();
       this.saveBuildService.createBuildIfNotExistsElseLoadIt(this.getBuildIdFromUrl(window.location.href));
       this.saveBuildService.listenBuildChanges();
-      // this.supabaseService.getBuildsListOrderByStatistiquesMaitrises().subscribe(console.log); // Précharger les builds triés par maitrises pour la page d'accueil
     }
 
 
@@ -208,6 +209,8 @@ export class AppComponent implements OnInit{
   private updateFilterOrBuildFromRoute(url: string): void {
     if (url.includes('/aptitudes') || url.includes('/sorts') || url.includes('/enchantements')) {
       this.filterOrBuild = 'aptitudes';
+    } else if(url.includes('/search')) {
+      this.filterOrBuild = 'search';
     } else {
       this.filterOrBuild = 'filter';
     }
@@ -237,31 +240,32 @@ export class AppComponent implements OnInit{
     }).then(() => this.filterOrBuild = filterOrBuild);
   }
 
-  protected redirectToAptitudes(): void {
-    this.filterOrBuild = 'aptitudes';
+  protected redirectToPage(page: 'aptitudes' | 'sorts' | 'enchantements' | 'search'): void {
     const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
     const buildId = this.getBuildIdFromUrl(window.location.href);
-    this.router.navigate(['/', buildId, 'aptitudes'], {
+    this.router.navigate(['/', buildId, page], {
       fragment: currentFragment || undefined
     });
+  }
+
+  protected redirectToSearch(): void {
+    this.filterOrBuild = 'search';
+    this.redirectToPage('search');
+  }
+
+  protected redirectToAptitudes(): void {
+    this.filterOrBuild = 'aptitudes';
+    this.redirectToPage('aptitudes');
   }
 
   protected redirectToSorts(): void {
     this.filterOrBuild = 'aptitudes';
-    const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
-    const buildId = this.getBuildIdFromUrl(window.location.href);
-    this.router.navigate(['/', buildId, 'sorts'], {
-      fragment: currentFragment || undefined
-    });
+    this.redirectToPage('sorts');
   }
 
   protected redirectToEnchantements(): void {
     this.filterOrBuild = 'aptitudes';
-    const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
-    const buildId = this.getBuildIdFromUrl(window.location.href);
-    this.router.navigate(['/', buildId, 'enchantements'], {
-      fragment: currentFragment || undefined
-    });
+    this.redirectToPage('enchantements');
   }
 
   private getBuildIdFromUrl(url: string): string {

@@ -1,0 +1,71 @@
+<h2>{{ "filter-search-build.classe" | translate }}</h2>
+<div class="classes-selector">
+    @for (id of idClasses; track id; let first = $first) {
+        <img [src]="`classes/icon/${id}.jpg`" [class.img-selected]="filterSearchBuildFormService.form.controls.class.value === id" alt="" (appActivate)="changeClasses(id)" [tabindex]="0">
+    }
+</div>
+<h2>{{ "filter-search-build.level" | translate }}</h2>
+<form [formGroup]="filterSearchBuildFormService.form">
+    <mat-form-field >
+        <mat-label>{{ "filter-search-build.level-min" | translate}}</mat-label>
+        <input type="number" matInput formControlName="levelMin">
+        <input type="text" matInput formControlName="levelMin">
+    </mat-form-field>
+
+    <mat-form-field >
+        <mat-label>{{ "filter-search-build.level-max" | translate}}</mat-label>
+        <input type="number" matInput formControlName="levelMax">
+        <input type="text" matInput formControlName="levelMax">
+    </mat-form-field>
+</form>
+
+<h2>{{ "filter-search-build.order-by" | translate }}</h2>
+<mat-form-field>
+    <mat-select [formControl]="filterSearchBuildFormService.form.controls.orderBy">
+        <mat-select-trigger>
+            {{("filter-search-build.order-by-label." + filterSearchBuildFormService.form.value.orderBy) | translate}}
+        </mat-select-trigger>
+        @for (orderBy of OrderBySearchBuildEnumList; track orderBy) {
+            <mat-option [value]="orderBy">{{("filter-search-build.order-by-label." + orderBy.valueOf()) | translate}}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>
+
+<h2>{{ "filter-search-build.majeurs" | translate }}</h2>
+<form [formGroup]="filterSearchBuildFormService.form">
+    <mat-form-field >
+        <mat-label>{{ "filter-search-build.PA" | translate}}</mat-label>
+        <input type="number" matInput formControlName="PA">
+        <input type="text" matInput formControlName="PA">
+    </mat-form-field>
+
+    <mat-form-field >
+        <mat-label>{{ "filter-search-build.PM" | translate}}</mat-label>
+        <input type="number" matInput formControlName="PM">
+        <input type="text" matInput formControlName="PM">
+    </mat-form-field>
+    
+    <mat-form-field >
+        <mat-label>{{ "filter-search-build.PW" | translate}}</mat-label>
+        <input type="number" matInput formControlName="PW">
+        <input type="text" matInput formControlName="PW">
+    </mat-form-field>
+
+    <mat-form-field >
+        <mat-label>{{ "filter-search-build.PO" | translate}}</mat-label>
+        <input type="number" matInput formControlName="PO">
+        <input type="text" matInput formControlName="PO">
+    </mat-form-field>
+    
+    <mat-form-field >
+        <mat-label>{{ "filter-search-build.CC" | translate}}</mat-label>
+        <input type="number" matInput formControlName="CC">
+        <input type="text" matInput formControlName="CC">
+    </mat-form-field>
+
+    <mat-form-field >
+        <mat-label>{{ "filter-search-build.parade" | translate}}</mat-label>
+        <input type="number" matInput formControlName="parade">
+        <input type="text" matInput formControlName="parade">
+    </mat-form-field>
+</form>

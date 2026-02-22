@@ -10,6 +10,8 @@ import { ItemTypeServices } from '../../../services/data/ItemTypesServices';
 import { ImageService } from '../../../services/imageService';
 import { ItemChooseService } from '../../../services/itemChooseService';
 import { SaveBuildService } from '../../../services/saveBuildService';
+import { Statistics } from '../../../models/data/statistics';
+import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 
 export enum ItemTypeBuild  {
   CASQUE =  "CASQUE",
@@ -38,14 +40,16 @@ export class BuildComponent implements OnInit {
 
   private readonly itemService = inject(ItemsService);
   private readonly itemTypeService = inject(ItemTypeServices);
-  private readonly imageService = inject(ImageService);
+  protected readonly imageService = inject(ImageService);
   protected readonly saveBuildService = inject(SaveBuildService);
   protected readonly itemChooseService = inject(ItemChooseService);
 
-  public readonly build = input<Build |  undefined>(undefined);
+  public readonly build = input<Build | undefined>(undefined);
+  public readonly statistics = input<Statistics | null>(null);
   public readonly displayRemove = input<boolean>(true);
 
   protected readonly ItemTypeBuild = ItemTypeBuild;
+  protected readonly IdActionsEnum = IdActionsEnum;
   protected readonly mapImageItems = new Map<ItemTypeBuild, string>([
     [ItemTypeBuild.CASQUE, "./aptitudes/EmplacementCoiffe.png"],
     [ItemTypeBuild.AMULETTE, "./aptitudes/EmplacementAmulette.png"],

@@ -18,6 +18,9 @@
 <div class="content">
     <div class="filter" [tabIndex]="-1" [class.open]="displayFilter" appSwipe (swipeRight)="displayFilterService.setDisplay(false)">
         <div class="filter-header">
+            <div class="filter-search">
+                <button (click)="redirectToSearch()">{{ "app.search-builds" | translate }}</button>
+            </div>
             <div class="filter-build">
                 <button (click)="redirectToListItems('filter')">{{ "app.filter-item" | translate }}</button>
                 <button (click)="redirectToListItems('build')">{{ "app.build" | translate }}</button>
@@ -60,6 +63,10 @@
         } @else if (filterOrBuild === 'aptitudes') {
             <div class="aptitudes-content">
                 <app-resume-aptitudes></app-resume-aptitudes>
+            </div>
+        } @else if(filterOrBuild === 'search') {
+            <div class="filter-content">
+                <app-filter-search-build></app-filter-search-build>
             </div>
         }
        

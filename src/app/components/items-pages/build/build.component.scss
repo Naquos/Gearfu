@@ -49,6 +49,35 @@
     }
 }
 
+.statistics {
+    width: calc(100% - 20px);
+    background-color: #1B263B;
+    color: white;
+    padding: 10px;
+    border-top-right-radius: 40px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+
+    .values, .majors, .cell {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        img {
+            width: 22px;
+            height: 22px;
+            margin-right: 10px;
+        }
+    }
+
+    .majors {
+        margin-top: 10px;
+    }
+}
+
 .content {
     width: calc(100% - 20px);
     background-color: #1B263B;
