@@ -240,10 +240,6 @@ export class RecapStatsService extends AbstractDestroyService {
       case ClassIdEnum.Sacrieur:
         this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 4 * level, params: [] });
         break;
-      case ClassIdEnum.Sram:
-        this.applyEffect({ id: IdActionsEnum.MAITRISES_DOS, value: level, params: [] });
-        this.applyEffect({ id: IdActionsEnum.CONTROLE, value: 1, params: [] });
-        break;
       case ClassIdEnum.Iop:
         this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
         break;
