@@ -75,20 +75,23 @@ export class SupabaseService {
             return of([]);
         }
         // Si jamais l'utilisateur ne souhaite pas filtrer sur une statistique, on met une valeur très basse pour ne pas exclure de résultats
-        const _PA = PA <= 0 ? -100 : PA;
-        const _PM = PM <= 0 ? -100 : PM;
-        const _PW = PW <= 0 ? -100 : PW;
-        const _PO = PO <= 0 ? -100 : PO;
-        const _CC = CC <= 0 ? -100 : CC;
-        const _parade = parade <= 0 ? -100 : parade;
+        const _PA = !PA || PA <= 0 ? -100 : PA;
+        const _PM = !PM || PM <= 0 ? -100 : PM;
+        const _PW = !PW || PW <= 0 ? -100 : PW;
+        const _PO = !PO || PO <= 0 ? -100 : PO;
+        const _CC = !CC || CC <= 0 ? -100 : CC;
+        const _parade = !parade || parade <= 0 ? -100 : parade;
+        const _levelMin = !lvlMin || lvlMin <= 0 ? 0 : lvlMin;
+        const _levelMax = !lvlMax || lvlMax <= 0 ? 999 : lvlMax;
 
         // On part de statistics pour trier directement sur la colonne maitrises,
         // puis on récupère le build lié via jointure.
         return from(this.supabase.from('statistics')
             .select('*, build!inner(*)')
             .eq('build.classe', classe)
-            .gte('build.level', lvlMin)
-            .lte('build.level', lvlMax)
+            .neq('build.itemsId', '') // On filtre pour n'avoir que les builds avec des items
+            .gte('build.level', _levelMin)
+            .lte('build.level', _levelMax)
             .gt('maitrises', 40) // On filtre pour n'avoir que les builds avec au moins 40 maitrise qui est la valeur par défaut donnée par la guilde
             .gte('PA', _PA)
             .gte('PM', _PM)

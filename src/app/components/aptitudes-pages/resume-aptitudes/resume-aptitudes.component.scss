@@ -81,6 +81,16 @@
         font-size: 14px;
         div, app-input-resume-aptitudes {
             width: 45%;
+            display:flex;
+            align-items: center;
+            img {
+                margin-right: 5px;
+                width: 22px;
+                height: 22px;
+            }
+            span {
+                margin-left: auto;
+            }
         }
     }
 }

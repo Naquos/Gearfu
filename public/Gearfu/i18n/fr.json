@@ -292,7 +292,9 @@
         "armure-recue": "Armure reçue",
         "DI_indirect": "Dommages indirects",
         "SR": "Soins réalisés",
-        "DI": "Dommages infligés"
+        "DI": "Dommages infligés",
+        "maitrises-totales": "Maitrises totales",
+        "resistances-totales": "Résistances totales"
     },
     "search-item-name": {
         "label": "Nom de l'item"

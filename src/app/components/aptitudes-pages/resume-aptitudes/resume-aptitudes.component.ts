@@ -36,6 +36,9 @@ export class ResumeAptitudesComponent {
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly classeFormService = inject(ClasseFormService);
 
+  protected readonly maitrisesTotal = toSignal(this.recapStatsService.maitrisesTotal$, { initialValue: 0 });
+  protected readonly resistancesTotal = toSignal(this.recapStatsService.resistancesTotal$, { initialValue: 0 });
+
   protected readonly idClasse = toSignal(this.classeFormService.classe$, { initialValue: ClassIdEnum.Eniripsa });
 
   constructor() {

@@ -12,6 +12,18 @@
         <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.pm" [idActionEnum]="IdActionsEnum.PM" [label]="'resume-aptitudes.PM'" [color]="'green'"></app-input-resume-aptitudes>
         <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.pw" [idActionEnum]="IdActionsEnum.BOOST_PW" [label]="'resume-aptitudes.PW'" [color]="'#268de2'"></app-input-resume-aptitudes>
     </div>
+    <div class="row-2">
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES)" alt=""> 
+            {{ 'resume-aptitudes.maitrises-totales' | translate }}
+            <span>{{ maitrisesTotal() }}</span>
+        </div>
+        <div>
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt=""> 
+            {{ 'resume-aptitudes.resistances-totales' | translate }}
+            <span>{{ resistancesTotal() }}</span>
+        </div>  
+    </div>
 </div>
 
 <h3>{{ 'resume-aptitudes.maitrises-resistances' | translate }}</h3>
