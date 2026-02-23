@@ -292,7 +292,9 @@
         "armure-recue": "Armor received",
         "DI_indirect": "Indirect Damage",
         "SR": "Healing done",
-        "DI": "Damage inflicted"
+        "DI": "Damage inflicted",
+        "maitrises-totales": "Total Mastery",
+        "resistances-totales": "Total Resistances"
     },
     "search-item-name": {
         "label": "Item name"
