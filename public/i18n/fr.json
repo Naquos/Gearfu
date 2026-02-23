@@ -152,8 +152,8 @@
         "zenith-export": "Exporter vers Zénith",
         "copy": "Copier l'url",
         "poids-total": "Poids total",
-        "maitrise-total": "Maitrises total",
-        "resistance-total": "Résistances total",
+        "maitrise-total": "Maitrises totales",
+        "resistance-total": "Résistances totales",
         "delete": "Supprimer le build",
         "nouveau-build": "Nouveau build"
     },
