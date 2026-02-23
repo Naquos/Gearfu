@@ -133,7 +133,9 @@ export class AppComponent implements OnInit{
     this.itemService.init();
     if (isPlatformBrowser(this.platformId)) {
       this.verifyToken();
-      this.saveBuildService.createBuildIfNotExistsElseLoadIt(this.getBuildIdFromUrl(window.location.href));
+      const buildId = this.getBuildIdFromUrl(window.location.href);
+      this.saveBuildService.initId(buildId);
+      this.saveBuildService.createBuildIfNotExistsElseLoadIt(buildId);
       this.saveBuildService.listenBuildChanges();
     }
 

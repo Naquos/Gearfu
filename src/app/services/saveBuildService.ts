@@ -46,6 +46,21 @@ export class SaveBuildService {
         this.buildList.next(savedBuilds);
     }
 
+    public initId(buildId: string): void {
+        if(buildId === NO_BUILD || !buildId) {
+            return;
+        }
+        this.currentBuildId.next(buildId);
+        this.supabaseService.getStatisticsByBuildId(buildId).pipe(
+            take(1),
+            tap(statistics => {
+                if (statistics) {
+                    this.statisticsId.next(statistics.id || null);
+                }
+            })
+        ).subscribe();
+    }
+
     /**
      * Regarde si le build existe, sinon le crée et navigue vers ce build
      * Si le build existe on charge les données de ce build
