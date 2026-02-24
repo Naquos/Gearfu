@@ -246,11 +246,10 @@ export class SaveBuildService {
     }
 
     public createBuild(build: Build): void {
-        const { codeZenith, ...buildWithoutCode } = build; // On enlève le code zenith pour éviter de le sauvegarder dans la base de données
-        this.supabaseService.createBuild(buildWithoutCode).subscribe(createdBuild => {
+        this.supabaseService.createBuild(build).subscribe(createdBuild => {
             if (createdBuild?.id) {
                 this.loadBuild(createdBuild, true);
-                this.addBuildToLocalStorage({ ...createdBuild, codeZenith });
+                this.addBuildToLocalStorage({ ...createdBuild, ...build });
             }
         });
     }

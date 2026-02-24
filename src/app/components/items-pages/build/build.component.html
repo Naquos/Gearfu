@@ -9,7 +9,7 @@
     }
 </div>
 @if (statistics()) {
-    <div class="statistics">
+    <div class="statistics" [style.border-top-right-radius]="build()?.codeZenith ? '0' : '40px'">
         <div class="values">
             <div class="cell">
                 <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES)" alt="maitrises">
