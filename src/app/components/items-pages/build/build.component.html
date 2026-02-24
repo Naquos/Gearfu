@@ -1,7 +1,7 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="header">
-    <div class="header-name" [style.position]="build()?.codeZenith ? 'absolute' : 'initial'">{{build()?.nameBuild}}</div>
+    <div class="header-name" [style.position]="build()?.codeZenith ? 'absolute' : 'initial'">{{ build()?.level }} - {{build()?.nameBuild}}</div>
     @if (build()?.codeZenith) {
         <div class="header-zenith">
             <img [matTooltip]="'build.zenith' | translate"  src="./zenith-logo.webp" (click)="goToZenith($event)" alt="zenith">

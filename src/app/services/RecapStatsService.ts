@@ -243,6 +243,9 @@ export class RecapStatsService extends AbstractDestroyService {
       case ClassIdEnum.Iop:
         this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
         break;
+      case ClassIdEnum.Sram:
+        this.applyEffect({ id: IdActionsEnum.COUP_CRITIQUE, value: 20, params: [] });
+        break;
       case ClassIdEnum.Eniripsa:
         this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 2 * level, params: [] });
         break;

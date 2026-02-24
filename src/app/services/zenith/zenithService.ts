@@ -433,10 +433,10 @@ export class ZenithService {
                 const enchantement = {
                     chasseCombinaison,
                     epique: {
-                        id: enchants.epic.id_shard,
+                        id: enchants.epic?.id_shard ?? '',
                     },
                     relique: {
-                        id: enchants.relic.id_shard,
+                        id: enchants.relic?.id_shard ?? '',
                     },
                 } as Enchantement;
                 return this.chassesFormService.generateCodeBuild(enchantement);

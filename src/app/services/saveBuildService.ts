@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { LocalStorageService } from "./data/localStorageService";
-import { BehaviorSubject, catchError, combineLatest, filter, map, switchMap, take, tap } from "rxjs";
+import { BehaviorSubject, catchError, combineLatest, filter, map, Observable, of, switchMap, take, tap } from "rxjs";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { Build } from "../models/data/build";
 import { LevelFormService } from "./form/levelFormService";
@@ -172,22 +172,22 @@ export class SaveBuildService {
             elementSelector: this.elementSelectorService.encodeForBuild(),
             compressed: false
         };
-        this.supabaseService.updateBuild(build).subscribe();
-        this.updateOrCreateStatistics(build);
+        this.supabaseService.updateBuild(build).pipe(
+            switchMap(() => this.updateOrCreateStatistics(build))).subscribe();
     }
 
     /**
      * Met à jour ou crée les statistiques pour un build donné
      * @param build 
      */
-    private updateOrCreateStatistics(build: Build): void {
+    private updateOrCreateStatistics(build: Build): Observable<void> {
         const statsistics: Statistics = {
             ...this.recapStatsService.getCurrentStatistics(),
             id: this.statisticsId.getValue() || undefined,
             buildId: build.id,
             token: this.currentTokenBuild.getValue() || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || ''
         } as Statistics;
-        this.supabaseService.updateOrCreateStatistics(statsistics).subscribe();
+        return this.supabaseService.updateOrCreateStatistics(statsistics);
     }
 
     /**
@@ -203,7 +203,7 @@ export class SaveBuildService {
 
 
     /**
-     * Sauvegarde le build actuel depuis l'etat des services
+     * Sauvegarde le build actuel depuis l'etat des services dans le localStorage
      */
     public saveCurrentBuild(nameBuild?: string): void {
         const build: Build = {
@@ -235,6 +235,10 @@ export class SaveBuildService {
         }
 
         // On enlève le build actuel s'il existe déjà pour éviter les doublons
+        const current = this.buildList.getValue().find(b => b.id === build.id);
+        if (current) {
+            build.codeZenith = current.codeZenith; // Conserver le code zenith si le build existe déjà pour éviter de le perdre lors de l'import depuis l'URL qui ne contient pas forcément le code zenith
+        }
         const currentBuilds = this.buildList.getValue().filter(b => b.id !== build.id); 
         currentBuilds.unshift(build);
         // Limiter à 50 builds max pour éviter de surcharger le localStorage
@@ -248,8 +252,9 @@ export class SaveBuildService {
     public createBuild(build: Build): void {
         this.supabaseService.createBuild(build).subscribe(createdBuild => {
             if (createdBuild?.id) {
-                this.loadBuild(createdBuild, true);
+                this.statisticsId.next(null);
                 this.addBuildToLocalStorage({ ...createdBuild, ...build });
+                this.loadBuild(createdBuild, true);
             }
         });
     }
@@ -270,10 +275,15 @@ export class SaveBuildService {
         this.codeAptitudesService.saveCode(build.aptitudes ?? "");
         this.sortFormService.decodeAndSaveCodeBuild(build.sorts ?? "0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
         this.chasseFormService.decodeAndSaveCodeBuild(build.enchantement ?? "");
-        if (saveStatistics) {
-            this.updateOrCreateStatistics(build);
-        }
-        this.buildLoading.next(false);
+
+        of(saveStatistics).pipe(switchMap(save => {
+            if (save) {
+                return this.updateOrCreateStatistics(build);
+            }
+            return of(undefined);
+        })).subscribe(() => {
+            this.buildLoading.next(false);
+        });
     }
 
     /**
