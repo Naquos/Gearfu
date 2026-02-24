@@ -39,9 +39,9 @@ export class ActivateDirective {
   onFocus(): void {
     const parent = this.el.nativeElement.parentElement;
     if (parent) {
-      this.renderer.setStyle(parent, 'outline', '3px solid #4A90E2');
-      this.renderer.setStyle(parent, 'outline-offset', '2px');
-      this.renderer.setStyle(parent, 'box-shadow', '0 0 0 4px rgba(74, 144, 226, 0.3), 2px 3px 2px rgba(240, 240, 240, 0.2)');
+      // this.renderer.setStyle(parent, 'outline', '3px solid #4A90E2');
+      // this.renderer.setStyle(parent, 'outline-offset', '2px');
+      // this.renderer.setStyle(parent, 'box-shadow', '0 0 0 4px rgba(74, 144, 226, 0.3), 2px 3px 2px rgba(240, 240, 240, 0.2)');
     }
   }
 
@@ -49,9 +49,9 @@ export class ActivateDirective {
   onBlur(): void {
     const parent = this.el.nativeElement.parentElement;
     if (parent) {
-      this.renderer.removeStyle(parent, 'outline');
-      this.renderer.removeStyle(parent, 'outline-offset');
-      this.renderer.removeStyle(parent, 'box-shadow');
+      // this.renderer.removeStyle(parent, 'outline');
+      // this.renderer.removeStyle(parent, 'outline-offset');
+      // this.renderer.removeStyle(parent, 'box-shadow');
     }
   }
 }

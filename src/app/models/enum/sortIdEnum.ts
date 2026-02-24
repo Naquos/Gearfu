@@ -69,7 +69,7 @@ export enum SortIdEnum {
     BRUTE = 3356,
     ANCRE = 3363,
     JEU_DE_JAMBES = 7093,
-    ART_DE_LA_VENGEANCE = 7094,
+    ART_DE_LA_VENGEANCE = 7096,
     POUSSEES_D_ENTRAVE = 7113,
 
     //Sorts passif ouginak
