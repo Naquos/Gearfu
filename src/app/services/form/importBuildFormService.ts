@@ -3,16 +3,18 @@ import { FormControl } from "@angular/forms";
 import { AbstractFormService } from "./abstractFormService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { ZenithApiService } from "../zenith/zenithApiService";
-import { tap } from "rxjs";
+import { map, switchMap, tap } from "rxjs";
 import { SaveBuildService } from "../saveBuildService";
 import { getBuildIdFromUrl } from "../../models/utils/utils";
 import { SupabaseService } from "../supabase/supabaseService";
 import { Spell } from "../../models/zenith/spell";
+import { ZenithService } from "../zenith/zenithService";
 
 @Injectable({providedIn: 'root'})
 export class ImportBuildFormService extends AbstractFormService<FormControl<string>> {
     private readonly saveBuildService = inject(SaveBuildService);
     private readonly zenithApiService = inject(ZenithApiService);
+    private readonly zenithService = inject(ZenithService);
     private readonly supabaseService = inject(SupabaseService);
     public static readonly DEFAULT_VALUE = "";
     
@@ -50,21 +52,28 @@ export class ImportBuildFormService extends AbstractFormService<FormControl<stri
     }
 
     private importBuildFromUrlZenith(): void {
-        const itemsId = this.form.value.split("builder/")[1];
-        if(itemsId) {
-            this.zenithApiService.getBuild(itemsId).pipe(tap(response => {
-                const ids = response.equipments.map(x => x.id_equipment);
-                const passives = this.fillSpellsListId(response.deck.passives, 6);
-                const actives = this.fillSpellsListId(response.deck.actives, 12);
+        const idBuild = this.form.value.split("builder/")[1];
+        if(idBuild) {
+            this.zenithApiService.getBuild(idBuild).pipe(
+                switchMap(build => this.zenithService.getAptitudesCodeFromBuild(idBuild)
+                    .pipe(map(aptitudes => ({build, aptitudes})))),
+                switchMap(({build, aptitudes}) => this.zenithService.getEnchantCodeFromBuild(build.id_build.toString())
+                    .pipe(map(enchantement => ({build, aptitudes, enchantement})))),
+            tap(({build, aptitudes, enchantement}) => {
+                const ids = build.equipments.map(x => x.id_equipment);
+                const passives = this.fillSpellsListId(build.deck.passives, 6);
+                const actives = this.fillSpellsListId(build.deck.actives, 12);
                 const sorts = `${passives}-${actives}`;
                 this.saveBuildService.createBuild(
                     {
                         itemsId: ids.join(","),
-                        nameBuild: response.name_build,
-                        codeZenith: response.link_build,
-                        level: response.level_build,
-                        classe: response.id_job,
-                        sorts
+                        nameBuild: build.name_build,
+                        codeZenith: build.link_build,
+                        level: build.level_build,
+                        classe: build.id_job,
+                        sorts,
+                        aptitudes,
+                        enchantement,
                     });
             })).subscribe();
         }

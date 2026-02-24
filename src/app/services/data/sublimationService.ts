@@ -47,6 +47,15 @@ export class SublimationService {
         return this.sublimationsEpiqueRelique;
     }
 
+    public getSublimationIdByIdLinkSublimation(idLinkSublimation: number): number | undefined {
+        for (const sublimation of this.sublimations.values()) {
+            if(sublimation.linkSublimation.find(link => link.id === idLinkSublimation)) {
+                return sublimation.id;
+            }
+        }
+        return undefined;
+    }
+
     public getSublimationById(id: number): SublimationsDescriptions | undefined {
         for (const sublimation of this.sublimations.values()) {
             if (sublimation.id === id) {

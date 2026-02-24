@@ -43,11 +43,21 @@ export class CodeAptitudesService {
         [39, IdActionsEnum.DI_INDIRECT],
     ]);
 
+    private mapCodeReverse = new Map<IdActionsEnum, number>(Array.from(this.mapCode.entries()).map(([key, value]) => [value, key]));
+
     constructor() {
         // Le chargement depuis l'URL est maintenant géré dans aptitudesFormService
         this.aptitudesFormService.recapStat$.subscribe(() => {
             this.updateCode();
         });
+    }
+
+    /**
+     * Retourne la map de correspondance entre les id du code et les IdActionsEnum
+     * @returns 
+     */
+    public getMapCodeReverse(): Map<IdActionsEnum, number> {
+        return this.mapCodeReverse;
     }
 
     private updateCode() {

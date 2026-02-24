@@ -9,6 +9,8 @@ import { BuildResponse } from "../../models/zenith/buildResponse";
 import { CustomStatisticsUpdate } from "../../models/zenith/customStatisticsUpdate";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { EquipEffects } from "../../models/data/equipEffects";
+import { AptitudeType } from "../../models/zenith/aptitudeType";
+import { EnchantResponse } from "../../models/zenith/enchantResponse";
 
 @Injectable({ providedIn: 'root' })
 export class ZenithApiService {
@@ -37,6 +39,14 @@ export class ZenithApiService {
 
     public getBuild(id: string): Observable<BuildResponse> {
         return this.http.get<BuildResponse>(this.urlZenith + "build/" + id, { headers: this.headers });
+    }
+
+    public getAptitudeTypes(id: string): Observable<AptitudeType[]> {
+        return this.http.get<AptitudeType[]>(this.urlZenith + "aptitudes/" + id, { headers: this.headers });
+    }
+
+    public getEnchants(id: string): Observable<EnchantResponse> {
+        return this.http.get<EnchantResponse>(this.urlZenith + "enchants/" + id, { headers: this.headers });
     }
 
     private prepareRequestsCustomStatistics(customStatistics: CustomStatisticsUpdate, nbElements: number, elementsList: IdActionsEnum[]): Observable<void[]> {

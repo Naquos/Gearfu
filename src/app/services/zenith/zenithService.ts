@@ -16,6 +16,14 @@ import { ActionService } from "../data/actionService";
 import { BuildResponse } from "../../models/zenith/buildResponse";
 import { MAX_LVL_TRANCHE } from "../../models/utils/utils";
 import { ClasseFormService } from "../form/classeFormService";
+import { CodeAptitudesService } from "../codeAptitudesService";
+import { ChasseFormService } from "../form/chasseFormService";
+import { Enchantement } from "../../models/data/enchantement";
+import { ChasseCombinaison, createEmptyChasseCombinaison } from "../../models/data/chasseCombinaison";
+import { keyId } from "../../models/zenith/enchantResponse";
+import { Sublimation } from "../../models/data/sublimation";
+import { IdShardEnum } from "../../models/zenith/enum/idShardEnum";
+import { SublimationService } from "../data/sublimationService";
 
 @Injectable({ providedIn: 'root' })
 export class ZenithService {
@@ -26,8 +34,42 @@ export class ZenithService {
     private readonly translateService = inject(TranslateService);
     private readonly actionService = inject(ActionService);
     private readonly classeFormService = inject(ClasseFormService);
-
+    private readonly codeAptitudesService = inject(CodeAptitudesService);
+    private readonly chassesFormService = inject(ChasseFormService);
+    private readonly sublimationService = inject(SublimationService);
     private firstRing = true;
+
+    private readonly APTITUDES_ORDER: IdActionsEnum[] = [
+        IdActionsEnum.PERCENTAGE_PV,
+        IdActionsEnum.RESISTANCES_ELEMENTAIRE,
+        IdActionsEnum.BARRIERE,
+        IdActionsEnum.SOINS_RECUE,
+        IdActionsEnum.POINT_DE_VIE_EN_ARMURE,
+        IdActionsEnum.MAITRISES_ELEMENTAIRES,
+        IdActionsEnum.MAITRISES_MELEE,
+        IdActionsEnum.MAITRISES_DISTANCES,
+        IdActionsEnum.POINT_DE_VIE,
+        IdActionsEnum.TACLE,
+        IdActionsEnum.ESQUIVE,
+        IdActionsEnum.INITIATIVE,
+        IdActionsEnum.TACLE_ESQUIVE,
+        IdActionsEnum.VOLONTE,
+        IdActionsEnum.COUP_CRITIQUE,
+        IdActionsEnum.PARADE,
+        IdActionsEnum.MAITRISES_CRITIQUES,
+        IdActionsEnum.MAITRISES_DOS,
+        IdActionsEnum.MAITRISES_BERZERK,
+        IdActionsEnum.MAITRISES_SOIN,
+        IdActionsEnum.RESISTANCES_DOS,
+        IdActionsEnum.RESISTANCES_CRITIQUES,
+        IdActionsEnum.PA,
+        IdActionsEnum.PM,
+        IdActionsEnum.PORTEE,
+        IdActionsEnum.BOOST_PW,
+        IdActionsEnum.CONTROLE,
+        IdActionsEnum.DI,
+        IdActionsEnum.RESISTANCES_ELEMENTAIRES_MAJEURES
+    ];
 
     private getMaxLevelItemInBuild(): Observable<number> {
         return this.itemChooseService.idItems$.pipe(
@@ -310,4 +352,95 @@ export class ZenithService {
         return equipEffect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE;
     }
 
+    public getAptitudesCodeFromBuild(buildId: string): Observable<string> {
+        const mapCodeReverse = this.codeAptitudesService.getMapCodeReverse();
+        return this.zenithApiService.getAptitudeTypes(buildId).pipe(
+            map(aptitudeTypes => {
+                let result = '';
+                const aptitudes = aptitudeTypes.flatMap(type => type.aptitudes);
+                this.APTITUDES_ORDER.forEach((id, index) => {
+                    if(aptitudes[index].value > 0) {
+                        result += `${mapCodeReverse.get(id)}:${aptitudes[index].value}-`;
+                    }
+                });
+                
+                if(result.endsWith('-')) {
+                    result = result.slice(0, -1);
+                }
+                return result;
+            })
+        );
+    }
+
+    /**
+     * Map un IdShardEnum à son IdActionsEnum correspondant, pour pouvoir ensuite calculer les effets des chasses
+     * @param idShardEnum 
+     * @returns 
+     */
+    private mapIdShardEnumToIdActionsEnum(idShardEnum: IdShardEnum): IdActionsEnum {
+        switch (idShardEnum) {
+            case IdShardEnum.MAITRISE_ELEMENTAIRE: return IdActionsEnum.MAITRISES_ELEMENTAIRES;
+            case IdShardEnum.MAITRISE_MELEE: return IdActionsEnum.MAITRISES_MELEE;
+            case IdShardEnum.MAITRISE_DISTANCE: return IdActionsEnum.MAITRISES_DISTANCES;
+            case IdShardEnum.MAITRISE_BERSERK: return IdActionsEnum.MAITRISES_BERZERK;
+            case IdShardEnum.MAITRISE_CRITIQUE: return IdActionsEnum.MAITRISES_CRITIQUES;
+            case IdShardEnum.MAITRISE_DOS: return IdActionsEnum.MAITRISES_DOS;
+            case IdShardEnum.TACLE: return IdActionsEnum.TACLE;
+            case IdShardEnum.ESQUIVE: return IdActionsEnum.ESQUIVE;
+            case IdShardEnum.INITIATIVE: return IdActionsEnum.INITIATIVE;
+            case IdShardEnum.RESISTANCE_FEU: return IdActionsEnum.RESISTANCES_FEU;
+            case IdShardEnum.RESISTANCE_EAU: return IdActionsEnum.RESISTANCES_EAU;
+            case IdShardEnum.RESISTANCE_TERRE: return IdActionsEnum.RESISTANCES_TERRE;
+            case IdShardEnum.RESISTANCE_AIR: return IdActionsEnum.RESISTANCES_AIR;
+            case IdShardEnum.VIE: return IdActionsEnum.POINT_DE_VIE;
+            case IdShardEnum.MAITRISE_SOIN: return IdActionsEnum.MAITRISES_SOIN;
+            default: throw new Error("Unknown idShardEnum: " + idShardEnum);
+        }
+    }
+
+    /**
+     * Récupère le code des aptitudes d'un build à partir de son id dans Zénith
+     * @param buildId 
+     * @returns 
+     */
+    public getEnchantCodeFromBuild(buildId: string): Observable<string> {
+        return this.zenithApiService.getEnchants(buildId).pipe(
+            map(enchants => {
+                const chasseCombinaison: ChasseCombinaison[] = [];
+                keyId.forEach(key => {
+                    const emptyChasses = createEmptyChasseCombinaison();
+                    if(enchants.sides[key]) {
+                        const side = enchants.sides[key];
+                        for(let i = 0; i < 4; i++) {
+                            if(side.shards[i]) {
+                                emptyChasses.chasses[i] = {
+                                    color: side.shards[i].id_color,
+                                    lvl: side.shards[i].level,
+                                    idAction: this.mapIdShardEnumToIdActionsEnum(side.shards[i].id_shard),
+                                    joker: side.shards[i].is_whited
+                                }
+                            }
+                        }
+                        if(side.sublimation) {
+                            emptyChasses.sublimation = {
+                                id: this.sublimationService.getSublimationIdByIdLinkSublimation(side.sublimation.id_shard) || 0,
+                                level: side.sublimation.level,
+                            } as Sublimation;
+                        }
+                    }
+                    chasseCombinaison.push(emptyChasses);
+                });
+                const enchantement = {
+                    chasseCombinaison,
+                    epique: {
+                        id: enchants.epic.id_shard,
+                    },
+                    relique: {
+                        id: enchants.relic.id_shard,
+                    },
+                } as Enchantement;
+                return this.chassesFormService.generateCodeBuild(enchantement);
+            })
+        );
+    }
 }

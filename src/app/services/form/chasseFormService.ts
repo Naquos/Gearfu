@@ -92,7 +92,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
      * Format: c0-c1-c2-c3_s|c0-c1-c2-c3_s|...|E123|R456
      * c = chasse (color.level.idAction.joker), s = sublimation ID.level, E = épique, R = relique
      */
-    private generateCodeBuild(value: Enchantement): string {
+    public generateCodeBuild(value: Enchantement): string {
         const parts: string[] = [];
         
         // Encoder chaque combinaison de chasses
@@ -412,7 +412,6 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         this.enchantement.next(value);
         this.recapChassesEffect.next(recapStats);
         this.coutEclatTotal.next(coutEclatTotal);
-        const codeBuild = this.generateCodeBuild(value);
     }
 
     public getCodeBuild(): string {

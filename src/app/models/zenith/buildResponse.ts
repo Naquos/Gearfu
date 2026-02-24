@@ -1,6 +1,7 @@
 import { Spell } from "./spell"
 
 export interface BuildResponse {
+    id_build: number,
     name_build: string,
     equipments: {
         id_equipment: number,
