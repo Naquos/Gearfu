@@ -1,3 +1,4 @@
 export interface Spell {
-    id_spell: number
+    id_spell: number,
+    gfx_id: string,
 }

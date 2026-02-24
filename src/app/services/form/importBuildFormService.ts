@@ -44,9 +44,9 @@ export class ImportBuildFormService extends AbstractFormService<FormControl<stri
      * @returns 
      */
     private fillSpellsListId(spells: Spell[], size: number): string {
-        const spellsId = spells.map(spell => spell.id_spell);
+        const spellsId = spells.map(spell => spell.gfx_id);
         while(spellsId.length < size) {
-            spellsId.push(0);
+            spellsId.push("0");
         }
         return spellsId.join("-");
     }
@@ -63,7 +63,7 @@ export class ImportBuildFormService extends AbstractFormService<FormControl<stri
                 const ids = build.equipments.map(x => x.id_equipment);
                 const passives = this.fillSpellsListId(build.deck.passives, 6);
                 const actives = this.fillSpellsListId(build.deck.actives, 12);
-                const sorts = `${passives}-${actives}`;
+                const sorts = `${actives}-${passives}`;
                 this.saveBuildService.createBuild(
                     {
                         itemsId: ids.join(","),
