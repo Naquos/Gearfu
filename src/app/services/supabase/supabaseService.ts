@@ -280,7 +280,7 @@ export class SupabaseService {
         if (!this.isBrowser) {
             return of(null);
         }
-        return from(this.supabase.from('statistics').select('*').eq('buildId', buildId).single()).pipe(
+        return from(this.supabase.from('statistics').select('*').eq('buildId', buildId).limit(1).single()).pipe(
             map(({ data, error }) => {
                 if (error) {
                     throw error;

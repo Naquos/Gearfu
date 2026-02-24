@@ -17,6 +17,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./components/items-pages/list-item-router/list-item-router.component').then(m => m.ListItemRouterComponent)
             },
             {
+                path: 'build',
+                loadComponent: () => import('./components/items-pages/list-item-router/list-item-router.component').then(m => m.ListItemRouterComponent)
+            },
+            {
                 path: 'aptitudes',
                 loadComponent: () => import('./components/aptitudes-pages/aptitudes-router/aptitudes-router.component').then(m => m.AptitudesRouterComponent)
             },

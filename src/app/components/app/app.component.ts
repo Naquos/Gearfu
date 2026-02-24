@@ -213,6 +213,8 @@ export class AppComponent implements OnInit{
       this.filterOrBuild = 'aptitudes';
     } else if(url.includes('/search')) {
       this.filterOrBuild = 'search';
+    } else if(url.includes('/build')) {
+      this.filterOrBuild = 'build';
     } else {
       this.filterOrBuild = 'filter';
     }
@@ -242,12 +244,17 @@ export class AppComponent implements OnInit{
     }).then(() => this.filterOrBuild = filterOrBuild);
   }
 
-  protected redirectToPage(page: 'aptitudes' | 'sorts' | 'enchantements' | 'search'): void {
+  protected redirectToPage(page: 'aptitudes' | 'sorts' | 'enchantements' | 'search' | 'build'): void {
     const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
     const buildId = this.getBuildIdFromUrl(window.location.href);
     this.router.navigate(['/', buildId, page], {
       fragment: currentFragment || undefined
     });
+  }
+
+  protected redirectToBuild(): void {
+    this.filterOrBuild = 'build';
+    this.redirectToPage('build');
   }
 
   protected redirectToSearch(): void {
