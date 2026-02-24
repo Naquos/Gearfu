@@ -67,7 +67,7 @@
                         <span class="cout-sort">
                             @if (sortSelected()!.PorteeMax) {
                                 <div>
-                                    {{ sortSelected()!.PorteeMin }} - {{ sortSelected()!.PorteeMax + (sortSelected()!.POModifiable ? PO() : 0) }} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="">
+                                    {{ sortSelected()!.PorteeMin }} - {{ sortPOMaximale() }} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="">
                                 </div>
                             }
                             @if (sortSelected()?.NotLDV) {

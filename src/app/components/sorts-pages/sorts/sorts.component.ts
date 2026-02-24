@@ -117,6 +117,13 @@ export class SortsComponent {
     }
   }
 
+  protected sortPOMaximale(): number {
+    const poMinSelected = this.sortSelected()?.PorteeMin || 0;
+    const poMaxSelected = this.sortSelected()?.PorteeMax || 0;
+    const poModifiable = this.sortSelected()?.POModifiable ? this.PO() : 0;
+    return Math.max(poMaxSelected + poModifiable, poMinSelected);
+  }
+
   protected copyToClipboards() {
     navigator.clipboard.writeText(this.codeBuild()).then();
   }
