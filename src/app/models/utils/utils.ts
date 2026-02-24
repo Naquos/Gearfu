@@ -124,3 +124,8 @@ export function coutEclat(levelChasse: number) : number {
         default: return 0;
     }
 }
+
+export function getBuildIdFromUrl(url: string): string {
+const match = url.match(/\/Gearfu\/(.*)/);
+return match?.[1].split('/')[0] ?? NO_BUILD;
+}

@@ -1,3 +1,5 @@
+import { Spell } from "./spell"
+
 export interface BuildResponse {
     name_build: string,
     equipments: {
@@ -14,4 +16,10 @@ export interface BuildResponse {
         }[]
     }[]
     link_build: string,
+    level_build: number,
+    id_job: number,
+    deck: {
+        passives: Spell[],
+        actives: Spell[]
+    }
 }

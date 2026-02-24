@@ -132,6 +132,26 @@ export class SupabaseService {
         );
     }
 
+    /**
+     * Crée un nouveau build dans la base de données à partir d'un objet Build sans id 
+     * (l'id est généré automatiquement par Supabase)
+     * @param build
+     * @returns 
+     */
+    public createBuild(build: Omit<Build, 'id'>): Observable<Build | null> {
+        if (!this.isBrowser) {
+            return of(null);
+        }
+        return from(this.supabase.from('build').insert([build]).select()).pipe(
+            map(({ data, error }) => {
+                if (error) {
+                    throw error;
+                }
+                return (data[0] as Build) ?? null;
+            }
+        ));
+    }
+
     public createEmptyBuild(): Observable<Build | null> {
         if (!this.isBrowser) {
             return of(null);

@@ -42,7 +42,7 @@ import { ElementSelectorService } from '../../services/elementSelectorService';
 import { ZenithService } from '../../services/zenith/zenithService';
 import { SupabaseService } from '../../services/supabase/supabaseService';
 import { SaveBuildService } from '../../services/saveBuildService';
-import { NO_BUILD } from '../../models/utils/utils';
+import { getBuildIdFromUrl } from '../../models/utils/utils';
 import { FilterSearchBuildComponent } from "../search-pages/filter-search-build/filter-search-build.component";
 
 type column = 'filter' | 'build' | 'aptitudes' | 'search';
@@ -133,7 +133,7 @@ export class AppComponent implements OnInit{
     this.itemService.init();
     if (isPlatformBrowser(this.platformId)) {
       this.verifyToken();
-      const buildId = this.getBuildIdFromUrl(window.location.href);
+      const buildId = getBuildIdFromUrl(window.location.href);
       this.saveBuildService.initId(buildId);
       this.saveBuildService.createBuildIfNotExistsElseLoadIt(buildId);
       this.saveBuildService.listenBuildChanges();
@@ -238,7 +238,7 @@ export class AppComponent implements OnInit{
 
   protected redirectToListItems(filterOrBuild: column): void {
     const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
-    const buildId = this.getBuildIdFromUrl(window.location.href);
+    const buildId = getBuildIdFromUrl(window.location.href);
     this.router.navigate(["/", buildId], {
       fragment: currentFragment || undefined
     }).then(() => this.filterOrBuild = filterOrBuild);
@@ -246,7 +246,7 @@ export class AppComponent implements OnInit{
 
   protected redirectToPage(page: 'aptitudes' | 'sorts' | 'enchantements' | 'search' | 'build'): void {
     const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
-    const buildId = this.getBuildIdFromUrl(window.location.href);
+    const buildId = getBuildIdFromUrl(window.location.href);
     this.router.navigate(['/', buildId, page], {
       fragment: currentFragment || undefined
     });
@@ -276,10 +276,4 @@ export class AppComponent implements OnInit{
     this.filterOrBuild = 'aptitudes';
     this.redirectToPage('enchantements');
   }
-
-  private getBuildIdFromUrl(url: string): string {
-    const match = url.match(/\/Gearfu\/(.*)/);
-    return match?.[1].split('/')[0] ?? NO_BUILD;
-  }
-
 }

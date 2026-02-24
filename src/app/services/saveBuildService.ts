@@ -53,6 +53,9 @@ export class SaveBuildService {
         )
     }
 
+    /**
+     * Initialise le build à partir de l'URL, si l'URL contient un id de build valide, sinon ne fait rien
+     */
     public initId(buildId: string): void {
         if(buildId === NO_BUILD || !buildId) {
             return;
@@ -170,6 +173,14 @@ export class SaveBuildService {
             compressed: false
         };
         this.supabaseService.updateBuild(build).subscribe();
+        this.updateOrCreateStatistics(build);
+    }
+
+    /**
+     * Met à jour ou crée les statistiques pour un build donné
+     * @param build 
+     */
+    private updateOrCreateStatistics(build: Build): void {
         const statsistics: Statistics = {
             ...this.recapStatsService.getCurrentStatistics(),
             id: this.statisticsId.getValue() || undefined,
@@ -234,10 +245,22 @@ export class SaveBuildService {
         this.localStorageService.setItem(KeyEnum.KEY_SAVE_BUILD_ALL, currentBuilds);
     }
 
+    public createBuild(build: Build): void {
+        const { codeZenith, ...buildWithoutCode } = build; // On enlève le code zenith pour éviter de le sauvegarder dans la base de données
+        this.supabaseService.createBuild(buildWithoutCode).subscribe(createdBuild => {
+            if (createdBuild?.id) {
+                this.loadBuild(createdBuild, true);
+                this.addBuildToLocalStorage({ ...createdBuild, codeZenith });
+            }
+        });
+    }
+
     /**
      * Charge un build et met à jour l'URL
+     * @param build
+     * @param saveStatistics indique si on doit sauvegarder les statistiques du build actuel
      */
-    public loadBuild(build: Build): void {
+    public loadBuild(build: Build, saveStatistics = false): void {
         this.buildLoading.next(true);
         this.currentBuildId.next(build.id ?? '');
         this.currentTokenBuild.next(build.token || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '');
@@ -248,6 +271,9 @@ export class SaveBuildService {
         this.codeAptitudesService.saveCode(build.aptitudes ?? "");
         this.sortFormService.decodeAndSaveCodeBuild(build.sorts ?? "0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
         this.chasseFormService.decodeAndSaveCodeBuild(build.enchantement ?? "");
+        if (saveStatistics) {
+            this.updateOrCreateStatistics(build);
+        }
         this.buildLoading.next(false);
     }
 

@@ -5,11 +5,15 @@ import { KeyEnum } from "../../models/enum/keyEnum";
 import { ZenithApiService } from "../zenith/zenithApiService";
 import { tap } from "rxjs";
 import { SaveBuildService } from "../saveBuildService";
+import { getBuildIdFromUrl } from "../../models/utils/utils";
+import { SupabaseService } from "../supabase/supabaseService";
+import { Spell } from "../../models/zenith/spell";
 
 @Injectable({providedIn: 'root'})
 export class ImportBuildFormService extends AbstractFormService<FormControl<string>> {
     private readonly saveBuildService = inject(SaveBuildService);
     private readonly zenithApiService = inject(ZenithApiService);
+    private readonly supabaseService = inject(SupabaseService);
     public static readonly DEFAULT_VALUE = "";
     
     public readonly form = new FormControl<string>(ImportBuildFormService.DEFAULT_VALUE, { nonNullable: true });
@@ -21,10 +25,28 @@ export class ImportBuildFormService extends AbstractFormService<FormControl<stri
     }
 
     private importBuildFromUrlGearfu(): void {
-        const itemsId = this.form.value.split("itemsId=")[1];
-        if(itemsId) {
-            this.saveBuildService.addBuildToLocalStorage({itemsId, nameBuild: "Gearfu - Build import"});
+        const buildId = getBuildIdFromUrl(this.form.value);
+        if(buildId) {
+            this.supabaseService.getBuildById(buildId).pipe(tap(build => {
+                if(build) {
+                    this.saveBuildService.addBuildToLocalStorage(build);
+                }
+            })).subscribe();
         }
+    }
+
+    /**
+     * Retourne un string contenant les id des sorts
+     * @param spells 
+     * @param size 
+     * @returns 
+     */
+    private fillSpellsListId(spells: Spell[], size: number): string {
+        const spellsId = spells.map(spell => spell.id_spell);
+        while(spellsId.length < size) {
+            spellsId.push(0);
+        }
+        return spellsId.join("-");
     }
 
     private importBuildFromUrlZenith(): void {
@@ -32,11 +54,17 @@ export class ImportBuildFormService extends AbstractFormService<FormControl<stri
         if(itemsId) {
             this.zenithApiService.getBuild(itemsId).pipe(tap(response => {
                 const ids = response.equipments.map(x => x.id_equipment);
-                this.saveBuildService.addBuildToLocalStorage(
+                const passives = this.fillSpellsListId(response.deck.passives, 6);
+                const actives = this.fillSpellsListId(response.deck.actives, 12);
+                const sorts = `${passives}-${actives}`;
+                this.saveBuildService.createBuild(
                     {
                         itemsId: ids.join(","),
                         nameBuild: response.name_build,
-                        codeZenith: response.link_build
+                        codeZenith: response.link_build,
+                        level: response.level_build,
+                        classe: response.id_job,
+                        sorts
                     });
             })).subscribe();
         }
