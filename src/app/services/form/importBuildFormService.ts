@@ -48,7 +48,7 @@ export class ImportBuildFormService extends AbstractFormService<FormControl<stri
         while(spellsId.length < size) {
             spellsId.push("0");
         }
-        return spellsId.join("-");
+        return spellsId.slice(0, size).join("-");
     }
 
     private importBuildFromUrlZenith(): void {
