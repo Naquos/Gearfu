@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { filter, takeUntil, tap } from "rxjs";
+import { catchError, filter, of, takeUntil, tap } from "rxjs";
 import { LocalStorageService } from "../data/localStorageService";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractDestroyService } from "../abstract/abstractDestroyService";
@@ -29,12 +29,20 @@ export abstract class AbstractFormService<TControl extends FormControl | FormGro
                 takeUntil(this.destroy$),
                 filter(value => value !== null),
                 tap(value => this.handleChanges(value)),
-                tap(value => this.localStorageService.setItem<FormValue<TControl>>(this.keyEnum, value))
-            )
+                tap(value => this.localStorageService.setItem<FormValue<TControl>>(this.keyEnum, value)),
+                catchError(() => {
+                    this.setDefaultValue();
+                    return of(null);
+                }))
             .subscribe()
 
         const value = this.localStorageService.getItem<FormValue<TControl>>(this.keyEnum);
-        this.setValue(value);
+        try {
+            this.setValue(value);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_) {
+            this.setDefaultValue();
+        }
     }
 
     protected abstract handleChanges(value: FormValue<TControl>): void;
