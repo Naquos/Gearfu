@@ -37,4 +37,5 @@ export interface Item {
     bossDropable: MonsterDrop[];
     archiDropable: MonsterDrop[];
     isPvP: boolean;
+    effectsMap?: Map<number, number>;
 }

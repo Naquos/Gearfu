@@ -75,6 +75,27 @@ export class ItemsService {
       IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,
       IdActionsEnum.PERTE_MAITRISES_FEU
     ];
+    private static readonly RESISTANCE_ELEM_IDS_SET = new Set([
+      IdActionsEnum.RESISTANCES_AIR,
+      IdActionsEnum.RESISTANCES_EAU,
+      IdActionsEnum.RESISTANCES_TERRE,
+      IdActionsEnum.RESISTANCES_FEU
+    ]);
+    private static readonly MALUS_RESIS_ELEM_IDS_SET = new Set([
+      IdActionsEnum.PERTE_RESISTANCES_FEU,
+      IdActionsEnum.PERTE_RESISTANCES_TERRE,
+      IdActionsEnum.PERTE_RESISTANCE_EAU
+    ]);
+    private static readonly MAITRISES_ELEM_IDS_SET = new Set([
+      IdActionsEnum.MAITRISES_FEU,
+      IdActionsEnum.MAITRISES_TERRE,
+      IdActionsEnum.MAITRISES_EAU,
+      IdActionsEnum.MAITRISES_AIR
+    ]);
+    private static readonly PERTE_MAITRISES_IDS_SET = new Set([
+      IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,
+      IdActionsEnum.PERTE_MAITRISES_FEU
+    ]);
     private static readonly EQUILIBRE_RESISTANCE_MULTIPLIER = 1.2;
     private static readonly DEFAULT_NB_ELEMENTS = 4;
 
@@ -312,13 +333,12 @@ export class ItemsService {
       })
 
       if(sort === SortChoiceEnum.EQUILIBRE && items.length) {
-          maxMaistrises =  items.sort((itemA, itemB) => itemB.maitrise - itemA.maitrise)[0].maitrise;
-          maxResistances = items.sort((itemA, itemB) => itemB.resistance - itemA.resistance)[0].resistance;
+          maxMaistrises = Math.max(...items.map(item => item.maitrise));
+          maxResistances = Math.max(...items.map(item => item.resistance));
       }
 
       items.forEach(item => {
-        const effectsMap = this.createEffectsMap(item);
-        item.weightForSort = this.calculateWeightForSort(item, sort, effectsMap, maxMaistrises, maxResistances);
+        item.weightForSort = this.calculateWeightForSort(item, sort, item.effectsMap!, maxMaistrises, maxResistances);
       })
     }
 
@@ -445,9 +465,12 @@ export class ItemsService {
             }
         }));
         this.buildIndexes(recipes, monsterDrops, idSiouperes);
-        this.items.forEach(item => this.calculItemIsCraftable(item));
-        this.items.forEach(item => this.calculItemIsDropable(item));
-        this.items.forEach(item => this.calculIsItemPvP(item));
+        this.items.forEach(item => {
+          item.effectsMap = this.createEffectsMap(item);
+          this.calculItemIsCraftable(item);
+          this.calculItemIsDropable(item);
+          this.calculIsItemPvP(item);
+        });
 
       })).subscribe();
     }
@@ -575,6 +598,7 @@ export class ItemsService {
     public calculResistancesForAnItem(item: Item, idResistances: number[]): number {
         let result = 0;
         const nbElements = idResistances.length === 0 ? ItemsService.DEFAULT_NB_ELEMENTS : idResistances.length;
+        const idResistancesSet = new Set(idResistances);
         
         item.equipEffects.forEach(effect => {
           if(effect.actionId === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE && effect.params[2] >= idResistances.length) {
@@ -583,12 +607,12 @@ export class ItemsService {
             result += effect.params[0] * nbElements;
           } else if (effect.actionId ===  IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE || effect.actionId === IdActionsEnum.PERTE_RESISTANCES_ELEMENTAIRE_SANS_CAP) {
             result -= effect.params[0] * nbElements;
-          } else if (ItemsService.RESISTANCE_ELEM_IDS.includes(effect.actionId) && (nbElements === ItemsService.DEFAULT_NB_ELEMENTS || idResistances.includes(effect.actionId))) {
+          } else if (ItemsService.RESISTANCE_ELEM_IDS_SET.has(effect.actionId) && (nbElements === ItemsService.DEFAULT_NB_ELEMENTS || idResistancesSet.has(effect.actionId))) {
             result += effect.params[0];
-          } else if ((nbElements === ItemsService.DEFAULT_NB_ELEMENTS && ItemsService.MALUS_RESIS_ELEM_IDS.includes(effect.actionId)) ||
-                    (effect.actionId === IdActionsEnum.PERTE_RESISTANCES_FEU && idResistances.includes(IdActionsEnum.RESISTANCES_FEU)) ||
-                    (effect.actionId === IdActionsEnum.PERTE_RESISTANCES_TERRE && idResistances.includes(IdActionsEnum.RESISTANCES_TERRE)) ||
-                    (effect.actionId === IdActionsEnum.PERTE_RESISTANCE_EAU && idResistances.includes(IdActionsEnum.RESISTANCES_EAU))) {
+          } else if ((nbElements === ItemsService.DEFAULT_NB_ELEMENTS && ItemsService.MALUS_RESIS_ELEM_IDS_SET.has(effect.actionId)) ||
+                    (effect.actionId === IdActionsEnum.PERTE_RESISTANCES_FEU && idResistancesSet.has(IdActionsEnum.RESISTANCES_FEU)) ||
+                    (effect.actionId === IdActionsEnum.PERTE_RESISTANCES_TERRE && idResistancesSet.has(IdActionsEnum.RESISTANCES_TERRE)) ||
+                    (effect.actionId === IdActionsEnum.PERTE_RESISTANCE_EAU && idResistancesSet.has(IdActionsEnum.RESISTANCES_EAU))) {
             result -= effect.params[0];
           } 
         })
@@ -597,28 +621,30 @@ export class ItemsService {
 
     public calculMaitrisesForAnItem(item: Item, nbElements: number, idMaitrises: number[], multiplicateurElem: number, denouement: boolean, noElem: boolean, noSecondary: boolean, chaos: boolean): number {
       let result = 0;
-      const idMaitrisesWithoutElem = [...idMaitrises].filter(x => !ItemsService.MAITRISES_ELEM_IDS.includes(x));
+      const idMaitrisesSet = new Set(idMaitrises);
+      const idMaitrisesWithoutElem = idMaitrises.filter(x => !ItemsService.MAITRISES_ELEM_IDS_SET.has(x));
+      const idMaitrisesWithoutElemSet = new Set(idMaitrisesWithoutElem);
 
       item.equipEffects.forEach(effect => {
         if(!noElem && !chaos && (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES ||
           (effect.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE && effect.params[2] >= nbElements) ||
           (effect.actionId === IdActionsEnum.MAITRISES_CRITIQUES && denouement))) {
             result += effect.params[0] * multiplicateurElem;
-        } else if (!noSecondary && idMaitrisesWithoutElem.includes(effect.actionId)) {
+        } else if (!noSecondary && idMaitrisesWithoutElemSet.has(effect.actionId)) {
           result += effect.params[0];
-        } else if (!noElem && !chaos && ItemsService.PERTE_MAITRISES_IDS.includes(effect.actionId) ||
+        } else if (!noElem && !chaos && ItemsService.PERTE_MAITRISES_IDS_SET.has(effect.actionId) ||
                   !noSecondary && (
-                    (effect.actionId === IdActionsEnum.PERTE_MAITRISES_CRITIQUE && idMaitrises.includes(IdActionsEnum.MAITRISES_CRITIQUES)) ||
-                    (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DOS && idMaitrises.includes(IdActionsEnum.MAITRISES_DOS)) ||
-                    (effect.actionId === IdActionsEnum.PERTE_MAITRISES_MELEE && idMaitrises.includes(IdActionsEnum.MAITRISES_MELEE)) ||
-                    (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DISTANCE && idMaitrises.includes(IdActionsEnum.MAITRISES_DISTANCES)) ||
-                    (effect.actionId === IdActionsEnum.PERTE_MAITRISES_BERZERK && idMaitrises.includes(IdActionsEnum.MAITRISES_BERZERK))
+                    (effect.actionId === IdActionsEnum.PERTE_MAITRISES_CRITIQUE && idMaitrisesSet.has(IdActionsEnum.MAITRISES_CRITIQUES)) ||
+                    (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DOS && idMaitrisesSet.has(IdActionsEnum.MAITRISES_DOS)) ||
+                    (effect.actionId === IdActionsEnum.PERTE_MAITRISES_MELEE && idMaitrisesSet.has(IdActionsEnum.MAITRISES_MELEE)) ||
+                    (effect.actionId === IdActionsEnum.PERTE_MAITRISES_DISTANCE && idMaitrisesSet.has(IdActionsEnum.MAITRISES_DISTANCES)) ||
+                    (effect.actionId === IdActionsEnum.PERTE_MAITRISES_BERZERK && idMaitrisesSet.has(IdActionsEnum.MAITRISES_BERZERK))
                   )) {
           result -= effect.params[0];
         }
       })
 
-      const effectMaitrises = item.equipEffects.find(x => ItemsService.MAITRISES_ELEM_IDS.includes(x.actionId) && (nbElements === 0 || (nbElements === 1 && idMaitrises.includes(x.actionId)))); 
+      const effectMaitrises = item.equipEffects.find(x => ItemsService.MAITRISES_ELEM_IDS_SET.has(x.actionId) && (nbElements === 0 || (nbElements === 1 && idMaitrisesSet.has(x.actionId)))); 
       if(!noElem && !chaos && effectMaitrises) {
         result += effectMaitrises.params[0] * multiplicateurElem;
       }
