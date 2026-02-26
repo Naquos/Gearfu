@@ -1,46 +1,28 @@
 import { inject, Injectable } from "@angular/core";
-import { BehaviorSubject, shareReplay, tap } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, from, map, Observable, shareReplay, tap } from "rxjs";
 import { SortLevel } from "../../models/data/sortLevel";
+import { GEARFU_RESOURCES_URL } from "../../models/utils/utils";
+import { CompressionService } from "../compression/compressionService";
 
 @Injectable({providedIn: 'root'})
 export class SortLevelService {
 
-    private readonly http = inject(HttpClient);
     private readonly sortsLevel = new BehaviorSubject<SortLevel[]>([]);
     public readonly sortsLevel$ = this.sortsLevel.asObservable();
+    private readonly compressionService = inject(CompressionService);
     
-    private loadPromise?: Promise<void>;
-
     /**
      * Charge les données des drops de monstres
      * Utilise un cache pour éviter les chargements multiples
      */
-    public load(): Promise<void> {
-        if (this.loadPromise) {
-            return this.loadPromise;
-        }
-
-        this.loadPromise = new Promise((resolve,) => {
-            this.http.get<SortLevel[]>('/sortsLevel.json')
-                .pipe(
-                    tap(data => {
-                        this.sortsLevel.next(data);
-                    }),
-                    shareReplay(1)
-                )
-                .subscribe({
-                    next: () => resolve(),
-                    error: (err) => {
-                        console.error('Failed to load sortLevel:', err);
-                        // Fallback sur données vides plutôt que de bloquer l'app
-                        this.sortsLevel.next([]);
-                        resolve();
-                    }
-                });
-        });
-
-        return this.loadPromise;
+    public load(): Observable<void> {
+        return this.compressionService.decompressGzipJson<SortLevel[]>(GEARFU_RESOURCES_URL + 'sortsLevel.json.gz').pipe(
+            tap(data => {
+                this.sortsLevel.next(data);
+            }),
+            shareReplay(1),
+            map(() => {})
+        );
     }
 
 }

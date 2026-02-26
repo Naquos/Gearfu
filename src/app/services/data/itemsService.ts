@@ -91,8 +91,10 @@ export class ItemsService {
     protected items: Item[] = [];
     protected readonly fullItems$ = new BehaviorSubject<Item[]>([]);
 
-    public items$?: Observable<Item[]>;
-    public itemsFilterByItemName$!: Observable<Item[]>;
+    private _items$ = new BehaviorSubject<Item[]>([]);
+    public items$ = this._items$.asObservable();
+    private _itemsFilterByItemName = new BehaviorSubject<Item[]>([]); 
+    public itemsFilterByItemName$ = this._itemsFilterByItemName.asObservable();
     protected itemsFilters$!: Observable<Item[]>;
 
     private recipesByProductId = new Map<number, RecipeResultsCdn>();
@@ -126,16 +128,16 @@ export class ItemsService {
             this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement, onlyNoElem, onlyNoSecondary, chaos)),
           map(([items,]) => items));
 
-          this.items$ = combineLatest([itemsFilters$, this.reverseFormService.reverse$])
+          combineLatest([itemsFilters$, this.reverseFormService.reverse$])
           .pipe(
             map(([items, reverse]) => {
               const sortedItems = items.sort(this.sortItems());
               return reverse  ? sortedItems.reverse() : sortedItems;
             }),
             tap(() => this.isLoading.set(false)),
-            shareReplay(1)
-          );
-          this.items$.pipe(take(1)).subscribe();
+            shareReplay(1),
+            tap(items => this._items$.next(items))
+          ).subscribe();
     }
 
     private initFamiliers(): void {
@@ -257,10 +259,11 @@ export class ItemsService {
       this.initFamiliers();
       this.fullItems$.next(this.items);
 
-      this.itemsFilterByItemName$ = combineLatest([this.fullItems$, this.searchItemNameFormService.itemName$])
-      .pipe(map(([items, itemName]) => items.filter(x => normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(normalizeString(itemName)))));
+      const itemFilterByName$ = combineLatest([this.fullItems$, this.searchItemNameFormService.itemName$])
+      .pipe(map(([items, itemName]) => items.filter(x => normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(normalizeString(itemName)))),
+      tap(items => this._itemsFilterByItemName.next(items)));
 
-      const itemsFilterByObtention$ = combineLatest([this.itemsFilterByItemName$, this.obtentionFormService.drop$, this.obtentionFormService.craftable$, this.obtentionFormService.boss$, this.obtentionFormService.archi$, this.obtentionFormService.pvp$])
+      const itemsFilterByObtention$ = combineLatest([itemFilterByName$, this.obtentionFormService.drop$, this.obtentionFormService.craftable$, this.obtentionFormService.boss$, this.obtentionFormService.archi$, this.obtentionFormService.pvp$])
       .pipe(map(([items, drop, craftable, boss, archi, pvp]) => items.filter(x => this.filterObtention(x, drop, craftable, boss, archi, pvp))));
       
       const itemsFilterByLevelMin$ = combineLatest([itemsFilterByObtention$, this.itemLevelFormService.levelMin$])

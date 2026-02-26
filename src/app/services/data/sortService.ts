@@ -1,6 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { BehaviorSubject, combineLatest, map, shareReplay, tap } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, combineLatest, map, Observable, shareReplay, tap } from "rxjs";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { ClasseFormService } from "../form/classeFormService";
 import { Sort } from "../../models/data/sort";
@@ -10,14 +9,16 @@ import { SpellEffectService } from "../spellEffectService";
 import { SortLevelService } from "./sortLevelService";
 import { LevelUnlockSort } from "../../models/data/levelUnlockSort";
 import { SortLevel } from "../../models/data/sortLevel";
+import { GEARFU_RESOURCES_URL } from "../../models/utils/utils";
+import { CompressionService } from "../compression/compressionService";
 
 @Injectable({providedIn: 'root'})
 export class SortService {
 
-    private readonly http = inject(HttpClient);
     private readonly classeFormService = inject(ClasseFormService);
     private readonly spellEffectService = inject(SpellEffectService);
     private readonly sortLevelService = inject(SortLevelService);
+    private readonly compressionService = inject(CompressionService);
     private readonly sorts = new BehaviorSubject<Sort[]>([]);
     public readonly sorts$ = this.sorts.asObservable();
     public readonly sortsClasse = toSignal(combineLatest([this.sorts$, this.classeFormService.classe$, this.sortLevelService.sortsLevel$]).pipe(
@@ -53,39 +54,19 @@ export class SortService {
         })).sort((a, b) => a.levelUnlock - b.levelUnlock);
     }
 
-    
-    private loadPromise?: Promise<void>;
-
     /**
-     * Charge les données des drops de monstres
+     * Charge les données des sorts
      * Utilise un cache pour éviter les chargements multiples
      */
-    public load(): Promise<void> {
-        if (this.loadPromise) {
-            return this.loadPromise;
-        }
-
-        this.loadPromise = new Promise((resolve,) => {
-            this.http.get<{imageDict: Record<string, string>, classes: Sort[]}>('/sorts.json')
-                .pipe(
-                    tap(data => {
-                        this.spellEffectService.setImageDictionary(data.imageDict);
-                        this.sorts.next(data.classes);
-                    }),
-                    shareReplay(1)
-                )
-                .subscribe({
-                    next: () => resolve(),
-                    error: (err) => {
-                        console.error('Failed to load monster drops:', err);
-                        // Fallback sur données vides plutôt que de bloquer l'app
-                        this.sorts.next([]);
-                        resolve();
-                    }
-                });
-        });
-
-        return this.loadPromise;
+    public load(): Observable<void> {
+        return this.compressionService.decompressGzipJson<{imageDict: Record<string, string>, classes: Sort[]}>(GEARFU_RESOURCES_URL + 'sorts.json.gz').pipe(
+            tap(data => {
+                this.spellEffectService.setImageDictionary(data.imageDict);
+                this.sorts.next(data.classes);
+            }),
+            shareReplay(1),
+            map(() => {})
+        );
     }
 
     public getDescriptionSortElementaireById(sortId: number): DescriptionSort | undefined {

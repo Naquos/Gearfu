@@ -15,7 +15,7 @@ import { ItemsService } from '../../../services/data/itemsService';
 })
 export class ItemListComponent implements OnInit, OnDestroy {
   protected readonly itemsService = inject(ItemsService);
-  protected readonly skeletonArray = Array(36).fill(0);
+  protected readonly skeletonArray = Array(36).fill(0).map((x, i) => i); // Tableau pour afficher 36 skeletons
   
   protected displayedItems$ = new BehaviorSubject<Item[]>([]);
   protected allItems: Item[] = [];
@@ -29,7 +29,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.itemsService.items$?.subscribe(items => {
+    this.itemsService.items$.subscribe(items => {
       this.allItems = items;
       this.currentIndex = 0;
       this.displayedItems$.next([]); // Réinitialiser

@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { AnkamaCdnService } from "./ankamaCdnService";
-import { BehaviorSubject, filter, map, tap } from "rxjs";
+import { BehaviorSubject, filter, forkJoin, map, Observable, tap } from "rxjs";
 import { ActionsCdn } from "../../models/ankama-cdn/actionsCdn";
 import { ItemCdn } from "../../models/ankama-cdn/itemCdn";
 import { StatesCdn } from "../../models/ankama-cdn/statesCdn";
@@ -53,20 +53,20 @@ export class AnkamaCdnFacade {
     private readonly mapProductItemIdToRecipeResult = new Map<number, RecipeResultsCdn>();
     private readonly mapRecipeIdToRecipeIngredients = new Map<number, RecipeIngredientCdn[]>();
 
-    private loadItems(config: string): void {
-        this.ankamaCdnService.getItems(config).pipe(tap(items => this.item.next(items))).subscribe();
+    private loadItems(): Observable<ItemCdn[]> {
+        return this.ankamaCdnService.getItems().pipe(tap(items => this.item.next(items)));
     }
 
-    private loadActions(config: string): void {
-        this.ankamaCdnService.getActions(config).pipe(tap(actions => this.action.next(actions))).subscribe();
+    private loadActions(): Observable<ActionsCdn[]> {
+        return this.ankamaCdnService.getActions().pipe(tap(actions => this.action.next(actions)));
     }
 
-    private loadStates(config: string): void {
-        this.ankamaCdnService.getStates(config).pipe(tap(states => this.states.next(states))).subscribe();
+    private loadStates(): Observable<StatesCdn[]> {
+        return this.ankamaCdnService.getStates().pipe(tap(states => this.states.next(states)));
     }
 
-    private loadRecipeIngredients(config: string): void {
-        this.ankamaCdnService.getRecipeIngredients(config)
+    private loadRecipeIngredients(): Observable<RecipeIngredientCdn[]> {
+        return this.ankamaCdnService.getRecipeIngredients()
         .pipe(tap(recipeIngredients => this.recipeIngredients.next(recipeIngredients)),
             tap(recipeIngredients => {
                 recipeIngredients.forEach(recipeIngredient => {
@@ -75,11 +75,11 @@ export class AnkamaCdnFacade {
                     this.mapRecipeIdToRecipeIngredients.set(recipeIngredient.recipeId, ingredients);
                 });
             })
-        ).subscribe();
+        );
     }
 
-    private loadRecipesResult(config: string): void {
-        this.ankamaCdnService.getRecipesResult(config)
+    private loadRecipesResult(): Observable<RecipeResultsCdn[]> {
+        return this.ankamaCdnService.getRecipesResult()
         .pipe(
             tap(recipes => this.recipes.next(recipes)),
             tap(recipes => {
@@ -87,28 +87,26 @@ export class AnkamaCdnFacade {
                     this.mapProductItemIdToRecipeResult.set(recipe.productedItemId, recipe);
                 });
             })
-        ).subscribe();
+        );
     }
 
-    private loadIdSioupere(config: string): void {
-        this.ankamaCdnService.getJobsItems(config)
+    private loadIdSioupere(): Observable<JobsItemCdn[]> {
+        return this.ankamaCdnService.getJobsItems()
         .pipe(
             map(jobsItems => jobsItems.filter(item => item.title.fr.toLowerCase().includes("sioupère"))),
-            tap(idSioupere => this.idSiouperes.next(idSioupere)))
-        .subscribe();
+            tap(idSioupere => this.idSiouperes.next(idSioupere)));
     }
 
-    public load(): void {
-        this.ankamaCdnService.getConfig()
-            .pipe(
-                tap(config => this.config.next(config.version)),
-                tap(config => this.loadItems(config.version)),
-                tap(config => this.loadActions(config.version)),
-                tap(config => this.loadStates(config.version)),
-                tap(config => this.loadRecipesResult(config.version)),
-                tap(config => this.loadIdSioupere(config.version)),
-                tap(config => this.loadRecipeIngredients(config.version)),
-            ).subscribe();
+    public load(): Observable<void> {
+        return forkJoin([
+                this.loadItems(),
+                this.loadActions(),
+                this.loadStates(),
+                this.loadRecipesResult(),
+                this.loadIdSioupere(),
+                this.loadRecipeIngredients()
+            ]).pipe(map(() => void 0)
+        );
     }
 
     public getActionList(): ActionsCdn[] {

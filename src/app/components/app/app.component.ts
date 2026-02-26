@@ -32,7 +32,7 @@ import { StatesDefinitionService } from '../../services/data/statesDefinitionSer
 import { DisplayFilterService } from '../../services/displayFilterService';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { ResumeAptitudesComponent } from "../aptitudes-pages/resume-aptitudes/resume-aptitudes.component";
-import { filter, take } from 'rxjs';
+import { filter, forkJoin, take } from 'rxjs';
 import { ItemChooseComponent } from '../items-pages/item-choose/item-choose.component';
 import { SortService } from '../../services/data/sortService';
 import { SublimationService } from '../../services/data/sublimationService';
@@ -97,7 +97,6 @@ export class AppComponent implements OnInit{
   private readonly sortLevelService = inject(SortLevelService);
   private readonly elementSelectorService = inject(ElementSelectorService);
   private readonly zenithService = inject(ZenithService);
-  private readonly supabaseService = inject(SupabaseService);
   private readonly saveBuildService = inject(SaveBuildService); 
 
   protected displayFilter = false;
@@ -121,16 +120,21 @@ export class AppComponent implements OnInit{
 
   public ngOnInit(): void {
     this.elementSelectorService.init();
-    this.ankamaCdnFacade.load();
-    this.monsterDropService.load();
-    this.itemConditionService.load();
-    this.statesDefinitionService.load();
-    this.sortService.load();
-    this.sublimationService.load();
-    this.familierService.load();
-    this.sortLevelService.load();
 
-    this.itemService.init();
+    forkJoin([
+      this.ankamaCdnFacade.load(),
+      this.monsterDropService.load(),
+      this.itemConditionService.load(),
+      this.statesDefinitionService.load(),
+      this.sortService.load(),
+      this.sublimationService.load(),
+      this.familierService.load(),
+      this.sortLevelService.load()
+    ])
+    .subscribe(() => this.itemService.init());
+
+
+    // this.itemService.init();
     if (isPlatformBrowser(this.platformId)) {
       this.verifyToken();
       const buildId = getBuildIdFromUrl(window.location.href);

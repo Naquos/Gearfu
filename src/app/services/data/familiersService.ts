@@ -1,45 +1,27 @@
 import { inject, Injectable } from "@angular/core";
-import { BehaviorSubject, shareReplay, tap } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, map, Observable, shareReplay, tap } from "rxjs";
 import { Familier } from "../../models/data/familier";
+import { GEARFU_RESOURCES_URL } from "../../models/utils/utils";
+import { CompressionService } from "../compression/compressionService";
 
 @Injectable({providedIn: 'root'})
 export class FamiliersService {
-
-    private readonly http = inject(HttpClient);
     private readonly familiers = new BehaviorSubject<Familier[]>([]);
     public readonly familiers$ = this.familiers.asObservable();
-
-    
-    private loadPromise?: Promise<void>;
+    private readonly compressionService = inject(CompressionService);
 
     /**
-     * Charge les données des drops de monstres
+     * Charge les données des familiers
      * Utilise un cache pour éviter les chargements multiples
      */
-    public load(): Promise<void> {
-        if (this.loadPromise) {
-            return this.loadPromise;
-        }
-
-        this.loadPromise = new Promise((resolve,) => {
-            this.http.get<Familier[]>('/familiers_stats.json')
-                .pipe(
-                    tap(drops => this.familiers.next(drops)),
-                    shareReplay(1)
-                )
-                .subscribe({
-                    next: () => resolve(),
-                    error: (err) => {
-                        console.error('Failed to load monster drops:', err);
-                        // Fallback sur données vides plutôt que de bloquer l'app
-                        this.familiers.next([]);
-                        resolve();
-                    }
-                });
-        });
-
-        return this.loadPromise;
+    public load(): Observable<void> {
+        return this.compressionService.decompressGzipJson<Familier[]>(GEARFU_RESOURCES_URL + 'familiers_stats.json.gz').pipe(
+            tap(data => {
+                this.familiers.next(data);
+            }),
+            shareReplay(1),
+            map(() => {})
+        );
     }
 
 }

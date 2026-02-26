@@ -1,46 +1,31 @@
 import { inject, Injectable } from "@angular/core";
 import { StatesDefiniton } from "../../models/data/statesDefinition";
-import { HttpClient } from "@angular/common/http";
-import { tap, shareReplay } from "rxjs";
+import { tap, shareReplay, Observable, map } from "rxjs";
+import { GEARFU_RESOURCES_URL } from "../../models/utils/utils";
+import { CompressionService } from "../compression/compressionService";
 
 @Injectable({providedIn: 'root'})
 export class StatesDefinitionService {
     
     private readonly stateDefinitionService = new Map<number,StatesDefiniton>();
-    private readonly http = inject(HttpClient);
+    private readonly compressionService = inject(CompressionService);
 
-    private loadPromise?: Promise<void>;
-
-    public load(): Promise<void> {
-        if (this.loadPromise) {
-            return this.loadPromise;
-        }
-
-        this.loadPromise = new Promise((resolve,) => {
-            this.http.get<StatesDefiniton[]>('/statesDefinition.json')
-                .pipe(
-                    tap(statesDefinitions => statesDefinitions.forEach(x => this.stateDefinitionService.set(x.id, {
-                        id: x.id,
-                        description: {
-                            fr: x.description.fr,
-                            en: x.description.en,
-                            es: x.description.es,
-                            pt: x.description.pt
-                        }
-                    }))),
-                    shareReplay(1)
-                )
-                .subscribe({
-                    next: () => resolve(),
-                    error: (err) => {
-                        console.error('Failed to load monster drops:', err);
-                        // Fallback sur données vides plutôt que de bloquer l'app
-                        resolve();
+    public load(): Observable<void> {
+        return this.compressionService.decompressGzipJson<StatesDefiniton[]>(GEARFU_RESOURCES_URL + 'statesDefinition.json.gz').pipe(
+            tap(statesDefinitions => {
+                statesDefinitions.forEach(x => this.stateDefinitionService.set(x.id, {
+                    id: x.id,
+                    description: {
+                        fr: x.description.fr,
+                        en: x.description.en,
+                        es: x.description.es,
+                        pt: x.description.pt
                     }
-                });
-        });
-
-        return this.loadPromise;
+                }));
+            }),
+            shareReplay(1),
+            map(() => {})
+        );
     }
 
     public findStatesDefinition(id: number): StatesDefiniton  | undefined {

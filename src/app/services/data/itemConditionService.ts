@@ -1,38 +1,22 @@
 import { inject, Injectable } from "@angular/core";
 import { ItemCondition } from "../../models/data/itemCondition";
-import { tap, shareReplay } from "rxjs";
+import { tap, shareReplay, Observable, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { GEARFU_RESOURCES_URL } from "../../models/utils/utils";
+import { CompressionService } from "../compression/compressionService";
 
 @Injectable({providedIn: 'root'})
 export class ItemConditionService {
 
     private readonly condition = new Map<number, ItemCondition>();
-    private readonly http = inject(HttpClient);
+    private readonly compressionService = inject(CompressionService);
 
-    private loadPromise?: Promise<void>;
-    
-    public load(): Promise<void> {
-        if (this.loadPromise) {
-            return this.loadPromise;
-        }
-
-        this.loadPromise = new Promise((resolve,) => {
-            this.http.get<ItemCondition[]>('/itemConditions.json')
-                .pipe(
-                    tap(conditions => conditions.forEach(x => this.condition.set(x.id, x))),
-                    shareReplay(1)
-                )
-                .subscribe({
-                    next: () => resolve(),
-                    error: (err) => {
-                        console.error('Failed to load monster drops:', err);
-                        // Fallback sur données vides plutôt que de bloquer l'app
-                        resolve();
-                    }
-                });
-        });
-
-        return this.loadPromise;
+    public load(): Observable<void> {
+        return this.compressionService.decompressGzipJson<ItemCondition[]>(GEARFU_RESOURCES_URL + 'itemConditions.json.gz').pipe(
+            tap(conditions => conditions.forEach(x => this.condition.set(x.id, x))),
+            shareReplay(1),
+            map(() => {})
+        );
     }
 
 

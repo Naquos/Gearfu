@@ -204,6 +204,7 @@ export class SublimationEffectsService {
         applyEffectFn({ id: IdActionsEnum.DI, value: -10, params: []  });
       } else if (id === IdSublimationEnum.FORCE_HERCULEENNE) {
         applyEffectFn({ id: IdActionsEnum.ESQUIVE, value: Math.floor(2.5 * level), params: [] });
+        applyEffectFn({ id: IdActionsEnum.TACLE, value: Math.floor(2.5 * level), params: [] });
       } else if (id === IdSublimationEnum.FURIE) {
         const esquive = recapValue.find(rs => rs.id === IdActionsEnum.ESQUIVE)?.value ?? 0;
         if(esquive > level) {

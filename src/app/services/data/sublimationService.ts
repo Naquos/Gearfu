@@ -1,7 +1,8 @@
 import { inject, Injectable } from "@angular/core";
-import { tap, shareReplay } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { tap, shareReplay, Observable, from, map } from "rxjs";
 import { SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
+import { GEARFU_RESOURCES_URL } from "../../models/utils/utils";
+import { CompressionService } from "../compression/compressionService";
 
 @Injectable({providedIn: 'root'})
 export class SublimationService {
@@ -9,34 +10,18 @@ export class SublimationService {
     private readonly sublimations = new Map<string, SublimationsDescriptions>();
     private readonly sublimationsClassique: SublimationsDescriptions[] = [];
     private readonly sublimationsEpiqueRelique: SublimationsDescriptions[] = [];
-    private readonly http = inject(HttpClient);
-
-    private loadPromise?: Promise<void>;
+    private readonly compressionService = inject(CompressionService);
     
-    public load(): Promise<void> {
-        if (this.loadPromise) {
-            return this.loadPromise;
-        }
-
-        this.loadPromise = new Promise((resolve,) => {
-            this.http.get<SublimationsDescriptions[]>('/sublimations.json')
-                .pipe(
-                    tap(sublimations => sublimations.forEach(x => this.sublimations.set(x.title.fr, x))),
-                    tap(sublimations => this.sublimationsClassique.push(...sublimations.filter(sublimation => !sublimation.isEpic && !sublimation.isRelic))),
-                    tap(sublimations => this.sublimationsEpiqueRelique.push(...sublimations.filter(sublimation => sublimation.isEpic || sublimation.isRelic))),
-                    shareReplay(1)
-                )
-                .subscribe({
-                    next: () => resolve(),
-                    error: (err) => {
-                        console.error('Failed to load sublimations:', err);
-                        // Fallback sur données vides plutôt que de bloquer l'app
-                        resolve();
-                    }
-                });
-        });
-
-        return this.loadPromise;
+    public load(): Observable<void> {
+        return this.compressionService.decompressGzipJson<SublimationsDescriptions[]>(GEARFU_RESOURCES_URL + 'sublimations.json.gz').pipe(
+            tap(data => {
+                data.forEach(x => this.sublimations.set(x.title.fr, x));
+                this.sublimationsClassique.push(...data.filter(sublimation => !sublimation.isEpic && !sublimation.isRelic));
+                this.sublimationsEpiqueRelique.push(...data.filter(sublimation => sublimation.isEpic || sublimation.isRelic));
+            }),
+            shareReplay(1),
+            map(() => {})
+        );
     }
     
     public getSublimations(): SublimationsDescriptions[] {

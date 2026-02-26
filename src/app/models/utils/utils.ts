@@ -7,6 +7,7 @@ export const MAX_LVL_TRANCHE = [20,35,50,65,80,95,110,125,140,155,170,185,200,21
 export const ID_MAITRISES_MODIFIABLES = -50000;
 export const ID_RESISTANCES_MODIFIABLES = -60000;
 export const NO_BUILD = "no-build";
+export const GEARFU_RESOURCES_URL = "https://raw.githubusercontent.com/Naquos/Gearfu-resources/main/";
 
 export const LEVEL_RATIOS_CHASSE = [
     { maxLevel: 36, ratio: truncate2(EffetMaitrisesChassesEnum.LEVEL_1 / EffetResistancesChassesEnum.LEVEL_1) },
