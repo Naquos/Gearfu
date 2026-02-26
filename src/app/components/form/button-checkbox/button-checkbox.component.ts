@@ -5,10 +5,11 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivateDirective } from '../../../directives/activate.directive';
+import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-button-checkbox',
-  imports: [MatTooltipModule, MatIconModule, TranslateModule, MatIconModule, ReactiveFormsModule, ActivateDirective],
+  imports: [MatTooltipModule, MatIconModule, TranslateModule, MatIconModule, ReactiveFormsModule, ActivateDirective, LazyImageDirective],
   templateUrl: './button-checkbox.component.html',
   styleUrl: './button-checkbox.component.scss',
 })

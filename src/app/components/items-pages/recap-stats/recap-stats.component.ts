@@ -6,10 +6,11 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { ParameterMajorActionEnum } from '../../../models/enum/parameterMajorActionEnum';
 import { ImageService } from '../../../services/imageService';
 import { RecapStatsService } from '../../../services/recapStatsService';
+import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-recap-stats',
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, LazyImageDirective],
   templateUrl: './recap-stats.component.html',
   styleUrl: './recap-stats.component.scss'
 })
