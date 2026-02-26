@@ -185,7 +185,8 @@ export class SupabaseService {
         if(!build.id) {
             throw new Error('Build ID is required for update');
         }
-        return from(this.supabase.from('build').update(build).eq('id', build.id)).pipe(
+        const token = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '';
+        return from(this.supabase.from('build').update(build).eq('id', build.id).eq('token', token)).pipe(
             map(({ error }) => {
                 if (error) {
                     throw error;
@@ -282,7 +283,8 @@ export class SupabaseService {
                 })
             );
         }
-        return from(this.supabase.from('statistics').update(statistics).eq('id', statistics.id)).pipe(
+        const token = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '';
+        return from(this.supabase.from('statistics').update(statistics).eq('id', statistics.id).eq('token', token)).pipe(
             map(({ error }) => {
                 if (error) {
                     throw error;
