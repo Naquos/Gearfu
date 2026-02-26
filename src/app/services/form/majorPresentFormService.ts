@@ -12,7 +12,6 @@ export interface MajorPresentForm {
   PM: boolean;
   PW: boolean;
   PO: boolean;
-  CONTROLE: boolean;
   ARMURE_DONNEE: boolean;
   ARMURE_RECUE: boolean;
   CRITIQUE: boolean;
@@ -26,7 +25,6 @@ export interface MajorPresentForm {
   PERTE_PM: boolean;
   PERTE_PW: boolean;
   PERTE_PO: boolean;
-  PERTE_CONTROLE: boolean;
   PERTE_ARMURE_DONNEE: boolean;
   PERTE_ARMURE_RECUE: boolean;
   PERTE_CRITIQUE: boolean;
@@ -57,7 +55,6 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
         PM: new FormControl(),
         PW: new FormControl(),
         PO: new FormControl(),
-        CONTROLE: new FormControl(),
         ARMURE_DONNEE: new FormControl(),
         ARMURE_RECUE: new FormControl(),
         CRITIQUE: new FormControl(),
@@ -70,7 +67,6 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
         PERTE_PM: new FormControl(),
         PERTE_PW: new FormControl(),
         PERTE_PO: new FormControl(),
-        PERTE_CONTROLE: new FormControl(),
         PERTE_ARMURE_DONNEE: new FormControl(),
         PERTE_ARMURE_RECUE: new FormControl(),
         PERTE_CRITIQUE: new FormControl(),
@@ -98,7 +94,6 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
     if(value.PM) {result.push({id:IdActionsEnum.PM})}
     if(value.PW) {result.push({id:IdActionsEnum.BOOST_PW})}
     if(value.PO) {result.push({id:IdActionsEnum.PORTEE})}
-    if(value.CONTROLE) {result.push({id:IdActionsEnum.CONTROLE})}
     if(value.ARMURE_DONNEE) {result.push({id:IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_DONNEE})}
     if(value.ARMURE_RECUE) {result.push({id:IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_RECUE})}
     if(value.CRITIQUE) {result.push({id:IdActionsEnum.COUP_CRITIQUE})}
@@ -112,7 +107,6 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
     if(value.PERTE_PM) {result.push({id:IdActionsEnum.PERTE_PM})}
     if(value.PERTE_PW) {result.push({id:IdActionsEnum.DEBOOST_PW})}
     if(value.PERTE_PO) {result.push({id:IdActionsEnum.PERTE_PORTEE})}
-    if(value.PERTE_CONTROLE) {result.push({id:IdActionsEnum.PERTE_CONTROLE})}
     if(value.PERTE_ARMURE_DONNEE) {result.push({id:IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_DONNEE})}
     if(value.PERTE_ARMURE_RECUE) {result.push({id:IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_RECUE})}
     if(value.PERTE_CRITIQUE) {result.push({id:IdActionsEnum.PERTE_COUP_CRITIQUE})}
@@ -138,7 +132,6 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
       PM: value?.PM ?? false,
       PW: value?.PW ?? false,
       PO: value?.PO ?? false,
-      CONTROLE: value?.CONTROLE ?? false,
       ARMURE_DONNEE: value?.ARMURE_DONNEE ?? false,
       ARMURE_RECUE: value?.ARMURE_RECUE ?? false,
       CRITIQUE: value?.CRITIQUE ?? false,
@@ -152,7 +145,6 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
       PERTE_PM: value?.PERTE_PM ?? false,
       PERTE_PW: value?.PERTE_PW ?? false,
       PERTE_PO: value?.PERTE_PO ?? false,
-      PERTE_CONTROLE: value?.PERTE_CONTROLE ?? false,
       PERTE_ARMURE_DONNEE: value?.PERTE_ARMURE_DONNEE ?? false,
       PERTE_ARMURE_RECUE: value?.PERTE_ARMURE_RECUE ?? false,
       PERTE_CRITIQUE: value?.PERTE_CRITIQUE ?? false,
@@ -181,7 +173,6 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
       PM: major.some(x => x.id === IdActionsEnum.PM),
       PW: major.some(x => x.id === IdActionsEnum.BOOST_PW),
       PO: major.some(x => x.id === IdActionsEnum.PORTEE),
-      CONTROLE: major.some(x => x.id === IdActionsEnum.CONTROLE),
       ARMURE_DONNEE: major.some(x => x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameter === ParameterMajorActionEnum.ARMURE_DONNEE),
       ARMURE_RECUE: major.some(x => x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameter === ParameterMajorActionEnum.ARMURE_RECUE),
       CRITIQUE: major.some(x => x.id === IdActionsEnum.COUP_CRITIQUE),
@@ -195,7 +186,6 @@ export class MajorPresentFormService extends AbstractFormService<FormGroup<Typed
       PERTE_PM: major.some(x => x.id === IdActionsEnum.PERTE_PM),
       PERTE_PW: major.some(x => x.id === IdActionsEnum.DEBOOST_PW),
       PERTE_PO: major.some(x => x.id === IdActionsEnum.PERTE_PORTEE),
-      PERTE_CONTROLE: major.some(x => x.id === IdActionsEnum.PERTE_CONTROLE),
       PERTE_ARMURE_DONNEE: major.some(x => x.id === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE && x.parameter === ParameterMajorActionEnum.ARMURE_DONNEE),
       PERTE_ARMURE_RECUE: major.some(x => x.id === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE && x.parameter === ParameterMajorActionEnum.ARMURE_RECUE),
       PERTE_CRITIQUE: major.some(x => x.id === IdActionsEnum.PERTE_COUP_CRITIQUE),

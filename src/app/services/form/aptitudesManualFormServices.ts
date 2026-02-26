@@ -34,7 +34,6 @@ export interface AptitudesManualForm {
     tacle: number;
     sagesse: number;
     prospection: number;
-    controle: number;
     volonte: number;
 
     maitriseCritique: number;
@@ -86,7 +85,6 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
     tacle: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
     sagesse: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
     prospection: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-    controle: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
     volonte: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
 
     maitriseCritique: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
@@ -136,7 +134,6 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
       value.tacle,
       value.sagesse,
       value.prospection,
-      value.controle,
       value.volonte,
       value.maitriseCritique,
       value.resistancesCritique,
@@ -190,7 +187,6 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
         tacle: 0,
         sagesse: 0,
         prospection: 0,
-        controle: 0,
         volonte: 0,
         maitriseCritique: 0,
         resistancesCritique: 0,
@@ -210,7 +206,7 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
         'maitriseFeu', 'maitriseEau', 'maitriseTerre', 'maitriseAir',
         'resistancesFeu', 'resistancesEau', 'resistancesTerre', 'resistancesAir',
         'di', 'soinsRealises', 'cc', 'parade', 'initiative', 'portee',
-        'esquive', 'tacle', 'sagesse', 'prospection', 'controle', 'volonte',
+        'esquive', 'tacle', 'sagesse', 'prospection', 'volonte',
         'maitriseCritique', 'resistancesCritique', 'maitriseDos', 'resistancesDos',
         'maitriseMelee', 'armureDonnee', 'maitriseDistance', 'armureRecue',
         'maitriseSoins', 'DIindirect', 'maitriseBerzerk'
@@ -261,7 +257,6 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
         { id: IdActionsEnum.TACLE, value: value.tacle, params: [] },
         { id: IdActionsEnum.SAGESSE, value: value.sagesse, params: [] },
         { id: IdActionsEnum.PROSPECTION, value: value.prospection, params: [] },
-        { id: IdActionsEnum.CONTROLE, value: value.controle, params: [] },
         { id: IdActionsEnum.VOLONTE, value: value.volonte, params: [] },
 
 
@@ -309,7 +304,6 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
         tacle: value?.tacle ?? AptitudesManualFormService.DEFAULT_VALUE,
         sagesse: value?.sagesse ?? AptitudesManualFormService.DEFAULT_VALUE,
         prospection: value?.prospection ?? AptitudesManualFormService.DEFAULT_VALUE,
-        controle: value?.controle ?? AptitudesManualFormService.DEFAULT_VALUE,
         volonte: value?.volonte ?? AptitudesManualFormService.DEFAULT_VALUE,
 
         maitriseCritique: value?.maitriseCritique ?? AptitudesManualFormService.DEFAULT_VALUE,
@@ -354,7 +348,6 @@ export class AptitudesManualFormService extends AbstractFormService<FormGroup<Ty
         tacle: AptitudesManualFormService.DEFAULT_VALUE,
         sagesse: AptitudesManualFormService.DEFAULT_VALUE,
         prospection: AptitudesManualFormService.DEFAULT_VALUE,
-        controle: AptitudesManualFormService.DEFAULT_VALUE,
         volonte: AptitudesManualFormService.DEFAULT_VALUE,
 
         maitriseCritique: AptitudesManualFormService.DEFAULT_VALUE,

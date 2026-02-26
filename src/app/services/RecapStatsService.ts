@@ -53,7 +53,6 @@ export class RecapStatsService extends AbstractDestroyService {
     { id: IdActionsEnum.PM, value: 3, params: [] },
     { id: IdActionsEnum.BOOST_PW, value: 6, params: [] },
     { id: IdActionsEnum.COUP_CRITIQUE, value: 3, params: [] },
-    { id: IdActionsEnum.CONTROLE, value: 1, params: [] },
   ];
 
   private readonly initialEffectList: RecapStats[] = [
@@ -74,10 +73,10 @@ export class RecapStatsService extends AbstractDestroyService {
     { id: IdActionsEnum.PARADE, value: 0, params: [] },
     { id: IdActionsEnum.RESISTANCES_DOS, value: 0, params: [] },
     { id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 0, params: [] },
-    { id: IdActionsEnum.CONTROLE, value: 0, params: [] },
     { id: IdActionsEnum.DI, value: 0, params: [] },
     { id: IdActionsEnum.DI_INDIRECT, value: 0, params: [] },
     { id: IdActionsEnum.PROSPECTION, value: 0, params: [] },
+    { id: IdActionsEnum.SAGESSE, value: 0, params: [] },
 
 
     // ============ COUPURE GRAPHIQUE ============
@@ -102,7 +101,6 @@ export class RecapStatsService extends AbstractDestroyService {
     { id: IdActionsEnum.INITIATIVE, value: 0, params: [] },
     { id: IdActionsEnum.SOINS_REALISE, value: 0, params: [] },
     { id: IdActionsEnum.PERCENTAGE_PV, value: 0, params: [] },
-    { id: IdActionsEnum.SAGESSE, value: 0, params: [] },
   ];
 
   private readonly recap = new BehaviorSubject<RecapStats[]>([...this.initialEffectList]);

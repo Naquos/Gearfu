@@ -229,17 +229,20 @@ export class SaveBuildService {
      * Ajoute un build à la liste
      */
     public addBuildToLocalStorage(build: Build): void {
-        // Vérifier qu'il y a au moins des items ou des paramètres valides
-        if (!build.itemsId && !build.aptitudes && !build.sorts && !build.enchantement && !build.elementSelector) {
-            return; // Éviter d'ajouter des builds vides
-        }
+     
 
         // On enlève le build actuel s'il existe déjà pour éviter les doublons
         const current = this.buildList.getValue().find(b => b.id === build.id);
         if (current) {
             build.codeZenith = current.codeZenith; // Conserver le code zenith si le build existe déjà pour éviter de le perdre lors de l'import depuis l'URL qui ne contient pas forcément le code zenith
         }
-        const currentBuilds = this.buildList.getValue().filter(b => b.id !== build.id); 
+        const currentBuilds = this.buildList.getValue().filter(b => b.id !== build.id);
+        // Si le build ne contient plus d'item, alors on le supprime sans sauvegarder un build vide
+        if (!build.itemsId) {
+            this.buildList.next(currentBuilds);
+            this.localStorageService.setItem(KeyEnum.KEY_SAVE_BUILD_ALL, currentBuilds);
+            return; // Éviter d'ajouter des builds vides
+        } 
         currentBuilds.unshift(build);
         // Limiter à 50 builds max pour éviter de surcharger le localStorage
         if (currentBuilds.length > 50) {
