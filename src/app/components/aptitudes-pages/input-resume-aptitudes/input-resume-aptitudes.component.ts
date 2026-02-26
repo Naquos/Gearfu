@@ -7,10 +7,11 @@ import { RecapStatsService } from '../../../services/recapStatsService';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivateDirective } from "../../../directives/activate.directive";
+import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-input-resume-aptitudes',
-  imports: [TranslateModule, ReactiveFormsModule, ActivateDirective],
+  imports: [TranslateModule, ReactiveFormsModule, ActivateDirective, LazyImageDirective],
   templateUrl: './input-resume-aptitudes.component.html',
   styleUrl: './input-resume-aptitudes.component.scss'
 })

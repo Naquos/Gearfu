@@ -12,10 +12,11 @@ import { TooltipService } from '../../../services/TooltipService';
 import { ItemComponent } from '../item/item.component';
 import { Router } from '@angular/router';
 import { ActivateDirective } from "../../../directives/activate.directive";
+import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-item-choose-display',
-  imports: [CommonModule, ImageFallbackDirective, ActivateDirective],
+  imports: [CommonModule, ImageFallbackDirective, ActivateDirective, LazyImageDirective],
   templateUrl: './item-choose-display.component.html',
   styleUrl: './item-choose-display.component.scss',
   host: {

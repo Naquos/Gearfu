@@ -24,7 +24,7 @@ type EffectDisplay = 'NORMAL' | 'CRITIQUE';
 
 @Component({
   selector: 'app-sorts',
-  imports: [TranslateModule, MatIconModule, MatTooltipModule, LazyImageDirective, FormsModule, MatSliderModule, ActivateDirective],
+  imports: [TranslateModule, MatIconModule, MatTooltipModule, LazyImageDirective, FormsModule, MatSliderModule, ActivateDirective, LazyImageDirective],
   templateUrl: './sorts.component.html',
   styleUrl: './sorts.component.scss'
 })

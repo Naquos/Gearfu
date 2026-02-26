@@ -7,10 +7,11 @@ import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, switchMap, tap } from 'rxjs';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
+import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-image-item',
-  imports: [ImageFallbackDirective],
+  imports: [ImageFallbackDirective, LazyImageDirective],
   templateUrl: './image-item.component.html',
   styleUrl: './image-item.component.scss'
 })

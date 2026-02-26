@@ -5,6 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MonsterDrop } from '../../../models/data/monsterDrop';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
+import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
 export interface DescriptionSublimationType {
   level: number;
@@ -13,7 +14,7 @@ export interface DescriptionSublimationType {
 
 @Component({
   selector: 'app-description-sublimation',
-  imports: [MatTooltipModule, TranslateModule, ImageFallbackDirective],
+  imports: [MatTooltipModule, TranslateModule, ImageFallbackDirective, LazyImageDirective],
   templateUrl: './description-sublimation.component.html',
   styleUrls: ['./description-sublimation.component.scss']
 })

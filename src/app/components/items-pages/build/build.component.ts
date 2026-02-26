@@ -12,6 +12,7 @@ import { ItemChooseService } from '../../../services/itemChooseService';
 import { SaveBuildService } from '../../../services/saveBuildService';
 import { Statistics } from '../../../models/data/statistics';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
+import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
 export enum ItemTypeBuild  {
   CASQUE =  "CASQUE",
@@ -32,7 +33,7 @@ export enum ItemTypeBuild  {
 
 @Component({
   selector: 'app-build',
-  imports: [MatTooltipModule, TranslateModule],
+  imports: [MatTooltipModule, TranslateModule, LazyImageDirective],
   templateUrl: './build.component.html',
   styleUrl: './build.component.scss'
 })

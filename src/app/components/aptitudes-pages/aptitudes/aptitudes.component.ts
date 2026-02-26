@@ -11,10 +11,11 @@ import { LevelFormService } from '../../../services/form/levelFormService';
 import { ImageService } from '../../../services/imageService';
 import { InputAptitudesComponent } from '../../form/input-aptitudes/input-aptitudes.component';
 import { ActivateDirective } from "../../../directives/activate.directive";
+import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-aptitudes',
-  imports: [TranslateModule, InputAptitudesComponent, MatIconModule, MatTooltipModule, ActivateDirective],
+  imports: [TranslateModule, InputAptitudesComponent, MatIconModule, MatTooltipModule, ActivateDirective, LazyImageDirective],
   templateUrl: './aptitudes.component.html',
   styleUrl: './aptitudes.component.scss'
 })
