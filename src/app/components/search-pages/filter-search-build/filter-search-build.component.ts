@@ -16,13 +16,13 @@ import { OrderBySearchBuildEnum } from '../../../models/enum/orderBySearchBuildE
   styleUrl: './filter-search-build.component.scss',
 })
 export class FilterSearchBuildComponent {
-    protected readonly filterSearchBuildFormService = inject(FilterSearchBuildFormService);
-    protected idClasses: number[] = Object.values(ClassIdEnum).filter(value => typeof value === 'number') as number[];
-      protected readonly OrderBySearchBuildEnumList = Object.values(OrderBySearchBuildEnum);
-    
+  protected readonly filterSearchBuildFormService = inject(FilterSearchBuildFormService);
+  protected idClasses: number[] = Object.values(ClassIdEnum).filter(value => typeof value === 'number') as number[];
+  protected readonly OrderBySearchBuildEnumList = Object.values(OrderBySearchBuildEnum);
 
-    protected changeClasses(idClass: ClassIdEnum): void {
-      this.filterSearchBuildFormService.form.controls.class.setValue(idClass);
-    }
-  
+
+  protected changeClasses(idClass: ClassIdEnum): void {
+    this.filterSearchBuildFormService.form.controls.class.setValue(idClass);
+  }
+
 }

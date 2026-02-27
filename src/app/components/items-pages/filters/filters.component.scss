@@ -1,0 +1,28 @@
+:host {
+
+    background: linear-gradient(to right, #213A57, #618A97);
+    opacity: 0.9;
+    color: white;
+    font-weight: 400;
+
+    .filter-content {
+        padding: 10px;
+
+        .filter-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            button,
+            app-reverse-button {
+                width: 41px;
+                border-radius: 25%;
+            }
+
+            app-reverse-button {
+                margin-left: auto;
+                margin-right: 15px;
+            }
+        }
+    }
+}

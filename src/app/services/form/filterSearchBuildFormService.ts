@@ -1,4 +1,4 @@
-import {  Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { FormControl, FormGroup } from "@angular/forms";
 import { AbstractFormService, TypedControls } from "./abstractFormService";
@@ -19,7 +19,7 @@ export interface FilterSearchBuildForm {
     parade: number;
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<TypedControls<FilterSearchBuildForm>>> {
     public static readonly DEFAULT_VALUE: FilterSearchBuildForm = {
         class: ClassIdEnum.Feca,
@@ -37,9 +37,9 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
     private readonly result = new BehaviorSubject<FilterSearchBuildForm>(FilterSearchBuildFormService.DEFAULT_VALUE);
     public readonly result$ = this.result.asObservable();
 
-    
+
     protected readonly keyEnum = KeyEnum.KEY_FILTER_SEARCH_BUILD;
-    public readonly form =  new FormGroup<TypedControls<FilterSearchBuildForm>>({
+    public readonly form = new FormGroup<TypedControls<FilterSearchBuildForm>>({
         class: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.class, { nonNullable: true }),
         levelMin: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.levelMin, { nonNullable: true }),
         levelMax: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.levelMax, { nonNullable: true }),
@@ -51,7 +51,7 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
         CC: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.CC, { nonNullable: true }),
         parade: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.parade, { nonNullable: true }),
     });
-    
+
     constructor() {
         super();
         this.init();
@@ -60,7 +60,7 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
     protected override handleChanges(value: FilterSearchBuildForm): void {
         this.result.next(value);
     }
-    
+
     public override setValue(value: FilterSearchBuildForm | null): void {
         this.form.setValue({
             class: value?.class ?? FilterSearchBuildFormService.DEFAULT_VALUE.class,

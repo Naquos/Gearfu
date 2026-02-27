@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Output, Renderer2, Input } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Output, Input, inject } from '@angular/core';
 
 @Directive({
   selector: '[appActivate]',
@@ -10,8 +10,7 @@ export class ActivateDirective {
   @HostBinding('tabIndex') tabIndex = 0;
 
   private readonly keyList: string[] = [' ', 'Spacebar', 'Enter'];
-
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  private readonly el = inject(ElementRef);
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {

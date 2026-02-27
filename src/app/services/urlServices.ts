@@ -21,7 +21,7 @@ interface UrlParams {
     c?: '1';
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class UrlServices extends AbstractDestroyService {
 
     private _initialParams: UrlParams | null = null;
@@ -62,7 +62,7 @@ export class UrlServices extends AbstractDestroyService {
     private set initialParams(value: UrlParams) {
         this._initialParams = value;
     }
-        
+
 
     public readonly itemsId$ = this.activatedRoute.fragment.pipe(
         map(() => {
@@ -215,7 +215,7 @@ export class UrlServices extends AbstractDestroyService {
                 /^[A-Za-z0-9\-_]+$/.test(data) || // EncodedURIComponent format
                 /^[A-Za-z0-9+/=]+$/.test(data)    // Base64 format
             );
-            
+
             if (!looksLikeCompressed) {
                 return data;
             }
@@ -224,12 +224,12 @@ export class UrlServices extends AbstractDestroyService {
         try {
             // Essayer d'abord EncodedURIComponent (nouveau format pour hash URLs)
             let decompressed = LZString.decompressFromEncodedURIComponent(data);
-            
+
             // Si échec, essayer Base64 (ancien format pour rétrocompatibilité avec query params)
             if (!decompressed) {
                 decompressed = LZString.decompressFromBase64(data);
             }
-            
+
             // Si la décompression réussit, retourner le résultat, sinon retourner l'original
             return decompressed || data;
         } catch (error) {
@@ -245,7 +245,7 @@ export class UrlServices extends AbstractDestroyService {
         if (!this.isBrowser) {
             return; // Ne pas naviguer côté serveur
         }
-        
+
         let needsCompression = false;
         let hasChanges = false;
 
@@ -317,7 +317,7 @@ export class UrlServices extends AbstractDestroyService {
      */
     private hasOtherCompressedParams(excludeParams: Partial<UrlParams>): boolean {
         const keysToCheck: (keyof UrlParams)[] = ['sorts', 'aptitudes', 'enchantement', 'aptitudesManual', 'elementSelector'];
-        
+
         for (const key of keysToCheck) {
             if (!(key in excludeParams) && this.initialParams[key]) {
                 const value = this.initialParams[key] as string;
@@ -326,7 +326,7 @@ export class UrlServices extends AbstractDestroyService {
                 }
             }
         }
-        
+
         return false;
     }
 
@@ -339,7 +339,7 @@ export class UrlServices extends AbstractDestroyService {
         }
 
         const params = new URLSearchParams();
-        
+
         if (this.initialParams.itemsId) {
             params.set('itemsId', this.initialParams.itemsId);
         }
@@ -385,31 +385,31 @@ export class UrlServices extends AbstractDestroyService {
         if (typeof window === 'undefined') {
             return {};
         }
-        
+
         try {
             let searchString = window.location.hash.substring(1); // Enlever le #
             let needsConversion = false;
-            
+
             // Si pas de hash, essayer les query params (rétrocompatibilité)
             if (!searchString && window.location.search) {
                 searchString = window.location.search.substring(1); // Enlever le ?
                 needsConversion = true; // Marquer pour conversion
             }
-            
+
             const urlParams = new URLSearchParams(searchString);
             const params: UrlParams = {};
-            
+
             // Vérifier si les données sont compressées
             const isCompressed = urlParams.get('c') === '1';
             if (isCompressed) {
                 params.c = '1';
             }
-            
+
             const itemsId = urlParams.get('itemsId');
             if (itemsId) {
                 params.itemsId = itemsId;
             }
-            
+
             const level = urlParams.get('level');
             if (level) {
                 params.level = parseInt(level, 10);
@@ -446,14 +446,14 @@ export class UrlServices extends AbstractDestroyService {
             if (elementSelector) {
                 params.elementSelector = elementSelector;
             }
-            
+
             // Si on a détecté une ancienne URL avec query params, la convertir en hash
             if (needsConversion && searchString) {
                 // Remplacer l'URL actuelle par la version avec hash (sans rechargement)
                 const newUrl = window.location.pathname + '#' + searchString;
                 window.history.replaceState(null, '', newUrl);
             }
-            
+
             return params;
         } catch (error) {
             console.error("Error parsing hash params:", error);

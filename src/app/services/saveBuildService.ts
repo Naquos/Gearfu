@@ -17,9 +17,9 @@ import { Statistics } from "../models/data/statistics";
 import { RecapStatsService } from "./recapStatsService";
 import { NO_BUILD } from "../models/utils/utils";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class SaveBuildService {
-    
+
     private readonly localStorageService = inject(LocalStorageService);
     private readonly levelFormService = inject(LevelFormService);
     private readonly itemChooseService = inject(ItemChooseService);
@@ -31,7 +31,7 @@ export class SaveBuildService {
     private readonly supabaseService = inject(SupabaseService);
     private readonly router = inject(Router);
     private readonly recapStatsService = inject(RecapStatsService);
-    
+
     private readonly buildList = new BehaviorSubject<Build[]>([]);
     public readonly buildList$ = this.buildList.asObservable();
     private readonly currentBuildId = new BehaviorSubject<string | null>(null);
@@ -40,16 +40,16 @@ export class SaveBuildService {
 
     private readonly buildLoading = new BehaviorSubject<boolean>(false);
     public readonly buildLoading$ = this.buildLoading.asObservable();
-    
+
     constructor() {
         const savedBuilds = this.localStorageService.getItem<Build[]>(KeyEnum.KEY_SAVE_BUILD_ALL) || [];
         this.buildList.next(savedBuilds);
         this.currentBuildId.subscribe(buildId => {
             const routerSplit = this.router.url.split("/");
-            if(buildId && buildId !== NO_BUILD) {
+            if (buildId && buildId !== NO_BUILD) {
                 this.router.navigate(["/", buildId || NO_BUILD, ...routerSplit.slice(2)]); // Met à jour l'URL avec le nouvel id de build sans recharger la page
-                }
             }
+        }
         )
     }
 
@@ -57,7 +57,7 @@ export class SaveBuildService {
      * Initialise le build à partir de l'URL, si l'URL contient un id de build valide, sinon ne fait rien
      */
     public initId(buildId: string): void {
-        if(buildId === NO_BUILD || !buildId) {
+        if (buildId === NO_BUILD || !buildId) {
             return;
         }
         this.currentBuildId.next(buildId);
@@ -81,28 +81,28 @@ export class SaveBuildService {
             this.createAndNavigate();
         } else {
             this.supabaseService.getBuildById(buildId)
-            .pipe(take(1),
-            tap(build => {
-                if (build) {
-                    this.loadBuild(build);
-                }
-            }),
-            switchMap(build => {
-                if (build) {
-                    return this.supabaseService.getStatisticsByBuildId(build.id || '').pipe(
-                        tap(statistics => {
-                            if (statistics) {
-                                this.statisticsId.next(statistics.id || null);
-                            }
-                        })
-                    );
-                }
-                return [];
-             }),
-            catchError(() => {
-                this.createAndNavigate();
-                return [];
-            })).subscribe();
+                .pipe(take(1),
+                    tap(build => {
+                        if (build) {
+                            this.loadBuild(build);
+                        }
+                    }),
+                    switchMap(build => {
+                        if (build) {
+                            return this.supabaseService.getStatisticsByBuildId(build.id || '').pipe(
+                                tap(statistics => {
+                                    if (statistics) {
+                                        this.statisticsId.next(statistics.id || null);
+                                    }
+                                })
+                            );
+                        }
+                        return [];
+                    }),
+                    catchError(() => {
+                        this.createAndNavigate();
+                        return [];
+                    })).subscribe();
         }
     }
 
@@ -111,21 +111,21 @@ export class SaveBuildService {
      */
     public createAndNavigate(): void {
         this.supabaseService.createEmptyBuild()
-        .pipe(
-            switchMap(newBuild => 
-                this.supabaseService.createEmptyStatistics(newBuild?.id || '').pipe(
-                    tap(newStatistics => this.statisticsId.next(newStatistics?.id || null)),
-                    map(() => newBuild)
+            .pipe(
+                switchMap(newBuild =>
+                    this.supabaseService.createEmptyStatistics(newBuild?.id || '').pipe(
+                        tap(newStatistics => this.statisticsId.next(newStatistics?.id || null)),
+                        map(() => newBuild)
+                    )
                 )
             )
-        )
-        .subscribe(newBuild => {
-            if (!newBuild?.id) {
-                return;
-            }
-            this.loadBuild(newBuild);
-            this.router.navigate(["/", newBuild.id]);
-        });
+            .subscribe(newBuild => {
+                if (!newBuild?.id) {
+                    return;
+                }
+                this.loadBuild(newBuild);
+                this.router.navigate(["/", newBuild.id]);
+            });
     }
 
     /**
@@ -142,11 +142,11 @@ export class SaveBuildService {
             this.chasseFormService.enchantement$,
             this.buildLoading$
         ]).pipe(
-            filter(([, , , , , ,  buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
+            filter(([, , , , , , buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
             tap(() => {
                 const token_build = this.currentTokenBuild.getValue();
                 const token_user = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN);
-                if(token_build && token_user && token_build !== token_user) {
+                if (token_build && token_user && token_build !== token_user) {
                     return; // Ne pas sauvegarder si le token du build actuel ne correspond pas au token de l'utilisateur (sécurité pour éviter d'écraser un build qui ne nous appartient pas)
                 }
                 this.saveCurrentBuild();
@@ -157,7 +157,7 @@ export class SaveBuildService {
 
     private saveBuildToSupabase(): void {
         const id = this.currentBuildId.getValue();
-        if(!id || id === NO_BUILD) {
+        if (!id || id === NO_BUILD) {
             return; // Si on n'a pas d'id de build, on ne peut pas sauvegarder sur Supabase
         }
         const build: Build = {
@@ -219,7 +219,7 @@ export class SaveBuildService {
             compressed: false,
             createdAt: Date.now()
         };
-        if(!build.id || build.id === NO_BUILD) {
+        if (!build.id || build.id === NO_BUILD) {
             return; // Si on n'a pas d'id de build, on ne peut pas sauvegarder dans le localStorage
         }
         this.addBuildToLocalStorage(build);
@@ -229,7 +229,7 @@ export class SaveBuildService {
      * Ajoute un build à la liste
      */
     public addBuildToLocalStorage(build: Build): void {
-     
+
 
         // On enlève le build actuel s'il existe déjà pour éviter les doublons
         const current = this.buildList.getValue().find(b => b.id === build.id);
@@ -242,7 +242,7 @@ export class SaveBuildService {
             this.buildList.next(currentBuilds);
             this.localStorageService.setItem(KeyEnum.KEY_SAVE_BUILD_ALL, currentBuilds);
             return; // Éviter d'ajouter des builds vides
-        } 
+        }
         currentBuilds.unshift(build);
         // Limiter à 50 builds max pour éviter de surcharger le localStorage
         if (currentBuilds.length > 50) {
@@ -306,10 +306,10 @@ export class SaveBuildService {
      */
     public removeBuild(build: Build): void {
         const currentBuilds = this.buildList.getValue();
-        const index = currentBuilds.findIndex(b => 
+        const index = currentBuilds.findIndex(b =>
             b.itemsId === build.itemsId
         );
-        
+
         if (index !== -1) {
             this.removeBuildByIndex(index);
         }

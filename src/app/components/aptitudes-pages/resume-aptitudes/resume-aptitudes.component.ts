@@ -59,8 +59,8 @@ export class ResumeAptitudesComponent {
     this.tooltipService.forceClose();
     this.tooltipService.cancelClose();
     let connectedPosition: ConnectedPosition[] | undefined = undefined;
-    if(window.innerWidth <= 700) {
-      connectedPosition = [{ 
+    if (window.innerWidth <= 700) {
+      connectedPosition = [{
         originX: 'start', originY: 'bottom',
         overlayX: 'start', overlayY: 'bottom',
         offsetY: 0, offsetX: 0
@@ -68,9 +68,9 @@ export class ResumeAptitudesComponent {
     }
     // Le 7ème paramètre active le comportement "garder ouvert au survol"
     this.tooltipService.openTooltip(
-      this.viewContainerRef, 
-      ClassesTooltipComponent, 
-      event as MouseEvent, 
+      this.viewContainerRef,
+      ClassesTooltipComponent,
+      event as MouseEvent,
       {},
       connectedPosition,  // connectedPosition
       true,       // withPush
@@ -89,7 +89,7 @@ export class ResumeAptitudesComponent {
 
   protected getClass(id: IdActionsEnum): string {
     const value = this.getValue(id);
-    if(value > 0) {
+    if (value > 0) {
       return 'positif';
     }
     return value < 0 ? 'negatif' : '';

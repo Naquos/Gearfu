@@ -143,7 +143,7 @@ export class RecapStatsService extends AbstractDestroyService {
         const extract = this.extractEquipEffects(items);
         const recapStat = this.mapToRecapStats(extract);
         recapStat.push(...aptitudes, ...chasses, ...bonus);
-        return {recapStat, level, sublimationsIdToLevel, aptitudesManual};
+        return { recapStat, level, sublimationsIdToLevel, aptitudesManual };
       }),
       tap(() => this.applyNatifEffects()),
       tap(() => this.applyEffectByClass()),
@@ -248,13 +248,13 @@ export class RecapStatsService extends AbstractDestroyService {
         this.applyEffect({ id: IdActionsEnum.POINT_DE_VIE, value: 2 * level, params: [] });
         break;
       case ClassIdEnum.Eliotrope:
-        if((this.recap.value.find(rs => rs.id === IdActionsEnum.PORTEE)?.value ?? 0) >= 2) {
+        if ((this.recap.value.find(rs => rs.id === IdActionsEnum.PORTEE)?.value ?? 0) >= 2) {
           this.applyEffect({ id: IdActionsEnum.PORTEE, value: -2, params: [] });
           this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
         }
         break;
-        case ClassIdEnum.Xelor:
-          this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: 6, params: [] });
+      case ClassIdEnum.Xelor:
+        this.applyEffect({ id: IdActionsEnum.BOOST_PW, value: 6, params: [] });
         break;
     }
   }

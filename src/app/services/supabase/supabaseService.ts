@@ -11,12 +11,13 @@ import { OrderBySearchBuildEnum } from "../../models/enum/orderBySearchBuildEnum
 
 let browserSupabaseClient: SupabaseClient | null = null;
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class SupabaseService {
     private readonly supabase: SupabaseClient;
     private readonly isBrowser: boolean;
     private readonly localStorageService = inject(LocalStorageService);
 
+    // eslint-disable-next-line @angular-eslint/prefer-inject
     constructor(@Inject(PLATFORM_ID) platformId: object) {
         this.isBrowser = isPlatformBrowser(platformId);
         const supabaseUrl = 'https://nsxhzgbzihkpltpsqpip.supabase.co';
@@ -149,7 +150,7 @@ export class SupabaseService {
                 }
                 return (data[0] as Build) ?? null;
             }
-        ));
+            ));
     }
 
     public createEmptyBuild(): Observable<Build | null> {
@@ -182,7 +183,7 @@ export class SupabaseService {
         if (!this.isBrowser) {
             return of(undefined);
         }
-        if(!build.id) {
+        if (!build.id) {
             throw new Error('Build ID is required for update');
         }
         const token = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '';
@@ -268,7 +269,7 @@ export class SupabaseService {
         if (!this.isBrowser) {
             return of(undefined);
         }
-        if(!statistics.id) {
+        if (!statistics.id) {
             return this.getStatisticsByBuildId(statistics?.buildId ?? "").pipe(
                 map(existingStats => {
                     if (existingStats) {

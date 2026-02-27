@@ -1,343 +1,334 @@
-$header-size:80px;
+$header-size: 80px;
 $footer-size: 38px;
 $item-choose-size: 70px;
 $width-filter: 430px;
 
 header {
-    display: flex;
-    position: fixed;
-    width: 96%;
-    height: calc($header-size - (15px * 2));
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 50px;
-    background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77);
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    top: 0;
-    z-index: 1;
+  display: flex;
+  position: fixed;
+  width: 96%;
+  height: calc($header-size - (15px * 2));
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  top: 0;
+  z-index: 1;
 
-    .zenithButton {
-      display: none;
-    }
+  .zenithButton {
+    display: none;
+  }
 
-    .flag {
-      width: 40px;
-      height: 40px;
-    }
+  .flag {
+    width: 40px;
+    height: 40px;
+  }
 
-    img {
-        width: 50px;
-        height: 50px;
-    }
+  img {
+    width: 50px;
+    height: 50px;
+  }
 
-    .gearfu {
-        width: 93px;
-        height: 50px;
-        margin-left: 20px;
-        margin-right: auto;
-    }
+  .gearfu {
+    width: 93px;
+    height: 50px;
+    margin-left: 20px;
+    margin-right: auto;
+  }
 
-    span {
-        margin-right: auto;
-        margin-left: 25px;
-        font-size: x-large;
-        text-shadow: 6px 4px 6px rgba(240, 240, 255, 0.3);
-        font-family: auto;
-        letter-spacing: 3px;
-    }
+  span {
+    margin-right: auto;
+    margin-left: 25px;
+    font-size: x-large;
+    text-shadow: 6px 4px 6px rgba(240, 240, 255, 0.3);
+    font-family: auto;
+    letter-spacing: 3px;
+  }
 
-    .flagButton {
-      margin-left: auto;
-    }
+  .flagButton {
+    margin-left: auto;
+  }
 
-    .flagButton:hover {
-      transform: scale(1.06);
-    }
+  .flagButton:hover {
+    transform: scale(1.06);
+  }
 
-    .discord {
-        cursor: pointer;
-    }
-    .discord:hover {
-        transform: scale(1.06);
-    }
+  button {
+    box-shadow: none !important;
+  }
+
+  .discord {
+    cursor: pointer;
+  }
+
+  .discord:hover {
+    transform: scale(1.06);
+  }
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    margin-top: $header-size;
-    min-height: calc(100vh - $header-size);
+  display: flex;
+  flex-direction: column;
+  margin-top: $header-size;
+  min-height: calc(100vh - $header-size);
 }
 
 .filter {
-    background: linear-gradient(to right, #213A57, #618A97);
-    opacity: 0.9;
-    color: white;
-    font-weight: 400;
+  background: linear-gradient(to right, #213A57, #618A97);
+  opacity: 0.9;
+  color: white;
+  font-weight: 400;
 
-    position: fixed;
-    width: $width-filter;
+  position: fixed;
+  width: $width-filter;
 
-    overflow-y: scroll;
-    height: calc(100% - 85px);
-    padding-bottom: 50px;
+  overflow-y: scroll;
+  height: calc(100% - 85px);
+  padding-bottom: 50px;
 
-
-    button {
-      margin: 5px;
-      border: 2px solid #415A77;
-      box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
-      cursor: pointer;
-      background-color: white;
-      color: #213A57;
-      font-weight: 600;
-      font-size: 17px;
-      height: 34px;
-    }
-
-    button:active {
-      transform: translateY(2px);
-      box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
-    }
-
-    .filter-header {
-        background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77);
-        display: flex;
-        flex-direction: column;
+  .filter-header {
+    background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77);
+    display: flex;
+    flex-direction: column;
 
 
-      .filter-build, .filter-aptitudes, .filter-search  {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .filter-build,
+    .filter-aptitudes,
+    .filter-search {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-        button {
-          width: 50%;
-          border-radius: 10px;
-        }
-      }
-
-      .filter-search {
-        button {
-          width: 100%;
-        }
+      button {
+        width: 50%;
+        border-radius: 10px;
       }
     }
 
-    .filter-content {
-      padding: 10px;
-      .filter-title {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-  
-        button, app-reverse-button {
-          width: 41px;
-          border-radius: 25%;
-        }
-
-        app-reverse-button {
-          margin-left: auto;
-          margin-right: 15px;
-        }
+    .filter-search {
+      button {
+        width: 100%;
       }
     }
+  }
 
-    .build-content {
-      padding: 10px;
-    }
+  .build-content {
+    padding: 10px;
+  }
 
-    app-builds-list {
-      display: block;
-    }
+  app-builds-list {
+    display: block;
+  }
 
-    scrollbar-width: none;  /* Firefox */
-    ::-webkit-scrollbar { 
-        display: none;  /* Safari and Chrome */
-    }
-    
+  scrollbar-width: none;
+
+  /* Firefox */
+  ::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+  }
+
 }
 
 .content-application {
-    width: calc(100% - $width-filter);
-    margin-left: $width-filter;
-    padding-bottom: 50px;
+  width: calc(100% - $width-filter);
+  margin-left: $width-filter;
+  padding-bottom: 50px;
 }
 
 
 
-@-webkit-keyframes rotating /* Safari and Chrome */ {
-    from {
-      -webkit-transform: rotate(0deg);
-      -o-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    to {
-      -webkit-transform: rotate(360deg);
-      -o-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-  @keyframes rotating {
-    from {
-      -ms-transform: rotate(0deg);
-      -moz-transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
-      -o-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    to {
-      -ms-transform: rotate(360deg);
-      -moz-transform: rotate(360deg);
-      -webkit-transform: rotate(360deg);
-      -o-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-  
-  #logo {
-    -webkit-animation: rotating 5s linear infinite;
-    -moz-animation: rotating 5s linear infinite;
-    -ms-animation: rotating 5s linear infinite;
-    -o-animation: rotating 5s linear infinite;
-    animation: rotating 5s linear infinite;
+@-webkit-keyframes rotating
+
+/* Safari and Chrome */
+  {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
-  ::ng-deep {
-    .mat-mdc-menu-panel {
-      background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77) !important;
-      min-width: 0 !important;
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+#logo {
+  -webkit-animation: rotating 5s linear infinite;
+  -moz-animation: rotating 5s linear infinite;
+  -ms-animation: rotating 5s linear infinite;
+  -o-animation: rotating 5s linear infinite;
+  animation: rotating 5s linear infinite;
+}
+
+::ng-deep {
+  .mat-mdc-menu-panel {
+    background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77) !important;
+    min-width: 0 !important;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .menu {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+
+  app-item-choose {
+    z-index: 50;
+    position: fixed;
+    top: $header-size;
+    left: 0px;
+
+    height: calc(100vh - $header-size);
+    overflow-y: scroll;
+
+    background: #1B263B;
+    width: $item-choose-size;
+  }
+
+  .content-application {
+    width: calc(100% - $item-choose-size);
+    margin-left: $item-choose-size;
+    font-size: 12px;
+  }
+
+
+  .filter-search {
+    button {
+      width: calc(100% - 20px) !important;
     }
   }
 
-  @media screen and (min-width: 1000px) {
-    .menu {
-      display: none;
-    }
-  }
+  header {
+    padding: 15px;
+    width: 100%;
 
-  @media screen and (max-width: 1000px) {
-    
-    app-item-choose {
-      z-index: 50;
-      position: fixed;
-      top: $header-size;
-      left: 0px;
+    .zenithButton {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-around;
+      margin-left: 5px;
+      margin-right: 20px;
+      width: 50px;
 
-      height: calc(100vh - $header-size);
-      overflow-y: scroll;
-      
-      background: #1B263B;
-      width: $item-choose-size;
-    }
 
-    .content-application {
-      width: calc(100% - $item-choose-size);
-      margin-left: $item-choose-size;
-      font-size: 12px;
-    }
+      color: #213A57;
+      font-weight: 400;
+      font-size: 16px;
 
-    header {
-      padding: 15px;
-      width: 100%;
-      
-      .zenithButton {
-          display: flex;
-          align-items: center;
-          flex-direction: row;
-          justify-content: space-around;
-          margin-left: 5px;
-          margin-right: 20px;
-          width: 50px;
+      background-color: #DFE0E1;
+      cursor: pointer;
+      border-radius: 10px;
+      border: 2px solid #415A77;
+      box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
 
-          
-          color: #213A57;
-          font-weight: 400;
-          font-size: 16px;
-
-          background-color: #DFE0E1;
-          cursor: pointer;
-          border-radius: 10px;
-          border: 2px solid #415A77;
-          box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
-
-          img {
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            align-content: center;
-          }
-      }
-
-      .zenithButton:active {
-          background-color: #1B263B;
-          color: #DFE0E1;
-          transform: translateY(2px);
-          box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #DFE0E1;
-      }
-
-      .flagButton {
-        display: none;
-      }
-
-      .menu {
-        margin-right: 25px;        
-        width: 44px;
-        height: 44px;
+      img {
+        width: 30px;
+        height: 30px;
         text-align: center;
         align-content: center;
-        cursor: pointer;
-      }
-    }
-    .content {
-        height: calc(100vh - $header-size - $footer-size);
-        overflow-y: scroll;
-        touch-action: pan-y !important;
-
-      .filter {
-
-        .filter-header {
-          display: flex !important;
-          margin-left: 0 !important;
-          width: 100%;
-          filter-aptitudes {
-            display: none;
-          }
-          button {
-            width: calc(50% - 20px);
-            font-size: 14px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-        }
-        .filter-aptitudes {
-          button {
-            width: calc(33% - 20px);
-          }
-        }
-        z-index: 100;
-        position: fixed;
-        top: $header-size;
-        right: -200%;
-        width: 100%;
-        height: calc(100% - $header-size);
-        transition: right 0.3s ease-in-out;
-  
-        * {
-          width: 90%;
-          margin: auto;
-          display: block;
-        }
-      }
-  
-      .filter.open {
-        right: 0;
       }
     }
 
-    .discord {
+    .zenithButton:active {
+      background-color: #1B263B;
+      color: #DFE0E1;
+      transform: translateY(2px);
+      box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #DFE0E1;
+    }
+
+    .flagButton {
       display: none;
     }
+
+    .menu {
+      margin-right: 25px;
+      width: 44px;
+      height: 44px;
+      text-align: center;
+      align-content: center;
+      cursor: pointer;
+    }
   }
+
+  .content {
+    height: calc(100vh - $header-size - $footer-size);
+    overflow-y: scroll;
+    touch-action: pan-y !important;
+
+    .filter {
+
+      .filter-header {
+        display: flex !important;
+        margin-left: 0 !important;
+        width: 100%;
+
+        filter-aptitudes {
+          display: none;
+        }
+
+        button {
+          width: calc(50% - 20px);
+          font-size: 14px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .filter-aptitudes {
+        button {
+          width: calc(33% - 20px);
+        }
+      }
+
+      z-index: 100;
+      position: fixed;
+      top: $header-size;
+      right: -200%;
+      width: 100%;
+      height: calc(100% - $header-size);
+      transition: right 0.3s ease-in-out;
+
+      * {
+        width: 90%;
+        margin: auto;
+        display: block;
+      }
+    }
+
+    .filter.open {
+      right: 0;
+    }
+  }
+
+  .discord {
+    display: none;
+  }
+}

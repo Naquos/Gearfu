@@ -1,31 +1,18 @@
-import { Component, inject, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, Inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { ItemTypesComponent } from '../form/item-types/item-types.component';
-import { ItemLevelComponent } from "../form/item-level/item-level.component";
-import { RareteItemComponent } from "../form/rarete-item/rarete-item.component";
-import { FilterMaitrisesComponent } from "../form/filter-maitrises/filter-maitrises.component";
-import { SortChoiceComponent } from "../form/sort-choice/sort-choice.component";
-import { OnlyNoSecondaryComponent } from "../form/only-no-secondary/only-no-secondary.component";
-import { ModifierMecanismComponent } from "../form/modifier-mecanism/modifier-mecanism.component";
-import { SearchItemNameComponent } from "../form/search-item-name/search-item-name.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SwipeDirective } from '../../directives/swipe.directive';
 import { KeyEnum } from '../../models/enum/keyEnum';
 import { LocalStorageService } from '../../services/data/localStorageService';
 import { ResetFormService } from '../../services/resetFormService';
-import { FilterResistancesComponent } from '../form/filter-resistances/filter-resistances.component';
-import { MajorPresentComponent } from '../form/major-present/major-present.component';
 import { BuildsListComponent } from "../items-pages/builds-list/builds-list.component";
 import { ImportBuildComponent } from "../form/import-build/import-build.component";
 import { NameBuildComponent } from "../form/name-build/name-build.component";
 import { ItemsService } from '../../services/data/itemsService';
 import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
-import { OnlyNoElemComponent } from '../form/only-no-elem/only-no-elem.component';
-import { ReverseButtonComponent } from '../form/reverse-button/reverse-button.component';
-import { ObtentionComponent } from "../form/obtention/obtention.component";
 import { MonsterDropService } from '../../services/data/monsterDropService';
 import { ItemConditionService } from '../../services/data/itemConditionService';
 import { StatesDefinitionService } from '../../services/data/statesDefinitionService';
@@ -40,10 +27,12 @@ import { FamiliersService } from '../../services/data/familiersService';
 import { SortLevelService } from '../../services/data/sortLevelService';
 import { ElementSelectorService } from '../../services/elementSelectorService';
 import { ZenithService } from '../../services/zenith/zenithService';
-import { SupabaseService } from '../../services/supabase/supabaseService';
 import { SaveBuildService } from '../../services/saveBuildService';
-import { getBuildIdFromUrl } from '../../models/utils/utils';
+import { getBuildIdFromUrl, isMobile } from '../../models/utils/utils';
 import { FilterSearchBuildComponent } from "../search-pages/filter-search-build/filter-search-build.component";
+import { FilterSidebarService } from '../../services/form/filterSidebarService';
+import { FiltersComponent } from "../items-pages/filters/filters.component";
+import { toSignal } from '@angular/core/rxjs-interop';
 
 type column = 'filter' | 'build' | 'aptitudes' | 'search';
 
@@ -53,37 +42,26 @@ type column = 'filter' | 'build' | 'aptitudes' | 'search';
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
-    ItemTypesComponent,
-    ItemLevelComponent,
-    RareteItemComponent,
-    FilterMaitrisesComponent,
-    FilterResistancesComponent,
-    SortChoiceComponent,
-    OnlyNoElemComponent,
-    OnlyNoSecondaryComponent,
-    MajorPresentComponent,
-    ModifierMecanismComponent,
-    SearchItemNameComponent,
     ItemChooseComponent,
     TranslateModule,
     SwipeDirective,
     BuildsListComponent,
     ImportBuildComponent,
     NameBuildComponent,
-    ReverseButtonComponent,
-    ObtentionComponent,
     RouterOutlet,
     ResumeAptitudesComponent,
-    FilterSearchBuildComponent
-],
+    FilterSearchBuildComponent,
+    FiltersComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit{
-  
+export class AppComponent implements OnInit {
+
   protected readonly resetFormServices = inject(ResetFormService);
   protected readonly translate = inject(TranslateService);
   protected readonly displayFilterService = inject(DisplayFilterService);
+  protected readonly filterSidebarService = inject(FilterSidebarService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly itemService = inject(ItemsService);
   private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
@@ -97,16 +75,19 @@ export class AppComponent implements OnInit{
   private readonly sortLevelService = inject(SortLevelService);
   private readonly elementSelectorService = inject(ElementSelectorService);
   private readonly zenithService = inject(ZenithService);
-  private readonly saveBuildService = inject(SaveBuildService); 
+  private readonly saveBuildService = inject(SaveBuildService);
 
   protected displayFilter = false;
-  protected filterOrBuild : column = "filter";
+  protected filterOrBuild: column = "filter";
+  protected readonly openSidebar = toSignal(this.filterSidebarService.open$, { initialValue: true });
+  protected readonly isMobile = signal(isMobile());
 
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(@Inject(PLATFORM_ID) private platformId: object) {
-    this.translate.addLangs(['fr','en', 'es', 'pt']);
+    this.translate.addLangs(['fr', 'en', 'es', 'pt']);
     this.translate.setDefaultLang('en');
     const lang = this.localStorageService.getItem<string>(KeyEnum.KEY_LANG);
-    if(lang) {
+    if (lang) {
       this.translate.use(lang);
     } else {
       // Vérifier si on est dans le navigateur avant d'accéder à navigator
@@ -115,7 +96,7 @@ export class AppComponent implements OnInit{
       } else {
         this.translate.use("en");
       }
-    } 
+    }
   }
 
   public ngOnInit(): void {
@@ -131,7 +112,7 @@ export class AppComponent implements OnInit{
       this.familierService.load(),
       this.sortLevelService.load()
     ])
-    .subscribe(() => this.itemService.init());
+      .subscribe(() => this.itemService.init());
 
 
     // this.itemService.init();
@@ -215,9 +196,9 @@ export class AppComponent implements OnInit{
   private updateFilterOrBuildFromRoute(url: string): void {
     if (url.includes('/aptitudes') || url.includes('/sorts') || url.includes('/enchantements')) {
       this.filterOrBuild = 'aptitudes';
-    } else if(url.includes('/search')) {
+    } else if (url.includes('/search')) {
       this.filterOrBuild = 'search';
-    } else if(url.includes('/build')) {
+    } else if (url.includes('/build')) {
       this.filterOrBuild = 'build';
     } else {
       this.filterOrBuild = 'filter';

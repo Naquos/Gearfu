@@ -1,16 +1,69 @@
+$width-app-filters: 15%;
+$width-left-menu: 430px;
+$height-recap-stats: 112px;
 
-app-recap-stats {
-  display: block;
-  position: relative;
-  width: 100%;
-  min-height: 64px;
-  margin-bottom: 10px;
+:host {
+    display: flex;
+    flex-wrap: wrap;
+
+    .close-button {
+        position: fixed;
+        left: calc($width-app-filters + $width-left-menu);
+        z-index: 100;
+        transition: left 0.3s ease-in-out;
+        margin-top: 98px;
+        margin-left: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+        &.close {
+            left: calc($width-left-menu);
+        }
+    }
+
+    app-filters {
+        display: block;
+        position: fixed;
+        width: $width-app-filters;
+        min-height: 64px;
+        margin-bottom: 10px;
+        margin-right: 1%;
+        overflow-y: scroll;
+        height: calc(100% - 85px);
+        padding-bottom: 50px;
+        transition: left 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        left: $width-left-menu;
+        z-index: -1;
+        opacity: 1;
+
+        &.close {
+            left: calc(430px - $width-app-filters);
+            opacity: 0;
+        }
+    }
+
+    app-item-list {
+        width: calc(100% - #{$width-app-filters} - 9%);
+        margin-left: calc(#{$width-app-filters} + 4%);
+        margin-top: 10px;
+        transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+
+        &.close {
+            width: 97%;
+            margin-left: 1%;
+        }
+    }
+
+
+    scrollbar-width: none;
+
+    /* Firefox */
+    ::-webkit-scrollbar {
+        display: none;
+        /* Safari and Chrome */
+    }
 }
 
-app-item-list {
-    width: 98%;
-    margin: auto;
-}
 
 
 
@@ -22,6 +75,101 @@ app-item-list {
 
 @media screen and (max-width: 1000px) {
     app-recap-stats {
-        display: none!important;
+        display: none !important;
+    }
+}
+
+
+@media screen and (min-width: 1700px) and (max-width: 2000px) {
+    .close-button {
+        &.close {
+            left: calc($width-app-filters + $width-left-menu);
+        }
+    }
+
+    app-filters {
+        &.close {
+            width: $width-app-filters;
+        }
+    }
+
+    app-item-list {
+        width: 97%;
+        margin-left: calc(#{$width-app-filters} + 7%) !important;
+
+        &.close {
+            margin-left: 10px !important;
+        }
+    }
+}
+
+@media screen and (min-width: 1450px) and (max-width: 1700px) {
+    $width-left-menu-reduced: 300px;
+    $width-app-filters-reduced: 430px;
+
+    .close-button {
+        left: calc($width-app-filters-reduced + $width-left-menu-reduced) !important;
+
+        &.close {
+            left: calc($width-app-filters-reduced) !important;
+        }
+    }
+
+    app-filters {
+        width: $width-left-menu-reduced !important;
+
+        &.close {
+            width: $width-app-filters;
+        }
+    }
+
+    app-item-list {
+        width: 68% !important;
+        margin-left: calc(#{$width-left-menu-reduced} + 2%) !important;
+
+        &.close {
+            margin-left: 10px !important;
+            width: 97% !important;
+        }
+    }
+
+}
+
+
+@media screen and (max-width: 1450px) {
+    $width-left-menu-minimized: 350px;
+    $width-app-filters-minimized: 430px;
+
+    .close-button {
+        left: calc($width-app-filters-minimized + $width-left-menu-minimized) !important;
+
+        &.close {
+            left: calc($width-app-filters-minimized) !important;
+        }
+    }
+
+    app-filters {
+        width: $width-left-menu-minimized !important;
+
+        &.close {
+            width: $width-app-filters;
+        }
+    }
+
+    app-item-list {
+        width: 48% !important;
+        margin-left: calc(#{$width-left-menu-minimized} + 4%) !important;
+
+        &.close {
+            margin-left: 10px !important;
+            width: 97% !important;
+        }
+    }
+
+}
+
+@media screen and (min-width: 701px) and (max-width: 1000px) {
+    .content {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

@@ -9,9 +9,10 @@
     width: 90%;
     margin-left: 5%;
 
-    
+
     background: linear-gradient(145deg, #0D1B2A, #415A77);
     border-radius: 15px;
+
     input {
         margin-left: 10px;
         width: 50%;
@@ -20,7 +21,7 @@
         padding: 5px;
         font-size: 16px;
     }
-    
+
     mat-icon {
         background-color: #DFE0E1;
         color: #1B263B;
@@ -28,7 +29,7 @@
         height: 30px;
         text-align: center;
         align-content: center;
-        
+
         cursor: pointer;
         border-radius: 25%;
         border: 2px solid #415A77;
@@ -62,7 +63,7 @@
     position: relative;
     filter: grayscale(100%) brightness(0.5);
     cursor: not-allowed !important;
-    
+
     &::before {
         content: '🔒';
         position: absolute;
@@ -75,7 +76,7 @@
         filter: none;
         text-shadow: 0 0 5px rgba(0, 0, 0, 1), 0 0 10px rgba(255, 255, 255, 0.5);
     }
-    
+
     &:hover {
         transform: none !important;
     }
@@ -87,10 +88,12 @@
     justify-content: space-between;
     width: 97%;
     margin: auto;
+
     .column {
         display: flex;
         flex-direction: column;
         width: 48%;
+
         .card {
             width: 100%;
             background: linear-gradient(145deg, #0D1B2A, #415A77);
@@ -104,7 +107,7 @@
             box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
             position: relative;
             margin-bottom: 15px;
-            
+
             .header {
                 display: flex;
                 align-items: center;
@@ -124,6 +127,7 @@
                 height: 56px;
                 cursor: pointer;
             }
+
             img:hover {
                 transform: scale(1.2);
             }
@@ -133,16 +137,20 @@
 
                 .sort-title {
                     display: flex;
+
                     img {
                         margin-right: 10px;
                     }
+
                     span {
-                        margin:auto 0;
+                        margin: auto 0;
                     }
+
                     .cout-sort {
                         display: flex;
                         font-size: 14px;
                         margin-left: auto;
+
                         div {
                             display: flex;
                             align-items: center;
@@ -153,7 +161,9 @@
                             width: 16px;
                             height: 16px;
                         }
-                        .ligne-not-vu, .ligne {
+
+                        .ligne-not-vu,
+                        .ligne {
                             margin-left: 0;
                         }
                     }
@@ -166,33 +176,17 @@
 
                 .effet-sort {
                     margin-left: 66px;
+
                     .button-group {
                         margin: 5px 0;
                         display: flex;
                         justify-content: space-between;
-
-                        button {
-                            margin: 5px;
-                            border: 2px solid #415A77;
-                            box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
-                            cursor: pointer;
-                            background-color: white;
-                            color: #213A57;
-                            font-weight: 600;
-                            font-size: 15px;
-                            height: 24px;
-                            width: 42%;
-                            border-radius: 10px;
-                        }
-
-                        button:active {
-                            transform: translateY(2px);
-                            box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
-                        }
                     }
+
                     .effet {
                         display: flex;
                         flex-direction: column;
+
                         span {
                             display: flex;
                             align-items: center;
@@ -205,8 +199,10 @@
                             }
                         }
                     }
+
                     .level-select {
                         width: 90%;
+
                         mat-slider {
                             width: 100%;
                         }
@@ -214,7 +210,9 @@
                 }
             }
 
-            .sorts-neutres, .sorts-passifs, .sorts-elementaires {
+            .sorts-neutres,
+            .sorts-passifs,
+            .sorts-elementaires {
                 margin: 0 5%;
                 display: grid;
                 justify-items: center;
@@ -233,10 +231,10 @@
                 grid-template-columns: repeat(5, 1fr);
             }
         }
-    } 
+    }
 }
 
- @media screen and (max-width: 1300px) {
+@media screen and (max-width: 1300px) {
     .body {
         flex-direction: column;
         align-items: center;
@@ -250,33 +248,36 @@
             }
         }
     }
- }
+}
 
- @media screen and (max-width: 850px) {
+@media screen and (max-width: 850px) {
     .body {
         img {
-            width: 30px!important;
-            height: 30px!important;
+            width: 30px !important;
+            height: 30px !important;
         }
 
-        
+
 
         .column {
             .card {
                 .cout-sort {
-                    flex-wrap: wrap!important;
-                    margin-left: 3px!important;
+                    flex-wrap: wrap !important;
+                    margin-left: 3px !important;
+
                     img {
-                        margin-left: 3px!important;
-                        width: 16px!important;
-                        height: 16px!important;
+                        margin-left: 3px !important;
+                        width: 16px !important;
+                        height: 16px !important;
                     }
                 }
             }
-            
-            .sorts-neutres, .sorts-passifs, .sorts-elementaires {
-                grid-column-gap: 0px!important;
+
+            .sorts-neutres,
+            .sorts-passifs,
+            .sorts-elementaires {
+                grid-column-gap: 0px !important;
             }
         }
     }
-  }
+}

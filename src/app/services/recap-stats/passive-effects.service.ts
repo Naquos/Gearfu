@@ -20,30 +20,30 @@ export class PassiveEffectsService {
   }
 
   private applyEffectPassifGenerique(sortPassifsIds: number[], level: number, applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.CARNAGE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.CARNAGE)) {
       applyEffectFn({ id: IdActionsEnum.DI, value: 15, params: [] });
       applyEffectFn({ id: IdActionsEnum.SOINS_REALISE, value: -30, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.EVASION)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.EVASION)) {
       applyEffectFn({ id: IdActionsEnum.ESQUIVE, value: level, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.INSPIRATION)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.INSPIRATION)) {
       applyEffectFn({ id: IdActionsEnum.INITIATIVE, value: Math.floor(level / 2), params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.INTERCEPTION)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.INTERCEPTION)) {
       applyEffectFn({ id: IdActionsEnum.TACLE, value: level, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.MEDECINE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.MEDECINE)) {
       applyEffectFn({ id: IdActionsEnum.SOINS_REALISE, value: 30, params: [] });
       applyEffectFn({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: 25, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
       applyEffectFn({ id: IdActionsEnum.DI, value: -15, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.MOTIVATION)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.MOTIVATION)) {
       applyEffectFn({ id: IdActionsEnum.PA, value: 1, params: [] });
       applyEffectFn({ id: IdActionsEnum.DI, value: -20, params: [] });
       applyEffectFn({ id: IdActionsEnum.VOLONTE, value: 10, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.ROCK)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.ROCK)) {
       applyEffectFn({ id: IdActionsEnum.PERCENTAGE_PV, value: 60, params: [] });
       applyEffectFn({ id: IdActionsEnum.SOINS_RECUE, value: 25, params: [] });
       applyEffectFn({ id: IdActionsEnum.DI, value: -25, params: [] });
@@ -108,167 +108,167 @@ export class PassiveEffectsService {
   }
 
   private applyEffectPassifHuppermage(sortPassifsIds: number[], applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.CHAINE_DE_LA_NATURE)) { // ABSORPTION QUADRAMENTALE
+    if (sortPassifsIds.find(x => x === SortIdEnum.CHAINE_DE_LA_NATURE)) { // ABSORPTION QUADRAMENTALE
       applyEffectFn({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
     }
   }
 
   private applyEffectPassifEliotrope(sortPassifsIds: number[], applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.EPEE_DU_DEBUT)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.EPEE_DU_DEBUT)) {
       applyEffectFn({ id: IdActionsEnum.PORTEE, value: -1, params: [] });
     }
   }
 
   private applyEffectPassifSteamer(sortPassifsIds: number[], level: number, applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.MECANIQUE_AVANCEE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.MECANIQUE_AVANCEE)) {
       applyEffectFn({ id: IdActionsEnum.DI_INDIRECT, value: -30, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.PARTAGE_ANIMAL)) { // REVETEMENT_A_TOUTE_EPREUVE
+    if (sortPassifsIds.find(x => x === SortIdEnum.PARTAGE_ANIMAL)) { // REVETEMENT_A_TOUTE_EPREUVE
       applyEffectFn({ id: IdActionsEnum.POINT_DE_VIE, value: 6 * level, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.ALLIAGE_LEGER)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.ALLIAGE_LEGER)) {
       applyEffectFn({ id: IdActionsEnum.PM, value: -1, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.ASSISTANCE_TELLURIQUE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.ASSISTANCE_TELLURIQUE)) {
       applyEffectFn({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -30, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.STRATEGIE_ROBOTIQUE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.STRATEGIE_ROBOTIQUE)) {
       applyEffectFn({ id: IdActionsEnum.DI_INDIRECT, value: -20, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.LA_MEILLEURE_DEFENSE_EST_L_ATTAQUE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.LA_MEILLEURE_DEFENSE_EST_L_ATTAQUE)) {
       applyEffectFn({ id: IdActionsEnum.PARADE, value: 50, params: [] });
     }
   }
 
   private applyEffectPassifOuginak(sortPassifsIds: number[], level: number, applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.EPUISEMENT)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.EPUISEMENT)) {
       applyEffectFn({ id: IdActionsEnum.DI_INDIRECT, value: 50, params: [] });
       applyEffectFn({ id: IdActionsEnum.PORTEE, value: -2, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.CROCS_FUTES)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.CROCS_FUTES)) {
       applyEffectFn({ id: IdActionsEnum.PARADE, value: 20, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.PISTAGE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.PISTAGE)) {
       applyEffectFn({ id: IdActionsEnum.PM, value: 1, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.ART_CANIN)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.ART_CANIN)) {
       applyEffectFn({ id: IdActionsEnum.DI_INDIRECT, value: -15, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.ENERGIE_CANINE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.ENERGIE_CANINE)) {
       applyEffectFn({ id: IdActionsEnum.BOOST_PW, value: 3, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.FUREUR)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.FUREUR)) {
       applyEffectFn({ id: IdActionsEnum.BOOST_PW, value: -1, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.PILLAGE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.PILLAGE)) {
       applyEffectFn({ id: IdActionsEnum.DI, value: -10, params: [] });
       applyEffectFn({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: 30, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
       applyEffectFn({ id: IdActionsEnum.POINT_DE_VIE, value: 4 * level, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.ARDEUR)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.ARDEUR)) {
       applyEffectFn({ id: IdActionsEnum.PM, value: -1, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.DIGESTION)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.DIGESTION)) {
       applyEffectFn({ id: IdActionsEnum.DI_INDIRECT, value: -15, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.CHAINE_DE_LA_NATURE)) { // ACHARNE
+    if (sortPassifsIds.find(x => x === SortIdEnum.CHAINE_DE_LA_NATURE)) { // ACHARNE
       applyEffectFn({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
       applyEffectFn({ id: IdActionsEnum.DI, value: -10, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.CANIN_OS)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.CANIN_OS)) {
       applyEffectFn({ id: IdActionsEnum.TACLE, value: 3 * level, params: [] });
     }
   }
 
   private applyEffectPassifZobal(sortPassifsIds: number[], level: number, recapValue: RecapStats[], applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.REGARD_MASQUE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.REGARD_MASQUE)) {
       applyEffectFn({ id: IdActionsEnum.PM, value: 1, params: [] });
     }
-    
-    if(sortPassifsIds.find(x => x === SortIdEnum.JEU_DE_JAMBES)) {
+
+    if (sortPassifsIds.find(x => x === SortIdEnum.JEU_DE_JAMBES)) {
       applyEffectFn({ id: IdActionsEnum.ESQUIVE, value: 2 * level, params: [] });
     }
 
     if (sortPassifsIds.find(x => x === SortIdEnum.LE_IOP_DE_WAZEMMES)) { // ART DE LA FUITE
       const esquive = recapValue.find(rs => rs.id === IdActionsEnum.ESQUIVE)?.value ?? 0;
-      if(esquive >= 0) {
-        const value = Math.min(Math.floor(esquive / 2), 2*level);
+      if (esquive >= 0) {
+        const value = Math.min(Math.floor(esquive / 2), 2 * level);
         applyEffectFn({ id: IdActionsEnum.MAITRISES_DISTANCES, value: value, params: [] });
       }
     }
-    
-    if(sortPassifsIds.find(x => x === SortIdEnum.EROSION)) {
+
+    if (sortPassifsIds.find(x => x === SortIdEnum.EROSION)) {
       applyEffectFn({ id: IdActionsEnum.DI, value: -25, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.BRUTE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.BRUTE)) {
       applyEffectFn({ id: IdActionsEnum.DI, value: 25, params: [] });
       applyEffectFn({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -40, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
       applyEffectFn({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -40, parameterMajorAction: ParameterMajorActionEnum.ARMURE_DONNEE, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.ANCRE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.ANCRE)) {
       const tacle = recapValue.find(rs => rs.id === IdActionsEnum.TACLE)?.value ?? 0;
-      if(tacle >= 0) {
+      if (tacle >= 0) {
         applyEffectFn({ id: IdActionsEnum.TACLE, value: tacle, params: [] });
       }
       applyEffectFn({ id: IdActionsEnum.PM, value: -1, params: [] });
     }
-    
+
     if (sortPassifsIds.find(x => x === SortIdEnum.ART_DE_LA_VENGEANCE)) { // ART DE LA FUITE
       const tacle = recapValue.find(rs => rs.id === IdActionsEnum.TACLE)?.value ?? 0;
-      if(tacle >= 0) {
-        const value = Math.min(Math.floor(tacle / 2), 2*level);
+      if (tacle >= 0) {
+        const value = Math.min(Math.floor(tacle / 2), 2 * level);
         applyEffectFn({ id: IdActionsEnum.MAITRISES_MELEE, value: value, params: [] });
       }
     }
 
-    if(sortPassifsIds.find(x => x === SortIdEnum.POUSSEES_D_ENTRAVE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.POUSSEES_D_ENTRAVE)) {
       applyEffectFn({ id: IdActionsEnum.VOLONTE, value: 10, params: [] });
     }
   }
 
   private applyEffectPassifPandawa(sortPassifsIds: number[], applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.COCKTAIL)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.COCKTAIL)) {
       applyEffectFn({ id: IdActionsEnum.SOINS_REALISE, value: 20, params: [] });
       applyEffectFn({ id: IdActionsEnum.DI, value: -10, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.CYANOSE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.CYANOSE)) {
       applyEffectFn({ id: IdActionsEnum.DI, value: 15, params: [] });
       applyEffectFn({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: -50, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.PANDEMIE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.PANDEMIE)) {
       applyEffectFn({ id: IdActionsEnum.DI, value: 10, params: [] });
     }
   }
 
   private applyEffectPassifSacrieur(sortPassifsIds: number[], level: number, recapValue: RecapStats[], applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.COEUR_DE_SACRIEUR)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.COEUR_DE_SACRIEUR)) {
       applyEffectFn({ id: IdActionsEnum.PORTEE, value: -2, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.CIRCULATION_SANGUINE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.CIRCULATION_SANGUINE)) {
       applyEffectFn({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -50, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.MOBILITE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.MOBILITE)) {
       const tacle = recapValue.find(rs => rs.id === IdActionsEnum.TACLE)?.value ?? 0;
-      if(tacle >= 0) {
+      if (tacle >= 0) {
         applyEffectFn({ id: IdActionsEnum.TACLE, value: -tacle, params: [] });
       }
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.SANG_TATOUE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.SANG_TATOUE)) {
       applyEffectFn({ id: IdActionsEnum.POINT_DE_VIE, value: 8 * level, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.PACTE_DE_WAKFU)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.PACTE_DE_WAKFU)) {
       applyEffectFn({ id: IdActionsEnum.POINT_DE_VIE, value: 4 * level, params: [] });
     }
   }
 
   private applyEffectPassifSadida(sortPassifsIds: number[], applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.CHAINE_DE_LA_NATURE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.CHAINE_DE_LA_NATURE)) {
       applyEffectFn({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
     }
   }
 
   private applyEffectPassifCra(sortPassifsIds: number[], recapValue: RecapStats[], applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.ECLAIREUR_INTOUCHABLE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.ECLAIREUR_INTOUCHABLE)) {
       const esquive = recapValue.find(rs => rs.id === IdActionsEnum.ESQUIVE)?.value ?? 0;
       applyEffectFn({ id: IdActionsEnum.ESQUIVE, value: -esquive, params: [] });
       applyEffectFn({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
@@ -276,66 +276,66 @@ export class PassiveEffectsService {
   }
 
   private applyEffectPassifIop(sortPassifsIds: number[], level: number, applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.VIRILITE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.VIRILITE)) {
       applyEffectFn({ id: IdActionsEnum.POINT_DE_VIE, value: 3 * level, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.LE_IOP_DE_WAZEMMES)) {
-      applyEffectFn({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -20, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE ,params: [] });
+    if (sortPassifsIds.find(x => x === SortIdEnum.LE_IOP_DE_WAZEMMES)) {
+      applyEffectFn({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -20, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
     }
   }
 
   private applyEffectPassifEniripsa(sortPassifsIds: number[], level: number, applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.TOUS_POUR_MOI)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.TOUS_POUR_MOI)) {
       applyEffectFn({ id: IdActionsEnum.POINT_DE_VIE, value: 8 * level, params: [] });
     }
   }
 
   private applyEffectPassifXelor(sortPassifsIds: number[], applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.MEMOIRE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.MEMOIRE)) {
       applyEffectFn({ id: IdActionsEnum.BOOST_PW, value: 6, params: [] });
       applyEffectFn({ id: IdActionsEnum.PM, value: -2, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.ASSIMILATION)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.ASSIMILATION)) {
       applyEffectFn({ id: IdActionsEnum.BOOST_PW, value: -6, params: [] });
     }
   }
 
   private applyEffectPassifSram(sortPassifsIds: number[], level: number, recapValue: RecapStats[], applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.MAITRE_DES_PIEGES)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.MAITRE_DES_PIEGES)) {
       applyEffectFn({ id: IdActionsEnum.CONTROLE, value: 4, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.EMBUSCADE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.EMBUSCADE)) {
       applyEffectFn({ id: IdActionsEnum.MAITRISES_DISTANCES, value: Math.floor(level * 1.5), params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.DUPERIE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.DUPERIE)) {
       applyEffectFn({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.SRAM_DANS_L_AME)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.SRAM_DANS_L_AME)) {
       const esquive = recapValue.find(rs => rs.id === IdActionsEnum.ESQUIVE)?.value ?? 0;
-      if(esquive >= 0) {
+      if (esquive >= 0) {
         applyEffectFn({ id: IdActionsEnum.COUP_CRITIQUE, value: Math.min(Math.floor(esquive / 20), 15), params: [] });
       }
       const tacle = recapValue.find(rs => rs.id === IdActionsEnum.TACLE)?.value ?? 0;
-      if(tacle >= 0) {
+      if (tacle >= 0) {
         applyEffectFn({ id: IdActionsEnum.COUP_CRITIQUE, value: Math.min(Math.floor(tacle / 20), 15), params: [] });
       }
     }
   }
 
   private applyEffectPassifOsamodas(sortPassifsIds: number[], applyEffectFn: (effect: RecapStats) => void): void {
-    if(sortPassifsIds.find(x => x === SortIdEnum.SACRIFICE_ANIMAL)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.SACRIFICE_ANIMAL)) {
       applyEffectFn({ id: IdActionsEnum.BOOST_PW, value: 3, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.PUISSANCE_DRACONIQUE)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.PUISSANCE_DRACONIQUE)) {
       applyEffectFn({ id: IdActionsEnum.DI, value: 25, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.GUERRIER_INVOCATEUR)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.GUERRIER_INVOCATEUR)) {
       applyEffectFn({ id: IdActionsEnum.DI, value: 20, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.VISION_DU_CORBAC)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.VISION_DU_CORBAC)) {
       applyEffectFn({ id: IdActionsEnum.PORTEE, value: 2, params: [] });
     }
-    if(sortPassifsIds.find(x => x === SortIdEnum.PARTAGE_ANIMAL)) {
+    if (sortPassifsIds.find(x => x === SortIdEnum.PARTAGE_ANIMAL)) {
       applyEffectFn({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: -100, params: [] });
     }
   }
