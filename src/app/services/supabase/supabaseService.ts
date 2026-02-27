@@ -216,6 +216,7 @@ export class SupabaseService {
             maitrises: 0,
             resistances: 0,
             poids: 0,
+            token: this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '',
         };
         return from(this.supabase.from('statistics').insert([newStatistics]).select()).pipe(
             map(({ data, error }) => {
@@ -237,7 +238,7 @@ export class SupabaseService {
             return of(null);
         }
         const newStatistics: Omit<Statistics, 'id'> = {
-            token: statistics.token || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '',
+            token: this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '',
             buildId: statistics.buildId || '',
             PA: statistics.PA,
             PM: statistics.PM,

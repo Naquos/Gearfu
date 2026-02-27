@@ -185,7 +185,7 @@ export class SaveBuildService {
             ...this.recapStatsService.getCurrentStatistics(),
             id: this.statisticsId.getValue() || undefined,
             buildId: build.id,
-            token: this.currentTokenBuild.getValue() || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || ''
+            token: this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || ''
         } as Statistics;
         return this.supabaseService.updateOrCreateStatistics(statsistics);
     }
