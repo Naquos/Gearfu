@@ -33,7 +33,7 @@ $height-recap-stats: 112px;
         padding-bottom: 50px;
         transition: left 0.3s ease-in-out, opacity 0.3s ease-in-out;
         left: $width-left-menu;
-        z-index: -1;
+        z-index: 1;
         opacity: 1;
 
         &.close {

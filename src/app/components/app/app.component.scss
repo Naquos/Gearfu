@@ -76,6 +76,7 @@ header {
 }
 
 .filter {
+  z-index: 10;
   background: linear-gradient(to right, #213A57, #618A97);
   opacity: 0.9;
   color: white;
