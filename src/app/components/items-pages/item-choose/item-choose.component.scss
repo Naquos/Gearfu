@@ -1,6 +1,7 @@
 .content {
     display: flex;
     align-items: center;
+
     .buttonGroupe {
         display: flex;
         align-items: center;
@@ -14,7 +15,7 @@
             margin-left: 5px;
             width: calc(100% - 5px);
 
-            
+
             color: #213A57;
             font-weight: 400;
             font-size: 16px;
@@ -47,7 +48,7 @@
                 text-align: center;
                 align-content: center;
                 padding: 0 2px;
-                
+
                 cursor: pointer;
                 border-radius: 25%;
                 border: 2px solid #415A77;
@@ -61,7 +62,7 @@
                 transform: translateY(2px);
                 box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #DFE0E1;
             }
-            
+
             .nouveauBuild {
                 display: flex;
                 align-items: center;
@@ -71,7 +72,7 @@
                 height: 30px;
                 width: 100%;
 
-                
+
                 color: #213A57;
                 font-weight: 400;
                 font-size: 16px;
@@ -95,7 +96,7 @@
     app-item-choose-display {
         margin-left: 10px;
     }
-    
+
     app-item-choose-display:hover {
         transform: scale(1.06);
     }
@@ -105,10 +106,12 @@
     .totalValue {
         display: flex;
         flex-direction: column;
+
         span {
             margin-left: 10px;
             display: flex;
             align-items: center;
+
             .poids {
                 width: 20px;
                 height: 20px;
@@ -120,30 +123,34 @@
 
 @media screen and (max-width: 1350px) {
     .totalValue {
-        display: none!important;
+        display: none !important;
     }
 }
 
 
 @media screen and (max-width: 1200px) {
-    .mat-icon, img, .buttonGroupe {
-        display: none!important;
+
+    .mat-icon,
+    img,
+    .buttonGroupe {
+        display: none !important;
     }
 
 }
 
 @media screen and (max-width: 1000px) {
-    
+
     app-item-choose-display {
-        margin-left: unset!important;
-        margin: 0 auto!important;
+        margin-left: unset !important;
+        margin: 0 auto !important;
     }
-    .content{
+
+    .content {
         flex-wrap: wrap;
         height: 100%;
     }
-    
+
     span {
-        display: none!important;
+        display: none !important;
     }
 }

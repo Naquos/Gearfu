@@ -34,7 +34,7 @@
         width: 200px;
         margin-bottom: 20px;
     }
-    
+
     .loader-spinner {
         width: 100px;
         height: 100px;
@@ -46,8 +46,21 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media screen and (min-width: 2000px) and (max-width:2100px) {
+    .content {
+        grid-column-gap: 2px !important;
+
+    }
+
 }
 
 @media screen and (min-width: 1700px) and (max-width: 2000px) {
