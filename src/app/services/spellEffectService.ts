@@ -16,9 +16,9 @@ export class SpellEffectService {
    * @param level Niveau du sort (0-245)
    * @returns Les valeurs numériques pour ce niveau
    */
-  private decompressRLE(rleData: [number[], number, number][], level: number): number[] {
+  private decompressRLE(rleData: [string[], string, string][], level: number): string[] {
     for (const [values, start, end] of rleData) {
-      if (level >= start && level <= end) {
+      if (level >= parseInt(start, 10) && level <= parseInt(end, 10)) {
         return values;
       }
     }
@@ -36,11 +36,12 @@ export class SpellEffectService {
 
   /**
    * Remplace les placeholders ${0}, ${1}, etc. par les valeurs
+   * Si un placeholder n'a pas de valeur correspondante, il est supprimé
    */
-  private replaceValuePlaceholders(template: string, values: number[]): string {
+  private replaceValuePlaceholders(template: string, values: string[]): string {
     return template.replace(/\$\{(\d+)\}/g, (match, index) => {
-      const idx = parseInt(index, 10);
-      return idx < values.length ? values[idx].toString() : match;
+      const numIndex = parseInt(index, 10);
+      return values[numIndex] !== undefined ? values[numIndex].toString() : '';
     });
   }
 
@@ -53,18 +54,18 @@ export class SpellEffectService {
    */
   getFormattedEffect(
     template: string,
-    rleData: [number[], number, number][],
+    rleData: [string[], string, string][],
     level: number
   ): string {
     // 1. Décompresser les valeurs pour ce niveau
     const values = this.decompressRLE(rleData, level);
-    
+
     // 2. Remplacer les placeholders d'images
     let result = this.replaceImagePlaceholders(template);
-    
+
     // 3. Remplacer les placeholders de valeurs
     result = this.replaceValuePlaceholders(result, values);
-    
+
     return result;
   }
 }

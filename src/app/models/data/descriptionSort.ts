@@ -41,15 +41,15 @@ export interface DescriptionSort {
     levelUnlock: number;
     // Format RLE: [[valeurs, start, end], ...]
     normalEffect: {
-        fr: [number[], number, number][];
-        en: [number[], number, number][];
-        es: [number[], number, number][];
-        pt: [number[], number, number][];
+        fr: [string[], string, string][];
+        en: [string[], string, string][];
+        es: [string[], string, string][];
+        pt: [string[], string, string][];
     };
     criticalEffect: {
-        fr: [number[], number, number][];
-        en: [number[], number, number][];
-        es: [number[], number, number][];
-        pt: [number[], number, number][];
+        fr: [string[], string, string][];
+        en: [string[], string, string][];
+        es: [string[], string, string][];
+        pt: [string[], string, string][];
     };
 }

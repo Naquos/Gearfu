@@ -52,7 +52,7 @@ export class SortsComponent {
   protected readonly level = toSignal(this.levelFormService.level$, {
     initialValue: 246
   });
-  
+
   private currentDragSource: 'list' | 'equipped' | null = null;
 
   protected readonly sortNeutres = toSignal(this.sortFormService.sortNeutres$, {
@@ -81,7 +81,7 @@ export class SortsComponent {
       }
     });
     this.levelFormService.level$.subscribe(level => {
-      if(Number.isNaN(Number.parseInt(`${level}`))) {
+      if (Number.isNaN(Number.parseInt(`${level}`))) {
         this.spellLevel.set(1);
         return;
       }
@@ -101,7 +101,7 @@ export class SortsComponent {
   }
 
   protected selectSortById(sortId: number, typeSort: TypeSort): void {
-    if(typeSort === 'NEUTRE') {
+    if (typeSort === 'NEUTRE') {
       const sort = this.sortService.getDescriptionSortElementaireById(sortId) ||
         this.sortService.getDescriptionSortActifById(sortId);
       if (sort) {
@@ -191,7 +191,7 @@ export class SortsComponent {
       const sortId = parseInt(event.dataTransfer.getData('sortId'), 10);
       const draggedTypeSort = event.dataTransfer.getData('typeSort') as TypeSort;
       const source = event.dataTransfer.getData('source');
-      
+
       if (draggedTypeSort === typeSort) {
         if (source === 'equipped') {
           // Réorganisation des sorts équipés
@@ -215,28 +215,27 @@ export class SortsComponent {
   }
 
   protected getEffect(): SafeHtml[] {
-    if(!this.sortSelected()) {
+    if (!this.sortSelected()) {
       return [];
     }
-    
+
     const sort = this.sortSelected()!;
     const lang = this.translateService.currentLang as 'fr' | 'en' | 'es' | 'pt';
     const level = this.spellLevel() - 1; // Les index commencent à 0
-    
+
     // Choisir le bon effet selon le mode d'affichage
     const isNormal = this.effectDisplay() === 'NORMAL';
     const template = isNormal ? sort.effect_normal[lang] : sort.effect_critical[lang];
     const rleData = isNormal ? sort.normalEffect[lang] : sort.criticalEffect[lang];
-    
+
     // Si pas de données RLE (sorts passifs sans effet critique par exemple)
     if (!rleData || rleData.length === 0) {
       const lines = template.split('\n').map(x => x.charAt(0).toUpperCase() + x.slice(1)) || [];
       return lines.map(line => this.sanitizer.bypassSecurityTrustHtml(line));
     }
-    
     // Générer l'effet avec le niveau actuel
     const formattedEffect = this.spellEffectService.getFormattedEffect(template, rleData, level);
-    
+
     // Diviser par lignes et capitaliser
     const lines = formattedEffect.split('\n').map(x => x.charAt(0).toUpperCase() + x.slice(1)) || [];
     return lines.map(line => this.sanitizer.bypassSecurityTrustHtml(line));

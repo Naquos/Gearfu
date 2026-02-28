@@ -12,7 +12,7 @@ import { SortLevel } from "../../models/data/sortLevel";
 import { GEARFU_RESOURCES_URL } from "../../models/utils/utils";
 import { CompressionService } from "../compression/compressionService";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class SortService {
 
     private readonly classeFormService = inject(ClasseFormService);
@@ -40,7 +40,7 @@ export class SortService {
                 }
             } : undefined
         }),
-    ), {initialValue: undefined});
+    ), { initialValue: undefined });
 
     private getUnlockedSortLevels(sortId: number, levelUnlockSort: LevelUnlockSort[]): number {
         const level = levelUnlockSort.find(s => s.idSort == sortId);
@@ -59,13 +59,13 @@ export class SortService {
      * Utilise un cache pour éviter les chargements multiples
      */
     public load(): Observable<void> {
-        return this.compressionService.decompressGzipJson<{imageDict: Record<string, string>, classes: Sort[]}>(GEARFU_RESOURCES_URL + 'sorts.json.gz').pipe(
+        return this.compressionService.decompressGzipJson<{ imageDict: Record<string, string>, classes: Sort[] }>(GEARFU_RESOURCES_URL + 'sorts.json.gz').pipe(
             tap(data => {
                 this.spellEffectService.setImageDictionary(data.imageDict);
                 this.sorts.next(data.classes);
             }),
             shareReplay(1),
-            map(() => {})
+            map(() => { })
         );
     }
 
