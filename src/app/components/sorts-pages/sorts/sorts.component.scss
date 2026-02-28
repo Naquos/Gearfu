@@ -181,6 +181,11 @@
                         margin: 5px 0;
                         display: flex;
                         justify-content: space-between;
+
+                        button {
+                            width: 48%;
+                            border-radius: 10px;
+                        }
                     }
 
                     .effet {
