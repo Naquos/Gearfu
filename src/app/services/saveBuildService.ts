@@ -233,6 +233,10 @@ export class SaveBuildService {
      * Ajoute un build à la liste
      */
     public addBuildToLocalStorage(build: Build): void {
+        if (!build.token || build.token !== this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN)) {
+            return; // Si le token du build ne correspond pas au token de l'utilisateur, on ne l'ajoute pas
+        }
+
         // On enlève le build actuel s'il existe déjà pour éviter les doublons
         const current = this.buildList.getValue().find(b => b.id === build.id);
         if (current) {

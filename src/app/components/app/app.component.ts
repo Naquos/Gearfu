@@ -113,17 +113,20 @@ export class AppComponent implements OnInit {
       this.familierService.load(),
       this.sortLevelService.load()
     ])
-      .subscribe(() => this.itemService.init());
+      .subscribe(() => {
+        this.itemService.init();
+
+        // this.itemService.init();
+        if (isPlatformBrowser(this.platformId)) {
+          this.verifyToken();
+          const buildId = getBuildIdFromUrl(window.location.href);
+          this.saveBuildService.initId(buildId);
+          this.saveBuildService.createBuildIfNotExistsElseLoadIt(buildId);
+          this.saveBuildService.listenBuildChanges();
+        }
+      });
 
 
-    // this.itemService.init();
-    if (isPlatformBrowser(this.platformId)) {
-      this.verifyToken();
-      const buildId = getBuildIdFromUrl(window.location.href);
-      this.saveBuildService.initId(buildId);
-      this.saveBuildService.createBuildIfNotExistsElseLoadIt(buildId);
-      this.saveBuildService.listenBuildChanges();
-    }
 
 
     this.displayFilterService.isDisplayed$.subscribe((value: boolean) => {
