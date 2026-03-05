@@ -3,26 +3,27 @@
         "donnee": " donnée",
         "recue": " reçue",
         "armure": "% Armure",
-        "maitrises" :" Maitrises dans ",
-        "resistances" :" Résistances dans ",
-        "elements" : " éléments",
+        "maitrises": " Maitrises dans ",
+        "resistances": " Résistances dans ",
+        "elements": " éléments",
         "resistances-elementaires": " Résistances élementaires"
     },
     "app": {
-        "filter-item":"Filtre des items",
-        "sort-item":"Tri des items",
+        "filter-item": "Filtre des items",
+        "sort-item": "Tri des items",
         "build": "Mes builds",
-        "aptitudes":"Aptitudes",
+        "aptitudes": "Aptitudes",
         "sorts": "Sorts",
         "enchantement": "Enchantement",
-        "search-builds":"Rechercher des builds"
+        "search-builds": "Rechercher des builds",
+        "readonly": "Ce build est en lecture seule. Aucune modification ne sera sauvegardée."
     },
     "aptitudes": {
-        "restant" : "Restant : ",
-        "intelligence" : "Intelligence",
-        "force" : "Force",
-        "agilite" : "Agilité",
-        "chance" : "Chance",
+        "restant": "Restant : ",
+        "intelligence": "Intelligence",
+        "force": "Force",
+        "agilite": "Agilité",
+        "chance": "Chance",
         "majeur": "Majeur",
         "%-vie": "% Points de vie",
         "resistances-elem": "Résistances élémentaires",
@@ -54,16 +55,16 @@
         "armure-recue": "% Armure donnée",
         "soins-realise": "% Soins réalisés",
         "di-indirect": "% Dommages indirects",
-        "code-aptitudes":"Code aptitudes",
-        "copy-code":"Copier le code des aptitudes",
-        "import-code":"Importer le code des aptitudes"
+        "code-aptitudes": "Code aptitudes",
+        "copy-code": "Copier le code des aptitudes",
+        "import-code": "Importer le code des aptitudes"
     },
     "build": {
-        "zenith":"Aller vers Zénith"
+        "zenith": "Aller vers Zénith"
     },
     "builds-list": {
         "label": "Votre liste de builds",
-        "no-build":"Vous n'avez pas encore de builds sauvegardés."
+        "no-build": "Vous n'avez pas encore de builds sauvegardés."
     },
     "description-sublimation": {
         "level-max": "Lvl max"
@@ -87,7 +88,7 @@
         "tacle": "Tacle",
         "initiative": "Initiative",
         "sublimations": "Sublimations",
-        "recherche-sublimation":"Recherche de sublimation..."
+        "recherche-sublimation": "Recherche de sublimation..."
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Maitrises élémentaires",
@@ -123,7 +124,7 @@
             "maitrises": "Maitrises",
             "resistances": "Résistances",
             "poids": "Poids",
-            "CC":"% Critique",
+            "CC": "% Critique",
             "parade": "% Parade",
             "PA": "PA",
             "PM": "PM",
@@ -136,16 +137,16 @@
         "placeholder": "Url Gearfu ou Zénith"
     },
     "item": {
-        "maitrises":"Maitrises",
+        "maitrises": "Maitrises",
         "resistances": "Résistances",
         "poids": "Poids",
         "poids-infobulle": "Poids = Maitrises + {{ ratio }}*Résistances",
-        "copier":"Copier le nom de l'item",
-        "craftable":"Peut être crafté",
-        "droppable":"Peut être droppé par un monstre",
-        "boss-drop":"Peut être droppé par un boss",
-        "archi-drop":"Peut être droppé par un archimonstre ou un dominant",
-        "pvp":"Peut être obtenu en PvP"
+        "copier": "Copier le nom de l'item",
+        "craftable": "Peut être crafté",
+        "droppable": "Peut être droppé par un monstre",
+        "boss-drop": "Peut être droppé par un boss",
+        "archi-drop": "Peut être droppé par un archimonstre ou un dominant",
+        "pvp": "Peut être obtenu en PvP"
     },
     "item-choose": {
         "zenith": "Exporter le build vers Zénith Wakfu",
@@ -182,19 +183,19 @@
     "major-present": {
         "label": "Majeur devant être présent sur l'item",
         "label-malus": "Malus devant être présent sur l'item",
-        "PA":"PA",
-        "PM":"PM",
-        "PW":"PW",
-        "PO":"PO",
-        "CONTROLE":"Contrôle",
-        "armure-donnee":"Armure donnée",
-        "armure-recue":"Armure reçue",
+        "PA": "PA",
+        "PM": "PM",
+        "PW": "PW",
+        "PO": "PO",
+        "CONTROLE": "Contrôle",
+        "armure-donnee": "Armure donnée",
+        "armure-recue": "Armure reçue",
         "critique": "Critique",
         "parade": "Parade",
-        "resistance-dos":"Résistance dos",
+        "resistance-dos": "Résistance dos",
         "resistance-critique": "Résistance critique",
-        "tacle":"Tacle",
-        "esquive":"Esquive",
+        "tacle": "Tacle",
+        "esquive": "Esquive",
         "PERTE_PA": "Perte PA",
         "PERTE_PM": "Perte PM",
         "PERTE_PW": "Perte PW",
@@ -216,28 +217,28 @@
         "PERTE_ESQUIVE": "Perte esquive"
     },
     "modifier-elem-maitrises": {
-        "label":"Activation de mécaniques",
-        "mecaniques":"Mécaniques"
+        "label": "Activation de mécaniques",
+        "mecaniques": "Mécaniques"
     },
     "name-build": {
-        "label":"Sauvegarder votre build",
-        "placeholder":"Nom de votre build"
+        "label": "Sauvegarder votre build",
+        "placeholder": "Nom de votre build"
     },
     "obtention": {
-        "craftable":"Pouvant être crafté",
-        "droppable":"Pouvant être droppé par un monstre",
-        "cacher":"Afficher les items obtenables par leur moyen d'obtention",
-        "boss":"Pouvant être droppé par un boss",
-        "archi":"Pouvant être droppé par un archimonstre ou un dominant",
-        "pvp":"Pouvant être obtenu en PvP"
+        "craftable": "Pouvant être crafté",
+        "droppable": "Pouvant être droppé par un monstre",
+        "cacher": "Afficher les items obtenables par leur moyen d'obtention",
+        "boss": "Pouvant être droppé par un boss",
+        "archi": "Pouvant être droppé par un archimonstre ou un dominant",
+        "pvp": "Pouvant être obtenu en PvP"
     },
     "only-no-elem": {
-        "label":"Prendre en compte exclusivement les items avec aucune maitrise élémentaire",
+        "label": "Prendre en compte exclusivement les items avec aucune maitrise élémentaire",
         "oui": "Oui",
         "non": "Non"
     },
     "only-no-secondary": {
-        "label":"Prendre en compte exclusivement les items avec aucune maitrises secondaires",
+        "label": "Prendre en compte exclusivement les items avec aucune maitrises secondaires",
         "oui": "Oui",
         "non": "Non"
     },
@@ -256,13 +257,13 @@
     },
     "resume-aptitudes": {
         "level": "Level",
-        "maitrises-resistances":"Maitrises et Résistances",
-        "combat":"Combat",
-        "secondaire":"Secondaire",
-        "PV":"PV",
-        "PA":"PA",
-        "PM":"PM",
-        "PW":"PW",
+        "maitrises-resistances": "Maitrises et Résistances",
+        "combat": "Combat",
+        "secondaire": "Secondaire",
+        "PV": "PV",
+        "PA": "PA",
+        "PM": "PM",
+        "PW": "PW",
         "resistances-elem": "Résistances élémentaires",
         "barriere": "Barrière",
         "soins-recus": "Soins reçus",
@@ -306,19 +307,19 @@
         "CHAOS": "Chaos"
     },
     "sorts": {
-        "code-deck":"Code deck",
-        "copy-code":"Copier le code du deck",
-        "sorts-equipes":"Sorts équipés",
-        "sorts-neutres":"Sorts neutres",
-        "passifs":"Passifs",
-        "sorts-classe":"Sorts de classe",
-        "sorts-elementaires":"Sorts élémentaires",
-        "sort-selectionne":"Sort sélectionné",
-        "no-sort-selectionne":"Aucun sort sélectionné",
-        "effet-normal":"Effet normal",
-        "effet-critique":"Effet critique"
+        "code-deck": "Code deck",
+        "copy-code": "Copier le code du deck",
+        "sorts-equipes": "Sorts équipés",
+        "sorts-neutres": "Sorts neutres",
+        "passifs": "Passifs",
+        "sorts-classe": "Sorts de classe",
+        "sorts-elementaires": "Sorts élémentaires",
+        "sort-selectionne": "Sort sélectionné",
+        "no-sort-selectionne": "Aucun sort sélectionné",
+        "effet-normal": "Effet normal",
+        "effet-critique": "Effet critique"
     },
-    "sort-choice-enum" : {
+    "sort-choice-enum": {
         "POIDS": "Poids",
         "MAITRISES": "Maîtrises",
         "RESISTANCES": "Résistances",
@@ -328,7 +329,7 @@
         "TACLE": "Tacle",
         "ESQUIVE": "Esquive",
         "TACLE_ESQUIVE": "Tacle + Esquive",
-        "CRITIQUE":"% Critique",
+        "CRITIQUE": "% Critique",
         "PARADE": "% Parade",
         "CRITIQUE_PARADE": "% Critique + Parade",
         "PA": "PA",

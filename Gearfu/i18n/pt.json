@@ -12,10 +12,11 @@
         "filter-item": "Filtro de itens",
         "sort-item": "Ordenação de itens",
         "build": "Construções",
-        "aptitudes":"Aptidões",
+        "aptitudes": "Aptidões",
         "sorts": "Feitiços",
         "enchantement": "Encantamento",
-        "search-builds":"Pesquisar construções"
+        "search-builds": "Pesquisar construções",
+        "readonly": "Este build é somente leitura. Nenhuma alteração será salva."
     },
     "aptitudes": {
         "restant": "Restante: ",
@@ -59,7 +60,7 @@
         "import-code": "Importar código de aptidões"
     },
     "build": {
-        "zenith":"Ir para Zénith"
+        "zenith": "Ir para Zénith"
     },
     "builds-list": {
         "label": "Sua lista de builds",
@@ -87,7 +88,7 @@
         "esquive": "Evasão",
         "initiative": "Iniciativa",
         "sublimations": "Sublimações",
-        "recherche-sublimation":"Pesquisa de sublimação..."
+        "recherche-sublimation": "Pesquisa de sublimação..."
     },
     "import-build": {
         "label": "Importe seu build através de uma URL do Gearfu ou Zénith",
@@ -193,8 +194,8 @@
         "parade": "Parada",
         "resistance-dos": "Resistência das costas",
         "resistance-critique": "Resistência crítica",
-        "tacle":"Bloqueio",
-        "esquive":"Evasão",
+        "tacle": "Bloqueio",
+        "esquive": "Evasão",
         "PERTE_PA": "Perda de PA",
         "PERTE_PM": "Perda de PM",
         "PERTE_PW": "Perda de PW",
@@ -226,7 +227,7 @@
     "obtention": {
         "craftable": "Pode ser craftado",
         "droppable": "Pode ser dropado por um monstro",
-        "cacher":"Mostrar itens obtidos por seu meio de obtenção",
+        "cacher": "Mostrar itens obtidos por seu meio de obtenção",
         "boss": "Pode ser dropado por um chefe",
         "archi": "Pode ser dropado por um archimonstre ou um dominante",
         "pvp": "Pode ser obtido em PvP"
@@ -256,13 +257,13 @@
     },
     "resume-aptitudes": {
         "level": "Level",
-        "maitrises-resistances":"Maestria e Resistências",
-        "combat":"Combate",
-        "secondaire":"Secundário",
-        "PV":"PV",
-        "PA":"PA",
-        "PM":"PM",
-        "PW":"PW",
+        "maitrises-resistances": "Maestria e Resistências",
+        "combat": "Combate",
+        "secondaire": "Secundário",
+        "PV": "PV",
+        "PA": "PA",
+        "PM": "PM",
+        "PW": "PW",
         "resistances-elem": "Resistências elementares",
         "barriere": "Barreira",
         "soins-recus": "Cura recebida",
@@ -306,17 +307,17 @@
         "CHAOS": "Caos"
     },
     "sorts": {
-        "code-deck":"Código do deck",
-        "copy-code":"Copiar código do deck",
-        "sorts-equipes":"Feitiços equipados",
-        "sorts-neutres":"Feitiços neutros",
-        "passifs":"Passivos",
-        "sorts-classe":"Feitiços de classe",
-        "sorts-elementaires":"Feitiços elementares",
-        "sort-selectionne":"Feitiço selecionado",
-        "no-sort-selectionne":"Nenhum feitiço selecionado",
-        "effet-normal":"Efeito normal",
-        "effet-critique":"Efeito crítico"
+        "code-deck": "Código do deck",
+        "copy-code": "Copiar código do deck",
+        "sorts-equipes": "Feitiços equipados",
+        "sorts-neutres": "Feitiços neutros",
+        "passifs": "Passivos",
+        "sorts-classe": "Feitiços de classe",
+        "sorts-elementaires": "Feitiços elementares",
+        "sort-selectionne": "Feitiço selecionado",
+        "no-sort-selectionne": "Nenhum feitiço selecionado",
+        "effet-normal": "Efeito normal",
+        "effet-critique": "Efeito crítico"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",
