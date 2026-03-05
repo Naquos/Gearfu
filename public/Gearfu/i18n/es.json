@@ -12,10 +12,11 @@
         "filter-item": "Filtro de objetos",
         "sort-item": "Orden de objetos",
         "build": "Construcciones",
-        "aptitudes":"Aptitudes",
+        "aptitudes": "Aptitudes",
         "sorts": "Hechizos",
         "enchantement": "Encantamiento",
-        "search-builds":"Buscar construcciones"
+        "search-builds": "Buscar construcciones",
+        "readonly": "Este build es de solo lectura. No se guardarán cambios."
     },
     "aptitudes": {
         "restant": "Restante: ",
@@ -59,7 +60,7 @@
         "import-code": "Importar código de aptitudes"
     },
     "build": {
-        "zenith":"Ir a Zénith"
+        "zenith": "Ir a Zénith"
     },
     "builds-list": {
         "label": "Tu lista de builds",
@@ -87,7 +88,7 @@
         "initiative": "Iniciativa",
         "effets": "Efectos",
         "sublimations": "Sublimaciones",
-        "recherche-sublimation":"Buscar sublimación..."
+        "recherche-sublimation": "Buscar sublimación..."
     },
     "import-build": {
         "label": "Importa tu build mediante una URL de Gearfu o Zénith",
@@ -193,8 +194,8 @@
         "parade": "Anticipación",
         "resistance-dos": "Resistencia de espalda",
         "resistance-critique": "Resistencia crítica",
-        "tacle":"Bloqueo",
-        "esquive":"Evasión",
+        "tacle": "Bloqueo",
+        "esquive": "Evasión",
         "PERTE_PA": "Pérdida de PA",
         "PERTE_PM": "Pérdida de PM",
         "PERTE_PW": "Pérdida de PW",
@@ -226,7 +227,7 @@
     "obtention": {
         "craftable": "Puede ser craftado",
         "droppable": "Puede ser dropeado por un monstruo",
-        "cacher":"Mostrar los objetos obtenibles por su medio de obtención",
+        "cacher": "Mostrar los objetos obtenibles por su medio de obtención",
         "boss": "Puede ser dropeado por un jefe",
         "archi": "Puede ser dropeado por un archimonstre o un dominante",
         "pvp": "Puede ser obtenido en PvP"
@@ -256,9 +257,9 @@
     },
     "resume-aptitudes": {
         "level": "Level",
-        "maitrises-resistances":"Dominio y resistencias",
-        "combat":"Combate",
-        "secondaire":"Secundario",
+        "maitrises-resistances": "Dominio y resistencias",
+        "combat": "Combate",
+        "secondaire": "Secundario",
         "PV": "PV",
         "PA": "PA",
         "PM": "PM",
@@ -284,16 +285,16 @@
         "maitrises-berzerk": "Dominio berserker",
         "resistances-dos": "Resistencias de espalda",
         "resistances-critique": "Resistencias críticas",
-        "po":"Alcance y daños",
-        "controle":"Control y daños",
-        "di":"Daños infligidos",
-        "sagesse":"Sabiduría",
-        "prospection":"Prospección",
-        "armure-donnee":"Armadura dada",
-        "armure-recue":"Armadura recibida",
-        "DI_indirect":"Daños indirectos",
-        "SR":"Curación realizada",
-        "DI":"Daños infligidos",
+        "po": "Alcance y daños",
+        "controle": "Control y daños",
+        "di": "Daños infligidos",
+        "sagesse": "Sabiduría",
+        "prospection": "Prospección",
+        "armure-donnee": "Armadura dada",
+        "armure-recue": "Armadura recibida",
+        "DI_indirect": "Daños indirectos",
+        "SR": "Curación realizada",
+        "DI": "Daños infligidos",
         "maitrises-totales": "Dominios totales",
         "resistances-totales": "Resistencias totales"
     },
@@ -307,17 +308,17 @@
         "CHAOS": "Caos"
     },
     "sorts": {
-        "code-deck":"Deck code",
-        "copy-code":"Copy deck code",
-        "sorts-equipes":"Equipped spells",
-        "sorts-neutres":"Neutral spells",
-        "passifs":"Passives",
-        "sorts-classe":"Class spells",
-        "sorts-elementaires":"Elemental spells",
-        "sort-selectionne":"Selected spell",
-        "no-sort-selectionne":"No spell selected",
-        "effet-normal":"Normal effect",
-        "effet-critique":"Critical effect"
+        "code-deck": "Deck code",
+        "copy-code": "Copy deck code",
+        "sorts-equipes": "Equipped spells",
+        "sorts-neutres": "Neutral spells",
+        "passifs": "Passives",
+        "sorts-classe": "Class spells",
+        "sorts-elementaires": "Elemental spells",
+        "sort-selectionne": "Selected spell",
+        "no-sort-selectionne": "No spell selected",
+        "effet-normal": "Normal effect",
+        "effet-critique": "Critical effect"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",

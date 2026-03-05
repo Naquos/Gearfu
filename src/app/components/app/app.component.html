@@ -18,6 +18,9 @@
     <mat-icon fontIcon="menu" class="menu" (click)="displayFilterService.toggleDisplay()"></mat-icon>
 </header>
 <div class="content">
+    @if (buildReadonly()) {
+    <div class="readonly">{{ "app.readonly" | translate }}</div>
+    }
     <div class="filter" [tabIndex]="-1" [class.open]="displayFilter" appSwipe
         (swipeRight)="displayFilterService.setDisplay(false)">
         <div class="filter-header">

@@ -12,10 +12,11 @@
         "filter-item": "Item filter",
         "sort-item": "Item sorting",
         "build": "Builds",
-        "aptitudes":"Aptitudes",
+        "aptitudes": "Aptitudes",
         "sorts": "Spells",
         "enchantement": "Enchanting",
-        "search-builds":"Search builds"
+        "search-builds": "Search builds",
+        "readonly": "This build is read-only. No changes will be saved."
     },
     "aptitudes": {
         "restant": "Remaining: ",
@@ -59,7 +60,7 @@
         "import-code": "Import aptitudes code"
     },
     "build": {
-        "zenith":"Go to Zenith"
+        "zenith": "Go to Zenith"
     },
     "builds-list": {
         "label": "Your builds list",
@@ -87,7 +88,7 @@
         "initiative": "Initiative",
         "effets": "Effects",
         "sublimations": "Sublimations",
-        "recherche-sublimation":"Search for sublimation..."
+        "recherche-sublimation": "Search for sublimation..."
     },
     "import-build": {
         "label": "Import your build via a Gearfu or Zenith URL",
@@ -193,8 +194,8 @@
         "parade": "Block",
         "resistance-dos": "Back resistance",
         "resistance-critique": "Critical resistance",
-        "tacle":"Lock",
-        "esquive":"Dodge",
+        "tacle": "Lock",
+        "esquive": "Dodge",
         "PERTE_PA": "AP Loss",
         "PERTE_PM": "MP Loss",
         "PERTE_PW": "WP Loss",
@@ -226,7 +227,7 @@
     "obtention": {
         "craftable": "Can be crafted",
         "droppable": "Can be dropped by a monster",
-        "cacher":"Display items obtainable by their means of obtainment",
+        "cacher": "Display items obtainable by their means of obtainment",
         "boss": "Can be dropped by a boss",
         "archi": "Can be dropped by an archimonster or dominant",
         "pvp": "Can be obtained in PvP"
@@ -256,13 +257,13 @@
     },
     "resume-aptitudes": {
         "level": "Level",
-        "maitrises-resistances":"Mastery and Resistances",
-        "combat":"Combat",
-        "secondaire":"Secondary",
-        "PV":"HP",
-        "PA":"AP",
-        "PM":"MP",
-        "PW":"WP",
+        "maitrises-resistances": "Mastery and Resistances",
+        "combat": "Combat",
+        "secondaire": "Secondary",
+        "PV": "HP",
+        "PA": "AP",
+        "PM": "MP",
+        "PW": "WP",
         "resistances-elem": "Elemental Resistances",
         "barriere": "Barrier",
         "soins-recus": "Healing received",
@@ -306,17 +307,17 @@
         "CHAOS": "Chaos"
     },
     "sorts": {
-        "code-deck":"Deck code",
-        "copy-code":"Copy deck code",
-        "sorts-equipes":"Equipped spells",
-        "sorts-neutres":"Neutral spells",
-        "passifs":"Passives",
-        "sorts-classe":"Class spells",
-        "sorts-elementaires":"Elemental spells",
-        "sort-selectionne":"Selected spell",
-        "no-sort-selectionne":"No spell selected",
-        "effet-normal":"Normal effect",
-        "effet-critique":"Critical effect"
+        "code-deck": "Deck code",
+        "copy-code": "Copy deck code",
+        "sorts-equipes": "Equipped spells",
+        "sorts-neutres": "Neutral spells",
+        "passifs": "Passives",
+        "sorts-classe": "Class spells",
+        "sorts-elementaires": "Elemental spells",
+        "sort-selectionne": "Selected spell",
+        "no-sort-selectionne": "No spell selected",
+        "effet-normal": "Normal effect",
+        "effet-critique": "Critical effect"
     },
     "sort-choice-enum": {
         "POIDS": "Weight",

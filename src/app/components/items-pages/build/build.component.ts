@@ -14,8 +14,8 @@ import { Statistics } from '../../../models/data/statistics';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
-export enum ItemTypeBuild  {
-  CASQUE =  "CASQUE",
+export enum ItemTypeBuild {
+  CASQUE = "CASQUE",
   AMULETTE = "AMULETTE",
   PLASTRON = "PLASTRON",
   ANNEAU_DROITE = "ANNEAU_DROITE",
@@ -71,12 +71,12 @@ export class BuildComponent implements OnInit {
 
   ngOnInit(): void {
     const idItemList = this.build()?.itemsId?.split(",");
-    if(idItemList && idItemList.length) {
+    if (idItemList && idItemList.length) {
       idItemList.forEach(idItem => {
         const item = this.itemService.getItem(parseInt(idItem));
-        if(item) {
+        if (item) {
           this.getItemType(item).forEach(type => {
-            if(this.mapImageItems.has(type)) {
+            if (this.mapImageItems.has(type)) {
               this.mapImageItems.set(type, this.imageService.getItemUrl(item.idImage));
             }
           })
@@ -90,7 +90,7 @@ export class BuildComponent implements OnInit {
     window.open('https://www.zenithwakfu.com/builder/' + this.build()?.codeZenith, '_blank')
   }
 
-  protected removeBuild(event : MouseEvent): void {
+  protected removeBuild(event: MouseEvent): void {
     event.stopPropagation();
     this.saveBuildService.removeBuild(this.build()!);
   }
@@ -112,7 +112,7 @@ export class BuildComponent implements OnInit {
       case ItemTypeEnum.PLASTRON:
         return [ItemTypeBuild.PLASTRON];
       case ItemTypeEnum.ANNEAU:
-        if(this.firstAnneau) {
+        if (this.firstAnneau) {
           this.firstAnneau = false;
           return [ItemTypeBuild.ANNEAU_DROITE];
         } else {

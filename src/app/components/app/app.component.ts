@@ -81,6 +81,7 @@ export class AppComponent implements OnInit {
   protected filterOrBuild: column = "filter";
   protected readonly openSidebar = toSignal(this.filterSidebarService.open$, { initialValue: true });
   protected readonly isMobile = signal(isMobile());
+  protected readonly buildReadonly = toSignal(this.saveBuildService.buildReadonly$, { initialValue: false });
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(@Inject(PLATFORM_ID) private platformId: object) {

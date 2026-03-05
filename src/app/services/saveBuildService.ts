@@ -38,6 +38,9 @@ export class SaveBuildService {
     private readonly currentTokenBuild = new BehaviorSubject<string | null>(null);
     private readonly statisticsId = new BehaviorSubject<string | null>(null);
 
+    private readonly buildReadonly = new BehaviorSubject<boolean>(false);
+    public readonly buildReadonly$ = this.buildReadonly.asObservable();
+
     private readonly buildLoading = new BehaviorSubject<boolean>(false);
     public readonly buildLoading$ = this.buildLoading.asObservable();
 
@@ -149,7 +152,7 @@ export class SaveBuildService {
                 if (token_build && token_user && token_build !== token_user) {
                     return; // Ne pas sauvegarder si le token du build actuel ne correspond pas au token de l'utilisateur (sécurité pour éviter d'écraser un build qui ne nous appartient pas)
                 }
-                this.saveCurrentBuild();
+                this.saveCurrentBuild(undefined, token_build || undefined);
                 this.saveBuildToSupabase();
             })
         ).subscribe();
@@ -205,7 +208,7 @@ export class SaveBuildService {
     /**
      * Sauvegarde le build actuel depuis l'etat des services dans le localStorage
      */
-    public saveCurrentBuild(nameBuild?: string): void {
+    public saveCurrentBuild(nameBuild?: string, token?: string): void {
         const build: Build = {
             id: this.currentBuildId.getValue() || '',
             nameBuild: nameBuild || this.getNameFromBuild(),
@@ -217,7 +220,8 @@ export class SaveBuildService {
             enchantement: this.chasseFormService.getCodeBuild(),
             elementSelector: this.elementSelectorService.encodeForBuild(),
             compressed: false,
-            createdAt: Date.now()
+            createdAt: Date.now(),
+            token: token || undefined
         };
         if (!build.id || build.id === NO_BUILD) {
             return; // Si on n'a pas d'id de build, on ne peut pas sauvegarder dans le localStorage
@@ -229,8 +233,6 @@ export class SaveBuildService {
      * Ajoute un build à la liste
      */
     public addBuildToLocalStorage(build: Build): void {
-
-
         // On enlève le build actuel s'il existe déjà pour éviter les doublons
         const current = this.buildList.getValue().find(b => b.id === build.id);
         if (current) {
@@ -256,7 +258,7 @@ export class SaveBuildService {
         this.supabaseService.createBuild(build).subscribe(createdBuild => {
             if (createdBuild?.id) {
                 this.statisticsId.next(null);
-                this.addBuildToLocalStorage({ ...createdBuild, ...build });
+                this.addBuildToLocalStorage({ ...build, ...createdBuild, token: this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || undefined });
                 this.loadBuild(createdBuild, true);
             }
         });
@@ -278,6 +280,7 @@ export class SaveBuildService {
         this.codeAptitudesService.saveCode(build.aptitudes ?? "");
         this.sortFormService.decodeAndSaveCodeBuild(build.sorts ?? "0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
         this.chasseFormService.decodeAndSaveCodeBuild(build.enchantement ?? "");
+        this.buildReadonly.next(!build.token || build.token !== this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN));
 
         of(saveStatistics).pipe(switchMap(save => {
             if (save) {
