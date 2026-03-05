@@ -66,7 +66,7 @@ export class PassiveEffectsService {
         this.applyEffectPassifOsamodas(sortPassifsIds, applyEffectFn);
         break;
       case ClassIdEnum.Sram:
-        this.applyEffectPassifSram(sortPassifsIds, level, recapValue, applyEffectFn);
+        // this.applyEffectPassifSram(sortPassifsIds, level, recapValue, applyEffectFn);
         break;
       case ClassIdEnum.Xelor:
         this.applyEffectPassifXelor(sortPassifsIds, applyEffectFn);
