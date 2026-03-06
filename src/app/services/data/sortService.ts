@@ -59,7 +59,7 @@ export class SortService {
      * Utilise un cache pour éviter les chargements multiples
      */
     public load(): Observable<void> {
-        return this.compressionService.decompressGzipJson<{ imageDict: Record<string, string>, classes: Sort[] }>(GEARFU_RESOURCES_URL + 'sorts.json.gz').pipe(
+        return this.compressionService.decompressGzipJson<{ imageDict: Record<string, string>, classes: Sort[] }>(GEARFU_RESOURCES_URL + 'sorts_1.91.json.gz').pipe(
             tap(data => {
                 this.spellEffectService.setImageDictionary(data.imageDict);
                 this.sorts.next(data.classes);
