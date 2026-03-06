@@ -273,29 +273,10 @@ export class ItemsService {
     });
   }
 
-  /**
-   * Ankama ne mettant pas à jour les jsons, l'item Marche vers Ombre vera ses stats modifiées à la main
-   * Fonction qui a pour vocation de disparaître dès que les données seront à jour
-   */
-  private correctionMarcheVersOmbre(): void {
-    const marcheVersOmbreLegendaire = this.items.find(x => x.id === 26314);
-    if (marcheVersOmbreLegendaire) {
-      marcheVersOmbreLegendaire.equipEffects.find(x => x.actionId === IdActionsEnum.POINT_DE_VIE)!.params[0] = 373;
-      marcheVersOmbreLegendaire.equipEffects.find(x => x.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE)!.params[0] = 175;
-    }
-
-    const marcheVersOmbreMythique = this.items.find(x => x.id === 26293);
-    if (marcheVersOmbreMythique) {
-      marcheVersOmbreMythique.equipEffects.find(x => x.actionId === IdActionsEnum.POINT_DE_VIE)!.params[0] = 332;
-      marcheVersOmbreMythique.equipEffects.find(x => x.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE)!.params[0] = 148;
-    }
-  }
-
   private initFilter(): void {
     // this.loadSublimations();
     this.items = this.items.filter(x => ![ItemTypeDefinitionEnum.LANTERNE, ItemTypeDefinitionEnum.STATISTIQUES, ItemTypeDefinitionEnum.SUBLIMATIONS].includes(x.itemTypeId))
       .filter(x => this.isNotWIP(x));
-    this.correctionMarcheVersOmbre();
     this.initFamiliers();
     this.fullItems$.next(this.items);
 
