@@ -1,7 +1,7 @@
 
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Build } from '../../../models/data/build';
 import { Item } from '../../../models/data/item';
 import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
@@ -13,6 +13,8 @@ import { SaveBuildService } from '../../../services/saveBuildService';
 import { Statistics } from '../../../models/data/statistics';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
+import { ChasseFormService } from '../../../services/form/chasseFormService';
+import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqueRelique';
 
 export enum ItemTypeBuild {
   CASQUE = "CASQUE",
@@ -41,13 +43,19 @@ export class BuildComponent implements OnInit {
 
   private readonly itemService = inject(ItemsService);
   private readonly itemTypeService = inject(ItemTypeServices);
+  private readonly chasseFormService = inject(ChasseFormService);
   protected readonly imageService = inject(ImageService);
   protected readonly saveBuildService = inject(SaveBuildService);
   protected readonly itemChooseService = inject(ItemChooseService);
+  private readonly translateService = inject(TranslateService);
+
 
   public readonly build = input<Build | undefined>(undefined);
   public readonly statistics = input<Statistics | null>(null);
   public readonly displayRemove = input<boolean>(true);
+  protected readonly sublimationEpique = signal<SublimationsEpiqueRelique | undefined>(undefined);
+  protected readonly sublimationRelique = signal<SublimationsEpiqueRelique | undefined>(undefined);
+  protected readonly hasSublimation = signal(false);
 
   protected readonly ItemTypeBuild = ItemTypeBuild;
   protected readonly IdActionsEnum = IdActionsEnum;
@@ -68,6 +76,26 @@ export class BuildComponent implements OnInit {
   ])
 
   private firstAnneau = true;
+
+  constructor() {
+    effect(() => {
+      const build = this.build();
+      if (build) {
+        const sublimationsEpique = this.chasseFormService.getSublimationEpiqueByCode(build.enchantement || "");
+        const sublimationsRelique = this.chasseFormService.getSublimationReliqueByCode(build.enchantement || "");
+        this.sublimationEpique.set(sublimationsEpique);
+        this.sublimationRelique.set(sublimationsRelique);
+        this.hasSublimation.set(!!sublimationsEpique || !!sublimationsRelique);
+      }
+    })
+  }
+
+  protected getSublimationTitle(sublimation: SublimationsEpiqueRelique | undefined): string {
+    if (!sublimation) {
+      return "";
+    }
+    return sublimation.title[this.translateService.currentLang as keyof typeof sublimation.title];
+  }
 
   ngOnInit(): void {
     const idItemList = this.build()?.itemsId?.split(",");

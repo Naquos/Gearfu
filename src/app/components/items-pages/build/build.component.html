@@ -1,61 +1,63 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="header">
-    <div class="header-name" [style.position]="build()?.codeZenith ? 'absolute' : 'initial'">{{ build()?.level }} - {{build()?.nameBuild}}</div>
+    <div class="header-name" [style.position]="build()?.codeZenith ? 'absolute' : 'initial'">{{ build()?.level }} -
+        {{build()?.nameBuild}}</div>
     @if (build()?.codeZenith) {
-        <div class="header-zenith">
-            <img [matTooltip]="'build.zenith' | translate"  src="./zenith-logo.webp" (click)="goToZenith($event)" alt="zenith">
-        </div>
+    <div class="header-zenith">
+        <img [matTooltip]="'build.zenith' | translate" src="./zenith-logo.webp" (click)="goToZenith($event)"
+            alt="zenith">
+    </div>
     }
 </div>
 @if (statistics()) {
-    <div class="statistics" [style.border-top-right-radius]="build()?.codeZenith ? '0' : '40px'">
-        <div class="values">
-            <div class="cell">
-                <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES)" alt="maitrises">
-                <span>{{statistics()?.maitrises}}</span>
-            </div>
-            <div class="cell">
-                <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt="resistances">
-                <span>{{statistics()?.resistances}}</span>
-            </div>
-            <div class="cell">
-                <img src="aptitudes/poids.png" alt="poids">
-                <span>{{statistics()?.poids}}</span>
-            </div>
+<div class="statistics" [style.border-top-right-radius]="build()?.codeZenith ? '0' : '40px'">
+
+    <div class="values">
+        <div class="cell">
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES)" alt="maitrises">
+            <span>{{statistics()?.maitrises}}</span>
         </div>
-        <div class="majors">
-            <div class="cell">
-                <img [src]="imageService.getActionIdUrl(IdActionsEnum.PA)" alt="PA">
-                <span>{{statistics()?.PA}}</span>
-            </div>
-            <div class="cell">
-                <img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="PM">
-                <span>{{statistics()?.PM}}</span>
-            </div>
-            <div class="cell">
-                <img [src]="imageService.getActionIdUrl(IdActionsEnum.PW)" alt="PW">
-                <span>{{statistics()?.PW}}</span>
-            </div>
-            <div class="cell">
-                <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="PO">
-                <span>{{statistics()?.PO}}</span>
-            </div>
-            <div class="cell">
-                <img [src]="imageService.getActionIdUrl(IdActionsEnum.COUP_CRITIQUE)" alt="CC">
-                <span>{{statistics()?.CC}}</span>
-            </div>
-            <div class="cell">
-                <img [src]="imageService.getActionIdUrl(IdActionsEnum.PARADE)" alt="parade">
-                <span>{{statistics()?.parade}}</span>
-            </div></div>
+        <div class="cell">
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt="resistances">
+            <span>{{statistics()?.resistances}}</span>
+        </div>
+        <div class="cell">
+            <img src="aptitudes/poids.png" alt="poids">
+            <span>{{statistics()?.poids}}</span>
+        </div>
     </div>
+    <div class="majors">
+        <div class="cell">
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PA)" alt="PA">
+            <span>{{statistics()?.PA}}</span>
+        </div>
+        <div class="cell">
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="PM">
+            <span>{{statistics()?.PM}}</span>
+        </div>
+        <div class="cell">
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PW)" alt="PW">
+            <span>{{statistics()?.PW}}</span>
+        </div>
+        <div class="cell">
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="PO">
+            <span>{{statistics()?.PO}}</span>
+        </div>
+        <div class="cell">
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.COUP_CRITIQUE)" alt="CC">
+            <span>{{statistics()?.CC}}</span>
+        </div>
+        <div class="cell">
+            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PARADE)" alt="parade">
+            <span>{{statistics()?.parade}}</span>
+        </div>
+    </div>
+</div>
 }
-<div 
-    class="content"
-    (click)="loadBuild()"
-    [style.background-image]="`url(classes/icon/${build()?.classe}.jpg)`"
-    >
+<div class="content" (click)="loadBuild()" [style.background-image]="`url(classes/icon/${build()?.classe}.jpg)`"
+    [style.border-bottom-right-radius]="hasSublimation() ? '0' : '40px'"
+    [style.border-bottom-left-radius]="hasSublimation() ? '0' : '40px'">
     <div class="row">
         <img [src]="mapImageItems.get(ItemTypeBuild.CASQUE)" alt="image">
         <img [src]="mapImageItems.get(ItemTypeBuild.AMULETTE)" alt="image">
@@ -76,3 +78,19 @@
         <button (click)="removeBuild($event)" [style.visibility]="displayRemove() ? 'visible' : 'hidden'">X</button>
     </div>
 </div>
+@if (sublimationEpique() || sublimationRelique()) {
+<div class="row enchantement">
+    <div class="cell">
+        @if(sublimationEpique()) {
+        <img [src]="imageService.getItemUrl(sublimationEpique()!.idImage)" alt="image">
+        <span>{{getSublimationTitle(sublimationEpique())}}</span>
+        }
+    </div>
+    <div class="cell">
+        @if(sublimationRelique()) {
+        <img [src]="imageService.getItemUrl(sublimationRelique()!.idImage)" alt="image">
+        <span>{{getSublimationTitle(sublimationRelique())}}</span>
+        }
+    </div>
+</div>
+}

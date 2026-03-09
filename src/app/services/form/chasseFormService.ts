@@ -22,12 +22,12 @@ import { SublimationsDescriptions } from "../../models/data/sublimationsDescript
 import { SublimationService } from "../data/sublimationService";
 import { coutEclat } from "../../models/utils/utils";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ChasseFormService extends AbstractFormService<FormControl<Enchantement>> {
     public static readonly DEFAULT_VALUE = () => {
         const initialChasses: ChasseCombinaison[] = [];
         for (let i = 0; i < 10; i++) {
-          initialChasses.push(createEmptyChasseCombinaison());
+            initialChasses.push(createEmptyChasseCombinaison());
         }
         return { chasseCombinaison: initialChasses };
     };
@@ -45,7 +45,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     public readonly coutEclatTotal$ = this.coutEclatTotal.asObservable();
 
     protected readonly keyEnum = KeyEnum.KEY_ENCHANTEMENT;
-    public readonly form =  new FormControl<Enchantement>(ChasseFormService.DEFAULT_VALUE(), { nonNullable: true });
+    public readonly form = new FormControl<Enchantement>(ChasseFormService.DEFAULT_VALUE(), { nonNullable: true });
 
     private readonly sublimationService = inject(SublimationService);
 
@@ -81,7 +81,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         [IdActionsEnum.RESISTANCES_TERRE, [ItemTypeEnum.PLASTRON, ItemTypeEnum.BOTTES]],
         [IdActionsEnum.POINT_DE_VIE, [ItemTypeEnum.CASQUE, ItemTypeEnum.UNE_MAIN]],
     ]);
-    
+
     constructor() {
         super();
         this.init();
@@ -94,11 +94,11 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
      */
     public generateCodeBuild(value: Enchantement): string {
         const parts: string[] = [];
-        
+
         // Encoder chaque combinaison de chasses
         value.chasseCombinaison.forEach(combinaison => {
             const chassesParts: string[] = [];
-            
+
             // Encoder les 4 chasses
             combinaison.chasses.forEach(chasse => {
                 if (chasse.color === IdChassesEnum.NON_CHASSE) {
@@ -109,19 +109,19 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                     chassesParts.push(`${chasse.color}.${chasse.lvl}.${idAction}.${jokerFlag}`);
                 }
             });
-            
+
             let combinaisonStr = chassesParts.join('-');
-            
+
             // Ajouter la sublimation si présente
             if (combinaison.sublimation) {
                 combinaisonStr += `_${combinaison.sublimation.id}.${combinaison.sublimation.level}`;
             }
-            
+
             parts.push(combinaisonStr);
         });
-        
+
         let result = parts.join('|');
-        
+
         // Ajouter l'épique et la relique
         if (value.epique) {
             result += `|E${value.epique.id}`;
@@ -129,7 +129,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         if (value.relique) {
             result += `|R${value.relique.id}`;
         }
-        
+
         return result;
     }
 
@@ -143,18 +143,18 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                 epique: undefined,
                 relique: undefined
             };
-            
+
             // Initialiser les 10 combinaisons vides
             for (let i = 0; i < 10; i++) {
                 enchantement.chasseCombinaison.push(createEmptyChasseCombinaison());
             }
-            
+
             const mainParts = codeBuild.split('|');
-            
+
             // Séparer les combinaisons des épiques/reliques
             const combinaisonParts: string[] = [];
             const specialParts: string[] = [];
-            
+
             for (const part of mainParts) {
                 if (part.startsWith('E') || part.startsWith('R')) {
                     specialParts.push(part);
@@ -162,22 +162,22 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                     combinaisonParts.push(part);
                 }
             }
-            
+
             // Décoder toutes les combinaisons de chasses
             for (let i = 0; i < Math.min(10, combinaisonParts.length); i++) {
                 const part = combinaisonParts[i];
                 const [chassesPart, sublimationPart] = part.split('_');
                 const chassesData = chassesPart.split('-');
-                
+
                 const combinaison = createEmptyChasseCombinaison();
-                
+
                 // Décoder les chasses
                 for (let j = 0; j < Math.min(4, chassesData.length); j++) {
                     const chasseData = chassesData[j];
                     if (chasseData === '0' || !chasseData) {
                         continue;
                     }
-                    
+
                     const parts = chasseData.split('.');
                     if (parts.length >= 4) {
                         const [color, lvl, idAction, joker] = parts.map(x => parseInt(x, 10));
@@ -189,7 +189,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                         };
                     }
                 }
-                
+
                 // Décoder la sublimation si présente
                 if (sublimationPart) {
                     const [subId, subLevel] = sublimationPart.split('.').map(x => parseInt(x, 10));
@@ -197,7 +197,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                     if (sublimation) {
                         combinaison.sublimation = {
                             id: subId,
-                            title: {...sublimation.title},
+                            title: { ...sublimation.title },
                             slotColorPattern: sublimation.slotColorPattern,
                             level: subLevel,
                             isValid: true
@@ -206,10 +206,10 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                         console.warn(`Sublimation ${subId} not found in database`);
                     }
                 }
-                
+
                 enchantement.chasseCombinaison[i] = combinaison;
             }
-            
+
             // Décoder l'épique et la relique
             for (const part of specialParts) {
                 if (part.startsWith('E')) {
@@ -219,7 +219,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                         enchantement.epique = {
                             id: epiqueSub.id,
                             idImage: epiqueSub.gfxId,
-                            title: {...epiqueSub.title},
+                            title: { ...epiqueSub.title },
                             epique: true,
                             relique: false
                         };
@@ -231,7 +231,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                         enchantement.relique = {
                             id: reliqueSub.id,
                             idImage: reliqueSub.gfxId,
-                            title: {...reliqueSub.title},
+                            title: { ...reliqueSub.title },
                             epique: false,
                             relique: true
                         };
@@ -245,7 +245,66 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         }
     }
 
-    
+    /**
+     * Retourne la sublimation épique ou relique correspondant au code enchantement du build,
+     * ou undefined si le code est invalide ou qu'il n'existe pas
+     * @param code Le code enchantement du build
+     * @returns La sublimation épique correspondante, ou undefined si le code est invalide ou inexistant
+     */
+    public getSublimationEpiqueByCode(code: string): SublimationsEpiqueRelique | undefined {
+        if (!code) {
+            return undefined;
+        }
+
+        const codeParts = code.split('|');
+        for (const part of codeParts) {
+            if (part.startsWith('E')) {
+                const epiqueId = parseInt(part.substring(1), 10);
+                const epiqueSub = this.sublimationService.getSublimationById(epiqueId);
+                if (epiqueSub) {
+                    return {
+                        id: epiqueSub.id,
+                        idImage: epiqueSub.gfxId,
+                        title: { ...epiqueSub.title },
+                        epique: true,
+                        relique: false
+                    };
+                }
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Retourne la sublimation relique correspondant au code enchantement du build,
+     * ou undefined si le code est invalide ou qu'il n'existe pas
+     * @param code Le code enchantement du build
+     * @returns La sublimation relique correspondante, ou undefined si le code est invalide ou inexistant
+     */
+    public getSublimationReliqueByCode(code: string): SublimationsEpiqueRelique | undefined {
+        if (!code) {
+            return undefined;
+        }
+        const codeParts = code.split('|');
+        for (const part of codeParts) {
+            if (part.startsWith('R')) {
+                const reliqueId = parseInt(part.substring(1), 10);
+                const reliqueSub = this.sublimationService.getSublimationById(reliqueId);
+                if (reliqueSub) {
+                    return {
+                        id: reliqueSub.id,
+                        idImage: reliqueSub.gfxId,
+                        title: { ...reliqueSub.title },
+                        epique: false,
+                        relique: true
+                    };
+                }
+            }
+        }
+        return undefined;
+    }
+
+
     private equalChasses(c1: Chasse, c2: Chasse): boolean {
         return c1.color === c2.color && c1.lvl === c2.lvl && c1.idAction === c2.idAction;
     }
@@ -264,20 +323,20 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
 
     public applySublimationEpicRelic(sublimation: SublimationsEpiqueRelique): void {
         const enchantement = this.getValue();
-        if(sublimation.epique) {
+        if (sublimation.epique) {
             enchantement.epique = {
                 id: sublimation.id,
                 idImage: sublimation.idImage,
-                title: {...sublimation.title},
+                title: { ...sublimation.title },
                 epique: true,
                 relique: false
             };
             this.setValue(enchantement);
-        } else if(sublimation.relique) {
+        } else if (sublimation.relique) {
             enchantement.relique = {
                 id: sublimation.id,
                 idImage: sublimation.idImage,
-                title: {...sublimation.title},
+                title: { ...sublimation.title },
                 epique: false,
                 relique: true
             };
@@ -338,9 +397,9 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     public changeJokerState(posX: number, posY: number): void {
         const enchantement = this.getValue();
         const currentChasses = [...enchantement.chasseCombinaison];
-        const chasseToUpdate = {...currentChasses[posY]};
+        const chasseToUpdate = { ...currentChasses[posY] };
         const chasses = [...chasseToUpdate.chasses];
-        const chasse = {...chasses[posX]};
+        const chasse = { ...chasses[posX] };
         if (!chasse.idAction) { return; }
         chasse.joker = !chasse.joker;
         chasses[posX] = chasse;
@@ -348,26 +407,26 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         currentChasses[posY] = chasseToUpdate;
         if (chasseToUpdate.sublimation) {
             chasseToUpdate.sublimation.isValid = this.canApplySublimation(chasseToUpdate, chasseToUpdate.sublimation!);
-        } 
-        this.setValue({...enchantement, chasseCombinaison: currentChasses});
+        }
+        this.setValue({ ...enchantement, chasseCombinaison: currentChasses });
     }
 
     private getChasseEffectValue(chasse: Chasse): number {
         if (!chasse.idAction) { return 0; }
-        if([IdActionsEnum.TACLE, IdActionsEnum.ESQUIVE].includes(chasse.idAction)) {
+        if ([IdActionsEnum.TACLE, IdActionsEnum.ESQUIVE].includes(chasse.idAction)) {
             return getValueTacleEsquiveByLevel(chasse.lvl);
-        } else if([IdActionsEnum.INITIATIVE].includes(chasse.idAction)) {
+        } else if ([IdActionsEnum.INITIATIVE].includes(chasse.idAction)) {
             return getValueInitiativesByLevel(chasse.lvl);
-        } else if([IdActionsEnum.POINT_DE_VIE].includes(chasse.idAction)) {
+        } else if ([IdActionsEnum.POINT_DE_VIE].includes(chasse.idAction)) {
             return getValueVieByLevel(chasse.lvl);
-        } else if([IdActionsEnum.MAITRISES_ELEMENTAIRES].includes(chasse.idAction)) {
+        } else if ([IdActionsEnum.MAITRISES_ELEMENTAIRES].includes(chasse.idAction)) {
             return getValueMaitriseElemByLevel(chasse.lvl);
-        } else if([IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES,
-                    IdActionsEnum.MAITRISES_BERZERK, IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS
-                ].includes(chasse.idAction)) {
+        } else if ([IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES,
+        IdActionsEnum.MAITRISES_BERZERK, IdActionsEnum.MAITRISES_CRITIQUES, IdActionsEnum.MAITRISES_DOS
+        ].includes(chasse.idAction)) {
             return getValueMaitrisesByLevel(chasse.lvl);
-        } else if([IdActionsEnum.RESISTANCES_FEU, IdActionsEnum.RESISTANCES_EAU, IdActionsEnum.RESISTANCES_AIR,
-             IdActionsEnum.RESISTANCES_TERRE].includes(chasse.idAction)) {
+        } else if ([IdActionsEnum.RESISTANCES_FEU, IdActionsEnum.RESISTANCES_EAU, IdActionsEnum.RESISTANCES_AIR,
+        IdActionsEnum.RESISTANCES_TERRE].includes(chasse.idAction)) {
             return getValueResistancesByLevel(chasse.lvl);
         }
         return 0;
@@ -401,10 +460,10 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         const sublimationList = value.chasseCombinaison.filter(x => !!x.sublimation).map(x => x.sublimation) as Sublimation[];
 
         const mapIdToLevel = this.calculMaxSublimationLevel(sublimationList);
-        if(value.epique) {
+        if (value.epique) {
             mapIdToLevel.set(value.epique.id, 1);
         }
-        if(value.relique) {
+        if (value.relique) {
             mapIdToLevel.set(value.relique.id, 1);
         }
 
@@ -436,7 +495,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         });
         return mapIdToMaxLevel;
     }
-    
+
     public override setValue(value: Enchantement | null): void {
         const val: Enchantement = value ?? ChasseFormService.DEFAULT_VALUE() as Enchantement;
         // Important: créer une copie profonde pour éviter les références partagées
@@ -449,7 +508,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
             relique: val.relique ? { ...val.relique } : undefined
         };
         // emitEvent: false pendant le chargement pour éviter les doublons
-        this.form.setValue(cleanValue, {emitEvent: !this.isLoadingFromUrl});
+        this.form.setValue(cleanValue, { emitEvent: !this.isLoadingFromUrl });
         // Émettre manuellement uniquement si pas en chargement
         if (!this.isLoadingFromUrl) {
             this.enchantement.next(cleanValue);
@@ -466,7 +525,7 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     public canApplySublimationWithItem(chasseCombinaison: ChasseCombinaison, sublimation: SublimationsDescriptions): boolean {
         return this.canApplySublimation(chasseCombinaison, {
             id: sublimation.id,
-            title: {...sublimation.title},
+            title: { ...sublimation.title },
             slotColorPattern: sublimation.slotColorPattern,
             isValid: false,
             level: sublimation.linkSublimation[0].level
@@ -482,12 +541,12 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
     public canApplySublimation(chasseCombinaison: ChasseCombinaison, sublimation: Sublimation): boolean {
         const chasses = chasseCombinaison.chasses;
         const pattern = sublimation.slotColorPattern;
-        
+
         // Si le pattern est plus long que le nombre de chasses, impossible
         if (pattern.length > chasses.length) {
             return false;
         }
-        
+
         // S'il y a au moins deux chasses vides alors on return true pour afficher toutes les sublimations
         const emptyChasses = chasses.filter(c => c.color === IdChassesEnum.NON_CHASSE);
         if (emptyChasses.length >= 2) {
@@ -535,8 +594,8 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
      * Vérifie si une couleur peut être remplacée par un joker
      */
     private isValidJokerReplacement(color: IdChassesEnum): boolean {
-        return color === IdChassesEnum.BLEU || 
-               color === IdChassesEnum.ROUGE || 
-               color === IdChassesEnum.VERT;
+        return color === IdChassesEnum.BLEU ||
+            color === IdChassesEnum.ROUGE ||
+            color === IdChassesEnum.VERT;
     }
 }

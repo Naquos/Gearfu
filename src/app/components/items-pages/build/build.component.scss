@@ -1,4 +1,4 @@
-.header  {
+.header {
     position: relative;
     z-index: -1;
 
@@ -12,7 +12,7 @@
         font-size: large;
         color: white;
     }
-    
+
     .header-zenith {
         position: relative;
         z-index: -1;
@@ -22,7 +22,7 @@
         width: 100%;
         height: 42px;
         text-align: end;
-    
+
         img {
             background-color: #DFE0E1;
             color: #1B263B;
@@ -32,14 +32,14 @@
             align-content: center;
             margin-right: 1%;
             margin-top: 0.5%;
-            
+
             cursor: pointer;
             border-radius: 25%;
             border: 2px solid #415A77;
             box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
             margin-left: 5px;
         }
-    
+
         img:active {
             background-color: #1B263B;
             color: #DFE0E1;
@@ -60,11 +60,14 @@
     display: flex;
     flex-direction: column;
 
-    .values, .majors, .cell {
+    .values,
+    .majors,
+    .cell {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
+
         img {
             width: 22px;
             height: 22px;
@@ -75,6 +78,14 @@
     .majors {
         margin-top: 10px;
     }
+}
+
+
+img {
+    width: 40px;
+    height: 40px;
+    filter:
+        drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000);
 }
 
 .content {
@@ -94,16 +105,6 @@
         justify-content: space-between;
         align-items: center;
 
-        img {
-            width: 40px;
-            height: 40px;
-            filter:
-                drop-shadow(1px 0 0 #000)
-                drop-shadow(-1px 0 0 #000)
-                drop-shadow(0 1px 0 #000)
-                drop-shadow(0 -1px 0 #000);
-        }
-        
         button {
             width: 40px;
             height: 40px;
@@ -116,17 +117,47 @@
             font-size: large;
             border-radius: 10px;
         }
-    
+
         button:active {
             transform: translateY(2px);
             box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
-      }
+        }
     }
 
     hr {
         margin: 10px 0;
         border: 1px solid #415A77;
     }
+}
+
+
+.enchantement {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #1B263B;
+    color: white;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    overflow: hidden;
+
+    .cell {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+    }
+
+    span {
+        height: fit-content;
+        margin: auto;
+    }
+
+    img {
+        margin: auto;
+    }
+
 }
 
 :host:hover {
