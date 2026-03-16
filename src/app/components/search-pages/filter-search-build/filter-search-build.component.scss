@@ -1,4 +1,4 @@
-.classes-selector {  
+.classes-selector {
     background-color: #1B263B;
     padding: 10px;
     border-radius: 15px;
@@ -25,7 +25,7 @@
         height: calc(60px - 2 * $size-border);
 
     }
-    
+
     img:hover {
         transform: scale(1.2);
         transition: transform 0.2s;
@@ -43,15 +43,15 @@ form {
 
 
 @media screen and (min-width: 700px) {
-        input[type=number] {
+    input[type=number] {
         display: none;
     }
-  }
+}
 
-  @media screen and (max-width: 700px) {
+@media screen and (max-width: 700px) {
     img {
-        width: 40px!important;
-        height: 40px!important;
+        width: 40px !important;
+        height: 40px !important;
     }
 
     input[type=text] {

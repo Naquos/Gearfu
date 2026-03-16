@@ -1,0 +1,16 @@
+<mat-form-field>
+    <mat-label>{{ label() | translate }}</mat-label>
+    <input matInput [formControl]="control()" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+        @for (option of options(); track option.id) {
+        <mat-option [value]="option.label" [style.backgroundColor]="option.backgroundColor">
+            <div style="display: flex; align-items: center;">
+                <img [src]="option.imgUrl" alt="image item" width="50px" height="50px" appFallback>
+                <span>
+                    {{ option.displayLabel }}
+                </span>
+            </div>
+        </mat-option>
+        }
+    </mat-autocomplete>
+</mat-form-field>

@@ -1,17 +1,17 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ItemsService } from '../../../services/data/itemsService';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CommonModule } from '@angular/common';
 import { ColorRarityService } from '../../../services/colorRarityService';
-import { iif, map, Observable, of, switchMap, take } from 'rxjs';
+import { iif, map, of, switchMap, tap } from 'rxjs';
 import { SearchItemNameFormService } from '../../../services/form/searchItemNameFormService';
 import { Item } from '../../../models/data/item';
 import { ImageService } from '../../../services/imageService';
-import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
+import { Option, SearchComponent } from "../search/search.component";
 
 @Component({
   selector: 'app-search-item-name',
@@ -19,11 +19,11 @@ import { ImageFallbackDirective } from '../../../directives/imageFallback.direct
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule, 
-    TranslateModule, 
-    MatAutocompleteModule, 
+    ReactiveFormsModule,
+    TranslateModule,
+    MatAutocompleteModule,
     CommonModule,
-    ImageFallbackDirective
+    SearchComponent
   ],
   templateUrl: './search-item-name.component.html',
   styleUrl: './search-item-name.component.scss'
@@ -36,28 +36,32 @@ export class SearchItemNameComponent {
   protected readonly searchItemNameFormService = inject(SearchItemNameFormService);
   protected readonly imageService = inject(ImageService);
 
-  protected options$?: Observable<Item[]>;
+  protected options = signal<Option<Item>[]>([]);
 
   constructor() {
-    this.options$ = this.itemService.itemsFilterByItemName$.pipe(
+    this.itemService.itemsFilterByItemName$.pipe(
       switchMap(items => iif(() => this.searchItemNameFormService.form.value.length > 2,
-      of(items), of([])
-    )),
-    map(x => x.slice(0, 10)));
+        of(items), of([])
+      )),
+      map(x => x.slice(0, 10)),
+      tap(items => this.options.set(items.map(item => ({
+        id: `${item.id}`,
+        label: this.getLabel(item),
+        displayLabel: `${this.getLabel(item)} (${item.level})`,
+        imgUrl: this.imageService.getItemUrl(item.idImage),
+        backgroundColor: this.colorRarityService.mapColors.get(item.rarity) ?? '',
+        value: item
+      }))))).subscribe();
   }
 
-  protected getTitle(item: Item): string {
-    return item.title[this.translateService.currentLang as keyof typeof item.title];
+  protected getLabel(item: Item): string {
+    return `${item.title[this.translateService.currentLang as keyof typeof item.title]}`;
   }
 
-  protected onOptionSelected(event: MatAutocompleteSelectedEvent): void {
-    const selectedTitle = event.option.value;
-    
-    this.options$?.pipe(take(1)).subscribe(items => {
-      const selectedItem = items.find(item => this.getTitle(item) === selectedTitle);
-      if (selectedItem) {
-        this.searchItemNameFormService.setFilter(selectedItem);
-      }
-    });
+  protected onOptionSelected(selected: string): void {
+    const foundOption = this.options().find(option => option.label === selected);
+    if (foundOption) {
+      this.searchItemNameFormService.setFilter(foundOption.value);
+    }
   }
 }
