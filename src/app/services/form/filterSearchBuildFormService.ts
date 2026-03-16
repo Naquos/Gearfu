@@ -17,6 +17,8 @@ export interface FilterSearchBuildForm {
     PO: number;
     CC: number;
     parade: number;
+    sublimationEpique: string;
+    sublimationRelique: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -32,6 +34,8 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
         PO: 0,
         CC: 0,
         parade: 0,
+        sublimationEpique: '',
+        sublimationRelique: '',
     };
 
     private readonly result = new BehaviorSubject<FilterSearchBuildForm>(FilterSearchBuildFormService.DEFAULT_VALUE);
@@ -50,6 +54,8 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
         PO: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.PO, { nonNullable: true }),
         CC: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.CC, { nonNullable: true }),
         parade: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.parade, { nonNullable: true }),
+        sublimationEpique: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.sublimationEpique, { nonNullable: true }),
+        sublimationRelique: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.sublimationRelique, { nonNullable: true }),
     });
 
     constructor() {
@@ -73,6 +79,8 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
             PO: value?.PO ?? FilterSearchBuildFormService.DEFAULT_VALUE.PO,
             CC: value?.CC ?? FilterSearchBuildFormService.DEFAULT_VALUE.CC,
             parade: value?.parade ?? FilterSearchBuildFormService.DEFAULT_VALUE.parade,
+            sublimationEpique: value?.sublimationEpique ?? FilterSearchBuildFormService.DEFAULT_VALUE.sublimationEpique,
+            sublimationRelique: value?.sublimationRelique ?? FilterSearchBuildFormService.DEFAULT_VALUE.sublimationRelique,
         });
     }
     public override setDefaultValue(): void {

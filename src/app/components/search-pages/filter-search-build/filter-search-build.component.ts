@@ -8,10 +8,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOption, MatSelectModule } from "@angular/material/select";
 import { OrderBySearchBuildEnum } from '../../../models/enum/orderBySearchBuildEnum';
+import { SearchSublimationsComponent } from "../search-sublimations/search-sublimations.component";
+import { RarityItemEnum } from '../../../models/enum/rarityItemEnum';
 
 @Component({
   selector: 'app-filter-search-build',
-  imports: [ActivateDirective, MatFormFieldModule, MatInputModule, MatLabel, TranslateModule, ReactiveFormsModule, MatSelectModule, MatOption],
+  imports: [ActivateDirective, MatFormFieldModule, MatInputModule, MatLabel, TranslateModule, ReactiveFormsModule, MatSelectModule, MatOption, SearchSublimationsComponent],
   templateUrl: './filter-search-build.component.html',
   styleUrl: './filter-search-build.component.scss',
 })
@@ -19,6 +21,7 @@ export class FilterSearchBuildComponent {
   protected readonly filterSearchBuildFormService = inject(FilterSearchBuildFormService);
   protected idClasses: number[] = Object.values(ClassIdEnum).filter(value => typeof value === 'number') as number[];
   protected readonly OrderBySearchBuildEnumList = Object.values(OrderBySearchBuildEnum);
+  protected readonly RarityItemEnum = RarityItemEnum;
 
 
   protected changeClasses(idClass: ClassIdEnum): void {

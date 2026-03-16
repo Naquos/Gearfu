@@ -70,7 +70,9 @@ export class SupabaseService {
         PW = 6,
         PO = 0,
         CC = 0,
-        parade = 0
+        parade = 0,
+        sublimationEpique = '',
+        sublimationRelique = '',
     ): Observable<{ build: Build, statistics: Statistics | null }[]> {
         if (!this.isBrowser) {
             return of([]);
@@ -82,6 +84,8 @@ export class SupabaseService {
         const _PO = !PO || PO <= 0 ? -100 : PO;
         const _CC = !CC || CC <= 0 ? -100 : CC;
         const _parade = !parade || parade <= 0 ? -100 : parade;
+        const _sublimationEpique = !sublimationEpique ? '%%' : `%E${sublimationEpique}%`;
+        const _sublimationRelique = !sublimationRelique ? '%%' : `%R${sublimationRelique}%`;
         const _levelMin = !lvlMin || lvlMin <= 0 ? 0 : lvlMin;
         const _levelMax = !lvlMax || lvlMax <= 0 ? 999 : lvlMax;
 
@@ -100,6 +104,8 @@ export class SupabaseService {
             .gte('PO', _PO)
             .gte('CC', _CC)
             .gte('parade', _parade)
+            .like('build.enchantement', _sublimationEpique)
+            .like('build.enchantement', _sublimationRelique)
             .order(orderBy, { ascending: false })
             .limit(100)
         ).pipe(

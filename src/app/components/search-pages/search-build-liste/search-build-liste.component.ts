@@ -28,7 +28,9 @@ export class SearchBuildListeComponent {
         result.PW,
         result.PO,
         result.CC,
-        result.parade
+        result.parade,
+        result.sublimationEpique,
+        result.sublimationRelique
       ))), { initialValue: [] });
 
 }
