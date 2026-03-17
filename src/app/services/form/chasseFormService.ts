@@ -432,6 +432,12 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         return 0;
     }
 
+    public valueChasse(chasse: Chasse, itemType: ItemTypeEnum): number {
+        if (!chasse.idAction || !itemType) { return 0; }
+        const multiplicateur = this.doubleEffect.get(chasse.idAction)?.includes(itemType) ? 2 : 1;
+        return multiplicateur * this.getChasseEffectValue(chasse);
+    }
+
     protected override handleChanges(value: Enchantement): void {
         // Éviter les calculs et émissions pendant le chargement depuis l'URL
         if (this.isLoadingFromUrl) {
@@ -447,10 +453,9 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
                 if (!chasse.idAction) { return; }
                 const itemType = this.indexToItemType.get(indexCombinaison);
                 if (!itemType) { return; }
-                const multiplicateur = this.doubleEffect.get(chasse.idAction)?.includes(itemType) ? 2 : 1;
                 recapStats.push({
                     id: chasse.idAction,
-                    value: multiplicateur * this.getChasseEffectValue(chasse),
+                    value: this.valueChasse(chasse, itemType),
                     params: []
                 });
                 coutEclatTotal += coutEclat(chasse.lvl);

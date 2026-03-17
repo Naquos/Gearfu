@@ -63,7 +63,7 @@ export class SupabaseService {
     public getBuildsListByFilter(
         lvlMin = 200,
         lvlMax = 245,
-        classe: ClassIdEnum = ClassIdEnum.Feca,
+        classe: ClassIdEnum | null = null,
         orderBy: OrderBySearchBuildEnum = OrderBySearchBuildEnum.maitrises,
         PA = 6,
         PM = 3,
@@ -91,7 +91,6 @@ export class SupabaseService {
         const _levelMax = !lvlMax || lvlMax <= 0 ? 999 : lvlMax;
         const request = this.supabase.from('statistics')
             .select('*, build!inner(*)')
-            .eq('build.classe', classe)
             .neq('build.itemsId', '') // On filtre pour n'avoir que les builds avec des items
             .gte('build.level', _levelMin)
             .lte('build.level', _levelMax)
@@ -104,6 +103,10 @@ export class SupabaseService {
             .gte('parade', _parade)
             .like('build.enchantement', _sublimationEpique)
             .like('build.enchantement', _sublimationRelique);
+
+        if (classe) {
+            request.eq('build.classe', classe);
+        }
 
         // Filtrage sur les items : on vérifie que pour chaque groupe d'items (correspondant à un item avec différentes raretés), au moins un des ids est présent dans itemsId du build
         idItems.forEach((group) => {

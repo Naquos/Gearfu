@@ -9,7 +9,7 @@ import { IdChassesEnum } from '../../../models/enum/idChassesEnum';
 import { ItemTypeServices } from '../../../services/data/ItemTypesServices';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { map, takeUntil } from 'rxjs';
@@ -26,6 +26,7 @@ import { ConnectedPosition } from '@angular/cdk/overlay';
 import { FormatNumberPipe } from "../../../pipe/formatNumber/formatNumber.pipe";
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
+import { MatTooltip } from "@angular/material/tooltip";
 
 interface DisplayTypeItem {
   indexItem: number;
@@ -42,7 +43,7 @@ interface EffetDescription {
 
 @Component({
   selector: 'app-enchantement',
-  imports: [ImageItemComponent, TranslateModule, MatSliderModule, MatInputModule, FormsModule, FormatNumberPipe, ActivateDirective, LazyImageDirective],
+  imports: [ImageItemComponent, TranslateModule, MatSliderModule, MatInputModule, FormsModule, FormatNumberPipe, ActivateDirective, LazyImageDirective, MatTooltip],
   templateUrl: './enchantement.component.html',
   styleUrl: './enchantement.component.scss'
 })
@@ -52,14 +53,14 @@ export class EnchantementComponent extends AbstractDestroyService {
   private readonly translateService = inject(TranslateService);
   private readonly tooltipService = inject(TooltipService<DescriptionSublimationType>);
   private readonly viewContainerRef = inject(ViewContainerRef);
-  
+
   protected readonly imageService = inject(ImageService);
   protected readonly chasseFormService = inject(ChasseFormService);
   protected readonly chasses = toSignal(this.chasseFormService.enchantement$.pipe(
     map(enchantement => enchantement.chasseCombinaison)
   ));
   protected readonly enchantement = toSignal(this.chasseFormService.enchantement$);
-  protected readonly coutEclatTotal = toSignal(this.chasseFormService.coutEclatTotal$, {initialValue: 0});
+  protected readonly coutEclatTotal = toSignal(this.chasseFormService.coutEclatTotal$, { initialValue: 0 });
   protected readonly itemTypeService = inject(ItemTypeServices);
   protected readonly sublimations = signal(this.sublimationService.getSublimations());
   protected readonly sublimationsEpiqueRelique = signal(this.sublimationService.getSublimationsEpiqueRelique());
@@ -84,23 +85,23 @@ export class EnchantementComponent extends AbstractDestroyService {
   }
 
   protected openTooltip(event: MouseEvent, sublimationDescriptions: SublimationsDescriptions | Sublimation | SublimationsEpiqueRelique | undefined, level: number): void {
-    if(!sublimationDescriptions) {
+    if (!sublimationDescriptions) {
       return;
     }
     let description = sublimationDescriptions;
-    if('isValid' in description || 'epique' in description) {
+    if ('isValid' in description || 'epique' in description) {
       description = this.sublimationService.getSublimationById(sublimationDescriptions.id)!;
     }
     this.tooltipService.forceClose();
-    if(sublimationDescriptions) {
+    if (sublimationDescriptions) {
 
       let connectedPosition: ConnectedPosition[] = [{
-          originX: 'end', originY: 'top',
-          overlayX: 'end', overlayY: 'bottom',
-          offsetY: -10
-        }];
-      if(window.innerWidth <= 700) {
-        connectedPosition = [{ 
+        originX: 'end', originY: 'top',
+        overlayX: 'end', overlayY: 'bottom',
+        offsetY: -10
+      }];
+      if (window.innerWidth <= 700) {
+        connectedPosition = [{
           originX: 'start', originY: 'bottom',
           overlayX: 'start', overlayY: 'bottom',
           offsetY: 0, offsetX: 0
@@ -111,10 +112,10 @@ export class EnchantementComponent extends AbstractDestroyService {
       this.tooltipService.cancelClose();
       // Le 7ème paramètre active le comportement "garder ouvert au survol"
       this.tooltipService.openTooltip(
-        this.viewContainerRef, 
-        DescriptionSublimationComponent, 
-        event, 
-        {sublimationsDescriptions: description, level},
+        this.viewContainerRef,
+        DescriptionSublimationComponent,
+        event,
+        { sublimationsDescriptions: description, level },
         connectedPosition,  // connectedPosition
         true,       // withPush
         true        // keepOpenOnHover
@@ -126,48 +127,57 @@ export class EnchantementComponent extends AbstractDestroyService {
     this.chasses();
     const search = normalizeString(this.searchSubli());
     return this.sublimations()?.filter(subli => (normalizeString(this.nameItem(subli)).includes(search)
-       || normalizeString(this.descriptionSublimation(subli)).includes(search)))
-    .filter(x => this.indexItemTypeSelected() === -1 
-        || this.chasseFormService.canApplySublimationWithItem(this.chasses()![this.indexItemTypeSelected()], x) );
+      || normalizeString(this.descriptionSublimation(subli)).includes(search)))
+      .filter(x => this.indexItemTypeSelected() === -1
+        || this.chasseFormService.canApplySublimationWithItem(this.chasses()![this.indexItemTypeSelected()], x));
   })
 
   protected readonly sublimationsEpiqueReliqueList = computed(() => {
     const search = normalizeString(this.searchSubli());
-    return this.sublimationsEpiqueRelique()?.filter(subli => normalizeString(this.nameItem(subli)).includes(search) 
+    return this.sublimationsEpiqueRelique()?.filter(subli => normalizeString(this.nameItem(subli)).includes(search)
       || normalizeString(this.descriptionSublimation(subli)).includes(search));
   });
 
 
   protected readonly displayTypeItem: DisplayTypeItem[] = [
-    {indexItem: 0, itemType: ItemTypeEnum.CASQUE, background: './aptitudes/EmplacementCoiffe.png'},
-    {indexItem: 0, itemType: ItemTypeEnum.AMULETTE, background: './aptitudes/EmplacementAmulette.png'},
-    {indexItem: 0, itemType: ItemTypeEnum.PLASTRON, background: './aptitudes/EmplacementPlastron.png'},
-    {indexItem: 0, itemType: ItemTypeEnum.ANNEAU, background: './aptitudes/EmplacementAnneauGauche.png'},
-    {indexItem: 1, itemType: ItemTypeEnum.ANNEAU, background: './aptitudes/EmplacementAnneauDroite.png'},
-    {indexItem: 0, itemType: ItemTypeEnum.BOTTES, background: './aptitudes/EmplacementBottes.png'},
-    {indexItem: 0, itemType: ItemTypeEnum.CAPE, background: './aptitudes/EmplacementCape.png'},
-    {indexItem: 0, itemType: ItemTypeEnum.EPAULETTES, background: './aptitudes/EmplacementEpaulettes.png'},
-    {indexItem: 0, itemType: ItemTypeEnum.CEINTURE, background: './aptitudes/EmplacementCeinture.png'},
-    {indexItem: 0, itemType: ItemTypeEnum.UNE_MAIN, background: './aptitudes/EmplacementPremièreMain.png'},
+    { indexItem: 0, itemType: ItemTypeEnum.CASQUE, background: './aptitudes/EmplacementCoiffe.png' },
+    { indexItem: 0, itemType: ItemTypeEnum.AMULETTE, background: './aptitudes/EmplacementAmulette.png' },
+    { indexItem: 0, itemType: ItemTypeEnum.PLASTRON, background: './aptitudes/EmplacementPlastron.png' },
+    { indexItem: 0, itemType: ItemTypeEnum.ANNEAU, background: './aptitudes/EmplacementAnneauGauche.png' },
+    { indexItem: 1, itemType: ItemTypeEnum.ANNEAU, background: './aptitudes/EmplacementAnneauDroite.png' },
+    { indexItem: 0, itemType: ItemTypeEnum.BOTTES, background: './aptitudes/EmplacementBottes.png' },
+    { indexItem: 0, itemType: ItemTypeEnum.CAPE, background: './aptitudes/EmplacementCape.png' },
+    { indexItem: 0, itemType: ItemTypeEnum.EPAULETTES, background: './aptitudes/EmplacementEpaulettes.png' },
+    { indexItem: 0, itemType: ItemTypeEnum.CEINTURE, background: './aptitudes/EmplacementCeinture.png' },
+    { indexItem: 0, itemType: ItemTypeEnum.UNE_MAIN, background: './aptitudes/EmplacementPremièreMain.png' },
   ]
 
   protected readonly effetsDescription: EffetDescription[] = [
-    {id: 0, chasse: {color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.MAITRISES_ELEMENTAIRES}, libelle: "enchantement.maitrise-elementaire", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.CAPE]},
-    {id: 1, chasse: {color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.MAITRISES_SOIN}, libelle: "enchantement.maitrise-soin", logos: [ItemTypeEnum.AMULETTE, ItemTypeEnum.EPAULETTES]},
-    {id: 2, chasse: {color: IdChassesEnum.ROUGE, lvl: 11, idAction: IdActionsEnum.MAITRISES_MELEE}, libelle: "enchantement.maitrise-melee", logos: [ItemTypeEnum.CASQUE, ItemTypeEnum.CAPE]},
-    {id: 3, chasse: {color: IdChassesEnum.ROUGE, lvl: 11, idAction: IdActionsEnum.MAITRISES_DISTANCES}, libelle: "enchantement.maitrise-distance", logos: [ItemTypeEnum.CEINTURE, ItemTypeEnum.UNE_MAIN]},
-    {id: 4, chasse: {color: IdChassesEnum.ROUGE, lvl: 11, idAction: IdActionsEnum.MAITRISES_BERZERK}, libelle: "enchantement.maitrise-berserk", logos: [ItemTypeEnum.AMULETTE, ItemTypeEnum.CAPE]},
-    {id: 5, chasse: {color: IdChassesEnum.VERT, lvl: 11, idAction: IdActionsEnum.MAITRISES_CRITIQUES}, libelle: "enchantement.maitrise-critique", logos: [ItemTypeEnum.EPAULETTES, ItemTypeEnum.UNE_MAIN]},
-    {id: 6, chasse: {color: IdChassesEnum.VERT, lvl: 11, idAction: IdActionsEnum.MAITRISES_DOS}, libelle: "enchantement.maitrise-dos", logos: [ItemTypeEnum.CEINTURE, ItemTypeEnum.BOTTES]},
-    {id: 7, chasse: {color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.TACLE}, libelle: "enchantement.tacle", logos: [ItemTypeEnum.ANNEAU, ItemTypeEnum.ANNEAU]},
-    {id: 8, chasse: {color: IdChassesEnum.VERT, lvl: 11, idAction: IdActionsEnum.ESQUIVE}, libelle: "enchantement.esquive", logos: [ItemTypeEnum.ANNEAU, ItemTypeEnum.ANNEAU]},
-    {id: 9, chasse: {color: IdChassesEnum.VERT, lvl: 11, idAction: IdActionsEnum.INITIATIVE}, libelle: "enchantement.initiative", logos: [ItemTypeEnum.AMULETTE, ItemTypeEnum.CAPE]},
-    {id: 10, chasse: {color: IdChassesEnum.VERT, lvl: 11, idAction: IdActionsEnum.RESISTANCES_FEU}, libelle: "enchantement.resistance-feu", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.CEINTURE]},
-    {id: 11, chasse: {color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.RESISTANCES_EAU}, libelle: "enchantement.resistance-eau", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.EPAULETTES]},
-    {id: 12, chasse: {color: IdChassesEnum.ROUGE, lvl: 11, idAction: IdActionsEnum.RESISTANCES_TERRE}, libelle: "enchantement.resistance-terre", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.BOTTES]},
-    {id: 13, chasse: {color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.RESISTANCES_AIR}, libelle: "enchantement.resistance-air", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.CAPE]},
-    {id: 14, chasse: {color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.POINT_DE_VIE}, libelle: "enchantement.vie", logos: [ItemTypeEnum.CASQUE, ItemTypeEnum.UNE_MAIN]},
+    { id: 0, chasse: { color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.MAITRISES_ELEMENTAIRES }, libelle: "enchantement.maitrise-elementaire", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.CAPE] },
+    { id: 1, chasse: { color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.MAITRISES_SOIN }, libelle: "enchantement.maitrise-soin", logos: [ItemTypeEnum.AMULETTE, ItemTypeEnum.EPAULETTES] },
+    { id: 2, chasse: { color: IdChassesEnum.ROUGE, lvl: 11, idAction: IdActionsEnum.MAITRISES_MELEE }, libelle: "enchantement.maitrise-melee", logos: [ItemTypeEnum.CASQUE, ItemTypeEnum.CAPE] },
+    { id: 3, chasse: { color: IdChassesEnum.ROUGE, lvl: 11, idAction: IdActionsEnum.MAITRISES_DISTANCES }, libelle: "enchantement.maitrise-distance", logos: [ItemTypeEnum.CEINTURE, ItemTypeEnum.UNE_MAIN] },
+    { id: 4, chasse: { color: IdChassesEnum.ROUGE, lvl: 11, idAction: IdActionsEnum.MAITRISES_BERZERK }, libelle: "enchantement.maitrise-berserk", logos: [ItemTypeEnum.AMULETTE, ItemTypeEnum.CAPE] },
+    { id: 5, chasse: { color: IdChassesEnum.VERT, lvl: 11, idAction: IdActionsEnum.MAITRISES_CRITIQUES }, libelle: "enchantement.maitrise-critique", logos: [ItemTypeEnum.EPAULETTES, ItemTypeEnum.UNE_MAIN] },
+    { id: 6, chasse: { color: IdChassesEnum.VERT, lvl: 11, idAction: IdActionsEnum.MAITRISES_DOS }, libelle: "enchantement.maitrise-dos", logos: [ItemTypeEnum.CEINTURE, ItemTypeEnum.BOTTES] },
+    { id: 7, chasse: { color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.TACLE }, libelle: "enchantement.tacle", logos: [ItemTypeEnum.ANNEAU, ItemTypeEnum.ANNEAU] },
+    { id: 8, chasse: { color: IdChassesEnum.VERT, lvl: 11, idAction: IdActionsEnum.ESQUIVE }, libelle: "enchantement.esquive", logos: [ItemTypeEnum.ANNEAU, ItemTypeEnum.ANNEAU] },
+    { id: 9, chasse: { color: IdChassesEnum.VERT, lvl: 11, idAction: IdActionsEnum.INITIATIVE }, libelle: "enchantement.initiative", logos: [ItemTypeEnum.AMULETTE, ItemTypeEnum.CAPE] },
+    { id: 10, chasse: { color: IdChassesEnum.VERT, lvl: 11, idAction: IdActionsEnum.RESISTANCES_FEU }, libelle: "enchantement.resistance-feu", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.CEINTURE] },
+    { id: 11, chasse: { color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.RESISTANCES_EAU }, libelle: "enchantement.resistance-eau", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.EPAULETTES] },
+    { id: 12, chasse: { color: IdChassesEnum.ROUGE, lvl: 11, idAction: IdActionsEnum.RESISTANCES_TERRE }, libelle: "enchantement.resistance-terre", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.BOTTES] },
+    { id: 13, chasse: { color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.RESISTANCES_AIR }, libelle: "enchantement.resistance-air", logos: [ItemTypeEnum.PLASTRON, ItemTypeEnum.CAPE] },
+    { id: 14, chasse: { color: IdChassesEnum.BLEU, lvl: 11, idAction: IdActionsEnum.POINT_DE_VIE }, libelle: "enchantement.vie", logos: [ItemTypeEnum.CASQUE, ItemTypeEnum.UNE_MAIN] },
   ]
+
+  protected tooltipChasse(chasse: Chasse, itemType: ItemTypeEnum): string {
+    if (!chasse.idAction) {
+      return "";
+    }
+    const effetDescription = this.effetsDescription.find(effet => effet.chasse.idAction === chasse.idAction);
+    const traduction = effetDescription ? this.translateService.instant(effetDescription.libelle) : "";
+    return `${this.chasseFormService.valueChasse(chasse, itemType)} - ${traduction}`;
+  }
 
   protected onMouseLeave(): void {
     this.tooltipService.closeTooltip();
@@ -175,7 +185,7 @@ export class EnchantementComponent extends AbstractDestroyService {
 
   protected getUrlSublimationImage(linkSublimation: LinkSublimation): string {
     let id = -1;
-    switch(linkSublimation.level) {
+    switch (linkSublimation.level) {
       case 1:
         id = 81228822;
         break;
@@ -190,7 +200,7 @@ export class EnchantementComponent extends AbstractDestroyService {
   }
 
   protected applySublimationEpicRelic() {
-    if(!this.sublimationToApply() || (!this.sublimationToApply()!.isEpic && !this.sublimationToApply()!.isRelic)) {
+    if (!this.sublimationToApply() || (!this.sublimationToApply()!.isEpic && !this.sublimationToApply()!.isRelic)) {
       return;
     }
     this.chasseFormService.applySublimationEpicRelic({
@@ -203,11 +213,11 @@ export class EnchantementComponent extends AbstractDestroyService {
   }
 
   protected applySublimation(posY: number) {
-    if(!this.sublimationToApply()) {
+    if (!this.sublimationToApply()) {
       this.chasseFormService.removeSublimation(posY);
       return;
     }
-    if(this.sublimationToApply()!.isEpic || this.sublimationToApply()!.isRelic) {
+    if (this.sublimationToApply()!.isEpic || this.sublimationToApply()!.isRelic) {
       return;
     }
     this.chasseFormService.applySumblimation(posY, {
@@ -220,21 +230,21 @@ export class EnchantementComponent extends AbstractDestroyService {
   }
 
   protected nameItem(sublimation: SublimationsDescriptions | undefined): string {
-    if(!sublimation) {
+    if (!sublimation) {
       return "";
     }
     return sublimation.title[this.translateService.currentLang as keyof typeof sublimation.title];
   }
 
   protected descriptionSublimation(sublimation: SublimationsDescriptions | undefined): string {
-    if(!sublimation) {
+    if (!sublimation) {
       return "";
     }
     return sublimation.description[this.translateService.currentLang as keyof typeof sublimation.description];
   }
 
   protected nameSublimation(sublimation: Sublimation | undefined): string {
-    if(!sublimation) {
+    if (!sublimation) {
       return "";
     }
     const levelSublimation = sublimation.level === 1 ? "I" : sublimation.level === 2 ? "II" : sublimation.level === 3 ? "III" : "";
@@ -242,7 +252,7 @@ export class EnchantementComponent extends AbstractDestroyService {
   }
 
   protected nameSublimationEpicRelic(sublimation: SublimationsEpiqueRelique | undefined): string {
-    if(!sublimation) {
+    if (!sublimation) {
       return "";
     }
     return sublimation.title[this.translateService.currentLang as keyof typeof sublimation.title];
@@ -273,7 +283,7 @@ export class EnchantementComponent extends AbstractDestroyService {
   }
 
   protected applyEffet(posX: number, posY: number, levelItem: number) {
-    if(!this.effectToApply()) {
+    if (!this.effectToApply()) {
       return;
     }
     this.chasseFormService.applyEffect(posX, posY, {
@@ -286,7 +296,7 @@ export class EnchantementComponent extends AbstractDestroyService {
 
   protected cursorDestructStyle(chasse: Chasse, effetToApply: EffetDescription | undefined): string {
     const currentChasses = effetToApply?.chasse;
-    if(!currentChasses || !this.equalChasses(chasse, currentChasses)) {
+    if (!currentChasses || !this.equalChasses(chasse, currentChasses)) {
       return '';
     }
     return `url(cursor/chasses/destructShard.png) 16 16, auto`;
@@ -297,11 +307,11 @@ export class EnchantementComponent extends AbstractDestroyService {
   }
 
   protected effectIsDouble(effet: EffetDescription): boolean {
-    return !!this.itemTypeSelected() &&  effet.logos.includes(this.itemTypeSelected()!);
+    return !!this.itemTypeSelected() && effet.logos.includes(this.itemTypeSelected()!);
   }
 
   protected selectItemType(itemType: ItemTypeEnum, index: number) {
-    if(this.itemTypeSelected() === itemType && this.indexItemTypeSelected() === index) {
+    if (this.itemTypeSelected() === itemType && this.indexItemTypeSelected() === index) {
       this.indexItemTypeSelected.set(-1);
       this.itemTypeSelected.set(undefined);
     } else {

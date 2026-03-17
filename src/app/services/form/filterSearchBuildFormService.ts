@@ -7,7 +7,7 @@ import { ClassIdEnum } from "../../models/enum/classIdEnum";
 import { OrderBySearchBuildEnum } from "../../models/enum/orderBySearchBuildEnum";
 
 export interface FilterSearchBuildForm {
-    class: ClassIdEnum;
+    class: ClassIdEnum | null;
     levelMin: number;
     levelMax: number;
     orderBy: OrderBySearchBuildEnum;
@@ -25,7 +25,7 @@ export interface FilterSearchBuildForm {
 @Injectable({ providedIn: 'root' })
 export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<TypedControls<FilterSearchBuildForm>>> {
     public static readonly DEFAULT_VALUE: FilterSearchBuildForm = {
-        class: ClassIdEnum.Feca,
+        class: null,
         levelMin: 200,
         levelMax: 245,
         orderBy: OrderBySearchBuildEnum.maitrises,

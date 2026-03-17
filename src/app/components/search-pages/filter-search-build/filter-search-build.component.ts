@@ -35,7 +35,9 @@ export class FilterSearchBuildComponent {
 
 
   protected changeClasses(idClass: ClassIdEnum): void {
-    this.filterSearchBuildFormService.form.controls.class.setValue(idClass);
+    this.filterSearchBuildFormService.form.controls.class.setValue(
+      this.filterSearchBuildFormService.form.controls.class.value === idClass ? null : idClass
+    );
   }
 
 }
