@@ -1,8 +1,10 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="header">
-    <div class="header-name" [style.position]="build()?.codeZenith ? 'absolute' : 'initial'">{{ build()?.level }} -
-        {{build()?.nameBuild}}
+    <div class="header-name" [style.position]="build()?.codeZenith ? 'absolute' : 'initial'">
+        <mat-icon fontIcon="reply" [matTooltip]="'build.dupliquer' | translate"
+            (click)="saveBuildService.duplicateBuild(build()!)"></mat-icon>
+        {{ build()?.level }} - {{build()?.nameBuild}}
         @if(sublimations()) {
         <img [src]="imageService.getItemUrl(81227111)" alt="sublimations" [matTooltip]="sublimations()"
             matTooltipClass="multiline-tooltip">

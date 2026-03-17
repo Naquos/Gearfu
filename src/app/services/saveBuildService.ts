@@ -48,9 +48,8 @@ export class SaveBuildService {
         const savedBuilds = this.localStorageService.getItem<Build[]>(KeyEnum.KEY_SAVE_BUILD_ALL) || [];
         this.buildList.next(savedBuilds);
         this.currentBuildId.subscribe(buildId => {
-            const routerSplit = this.router.url.split("/");
             if (buildId && buildId !== NO_BUILD) {
-                this.router.navigate(["/", buildId || NO_BUILD, ...routerSplit.slice(2)]); // Met à jour l'URL avec le nouvel id de build sans recharger la page
+                this.router.navigate(["/", buildId || NO_BUILD]); // Met à jour l'URL avec le nouvel id de build sans recharger la page
             }
         }
         )
@@ -328,5 +327,19 @@ export class SaveBuildService {
     private generateDefaultName(): string {
         const now = new Date();
         return `Build ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+    }
+
+    /**
+     * Dupplique un build en créant un nouveau build avec les mêmes données mais un nouvel id et en naviguant vers ce nouveau build
+     * @param build 
+     */
+    public duplicateBuild(build: Build): void {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { id, createdAt, ...newBuild } = {
+            ...build,
+            nameBuild: this.generateDefaultName(),
+            token: this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || undefined
+        };
+        this.createBuild(newBuild);
     }
 }

@@ -15,6 +15,7 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { ChasseFormService } from '../../../services/form/chasseFormService';
 import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqueRelique';
+import { MatIcon } from "@angular/material/icon";
 
 export enum ItemTypeBuild {
   CASQUE = "CASQUE",
@@ -35,7 +36,7 @@ export enum ItemTypeBuild {
 
 @Component({
   selector: 'app-build',
-  imports: [MatTooltipModule, TranslateModule, LazyImageDirective],
+  imports: [MatTooltipModule, TranslateModule, LazyImageDirective, MatIcon],
   templateUrl: './build.component.html',
   styleUrl: './build.component.scss'
 })

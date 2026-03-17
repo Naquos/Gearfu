@@ -6,7 +6,6 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
         width: 80%;
         background-color: #1B263B;
         padding: 10px;
@@ -16,9 +15,31 @@
         font-size: large;
         color: white;
 
+        mat-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            cursor: pointer;
+            color: #1B263B;
+            background-color: white;
+            border-radius: 25%;
+            border: 2px solid #415A77;
+            box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+        }
+
+        mat-icon:hover {
+            transform: scale(1.2);
+        }
+
         img {
             width: 30px;
             height: 30px;
+            margin-left: auto;
             margin-right: 10px;
         }
 
