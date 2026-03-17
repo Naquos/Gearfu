@@ -135,7 +135,8 @@
             "PO": "Range",
             "PW": "WP"
         },
-        "sublimations": "Sublimations required on the build"
+        "sublimations": "Sublimations required on the build",
+        "items": "Items required on the build"
     },
     "item": {
         "maitrises": "Mastery",
@@ -300,6 +301,9 @@
     },
     "search-item-name": {
         "label": "Item name"
+    },
+    "search-list-item": {
+        "item": "Item"
     },
     "search-sublimations": {
         "epique": "Epic sublimation",
