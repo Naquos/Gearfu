@@ -249,7 +249,6 @@ export class RecapStatsService extends AbstractDestroyService {
         break;
       case ClassIdEnum.Eliotrope:
         if ((this.recap.value.find(rs => rs.id === IdActionsEnum.PORTEE)?.value ?? 0) >= 2) {
-          this.applyEffect({ id: IdActionsEnum.PORTEE, value: -2, params: [] });
           this.applyEffect({ id: IdActionsEnum.PM, value: 1, params: [] });
         }
         break;
