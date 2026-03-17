@@ -3,6 +3,10 @@
     z-index: -1;
 
     .header-name {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
         width: 80%;
         background-color: #1B263B;
         padding: 10px;
@@ -11,6 +15,16 @@
         font-weight: 600;
         font-size: large;
         color: white;
+
+        img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        img:hover {
+            transform: scale(1.2);
+        }
     }
 
     .header-zenith {

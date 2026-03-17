@@ -128,8 +128,9 @@
                                 <img class="parchemins"
                                     (appActivate)="chooseSublimation(sublimation, linkSublimation.level)"
                                     (mouseenter)="openTooltip($event, sublimation, linkSublimation.level)"
-                                    (mouseleave)="onMouseLeave()" [src]="getUrlSublimationImage(linkSublimation)"
-                                    [alt]="" [class.parchemins-selected]="sublimationToApply() && sublimationToApply()!.id === sublimation.id
+                                    (mouseleave)="onMouseLeave()"
+                                    [src]="imageService.getSublimationImageUrl(linkSublimation)" [alt]=""
+                                    [class.parchemins-selected]="sublimationToApply() && sublimationToApply()!.id === sublimation.id
                                                     && levelSublimationToApply() === linkSublimation.level">
                                 }
                             </div>

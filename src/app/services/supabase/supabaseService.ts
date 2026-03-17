@@ -74,6 +74,7 @@ export class SupabaseService {
         sublimationEpique = '',
         sublimationRelique = '',
         idItems: string[][] = [],
+        sublimations: string[] = [],
     ): Observable<{ build: Build, statistics: Statistics | null }[]> {
         if (!this.isBrowser) {
             return of([]);
@@ -119,6 +120,14 @@ export class SupabaseService {
                 request.or(orGroup, { referencedTable: 'build' });
             }
         });
+
+        // Filtrage sur les sublimations : on vérifie que pour chaque sublimation, elle est présente dans enchantement du build
+        sublimations.forEach((sublimation) => {
+            if (sublimation) {
+                request.like('build.enchantement', `%${sublimation}%`);
+            }
+        });
+
 
         // On part de statistics pour trier directement sur la colonne maitrises,
         // puis on récupère le build lié via jointure.

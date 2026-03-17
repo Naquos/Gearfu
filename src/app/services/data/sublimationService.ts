@@ -12,6 +12,9 @@ export class SublimationService {
     private readonly sublimationsEpiqueRelique: SublimationsDescriptions[] = [];
     private readonly compressionService = inject(CompressionService);
 
+    private _sublimations = new BehaviorSubject<SublimationsDescriptions[]>([]);
+    public sublimations$ = this._sublimations.asObservable();
+
     private _sublimationsEpique = new BehaviorSubject<SublimationsDescriptions[]>([]);
     public sublimationsEpique$ = this._sublimationsEpique.asObservable();
 
@@ -24,6 +27,7 @@ export class SublimationService {
                 data.forEach(x => this.sublimations.set(x.title.fr, x));
                 this.sublimationsClassique.push(...data.filter(sublimation => !sublimation.isEpic && !sublimation.isRelic));
                 this.sublimationsEpiqueRelique.push(...data.filter(sublimation => sublimation.isEpic || sublimation.isRelic));
+                this._sublimations.next(this.sublimationsClassique);
                 this._sublimationsEpique.next(this.sublimationsEpiqueRelique.filter(s => s.isEpic));
                 this._sublimationsRelique.next(this.sublimationsEpiqueRelique.filter(s => s.isRelic));
             }),

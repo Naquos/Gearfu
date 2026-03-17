@@ -11,6 +11,7 @@ import { OrderBySearchBuildEnum } from '../../../models/enum/orderBySearchBuildE
 import { SearchSublimationsComponent } from "../search-sublimations/search-sublimations.component";
 import { RarityItemEnum } from '../../../models/enum/rarityItemEnum';
 import { SearchListItemComponent } from "../search-list-item/search-list-item.component";
+import { SearchListSublimationComponent } from "../search-list-sublimation/search-list-sublimation.component";
 
 @Component({
   selector: 'app-filter-search-build',
@@ -23,7 +24,7 @@ import { SearchListItemComponent } from "../search-list-item/search-list-item.co
     MatSelectModule,
     MatOption,
     SearchSublimationsComponent,
-    SearchListItemComponent],
+    SearchListItemComponent, SearchListSublimationComponent],
   templateUrl: './filter-search-build.component.html',
   styleUrl: './filter-search-build.component.scss',
 })

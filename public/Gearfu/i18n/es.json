@@ -306,6 +306,9 @@
     "search-list-item": {
         "item": "Objeto"
     },
+    "search-list-sublimation": {
+        "sublimation": "Sublimación"
+    },
     "search-sublimations": {
         "epique": "Sublimación épica",
         "relique": "Sublimación de reliquia"

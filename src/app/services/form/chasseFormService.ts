@@ -21,6 +21,7 @@ import { SublimationsEpiqueRelique } from "../../models/data/sublimationEpiqueRe
 import { SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
 import { SublimationService } from "../data/sublimationService";
 import { coutEclat } from "../../models/utils/utils";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable({ providedIn: 'root' })
 export class ChasseFormService extends AbstractFormService<FormControl<Enchantement>> {
@@ -31,6 +32,8 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         }
         return { chasseCombinaison: initialChasses };
     };
+
+    private readonly translateService = inject(TranslateService);
 
     private readonly recapChassesEffect = new BehaviorSubject<RecapStats[]>([]);
     public readonly recapChassesEffect$ = this.recapChassesEffect.asObservable();
@@ -243,6 +246,37 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         } catch (error) {
             console.error('Error decoding enchantement from URL:', error);
         }
+    }
+
+    private getLevelSublimation(level: number): string {
+        const levelStr = ["I", "II", "III"];
+        return levelStr[level - 1] || "";
+    }
+
+
+    /**
+     * Retourne un string contenant la liste des sublimations classiques appliquées sur le build, séparées par des retours à la ligne
+     * @param code Le code enchantement du build
+     * @returns Un string contenant la liste des sublimations classiques appliquées sur le build, séparées par des retours à la ligne
+     */
+    public getSublimations(code: string): string {
+        if (!code) {
+            return "";
+        }
+        const codeParts = code.split('|');
+        const sublimations: string[] = [];
+        for (const part of codeParts) {
+            if (!part.startsWith('E') && !part.startsWith('R')) {
+                const partSublimation = part.split('_')[1];
+                const [subId, subLevel] = partSublimation ? partSublimation.split('.').map(x => parseInt(x, 10)) : [undefined, undefined];
+                const sub = this.sublimationService.getSublimationById(subId ?? 0);
+                if (sub) {
+                    sublimations.push(`${sub.title[this.translateService.currentLang as keyof typeof sub.title]} ${this.getLevelSublimation(subLevel ?? 0)}`);
+                }
+            }
+        }
+        return sublimations.join('\n');
+
     }
 
     /**

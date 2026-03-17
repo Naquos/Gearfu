@@ -56,6 +56,7 @@ export class BuildComponent implements OnInit {
   protected readonly sublimationEpique = signal<SublimationsEpiqueRelique | undefined>(undefined);
   protected readonly sublimationRelique = signal<SublimationsEpiqueRelique | undefined>(undefined);
   protected readonly hasSublimation = signal(false);
+  protected readonly sublimations = signal<string>("")
 
   protected readonly ItemTypeBuild = ItemTypeBuild;
   protected readonly IdActionsEnum = IdActionsEnum;
@@ -86,6 +87,7 @@ export class BuildComponent implements OnInit {
         this.sublimationEpique.set(sublimationsEpique);
         this.sublimationRelique.set(sublimationsRelique);
         this.hasSublimation.set(!!sublimationsEpique || !!sublimationsRelique);
+        this.sublimations.set(this.chasseFormService.getSublimations(build.enchantement || ""));
       }
     })
   }

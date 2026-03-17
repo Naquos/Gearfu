@@ -16,7 +16,7 @@ import { map, takeUntil } from 'rxjs';
 import { Sublimation } from '../../../models/data/sublimation';
 import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqueRelique';
 import { SublimationService } from '../../../services/data/sublimationService';
-import { LinkSublimation, SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
+import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { TooltipService } from '../../../services/TooltipService';
 import { DescriptionSublimationComponent, DescriptionSublimationType } from '../description-sublimation/description-sublimation.component';
 import { LevelFormService } from '../../../services/form/levelFormService';
@@ -181,22 +181,6 @@ export class EnchantementComponent extends AbstractDestroyService {
 
   protected onMouseLeave(): void {
     this.tooltipService.closeTooltip();
-  }
-
-  protected getUrlSublimationImage(linkSublimation: LinkSublimation): string {
-    let id = -1;
-    switch (linkSublimation.level) {
-      case 1:
-        id = 81228822;
-        break;
-      case 2:
-        id = 81228823;
-        break;
-      default:
-        id = 81227111;
-        break;
-    }
-    return this.imageService.getItemUrl(id);
   }
 
   protected applySublimationEpicRelic() {

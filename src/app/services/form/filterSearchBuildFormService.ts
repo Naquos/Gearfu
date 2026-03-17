@@ -19,6 +19,7 @@ export interface FilterSearchBuildForm {
     parade: number;
     sublimationEpique: string;
     sublimationRelique: string;
+    sublimations: string[];
     idItems: string[][]; // Liste d'items, où pour chaque item, on peut avoir plusieurs ids (1 par rareté)
 }
 
@@ -37,6 +38,7 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
         parade: 0,
         sublimationEpique: '',
         sublimationRelique: '',
+        sublimations: [],
         idItems: []
     };
 
@@ -58,6 +60,7 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
         parade: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.parade, { nonNullable: true }),
         sublimationEpique: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.sublimationEpique, { nonNullable: true }),
         sublimationRelique: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.sublimationRelique, { nonNullable: true }),
+        sublimations: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.sublimations, { nonNullable: true }),
         idItems: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.idItems, { nonNullable: true }),
     });
 
@@ -84,6 +87,7 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
             parade: value?.parade ?? FilterSearchBuildFormService.DEFAULT_VALUE.parade,
             sublimationEpique: value?.sublimationEpique ?? FilterSearchBuildFormService.DEFAULT_VALUE.sublimationEpique,
             sublimationRelique: value?.sublimationRelique ?? FilterSearchBuildFormService.DEFAULT_VALUE.sublimationRelique,
+            sublimations: value?.sublimations ?? FilterSearchBuildFormService.DEFAULT_VALUE.sublimations,
             idItems: value?.idItems ?? FilterSearchBuildFormService.DEFAULT_VALUE.idItems,
         });
     }
