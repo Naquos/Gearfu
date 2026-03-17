@@ -40,7 +40,7 @@ export class SearchSublimationsComponent {
 
   protected readonly label = computed(() => {
     const rarity = this.rarity();
-    return rarity === RarityItemEnum.EPIQUE ? 'Sublimation épique' : 'Sublimation relique';
+    return rarity === RarityItemEnum.EPIQUE ? 'search-sublimations.epique' : 'search-sublimations.relique';
   })
 
   protected readonly sublimationsList$ = toObservable(this.rarity).pipe(

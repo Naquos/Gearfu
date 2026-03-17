@@ -134,7 +134,8 @@
             "PM": "PM",
             "PO": "Alcance",
             "PW": "PW"
-        }
+        },
+        "sublimations": "Sublimaciones que deben estar presentes en la construcción"
     },
     "item": {
         "maitrises": "Dominio",
@@ -300,6 +301,10 @@
     },
     "search-item-name": {
         "label": "Nombre del objeto"
+    },
+    "search-sublimations": {
+        "epique": "Sublimación épica",
+        "relique": "Sublimación de reliquia"
     },
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Corazón Huppermago",

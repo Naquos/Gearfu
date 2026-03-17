@@ -81,6 +81,7 @@
         "maitrise-distance": "Maestria à distância",
         "maitrise-critique": "Maestria crítica",
         "maitrise-dos": "Maestria pelas costas",
+        "maitrise-soin": "Maestria de cura",
         "maitrise-berserk": "Maestria berserker",
         "soin": "Cura",
         "vie": "Pontos de vida",
@@ -134,7 +135,8 @@
             "PM": "PM",
             "PO": "Alcance",
             "PW": "PW"
-        }
+        },
+        "sublimations": "Sublimações que devem estar presentes na construção"
     },
     "item": {
         "maitrises": "Maestria",
@@ -299,6 +301,10 @@
     },
     "search-item-name": {
         "label": "Nome do item"
+    },
+    "search-sublimations": {
+        "epique": "Sublimação épica",
+        "relique": "Sublimação de relíquia"
     },
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Coração do Huppermago",
