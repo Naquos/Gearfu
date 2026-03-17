@@ -134,7 +134,8 @@
             "PM": "MP",
             "PO": "Range",
             "PW": "WP"
-        }
+        },
+        "sublimations": "Sublimations required on the build"
     },
     "item": {
         "maitrises": "Mastery",
@@ -299,6 +300,10 @@
     },
     "search-item-name": {
         "label": "Item name"
+    },
+    "search-sublimations": {
+        "epique": "Epic sublimation",
+        "relique": "Relic sublimation"
     },
     "elem-maitrises-mecanism-enum": {
         "COEUR_HUPPERMAGE": "Huppermage's Heart",
