@@ -131,7 +131,8 @@
             "PO": "PO",
             "PW": "PW"
         },
-        "sublimations": "Sublimations devant être présentes sur le build"
+        "sublimations": "Sublimations devant être présentes sur le build",
+        "items": "Items devant être présents sur le build"
     },
     "import-build": {
         "label": "Importer votre build via une url Gearfu ou Zénith",
@@ -300,6 +301,9 @@
     },
     "search-item-name": {
         "label": "Nom de l'item"
+    },
+    "search-list-item": {
+        "item": "Item"
     },
     "search-sublimations": {
         "epique": "Sublimation épique",

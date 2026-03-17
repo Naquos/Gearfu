@@ -135,7 +135,8 @@
             "PO": "Alcance",
             "PW": "PW"
         },
-        "sublimations": "Sublimaciones que deben estar presentes en la construcción"
+        "sublimations": "Sublimaciones que deben estar presentes en la construcción",
+        "items": "Objetos que deben estar presentes en la construcción"
     },
     "item": {
         "maitrises": "Dominio",
@@ -301,6 +302,9 @@
     },
     "search-item-name": {
         "label": "Nombre del objeto"
+    },
+    "search-list-item": {
+        "item": "Objeto"
     },
     "search-sublimations": {
         "epique": "Sublimación épica",

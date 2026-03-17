@@ -73,6 +73,7 @@ export class SupabaseService {
         parade = 0,
         sublimationEpique = '',
         sublimationRelique = '',
+        idItems: string[][] = [],
     ): Observable<{ build: Build, statistics: Statistics | null }[]> {
         if (!this.isBrowser) {
             return of([]);
@@ -88,10 +89,7 @@ export class SupabaseService {
         const _sublimationRelique = !sublimationRelique ? '%%' : `%R${sublimationRelique}%`;
         const _levelMin = !lvlMin || lvlMin <= 0 ? 0 : lvlMin;
         const _levelMax = !lvlMax || lvlMax <= 0 ? 999 : lvlMax;
-
-        // On part de statistics pour trier directement sur la colonne maitrises,
-        // puis on récupère le build lié via jointure.
-        return from(this.supabase.from('statistics')
+        const request = this.supabase.from('statistics')
             .select('*, build!inner(*)')
             .eq('build.classe', classe)
             .neq('build.itemsId', '') // On filtre pour n'avoir que les builds avec des items
@@ -105,8 +103,23 @@ export class SupabaseService {
             .gte('CC', _CC)
             .gte('parade', _parade)
             .like('build.enchantement', _sublimationEpique)
-            .like('build.enchantement', _sublimationRelique)
-            .order(orderBy, { ascending: false })
+            .like('build.enchantement', _sublimationRelique);
+
+        // Filtrage sur les items : on vérifie que pour chaque groupe d'items (correspondant à un item avec différentes raretés), au moins un des ids est présent dans itemsId du build
+        idItems.forEach((group) => {
+            const orGroup = group
+                .filter(id => !!id)
+                .map(id => `itemsId.like.%${id}%`)
+                .join(',');
+
+            if (orGroup) {
+                request.or(orGroup, { referencedTable: 'build' });
+            }
+        });
+
+        // On part de statistics pour trier directement sur la colonne maitrises,
+        // puis on récupère le build lié via jointure.
+        return from(request.order(orderBy, { ascending: false })
             .limit(100)
         ).pipe(
             map(({ data, error }) => {

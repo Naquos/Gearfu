@@ -1,0 +1,11 @@
+<app-search [label]="label()" [options]="options()" [control]="control()"
+    (selected)="onOptionsSelected($event)"></app-search>
+<div class="option-list">
+    @for (option of optionsChoosed(); track option.id) {
+    <div class="option" [style.backgroundColor]="option.backgroundColor || '#888888'">
+        <img [src]="option.imgUrl" [alt]="option.displayLabel">
+        <span class="label">{{ option.label }}</span>
+        <span class="remove" (appActivate)="removeOptionSelected(option.label)">&times;</span>
+    </div>
+    }
+</div>

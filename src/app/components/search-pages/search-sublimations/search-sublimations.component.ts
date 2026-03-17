@@ -10,6 +10,7 @@ import { ColorRarityService } from '../../../services/colorRarityService';
 import { RarityItemEnum } from '../../../models/enum/rarityItemEnum';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { FilterSearchBuildFormService } from '../../../services/form/filterSearchBuildFormService';
+import { normalizeString } from '../../../models/utils/utils';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class SearchSublimationsComponent {
     const rarity = this.rarity();
     const control = rarity === RarityItemEnum.EPIQUE ? this.filterSearchBuildFormService.form.controls.sublimationEpique
       : this.filterSearchBuildFormService.form.controls.sublimationRelique;
+    control.setValue('');
     return control;
   })
 
@@ -50,7 +52,7 @@ export class SearchSublimationsComponent {
   constructor() {
     combineLatest([this.sublimationsList$, this.control.valueChanges]).pipe(
       switchMap(([sublimations, controlValue]) => iif(() => controlValue.length > 2, of(sublimations), of([]))),
-      map(sublimations => sublimations.filter(s => s.title[this.translateService.currentLang as keyof typeof s.title].toLowerCase().includes(this.control.value.toLowerCase()))),
+      map(sublimations => sublimations.filter(s => normalizeString(s.title[this.translateService.currentLang as keyof typeof s.title]).includes(normalizeString(this.control.value)))),
       map(sublimations => sublimations.slice(0, 10)),
       map(sublimations => sublimations.map(sublimation => ({
         id: `${sublimation.id}`,

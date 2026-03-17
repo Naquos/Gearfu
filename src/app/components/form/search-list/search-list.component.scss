@@ -1,0 +1,40 @@
+.option-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+
+    .option {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: 50px;
+        width: 100%;
+        border-radius: 50px;
+        color: black;
+        overflow: hidden;
+
+        img {
+            height: 40px;
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .label {
+            margin: auto;
+            max-height: 50px;
+            font-size: 13px;
+        }
+
+        .remove {
+            margin-right: 10px;
+            font-size: 40px;
+            color: red;
+        }
+
+        .remove:hover {
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+    }
+}

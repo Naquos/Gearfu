@@ -10,10 +10,20 @@ import { MatOption, MatSelectModule } from "@angular/material/select";
 import { OrderBySearchBuildEnum } from '../../../models/enum/orderBySearchBuildEnum';
 import { SearchSublimationsComponent } from "../search-sublimations/search-sublimations.component";
 import { RarityItemEnum } from '../../../models/enum/rarityItemEnum';
+import { SearchListItemComponent } from "../search-list-item/search-list-item.component";
 
 @Component({
   selector: 'app-filter-search-build',
-  imports: [ActivateDirective, MatFormFieldModule, MatInputModule, MatLabel, TranslateModule, ReactiveFormsModule, MatSelectModule, MatOption, SearchSublimationsComponent],
+  imports: [ActivateDirective,
+    MatFormFieldModule,
+    MatInputModule,
+    MatLabel,
+    TranslateModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatOption,
+    SearchSublimationsComponent,
+    SearchListItemComponent],
   templateUrl: './filter-search-build.component.html',
   styleUrl: './filter-search-build.component.scss',
 })

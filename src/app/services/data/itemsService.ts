@@ -54,27 +54,7 @@ export class ItemsService {
 
   // Constants
   private static readonly ARMURE_DONNEE_RECUE_LIST = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
-  private static readonly RESISTANCE_ELEM_IDS = [
-    IdActionsEnum.RESISTANCES_AIR,
-    IdActionsEnum.RESISTANCES_EAU,
-    IdActionsEnum.RESISTANCES_TERRE,
-    IdActionsEnum.RESISTANCES_FEU
-  ];
-  private static readonly MALUS_RESIS_ELEM_IDS = [
-    IdActionsEnum.PERTE_RESISTANCES_FEU,
-    IdActionsEnum.PERTE_RESISTANCES_TERRE,
-    IdActionsEnum.PERTE_RESISTANCE_EAU
-  ];
-  private static readonly MAITRISES_ELEM_IDS = [
-    IdActionsEnum.MAITRISES_FEU,
-    IdActionsEnum.MAITRISES_TERRE,
-    IdActionsEnum.MAITRISES_EAU,
-    IdActionsEnum.MAITRISES_AIR
-  ];
-  private static readonly PERTE_MAITRISES_IDS = [
-    IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,
-    IdActionsEnum.PERTE_MAITRISES_FEU
-  ];
+
   private static readonly RESISTANCE_ELEM_IDS_SET = new Set([
     IdActionsEnum.RESISTANCES_AIR,
     IdActionsEnum.RESISTANCES_EAU,
@@ -107,10 +87,9 @@ export class ItemsService {
     IdPierreDonjonEnum.ULTIME
   ];
 
-
-
   protected items: Item[] = [];
-  protected readonly fullItems$ = new BehaviorSubject<Item[]>([]);
+  protected readonly _fullItems = new BehaviorSubject<Item[]>([]);
+  public readonly fullItems$ = this._fullItems.asObservable();
 
   private _items$ = new BehaviorSubject<Item[]>([]);
   public items$ = this._items$.asObservable();
@@ -278,9 +257,9 @@ export class ItemsService {
     this.items = this.items.filter(x => ![ItemTypeDefinitionEnum.LANTERNE, ItemTypeDefinitionEnum.STATISTIQUES, ItemTypeDefinitionEnum.SUBLIMATIONS].includes(x.itemTypeId))
       .filter(x => this.isNotWIP(x));
     this.initFamiliers();
-    this.fullItems$.next(this.items);
+    this._fullItems.next(this.items);
 
-    const itemFilterByName$ = combineLatest([this.fullItems$, this.searchItemNameFormService.itemName$])
+    const itemFilterByName$ = combineLatest([this._fullItems, this.searchItemNameFormService.itemName$])
       .pipe(map(([items, itemName]) => items.filter(x => normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(normalizeString(itemName)))),
         tap(items => this._itemsFilterByItemName.next(items)));
 
@@ -579,13 +558,13 @@ export class ItemsService {
   }
 
   public searchItem(idItem: number): Observable<Item | undefined> {
-    return this.fullItems$.pipe(
+    return this._fullItems.pipe(
       filter(items => items.length > 0),
       map(x => x.find(x => x.id === idItem)));
   }
 
   public getItem(idItem: number): Item | undefined {
-    return this.fullItems$.value.find(x => x.id === idItem);
+    return this._fullItems.value.find(x => x.id === idItem);
   }
 
   private majorIsPresent(idMajor: MajorAction[], x: Item): boolean {
@@ -649,5 +628,9 @@ export class ItemsService {
       result += effectMaitrises.params[0] * multiplicateurElem;
     }
     return result;
+  }
+
+  public getItemsByName(name: string): Item[] {
+    return this.itemsByName.get(name) ?? [];
   }
 }

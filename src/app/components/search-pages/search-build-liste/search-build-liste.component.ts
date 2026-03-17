@@ -30,7 +30,8 @@ export class SearchBuildListeComponent {
         result.CC,
         result.parade,
         result.sublimationEpique,
-        result.sublimationRelique
+        result.sublimationRelique,
+        result.idItems
       ))), { initialValue: [] });
 
 }

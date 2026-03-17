@@ -136,7 +136,8 @@
             "PO": "Alcance",
             "PW": "PW"
         },
-        "sublimations": "Sublimações que devem estar presentes na construção"
+        "sublimations": "Sublimações que devem estar presentes na construção",
+        "items": "Itens que devem estar presentes na construção"
     },
     "item": {
         "maitrises": "Maestria",
@@ -301,6 +302,9 @@
     },
     "search-item-name": {
         "label": "Nome do item"
+    },
+    "search-list-item": {
+        "item": "Item"
     },
     "search-sublimations": {
         "epique": "Sublimação épica",
