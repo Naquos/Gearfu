@@ -60,7 +60,8 @@
         "import-code": "Import aptitudes code"
     },
     "build": {
-        "zenith": "Go to Zenith"
+        "zenith": "Go to Zenith",
+        "dupliquer": "Duplicate build"
     },
     "builds-list": {
         "label": "Your builds list",
