@@ -305,6 +305,9 @@
     "search-list-item": {
         "item": "Item"
     },
+    "search-list-sublimation": {
+        "sublimation": "Sublimation"
+    },
     "search-sublimations": {
         "epique": "Epic sublimation",
         "relique": "Relic sublimation"
