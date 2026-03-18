@@ -66,22 +66,34 @@
     [style.border-bottom-right-radius]="hasSublimation() ? '0' : '40px'"
     [style.border-bottom-left-radius]="hasSublimation() ? '0' : '40px'">
     <div class="row">
-        <img [src]="mapImageItems.get(ItemTypeBuild.CASQUE)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.AMULETTE)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.PLASTRON)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.ANNEAU_GAUCHE)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.ANNEAU_DROITE)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.BOTTES)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.CAPE)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.CASQUE)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.CASQUE)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.AMULETTE)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.AMULETTE)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.PLASTRON)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.PLASTRON)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.ANNEAU_GAUCHE)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.ANNEAU_GAUCHE)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.ANNEAU_DROITE)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.ANNEAU_DROITE)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.BOTTES)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.BOTTES)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.CAPE)" alt="image" [matTooltip]="getItemName(ItemTypeBuild.CAPE)">
     </div>
     <hr />
     <div class="row">
-        <img [src]="mapImageItems.get(ItemTypeBuild.EPAULETTES)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.CEINTURE)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.SECONDE_MAIN)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.PREMIERE_MAIN)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.ACCESSOIRES)" alt="image">
-        <img [src]="mapImageItems.get(ItemTypeBuild.FAMILIER)" alt="image">
+        <img [src]="mapImageItems.get(ItemTypeBuild.EPAULETTES)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.EPAULETTES)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.CEINTURE)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.CEINTURE)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.SECONDE_MAIN)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.SECONDE_MAIN)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.PREMIERE_MAIN)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.PREMIERE_MAIN)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.ACCESSOIRES)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.ACCESSOIRES)">
+        <img [src]="mapImageItems.get(ItemTypeBuild.FAMILIER)" alt="image"
+            [matTooltip]="getItemName(ItemTypeBuild.FAMILIER)">
         <button (click)="removeBuild($event)" [style.visibility]="displayRemove() ? 'visible' : 'hidden'">X</button>
     </div>
 </div>

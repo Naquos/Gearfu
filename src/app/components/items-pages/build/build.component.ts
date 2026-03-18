@@ -76,6 +76,21 @@ export class BuildComponent implements OnInit {
     [ItemTypeBuild.ACCESSOIRES, "./aptitudes/EmplacementEmblème.png"],
     [ItemTypeBuild.FAMILIER, "./aptitudes/EmplacementFamilier.png"],
   ])
+  protected readonly mapItems = new Map<ItemTypeBuild, Item | null>([
+    [ItemTypeBuild.CASQUE, null],
+    [ItemTypeBuild.AMULETTE, null],
+    [ItemTypeBuild.PLASTRON, null],
+    [ItemTypeBuild.ANNEAU_DROITE, null],
+    [ItemTypeBuild.ANNEAU_GAUCHE, null],
+    [ItemTypeBuild.BOTTES, null],
+    [ItemTypeBuild.CAPE, null],
+    [ItemTypeBuild.EPAULETTES, null],
+    [ItemTypeBuild.CEINTURE, null],
+    [ItemTypeBuild.SECONDE_MAIN, null],
+    [ItemTypeBuild.PREMIERE_MAIN, null],
+    [ItemTypeBuild.ACCESSOIRES, null],
+    [ItemTypeBuild.FAMILIER, null],
+  ])
 
   private firstAnneau = true;
 
@@ -91,6 +106,11 @@ export class BuildComponent implements OnInit {
         this.sublimations.set(this.chasseFormService.getSublimations(build.enchantement || ""));
       }
     })
+  }
+
+  protected getItemName(itemTypeBuild: ItemTypeBuild): string {
+    const item = this.mapItems.get(itemTypeBuild);
+    return item ? item.title[this.translateService.currentLang as keyof typeof item.title] : "";
   }
 
   protected getSublimationTitle(sublimation: SublimationsEpiqueRelique | undefined): string {
@@ -109,6 +129,7 @@ export class BuildComponent implements OnInit {
           this.getItemType(item).forEach(type => {
             if (this.mapImageItems.has(type)) {
               this.mapImageItems.set(type, this.imageService.getItemUrl(item.idImage));
+              this.mapItems.set(type, item);
             }
           })
         }

@@ -117,7 +117,6 @@ export class RecapStatsService extends AbstractDestroyService {
 
   // Statistiques du builds calculées avant la prise en compte des aptitudes manuelles
   private readonly statistics = new BehaviorSubject<Statistics | null>(null);
-  public readonly statistics$ = this.statistics.asObservable();
 
   constructor() {
     super();
