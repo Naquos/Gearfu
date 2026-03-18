@@ -1,5 +1,29 @@
 <div class="content">
-    @for(build of builds(); track build.build.id) {
-        <app-build [build]="build.build" [statistics]="build.statistics" [displayRemove]="false"></app-build>
+    @if (isLoading()) {
+    @for (i of skeletonArray; track i) {
+    <div class="build-skeleton">
+        <div class="skeleton-header"></div>
+
+        <div class="skeleton-stats">
+            <span class="skeleton-stat"></span>
+            <span class="skeleton-stat"></span>
+            <span class="skeleton-stat"></span>
+        </div>
+
+        <div class="skeleton-grid">
+            @for (slot of skeletonSlotsArray; track slot) {
+            <span class="skeleton-slot"></span>
+            }
+        </div>
+    </div>
+    }
+    } @else {
+    @for (build of builds(); track build.build.id) {
+    <app-build [build]="build.build" [statistics]="build.statistics" [displayRemove]="false"></app-build>
+    } @empty {
+    <div class="empty-state">
+        {{ 'search-build-list.empty' | translate }}
+    </div>
+    }
     }
 </div>

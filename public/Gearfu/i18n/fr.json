@@ -306,6 +306,9 @@
     "search-list-item": {
         "item": "Item"
     },
+    "search-build-list": {
+        "empty": "Aucun build ne correspond à ces filtres."
+    },
     "search-list-sublimation": {
         "sublimation": "Sublimation"
     },

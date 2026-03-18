@@ -307,6 +307,9 @@
     "search-list-item": {
         "item": "Objeto"
     },
+    "search-build-list": {
+        "empty": "Ninguna construcción coincide con estos filtros."
+    },
     "search-list-sublimation": {
         "sublimation": "Sublimación"
     },

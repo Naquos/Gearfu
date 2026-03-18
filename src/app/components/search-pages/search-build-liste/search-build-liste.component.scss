@@ -12,6 +12,80 @@
     }
 }
 
+.build-skeleton {
+    width: 100%;
+    min-height: 260px;
+    padding: 16px;
+    border-radius: 18px;
+    background-color: #1B263B;
+    box-sizing: border-box;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    border-radius: 18px;
+    border: 1px solid #415A77;
+    background-color: #1B263B;
+    color: #DFE0E1;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.skeleton-header,
+.skeleton-stat,
+.skeleton-slot {
+    background: linear-gradient(90deg, #2B3D58 25%, #4A658A 50%, #2B3D58 75%);
+    background-size: 220% 100%;
+    animation: skeleton-loading 1.3s ease-in-out infinite;
+}
+
+.skeleton-header {
+    width: 65%;
+    height: 24px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+.skeleton-stats {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.skeleton-stat {
+    width: 60px;
+    height: 18px;
+    border-radius: 8px;
+}
+
+.skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.skeleton-slot {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 10px;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0 50%;
+    }
+}
+
 
 @media screen and (min-width: 1700px) and (max-width: 2000px) {
     .content {
@@ -32,10 +106,18 @@
     .content {
         grid-template-columns: repeat(1, 1fr);
     }
+
+    .skeleton-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 
 @media screen and (min-width: 701px) and (max-width: 1000px) {
     .content {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .skeleton-grid {
+        grid-template-columns: repeat(7, 1fr);
     }
 }
