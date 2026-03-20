@@ -33,6 +33,7 @@ import { FilterSearchBuildComponent } from "../search-pages/filter-search-build/
 import { FilterSidebarService } from '../../services/form/filterSidebarService';
 import { FiltersComponent } from "../items-pages/filters/filters.component";
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MatTooltip } from "@angular/material/tooltip";
 
 type column = 'filter' | 'build' | 'aptitudes' | 'search';
 
@@ -51,7 +52,8 @@ type column = 'filter' | 'build' | 'aptitudes' | 'search';
     RouterOutlet,
     ResumeAptitudesComponent,
     FilterSearchBuildComponent,
-    FiltersComponent
+    FiltersComponent,
+    MatTooltip
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
