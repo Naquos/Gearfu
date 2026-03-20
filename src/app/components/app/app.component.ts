@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, PLATFORM_ID, Inject, signal } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, Inject, signal, computed } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
@@ -56,7 +56,7 @@ type column = 'filter' | 'build' | 'aptitudes' | 'search';
     MatTooltip
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss', './birthday.scss']
 })
 export class AppComponent implements OnInit {
 
@@ -84,6 +84,18 @@ export class AppComponent implements OnInit {
   protected readonly openSidebar = toSignal(this.filterSidebarService.open$, { initialValue: true });
   protected readonly isMobile = signal(isMobile());
   protected readonly buildReadonly = toSignal(this.saveBuildService.buildReadonly$, { initialValue: false });
+
+  protected readonly isBirthday = computed(() => {
+    const today = new Date();
+    return today.getDate() === 20 && today.getMonth() === 2; // 20 mars (le mois est indexé à partir de 0)
+  })
+
+  protected readonly tooltipBirthday = computed(() => {
+    const today = new Date();
+    const age = today.getFullYear() - 2025; // Gearfu est né en 2025
+    return `Happy birthday Gearfu ! (${age} year${age > 1 ? 's' : ''}) 🎉`;
+  });
+
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(@Inject(PLATFORM_ID) private platformId: object) {
