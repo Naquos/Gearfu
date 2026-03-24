@@ -27,6 +27,8 @@ export class SublimationEffectsService {
         applyEffectFn({ id: IdActionsEnum.MAITRISES_DISTANCES, value: Math.floor(0.05 * levelSubli * level), params: [] });
         applyEffectFn({ id: IdActionsEnum.MAITRISES_SOIN, value: Math.floor(0.05 * levelSubli * level), params: [] });
         applyEffectFn({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 3 * levelSubli, params: [] });
+        applyEffectFn({ id: IdActionsEnum.RESISTANCES_DOS, value: 3 * levelSubli, params: [] });
+        applyEffectFn({ id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 3 * levelSubli, params: [] });
       } else if (id === IdSublimationEnum.INFLUENCE) {
         applyEffectFn({ id: IdActionsEnum.COUP_CRITIQUE, value: 3 * levelSubli, params: [] });
       } else if (id === IdSublimationEnum.THEORIE_DE_LA_MATIERE) {
