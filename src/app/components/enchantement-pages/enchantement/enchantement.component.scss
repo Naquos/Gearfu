@@ -1,17 +1,28 @@
-
 .container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
     margin: auto;
+
     .column {
         display: flex;
         flex-direction: column;
         align-items: center;
-        min-width: 30%;
-        width: fit-content;
-        
+        width: 30%;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        width: 98%;
+        margin: auto;
+    }
+
+    .column,
+    .row {
         button {
             width: 100%;
             border: 2px solid #415A77;
@@ -24,7 +35,9 @@
             height: 35px;
             border-radius: 10px;
         }
-        button:active, .selected {
+
+        button:active,
+        .selected {
             transform: translateY(2px);
             box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
             color: white;
@@ -43,7 +56,7 @@
             box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
             position: relative;
             margin-bottom: 15px;
-            
+
             .header {
                 display: flex;
                 align-items: center;
@@ -51,7 +64,9 @@
                 border-bottom: 3px solid #415A77;
                 margin-bottom: 10px;
                 padding: 5px 0;
-                span, div {
+
+                span,
+                div {
                     margin-left: auto;
                 }
 
@@ -59,9 +74,11 @@
                     display: flex;
                     justify-content: space-around;
                     width: 50%;
+
                     div {
                         width: auto;
                     }
+
                     img {
                         width: 20px;
                         height: 20px;
@@ -73,7 +90,7 @@
                     margin-left: auto;
                     width: 50px;
                 }
-                
+
             }
 
             .body {
@@ -81,21 +98,26 @@
                 flex-direction: column;
                 vertical-align: middle;
                 align-items: center;
+
                 mat-slider {
                     width: 100%;
                 }
+
                 .group-item-chasses {
                     display: flex;
                     align-items: center;
-                    margin-bottom: 10px;
+                    margin-bottom: 3px;
+
                     app-image-item {
                         margin-right: 10px;
                     }
+
                     img {
                         width: 30px;
                         height: 30px;
                         margin: 0 5px;
                     }
+
                     img:hover {
                         transform: scale(1.2);
                     }
@@ -106,7 +128,7 @@
 
                     .container-image {
                         position: relative;
-                        
+
                         .action-image {
                             display: flex;
                             align-items: center;
@@ -114,9 +136,10 @@
                             position: absolute;
                             bottom: 0px;
                             right: 0px;
+
                             span {
                                 font-size: 11px;
-                                color:#0D1B2A;
+                                color: #0D1B2A;
                                 background-color: white;
                                 border: 1px solid #415A77;
                                 border-radius: 50%;
@@ -124,13 +147,14 @@
                                 height: 15px;
                                 text-align: center;
                             }
-                            
+
                             img {
                                 width: 15px;
                                 height: 15px;
                             }
                         }
                     }
+
                     .sublimations {
                         display: flex;
                         align-items: center;
@@ -138,20 +162,23 @@
                         margin-left: 10px;
                         width: 100px;
                         position: relative;
+
                         img {
                             width: 30px;
                             height: 30px;
                             cursor: pointer;
                         }
+
                         span {
                             display: contents;
                             margin-left: 5px;
                             width: 50px;
-                            font-size: 11px;
+                            font-size: 13px;
                             height: 40px;
                             overflow: hidden;
                         }
                     }
+
                     .sublimations.invalid::after {
                         content: "✖";
                         color: red;
@@ -170,27 +197,39 @@
                     background-color: orange;
                 }
 
-                .effets-description {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    margin-bottom: 10px;
-                    img {
-                        width: 20px;
-                        height: 20px;
-                    }
-                    span {
-                        margin: 0 10px;
-                    }
-                    .logos {
+                .effets-descriptions-container {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-rows: repeat(7, 1fr);
+                    grid-column-gap: 5px;
+                    grid-row-gap: 5px;
+
+                    .effets-description {
                         display: flex;
                         align-items: center;
+                        justify-content: space-between;
+                        margin-bottom: 10px;
+
                         img {
-                            margin-right: 5px;
+                            width: 20px;
+                            height: 20px;
+                        }
+
+                        span {
+                            margin: 0 10px;
+                        }
+
+                        .logos {
+                            display: flex;
+                            align-items: center;
+
+                            img {
+                                margin-right: 5px;
+                            }
                         }
                     }
                 }
-                
+
                 .double {
                     background-color: orange;
                 }
@@ -213,7 +252,7 @@
                     border: 1px solid #0D1B2A;
                     border-radius: 10px;
 
-                    color:#0D1B2A;
+                    color: #0D1B2A;
                     padding: 10px;
                     margin-top: 20px;
 
@@ -230,7 +269,7 @@
                         display: flex;
                         flex-direction: column;
                         align-items: center;
-                        margin-bottom: 10px; 
+                        margin-bottom: 10px;
                         background: linear-gradient(145deg, #0D1B2A, #415A77);
                         height: fit-content;
 
@@ -262,31 +301,39 @@
                         .parchemins:hover {
                             transform: scale(1.4);
                         }
+
                         .parchemins-selected {
                             background-color: #7eb3ec;
                             border-radius: 5px;
                         }
                     }
+
                     .subli-container:hover {
                         transform: scale(1.1);
                     }
+
                     .selected {
                         background-color: orange;
                     }
                 }
+
                 .epique-relique {
                     width: 100%;
                     display: flex;
                     justify-content: space-around;
                     margin-top: 10px;
-                    .epique, .relique {
+
+                    .epique,
+                    .relique {
                         display: flex;
                         flex-direction: row;
                         align-items: center;
+
                         img {
                             width: 30px;
                             height: 30px;
                         }
+
                         span {
                             margin-top: 5px;
                             font-size: 12px;
@@ -300,32 +347,34 @@
 }
 
 @media screen and (max-width: 1000px) {
-    
+
     .container {
-        flex-direction: column!important;
+        flex-direction: column !important;
         align-items: center;
 
         .column {
-            width: 80%!important;
+            width: 80% !important;
         }
-     
+
         .card {
-            width: 100%!important;
+            width: 100% !important;
 
             .slider-container {
-                width: 80%!important;
+                width: 80% !important;
+
                 .subli-container {
-                    width: 100%!important;
+                    width: 100% !important;
                 }
             }
         }
     }
 }
 
- @media screen and (max-width: 1500px) {
+@media screen and (max-width: 1500px) {
     .container {
         flex-direction: row;
         flex-wrap: wrap;
+
         .column {
             width: 40%;
 
@@ -338,21 +387,22 @@
             .delete {
                 display: none;
             }
-            
+
             .sublimations {
                 flex-direction: column;
-                width: 50px!important;
+                width: 50px !important;
             }
 
             .group-item-chasses {
                 img {
-                    width: 24px!important;
-                    height: 24px!important;
+                    width: 24px !important;
+                    height: 24px !important;
                 }
+
                 .action-image {
                     img {
-                        width: 10px!important;
-                        height: 10px!important;
+                        width: 10px !important;
+                        height: 10px !important;
                     }
                 }
             }
@@ -362,4 +412,4 @@
             }
         }
     }
-  }
+}
