@@ -1,0 +1,22 @@
+<div class="card">
+    <div class="header">
+        {{ 'enchantement.effets' | translate }}
+    </div>
+    <div class="body">
+        <div class="effets-descriptions-container">
+            @for(effet of stateService.effetsDescription; track $index) {
+            <button class="effets-description" (appActivate)="stateService.chooseEffet(effet)"
+                [class.selected]="stateService.effectToApply() && stateService.effectToApply()?.id === effet.id"
+                [class.double]="effectIsDouble(effet)">
+                <img [src]="imageService.getChasseColorUrl(effet.chasse)" [alt]="">
+                <span>{{ effet.libelle | translate }}</span>
+                <div class="logos">
+                    @for(logo of effet.logos; track $index) {
+                    <img [src]="itemTypeService.getLogo(logo)" [alt]="">
+                    }
+                </div>
+            </button>
+            }
+        </div>
+    </div>
+</div>

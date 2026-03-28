@@ -1,0 +1,56 @@
+.subli-container {
+    cursor: pointer;
+    color: white;
+    margin: 0 auto 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    height: fit-content;
+    border-radius: 5px;
+    border: 2px solid #0D1B2A;
+    text-align: center;
+
+    .row {
+        border-top: 3px solid #415A77;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px 0;
+        width: 100%;
+
+        div {
+            width: 49%;
+            display: flex;
+        }
+    }
+
+    img {
+        width: 25px;
+        height: 25px;
+    }
+
+    .parchemins:hover {
+        transform: scale(1.4);
+    }
+
+    .parchemins-selected {
+        background-color: #7eb3ec;
+        border-radius: 5px;
+    }
+}
+
+.subli-container:hover {
+    transform: scale(1.1);
+}
+
+.selected {
+    background-color: orange;
+}
+
+@media screen and (max-width: 1500px) {
+    .subli-container {
+        width: 100% !important;
+    }
+}

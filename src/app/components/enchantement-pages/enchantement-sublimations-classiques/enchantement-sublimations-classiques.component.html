@@ -1,0 +1,18 @@
+<div class="subli-container" [class.selected]="isSelected()">
+    <span>{{ displayName() }}</span>
+    <div class="row">
+        <div>
+            @for(chasse of sublimation().slotColorPattern; track $index) {
+            <img [src]="imageService.getChasseColorUrlById(chasse)" [alt]="">
+            }
+        </div>
+        <div>
+            @for(linkSublimation of sublimation().linkSublimation; track $index) {
+            <img class="parchemins" (appActivate)="onChooseSublimation(linkSublimation.level)"
+                (mouseenter)="onTooltipEnter($event, linkSublimation.level)" (mouseleave)="onTooltipLeave()"
+                [src]="imageService.getSublimationImageUrl(linkSublimation)" [alt]=""
+                [class.parchemins-selected]="isSelected() && selectedLevel() === linkSublimation.level">
+            }
+        </div>
+    </div>
+</div>

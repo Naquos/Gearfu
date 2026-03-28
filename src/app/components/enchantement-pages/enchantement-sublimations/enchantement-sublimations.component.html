@@ -1,0 +1,23 @@
+<div class="card">
+    <div class="header">
+        Sublimations
+    </div>
+    <div class="body">
+        <input matInput [ngModel]="searchSubli()" (ngModelChange)="searchSubli.set($event)"
+            [placeholder]="'enchantement.recherche-sublimation' | translate">
+
+        <div class="slider-container">
+            @for(sublimation of sublimationsList(); track $index) {
+            <app-enchantement-sublimations-classiques
+                [sublimation]="sublimation"></app-enchantement-sublimations-classiques>
+            }
+        </div>
+
+        <div class="slider-container">
+            @for(sublimation of sublimationsEpiqueReliqueList(); track $index) {
+            <app-enchantement-sublimations-epiques-reliques
+                [sublimation]="sublimation"></app-enchantement-sublimations-epiques-reliques>
+            }
+        </div>
+    </div>
+</div>

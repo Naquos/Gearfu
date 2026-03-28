@@ -1,0 +1,83 @@
+.card {
+    width: 100%;
+    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    border-radius: 15px;
+    padding: 15px;
+    color: white;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+    position: relative;
+    margin-bottom: 15px;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 3px solid #415A77;
+        margin-bottom: 10px;
+        padding: 5px 0;
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        vertical-align: middle;
+        align-items: center;
+
+        input {
+            width: 80%;
+            margin: 10px auto 0;
+            height: 30px;
+        }
+
+        .slider-container {
+            width: 350px;
+            display: flex;
+            flex-wrap: wrap;
+            grid-row-gap: 5px;
+            height: 250px;
+            overflow-y: scroll;
+
+            background-color: #81AAB7;
+            border: 1px solid #0D1B2A;
+            border-radius: 10px;
+
+            color: #0D1B2A;
+            padding: 10px;
+            margin-top: 20px;
+
+            img {
+                width: 30px;
+                height: 30px;
+            }
+
+            app-enchantement-sublimations-classiques,
+            app-enchantement-sublimations-epiques-reliques {
+                width: 45%;
+                margin: 0 auto;
+            }
+
+            .selected {
+                background-color: orange;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .card {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        .slider-container {
+            width: 80% !important;
+
+            .subli-container {
+                width: 100% !important;
+            }
+        }
+    }
+}

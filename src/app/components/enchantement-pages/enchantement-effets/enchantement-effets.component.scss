@@ -1,0 +1,99 @@
+.card {
+    width: 100%;
+    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    border-radius: 15px;
+    padding: 15px;
+    color: white;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+    position: relative;
+    margin-bottom: 15px;
+
+    button {
+        width: 100%;
+        border: 2px solid #415A77;
+        box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+        cursor: pointer;
+        background-color: white;
+        color: #213A57;
+        font-weight: 600;
+        font-size: 13px;
+        height: 35px;
+        border-radius: 10px;
+    }
+
+    button:active,
+    .selected {
+        transform: translateY(2px);
+        box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
+        color: white;
+        background-color: #1B263B;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 3px solid #415A77;
+        margin-bottom: 10px;
+        padding: 5px 0;
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        vertical-align: middle;
+        align-items: center;
+
+        .effets-descriptions-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(7, 1fr);
+            grid-column-gap: 5px;
+            grid-row-gap: 5px;
+
+            .effets-description {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                }
+
+                span {
+                    margin: 0 10px;
+                }
+
+                .logos {
+                    display: flex;
+                    align-items: center;
+
+                    img {
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+
+        .double {
+            background-color: orange;
+        }
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .card {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        .effets-description {
+            width: 100%;
+        }
+    }
+}

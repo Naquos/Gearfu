@@ -1,0 +1,229 @@
+.card {
+    width: 100%;
+    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    border-radius: 15px;
+    padding: 15px;
+    color: white;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+    position: relative;
+    margin-bottom: 15px;
+
+    button {
+        width: 100%;
+        border: 2px solid #415A77;
+        box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+        cursor: pointer;
+        background-color: white;
+        color: #213A57;
+        font-weight: 600;
+        font-size: 13px;
+        height: 35px;
+        border-radius: 10px;
+    }
+
+    button:active {
+        transform: translateY(2px);
+        box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
+        color: white;
+        background-color: #1B263B;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 3px solid #415A77;
+        margin-bottom: 10px;
+        padding: 5px 0;
+
+        span,
+        div {
+            margin-left: auto;
+        }
+
+        div {
+            display: flex;
+            justify-content: space-around;
+            width: 50%;
+
+            div {
+                width: auto;
+            }
+
+            img {
+                width: 20px;
+                height: 20px;
+                margin-left: 5px;
+            }
+        }
+
+        button {
+            margin-left: auto;
+            width: 50px;
+        }
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        vertical-align: middle;
+        align-items: center;
+
+        mat-slider {
+            width: 100%;
+        }
+
+        .group-item-chasses {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3px;
+
+            app-image-item {
+                margin-right: 10px;
+            }
+
+            img {
+                width: 30px;
+                height: 30px;
+                margin: 0 5px;
+            }
+
+            img:hover {
+                transform: scale(1.2);
+            }
+
+            .delete {
+                width: 50px;
+            }
+
+            .container-image {
+                position: relative;
+
+                .action-image {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+                    position: absolute;
+                    bottom: 0px;
+                    right: 0px;
+
+                    span {
+                        font-size: 11px;
+                        color: #0D1B2A;
+                        background-color: white;
+                        border: 1px solid #415A77;
+                        border-radius: 50%;
+                        width: 15px;
+                        height: 15px;
+                        text-align: center;
+                    }
+
+                    img {
+                        width: 15px;
+                        height: 15px;
+                    }
+                }
+            }
+
+            .sublimations {
+                display: flex;
+                align-items: center;
+                vertical-align: middle;
+                margin-left: 10px;
+                width: 100px;
+                position: relative;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                }
+
+                span {
+                    display: contents;
+                    margin-left: 5px;
+                    width: 50px;
+                    font-size: 13px;
+                    height: 40px;
+                    overflow: hidden;
+                }
+            }
+
+            .sublimations.invalid::after {
+                content: "✖";
+                color: red;
+                font-weight: bold;
+                font-size: 24px;
+                position: absolute;
+                top: 47%;
+                left: 20px;
+                transform: translate(-50%, -50%);
+                text-shadow: 1px 1px 2px black, -1px -1px 2px black;
+                pointer-events: none;
+            }
+        }
+
+        .selected {
+            background-color: orange;
+        }
+
+        .epique-relique {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+
+            .epique,
+            .relique {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+
+                span {
+                    margin-top: 5px;
+                    font-size: 12px;
+                    width: 100px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .card {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        .delete {
+            display: none;
+        }
+
+        .sublimations {
+            flex-direction: column;
+            width: 50px !important;
+        }
+
+        .group-item-chasses {
+            img {
+                width: 24px !important;
+                height: 24px !important;
+            }
+
+            .action-image {
+                img {
+                    width: 10px !important;
+                    height: 10px !important;
+                }
+            }
+        }
+    }
+}
