@@ -1,0 +1,128 @@
+.card {
+    width: 100%;
+    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    border-radius: 15px;
+    padding: 5px;
+    color: white;
+    min-width: 300px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+    position: relative;
+    margin-bottom: 15px;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 3px solid #415A77;
+        margin-bottom: 10px;
+        padding: 5px 0;
+    }
+
+    .description-sort {
+        margin: 0 5%;
+
+        .sort-title {
+            display: flex;
+
+            img {
+                margin-right: 10px;
+                width: 56px;
+                height: 56px;
+                cursor: pointer;
+            }
+
+            span {
+                margin: auto 0;
+            }
+
+            .cout-sort {
+                display: flex;
+                font-size: 14px;
+                margin-left: auto;
+
+                div {
+                    display: flex;
+                    align-items: center;
+                }
+
+                img {
+                    margin-left: 10px;
+                    width: 16px;
+                    height: 16px;
+                }
+
+                .ligne-not-vu,
+                .ligne {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .description {
+            margin-left: 66px;
+            font-size: 12px;
+        }
+
+        .effet-sort {
+            margin-left: 66px;
+
+            .button-group {
+                margin: 5px 0;
+                display: flex;
+                justify-content: space-between;
+
+                button {
+                    width: 48%;
+                    border-radius: 10px;
+                }
+            }
+
+            .effet {
+                display: flex;
+                flex-direction: column;
+
+                span {
+                    display: flex;
+                    align-items: center;
+                    text-align: start;
+                    font-size: 14px;
+                    margin: 0;
+
+                    img {
+                        margin: 0 3px;
+                    }
+                }
+            }
+
+            .level-select {
+                width: 90%;
+
+                mat-slider {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .card {
+        .description-sort {
+            .sort-title {
+                .cout-sort {
+                    flex-wrap: wrap !important;
+                    margin-left: 3px !important;
+
+                    img {
+                        margin-left: 3px !important;
+                        width: 16px !important;
+                        height: 16px !important;
+                    }
+                }
+            }
+        }
+    }
+}

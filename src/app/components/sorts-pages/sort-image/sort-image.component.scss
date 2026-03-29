@@ -1,0 +1,39 @@
+img {
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+}
+
+img:hover {
+    transform: scale(1.2);
+}
+
+.sort-locked {
+    position: relative;
+    filter: grayscale(100%) brightness(0.5);
+    cursor: not-allowed !important;
+
+    &::before {
+        content: '🔒';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 32px;
+        pointer-events: none;
+        z-index: 10;
+        filter: none;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 1), 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    &:hover {
+        transform: none !important;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    img {
+        width: 30px !important;
+        height: 30px !important;
+    }
+}

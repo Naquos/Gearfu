@@ -1,0 +1,7 @@
+<div class="code-aptitudes">
+    {{'sorts.code-deck' | translate}} :
+    <input [value]="codeBuild()" readonly />
+    <mat-icon aria-hidden="false" fontIcon="file_copy" [matTooltip]="'sorts.copy-code' | translate"
+        [matTooltipShowDelay]="300" (appActivate)="copyToClipboards()">
+    </mat-icon>
+</div>

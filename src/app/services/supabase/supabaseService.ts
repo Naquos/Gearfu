@@ -370,4 +370,30 @@ export class SupabaseService {
                 })
             );
     }
+
+    /**
+     * Récupère les sorts conseillés pour une classe donnée à partir des builds les plus récents
+     * @param classe 
+     * @returns 
+     */
+    public getSortsConseillees(classe: ClassIdEnum): Observable<string[]> {
+        if (!this.isBrowser) {
+            return of([]);
+        }
+        return from(this.supabase.from('build')
+            .select('sorts')
+            .eq('classe', classe)
+            .neq('sorts', '0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0')
+            .order('createdAt', { ascending: false })
+            .limit(100)).pipe(
+                map(({ data, error }) => {
+                    if (error) {
+                        throw error;
+                    }
+                    return (data ?? [])
+                        .map((item: Build) => item.sorts as string)
+                        .filter(x => x);
+                })
+            );
+    }
 }

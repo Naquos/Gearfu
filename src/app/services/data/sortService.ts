@@ -1,6 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, map, Observable, shareReplay, tap } from "rxjs";
 import { toSignal } from "@angular/core/rxjs-interop";
+import { TranslateService } from "@ngx-translate/core";
 import { ClasseFormService } from "../form/classeFormService";
 import { Sort } from "../../models/data/sort";
 import { DescriptionSort } from "../../models/data/descriptionSort";
@@ -19,6 +20,7 @@ export class SortService {
     private readonly spellEffectService = inject(SpellEffectService);
     private readonly sortLevelService = inject(SortLevelService);
     private readonly compressionService = inject(CompressionService);
+    private readonly translateService = inject(TranslateService);
     private readonly sorts = new BehaviorSubject<Sort[]>([]);
     public readonly sorts$ = this.sorts.asObservable();
     public readonly sortsClasse = toSignal(combineLatest([this.sorts$, this.classeFormService.classe$, this.sortLevelService.sortsLevel$]).pipe(
@@ -65,8 +67,13 @@ export class SortService {
                 this.sorts.next(data.classes);
             }),
             shareReplay(1),
-            map(() => { })
+            map(() => { /* empty */ })
         );
+    }
+
+    public getDescriptionSortNeutreById(sortId: number): DescriptionSort | undefined {
+        return this.getDescriptionSortElementaireById(sortId)
+            || this.getDescriptionSortActifById(sortId);
     }
 
     public getDescriptionSortElementaireById(sortId: number): DescriptionSort | undefined {
@@ -82,6 +89,10 @@ export class SortService {
 
     public getDescriptionSortActifById(sortId: number): DescriptionSort | undefined {
         return this.sortsClasse()?.sortActifs.find(s => s.gfxId === sortId);
+    }
+
+    public getCurrentLang(): 'fr' | 'en' | 'es' | 'pt' {
+        return (this.translateService.currentLang || 'fr') as 'fr' | 'en' | 'es' | 'pt';
     }
 
 }

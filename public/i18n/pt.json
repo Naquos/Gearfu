@@ -90,7 +90,8 @@
         "esquive": "Evasão",
         "initiative": "Iniciativa",
         "sublimations": "Sublimações",
-        "recherche-sublimation": "Pesquisa de sublimação..."
+        "recherche-sublimation": "Pesquisa de sublimação...",
+        "sublimations-conseillees": "Sublimações recomendadas pela comunidade"
     },
     "import-build": {
         "label": "Importe seu build através de uma URL do Gearfu ou Zénith",
@@ -334,7 +335,8 @@
         "sort-selectionne": "Feitiço selecionado",
         "no-sort-selectionne": "Nenhum feitiço selecionado",
         "effet-normal": "Efeito normal",
-        "effet-critique": "Efeito crítico"
+        "effet-critique": "Efeito crítico",
+        "sort-conseille": "Feitiços recomendados pela comunidade"
     },
     "sort-choice-enum": {
         "POIDS": "Peso",

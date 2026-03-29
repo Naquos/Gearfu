@@ -1,0 +1,13 @@
+<div class="card">
+    <div class="header">
+        {{'sorts.sort-conseille' | translate}}
+    </div>
+    <div class="content">
+        @for (sort of sortsNeutreConseilles(); track sort.gfxId) {
+        <app-sort-image [sort]="sort" typeSort="NEUTRE"></app-sort-image>
+        }
+        @for (sort of sortsPassifConseilles(); track sort.gfxId) {
+        <app-sort-image [sort]="sort" typeSort="PASSIF"></app-sort-image>
+        }
+    </div>
+</div>

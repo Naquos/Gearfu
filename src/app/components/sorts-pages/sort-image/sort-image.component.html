@@ -1,0 +1,5 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<img [src]="getSortUrl(sort.gfxId)" [class.sort-locked]="isLocked()" alt="" [matTooltip]="getSortName()"
+    draggable="true" (dragstart)="onDragStart($event)" (click)="onClick()" (appActivate)="onDoubleClick()"
+    appActivateTrigger="dblclick" (contextmenu)="onContextMenu($event)">

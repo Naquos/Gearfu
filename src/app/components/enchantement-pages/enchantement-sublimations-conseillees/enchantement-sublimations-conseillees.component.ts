@@ -8,12 +8,14 @@ import { SublimationService } from '../../../services/data/sublimationService';
 import { SupabaseService } from '../../../services/supabase/supabaseService';
 import { EnchantementSublimationsClassiquesComponent } from '../enchantement-sublimations-classiques/enchantement-sublimations-classiques.component';
 import { EnchantementSublimationsEpiquesReliquesComponent } from '../enchantement-sublimations-epiques-reliques/enchantement-sublimations-epiques-reliques.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-enchantement-sublimations-community',
     imports: [
         EnchantementSublimationsClassiquesComponent,
-        EnchantementSublimationsEpiquesReliquesComponent
+        EnchantementSublimationsEpiquesReliquesComponent,
+        TranslateModule
     ],
     templateUrl: './enchantement-sublimations-conseillees.component.html',
     styleUrl: './enchantement-sublimations-conseillees.component.scss'

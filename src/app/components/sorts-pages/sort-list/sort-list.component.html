@@ -1,0 +1,38 @@
+<div class="card">
+    <div class="header">
+        {{'sorts.sorts-classe' | translate}}
+    </div>
+    <span>{{'sorts.sorts-elementaires' | translate}}</span>
+    <div class="sorts-elementaires">
+        @if(sortService.sortsClasse() !== undefined) {
+        @for (sort of sortService.sortsClasse()!.sortElementaires.feu; track sort.gfxId) {
+        <app-sort-image [sort]="sort" typeSort="NEUTRE"></app-sort-image>
+        }
+        @for (sort of sortService.sortsClasse()!.sortElementaires.eau; track sort.gfxId) {
+        <app-sort-image [sort]="sort" typeSort="NEUTRE"></app-sort-image>
+        }
+        @for (sort of sortService.sortsClasse()!.sortElementaires.terre; track sort.gfxId) {
+        <app-sort-image [sort]="sort" typeSort="NEUTRE"></app-sort-image>
+        }
+        @for (sort of sortService.sortsClasse()!.sortElementaires.air; track sort.gfxId) {
+        <app-sort-image [sort]="sort" typeSort="NEUTRE"></app-sort-image>
+        }
+        }
+    </div>
+    <span>{{'sorts.sorts-neutres' | translate}}</span>
+    <div class="sorts-passifs">
+        @if(sortService.sortsClasse() !== undefined) {
+        @for(sort of sortService.sortsClasse()!.sortActifs; track sort.gfxId) {
+        <app-sort-image [sort]="sort" typeSort="NEUTRE"></app-sort-image>
+        }
+        }
+    </div>
+    <span>{{'sorts.passifs' | translate}}</span>
+    <div class="sorts-passifs">
+        @if(sortService.sortsClasse() !== undefined) {
+        @for(sort of sortService.sortsClasse()!.sortPassifs; track sort.gfxId) {
+        <app-sort-image [sort]="sort" typeSort="PASSIF"></app-sort-image>
+        }
+        }
+    </div>
+</div>
