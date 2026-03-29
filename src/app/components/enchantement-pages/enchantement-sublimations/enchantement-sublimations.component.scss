@@ -33,11 +33,13 @@
         }
 
         .slider-container {
-            width: 350px;
-            display: flex;
-            flex-wrap: wrap;
+            width: 98%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
             grid-row-gap: 5px;
-            height: 250px;
+            height: 200px;
             overflow-y: scroll;
 
             background-color: #81AAB7;
@@ -55,7 +57,7 @@
 
             app-enchantement-sublimations-classiques,
             app-enchantement-sublimations-epiques-reliques {
-                width: 45%;
+                width: 95%;
                 margin: 0 auto;
             }
 
@@ -73,11 +75,7 @@
         white-space: nowrap;
 
         .slider-container {
-            width: 80% !important;
-
-            .subli-container {
-                width: 100% !important;
-            }
+            grid-template-columns: repeat(1, 1fr) !important;
         }
     }
 }

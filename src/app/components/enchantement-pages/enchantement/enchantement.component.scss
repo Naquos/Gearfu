@@ -1,80 +1,32 @@
 .container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    width: 100%;
+    justify-content: space-between;
+    width: 94%;
     margin: auto;
+
+    app-enchantement-sublimations-community {
+        width: 100%;
+        margin: auto;
+    }
 
     .column {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         align-items: center;
         width: 30%;
-    }
 
-    .row {
-        display: flex;
-        justify-content: space-around;
-        width: 98%;
-        margin: 0 auto;
-    }
-
-
-    .card {
-        width: 100%;
-        background: linear-gradient(145deg, #0D1B2A, #415A77);
-        border-radius: 15px;
-        padding: 15px;
-        color: white;
-        height: fit-content;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
-        position: relative;
-        margin-bottom: 15px;
-
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 3px solid #415A77;
-            margin-bottom: 10px;
-            padding: 5px 0;
-
-            span,
-            div {
-                margin-left: auto;
-            }
-
-            div {
-                display: flex;
-                justify-content: space-around;
-                width: 50%;
-
-                div {
-                    width: auto;
-                }
-
-                img {
-                    width: 20px;
-                    height: 20px;
-                    margin-left: 5px;
-                }
-            }
-
-            button {
-                margin-left: auto;
-                width: 50px;
-            }
-        }
-
-        .body {
-            display: flex;
-            flex-direction: column;
-            vertical-align: middle;
-            align-items: center;
+        app-enchantement-chasses,
+        app-enchantement-effets,
+        app-enchantement-sublimations {
+            width: 100%;
         }
     }
+}
+
+.container-row {
+    width: 98%;
 }
 
 
@@ -89,7 +41,7 @@
     }
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1200px) {
     .container {
         flex-direction: row;
         flex-wrap: wrap;

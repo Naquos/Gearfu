@@ -344,4 +344,30 @@ export class SupabaseService {
             })
         );
     }
+
+    /**
+     * Récupère les sublimations pour une classe donnée à partir des builds les plus récents
+     * @param classe 
+     * @returns 
+     */
+    public getSublimationsConseillees(classe: ClassIdEnum): Observable<string[]> {
+        if (!this.isBrowser) {
+            return of([]);
+        }
+        return from(this.supabase.from('build')
+            .select('enchantement')
+            .eq('classe', classe)
+            .neq('enchantement', '0-0-0-0|0-0-0-0|0-0-0-0|0-0-0-0|0-0-0-0|0-0-0-0|0-0-0-0|0-0-0-0|0-0-0-0|0-0-0-0')
+            .order('createdAt', { ascending: false })
+            .limit(100)).pipe(
+                map(({ data, error }) => {
+                    if (error) {
+                        throw error;
+                    }
+                    return (data ?? [])
+                        .map((item: Build) => item.enchantement as string)
+                        .filter(x => x);
+                })
+            );
+    }
 }

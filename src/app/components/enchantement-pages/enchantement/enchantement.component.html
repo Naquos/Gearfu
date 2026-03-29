@@ -1,16 +1,5 @@
-<div class="container">
-    <div class="row">
-        <div class="card">
-            <div class="header">
-                Sublimations conseillées par la communauté
-            </div>
-            <div class="body">
-                Il y aura des sublimations ICI <br>
-                Ne vous en faite pas <br>
-                Juste faut y implémenter
-            </div>
-        </div>
-    </div>
+<div class="container container-row">
+    <app-enchantement-sublimations-community></app-enchantement-sublimations-community>
 </div>
 <div class="container"
     [style.cursor]="stateService.effectToApply() ? 'url(cursor/' + imageService.getChasseColorUrl(stateService.effectToApply()!.chasse) + ') 16 16, auto' : 'default'">

@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row">
+        <div class="card">
+            <div class="header">
+                Sublimations conseillees par la communaute
+            </div>
+            <div class="body">
+                @for (sublimation of sublimationsConseilleesClassique(); track sublimation.id) {
+                <app-enchantement-sublimations-classiques
+                    [sublimation]="sublimation"></app-enchantement-sublimations-classiques>
+                }
+                @for (sublimation of sublimationsConseilleesEpicRelic(); track sublimation.id) {
+                <app-enchantement-sublimations-epiques-reliques
+                    [sublimation]="sublimation"></app-enchantement-sublimations-epiques-reliques>
+                }
+            </div>
+        </div>
+    </div>
+</div>

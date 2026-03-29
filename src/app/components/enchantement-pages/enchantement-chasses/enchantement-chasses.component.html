@@ -34,7 +34,6 @@
                 }
             </div>
             }
-            <button class="delete" (appActivate)="chasseFormService.clearChasseCombinaison(indexParent)">X</button>
             <div class="sublimations" [class.invalid]="chasse.sublimation && !chasse.sublimation.isValid"
                 (appActivate)="applySublimation(indexParent)"
                 (contextmenu)="$event.preventDefault();chasseFormService.removeSublimation(indexParent);">

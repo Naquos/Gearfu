@@ -338,6 +338,66 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
         return undefined;
     }
 
+    /**
+     * Retourne les ids des sublimations classiques appliquées sur le build, extraits du code enchantement du build
+     * @param code Le code enchantement du build
+     * @returns Les ids des sublimations classiques appliquées sur le build
+     */
+    public getSublimationIdsByCode(code: string): string[] {
+        if (!code) {
+            return [];
+        }
+        const codeParts = code.split('|');
+        const sublimationIds: string[] = [];
+        for (const part of codeParts) {
+            if (!part.startsWith('E') && !part.startsWith('R')) {
+                const partSublimation = part.split('_')[1];
+                const subId = partSublimation ? partSublimation.split('.')[0] : undefined;
+                if (subId) {
+                    sublimationIds.push(subId);
+                }
+            }
+        }
+        return sublimationIds;
+    }
+
+    /**
+     * Retourne l'id de la sublimation épique appliquée sur le build, extrait du code enchantement du build
+     * @param code Le code enchantement du build
+     * @returns L'id de la sublimation épique appliquée sur le build, ou undefined si aucune sublimation épique n'est présente
+     */
+    public getSublimationIdEpiqueByCode(code: string): string | undefined {
+        if (!code) {
+            return undefined;
+        }
+        const codeParts = code.split('|');
+        for (const part of codeParts) {
+            if (part.startsWith('E')) {
+                const epiqueId = parseInt(part.substring(1), 10);
+                return epiqueId.toString();
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Retourne l'id de la sublimation relique appliquée sur le build, extrait du code enchantement du build
+     * @param code Le code enchantement du build
+     * @returns L'id de la sublimation relique appliquée sur le build, ou undefined si aucune sublimation relique n'est présente
+     */
+    public getSublimationIdReliqueByCode(code: string): string | undefined {
+        if (!code) {
+            return undefined;
+        }
+        const codeParts = code.split('|');
+        for (const part of codeParts) {
+            if (part.startsWith('R')) {
+                const reliqueId = parseInt(part.substring(1), 10);
+                return reliqueId.toString();
+            }
+        }
+        return undefined;
+    }
 
     private equalChasses(c1: Chasse, c2: Chasse): boolean {
         return c1.color === c2.color && c1.lvl === c2.lvl && c1.idAction === c2.idAction;

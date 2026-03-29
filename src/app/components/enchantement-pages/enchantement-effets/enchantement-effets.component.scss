@@ -59,6 +59,7 @@
                 align-items: center;
                 justify-content: space-between;
                 margin-bottom: 10px;
+                width: 100%;
 
                 img {
                     width: 20px;
@@ -92,8 +93,50 @@
         text-overflow: ellipsis;
         white-space: nowrap;
 
+
+        .effets-descriptions-container {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr) !important;
+            grid-template-rows: repeat(15, 1fr) !important;
+            grid-column-gap: 0px !important;
+            grid-row-gap: 0px !important;
+        }
+
+        button {
+            margin-bottom: 0px !important;
+        }
+
+
+        span {
+            font-size: 12px !important;
+        }
+
+        img {
+            width: 20px !important;
+            height: 20px !important;
+        }
+
         .effets-description {
             width: 100%;
+        }
+    }
+}
+
+
+
+@media screen and (max-width: 1700px) {
+    .card {
+        overflow: hidden;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
+
+        span {
+            font-size: 10px;
+        }
+
+        img {
+            width: 15px;
+            height: 15px;
         }
     }
 }

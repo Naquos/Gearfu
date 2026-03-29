@@ -7,10 +7,11 @@ import { EnchantementStateService } from '../../../services/form/enchantementSta
 import { EnchantementChassesComponent } from '../enchantement-chasses/enchantement-chasses.component';
 import { EnchantementEffetsComponent } from '../enchantement-effets/enchantement-effets.component';
 import { EnchantementSublimationsComponent } from '../enchantement-sublimations/enchantement-sublimations.component';
+import { EnchantementSublimationsCommunityComponent } from '../enchantement-sublimations-conseillees/enchantement-sublimations-conseillees.component';
 
 @Component({
   selector: 'app-enchantement',
-  imports: [EnchantementChassesComponent, EnchantementEffetsComponent, EnchantementSublimationsComponent],
+  imports: [EnchantementChassesComponent, EnchantementEffetsComponent, EnchantementSublimationsComponent, EnchantementSublimationsCommunityComponent],
   templateUrl: './enchantement.component.html',
   styleUrl: './enchantement.component.scss'
 })
