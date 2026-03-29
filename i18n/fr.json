@@ -89,7 +89,8 @@
         "tacle": "Tacle",
         "initiative": "Initiative",
         "sublimations": "Sublimations",
-        "recherche-sublimation": "Recherche de sublimation..."
+        "recherche-sublimation": "Recherche de sublimation...",
+        "sublimations-conseillees": "Sublimations conseillées par la communauté"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Maitrises élémentaires",
@@ -333,7 +334,8 @@
         "sort-selectionne": "Sort sélectionné",
         "no-sort-selectionne": "Aucun sort sélectionné",
         "effet-normal": "Effet normal",
-        "effet-critique": "Effet critique"
+        "effet-critique": "Effet critique",
+        "sort-conseille": "Sorts conseillés par la communauté"
     },
     "sort-choice-enum": {
         "POIDS": "Poids",

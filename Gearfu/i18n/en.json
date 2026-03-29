@@ -89,7 +89,8 @@
         "initiative": "Initiative",
         "effets": "Effects",
         "sublimations": "Sublimations",
-        "recherche-sublimation": "Search for sublimation..."
+        "recherche-sublimation": "Search for sublimation...",
+        "sublimations-conseillees": "Community-recommended sublimations"
     },
     "import-build": {
         "label": "Import your build via a Gearfu or Zenith URL",
@@ -333,7 +334,8 @@
         "sort-selectionne": "Selected spell",
         "no-sort-selectionne": "No spell selected",
         "effet-normal": "Normal effect",
-        "effet-critique": "Critical effect"
+        "effet-critique": "Critical effect",
+        "sort-conseille": "Community-recommended spells"
     },
     "sort-choice-enum": {
         "POIDS": "Weight",
