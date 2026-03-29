@@ -27,6 +27,8 @@ export class EnchantementSublimationsCommunityComponent {
     private readonly mapSublimationConseilleeCount = new Map<string, number>();
     private readonly mapSublimationConseilleeCountEpic = new Map<string, number>();
     private readonly mapSublimationConseilleeCountRelic = new Map<string, number>();
+    private readonly nbSublimationsClassiquesConseillees = 10;
+    private readonly nbSublimationsEpiquesReliquesConseillees = 2;
 
     private readonly sublimationsConseillees = toSignal(this.classeFormService.classe$.pipe(
         switchMap(classe => this.supabaseService.getSublimationsConseillees(classe)),
@@ -37,9 +39,12 @@ export class EnchantementSublimationsCommunityComponent {
         }),
         tap(sublimationsConseillees => this.fillMapSublimationsConseillees(sublimationsConseillees)),
         map(() => {
-            const topSublimationsConseillees = this.keepSublimationsMoreUsed(this.mapSublimationConseilleeCount, 6);
-            const topSublimationsConseilleesEpic = this.keepSublimationsMoreUsed(this.mapSublimationConseilleeCountEpic, 2);
-            const topSublimationsConseilleesRelic = this.keepSublimationsMoreUsed(this.mapSublimationConseilleeCountRelic, 2);
+            const topSublimationsConseillees = this.keepSublimationsMoreUsed(this.mapSublimationConseilleeCount,
+                this.nbSublimationsClassiquesConseillees);
+            const topSublimationsConseilleesEpic = this.keepSublimationsMoreUsed(this.mapSublimationConseilleeCountEpic,
+                this.nbSublimationsEpiquesReliquesConseillees);
+            const topSublimationsConseilleesRelic = this.keepSublimationsMoreUsed(this.mapSublimationConseilleeCountRelic,
+                this.nbSublimationsEpiquesReliquesConseillees);
             return [...topSublimationsConseillees, ...topSublimationsConseilleesEpic, ...topSublimationsConseilleesRelic];
         })
     ));
