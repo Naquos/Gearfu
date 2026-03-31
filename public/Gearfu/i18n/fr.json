@@ -92,6 +92,10 @@
         "recherche-sublimation": "Recherche de sublimation...",
         "sublimations-conseillees": "Sublimations conseillées par la communauté"
     },
+    "import-build": {
+        "label": "Importer votre build via une url Gearfu ou Zénith",
+        "placeholder": "Url Gearfu ou Zénith"
+    },
     "filter-maitrises": {
         "maitrises-elementaires": "Maitrises élémentaires",
         "maitrises-secondaires": "Maitrises secondaires",
@@ -111,6 +115,7 @@
     },
     "filter-search-build": {
         "classe": "Sélection de la classe",
+        "name": "Recherche par nom",
         "level": "Sélection de la tranche de level",
         "level-min": "Level min",
         "level-max": "Level max",
@@ -135,10 +140,6 @@
         },
         "sublimations": "Sublimations devant être présentes sur le build",
         "items": "Items devant être présents sur le build"
-    },
-    "import-build": {
-        "label": "Importer votre build via une url Gearfu ou Zénith",
-        "placeholder": "Url Gearfu ou Zénith"
     },
     "item": {
         "maitrises": "Maitrises",

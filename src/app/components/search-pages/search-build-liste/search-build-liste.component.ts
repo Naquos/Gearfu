@@ -39,6 +39,7 @@ export class SearchBuildListeComponent {
           result.sublimationRelique,
           result.idItems,
           result.sublimations,
+          result.name
         ).pipe(
           finalize(() => this.isLoading.set(false)),
         );

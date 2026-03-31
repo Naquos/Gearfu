@@ -6,6 +6,12 @@
         (appActivate)="changeClasses(id)" [tabindex]="0">
     }
 </div>
+
+<h2>{{ "filter-search-build.name" | translate }}</h2>
+<mat-form-field>
+    <mat-label>{{ "filter-search-build.name" | translate }}</mat-label>
+    <input matInput [formControl]="filterSearchBuildFormService.form.controls.name">
+</mat-form-field>
 <h2>{{ "filter-search-build.level" | translate }}</h2>
 <form [formGroup]="filterSearchBuildFormService.form">
     <mat-form-field>

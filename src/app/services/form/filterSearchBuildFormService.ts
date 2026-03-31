@@ -8,6 +8,7 @@ import { OrderBySearchBuildEnum } from "../../models/enum/orderBySearchBuildEnum
 
 export interface FilterSearchBuildForm {
     class: ClassIdEnum | null;
+    name: string;
     levelMin: number;
     levelMax: number;
     orderBy: OrderBySearchBuildEnum;
@@ -27,6 +28,7 @@ export interface FilterSearchBuildForm {
 export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<TypedControls<FilterSearchBuildForm>>> {
     public static readonly DEFAULT_VALUE: FilterSearchBuildForm = {
         class: null,
+        name: '',
         levelMin: 200,
         levelMax: 245,
         orderBy: OrderBySearchBuildEnum.maitrises,
@@ -49,6 +51,7 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
     protected readonly keyEnum = KeyEnum.KEY_FILTER_SEARCH_BUILD;
     public readonly form = new FormGroup<TypedControls<FilterSearchBuildForm>>({
         class: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.class, { nonNullable: true }),
+        name: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.name, { nonNullable: true }),
         levelMin: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.levelMin, { nonNullable: true }),
         levelMax: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.levelMax, { nonNullable: true }),
         orderBy: new FormControl(FilterSearchBuildFormService.DEFAULT_VALUE.orderBy, { nonNullable: true }),
@@ -76,6 +79,7 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
     public override setValue(value: FilterSearchBuildForm | null): void {
         this.form.setValue({
             class: value?.class ?? FilterSearchBuildFormService.DEFAULT_VALUE.class,
+            name: value?.name ?? FilterSearchBuildFormService.DEFAULT_VALUE.name,
             levelMin: value?.levelMin ?? FilterSearchBuildFormService.DEFAULT_VALUE.levelMin,
             levelMax: value?.levelMax ?? FilterSearchBuildFormService.DEFAULT_VALUE.levelMax,
             orderBy: value?.orderBy ?? FilterSearchBuildFormService.DEFAULT_VALUE.orderBy,

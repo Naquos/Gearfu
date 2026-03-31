@@ -115,6 +115,7 @@
     },
     "filter-search-build": {
         "classe": "Class selection",
+        "name": "Search by name",
         "level": "Level range selection",
         "level-min": "Min level",
         "level-max": "Max level",

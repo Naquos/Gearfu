@@ -75,6 +75,7 @@ export class SupabaseService {
         sublimationRelique = '',
         idItems: string[][] = [],
         sublimations: string[] = [],
+        name = '',
     ): Observable<{ build: Build, statistics: Statistics | null }[]> {
         if (!this.isBrowser) {
             return of([]);
@@ -90,6 +91,7 @@ export class SupabaseService {
         const _sublimationRelique = !sublimationRelique ? '%%' : `%R${sublimationRelique}%`;
         const _levelMin = !lvlMin || lvlMin <= 0 ? 0 : lvlMin;
         const _levelMax = !lvlMax || lvlMax <= 0 ? 999 : lvlMax;
+        const _name = !name ? '%%' : `%${name}%`;
         const request = this.supabase.from('statistics')
             .select('*, build!inner(*)')
             .neq('build.itemsId', '') // On filtre pour n'avoir que les builds avec des items
@@ -103,7 +105,8 @@ export class SupabaseService {
             .gte('CC', _CC)
             .gte('parade', _parade)
             .like('build.enchantement', _sublimationEpique)
-            .like('build.enchantement', _sublimationRelique);
+            .like('build.enchantement', _sublimationRelique)
+            .ilike('build.nameBuild', _name);
 
         if (classe) {
             request.eq('build.classe', classe);
