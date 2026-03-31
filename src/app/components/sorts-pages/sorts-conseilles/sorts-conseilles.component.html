@@ -4,10 +4,20 @@
     </div>
     <div class="content">
         @for (sort of sortsNeutreConseilles(); track sort.gfxId) {
-        <app-sort-image [sort]="sort" typeSort="NEUTRE"></app-sort-image>
+        <div class="sort-conseille">
+            <app-sort-image [sort]="sort" typeSort="NEUTRE"></app-sort-image>
+            <span class="ratio">
+                {{ratioUsageSortNeutre(sort)}}
+            </span>
+        </div>
         }
         @for (sort of sortsPassifConseilles(); track sort.gfxId) {
-        <app-sort-image [sort]="sort" typeSort="PASSIF"></app-sort-image>
+        <div class="sort-conseille">
+            <app-sort-image [sort]="sort" typeSort="PASSIF"></app-sort-image>
+            <span class="ratio">
+                {{ratioUsageSortPassif(sort)}}
+            </span>
+        </div>
         }
     </div>
 </div>

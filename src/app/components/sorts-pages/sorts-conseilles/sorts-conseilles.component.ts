@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap, tap } from 'rxjs';
 import { ClasseFormService } from '../../../services/form/classeFormService';
@@ -21,6 +21,7 @@ export class SortsConseillesComponent {
 
     private readonly countSortNeutreConseilles = new Map<string, number>();
     private readonly countSortPassifConseilles = new Map<string, number>();
+    private readonly nbDeckSorts = signal(0);
     private readonly MAX_SORTS = 18;
     private readonly MAX_SORTS_NEUTRE = 12;
     private readonly MAX_SORTS_PASSIF = 6;
@@ -31,6 +32,7 @@ export class SortsConseillesComponent {
             this.countSortNeutreConseilles.clear();
             this.countSortPassifConseilles.clear();
         }),
+        tap(sorts => this.nbDeckSorts.set(sorts.length)),
         tap(sorts => this.fillCounts(sorts)),
         map(() => this.keepBestSortsConseilles())
     ), {
@@ -41,6 +43,30 @@ export class SortsConseillesComponent {
 
     protected readonly sortsPassifConseilles = computed(() => this.sortsConseilles().slice(this.MAX_SORTS_NEUTRE, this.MAX_SORTS));
 
+    /**
+     * Calcule le ratio d'utilisation d'un sort neutre conseillé parmi les decks de sorts conseillés, en utilisant les compteurs remplis à partir des données récupérées
+     * @param sort 
+     * @returns 
+     */
+    protected ratioUsageSortNeutre(sort: DescriptionSort): string {
+        const count = this.countSortNeutreConseilles.get(sort.gfxId.toString()) || 0;
+        return this.nbDeckSorts() > 0 ? `${Math.round((count / this.nbDeckSorts()) * 100)}%` : '0%';
+    }
+
+    /**
+     * Calcule le ratio d'utilisation d'un sort passif conseillé parmi les decks de sorts conseillés, en utilisant les compteurs remplis à partir des données récupérées
+     * @param sort 
+     * @returns 
+     */
+    protected ratioUsageSortPassif(sort: DescriptionSort): string {
+        const count = this.countSortPassifConseilles.get(sort.gfxId.toString()) || 0;
+        return this.nbDeckSorts() > 0 ? `${Math.round((count / this.nbDeckSorts()) * 100)}%` : '0%';
+    }
+
+    /**
+     * Garde uniquement les sorts conseillés les plus utilisés, en fonction des compteurs remplis 
+     * @returns 
+     */
     private keepBestSortsConseilles(): DescriptionSort[] {
         const bestSortsNeutre = Array.from(this.countSortNeutreConseilles.entries())
             .sort((a, b) => b[1] - a[1])

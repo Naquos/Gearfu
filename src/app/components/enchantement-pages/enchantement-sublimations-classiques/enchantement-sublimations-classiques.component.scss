@@ -4,9 +4,10 @@
     margin: 0 auto 10px;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     background: linear-gradient(145deg, #0D1B2A, #415A77);
-    height: fit-content;
+    height: 85px;
     border-radius: 5px;
     border: 2px solid #0D1B2A;
     text-align: center;
@@ -19,6 +20,7 @@
         align-items: center;
         margin: 5px 0;
         width: 100%;
+        padding-top: 8px;
 
         div {
             width: 49%;

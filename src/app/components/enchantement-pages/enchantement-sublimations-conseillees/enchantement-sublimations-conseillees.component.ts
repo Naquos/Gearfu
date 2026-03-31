@@ -1,4 +1,4 @@
-import { Component, Signal, computed, inject } from '@angular/core';
+import { Component, Signal, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap, tap } from 'rxjs';
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
@@ -30,7 +30,10 @@ export class EnchantementSublimationsCommunityComponent {
     private readonly mapSublimationConseilleeCountEpic = new Map<string, number>();
     private readonly mapSublimationConseilleeCountRelic = new Map<string, number>();
     private readonly nbSublimationsClassiquesConseillees = 10;
-    private readonly nbSublimationsEpiquesReliquesConseillees = 2;
+    private readonly nbSublimationsEpiquesReliquesConseillees = 4;
+    private readonly nbDeckAvecSublimationClassiqueConseillee = signal(0);
+    private readonly nbDeckAvecSublimationEpicConseillee = signal(0);
+    private readonly nbDeckAvecSublimationRelicConseillee = signal(0);
 
     private readonly sublimationsConseillees = toSignal(this.classeFormService.classe$.pipe(
         switchMap(classe => this.supabaseService.getSublimationsConseillees(classe)),
@@ -69,6 +72,32 @@ export class EnchantementSublimationsCommunityComponent {
             return sublimationsConseillees.filter(s => s.isEpic || s.isRelic);
         });
 
+    /**
+     * Calcule le ratio d'utilisation d'une sublimation conseillée parmi les decks de sublimations conseillées,
+     * en utilisant les compteurs remplis à partir des données récupérées
+     * @param sublimation 
+     * @returns 
+     */
+    protected ratioUsageSublimation(sublimation: SublimationsDescriptions): string {
+        if (sublimation.isEpic) {
+            const count = this.mapSublimationConseilleeCountEpic.get(sublimation.id.toString()) ?? 0;
+            return this.nbDeckAvecSublimationEpicConseillee() > 0 ? `${Math.round((count / this.nbDeckAvecSublimationEpicConseillee()) * 100)}%` : '0%';
+        }
+        if (sublimation.isRelic) {
+            const count = this.mapSublimationConseilleeCountRelic.get(sublimation.id.toString()) ?? 0;
+            return this.nbDeckAvecSublimationRelicConseillee() > 0 ? `${Math.round((count / this.nbDeckAvecSublimationRelicConseillee()) * 100)}%` : '0%';
+        }
+        const count = this.mapSublimationConseilleeCount.get(sublimation.id.toString()) ?? 0;
+        return this.nbDeckAvecSublimationClassiqueConseillee() > 0 ? `${Math.round((count / this.nbDeckAvecSublimationClassiqueConseillee()) * 100)}%` : '0%';
+    }
+
+
+    /**
+     * Garde uniquement les sublimations conseillées les plus utilisées, en fonction des compteurs remplis
+     * @param map 
+     * @param nbElements 
+     * @returns 
+     */
     private keepSublimationsMoreUsed(map: Map<string, number>, nbElements: number): SublimationsDescriptions[] {
         const sortedSublimations = Array.from(map.entries())
             .sort((a, b) => b[1] - a[1])
@@ -86,25 +115,55 @@ export class EnchantementSublimationsCommunityComponent {
         return sublimationsDescriptions;
     }
 
+    /**
+     * Garde uniquement les éléments distincts d'une liste de chaînes de caractères
+     * @param list 
+     * @returns 
+     */
+    private distinctElementsList(list: string[]): string[] {
+        return Array.from(new Set(list));
+    }
+
+    /**
+     * Remplit les compteurs de sublimations conseillées à partir des données récupérées
+     * @param sublimationsConseillees 
+     */
     private fillMapSublimationsConseillees(sublimationsConseillees: string[]): void {
+        let nbDeckAvecSublimationClassiqueConseillee = 0;
+        let nbDeckAvecSublimationEpicConseillee = 0;
+        let nbDeckAvecSublimationRelicConseillee = 0;
         sublimationsConseillees.forEach(sublimationsCode => {
             const sublimations = this.chasseFormService.getSublimationIdsByCode(sublimationsCode);
-            sublimations.forEach(sublimationId => {
-                this.incrementalMapCount(sublimationId, this.mapSublimationConseilleeCount);
-            });
+            if (sublimations.length > 0) {
+                nbDeckAvecSublimationClassiqueConseillee++;
+                const distinctSublimations = this.distinctElementsList(sublimations);
+                distinctSublimations.forEach(sublimationId => {
+                    this.incrementalMapCount(sublimationId, this.mapSublimationConseilleeCount);
+                });
+            }
 
             const sublimationEpic = this.chasseFormService.getSublimationIdEpiqueByCode(sublimationsCode);
             if (sublimationEpic) {
+                nbDeckAvecSublimationEpicConseillee++;
                 this.incrementalMapCount(sublimationEpic, this.mapSublimationConseilleeCountEpic);
             }
 
             const sublimationRelic = this.chasseFormService.getSublimationIdReliqueByCode(sublimationsCode);
             if (sublimationRelic) {
+                nbDeckAvecSublimationRelicConseillee++;
                 this.incrementalMapCount(sublimationRelic, this.mapSublimationConseilleeCountRelic);
             }
         });
+        this.nbDeckAvecSublimationClassiqueConseillee.set(nbDeckAvecSublimationClassiqueConseillee);
+        this.nbDeckAvecSublimationEpicConseillee.set(nbDeckAvecSublimationEpicConseillee);
+        this.nbDeckAvecSublimationRelicConseillee.set(nbDeckAvecSublimationRelicConseillee);
     }
 
+    /**
+     * Incrémente le compteur pour une sublimation conseillée
+     * @param sublimationId 
+     * @param map 
+     */
     private incrementalMapCount(sublimationId: string, map: Map<string, number>): void {
         const count = map.get(sublimationId) ?? 0;
         map.set(sublimationId, count + 1);

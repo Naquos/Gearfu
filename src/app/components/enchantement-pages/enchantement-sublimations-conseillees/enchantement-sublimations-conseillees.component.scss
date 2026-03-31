@@ -11,7 +11,6 @@
 
 .card {
     width: 100%;
-    overflow-x: auto;
     background: linear-gradient(145deg, #0d1b2a, #415a77);
     border-radius: 15px;
     padding: 15px;
@@ -38,6 +37,18 @@
     flex-direction: row;
     vertical-align: middle;
     align-items: center;
+    overflow-x: auto;
+
+    .sublimation-conseillee {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .ratio {
+            color: white;
+            font-size: large;
+        }
+    }
 }
 
 .body app-enchantement-sublimations-classiques,

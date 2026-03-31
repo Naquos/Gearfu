@@ -383,7 +383,7 @@ export class SupabaseService {
         return from(this.supabase.from('build')
             .select('sorts')
             .eq('classe', classe)
-            .neq('sorts', '0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0')
+            .filter('sorts', 'not.ilike', '%0-0-0-0-0-0-0-0-0-0%') // On filtre pour n'avoir que les builds avec un certain nombre de sorts renseignés
             .order('createdAt', { ascending: false })
             .limit(100)).pipe(
                 map(({ data, error }) => {

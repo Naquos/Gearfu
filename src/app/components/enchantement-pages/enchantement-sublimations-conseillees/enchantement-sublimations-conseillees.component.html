@@ -6,12 +6,22 @@
             </div>
             <div class="body">
                 @for (sublimation of sublimationsConseilleesClassique(); track sublimation.id) {
-                <app-enchantement-sublimations-classiques
-                    [sublimation]="sublimation"></app-enchantement-sublimations-classiques>
+                <div class="sublimation-conseillee">
+                    <app-enchantement-sublimations-classiques
+                        [sublimation]="sublimation"></app-enchantement-sublimations-classiques>
+                    <span class="ratio">
+                        {{ ratioUsageSublimation(sublimation) }}
+                    </span>
+                </div>
                 }
                 @for (sublimation of sublimationsConseilleesEpicRelic(); track sublimation.id) {
-                <app-enchantement-sublimations-epiques-reliques
-                    [sublimation]="sublimation"></app-enchantement-sublimations-epiques-reliques>
+                <div class="sublimation-conseillee">
+                    <app-enchantement-sublimations-epiques-reliques
+                        [sublimation]="sublimation"></app-enchantement-sublimations-epiques-reliques>
+                    <span class="ratio">
+                        {{ ratioUsageSublimation(sublimation) }}
+                    </span>
+                </div>
                 }
             </div>
         </div>
