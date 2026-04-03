@@ -6,12 +6,18 @@
                 <img [src]="imageService.getItemUrl(81127083)" alt="eclats"> x {{ coutEclatTotal() | formatNumber }}
             </div>
         </div>
+        @if (!readonly()) {
         <button (appActivate)="chasseFormService.setDefaultValue()">X</button>
+        } @else {
+        <div class="no-button"></div>
+        }
     </div>
     <div class="body">
+        @if(!readonly()) {
         <mat-slider min="1" [max]="maxLevel" step="1" showTickMarks discrete>
             <input matSliderThumb [(ngModel)]="level">
         </mat-slider>
+        }
 
         @for (chasse of chasses(); let indexParent = $index; track 'chasse-' + $index) {
         <div class="group-item-chasses" [class.selected]="stateService.indexItemTypeSelected() === $index">
@@ -35,10 +41,9 @@
             </div>
             }
             <div class="sublimations" [class.invalid]="chasse.sublimation && !chasse.sublimation.isValid"
-                (appActivate)="applySublimation(indexParent)"
-                (contextmenu)="$event.preventDefault();chasseFormService.removeSublimation(indexParent);">
+                (appActivate)="applySublimation(indexParent)" (contextmenu)="removeSublimation(indexParent, $event)">
                 <img [src]="imageService.getItemTypeUrl(ItemTypeEnum.SUBLIMATIONS)"
-                    (appActivate)="stateService.selectItemType(displayTypeItem[$index].itemType, $index)"
+                    (appActivate)="selectItemType(displayTypeItem[$index].itemType, $index)"
                     (mouseenter)="openTooltip($event, chasse.sublimation, chasse.sublimation?.level || 1)"
                     (mouseleave)="onMouseLeave()" alt="">
                 <span>{{ nameSublimation(chasse.sublimation) }}</span>
@@ -47,8 +52,8 @@
         }
 
         <div class="epique-relique">
-            <div class="epique" (appActivate)="chasseFormService.removeEpic()"
-                (contextmenu)="$event.preventDefault();chasseFormService.removeEpic();"
+            <div class="epique" (appActivate)="removeSublimationEpic($event)"
+                (contextmenu)="removeSublimationEpic($event)"
                 (mouseenter)="openTooltip($event, enchantement()?.epique, 1)" (mouseleave)="onMouseLeave()">
                 @if(enchantement()?.epique) {
                 <img [src]="imageService.getItemUrl(enchantement()!.epique!.idImage)" alt="">
@@ -57,8 +62,8 @@
                 <img src="chasses/shardEpique.png" alt="">
                 }
             </div>
-            <div class="relique" (appActivate)="chasseFormService.removeRelic()"
-                (contextmenu)="$event.preventDefault();chasseFormService.removeRelic();"
+            <div class="relique" (appActivate)="removeSublimationRelic($event)"
+                (contextmenu)="removeSublimationRelic($event)"
                 (mouseenter)="openTooltip($event, enchantement()?.relique, 1)" (mouseleave)="onMouseLeave()">
                 @if(enchantement()?.relique) {
                 <img [src]="imageService.getItemUrl(enchantement()!.relique!.idImage)" alt="">

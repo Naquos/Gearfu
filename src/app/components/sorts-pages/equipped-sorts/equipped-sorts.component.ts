@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
@@ -25,6 +25,7 @@ export class EquippedSortsComponent {
 
     protected readonly imageService = inject(ImageService);
     protected readonly sortFormService = inject(SortFormService);
+    public readonly readonly = input<boolean>(false);
 
     protected readonly level = toSignal(this.levelFormService.level$, {
         initialValue: 246
@@ -39,6 +40,7 @@ export class EquippedSortsComponent {
     });
 
     protected onDragStart(event: DragEvent, sortId: number, typeSort: TypeSort, index: number): void {
+        if (this.readonly()) { return; }
         if (sortId === 0) {
             event.preventDefault();
             return;
@@ -54,6 +56,7 @@ export class EquippedSortsComponent {
     }
 
     protected onDragOver(event: DragEvent): void {
+        if (this.readonly()) { return; }
         event.preventDefault();
         if (event.dataTransfer) {
             const currentSource = this.sortSelectionService.currentDragSource();
@@ -62,6 +65,7 @@ export class EquippedSortsComponent {
     }
 
     protected onDrop(event: DragEvent, typeSort: TypeSort, index: number): void {
+        if (this.readonly()) { return; }
         event.preventDefault();
         if (event.dataTransfer) {
             const sortId = parseInt(event.dataTransfer.getData('sortId'), 10);
@@ -91,6 +95,8 @@ export class EquippedSortsComponent {
     }
 
     protected selectSortById(sortId: number, typeSort: TypeSort): void {
+        if (this.readonly()) { return; }
+
         if (typeSort === 'NEUTRE') {
             const sort = this.sortService.getDescriptionSortElementaireById(sortId) ||
                 this.sortService.getDescriptionSortActifById(sortId);
@@ -106,6 +112,7 @@ export class EquippedSortsComponent {
     }
 
     protected removeSortFromBuild(typeSort: TypeSort, index: number): void {
+        if (this.readonly()) { return; }
         if (typeSort === 'NEUTRE') {
             this.sortFormService.removeSortNeutreAt(index);
         } else if (typeSort === 'PASSIF') {

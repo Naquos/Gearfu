@@ -212,7 +212,7 @@ export class AppComponent implements OnInit {
   }
 
   private updateFilterOrBuildFromRoute(url: string): void {
-    if (url.includes('/aptitudes') || url.includes('/sorts') || url.includes('/enchantements')) {
+    if (url.includes('/aptitudes') || url.includes('/sorts') || url.includes('/enchantements') || url.includes('/recapitulatif')) {
       this.filterOrBuild = 'aptitudes';
     } else if (url.includes('/search')) {
       this.filterOrBuild = 'search';
@@ -247,7 +247,7 @@ export class AppComponent implements OnInit {
     }).then(() => this.filterOrBuild = filterOrBuild);
   }
 
-  protected redirectToPage(page: 'aptitudes' | 'sorts' | 'enchantements' | 'search' | 'build'): void {
+  protected redirectToPage(page: 'aptitudes' | 'sorts' | 'enchantements' | 'search' | 'build' | 'recapitulatif'): void {
     const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
     const buildId = getBuildIdFromUrl(window.location.href);
     this.router.navigate(['/', buildId, page], {
@@ -279,4 +279,10 @@ export class AppComponent implements OnInit {
     this.filterOrBuild = 'aptitudes';
     this.redirectToPage('enchantements');
   }
+
+  protected redirectToRecapitulatif(): void {
+    this.filterOrBuild = 'aptitudes';
+    this.redirectToPage('recapitulatif');
+  }
+
 }

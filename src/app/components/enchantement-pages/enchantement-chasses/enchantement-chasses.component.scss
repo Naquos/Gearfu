@@ -60,7 +60,8 @@
             }
         }
 
-        button {
+        button,
+        .no-button {
             margin-left: auto;
             width: 50px;
         }
@@ -80,6 +81,8 @@
             display: flex;
             align-items: center;
             margin-bottom: 3px;
+            width: 90%;
+            margin: auto;
 
             app-image-item {
                 margin-right: 10px;
@@ -129,7 +132,7 @@
                 align-items: center;
                 vertical-align: middle;
                 margin-left: 10px;
-                width: 100px;
+                min-width: 100px;
                 position: relative;
 
                 img {
@@ -144,7 +147,6 @@
                     width: 50px;
                     font-size: 13px;
                     height: 40px;
-                    overflow: hidden;
                 }
             }
 
@@ -195,7 +197,6 @@
 
 @media screen and (max-width: 1500px) {
     .card {
-        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
 

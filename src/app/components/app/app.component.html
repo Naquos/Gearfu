@@ -48,6 +48,9 @@
                 <button (click)="redirectToSorts()">{{ "app.sorts" | translate }}</button>
                 <button (click)="redirectToEnchantements()">{{ "app.enchantement" | translate }}</button>
             </div>
+            <div class="filter-recapitulatif">
+                <button (click)="redirectToRecapitulatif()">Récapitulatif</button>
+            </div>
         </div>
         @if (filterOrBuild === 'filter') {
         @if (openSidebar() && !isMobile()) {

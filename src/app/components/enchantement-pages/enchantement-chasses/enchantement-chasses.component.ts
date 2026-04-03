@@ -1,4 +1,4 @@
-import { Component, inject, ViewContainerRef } from '@angular/core';
+import { Component, inject, input, ViewContainerRef } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { ChasseFormService } from '../../../services/form/chasseFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -56,6 +56,7 @@ export class EnchantementChassesComponent extends AbstractDestroyService {
     protected readonly ItemTypeEnum = ItemTypeEnum;
     protected level = 11;
     protected maxLevel = 11;
+    public readonly readonly = input<boolean>(false);
 
     constructor() {
         super();
@@ -127,6 +128,7 @@ export class EnchantementChassesComponent extends AbstractDestroyService {
     }
 
     protected applySublimation(posY: number): void {
+        if (this.readonly()) { return; }
         const sublimationToApply = this.stateService.sublimationToApply();
         if (!sublimationToApply) {
             this.chasseFormService.removeSublimation(posY);
@@ -160,6 +162,7 @@ export class EnchantementChassesComponent extends AbstractDestroyService {
     }
 
     protected applyEffet(posX: number, posY: number, levelItem: number): void {
+        if (this.readonly()) { return; }
         const effectToApply = this.stateService.effectToApply();
         if (!effectToApply) {
             return;
@@ -173,6 +176,7 @@ export class EnchantementChassesComponent extends AbstractDestroyService {
     }
 
     protected changeJokerState(posX: number, posY: number): void {
+        if (this.readonly()) { return; }
         this.chasseFormService.changeJokerState(posX, posY);
     }
 
@@ -189,10 +193,34 @@ export class EnchantementChassesComponent extends AbstractDestroyService {
     }
 
     protected setLevelItem(level: number, index: number): void {
+        if (this.readonly()) { return; }
         this.itemLevels.set(index, level);
     }
 
     protected getLevelItem(index: number): number {
         return this.itemLevels.get(index) || 0;
+    }
+
+    protected removeSublimation(posY: number, event: Event): void {
+        if (this.readonly()) { return; }
+        event.preventDefault();
+        this.chasseFormService.removeSublimation(posY);
+    }
+
+    protected removeSublimationEpic(event: Event): void {
+        if (this.readonly()) { return; }
+        event.preventDefault();
+        this.chasseFormService.removeEpic();
+    }
+
+    protected removeSublimationRelic(event: Event): void {
+        if (this.readonly()) { return; }
+        event.preventDefault();
+        this.chasseFormService.removeRelic();
+    }
+
+    protected selectItemType(itemType: ItemTypeEnum, index: number): void {
+        if (this.readonly()) { return; }
+        this.stateService.selectItemType(itemType, index);
     }
 }

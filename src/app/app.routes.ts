@@ -35,6 +35,10 @@ export const routes: Routes = [
             {
                 path: 'search',
                 loadComponent: () => import('./components/search-pages/search-pages-router/search-pages-router.component').then(m => m.SearchPagesRouterComponent)
+            },
+            {
+                path: 'recapitulatif',
+                loadComponent: () => import('./components/recapitulatif-pages/recapitulatif-router/recapitulatif-router.component').then(m => m.RecapitulatifRouterComponent)
             }
         ]
     }

@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="header">
+        Recapitulatif des aptitudes
+    </div>
+    <div class="content">
+        @for(aptitude of recapitulatifAptitudes(); track aptitude.idAction) {
+        <div class="aptitude">
+            <img [src]="imageService.getActionIdUrl(aptitude.idAction)" alt="">
+            <div class="label">
+                {{aptitude.label | translate}}
+            </div>
+            <div class="value">
+                {{aptitude.value}}
+            </div>
+        </div>
+        }
+    </div>
+</div>

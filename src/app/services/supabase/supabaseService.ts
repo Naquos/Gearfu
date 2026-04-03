@@ -58,7 +58,22 @@ export class SupabaseService {
     /**
      * Récupère la liste des builds triée par le nombre de maitrises décroissant
      * avec leur statistiques associées
-     * @returns 
+     * @param lvlMin niveau minimum du build (optionnel)
+     * @param lvlMax niveau maximum du build (optionnel)
+     * @param classe classe du build (optionnel)
+     * @param orderBy critère de tri des builds (par défaut maitrises)
+     * @param PA nombre minimum de PA (optionnel)
+     * @param PM nombre minimum de PM (optionnel)
+     * @param PW nombre minimum de PW (optionnel)
+     * @param PO nombre minimum de PO (optionnel)
+     * @param CC nombre minimum de CC (optionnel) 
+     * @param parade nombre minimum de parade (optionnel)
+     * @param sublimationEpique id de la sublimation épique présente dans le build (optionnel)
+     * @param sublimationRelique id de la sublimation relique présente dans le build (optionnel)
+     * @param idItems liste d'id d'items présents dans le build (optionnel)
+     * @param sublimations liste de sublimations présentes dans le build (optionnel)
+     * @param name nom du build (optionnel)
+     * @returns Observable contenant la liste des builds filtrés avec leurs statistiques associées
      */
     public getBuildsListByFilter(
         lvlMin = 200,
@@ -386,7 +401,7 @@ export class SupabaseService {
         return from(this.supabase.from('build')
             .select('sorts')
             .eq('classe', classe)
-            .filter('sorts', 'not.ilike', '%0-0-0-0-0-0-0-0-0-0%') // On filtre pour n'avoir que les builds avec un certain nombre de sorts renseignés
+            .filter('sorts', 'not.ilike', '%0-0-0-0%') // On filtre pour n'avoir que les builds avec un certain nombre de sorts renseignés
             .order('createdAt', { ascending: false })
             .limit(100)).pipe(
                 map(({ data, error }) => {

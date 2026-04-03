@@ -81,7 +81,7 @@ header {
     background-color: rgba(255, 0, 0, 0.8);
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 10px 0;
     font-weight: bold;
   }
 }
@@ -108,7 +108,8 @@ header {
 
     .filter-build,
     .filter-aptitudes,
-    .filter-search {
+    .filter-search,
+    .filter-recapitulatif {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -119,7 +120,8 @@ header {
       }
     }
 
-    .filter-search {
+    .filter-search,
+    .filter-recapitulatif {
       button {
         width: 100%;
       }
@@ -237,7 +239,8 @@ header {
   }
 
 
-  .filter-search {
+  .filter-search,
+  .filter-recapitulatif {
     button {
       width: calc(100% - 20px) !important;
     }
