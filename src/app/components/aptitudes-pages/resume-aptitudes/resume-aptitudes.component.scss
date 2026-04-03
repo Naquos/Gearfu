@@ -4,6 +4,7 @@
     margin: auto;
 
     app-bonus {
+        width: fit-content;
         bottom: 90px;
         display: flex;
         margin-top: -50px;
@@ -44,6 +45,7 @@
         align-items: center;
         position: relative;
         z-index: 1;
+        pointer-events: none;
 
         input {
             width: 60px;
@@ -51,6 +53,7 @@
             border: 2px solid var(--color-surface-soft);
             text-align: center;
             border-radius: 10px;
+            pointer-events: auto;
         }
     }
 
