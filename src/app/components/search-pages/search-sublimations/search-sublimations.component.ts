@@ -50,6 +50,7 @@ export class SearchSublimationsComponent {
       this.sublimationService.sublimationsEpique$, this.sublimationService.sublimationsRelique$))
   );
   constructor() {
+    this.controlSearch().setValue('');
     combineLatest([this.sublimationsList$, this.control.valueChanges]).pipe(
       switchMap(([sublimations, controlValue]) => iif(() => controlValue.length > 2, of(sublimations), of([]))),
       map(sublimations => sublimations.filter(s => normalizeString(s.title[this.translateService.currentLang as keyof typeof s.title]).includes(normalizeString(this.control.value)))),
