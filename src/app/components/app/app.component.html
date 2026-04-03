@@ -30,11 +30,23 @@
 }
 
 <div class="content">
+    @if(!isMobile()) {
+    <div class="row-buttons">
+        <button (click)="redirectToSearch()">{{ "app.search-builds" | translate }}</button>
+        <button (click)="redirectToListItems('filter')">{{ "app.filter-item" | translate }}</button>
+        <button (click)="redirectToAptitudes()">{{ "app.aptitudes" | translate }}</button>
+        <button (click)="redirectToSorts()">{{ "app.sorts" | translate }}</button>
+        <button (click)="redirectToEnchantements()">{{ "app.enchantement" | translate }}</button>
+        <button (click)="redirectToRecapitulatif()">Récapitulatif</button>
+        <button (click)="redirectToPage('build')">{{ "app.build" | translate }}</button>
+    </div>
+    }
     @if (buildReadonly()) {
     <div class="readonly">{{ "app.readonly" | translate }}</div>
     }
     <div class="filter" [tabIndex]="-1" [class.open]="displayFilter" appSwipe
         (swipeRight)="displayFilterService.setDisplay(false)">
+        @if(isMobile()) {
         <div class="filter-header">
             <div class="filter-search">
                 <button (click)="redirectToSearch()">{{ "app.search-builds" | translate }}</button>
@@ -52,6 +64,7 @@
                 <button (click)="redirectToRecapitulatif()">Récapitulatif</button>
             </div>
         </div>
+        }
         @if (filterOrBuild === 'filter') {
         @if (openSidebar() && !isMobile()) {
         <app-resume-aptitudes></app-resume-aptitudes>

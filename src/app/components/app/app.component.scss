@@ -74,6 +74,40 @@ header {
   margin-top: $header-size;
   min-height: calc(100vh - $header-size);
 
+  .row-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77);
+    width: calc(100% - $width-filter);
+    margin-left: $width-filter;
+
+    button {
+      border: 2px solid #415A77;
+      border-radius: 10px;
+      box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+      cursor: pointer;
+      width: 100%;
+      height: 40px;
+      background-color: #DFE0E1;
+      font-weight: 600;
+      font-size: 16px;
+      overflow: hidden;
+    }
+
+    button:hover {
+      background-color: #1B263B;
+      color: #DFE0E1;
+    }
+
+    button:active {
+      transform: translateY(2px);
+      box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #DFE0E1;
+      color: white;
+      background-color: #1B263B;
+    }
+  }
+
   .readonly {
     top: $header-size;
     left: 0;
