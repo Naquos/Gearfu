@@ -1,13 +1,13 @@
 :host {
-    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    background: var(--gradient-panel);
     border-radius: 15px;
     padding: 5px;
-    color: white;
+    color: var(--color-text-inverse);
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 8px 8px var(--shadow-panel-color);
     position: relative;
 
     span {
@@ -16,7 +16,7 @@
 
     .header {
         display: flex;
-        border-bottom: 3px solid #415A77;
+        border-bottom: 3px solid var(--color-surface-soft);
         margin-bottom: 10px;
 
         span {
@@ -56,7 +56,7 @@
 
     .condition {
         text-align: center;
-        color: red;
+        color: var(--color-danger);
         font-weight: bolder;
         margin-bottom: 5px;
     }
@@ -173,11 +173,11 @@
         position: absolute;
         right: 10px;
         bottom: 10px;
-        color: #415A77;
-        background-color: #E5E9EA;
+        color: var(--color-text-muted-on-dark);
+        background-color: var(--color-surface-muted-alt);
         border-radius: 50%;
         cursor: pointer;
-        border: 5px solid #0D1B2A;
+        border: 5px solid var(--color-surface-deepest);
     }
 }
 

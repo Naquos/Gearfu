@@ -1,0 +1,46 @@
+:root {
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    --color-surface-page: #81AAB7;
+    --color-surface-footer: #201e1e;
+    --color-surface-deepest: #0D1B2A;
+    --color-surface-deep: #1B263B;
+    --color-surface-mid: #213A57;
+    --color-surface-soft: #415A77;
+    --color-surface-soft-alt: #618A97;
+    --color-surface-muted: #DFE0E1;
+    --color-surface-muted-alt: #E5E9EA;
+    --color-border-strong: #112a47;
+    --color-border-muted: #5e758e;
+
+    --color-text-inverse: var(--color-white);
+    --color-text-primary: var(--color-surface-mid);
+    --color-text-dark: var(--color-surface-deep);
+    --color-text-muted-on-dark: var(--color-surface-soft);
+
+    --color-positive: #4CAF50;
+    --color-positive-alt: #00C896;
+    --color-negative: #F44336;
+    --color-negative-strong: #E63946;
+    --color-negative-alt: #FF6B35;
+    --color-warning: orange;
+    --color-danger: red;
+
+    --overlay-danger: rgba(255, 0, 0, 0.8);
+    --shadow-soft-highlight-color: rgba(240, 240, 240, 0.2);
+    --shadow-panel-color: rgba(0, 0, 0, 0.6);
+    --shadow-header-color: rgba(0, 0, 0, 0.2);
+    --glow-title-color: rgba(240, 240, 255, 0.3);
+    --glow-lock-inner: rgba(255, 255, 255, 0.5);
+    --glow-lock-outer: rgba(0, 0, 0, 1);
+    --skeleton-shimmer-start: rgba(255, 255, 255, 0.05);
+    --skeleton-shimmer-middle: rgba(255, 255, 255, 0.15);
+
+    --gradient-panel: linear-gradient(145deg, var(--color-surface-deepest), var(--color-surface-soft));
+    --gradient-app-header: linear-gradient(to right, var(--color-surface-deepest), var(--color-surface-deep), var(--color-surface-soft));
+    --gradient-sidebar: linear-gradient(to right, var(--color-surface-mid), var(--color-surface-soft-alt));
+    --gradient-positive: linear-gradient(145deg, var(--color-positive), var(--color-positive-alt));
+    --gradient-negative: linear-gradient(145deg, var(--color-negative-strong), var(--color-negative-alt));
+    --gradient-skeleton: linear-gradient(90deg, var(--skeleton-shimmer-start) 25%, var(--skeleton-shimmer-middle) 50%, var(--skeleton-shimmer-start) 75%);
+}

@@ -1,13 +1,13 @@
 :host {
-    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    background: var(--gradient-panel);
     border-radius: 15px;
     padding: 5px;
-    color: white;
+    color: var(--color-text-inverse);
     height: fit-content;
     width: 600px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 8px 8px var(--shadow-panel-color);
     position: relative;
 
     span {
@@ -20,20 +20,21 @@
     }
 
     .green {
-        background: linear-gradient(145deg, #4CAF50, #00C896 );
+        background: var(--gradient-positive);
     }
 
     .red {
-        background: linear-gradient(145deg, #E63946 , #FF6B35 );
+        background: var(--gradient-negative);
     }
 
-    .green, .red {
-        color:#0D1B2A;
+    .green,
+    .red {
+        color: var(--color-surface-deepest);
     }
 
     .header {
         display: flex;
-        border-bottom: 3px solid #415A77;
+        border-bottom: 3px solid var(--color-surface-soft);
         margin-bottom: 10px;
 
         span {
@@ -42,20 +43,22 @@
                 margin: 0 10px;
             }
         }
+
         .imgContainer {
             width: 50px;
             height: 50px;
-            
+
             img {
                 width: 40px;
                 cursor: pointer;
             }
+
             img:hover {
                 width: 50px;
             }
         }
     }
-    
+
     .content {
         height: 100%;
         display: flex;
@@ -79,7 +82,7 @@
             margin-right: 10px;
         }
 
-        .title{
+        .title {
             display: flex;
             max-width: 30%;
             flex-direction: column;
@@ -95,7 +98,7 @@
                 margin: auto;
             }
         }
-        
+
         p {
             display: flex;
             align-items: center;
@@ -110,30 +113,31 @@
         .poids {
             align-items: center;
             display: flex;
-            
+
             img {
                 width: 22px;
                 height: 22px;
                 margin: 0 10px;
             }
+
             text-align: center;
         }
     }
 
-    .iconComparator {    
+    .iconComparator {
         position: absolute;
         right: 10px;
         bottom: 10px;
-        color: #415A77;
-        background-color: #E5E9EA;
+        color: var(--color-text-muted-on-dark);
+        background-color: var(--color-surface-muted-alt);
         border-radius: 50%;
         cursor: pointer;
-        border: 5px solid #0D1B2A;
+        border: 5px solid var(--color-surface-deepest);
     }
 }
 
 
-@media screen and (max-width: 700px) { 
+@media screen and (max-width: 700px) {
     :host {
         width: 300px;
         font-size: 12px;
@@ -141,8 +145,8 @@
 }
 
 ::ng-deep {
-    @media screen and (max-width: 700px) { 
-        .cdk-overlay-pane  {
+    @media screen and (max-width: 700px) {
+        .cdk-overlay-pane {
             transform: none !important;
         }
     }

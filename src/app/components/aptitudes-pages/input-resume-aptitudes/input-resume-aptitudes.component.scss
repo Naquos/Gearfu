@@ -1,21 +1,23 @@
 .change {
-    border: 2px #5e758e dashed;
-    border-radius: 5px;   
+    border: 2px var(--color-border-muted) dashed;
+    border-radius: 5px;
     min-width: fit-content;
     margin: -2px;
 }
+
 div {
-    display:flex;
+    display: flex;
     align-items: center;
     width: 100%;
 
     input {
         width: 100%;
     }
-    
+
     span {
         margin-left: auto;
     }
+
     img {
         margin-right: 5px;
         width: 22px;
@@ -23,21 +25,22 @@ div {
     }
 
     .positif {
-        color: #4CAF50;
+        color: var(--color-positive);
     }
+
     .negatif {
-        color: #F44336;
+        color: var(--color-negative);
     }
 }
 
 
 @media screen and (max-width: 700px) {
     :host {
-        font-size: 11px!important;
+        font-size: 11px !important;
     }
 
     img {
-        width: 16px!important;
-        height: 16px!important;
+        width: 16px !important;
+        height: 16px !important;
     }
 }

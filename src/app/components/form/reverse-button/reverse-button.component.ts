@@ -6,8 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-reverse-button',
   imports: [ButtonCheckboxComponent, TranslateModule],
-  templateUrl: './reverse-button.component.html',
-  styleUrl: './reverse-button.component.scss'
+  templateUrl: './reverse-button.component.html'
 })
 export class ReverseButtonComponent {
   protected readonly reverseFormService = inject(ReverseFormService);

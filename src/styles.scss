@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@use "styles/colors";
 @use "styles/mixin" as *;
+@use "styles/panel-theme";
 
 html,
 body {
@@ -9,7 +11,7 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: #81AAB7;
+    background-color: var(--color-surface-page);
     flex-direction: column;
     display: flex;
     height: 100%;
@@ -28,30 +30,10 @@ app-root {
     white-space: pre-wrap !important;
 }
 
-
-button {
-    margin: 5px;
-    border: 2px solid #415A77;
-    box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
-    cursor: pointer;
-    background-color: white;
-    color: #213A57;
-    font-weight: 600;
-    font-size: 17px;
-    height: 34px;
-    width: 41px;
-    border-radius: 25%;
-}
-
-button:active {
-    transform: translateY(2px);
-    box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #1B263B;
-}
-
 footer {
     width: 100%;
-    background-color: #201e1e;
-    color: white;
+    background-color: var(--color-surface-footer);
+    color: var(--color-text-inverse);
     text-align: center;
     position: static;
     bottom: 0;

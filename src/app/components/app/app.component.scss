@@ -11,9 +11,9 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 15px 50px;
-  background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77);
-  color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  background: var(--gradient-app-header);
+  color: var(--color-text-inverse);
+  box-shadow: 0 4px 6px var(--shadow-header-color);
   top: 0;
   z-index: 1;
 
@@ -42,7 +42,7 @@ header {
     margin-right: auto;
     margin-left: 25px;
     font-size: x-large;
-    text-shadow: 6px 4px 6px rgba(240, 240, 255, 0.3);
+    text-shadow: 6px 4px 6px var(--glow-title-color);
     font-family: auto;
     letter-spacing: 3px;
   }
@@ -78,33 +78,33 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77);
+    background: var(--gradient-app-header);
     width: calc(100% - $width-filter);
     margin-left: $width-filter;
 
     button {
-      border: 2px solid #415A77;
+      border: 2px solid var(--color-surface-soft);
       border-radius: 10px;
-      box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+      box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color);
       cursor: pointer;
       width: 100%;
       height: 40px;
-      background-color: #DFE0E1;
+      background-color: var(--color-surface-muted);
       font-weight: 600;
       font-size: 16px;
       overflow: hidden;
     }
 
     button:hover {
-      background-color: #1B263B;
-      color: #DFE0E1;
+      background-color: var(--color-surface-deep);
+      color: var(--color-surface-muted);
     }
 
     button:active {
       transform: translateY(2px);
-      box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #DFE0E1;
-      color: white;
-      background-color: #1B263B;
+      box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-muted);
+      color: var(--color-text-inverse);
+      background-color: var(--color-surface-deep);
     }
   }
 
@@ -112,8 +112,8 @@ header {
     top: $header-size;
     left: 0;
     width: 100%;
-    background-color: rgba(255, 0, 0, 0.8);
-    color: white;
+    background-color: var(--overlay-danger);
+    color: var(--color-text-inverse);
     text-align: center;
     padding: 10px 0;
     font-weight: bold;
@@ -122,9 +122,9 @@ header {
 
 .filter {
   z-index: 10;
-  background: linear-gradient(to right, #213A57, #618A97);
+  background: var(--gradient-sidebar);
   opacity: 0.9;
-  color: white;
+  color: var(--color-text-inverse);
   font-weight: 400;
 
   position: fixed;
@@ -135,7 +135,7 @@ header {
   padding-bottom: 50px;
 
   .filter-header {
-    background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77);
+    background: var(--gradient-app-header);
     display: flex;
     flex-direction: column;
 
@@ -240,7 +240,7 @@ header {
 
 ::ng-deep {
   .mat-mdc-menu-panel {
-    background: linear-gradient(to right, #0D1B2A, #1B263B, #415A77) !important;
+    background: var(--gradient-app-header) !important;
     min-width: 0 !important;
   }
 }
@@ -262,7 +262,7 @@ header {
     height: calc(100vh - $header-size);
     overflow-y: scroll;
 
-    background: #1B263B;
+    background: var(--color-surface-deep);
     width: $item-choose-size;
   }
 
@@ -294,15 +294,15 @@ header {
       width: 50px;
 
 
-      color: #213A57;
+      color: var(--color-text-primary);
       font-weight: 400;
       font-size: 16px;
 
-      background-color: #DFE0E1;
+      background-color: var(--color-surface-muted);
       cursor: pointer;
       border-radius: 10px;
-      border: 2px solid #415A77;
-      box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2);
+      border: 2px solid var(--color-surface-soft);
+      box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color);
 
       img {
         width: 30px;
@@ -313,10 +313,10 @@ header {
     }
 
     .zenithButton:active {
-      background-color: #1B263B;
-      color: #DFE0E1;
+      background-color: var(--color-surface-deep);
+      color: var(--color-surface-muted);
       transform: translateY(2px);
-      box-shadow: 2px 3px 2px rgba(240, 240, 240, 0.2), inset 3px 2px 5px #DFE0E1;
+      box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-muted);
     }
 
     .flagButton {

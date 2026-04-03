@@ -1,17 +1,17 @@
 :host {
-    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    background: var(--gradient-panel);
     border-radius: 15px;
     padding: 10px;
-    color: white;
+    color: var(--color-text-inverse);
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 8px 8px var(--shadow-panel-color);
     position: relative;
 
-       
+
     .header {
         display: flex;
-        border-bottom: 3px solid #415A77;
+        border-bottom: 3px solid var(--color-surface-soft);
         margin-bottom: 10px;
 
         span {
@@ -22,4 +22,3 @@
         }
     }
 }
- 

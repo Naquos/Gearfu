@@ -1,10 +1,9 @@
-
 @mixin EnfoncementClair {
     transform: translateY(2px);
-    box-shadow:  inset 3px 2px 5px #DFE0E1;
+    box-shadow: inset 3px 2px 5px var(--color-surface-muted);
 }
 
 @mixin EnfoncementFonce {
     transform: translateY(2px);
-    box-shadow:  inset 3px 2px 5px #1B263B;
+    box-shadow: inset 3px 2px 5px var(--color-surface-deep);
 }

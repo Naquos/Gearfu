@@ -1,8 +1,8 @@
 :host {
 
-    background: linear-gradient(to right, #213A57, #618A97);
+    background: var(--gradient-sidebar);
     opacity: 0.9;
-    color: white;
+    color: var(--color-text-inverse);
     font-weight: 400;
 
     .filter-content {

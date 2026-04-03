@@ -1,5 +1,5 @@
 :host {
-    background: linear-gradient(to right, #213A57, #618A97);
+    background: var(--gradient-sidebar);
     width: 100%;
 
     .content {
@@ -11,7 +11,8 @@
 
         span {
             text-align: center;
-            color: white;
+            color: var(--color-text-inverse);
+
             img {
                 position: relative;
                 top: 3px;
@@ -22,7 +23,7 @@
 
     .info {
         text-align: center;
-        color: white;
+        color: var(--color-text-inverse);
         width: 100%;
     }
 }

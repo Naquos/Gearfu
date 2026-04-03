@@ -1,0 +1,128 @@
+:root {
+    --panel-background: var(--gradient-panel);
+    --panel-border-color: var(--color-surface-soft);
+    --panel-radius: 15px;
+    --panel-shadow: 0px 8px 8px var(--shadow-panel-color);
+    --panel-text-color: var(--color-text-inverse);
+
+    --button-border-color: var(--color-surface-soft);
+    --button-shadow: 2px 3px 2px var(--shadow-soft-highlight-color);
+    --button-shadow-active: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-deep);
+    --button-background: var(--color-white);
+    --button-background-active: var(--color-surface-deep);
+    --button-color: var(--color-text-primary);
+    --button-color-active: var(--color-text-inverse);
+    --button-font-weight: 600;
+    --button-font-size: 17px;
+    --button-height: 34px;
+    --button-width: 41px;
+    --button-radius: 25%;
+    --button-margin: 5px;
+
+    --icon-button-background: var(--color-surface-muted);
+    --icon-button-background-active: var(--color-surface-deep);
+    --icon-button-color: var(--color-text-dark);
+    --icon-button-color-active: var(--color-surface-muted);
+}
+
+.card {
+    background: var(--panel-background);
+    border-radius: var(--panel-radius);
+    color: var(--panel-text-color);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--panel-shadow);
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.card .header,
+.header.card-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid var(--panel-border-color);
+    margin-bottom: 10px;
+}
+
+button {
+    margin: var(--button-margin);
+    border: 2px solid var(--button-border-color);
+    box-shadow: var(--button-shadow);
+    cursor: pointer;
+    background-color: var(--button-background);
+    color: var(--button-color);
+    font-weight: var(--button-font-weight);
+    font-size: var(--button-font-size);
+    height: var(--button-height);
+    width: var(--button-width);
+    border-radius: var(--button-radius);
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: var(--button-shadow-active);
+    color: var(--button-color-active);
+    background-color: var(--button-background-active);
+}
+
+.code-aptitudes {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 5px 0;
+    color: var(--panel-text-color);
+    width: 90%;
+    margin-left: 5%;
+    background: var(--panel-background);
+    border-radius: var(--panel-radius);
+
+    input {
+        margin-left: 10px;
+        width: 50%;
+        border: 2px solid var(--panel-border-color);
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 16px;
+    }
+
+    mat-icon {
+        background-color: var(--icon-button-background);
+        color: var(--icon-button-color);
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        align-content: center;
+        cursor: pointer;
+        border-radius: 25%;
+        border: 2px solid var(--panel-border-color);
+        box-shadow: var(--button-shadow);
+        margin-left: 5px;
+    }
+
+    mat-icon:active {
+        background-color: var(--icon-button-background-active);
+        color: var(--icon-button-color-active);
+        transform: translateY(2px);
+        box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-muted);
+    }
+}
+
+.form-action-icon {
+    width: 56px;
+    height: 56px;
+    border: 2px solid var(--button-border-color);
+    box-shadow: var(--button-shadow);
+    cursor: pointer;
+    background-color: var(--button-background);
+    color: var(--button-color);
+    font-size: 50px;
+    border-radius: 10px;
+    text-align: center;
+    align-content: center;
+}
+
+.form-action-icon:active {
+    transform: translateY(2px);
+    box-shadow: var(--button-shadow-active);
+}

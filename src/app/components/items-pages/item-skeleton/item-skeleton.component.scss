@@ -1,17 +1,17 @@
 .skeleton-item {
-    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    background: var(--gradient-panel);
     border-radius: 15px;
     padding: 5px;
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 8px 8px var(--shadow-panel-color);
 }
 
 .skeleton-header {
     display: flex;
-    border-bottom: 3px solid #415A77;
+    border-bottom: 3px solid var(--color-surface-soft);
     margin-bottom: 10px;
     padding: 10px;
     justify-content: space-around;
@@ -19,7 +19,7 @@
     .skeleton-box {
         width: 40px;
         height: 40px;
-        background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 75%);
+        background: var(--gradient-skeleton);
         background-size: 200% 100%;
         animation: skeleton-loading 1.5s ease-in-out infinite;
         border-radius: 8px;
@@ -49,7 +49,7 @@
         width: 80px;
         height: 80px;
         margin: auto;
-        background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 75%);
+        background: var(--gradient-skeleton);
         background-size: 200% 100%;
         animation: skeleton-loading 1.5s ease-in-out infinite;
         border-radius: 8px;
@@ -76,7 +76,7 @@
 
 .skeleton-text {
     height: 16px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 75%);
+    background: var(--gradient-skeleton);
     background-size: 200% 100%;
     animation: skeleton-loading 1.5s ease-in-out infinite;
     border-radius: 4px;
@@ -92,7 +92,7 @@
     .skeleton-box {
         width: 80px;
         height: 80px;
-        background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 75%);
+        background: var(--gradient-skeleton);
         background-size: 200% 100%;
         animation: skeleton-loading 1.5s ease-in-out infinite;
         border-radius: 8px;
@@ -103,6 +103,7 @@
     0% {
         background-position: 200% 0;
     }
+
     100% {
         background-position: -200% 0;
     }

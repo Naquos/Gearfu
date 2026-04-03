@@ -10,8 +10,7 @@ import { CodeAptitudesService } from '../../../services/codeAptitudesService';
     selector: 'app-code-aptitudes',
     standalone: true,
     imports: [TranslateModule, MatIconModule, MatTooltipModule, ActivateDirective],
-    templateUrl: './code-aptitudes.component.html',
-    styleUrl: './code-aptitudes.component.scss'
+    templateUrl: './code-aptitudes.component.html'
 })
 export class CodeAptitudesComponent {
     private readonly codeAptitudesService = inject(CodeAptitudesService);
