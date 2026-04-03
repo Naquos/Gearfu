@@ -1,0 +1,33 @@
+.content {
+    width: 95%;
+    margin: 10px auto;
+
+    .card {
+        padding: 0 10px;
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+
+
+
+            app-name-build,
+            app-import-build {
+                width: 45%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .row {
+        flex-direction: column !important;
+    }
+
+    app-name-build,
+    app-import-build {
+        width: 100% !important;
+    }
+}

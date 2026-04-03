@@ -111,12 +111,18 @@ header {
   .readonly {
     top: $header-size;
     left: 0;
-    width: 100%;
+    width: calc(100% - $width-filter);
+    margin-left: $width-filter;
     background-color: var(--overlay-danger);
     color: var(--color-text-inverse);
     text-align: center;
     padding: 10px 0;
     font-weight: bold;
+  }
+
+  .readonly-mobile {
+    width: calc(100% - $item-choose-size);
+    margin-left: $item-choose-size;
   }
 }
 
@@ -160,6 +166,14 @@ header {
         width: 100%;
       }
     }
+  }
+
+  .build-name {
+    margin: 0;
+    min-width: 23px;
+    padding: 13px 10px;
+    text-align: center;
+    background: var(--panel-background);
   }
 
 

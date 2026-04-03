@@ -42,7 +42,7 @@
     </div>
     }
     @if (buildReadonly()) {
-    <div class="readonly">{{ "app.readonly" | translate }}</div>
+    <div class="readonly" [class.readonly-mobile]="isMobile()">{{ "app.readonly" | translate }}</div>
     }
     <div class="filter" [tabIndex]="-1" [class.open]="displayFilter" appSwipe
         (swipeRight)="displayFilterService.setDisplay(false)">
@@ -67,20 +67,14 @@
         }
         @if (filterOrBuild === 'filter') {
         @if (openSidebar() && !isMobile()) {
+        <h3 class="build-name">{{ saveBuildService.getNameFromBuild() }}</h3>
         <app-resume-aptitudes></app-resume-aptitudes>
         } @else {
         <app-filters></app-filters>
         }
-        } @else if (filterOrBuild === 'build') {
-        <div class="build-content">
-            <app-name-build></app-name-build>
-            <app-import-build></app-import-build>
-            <app-builds-list></app-builds-list>
-        </div>
         } @else if (filterOrBuild === 'aptitudes') {
-        <div class="aptitudes-content">
-            <app-resume-aptitudes></app-resume-aptitudes>
-        </div>
+        <h3 class="build-name">{{ saveBuildService.getNameFromBuild() }}</h3>
+        <app-resume-aptitudes></app-resume-aptitudes>
         } @else if(filterOrBuild === 'search') {
         <div class="filter-content">
             <app-filter-search-build></app-filter-search-build>

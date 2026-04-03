@@ -109,8 +109,8 @@ button:active {
 }
 
 .form-action-icon {
-    width: 56px;
-    height: 56px;
+    width: 56px !important;
+    height: 56px !important;
     border: 2px solid var(--button-border-color);
     box-shadow: var(--button-shadow);
     cursor: pointer;

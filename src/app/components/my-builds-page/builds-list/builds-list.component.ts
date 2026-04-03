@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BuildComponent } from '../build/build.component';
+import { BuildComponent } from '../../items-pages/build/build.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SaveBuildService } from '../../../services/saveBuildService';
 

@@ -196,7 +196,7 @@ export class SaveBuildService {
      * Recupère le nom du builds s'il existe
      * @returns 
      */
-    private getNameFromBuild(): string {
+    public getNameFromBuild(): string {
         const id = this.currentBuildId.getValue() || '';
         const currentBuilds = this.buildList.getValue();
         const build = currentBuilds.find(b => b.id === id);

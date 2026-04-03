@@ -1,0 +1,44 @@
+app-build {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    padding: 0 10px;
+    width: fit-content;
+}
+
+h3 {
+    color: white;
+}
+
+.no-build {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: white;
+
+    span {
+        font-size: 200px
+    }
+}
+
+.build-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+@media screen and (max-width: 1450px) {
+    .build-list {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .build-list {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+}

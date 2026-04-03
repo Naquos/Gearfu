@@ -18,7 +18,7 @@ export const routes: Routes = [
             },
             {
                 path: 'build',
-                loadComponent: () => import('./components/items-pages/list-item-router/list-item-router.component').then(m => m.ListItemRouterComponent)
+                loadComponent: () => import('./components/my-builds-page/my-builds/my-builds.component').then(m => m.MyBuildsComponent)
             },
             {
                 path: 'aptitudes',

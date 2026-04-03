@@ -8,9 +8,6 @@ import { SwipeDirective } from '../../directives/swipe.directive';
 import { KeyEnum } from '../../models/enum/keyEnum';
 import { LocalStorageService } from '../../services/data/localStorageService';
 import { ResetFormService } from '../../services/resetFormService';
-import { BuildsListComponent } from "../items-pages/builds-list/builds-list.component";
-import { ImportBuildComponent } from "../form/import-build/import-build.component";
-import { NameBuildComponent } from "../form/name-build/name-build.component";
 import { ItemsService } from '../../services/data/itemsService';
 import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
 import { MonsterDropService } from '../../services/data/monsterDropService';
@@ -35,7 +32,7 @@ import { FiltersComponent } from "../items-pages/filters/filters.component";
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatTooltip } from "@angular/material/tooltip";
 
-type column = 'filter' | 'build' | 'aptitudes' | 'search';
+type column = 'filter' | 'aptitudes' | 'search';
 
 @Component({
   selector: 'app-root',
@@ -46,9 +43,6 @@ type column = 'filter' | 'build' | 'aptitudes' | 'search';
     ItemChooseComponent,
     TranslateModule,
     SwipeDirective,
-    BuildsListComponent,
-    ImportBuildComponent,
-    NameBuildComponent,
     RouterOutlet,
     ResumeAptitudesComponent,
     FilterSearchBuildComponent,
@@ -77,7 +71,7 @@ export class AppComponent implements OnInit {
   private readonly sortLevelService = inject(SortLevelService);
   private readonly elementSelectorService = inject(ElementSelectorService);
   private readonly zenithService = inject(ZenithService);
-  private readonly saveBuildService = inject(SaveBuildService);
+  protected readonly saveBuildService = inject(SaveBuildService);
 
   protected displayFilter = false;
   protected filterOrBuild: column = "filter";
@@ -212,12 +206,10 @@ export class AppComponent implements OnInit {
   }
 
   private updateFilterOrBuildFromRoute(url: string): void {
-    if (url.includes('/aptitudes') || url.includes('/sorts') || url.includes('/enchantements') || url.includes('/recapitulatif')) {
+    if (url.includes('/aptitudes') || url.includes('/sorts') || url.includes('/enchantements') || url.includes('/recapitulatif') || url.includes('/build')) {
       this.filterOrBuild = 'aptitudes';
     } else if (url.includes('/search')) {
       this.filterOrBuild = 'search';
-    } else if (url.includes('/build')) {
-      this.filterOrBuild = 'build';
     } else {
       this.filterOrBuild = 'filter';
     }
@@ -256,7 +248,7 @@ export class AppComponent implements OnInit {
   }
 
   protected redirectToBuild(): void {
-    this.filterOrBuild = 'build';
+    this.filterOrBuild = 'aptitudes';
     this.redirectToPage('build');
   }
 
