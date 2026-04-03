@@ -3,6 +3,31 @@
 @use "styles/mixin" as *;
 @use "styles/panel-theme";
 
+// Scrollbar — Chrome, Edge, Safari (Webkit)
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-surface-deepest);
+    border-radius: 3px;
+
+    &:hover {
+        background: var(--color-surface-deep);
+    }
+}
+
+// Scrollbar — Firefox, Chrome 121+ (standard CSS)
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-surface-deepest) transparent;
+}
+
 html,
 body {
     height: 100%;
