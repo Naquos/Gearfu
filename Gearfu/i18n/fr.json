@@ -9,6 +9,7 @@
         "resistances-elementaires": " Résistances élementaires"
     },
     "app": {
+        "recapitulatif": "Récapitulatif",
         "filter-item": "Filtre des items",
         "sort-item": "Tri des items",
         "build": "Mes builds",
@@ -323,6 +324,9 @@
         "DENOUEMENT": "Denouement",
         "DEMESURE": "Démesure",
         "CHAOS": "Chaos"
+    },
+    "recapitulatif-aptitudes": {
+        "label": "Récapitulatif des aptitudes"
     },
     "sorts": {
         "code-deck": "Code deck",
