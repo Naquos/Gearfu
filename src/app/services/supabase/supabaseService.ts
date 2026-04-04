@@ -109,6 +109,7 @@ export class SupabaseService {
         const _name = !name ? '%%' : `%${name}%`;
         const request = this.supabase.from('statistics')
             .select('*, build!inner(*)')
+            .eq('build.hide', false) // On filtre pour n'avoir que les builds publics
             .neq('build.itemsId', '') // On filtre pour n'avoir que les builds avec des items
             .gte('build.level', _levelMin)
             .lte('build.level', _levelMax)
@@ -217,6 +218,7 @@ export class SupabaseService {
             elementSelector: '',
             compressed: false,
             token: this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '',
+            hide: false
         };
         return from(this.supabase.from('build').insert([newBuild]).select()).pipe(
             map(({ data, error }) => {

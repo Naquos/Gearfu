@@ -16,4 +16,5 @@ export interface Build {
     createdAt?: number;
     codeZenith?: string;
     token?: string;
+    hide?: boolean;
 }

@@ -1,0 +1,19 @@
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 0;
+    min-width: 23px;
+    padding: 13px 10px;
+    text-align: center;
+    background: var(--panel-background);
+
+    h3 {
+        margin: 0;
+    }
+
+    mat-icon {
+        cursor: pointer;
+    }
+}

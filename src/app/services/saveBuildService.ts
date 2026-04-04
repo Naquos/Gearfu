@@ -16,6 +16,7 @@ import { ClassIdEnum } from "../models/enum/classIdEnum";
 import { Statistics } from "../models/data/statistics";
 import { RecapStatsService } from "./recapStatsService";
 import { NO_BUILD } from "../models/utils/utils";
+import { VisibilityBuildFormService } from "./form/visibilityBuildFormService";
 
 @Injectable({ providedIn: 'root' })
 export class SaveBuildService {
@@ -31,6 +32,7 @@ export class SaveBuildService {
     private readonly supabaseService = inject(SupabaseService);
     private readonly router = inject(Router);
     private readonly recapStatsService = inject(RecapStatsService);
+    private readonly visibilityBuildFormService = inject(VisibilityBuildFormService);
 
     private readonly buildList = new BehaviorSubject<Build[]>([]);
     public readonly buildList$ = this.buildList.asObservable();
@@ -145,9 +147,10 @@ export class SaveBuildService {
             this.codeAptitudesService.code$,
             this.sortFormService.codeBuild$,
             this.chasseFormService.enchantement$,
-            this.buildLoading$
+            this.visibilityBuildFormService.visibilityBuild$,
+            this.buildLoading$,
         ]).pipe(
-            filter(([, , , , , , buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
+            filter(([, , , , , , , buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
             tap(() => {
                 const token_build = this.currentTokenBuild.getValue();
                 const token_user = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN);
@@ -175,7 +178,8 @@ export class SaveBuildService {
             sorts: this.sortFormService.getCodeBuild(),
             enchantement: this.chasseFormService.getCodeBuild(),
             elementSelector: this.elementSelectorService.encodeForBuild(),
-            compressed: false
+            compressed: false,
+            hide: !this.visibilityBuildFormService.visibilityBuild(),
         };
         this.currentNameBuild.next(build.nameBuild!);
         this.supabaseService.updateBuild(build).pipe(
@@ -224,7 +228,8 @@ export class SaveBuildService {
             elementSelector: this.elementSelectorService.encodeForBuild(),
             compressed: false,
             createdAt: Date.now(),
-            token: token || undefined
+            token: token || undefined,
+            hide: !this.visibilityBuildFormService.visibilityBuild()
         };
         this.currentNameBuild.next(build.nameBuild!);
         if (!build.id || build.id === NO_BUILD) {
@@ -290,6 +295,7 @@ export class SaveBuildService {
         this.sortFormService.decodeAndSaveCodeBuild(build.sorts ?? "0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
         this.chasseFormService.decodeAndSaveCodeBuild(build.enchantement ?? "");
         this.buildReadonly.next(!build.token || build.token !== this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN));
+        this.visibilityBuildFormService.setValue(!build.hide);
 
         of(saveStatistics).pipe(switchMap(save => {
             if (save) {

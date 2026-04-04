@@ -31,6 +31,7 @@ import { FilterSidebarService } from '../../services/form/filterSidebarService';
 import { FiltersComponent } from "../items-pages/filters/filters.component";
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatTooltip } from "@angular/material/tooltip";
+import { CurrentBuildNameComponent } from '../current-build-name/current-build-name.component';
 
 type column = 'filter' | 'aptitudes' | 'search';
 
@@ -47,7 +48,8 @@ type column = 'filter' | 'aptitudes' | 'search';
     ResumeAptitudesComponent,
     FilterSearchBuildComponent,
     FiltersComponent,
-    MatTooltip
+    MatTooltip,
+    CurrentBuildNameComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss', './birthday.scss']
@@ -78,7 +80,6 @@ export class AppComponent implements OnInit {
   protected readonly openSidebar = toSignal(this.filterSidebarService.open$, { initialValue: true });
   protected readonly isMobile = signal(isMobile());
   protected readonly buildReadonly = toSignal(this.saveBuildService.buildReadonly$, { initialValue: false });
-  protected readonly currentNameBuild = toSignal(this.saveBuildService.currentNameBuild$, { initialValue: '' });
 
   protected readonly isBirthday = computed(() => {
     const today = new Date();
