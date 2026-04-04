@@ -67,13 +67,13 @@
         }
         @if (filterOrBuild === 'filter') {
         @if (openSidebar() && !isMobile()) {
-        <h3 class="build-name">{{ saveBuildService.getNameFromBuild() }}</h3>
+        <h3 class="build-name">{{ currentNameBuild() }}</h3>
         <app-resume-aptitudes></app-resume-aptitudes>
         } @else {
         <app-filters></app-filters>
         }
         } @else if (filterOrBuild === 'aptitudes') {
-        <h3 class="build-name">{{ saveBuildService.getNameFromBuild() }}</h3>
+        <h3 class="build-name">{{ currentNameBuild() }}</h3>
         <app-resume-aptitudes></app-resume-aptitudes>
         } @else if(filterOrBuild === 'search') {
         <div class="filter-content">

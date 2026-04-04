@@ -71,13 +71,14 @@ export class AppComponent implements OnInit {
   private readonly sortLevelService = inject(SortLevelService);
   private readonly elementSelectorService = inject(ElementSelectorService);
   private readonly zenithService = inject(ZenithService);
-  protected readonly saveBuildService = inject(SaveBuildService);
+  private readonly saveBuildService = inject(SaveBuildService);
 
   protected displayFilter = false;
   protected filterOrBuild: column = "filter";
   protected readonly openSidebar = toSignal(this.filterSidebarService.open$, { initialValue: true });
   protected readonly isMobile = signal(isMobile());
   protected readonly buildReadonly = toSignal(this.saveBuildService.buildReadonly$, { initialValue: false });
+  protected readonly currentNameBuild = toSignal(this.saveBuildService.currentNameBuild$, { initialValue: '' });
 
   protected readonly isBirthday = computed(() => {
     const today = new Date();

@@ -44,6 +44,9 @@ export class SaveBuildService {
     private readonly buildLoading = new BehaviorSubject<boolean>(false);
     public readonly buildLoading$ = this.buildLoading.asObservable();
 
+    private readonly currentNameBuild = new BehaviorSubject<string>('');
+    public readonly currentNameBuild$ = this.currentNameBuild.asObservable();
+
     constructor() {
         const savedBuilds = this.localStorageService.getItem<Build[]>(KeyEnum.KEY_SAVE_BUILD_ALL) || [];
         this.buildList.next(savedBuilds);
@@ -174,6 +177,7 @@ export class SaveBuildService {
             elementSelector: this.elementSelectorService.encodeForBuild(),
             compressed: false
         };
+        this.currentNameBuild.next(build.nameBuild!);
         this.supabaseService.updateBuild(build).pipe(
             switchMap(() => this.updateOrCreateStatistics(build))).subscribe();
     }
@@ -196,7 +200,7 @@ export class SaveBuildService {
      * Recupère le nom du builds s'il existe
      * @returns 
      */
-    public getNameFromBuild(): string {
+    private getNameFromBuild(): string {
         const id = this.currentBuildId.getValue() || '';
         const currentBuilds = this.buildList.getValue();
         const build = currentBuilds.find(b => b.id === id);
@@ -222,6 +226,7 @@ export class SaveBuildService {
             createdAt: Date.now(),
             token: token || undefined
         };
+        this.currentNameBuild.next(build.nameBuild!);
         if (!build.id || build.id === NO_BUILD) {
             return; // Si on n'a pas d'id de build, on ne peut pas sauvegarder dans le localStorage
         }
@@ -273,6 +278,7 @@ export class SaveBuildService {
      * @param saveStatistics indique si on doit sauvegarder les statistiques du build actuel
      */
     public loadBuild(build: Build, saveStatistics = false): void {
+        this.currentNameBuild.next(build.nameBuild || this.generateDefaultName());
         this.buildLoading.next(true);
         this.currentBuildId.next(build.id ?? '');
         this.currentTokenBuild.next(build.token || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '');
