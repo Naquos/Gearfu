@@ -1,5 +1,11 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="row">
     <div></div>
-    <h3 class="build-name">{{ currentNameBuild() }}</h3>
-    <mat-icon [fontIcon]="icon()" (click)="visibilityBuildFormService.setValue(!visibilityBuild())"></mat-icon>
+    @if(displayInput()){
+    <input #inputField [formControl]="nameBuildFormService.form" (keydown)="onKeyDown($event)">
+    } @else {
+    <h3 class="build-name" (click)="toggleDisplayInput()">{{ currentNameBuild() }}</h3>
+    }
+    <mat-icon [fontIcon]="icon()" (click)="toggleVisibilityBuild()"></mat-icon>
 </div>

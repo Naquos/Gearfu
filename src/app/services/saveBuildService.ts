@@ -17,6 +17,7 @@ import { Statistics } from "../models/data/statistics";
 import { RecapStatsService } from "./recapStatsService";
 import { NO_BUILD } from "../models/utils/utils";
 import { VisibilityBuildFormService } from "./form/visibilityBuildFormService";
+import { NameBuildFormService } from "./form/nameBuildFormService";
 
 @Injectable({ providedIn: 'root' })
 export class SaveBuildService {
@@ -33,6 +34,8 @@ export class SaveBuildService {
     private readonly router = inject(Router);
     private readonly recapStatsService = inject(RecapStatsService);
     private readonly visibilityBuildFormService = inject(VisibilityBuildFormService);
+    private readonly nameBuildFormService = inject(NameBuildFormService);
+
 
     private readonly buildList = new BehaviorSubject<Build[]>([]);
     public readonly buildList$ = this.buildList.asObservable();
@@ -136,6 +139,15 @@ export class SaveBuildService {
     }
 
     /**
+     * Ajoute un build à la liste des builds sauvegardés et le sauvegarde dans le localStorage
+     * @param build
+     */
+    public addBuild(): void {
+        this.saveCurrentBuild(this.nameBuildFormService.getName() || undefined,
+            this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || undefined);
+    }
+
+    /**
      * Ecoute les changements sur les différents services et sauvegarde le build à chaque changement sur Supabase
      * et dans le localStorage pour la liste des builds sauvegardés
      */
@@ -148,16 +160,17 @@ export class SaveBuildService {
             this.sortFormService.codeBuild$,
             this.chasseFormService.enchantement$,
             this.visibilityBuildFormService.visibilityBuild$,
+            this.nameBuildFormService.name$,
             this.buildLoading$,
         ]).pipe(
-            filter(([, , , , , , , buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
-            tap(() => {
+            filter(([, , , , , , , , buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
+            tap(([, , , , , , , name,]) => {
                 const token_build = this.currentTokenBuild.getValue();
                 const token_user = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN);
                 if (token_build && token_user && token_build !== token_user) {
                     return; // Ne pas sauvegarder si le token du build actuel ne correspond pas au token de l'utilisateur (sécurité pour éviter d'écraser un build qui ne nous appartient pas)
                 }
-                this.saveCurrentBuild(undefined, token_build || undefined);
+                this.saveCurrentBuild(name, token_build || undefined);
                 this.saveBuildToSupabase();
             })
         ).subscribe();
@@ -170,7 +183,7 @@ export class SaveBuildService {
         }
         const build: Build = {
             id,
-            nameBuild: this.getNameFromBuild(),
+            nameBuild: this.nameBuildFormService.getName() || this.getNameFromBuild(),
             level: this.levelFormService.getValue(),
             itemsId: this.itemChooseService.getIdItems(),
             classe: this.classeFormService.getValue(),
@@ -296,6 +309,7 @@ export class SaveBuildService {
         this.chasseFormService.decodeAndSaveCodeBuild(build.enchantement ?? "");
         this.buildReadonly.next(!build.token || build.token !== this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN));
         this.visibilityBuildFormService.setValue(!build.hide);
+        this.nameBuildFormService.setValue(build.nameBuild || this.generateDefaultName());
 
         of(saveStatistics).pipe(switchMap(save => {
             if (save) {

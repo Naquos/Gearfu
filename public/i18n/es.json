@@ -9,6 +9,7 @@
         "resistances-elementaires": "Resistencias elementales"
     },
     "app": {
+        "recapitulatif": "Resumen",
         "filter-item": "Filtro de objetos",
         "sort-item": "Orden de objetos",
         "build": "Construcciones",
@@ -324,6 +325,9 @@
         "DENOUEMENT": "Denouement",
         "DEMESURE": "Démesure",
         "CHAOS": "Caos"
+    },
+    "recapitulatif-aptitudes": {
+        "label": "Resumen de aptitudes"
     },
     "sorts": {
         "code-deck": "Deck code",

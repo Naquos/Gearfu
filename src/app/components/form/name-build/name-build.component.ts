@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
+import { SaveBuildService } from '../../../services/saveBuildService';
 
 @Component({
   selector: 'app-name-build',
@@ -14,4 +15,5 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class NameBuildComponent {
   protected readonly nameBuildFormService = inject(NameBuildFormService);
+  protected readonly saveBuildService = inject(SaveBuildService);
 }

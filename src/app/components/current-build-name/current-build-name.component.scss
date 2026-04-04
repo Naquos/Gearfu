@@ -5,11 +5,22 @@
     flex-direction: row;
     margin: 0;
     min-width: 23px;
-    padding: 13px 10px;
+    padding: 11px 10px;
     text-align: center;
     background: var(--panel-background);
 
+
+    input,
     h3 {
+        width: 90%;
+        margin: auto;
+        font-size: 1.5em;
+        text-align: center;
+        border: none;
+    }
+
+    h3 {
+        cursor: pointer;
         margin: 0;
     }
 
