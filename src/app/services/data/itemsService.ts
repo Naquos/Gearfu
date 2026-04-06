@@ -272,8 +272,9 @@ export class ItemsService {
     const itemsFilterByLevelMax$ = combineLatest([itemsFilterByLevelMin$, this.itemLevelFormService.levelMax$])
       .pipe(map(([items, levelMax]) => items.filter(x => x.level <= levelMax || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
 
-    const itemsFilterByRarity$ = combineLatest([itemsFilterByLevelMax$, this.rareteItemFormService.rarity$])
-      .pipe(map(([items, rarity]) => items.filter(x => rarity.length === 0 || rarity.includes(x.rarity) || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
+    const itemsFilterByRarity$ = combineLatest([itemsFilterByLevelMax$, this.rareteItemFormService.rarity$, this.itemTypeFormServices.selected$])
+      .pipe(map(([items, rarity, itemTypeIds]) => items.filter(x => rarity.length === 0 || rarity.includes(x.rarity) ||
+        (x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER) && itemTypeIds.length > 0 && itemTypeIds.includes(ItemTypeDefinitionEnum.FAMILIER))));
 
     const itemsFilterByOnlyNoElem$ = combineLatest([itemsFilterByRarity$, this.onlyNoElemFormService.onlyNoElem$])
       .pipe(map(([items, onlyNoElem]) =>
