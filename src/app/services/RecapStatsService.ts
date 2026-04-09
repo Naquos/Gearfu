@@ -145,10 +145,11 @@ export class RecapStatsService extends AbstractDestroyService {
         return { recapStat, level, sublimationsIdToLevel, aptitudesManual };
       }),
       tap(() => this.applyNatifEffects()),
-      tap(() => this.applyEffectByClass()),
       tap((x => x.recapStat.forEach(effect => this.applyEffect(effect)))),
+      tap(() => this.applyEffectByClass()),
       tap(() => this.applyEffectPassif()),
       tap(x => this.applyEffectSublimation(x.sublimationsIdToLevel)),
+      tap(() => this.applyCoeurHuppermage()), // On applique le coeur après les autres classes, pour éviter des conflits avec des sublimations
       tap(() => this.updateStatistics()),
       tap(x => x.aptitudesManual.forEach((effect: RecapStats) => this.applyEffect(effect))),
       tap(() => this.applyPdv()),
@@ -162,6 +163,33 @@ export class RecapStatsService extends AbstractDestroyService {
    */
   public getCurrentStatistics(): Statistics | null {
     return this.statistics.value;
+  }
+
+  /**
+   * Ajoute 20% dans sa meilleure maitrise élémentaire si le personnage est un huppermage
+   */
+  private applyCoeurHuppermage(): void {
+    if (this.classeFormService.getValue() === ClassIdEnum.Huppermage) {
+      const idMaitrisesElementaires = [
+        IdActionsEnum.MAITRISES_FEU,
+        IdActionsEnum.MAITRISES_EAU,
+        IdActionsEnum.MAITRISES_TERRE,
+        IdActionsEnum.MAITRISES_AIR
+      ];
+      const valuesMaitrisesElementaires = idMaitrisesElementaires.map(id => this.recap.value.find(rs => rs.id === id)?.value || 0);
+      const maxMaitriseElementaire = Math.max(...valuesMaitrisesElementaires);
+      const indexMax = valuesMaitrisesElementaires.findIndex(value => value === maxMaitriseElementaire);
+      const idMaitriseToBoost = idMaitrisesElementaires[indexMax];
+      const recapToBoost = this.recap.value.find(rs => rs.id === idMaitriseToBoost);
+      if (recapToBoost) {
+        this.applyEffect({
+          id: idMaitriseToBoost,
+          value: Math.ceil(recapToBoost.value * 0.2),
+          params: []
+        })
+      }
+    }
+
   }
 
   /**
