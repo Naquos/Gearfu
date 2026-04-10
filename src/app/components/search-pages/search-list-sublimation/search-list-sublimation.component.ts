@@ -43,8 +43,8 @@ export class SearchListSublimationComponent {
           id: `${s.id}`,
           label: s.title[this.translateService.currentLang as keyof typeof s.title],
           displayLabel: s.title[this.translateService.currentLang as keyof typeof s.title],
-          imgUrl: this.imageService.getSublimationImageUrl(s.linkSublimation[s.linkSublimation.length - 1]),
-          backgroundColor: this.colorRarityService.mapColors.get(this.colorRarityList[s.linkSublimation[s.linkSublimation.length - 1].level - 1]) ?? '',
+          imgUrl: this.getSublimationImageUrl(s),
+          backgroundColor: this.getBackgroundColor(s),
           value: s,
         }))),
         tap(options => this.options.set(options))
@@ -54,5 +54,39 @@ export class SearchListSublimationComponent {
 
   onOptionsSelected(event: Set<Option<SublimationsDescriptions>>) {
     this.filterSearchBuildFormService.form.controls.sublimations.setValue(Array.from(event).map(option => `${option.value.id}`));
+  }
+
+  /**
+   * Récupère l'URL de l'image de la sublimation.
+   * Si la sublimation est épique ou relique, utilise le gfxId pour récupérer l'image de l'item correspondant,
+   * sinon utilise le dernier linkSublimation pour récupérer l'image de la sublimation.
+   * @param sublimation 
+   * @returns 
+   */
+  private getSublimationImageUrl(sublimation: SublimationsDescriptions): string {
+    if (sublimation.isEpic || sublimation.isRelic) {
+      return this.imageService.getItemUrl(sublimation.gfxId);
+    }
+    return this.imageService.getSublimationImageUrl(sublimation.linkSublimation[sublimation.linkSublimation.length - 1]);
+  }
+
+  /**
+   * Récupère la couleur de fond de la sublimation en fonction de sa rareté.
+   * Si la sublimation est épique ou relique, utilise la rareté correspondante,
+   * sinon utilise le dernier linkSublimation pour déterminer la rareté.
+   * @param sublimation 
+   * @returns 
+   */
+  private getBackgroundColor(sublimation: SublimationsDescriptions): string {
+    let rarity = RarityItemEnum.NORMAL;
+    if (sublimation.isEpic) {
+      rarity = RarityItemEnum.EPIQUE;
+    } else if (sublimation.isRelic) {
+      rarity = RarityItemEnum.RELIQUE;
+    } else if (sublimation.linkSublimation.length > 0) {
+      const lastLink = sublimation.linkSublimation[sublimation.linkSublimation.length - 1];
+      rarity = this.colorRarityList[lastLink.level - 1];
+    }
+    return this.colorRarityService.mapColors.get(rarity) ?? '';
   }
 }

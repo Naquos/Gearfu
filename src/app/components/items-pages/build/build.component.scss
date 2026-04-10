@@ -7,6 +7,8 @@
         flex-direction: row;
         align-items: center;
         width: 80%;
+        height: 42px;
+        overflow-y: hidden;
         background-color: var(--color-surface-deep);
         padding: 10px;
         border-top-left-radius: 10px;
@@ -21,8 +23,8 @@
             justify-content: center;
 
             font-size: 23px;
-            width: 30px;
-            height: 30px;
+            min-width: 30px;
+            min-height: 30px;
             margin-right: 10px;
             cursor: pointer;
             color: var(--color-text-dark);
@@ -49,12 +51,13 @@
     }
 
     .header-zenith {
-        position: relative;
+        position: absolute;
         z-index: -1;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         background-color: var(--color-warning);
         width: 100%;
+        padding: 10px 0;
         height: 42px;
         text-align: end;
 
@@ -65,7 +68,7 @@
             height: 30px;
             text-align: center;
             align-content: center;
-            margin-right: 1%;
+            margin-right: 10px;
             margin-top: 0.5%;
 
             cursor: pointer;

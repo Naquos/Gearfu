@@ -15,21 +15,13 @@ export class SublimationService {
     private _sublimations = new BehaviorSubject<SublimationsDescriptions[]>([]);
     public sublimations$ = this._sublimations.asObservable();
 
-    private _sublimationsEpique = new BehaviorSubject<SublimationsDescriptions[]>([]);
-    public sublimationsEpique$ = this._sublimationsEpique.asObservable();
-
-    private _sublimationsRelique = new BehaviorSubject<SublimationsDescriptions[]>([]);
-    public sublimationsRelique$ = this._sublimationsRelique.asObservable();
-
     public load(): Observable<void> {
         return this.compressionService.decompressGzipJson<SublimationsDescriptions[]>(GEARFU_RESOURCES_URL + 'sublimations.json.gz').pipe(
             tap(data => {
                 data.forEach(x => this.sublimations.set(x.title.fr, x));
-                this.sublimationsClassique.push(...data.filter(sublimation => !sublimation.isEpic && !sublimation.isRelic));
+                this.sublimationsClassique.push(...data);
                 this.sublimationsEpiqueRelique.push(...data.filter(sublimation => sublimation.isEpic || sublimation.isRelic));
                 this._sublimations.next(this.sublimationsClassique);
-                this._sublimationsEpique.next(this.sublimationsEpiqueRelique.filter(s => s.isEpic));
-                this._sublimationsRelique.next(this.sublimationsEpiqueRelique.filter(s => s.isRelic));
             }),
             shareReplay(1),
             map(() => void 0)

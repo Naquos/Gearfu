@@ -1,7 +1,13 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="header">
-    <div class="header-name" [style.position]="build()?.codeZenith ? 'absolute' : 'initial'">
+    @if (build()?.codeZenith) {
+    <div class="header-zenith">
+        <img [matTooltip]="'build.zenith' | translate" src="./zenith-logo.webp" (click)="goToZenith($event)"
+            alt="zenith">
+    </div>
+    }
+    <div class="header-name">
         <mat-icon fontIcon="reply" [matTooltip]="'build.dupliquer' | translate"
             (click)="saveBuildService.duplicateBuild(build()!)"></mat-icon>
         {{ build()?.level }} - {{build()?.nameBuild}}
@@ -10,12 +16,6 @@
             matTooltipClass="multiline-tooltip">
         }
     </div>
-    @if (build()?.codeZenith) {
-    <div class="header-zenith">
-        <img [matTooltip]="'build.zenith' | translate" src="./zenith-logo.webp" (click)="goToZenith($event)"
-            alt="zenith">
-    </div>
-    }
 </div>
 @if (statistics()) {
 <div class="statistics" [style.border-top-right-radius]="build()?.codeZenith ? '0' : '40px'">

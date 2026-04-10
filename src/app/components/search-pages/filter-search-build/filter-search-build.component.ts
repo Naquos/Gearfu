@@ -8,7 +8,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOption, MatSelectModule } from "@angular/material/select";
 import { OrderBySearchBuildEnum } from '../../../models/enum/orderBySearchBuildEnum';
-import { SearchSublimationsComponent } from "../search-sublimations/search-sublimations.component";
 import { RarityItemEnum } from '../../../models/enum/rarityItemEnum';
 import { SearchListItemComponent } from "../search-list-item/search-list-item.component";
 import { SearchListSublimationComponent } from "../search-list-sublimation/search-list-sublimation.component";
@@ -23,7 +22,6 @@ import { SearchListSublimationComponent } from "../search-list-sublimation/searc
     ReactiveFormsModule,
     MatSelectModule,
     MatOption,
-    SearchSublimationsComponent,
     SearchListItemComponent, SearchListSublimationComponent],
   templateUrl: './filter-search-build.component.html',
   styleUrl: './filter-search-build.component.scss',
