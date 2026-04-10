@@ -301,7 +301,8 @@
         "SR": "Soins réalisés",
         "DI": "Dommages infligés",
         "maitrises-totales": "Maitrises totales",
-        "resistances-totales": "Résistances totales"
+        "resistances-totales": "Résistances totales",
+        "poids-totaux": "Poids total"
     },
     "search-item-name": {
         "label": "Nom de l'item"
