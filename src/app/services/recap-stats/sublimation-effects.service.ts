@@ -188,7 +188,7 @@ export class SublimationEffectsService {
         this.applyNerfConcentrationElementaire(recapValue, applyEffectFn);
       } else if (id === IdSublimationEnum.CONSTANCE) {
         applyEffectFn({ id: IdActionsEnum.DI, value: 20, params: [] });
-        applyEffectFn({ id: IdActionsEnum.COUP_CRITIQUE, value: 50, params: [] });
+        applyEffectFn({ id: IdActionsEnum.RESISTANCES_CRITIQUES, value: 50, params: [] });
       } else if (id === IdSublimationEnum.CONSTANCE_II) {
         applyEffectFn({ id: IdActionsEnum.DI_INDIRECT, value: 40, params: [] });
       } else if (id === IdSublimationEnum.CONTROLE_DE_L_ESPACE_II) {
