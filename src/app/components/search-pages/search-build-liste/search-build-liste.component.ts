@@ -3,7 +3,7 @@ import { SupabaseService } from '../../../services/supabase/supabaseService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BuildComponent } from "../../items-pages/build/build.component";
 import { FilterSearchBuildFormService } from '../../../services/form/filterSearchBuildFormService';
-import { debounceTime, finalize, switchMap } from 'rxjs';
+import { finalize, switchMap } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -21,7 +21,6 @@ export class SearchBuildListeComponent {
 
   protected builds = toSignal(
     this.filterSearchBuildFormService.result$.pipe(
-      debounceTime(300),
       switchMap(result => {
         this.isLoading.set(true);
         return this.supabaseService.getBuildsListByFilter(

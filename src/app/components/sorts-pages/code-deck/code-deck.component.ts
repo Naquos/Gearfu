@@ -9,7 +9,8 @@ import { ActivateDirective } from '../../../directives/activate.directive';
 @Component({
     selector: 'app-code-deck',
     imports: [TranslateModule, MatIconModule, MatTooltipModule, ActivateDirective],
-    templateUrl: './code-deck.component.html'
+    templateUrl: './code-deck.component.html',
+    styleUrl: './code-deck.component.scss'
 })
 export class CodeDeckComponent {
     private readonly sortFormService = inject(SortFormService);

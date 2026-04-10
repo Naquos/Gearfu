@@ -23,6 +23,9 @@
     --icon-button-background-active: var(--color-surface-deep);
     --icon-button-color: var(--color-text-dark);
     --icon-button-color-active: var(--color-surface-muted);
+
+    --font-weight-title: 500;
+    --font-weight-text: 300;
 }
 
 .card {
@@ -34,6 +37,7 @@
     box-shadow: var(--panel-shadow);
     position: relative;
     margin-bottom: 15px;
+    font-weight: var(--font-weight-text);
 }
 
 .card .header,
@@ -42,6 +46,7 @@
     align-items: center;
     border-bottom: 3px solid var(--panel-border-color);
     margin-bottom: 10px;
+    font-weight: var(--font-weight-title);
 }
 
 button {

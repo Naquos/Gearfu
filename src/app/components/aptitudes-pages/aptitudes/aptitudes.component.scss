@@ -16,6 +16,7 @@
                     justify-content: space-around;
                     align-items: center;
                     margin: auto;
+                    font-weight: var(--font-weight-title);
                 }
 
                 button {
@@ -40,6 +41,7 @@
                     .aptitudes-name {
                         display: flex;
                         margin-right: auto;
+                        font-weight: var(--font-weight-text);
 
                         img {
                             margin-right: 10px;
