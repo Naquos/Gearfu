@@ -302,7 +302,8 @@
         "SR": "Curación realizada",
         "DI": "Daños infligidos",
         "maitrises-totales": "Dominios totales",
-        "resistances-totales": "Resistencias totales"
+        "resistances-totales": "Resistencias totales",
+        "poids-totaux": "Peso total"
     },
     "search-item-name": {
         "label": "Nombre del objeto"

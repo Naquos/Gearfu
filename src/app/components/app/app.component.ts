@@ -16,7 +16,7 @@ import { StatesDefinitionService } from '../../services/data/statesDefinitionSer
 import { DisplayFilterService } from '../../services/displayFilterService';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { ResumeAptitudesComponent } from "../aptitudes-pages/resume-aptitudes/resume-aptitudes.component";
-import { filter, forkJoin, take } from 'rxjs';
+import { filter, forkJoin, map, take } from 'rxjs';
 import { ItemChooseComponent } from '../items-pages/item-choose/item-choose.component';
 import { SortService } from '../../services/data/sortService';
 import { SublimationService } from '../../services/data/sublimationService';
@@ -80,6 +80,14 @@ export class AppComponent implements OnInit {
   protected readonly openSidebar = toSignal(this.filterSidebarService.open$, { initialValue: true });
   protected readonly isMobile = signal(isMobile());
   protected readonly buildReadonly = toSignal(this.saveBuildService.buildReadonly$, { initialValue: false });
+  protected readonly activePage = toSignal(
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      map((event: any) => this.getActivePage(event.urlAfterRedirects))
+    ),
+    { initialValue: this.getActivePage(this.router.url) }
+  );
 
   protected readonly isBirthday = computed(() => {
     const today = new Date();
@@ -205,6 +213,16 @@ export class AppComponent implements OnInit {
         window.open('https://www.zenithwakfu.com/builder/' + linkBuild, '_blank');
       }
     });
+  }
+
+  private getActivePage(url: string): string {
+    if (url.includes('/search')) return 'search';
+    if (url.includes('/aptitudes')) return 'aptitudes';
+    if (url.includes('/sorts')) return 'sorts';
+    if (url.includes('/enchantements')) return 'enchantements';
+    if (url.includes('/recapitulatif')) return 'recapitulatif';
+    if (url.includes('/build')) return 'build';
+    return 'filter';
   }
 
   private updateFilterOrBuildFromRoute(url: string): void {

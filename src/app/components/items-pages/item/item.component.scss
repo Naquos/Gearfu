@@ -1,5 +1,7 @@
 :host {
-    background: var(--gradient-panel);
+    // background: var(--gradient-panel);
+
+    background: var(--color-surface-mid);
     border-radius: 15px;
     padding: 5px;
     color: var(--color-text-inverse);
@@ -7,7 +9,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 8px 8px var(--shadow-panel-color);
+    box-shadow: 0px 4px 4px var(--shadow-panel-color);
     position: relative;
 
     span {
@@ -17,7 +19,9 @@
     .header {
         display: flex;
         border-bottom: 3px solid var(--color-surface-soft);
+        padding: 3px;
         margin-bottom: 10px;
+        font-weight: 500;
 
         span {
             display: flex;
@@ -35,8 +39,7 @@
             width: 50px;
             height: 50px;
 
-            img,
-            mat-icon {
+            img {
                 width: 40px;
                 height: 40px;
                 cursor: pointer;
@@ -80,38 +83,41 @@
                 text-align: center;
                 margin: auto;
 
-                img {
-                    width: 30px;
-                    height: 30px;
-                    min-width: 30px;
-                    min-height: 30px;
-                    vertical-align: middle;
+                .icon {
+                    margin-top: 4px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: row;
+                    margin-left: 10px;
+
+                    img {
+                        width: 30px;
+                        height: 30px;
+                        min-width: 30px;
+                        min-height: 30px;
+                        vertical-align: middle;
+                    }
+
+                    mat-icon {
+                        width: 30px;
+                        height: 30px;
+                        cursor: pointer;
+                        align-content: center;
+                        color: var(--color-surface-muted);
+                        line-height: 10px;
+                    }
                 }
             }
 
             >img {
-                width: 80px;
-                height: 80px;
-                min-width: 80px;
-                min-height: 80px;
+                width: 60px;
+                height: 60px;
+                min-width: 60px;
+                min-height: 60px;
                 margin: auto;
                 object-fit: contain;
                 border-radius: 8px;
-            }
-
-            .poids {
-                align-items: center;
-                display: flex;
-
-                img {
-                    width: 22px;
-                    height: 22px;
-                    min-width: 22px;
-                    min-height: 22px;
-                    margin: 0 10px;
-                }
-
-                text-align: center;
             }
         }
 
@@ -139,6 +145,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            font-weight: 300;
 
             .craftAndDrop {
                 display: flex;
@@ -148,10 +155,10 @@
                 justify-content: space-around;
 
                 img {
-                    width: 80px;
-                    height: 80px;
-                    min-width: 80px;
-                    min-height: 80px;
+                    width: 60px;
+                    height: 60px;
+                    min-width: 60px;
+                    min-height: 60px;
                     object-fit: contain;
                     flex: 0 0 calc(33% - 10px); // Force 3 éléments par ligne (33% chacun)
                     max-width: calc(33% - 10px);

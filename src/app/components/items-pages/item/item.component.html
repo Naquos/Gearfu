@@ -2,14 +2,14 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 @if(item()) {
 <div class="header">
-    <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy"
-        (appActivate)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
     <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{
         "item.maitrises" | translate }} {{Math.trunc(item().maitrise)}}</span>
     <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances">{{
         "item.resistances" | translate }} {{item().resistance}}</span>
-    <span class="imgContainer" (appActivate)="openEncyclopedie(item().id)"><img src="aptitudes/Encyclopédie.png"
-            alt="Encyclopédie"></span>
+    <span [matTooltip]="'item.poids-infobulle' | translate:{ratio: ratioWeight()}" [matTooltipShowDelay]="300"><img
+            [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }}
+        {{item().weight}}</span>
+
 </div>
 @if (textCondition() | async; as condition) {
 <div class="condition">
@@ -18,13 +18,18 @@
 }
 <div class="content" (appActivate)="setItemChoosen()">
     <div class="title">
-        <h3 [style.color]="colorRarityService.mapColors.get(item().rarity)">{{getTitle()}} ({{item().level}}) <img
-                [src]="itemTypeService.getLogo(itemTypeService.getItemType(item().itemTypeId))" alt="item type logo">
+        <h3 [style.color]="colorRarityService.mapColors.get(item().rarity)">
+            {{getTitle()}} ({{item().level}})
+            <div class="icon">
+                <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item().itemTypeId))"
+                    alt="item type logo">
+                <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy"
+                    (appActivate)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
+            </div>
         </h3>
         <img [src]="imageService.getItemUrl(item().idImage)" alt="items" appFallback>
-        <div class="poids" [matTooltip]="'item.poids-infobulle' | translate:{ratio: ratioWeight()}"
-            [matTooltipShowDelay]="300"><img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }}
-            {{item().weight}}</div>
+        <span class="imgContainer" (appActivate)="openEncyclopedie(item().id)"><img src="aptitudes/Encyclopédie.png"
+                alt="Encyclopédie"></span>
     </div>
     <div class="effects">
         <div>

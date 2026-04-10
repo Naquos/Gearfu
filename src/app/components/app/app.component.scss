@@ -14,11 +14,11 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 15px 50px;
-  background: var(--gradient-app-header);
+  background: var(--color-surface-mid);
   color: var(--color-text-inverse);
   box-shadow: 0 4px 6px var(--shadow-header-color);
   top: 0;
-  z-index: 1;
+  z-index: 11;
 
   .zenithButton {
     display: none;
@@ -81,27 +81,32 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--gradient-app-header);
+    background: var(--color-surface-mid);
     width: calc(100% - $width-filter);
     height: $height-row-buttons;
     margin-left: $width-filter;
     position: fixed;
     z-index: 2;
+    box-shadow: 0 4px 6px var(--shadow-header-color);
 
-    button {
-      border: 2px solid var(--color-surface-soft);
-      border-radius: 10px;
-      box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color);
+
+
+    div {
+      padding: 0 10px;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
-      height: 40px;
-      background-color: var(--color-surface-muted);
-      font-weight: 600;
+      height: 100%;
+      font-weight: 500;
       font-size: 16px;
       overflow: hidden;
+      color: var(--color-surface-muted);
     }
 
-    button:hover {
+    div:hover,
+    .active {
       background-color: var(--color-surface-deep);
       color: var(--color-surface-muted);
     }
@@ -123,7 +128,7 @@ header {
     color: var(--color-text-inverse);
     text-align: center;
     padding: 10px 0;
-    font-weight: bold;
+    font-weight: 500;
     position: fixed;
     z-index: 2;
   }
@@ -136,8 +141,7 @@ header {
 
 .filter {
   z-index: 10;
-  background: var(--gradient-sidebar);
-  opacity: 0.9;
+  background: var(--color-surface-mid);
   color: var(--color-text-inverse);
   font-weight: 400;
 

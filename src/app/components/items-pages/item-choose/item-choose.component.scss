@@ -2,6 +2,15 @@
     display: flex;
     align-items: center;
 
+    .firstLine:active,
+    .firstLine:hover,
+    mat-icon:active,
+    mat-icon:hover,
+    .nouveauBuild:active,
+    .nouveauBuild:hover {
+        background-color: var(--color-surface-deep);
+    }
+
     .buttonGroupe {
         display: flex;
         align-items: center;
@@ -16,22 +25,15 @@
             width: calc(100% - 5px);
 
 
-            color: var(--color-text-primary);
+            color: var(--color-white);
             font-weight: 400;
             font-size: 16px;
 
-            background-color: var(--color-surface-muted);
             cursor: pointer;
-            border-radius: 10px;
-            border: 2px solid var(--color-surface-soft);
-            box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color);
-        }
 
-        .firstLine:active {
-            background-color: var(--color-surface-deep);
-            color: var(--color-surface-muted);
-            transform: translateY(2px);
-            box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-muted);
+            img {
+                margin-right: 10px;
+            }
         }
 
         .secondLine {
@@ -40,9 +42,10 @@
             flex-direction: row;
             width: 100%;
 
+            border-bottom: 1px solid var(--color-surface-deepest);
+
             mat-icon {
-                background-color: var(--color-surface-muted);
-                color: var(--color-text-dark);
+                color: var(--color-white);
                 width: 30px;
                 height: 30px;
                 text-align: center;
@@ -50,17 +53,7 @@
                 padding: 0 2px;
 
                 cursor: pointer;
-                border-radius: 25%;
-                border: 2px solid var(--color-surface-soft);
-                box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color);
                 margin-left: 5px;
-            }
-
-            mat-icon:active {
-                background-color: var(--color-surface-deep);
-                color: var(--color-surface-muted);
-                transform: translateY(2px);
-                box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-muted);
             }
 
             .nouveauBuild {
@@ -71,24 +64,14 @@
                 margin-left: 5px;
                 height: 30px;
                 width: 100%;
+                border-left: 1px solid var(--color-surface-deepest);
 
 
-                color: #213A57;
+                color: var(--color-white);
                 font-weight: 400;
                 font-size: 16px;
 
-                background-color: var(--color-surface-muted);
                 cursor: pointer;
-                border-radius: 10px;
-                border: 2px solid var(--color-surface-soft);
-                box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color);
-            }
-
-            .nouveauBuild:active {
-                background-color: var(--color-surface-deep);
-                color: var(--color-surface-muted);
-                transform: translateY(2px);
-                box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-muted);
             }
         }
     }
@@ -100,33 +83,7 @@
     app-item-choose-display:hover {
         transform: scale(1.06);
     }
-
-
-
-    .totalValue {
-        display: flex;
-        flex-direction: column;
-
-        span {
-            margin-left: 10px;
-            display: flex;
-            align-items: center;
-
-            .poids {
-                width: 20px;
-                height: 20px;
-                margin-right: 5px;
-            }
-        }
-    }
 }
-
-@media screen and (max-width: 1350px) {
-    .totalValue {
-        display: none !important;
-    }
-}
-
 
 @media screen and (max-width: 1200px) {
 

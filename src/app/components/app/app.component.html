@@ -32,13 +32,19 @@
 <div class="content">
     @if(!isMobile()) {
     <div class="row-buttons">
-        <button (click)="redirectToSearch()">{{ "app.search-builds" | translate }}</button>
-        <button (click)="redirectToListItems('filter')">{{ "app.filter-item" | translate }}</button>
-        <button (click)="redirectToAptitudes()">{{ "app.aptitudes" | translate }}</button>
-        <button (click)="redirectToSorts()">{{ "app.sorts" | translate }}</button>
-        <button (click)="redirectToEnchantements()">{{ "app.enchantement" | translate }}</button>
-        <button (click)="redirectToRecapitulatif()">{{ "app.recapitulatif" | translate }}</button>
-        <button (click)="redirectToPage('build')">{{ "app.build" | translate }}</button>
+        <div (click)="redirectToSearch()" [class.active]="activePage() === 'search'">{{ "app.search-builds" | translate
+            }}</div>
+        <div (click)="redirectToListItems('filter')" [class.active]="activePage() === 'filter'">{{ "app.filter-item" |
+            translate }}</div>
+        <div (click)="redirectToAptitudes()" [class.active]="activePage() === 'aptitudes'">{{ "app.aptitudes" |
+            translate }}</div>
+        <div (click)="redirectToSorts()" [class.active]="activePage() === 'sorts'">{{ "app.sorts" | translate }}</div>
+        <div (click)="redirectToEnchantements()" [class.active]="activePage() === 'enchantements'">{{ "app.enchantement"
+            | translate }}</div>
+        <div (click)="redirectToRecapitulatif()" [class.active]="activePage() === 'recapitulatif'">{{
+            "app.recapitulatif" | translate }}</div>
+        <div (click)="redirectToPage('build')" [class.active]="activePage() === 'build'">{{ "app.build" | translate }}
+        </div>
     </div>
     }
     @if (buildReadonly()) {

@@ -1,49 +1,43 @@
-<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="content">
     <div class="buttonGroupe">
-        <div class="firstLine" (appActivate)="generateBuild()" [matTooltip]="'item-choose.zenith' | translate">
-            <img src="./zenith-logo.webp" alt="zenith" id="zenithButton">
-            <span>{{"item-choose.zenith-export" | translate}}</span>
-        </div>
-        
         <div class="secondLine">
-            <mat-icon aria-hidden="false" fontIcon="gavel"
-                matTooltip="Craftku"
-                [matTooltipShowDelay]="300" 
-                (appActivate)="navigateToCraftku()"
-                 alt="craftku"
-                id="craftkuButton">
+            <mat-icon aria-hidden="false" fontIcon="gavel" matTooltip="Craftku" [matTooltipShowDelay]="300"
+                (appActivate)="navigateToCraftku()" alt="craftku" id="craftkuButton">
             </mat-icon>
             <div class="nouveauBuild" (appActivate)="saveBuildService.createAndNavigate()">
                 {{ "item-choose.nouveau-build" | translate }}
             </div>
         </div>
-    </div>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementCoiffe.png" [itemType]="ItemTypeEnum.CASQUE" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementAmulette.png" [itemType]="ItemTypeEnum.AMULETTE" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementPlastron.png" [itemType]="ItemTypeEnum.PLASTRON" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementAnneauGauche.png" [itemType]="ItemTypeEnum.ANNEAU" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementAnneauDroite.png" [itemType]="ItemTypeEnum.ANNEAU" [indexItem]="1" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementBottes.png" [itemType]="ItemTypeEnum.BOTTES" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementCape.png" [itemType]="ItemTypeEnum.CAPE" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementEpaulettes.png" [itemType]="ItemTypeEnum.EPAULETTES" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementCeinture.png" [itemType]="ItemTypeEnum.CEINTURE" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementSecondeMain.png" [itemType]="ItemTypeEnum.BOUCLIER" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementPremièreMain.png" [itemType]="ItemTypeEnum.UNE_MAIN" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementEmblème.png" [itemType]="ItemTypeEnum.ACCESSOIRES" ></app-item-choose-display>
-    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementFamilier.png" [itemType]="ItemTypeEnum.FAMILIER" ></app-item-choose-display>
-    <div class="totalValue">
-        <span>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES)" alt="poids" class="poids"> {{ "item-choose.maitrise-total" | translate }} : {{ maitrisesTotal() }} 
-        </span>
+        <div class="firstLine" (appActivate)="generateBuild()" [matTooltip]="'item-choose.zenith' | translate">
+            <img src="./zenith-logo.webp" alt="zenith" id="zenithButton">
+            <span>{{"item-choose.zenith-export" | translate}}</span>
+        </div>
 
-        <span>
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt="poids" class="poids"> {{ "item-choose.resistance-total" | translate }} : {{ resistancesTotal() }} 
-        </span>
-
-        <span>
-            <img [src]="'aptitudes/poids.png'" alt="poids" class="poids"> {{ "item-choose.poids-total" | translate }} : {{ poidsTotal() }} 
-        </span>
     </div>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementCoiffe.png"
+        [itemType]="ItemTypeEnum.CASQUE"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementAmulette.png"
+        [itemType]="ItemTypeEnum.AMULETTE"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementPlastron.png"
+        [itemType]="ItemTypeEnum.PLASTRON"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementAnneauGauche.png"
+        [itemType]="ItemTypeEnum.ANNEAU"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementAnneauDroite.png"
+        [itemType]="ItemTypeEnum.ANNEAU" [indexItem]="1"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementBottes.png"
+        [itemType]="ItemTypeEnum.BOTTES"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementCape.png"
+        [itemType]="ItemTypeEnum.CAPE"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementEpaulettes.png"
+        [itemType]="ItemTypeEnum.EPAULETTES"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementCeinture.png"
+        [itemType]="ItemTypeEnum.CEINTURE"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementSecondeMain.png"
+        [itemType]="ItemTypeEnum.BOUCLIER"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementPremièreMain.png"
+        [itemType]="ItemTypeEnum.UNE_MAIN"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementEmblème.png"
+        [itemType]="ItemTypeEnum.ACCESSOIRES"></app-item-choose-display>
+    <app-item-choose-display backgroundItemType="./aptitudes/EmplacementFamilier.png"
+        [itemType]="ItemTypeEnum.FAMILIER"></app-item-choose-display>
 </div>
