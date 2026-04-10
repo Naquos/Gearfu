@@ -2,6 +2,9 @@ $header-size: 80px;
 $footer-size: 38px;
 $item-choose-size: 70px;
 $width-filter: 430px;
+$height-row-buttons: 50px;
+$height-readonly: 39px;
+$height-readonly-mobile: 58px;
 
 header {
   display: flex;
@@ -80,7 +83,10 @@ header {
     align-items: center;
     background: var(--gradient-app-header);
     width: calc(100% - $width-filter);
+    height: $height-row-buttons;
     margin-left: $width-filter;
+    position: fixed;
+    z-index: 2;
 
     button {
       border: 2px solid var(--color-surface-soft);
@@ -109,7 +115,7 @@ header {
   }
 
   .readonly {
-    top: $header-size;
+    top: calc($header-size + $height-row-buttons);
     left: 0;
     width: calc(100% - $width-filter);
     margin-left: $width-filter;
@@ -118,6 +124,8 @@ header {
     text-align: center;
     padding: 10px 0;
     font-weight: bold;
+    position: fixed;
+    z-index: 2;
   }
 
   .readonly-mobile {
@@ -191,10 +199,16 @@ header {
 }
 
 .content-application {
+  margin-top: $height-row-buttons;
   width: calc(100% - $width-filter);
   margin-left: $width-filter;
   padding-bottom: 50px;
 }
+
+.content-application-readonly {
+  margin-top: calc($height-row-buttons + $height-readonly);
+}
+
 
 
 
@@ -270,10 +284,19 @@ header {
     width: $item-choose-size;
   }
 
+  .readonly {
+    top: $header-size !important;
+  }
+
   .content-application {
+    margin-top: 0;
     width: calc(100% - $item-choose-size);
     margin-left: $item-choose-size;
     font-size: 12px;
+  }
+
+  .content-application-readonly {
+    margin-top: $height-readonly-mobile;
   }
 
 

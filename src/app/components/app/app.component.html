@@ -82,7 +82,7 @@
         }
 
     </div>
-    <div class="content-application">
+    <div class="content-application" [class.content-application-readonly]="buildReadonly()">
         <router-outlet></router-outlet>
     </div>
 </div>
