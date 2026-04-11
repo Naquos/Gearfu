@@ -2,7 +2,7 @@ $header-size: 80px;
 $footer-size: 38px;
 $item-choose-size: 70px;
 $width-filter: 430px;
-$height-row-buttons: 50px;
+$height-main-nav: 50px;
 $height-readonly: 39px;
 $height-readonly-mobile: 58px;
 
@@ -77,50 +77,8 @@ header {
   margin-top: $header-size;
   min-height: calc(100vh - $header-size);
 
-  .row-buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--color-surface-mid);
-    width: calc(100% - $width-filter);
-    height: $height-row-buttons;
-    margin-left: $width-filter;
-    position: fixed;
-    z-index: 2;
-    box-shadow: 0 4px 6px var(--shadow-header-color);
-
-
-
-    div {
-      padding: 0 10px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      font-weight: var(--font-weight-title);
-      font-size: 16px;
-      overflow: hidden;
-      color: var(--color-surface-muted);
-    }
-
-    div:hover,
-    .active {
-      background-color: var(--color-surface-deep);
-      color: var(--color-surface-muted);
-    }
-
-    button:active {
-      transform: translateY(2px);
-      box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-muted);
-      color: var(--color-text-inverse);
-      background-color: var(--color-surface-deep);
-    }
-  }
-
   .readonly {
-    top: calc($header-size + $height-row-buttons);
+    top: calc($header-size + $height-main-nav);
     left: 0;
     width: calc(100% - $width-filter);
     margin-left: $width-filter;
@@ -203,14 +161,14 @@ header {
 }
 
 .content-application {
-  margin-top: $height-row-buttons;
+  margin-top: $height-main-nav;
   width: calc(100% - $width-filter);
   margin-left: $width-filter;
   padding-bottom: 50px;
 }
 
 .content-application-readonly {
-  margin-top: calc($height-row-buttons + $height-readonly);
+  margin-top: calc($height-main-nav + $height-readonly);
 }
 
 
@@ -274,6 +232,9 @@ header {
 }
 
 @media screen and (max-width: 1000px) {
+  #mainNavDesktop {
+    display: none;
+  }
 
   app-item-choose {
     z-index: 50;
@@ -379,19 +340,6 @@ header {
         width: 100% !important;
       }
 
-      .row-buttons {
-        width: 100% !important;
-        flex-direction: column !important;
-        position: relative;
-        height: fit-content;
-
-        div {
-          width: 100% !important;
-          height: 40px;
-          padding: 5px 0 !important;
-        }
-      }
-
       .filter-aptitudes {
         button {
           width: calc(33% - 20px);
@@ -405,12 +353,6 @@ header {
       width: 100%;
       height: calc(100% - $header-size);
       transition: right 0.3s ease-in-out;
-
-      * {
-        width: 90%;
-        margin: auto;
-        display: block;
-      }
     }
 
     .filter.open {

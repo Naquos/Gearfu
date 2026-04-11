@@ -31,21 +31,7 @@
 
 <div class="content">
     @if(!isMobile()) {
-    <div class="row-buttons">
-        <div (click)="redirectToSearch()" [class.active]="activePage() === 'search'">{{ "app.search-builds" | translate
-            }}</div>
-        <div (click)="redirectToListItems('filter')" [class.active]="activePage() === 'filter'">{{ "app.filter-item" |
-            translate }}</div>
-        <div (click)="redirectToAptitudes()" [class.active]="activePage() === 'aptitudes'">{{ "app.aptitudes" |
-            translate }}</div>
-        <div (click)="redirectToSorts()" [class.active]="activePage() === 'sorts'">{{ "app.sorts" | translate }}</div>
-        <div (click)="redirectToEnchantements()" [class.active]="activePage() === 'enchantements'">{{ "app.enchantement"
-            | translate }}</div>
-        <div (click)="redirectToRecapitulatif()" [class.active]="activePage() === 'recapitulatif'">{{
-            "app.recapitulatif" | translate }}</div>
-        <div (click)="redirectToPage('build')" [class.active]="activePage() === 'build'">{{ "app.build" | translate }}
-        </div>
-    </div>
+    <app-main-nav id="mainNavDesktop"></app-main-nav>
     }
     @if (buildReadonly()) {
     <div class="readonly" [class.readonly-mobile]="isMobile()">{{ "app.readonly" | translate }}</div>
@@ -53,26 +39,7 @@
     <div class="filter" [tabIndex]="-1" [class.open]="displayFilter" appSwipe
         (swipeRight)="displayFilterService.setDisplay(false)">
         @if(isMobile()) {
-        <div class="row-buttons">
-            <div (click)="redirectToSearch()" [class.active]="activePage() === 'search'">{{ "app.search-builds" |
-                translate
-                }}</div>
-            <div (click)="redirectToListItems('filter')" [class.active]="activePage() === 'filter'">{{ "app.filter-item"
-                |
-                translate }}</div>
-            <div (click)="redirectToAptitudes()" [class.active]="activePage() === 'aptitudes'">{{ "app.aptitudes" |
-                translate }}</div>
-            <div (click)="redirectToSorts()" [class.active]="activePage() === 'sorts'">{{ "app.sorts" | translate }}
-            </div>
-            <div (click)="redirectToEnchantements()" [class.active]="activePage() === 'enchantements'">{{
-                "app.enchantement"
-                | translate }}</div>
-            <div (click)="redirectToRecapitulatif()" [class.active]="activePage() === 'recapitulatif'">{{
-                "app.recapitulatif" | translate }}</div>
-            <div (click)="redirectToPage('build')" [class.active]="activePage() === 'build'">{{ "app.build" | translate
-                }}
-            </div>
-        </div>
+        <app-main-nav></app-main-nav>
         }
         @if (filterOrBuild === 'filter' && (isMobile() || !openSidebar())) {
         <app-filters></app-filters>

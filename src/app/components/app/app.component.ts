@@ -16,7 +16,7 @@ import { StatesDefinitionService } from '../../services/data/statesDefinitionSer
 import { DisplayFilterService } from '../../services/displayFilterService';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { ResumeAptitudesComponent } from "../aptitudes-pages/resume-aptitudes/resume-aptitudes.component";
-import { filter, forkJoin, map, take } from 'rxjs';
+import { filter, forkJoin, take } from 'rxjs';
 import { ItemChooseComponent } from '../items-pages/item-choose/item-choose.component';
 import { SortService } from '../../services/data/sortService';
 import { SublimationService } from '../../services/data/sublimationService';
@@ -32,6 +32,7 @@ import { FiltersComponent } from "../items-pages/filters/filters.component";
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatTooltip } from "@angular/material/tooltip";
 import { CurrentBuildNameComponent } from '../current-build-name/current-build-name.component';
+import { MainNavComponent } from '../main-nav/main-nav.component';
 
 type column = 'filter' | 'aptitudes' | 'search';
 
@@ -49,7 +50,8 @@ type column = 'filter' | 'aptitudes' | 'search';
     FilterSearchBuildComponent,
     FiltersComponent,
     MatTooltip,
-    CurrentBuildNameComponent
+    CurrentBuildNameComponent,
+    MainNavComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss', './birthday.scss']
@@ -80,14 +82,6 @@ export class AppComponent implements OnInit {
   protected readonly openSidebar = toSignal(this.filterSidebarService.open$, { initialValue: true });
   protected readonly isMobile = signal(isMobile());
   protected readonly buildReadonly = toSignal(this.saveBuildService.buildReadonly$, { initialValue: false });
-  protected readonly activePage = toSignal(
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      map((event: any) => this.getActivePage(event.urlAfterRedirects))
-    ),
-    { initialValue: this.getActivePage(this.router.url) }
-  );
 
   protected readonly isBirthday = computed(() => {
     const today = new Date();
@@ -159,23 +153,6 @@ export class AppComponent implements OnInit {
     ).subscribe((event: NavigationEnd) => {
       this.updateFilterOrBuildFromRoute(event.urlAfterRedirects);
     });
-
-    // Supprimer le loader quand les items sont chargés
-    if (isPlatformBrowser(this.platformId)) {
-      // Observer le signal isLoading
-      const checkLoading = setInterval(() => {
-        if (!this.itemService.isLoading()) {
-          this.removeLoader();
-          clearInterval(checkLoading);
-        }
-      }, 100);
-
-      // Timeout de sécurité après 10 secondes
-      setTimeout(() => {
-        clearInterval(checkLoading);
-        this.removeLoader();
-      }, 10000);
-    }
   }
 
   /**
@@ -214,16 +191,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private getActivePage(url: string): string {
-    if (url.includes('/search')) return 'search';
-    if (url.includes('/aptitudes')) return 'aptitudes';
-    if (url.includes('/sorts')) return 'sorts';
-    if (url.includes('/enchantements')) return 'enchantements';
-    if (url.includes('/recapitulatif')) return 'recapitulatif';
-    if (url.includes('/build')) return 'build';
-    return 'filter';
-  }
-
   private updateFilterOrBuildFromRoute(url: string): void {
     if (url.includes('/aptitudes') || url.includes('/sorts') || url.includes('/enchantements') || url.includes('/recapitulatif') || url.includes('/build')) {
       this.filterOrBuild = 'aptitudes';
@@ -234,66 +201,9 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private removeLoader(): void {
-    const loader = document.getElementById('app-loader');
-    if (loader) {
-      loader.style.opacity = '0';
-      loader.style.transition = 'opacity 0.5s ease-out';
-      setTimeout(() => {
-        loader.remove();
-      }, 500);
-    }
-  }
-
   protected setLang(value: string): void {
     this.translate.use(value);
     this.localStorageService.setItem<string>(KeyEnum.KEY_LANG, value);
-  }
-
-  protected redirectToListItems(filterOrBuild: column): void {
-    const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
-    const buildId = getBuildIdFromUrl(window.location.href);
-    this.router.navigate(["/", buildId], {
-      fragment: currentFragment || undefined
-    }).then(() => this.filterOrBuild = filterOrBuild);
-  }
-
-  protected redirectToPage(page: 'aptitudes' | 'sorts' | 'enchantements' | 'search' | 'build' | 'recapitulatif'): void {
-    const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
-    const buildId = getBuildIdFromUrl(window.location.href);
-    this.router.navigate(['/', buildId, page], {
-      fragment: currentFragment || undefined
-    });
-  }
-
-  protected redirectToBuild(): void {
-    this.filterOrBuild = 'aptitudes';
-    this.redirectToPage('build');
-  }
-
-  protected redirectToSearch(): void {
-    this.filterOrBuild = 'search';
-    this.redirectToPage('search');
-  }
-
-  protected redirectToAptitudes(): void {
-    this.filterOrBuild = 'aptitudes';
-    this.redirectToPage('aptitudes');
-  }
-
-  protected redirectToSorts(): void {
-    this.filterOrBuild = 'aptitudes';
-    this.redirectToPage('sorts');
-  }
-
-  protected redirectToEnchantements(): void {
-    this.filterOrBuild = 'aptitudes';
-    this.redirectToPage('enchantements');
-  }
-
-  protected redirectToRecapitulatif(): void {
-    this.filterOrBuild = 'aptitudes';
-    this.redirectToPage('recapitulatif');
   }
 
 }
