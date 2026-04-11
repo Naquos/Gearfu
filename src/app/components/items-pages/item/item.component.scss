@@ -120,6 +120,10 @@
                 object-fit: contain;
                 border-radius: 8px;
             }
+
+            .cliquable:hover {
+                transform: scale(1.2);
+            }
         }
 
         p {

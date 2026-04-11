@@ -23,13 +23,13 @@
             <div class="icon">
                 <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item().itemTypeId))"
                     alt="item type logo">
-                <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy"
+                <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy cliquable"
                     (appActivate)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
             </div>
         </h3>
         <img [src]="imageService.getItemUrl(item().idImage)" alt="items" appFallback>
-        <span class="imgContainer" (appActivate)="openEncyclopedie(item().id)"><img src="aptitudes/Encyclopédie.png"
-                alt="Encyclopédie"></span>
+        <span class="imgContainer cliquable" (appActivate)="openEncyclopedie(item().id)"><img
+                src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
     </div>
     <div class="effects">
         <div>

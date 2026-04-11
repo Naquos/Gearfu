@@ -19,9 +19,9 @@ export class SublimationService {
         return this.compressionService.decompressGzipJson<SublimationsDescriptions[]>(GEARFU_RESOURCES_URL + 'sublimations.json.gz').pipe(
             tap(data => {
                 data.forEach(x => this.sublimations.set(x.title.fr, x));
-                this.sublimationsClassique.push(...data);
+                this.sublimationsClassique.push(...data.filter(sublimation => !sublimation.isEpic && !sublimation.isRelic));
                 this.sublimationsEpiqueRelique.push(...data.filter(sublimation => sublimation.isEpic || sublimation.isRelic));
-                this._sublimations.next(this.sublimationsClassique);
+                this._sublimations.next(data);
             }),
             shareReplay(1),
             map(() => void 0)
