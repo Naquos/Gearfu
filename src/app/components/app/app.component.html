@@ -53,21 +53,24 @@
     <div class="filter" [tabIndex]="-1" [class.open]="displayFilter" appSwipe
         (swipeRight)="displayFilterService.setDisplay(false)">
         @if(isMobile()) {
-        <div class="filter-header">
-            <div class="filter-search">
-                <button (click)="redirectToSearch()">{{ "app.search-builds" | translate }}</button>
+        <div class="row-buttons">
+            <div (click)="redirectToSearch()" [class.active]="activePage() === 'search'">{{ "app.search-builds" |
+                translate
+                }}</div>
+            <div (click)="redirectToListItems('filter')" [class.active]="activePage() === 'filter'">{{ "app.filter-item"
+                |
+                translate }}</div>
+            <div (click)="redirectToAptitudes()" [class.active]="activePage() === 'aptitudes'">{{ "app.aptitudes" |
+                translate }}</div>
+            <div (click)="redirectToSorts()" [class.active]="activePage() === 'sorts'">{{ "app.sorts" | translate }}
             </div>
-            <div class="filter-build">
-                <button (click)="redirectToListItems('filter')">{{ "app.filter-item" | translate }}</button>
-                <button (click)="redirectToPage('build')">{{ "app.build" | translate }}</button>
-            </div>
-            <div class="filter-aptitudes">
-                <button (click)="redirectToAptitudes()">{{ "app.aptitudes" | translate }}</button>
-                <button (click)="redirectToSorts()">{{ "app.sorts" | translate }}</button>
-                <button (click)="redirectToEnchantements()">{{ "app.enchantement" | translate }}</button>
-            </div>
-            <div class="filter-recapitulatif">
-                <button (click)="redirectToRecapitulatif()">{{ "app.recapitulatif" | translate }}</button>
+            <div (click)="redirectToEnchantements()" [class.active]="activePage() === 'enchantements'">{{
+                "app.enchantement"
+                | translate }}</div>
+            <div (click)="redirectToRecapitulatif()" [class.active]="activePage() === 'recapitulatif'">{{
+                "app.recapitulatif" | translate }}</div>
+            <div (click)="redirectToPage('build')" [class.active]="activePage() === 'build'">{{ "app.build" | translate
+                }}
             </div>
         </div>
         }

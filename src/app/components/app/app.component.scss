@@ -314,6 +314,8 @@ header {
   header {
     padding: 15px;
     width: 100%;
+    z-index: 1000;
+
 
     .zenithButton {
       display: flex;
@@ -370,22 +372,23 @@ header {
     touch-action: pan-y !important;
 
     .filter {
+      width: calc(100% - 70px) !important;
+      background-color: var(--color-surface-strong);
 
-      .filter-header {
-        display: flex !important;
-        margin-left: 0 !important;
-        width: 100%;
+      app-filters {
+        width: 100% !important;
+      }
 
-        filter-aptitudes {
-          display: none;
-        }
+      .row-buttons {
+        width: 100% !important;
+        flex-direction: column !important;
+        position: relative;
+        height: fit-content;
 
-        button {
-          width: calc(50% - 20px);
-          font-size: 14px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+        div {
+          width: 100% !important;
+          height: 40px;
+          padding: 5px 0 !important;
         }
       }
 
