@@ -111,9 +111,9 @@ export class AppComponent implements OnInit {
     } else {
       // Vérifier si on est dans le navigateur avant d'accéder à navigator
       if (isPlatformBrowser(this.platformId)) {
-        this.translate.use(navigator.language.split("-")[0] ?? "en");
+        this.translate.use(navigator.language.split("-")[0] ?? "fr");
       } else {
-        this.translate.use("en");
+        this.translate.use("fr");
       }
     }
   }
@@ -134,7 +134,6 @@ export class AppComponent implements OnInit {
       .subscribe(() => {
         this.itemService.init();
 
-        // this.itemService.init();
         if (isPlatformBrowser(this.platformId)) {
           this.verifyToken();
           const buildId = getBuildIdFromUrl(window.location.href);

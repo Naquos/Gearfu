@@ -89,8 +89,8 @@ export class FilterSearchBuildFormService extends AbstractFormService<FormGroup<
             PO: value?.PO ?? FilterSearchBuildFormService.DEFAULT_VALUE.PO,
             CC: value?.CC ?? FilterSearchBuildFormService.DEFAULT_VALUE.CC,
             parade: value?.parade ?? FilterSearchBuildFormService.DEFAULT_VALUE.parade,
-            sublimationEpique: value?.sublimationEpique ?? FilterSearchBuildFormService.DEFAULT_VALUE.sublimationEpique,
-            sublimationRelique: value?.sublimationRelique ?? FilterSearchBuildFormService.DEFAULT_VALUE.sublimationRelique,
+            sublimationEpique: FilterSearchBuildFormService.DEFAULT_VALUE.sublimationEpique,
+            sublimationRelique: FilterSearchBuildFormService.DEFAULT_VALUE.sublimationRelique,
             sublimations: value?.sublimations ?? FilterSearchBuildFormService.DEFAULT_VALUE.sublimations,
             idItems: value?.idItems ?? FilterSearchBuildFormService.DEFAULT_VALUE.idItems,
         });
