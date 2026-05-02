@@ -670,13 +670,9 @@ export class ChasseFormService extends AbstractFormService<FormControl<Enchantem
             const chasse = chasses[startPos + i];
             const requiredColor = pattern[i];
 
-            // Si la chasse est vide (NON_CHASSE), elle ne peut pas matcher
-            if (chasse.color === IdChassesEnum.NON_CHASSE) {
-                return false;
-            }
 
-            // Si c'est un joker, il peut remplacer n'importe quelle couleur (sauf NON_CHASSE et JAUNE)
-            if (chasse.joker && this.isValidJokerReplacement(requiredColor)) {
+            // Si c'est un joker ou une chasse vide, il peut remplacer n'importe quelle couleur (sauf NON_CHASSE et JAUNE)
+            if (chasse.color === IdChassesEnum.NON_CHASSE || (chasse.joker && this.isValidJokerReplacement(requiredColor))) {
                 continue;
             }
 
