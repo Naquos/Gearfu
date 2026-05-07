@@ -6,7 +6,7 @@
     "start": "node node_modules/@angular/cli/bin/ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "deploy": "ng deploy --base-href /Gearfu/",
+    "deploy": "ng build --base-href /Gearfu/ && copy dist\\wakfu-builder\\browser\\index.html dist\\wakfu-builder\\browser\\404.html && npx angular-cli-ghpages --dir=dist/wakfu-builder/browser",
     "test": "ng test",
     "serve:ssr:WakfuBuilder": "node dist/wakfu-builder/server/server.mjs"
   },
