@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SortChoiceEnum } from '../../../models/enum/sortChoiceEnum';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,7 +10,8 @@ import { SortChoiceFormService } from '../../../services/form/sortChoiceFormServ
   selector: 'app-sort-choice',
   imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './sort-choice.component.html',
-  styleUrl: './sort-choice.component.scss'
+  styleUrl: './sort-choice.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SortChoiceComponent {
   protected readonly sortChoiceFormService = inject(SortChoiceFormService);

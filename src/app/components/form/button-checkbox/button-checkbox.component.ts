@@ -1,8 +1,8 @@
 
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivateDirective } from '../../../directives/activate.directive';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
@@ -12,6 +12,7 @@ import { LazyImageDirective } from '../../../directives/lazy-image.directive';
   imports: [MatTooltipModule, MatIconModule, TranslateModule, MatIconModule, ReactiveFormsModule, ActivateDirective, LazyImageDirective],
   templateUrl: './button-checkbox.component.html',
   styleUrl: './button-checkbox.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonCheckboxComponent {
   public readonly srcImg = input<string>("");

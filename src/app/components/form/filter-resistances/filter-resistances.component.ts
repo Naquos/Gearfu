@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,7 +11,8 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
   selector: 'app-filter-resistances',
   imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
   templateUrl: './filter-resistances.component.html',
-  styleUrl: './filter-resistances.component.scss'
+  styleUrl: './filter-resistances.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterResistancesComponent {
   protected readonly resistancesFormService = inject(ResistancesFormService);

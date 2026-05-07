@@ -1,6 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ItemChooseDisplayComponent } from "../item-choose-display/item-choose-display.component";
-import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -17,9 +16,10 @@ import { SaveBuildService } from '../../../services/saveBuildService';
 
 @Component({
   selector: 'app-item-choose',
-  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule, CommonModule, ActivateDirective],
+  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule, ActivateDirective],
   templateUrl: './item-choose.component.html',
-  styleUrl: './item-choose.component.scss'
+  styleUrl: './item-choose.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemChooseComponent {
   protected readonly itemChooseService = inject(ItemChooseService);
@@ -27,7 +27,7 @@ export class ItemChooseComponent {
   private readonly recapStatsService = inject(RecapStatsService);
   protected readonly imageService = inject(ImageService);
   protected readonly saveBuildService = inject(SaveBuildService);
-  
+
 
 
   protected readonly maitrisesTotal = toSignal(this.recapStatsService.maitrisesTotal$, {

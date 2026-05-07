@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { SupabaseService } from '../../../services/supabase/supabaseService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BuildComponent } from "../../items-pages/build/build.component";
@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [BuildComponent, TranslateModule],
   templateUrl: './search-build-liste.component.html',
   styleUrl: './search-build-liste.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchBuildListeComponent {
   private readonly supabaseService = inject(SupabaseService);

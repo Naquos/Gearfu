@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { ChasseFormService } from '../../../services/form/chasseFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -23,7 +23,8 @@ import { EnchantementSublimationsEpiquesReliquesComponent } from '../enchantemen
         EnchantementSublimationsEpiquesReliquesComponent
     ],
     templateUrl: './enchantement-sublimations.component.html',
-    styleUrl: './enchantement-sublimations.component.scss'
+    styleUrl: './enchantement-sublimations.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnchantementSublimationsComponent {
 

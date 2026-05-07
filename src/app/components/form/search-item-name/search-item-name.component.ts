@@ -1,11 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ItemsService } from '../../../services/data/itemsService';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { CommonModule } from '@angular/common';
 import { ColorRarityService } from '../../../services/colorRarityService';
 import { iif, map, of, switchMap, tap } from 'rxjs';
 import { SearchItemNameFormService } from '../../../services/form/searchItemNameFormService';
@@ -22,11 +21,11 @@ import { Option, SearchComponent } from "../search/search.component";
     ReactiveFormsModule,
     TranslateModule,
     MatAutocompleteModule,
-    CommonModule,
     SearchComponent
   ],
   templateUrl: './search-item-name.component.html',
-  styleUrl: './search-item-name.component.scss'
+  styleUrl: './search-item-name.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchItemNameComponent {
 

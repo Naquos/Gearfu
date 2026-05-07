@@ -1,18 +1,24 @@
-import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Output, Input, inject } from '@angular/core';
+import { Directive, ElementRef, inject, input, output } from '@angular/core';
 
 @Directive({
   selector: '[appActivate]',
-  standalone: true
+  standalone: true,
+  host: {
+    'tabindex': '0',
+    '(keydown)': 'onKeyDown($event)',
+    '(click)': 'onClick($event)',
+    '(dblclick)': 'onDblClick($event)',
+    '(focus)': 'onFocus()',
+    '(blur)': 'onBlur()'
+  }
 })
 export class ActivateDirective {
-  @Output() appActivate = new EventEmitter<Event>();
-  @Input() appActivateTrigger: 'click' | 'dblclick' = 'click';
-  @HostBinding('tabIndex') tabIndex = 0;
+  appActivate = output<Event>();
+  appActivateTrigger = input<'click' | 'dblclick'>('click');
 
   private readonly keyList: string[] = [' ', 'Spacebar', 'Enter'];
   private readonly el = inject(ElementRef);
 
-  @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
     if (this.keyList.includes(event.key)) {
       event.preventDefault();
@@ -20,21 +26,18 @@ export class ActivateDirective {
     }
   }
 
-  @HostListener('click', ['$event'])
   onClick(event: MouseEvent): void {
-    if (this.appActivateTrigger === 'click') {
+    if (this.appActivateTrigger() === 'click') {
       this.appActivate.emit(event);
     }
   }
 
-  @HostListener('dblclick', ['$event'])
   onDblClick(event: MouseEvent): void {
-    if (this.appActivateTrigger === 'dblclick') {
+    if (this.appActivateTrigger() === 'dblclick') {
       this.appActivate.emit(event);
     }
   }
 
-  @HostListener('focus')
   onFocus(): void {
     const parent = this.el.nativeElement.parentElement;
     if (parent) {
@@ -44,7 +47,6 @@ export class ActivateDirective {
     }
   }
 
-  @HostListener('blur')
   onBlur(): void {
     const parent = this.el.nativeElement.parentElement;
     if (parent) {

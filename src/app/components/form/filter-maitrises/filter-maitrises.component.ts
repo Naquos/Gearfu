@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
@@ -11,7 +11,8 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
   selector: 'app-filter-maitrises',
   imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
   templateUrl: './filter-maitrises.component.html',
-  styleUrl: './filter-maitrises.component.scss'
+  styleUrl: './filter-maitrises.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterMaitrisesComponent {
   protected readonly maitrisesFormServices = inject(MaitrisesFormService);

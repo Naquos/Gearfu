@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -11,7 +11,8 @@ import { CodeAptitudesService } from '../../../services/codeAptitudesService';
     standalone: true,
     imports: [TranslateModule, MatIconModule, MatTooltipModule, ActivateDirective],
     templateUrl: './code-aptitudes.component.html',
-    styleUrl: './code-aptitudes.component.scss'
+    styleUrl: './code-aptitudes.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CodeAptitudesComponent {
     private readonly codeAptitudesService = inject(CodeAptitudesService);

@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef, computed, inject, input } from '@angular/core';
+import { Component, ViewContainerRef, computed, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { ImageService } from '../../../services/imageService';
 import { ActivateDirective } from '../../../directives/activate.directive';
@@ -12,7 +12,8 @@ import { ConnectedPosition } from '@angular/cdk/overlay';
     selector: 'app-enchantement-sublimations-classiques',
     imports: [ActivateDirective],
     templateUrl: './enchantement-sublimations-classiques.component.html',
-    styleUrl: './enchantement-sublimations-classiques.component.scss'
+    styleUrl: './enchantement-sublimations-classiques.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnchantementSublimationsClassiquesComponent {
 

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { SearchListComponent } from "../../form/search-list/search-list.component";
 import { FormControl } from '@angular/forms';
 import { SublimationService } from '../../../services/data/sublimationService';
@@ -17,6 +17,7 @@ import { FilterSearchBuildFormService } from '../../../services/form/filterSearc
   imports: [SearchListComponent],
   templateUrl: './search-list-sublimation.component.html',
   styleUrl: './search-list-sublimation.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchListSublimationComponent {
 

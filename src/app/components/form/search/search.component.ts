@@ -1,10 +1,9 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { CommonModule } from '@angular/common';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
 
 export interface Option<T> {
@@ -25,11 +24,11 @@ export interface Option<T> {
     ReactiveFormsModule,
     TranslateModule,
     MatAutocompleteModule,
-    CommonModule,
     ImageFallbackDirective
   ],
   templateUrl: './search.component.html',
-  styleUrl: './search.component.scss'
+  styleUrl: './search.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchComponent<T> {
 

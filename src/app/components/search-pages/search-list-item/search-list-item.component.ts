@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Option } from "../../form/search/search.component";
 import { SearchListComponent } from "../../form/search-list/search-list.component";
@@ -16,6 +16,7 @@ import { FilterSearchBuildFormService } from '../../../services/form/filterSearc
   imports: [SearchListComponent],
   templateUrl: './search-list-item.component.html',
   styleUrl: './search-list-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchListItemComponent {
   public label = input<string>('search-list-item.item');

@@ -1,4 +1,4 @@
-import { Component, Signal, computed, inject, signal } from '@angular/core';
+import { Component, Signal, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap, tap } from 'rxjs';
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
@@ -18,7 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
         TranslateModule
     ],
     templateUrl: './enchantement-sublimations-conseillees.component.html',
-    styleUrl: './enchantement-sublimations-conseillees.component.scss'
+    styleUrl: './enchantement-sublimations-conseillees.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnchantementSublimationsCommunityComponent {
     private readonly supabaseService = inject(SupabaseService);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RecapitulatifComponent } from "../recapitulatif/recapitulatif.component";
 
 @Component({
@@ -6,6 +6,7 @@ import { RecapitulatifComponent } from "../recapitulatif/recapitulatif.component
   imports: [RecapitulatifComponent],
   templateUrl: './recapitulatif-router.component.html',
   styleUrl: './recapitulatif-router.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecapitulatifRouterComponent {
 

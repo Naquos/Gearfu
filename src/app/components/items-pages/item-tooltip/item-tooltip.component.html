@@ -1,42 +1,48 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
- @if (loaded$ | async) {
-    <div class="header">
-        <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)" ><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{"item.maitrises" | translate}} {{Math.trunc(maitrises)}}</span>
-        <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Resistances">{{ "item.resistances" | translate }} {{resistances}}</span>
-    </div>
- }
-<div class="content" (click)="setItem(item)">
+@if (loaded$ | async) {
+<div class="header">
+    <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)"><img
+            [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{"item.maitrises"
+        | translate}} {{Math.trunc(maitrises)}}</span>
+    <span [class]="getBackgroundDifferentsStatsOnValue(resistances)"><img
+            [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Resistances">{{
+        "item.resistances" | translate }} {{resistances}}</span>
+</div>
+}
+<div class="content" (click)="setItem(item())">
     <div class="column">
         <div class="row">
             <div class="title">
-                <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{ getTitle(item) }} ({{item.level}})</h3>
-                <img [src]="imageService.getItemUrl(item.idImage)" alt="item">
+                <h3 [style.color]="colorRarityService.mapColors.get(item().rarity)">{{ getTitle(item()) }}
+                    ({{item().level}})</h3>
+                <img [src]="imageService.getItemUrl(item().idImage)" alt="item">
             </div>
             @if (itemSelected$ | async; as itemSelected) {
-                @for (item of itemSelected; track $index) {
-                    <div class="title" >
-                        <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{ getTitle(item) }}  ({{item.level}})</h3>
-                        <img [src]="imageService.getItemUrl(item.idImage)" appFallback alt="items">
-                    </div>
-                }
+            @for (item of itemSelected; track $index) {
+            <div class="title">
+                <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{ getTitle(item) }} ({{item.level}})
+                </h3>
+                <img [src]="imageService.getItemUrl(item.idImage)" appFallback alt="items">
+            </div>
+            }
             }
         </div>
-        
+
         <span [class]="getBackgroundDifferentsStatsOnValue(weight) + ' poids'">
             <img [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }} {{weight}}
         </span>
     </div>
 
     @if (differentStatsItemList$ | async; as statsList) {
-        <div>
-            @for (effect of statsList; track $index) {
-                <p [class]="getBackgroundDifferentsStats(effect)">
-                    @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT && effect.value !== 0) {
-                        <img  [src]="getEffectPng(effect)" alt="aptitudes">  {{ effect | actions | async }}
-                    }
-                </p>
+    <div>
+        @for (effect of statsList; track $index) {
+        <p [class]="getBackgroundDifferentsStats(effect)">
+            @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT && effect.value !== 0) {
+            <img [src]="getEffectPng(effect)" alt="aptitudes"> {{ effect | actions | async }}
             }
-        </div>
+        </p>
+        }
+    </div>
     }
 </div>

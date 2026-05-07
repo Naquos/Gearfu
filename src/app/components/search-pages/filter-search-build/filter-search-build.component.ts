@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ClassIdEnum } from '../../../models/enum/classIdEnum';
 import { FilterSearchBuildFormService } from '../../../services/form/filterSearchBuildFormService';
 import { ActivateDirective } from '../../../directives/activate.directive';
@@ -25,6 +25,7 @@ import { SearchListSublimationComponent } from "../search-list-sublimation/searc
     SearchListItemComponent, SearchListSublimationComponent],
   templateUrl: './filter-search-build.component.html',
   styleUrl: './filter-search-build.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterSearchBuildComponent {
   protected readonly filterSearchBuildFormService = inject(FilterSearchBuildFormService);

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReverseButtonComponent } from "../../form/reverse-button/reverse-button.component";
 import { SearchItemNameComponent } from "../../form/search-item-name/search-item-name.component";
 import { ObtentionComponent } from "../../form/obtention/obtention.component";
@@ -20,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [TranslateModule, ReverseButtonComponent, SearchItemNameComponent, ObtentionComponent, OnlyNoSecondaryComponent, OnlyNoElemComponent, ModifierMecanismComponent, SortChoiceComponent, FilterResistancesComponent, MajorPresentComponent, FilterMaitrisesComponent, RareteItemComponent, ItemLevelComponent, ItemTypesComponent],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FiltersComponent {
   protected readonly resetFormService = inject(ResetFormService);

@@ -1,5 +1,4 @@
-import { Component, inject, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { ActivateDirective } from '../../../directives/activate.directive';
@@ -14,9 +13,10 @@ type TypeSort = 'NEUTRE' | 'PASSIF';
 
 @Component({
     selector: 'app-equipped-sorts',
-    imports: [CommonModule, TranslateModule, LazyImageDirective, ActivateDirective],
+    imports: [TranslateModule, LazyImageDirective, ActivateDirective],
     templateUrl: './equipped-sorts.component.html',
-    styleUrl: './equipped-sorts.component.scss'
+    styleUrl: './equipped-sorts.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EquippedSortsComponent {
     private readonly levelFormService = inject(LevelFormService);

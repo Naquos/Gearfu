@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 import { OnlyNoSecondaryFormService } from '../../../services/form/onlyNoSecondaryFormService';
@@ -7,7 +7,8 @@ import { OnlyNoSecondaryFormService } from '../../../services/form/onlyNoSeconda
   selector: 'app-only-no-secondary',
   imports: [MatButtonToggleModule, TranslateModule],
   templateUrl: './only-no-secondary.component.html',
-  styleUrl: './only-no-secondary.component.scss'
+  styleUrl: './only-no-secondary.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnlyNoSecondaryComponent {
   protected readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);

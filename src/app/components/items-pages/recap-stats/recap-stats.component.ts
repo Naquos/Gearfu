@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { RecapStats } from '../../../models/data/recap-stats';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
@@ -7,12 +6,14 @@ import { ParameterMajorActionEnum } from '../../../models/enum/parameterMajorAct
 import { ImageService } from '../../../services/imageService';
 import { RecapStatsService } from '../../../services/recapStatsService';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-recap-stats',
-  imports: [CommonModule, TranslateModule, LazyImageDirective],
+  imports: [TranslateModule, LazyImageDirective, CommonModule],
   templateUrl: './recap-stats.component.html',
-  styleUrl: './recap-stats.component.scss'
+  styleUrl: './recap-stats.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecapStatsComponent {
 
@@ -27,10 +28,10 @@ export class RecapStatsComponent {
   ];
 
   protected displayEffect(effect: RecapStats): string {
-    const symbol = effect.value < 0? "-" : ""
+    const symbol = effect.value < 0 ? "-" : ""
     const value = Math.abs(effect.value);
 
-    if(RecapStatsComponent.RESISTANCES_LIST.includes(effect.id)) {
+    if (RecapStatsComponent.RESISTANCES_LIST.includes(effect.id)) {
       const percentage = Math.floor((1 - Math.pow(0.8, value / 100)) * 100);
       return `${symbol}${percentage}% (${value})`;
     }
@@ -38,11 +39,11 @@ export class RecapStatsComponent {
     return symbol + value;
   }
 
-  protected getEffectPng(effect : RecapStats): string {
-      return this.imageService.getActionIdUrl(
-        effect.id, 
-        effect.id === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.parameterMajorAction === ParameterMajorActionEnum.ARMURE_RECUE
-      );
+  protected getEffectPng(effect: RecapStats): string {
+    return this.imageService.getActionIdUrl(
+      effect.id,
+      effect.id === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.parameterMajorAction === ParameterMajorActionEnum.ARMURE_RECUE
+    );
   }
 
 

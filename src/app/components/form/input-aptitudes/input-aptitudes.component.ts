@@ -1,11 +1,12 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-input-aptitudes',
   imports: [ReactiveFormsModule],
   templateUrl: './input-aptitudes.component.html',
-  styleUrl: './input-aptitudes.component.scss'
+  styleUrl: './input-aptitudes.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputAptitudesComponent implements OnInit {
   public control = input.required<FormControl<number>>();
@@ -39,29 +40,29 @@ export class InputAptitudesComponent implements OnInit {
     // Tester avec une grande valeur pour déclencher l'erreur max
     const testControl = new FormControl(999999);
     const errors = validators(testControl);
-    
+
     if (errors && errors['max']) {
       return errors['max'].max;
     }
-    
+
     return null;
   }
 
   protected incrementValue(increment: number, event?: MouseEvent): void {
     let incrementAmount = increment;
-    if(event?.shiftKey) {
+    if (event?.shiftKey) {
       incrementAmount = increment > 0 ? increment * Math.min(10, this.aptitudesRestantes()) : increment * 10;
-    } else if(event?.altKey) {
+    } else if (event?.altKey) {
       incrementAmount = increment > 0 ? this.aptitudesRestantes() : - (this.control().value || 0);
     }
 
-    if(incrementAmount > 0 && this.aptitudesRestantes() <= 0) {
+    if (incrementAmount > 0 && this.aptitudesRestantes() <= 0) {
       return;
     }
     const currentValue = +this.control().value || 0;
     const value = currentValue + incrementAmount;
 
-    
+
     this.control().setValue(value);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, Inject, PLATFORM_ID, ChangeDetectionStrategy } from '@angular/core';
 import { ItemComponent } from '../item/item.component';
 import { ItemSkeletonComponent } from '../item-skeleton/item-skeleton.component';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
@@ -11,12 +11,13 @@ import { ItemsService } from '../../../services/data/itemsService';
   selector: 'app-item-list',
   imports: [ItemComponent, CommonModule, ItemSkeletonComponent, IntersectDirective],
   templateUrl: './item-list.component.html',
-  styleUrl: './item-list.component.scss'
+  styleUrl: './item-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemListComponent implements OnInit, OnDestroy {
   protected readonly itemsService = inject(ItemsService);
   protected readonly skeletonArray = Array(36).fill(0).map((x, i) => i); // Tableau pour afficher 36 skeletons
-  
+
   protected displayedItems$ = new BehaviorSubject<Item[]>([]);
   protected allItems: Item[] = [];
   private itemsPerLoad = 36; // Charger 36 items à la fois
@@ -54,7 +55,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
     const currentItems = this.displayedItems$.value;
     this.displayedItems$.next([...currentItems, ...nextItems]);
     this.currentIndex += this.itemsPerLoad;
-    
+
   }
 
   protected onScrollEnd(): void {

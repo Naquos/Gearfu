@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NameBuildFormService } from '../../../services/form/nameBuildFormService';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,7 +11,8 @@ import { SaveBuildService } from '../../../services/saveBuildService';
   selector: 'app-name-build',
   imports: [MatFormFieldModule, FormsModule, MatInputModule, ReactiveFormsModule, MatIconModule, TranslateModule],
   templateUrl: './name-build.component.html',
-  styleUrl: './name-build.component.scss'
+  styleUrl: './name-build.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NameBuildComponent {
   protected readonly nameBuildFormService = inject(NameBuildFormService);

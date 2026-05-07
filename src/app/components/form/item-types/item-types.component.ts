@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ItemType } from '../../../models/data/itemType';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 import { ItemTypeFormServices } from '../../../services/form/itemTypeFormServices';
 import { TranslateModule } from '@ngx-translate/core';
@@ -12,7 +12,8 @@ import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
   selector: 'app-item-types',
   imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
   templateUrl: './item-types.component.html',
-  styleUrl: './item-types.component.scss'
+  styleUrl: './item-types.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemTypesComponent {
   protected readonly itemTypeFormServices = inject(ItemTypeFormServices);

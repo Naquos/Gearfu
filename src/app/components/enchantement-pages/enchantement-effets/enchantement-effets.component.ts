@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
 import { ItemTypeServices } from '../../../services/data/ItemTypesServices';
@@ -10,7 +10,8 @@ import { EnchantementStateService, EffetDescription } from '../../../services/fo
     selector: 'app-enchantement-effets',
     imports: [TranslateModule, ActivateDirective],
     templateUrl: './enchantement-effets.component.html',
-    styleUrl: './enchantement-effets.component.scss'
+    styleUrl: './enchantement-effets.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnchantementEffetsComponent {
 

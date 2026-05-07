@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, input, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, inject, input, OnInit, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, filter, map, startWith } from 'rxjs';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
 import { Item } from '../../../models/data/item';
@@ -13,12 +12,14 @@ import { ItemComponent } from '../item/item.component';
 import { Router } from '@angular/router';
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-item-choose-display',
-  imports: [CommonModule, ImageFallbackDirective, ActivateDirective, LazyImageDirective],
+  imports: [ImageFallbackDirective, ActivateDirective, LazyImageDirective, CommonModule],
   templateUrl: './item-choose-display.component.html',
   styleUrl: './item-choose-display.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     ngSkipHydration: 'true'
   }
@@ -27,7 +28,7 @@ export class ItemChooseDisplayComponent implements OnInit {
   protected readonly colorRarityService = inject(ColorRarityService);
   protected readonly itemChooseService = inject(ItemChooseService);
   protected readonly itemTypeFormServices = inject(ItemTypeFormServices);
-  protected readonly tooltipService = inject(TooltipService<{item: Item}>);
+  protected readonly tooltipService = inject(TooltipService<{ item: Item }>);
   private readonly viewContainerRef = inject(ViewContainerRef);
   protected readonly imageService = inject(ImageService);
   private readonly router = inject(Router);
@@ -47,14 +48,14 @@ export class ItemChooseDisplayComponent implements OnInit {
 
   protected openTooltip(event: MouseEvent, item: Item): void {
     this.tooltipService.forceClose();
-    if(item) {
+    if (item) {
       this.tooltipService.cancelClose();
       // Le 7ème paramètre active le comportement "garder ouvert au survol"
       this.tooltipService.openTooltip(
-        this.viewContainerRef, 
-        ItemComponent, 
-        event, 
-        {item, isTooltip: true},
+        this.viewContainerRef,
+        ItemComponent,
+        event,
+        { item, isTooltip: true },
         undefined,  // connectedPosition
         true,       // withPush
         true        // keepOpenOnHover - ACTIVÉ ICI
@@ -66,15 +67,15 @@ export class ItemChooseDisplayComponent implements OnInit {
     this.tooltipService.closeTooltip();
   }
 
-  protected setFilter():void {
+  protected setFilter(): void {
     const currentFragment = typeof window !== 'undefined' ? window.location.hash.substring(1) : '';
     const buildId = this.getBuildIdFromUrl(this.router.url);
     this.router.navigate(["/", buildId], {
       fragment: currentFragment || undefined
     });
-    if(this.itemType() === ItemTypeEnum.BOUCLIER) {
+    if (this.itemType() === ItemTypeEnum.BOUCLIER) {
       this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DAGUE)
-    } else if(this.itemType() === ItemTypeEnum.UNE_MAIN) {
+    } else if (this.itemType() === ItemTypeEnum.UNE_MAIN) {
       this.itemTypeFormServices.setItemType(this.itemType(), ItemTypeEnum.DEUX_MAINS)
     } else {
       this.itemTypeFormServices.setItemType(this.itemType())

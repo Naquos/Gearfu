@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { ItemLevelFormService } from '../../../services/form/itemLevelFormService';
 
@@ -9,7 +9,8 @@ import { ItemLevelFormService } from '../../../services/form/itemLevelFormServic
   selector: 'app-item-level',
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslateModule],
   templateUrl: './item-level.component.html',
-  styleUrl: './item-level.component.scss'
+  styleUrl: './item-level.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemLevelComponent {
   protected readonly itemLevelFormService = inject(ItemLevelFormService);

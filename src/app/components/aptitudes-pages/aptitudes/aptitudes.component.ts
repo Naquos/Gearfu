@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
 import { combineLatest, map } from 'rxjs';
@@ -13,6 +13,7 @@ import { CodeAptitudesComponent } from '../code-aptitudes/code-aptitudes.compone
 @Component({
   selector: 'app-aptitudes',
   imports: [TranslateModule, InputAptitudesComponent, LazyImageDirective, CodeAptitudesComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './aptitudes.component.html',
   styleUrl: './aptitudes.component.scss'
 })

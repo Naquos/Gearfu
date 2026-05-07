@@ -1,16 +1,15 @@
-import { Directive, ElementRef, EventEmitter, OnDestroy, OnInit, Output, Input } from '@angular/core';
+import { Directive, ElementRef, OnDestroy, OnInit, inject, input, output } from '@angular/core';
 
 @Directive({
   selector: '[appIntersect]',
   standalone: true
 })
 export class IntersectDirective implements OnInit, OnDestroy {
-  @Output() appIntersect = new EventEmitter<void>();
-  @Input() intersectRoot?: HTMLElement; // Conteneur de scroll optionnel
-  
-  private observer?: IntersectionObserver;
+  appIntersect = output<void>();
+  intersectRoot = input<HTMLElement | undefined>(undefined); // Conteneur de scroll optionnel
 
-  constructor(private el: ElementRef) {}
+  private observer?: IntersectionObserver;
+  private readonly el = inject(ElementRef);
 
   ngOnInit(): void {
     this.observer = new IntersectionObserver(
@@ -21,8 +20,8 @@ export class IntersectDirective implements OnInit, OnDestroy {
           }
         });
       },
-      { 
-        root: this.intersectRoot || null, // Utilise le root custom ou le viewport par défaut
+      {
+        root: this.intersectRoot() || null, // Utilise le root custom ou le viewport par défaut
         threshold: 0.1,
         rootMargin: '300px' // Commence à charger 300px avant
       }

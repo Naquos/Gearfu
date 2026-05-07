@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -16,32 +16,33 @@ export interface DescriptionSublimationType {
   selector: 'app-description-sublimation',
   imports: [MatTooltipModule, TranslateModule, ImageFallbackDirective, LazyImageDirective],
   templateUrl: './description-sublimation.component.html',
-  styleUrls: ['./description-sublimation.component.scss']
+  styleUrls: ['./description-sublimation.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DescriptionSublimationComponent {
 
   private readonly translateService = inject(TranslateService);
   protected readonly imageService = inject(ImageService);
-  
+
   // Signals for reactive template usage
   protected readonly level = input<number>(1);
   protected readonly sublimationsDescriptions = input<SublimationsDescriptions | undefined>(undefined);
 
   protected openEncyclopedieForMonster(monsterId: number): void {
-    if(monsterId === -1) {
+    if (monsterId === -1) {
       return;
     }
     window.open('https://www.wakfu.com/fr/mmorpg/encyclopedie/monstres/' + monsterId);
   }
 
   protected getUrlMonster(monsterDrop: MonsterDrop): string {
-    if(monsterDrop.idMob !== -1 && monsterDrop.idMob !== 4189) {
+    if (monsterDrop.idMob !== -1 && monsterDrop.idMob !== 4189) {
       return this.imageService.getMonsterUrl(monsterDrop.gfxId);
     }
-    if(monsterDrop.idMob === 4189) {
+    if (monsterDrop.idMob === 4189) {
       return "breche/mimic.png";
     }
-    switch(monsterDrop.name.fr) {
+    switch (monsterDrop.name.fr) {
       case 'Brèche Tainela':
         return "breche/tainela.png";
       case 'Brèche Sufokia':
@@ -66,7 +67,7 @@ export class DescriptionSublimationComponent {
     return "";
   }
 
-  
+
   protected navigateToCraftku(): void {
     window.open('https://craftkfu.waklab.fr/?' + this.sublimationsDescriptions()?.id, '_blank');
   }
@@ -76,14 +77,14 @@ export class DescriptionSublimationComponent {
   }
 
   protected getUrlSublimationImage(): string {
-    if(!this.level() || !this.sublimationsDescriptions()) {
+    if (!this.level() || !this.sublimationsDescriptions()) {
       return "";
     }
-    if(this.sublimationsDescriptions()?.isEpic || this.sublimationsDescriptions()?.isRelic) {
+    if (this.sublimationsDescriptions()?.isEpic || this.sublimationsDescriptions()?.isRelic) {
       return this.imageService.getItemUrl(this.sublimationsDescriptions()!.gfxId);
     }
     let id = 81228822;
-    switch(this.level()) {
+    switch (this.level()) {
       case 1:
         id = 81228822;
         break;
@@ -97,16 +98,16 @@ export class DescriptionSublimationComponent {
     return this.imageService.getItemUrl(id);
   }
 
-  protected getSublimationTitle() : string {
-    if(!this.sublimationsDescriptions()) {
+  protected getSublimationTitle(): string {
+    if (!this.sublimationsDescriptions()) {
       return "";
     }
     const title = this.sublimationsDescriptions()!.title;
     return title[this.translateService.currentLang as keyof typeof title];
   }
 
-  protected getSublimationDescription() : string {
-    if(!this.sublimationsDescriptions()) {
+  protected getSublimationDescription(): string {
+    if (!this.sublimationsDescriptions()) {
       return "";
     }
     const description = this.sublimationsDescriptions()!.description;
@@ -115,9 +116,9 @@ export class DescriptionSublimationComponent {
   }
 
   private formatDescription(description: string): string {
-    if(!this.sublimationsDescriptions()) {
+    if (!this.sublimationsDescriptions()) {
       return "";
-    } 
+    }
     const baseEffects = this.sublimationsDescriptions()!.baseEffect;
     let formattedDescription = description;
     baseEffects.forEach((effect, index) => {

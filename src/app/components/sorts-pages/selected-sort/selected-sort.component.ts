@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -18,9 +17,10 @@ import { DescriptionSort } from '../../../models/data/descriptionSort';
 
 @Component({
     selector: 'app-selected-sort',
-    imports: [CommonModule, TranslateModule, MatButtonModule, FormsModule, MatSliderModule, LazyImageDirective, ActivateDirective],
+    imports: [TranslateModule, MatButtonModule, FormsModule, MatSliderModule, LazyImageDirective, ActivateDirective],
     templateUrl: './selected-sort.component.html',
-    styleUrl: './selected-sort.component.scss'
+    styleUrl: './selected-sort.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectedSortComponent {
     private readonly translateService = inject(TranslateService);

@@ -1,4 +1,4 @@
-import { Component, inject, ViewContainerRef } from '@angular/core';
+import { Component, inject, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
 import { RecapStatsService } from '../../../services/recapStatsService';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { RecapStats } from '../../../models/data/recap-stats';
@@ -23,7 +23,8 @@ import { ActivateDirective } from "../../../directives/activate.directive";
   selector: 'app-resume-aptitudes',
   imports: [TranslateModule, ReactiveFormsModule, LazyImageDirective, BonusComponent, InputResumeAptitudesComponent, ActivateDirective],
   templateUrl: './resume-aptitudes.component.html',
-  styleUrl: './resume-aptitudes.component.scss'
+  styleUrl: './resume-aptitudes.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResumeAptitudesComponent {
   protected readonly recapStatsService = inject(RecapStatsService);

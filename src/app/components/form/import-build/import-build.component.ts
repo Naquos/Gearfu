@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ImportBuildFormService } from '../../../services/form/importBuildFormService';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,7 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-import-build',
   imports: [MatFormFieldModule, FormsModule, MatInputModule, ReactiveFormsModule, MatIconModule, TranslateModule],
   templateUrl: './import-build.component.html',
-  styleUrl: './import-build.component.scss'
+  styleUrl: './import-build.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImportBuildComponent {
   protected readonly importBuildService = inject(ImportBuildFormService);

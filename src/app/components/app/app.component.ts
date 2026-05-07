@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, PLATFORM_ID, Inject, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, Inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
@@ -54,7 +54,8 @@ type column = 'filter' | 'aptitudes' | 'search';
     MainNavComponent
   ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss', './birthday.scss']
+  styleUrls: ['./app.component.scss', './birthday.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 

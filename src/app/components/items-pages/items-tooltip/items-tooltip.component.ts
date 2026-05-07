@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { ItemTooltipComponent } from '../item-tooltip/item-tooltip.component';
 import { Item } from '../../../models/data/item';
@@ -7,7 +7,8 @@ import { Item } from '../../../models/data/item';
   selector: 'app-items-tooltip',
   imports: [ItemTooltipComponent],
   templateUrl: './items-tooltip.component.html',
-  styleUrl: './items-tooltip.component.scss'
+  styleUrl: './items-tooltip.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemsTooltipComponent {
 

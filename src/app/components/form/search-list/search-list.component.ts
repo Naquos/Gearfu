@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, input, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { SearchComponent } from "../search/search.component";
 import { Option } from "../search/search.component";
 import { FormControl } from '@angular/forms';
@@ -9,6 +9,7 @@ import { ActivateDirective } from "../../../directives/activate.directive";
   imports: [SearchComponent, ActivateDirective],
   templateUrl: './search-list.component.html',
   styleUrl: './search-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchListComponent<T> {
   public label = input<string>('Items');

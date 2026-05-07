@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap, tap } from 'rxjs';
 import { ClasseFormService } from '../../../services/form/classeFormService';
@@ -12,7 +12,8 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'app-sorts-conseilles',
     imports: [SortImageComponent, TranslateModule],
     templateUrl: './sorts-conseilles.component.html',
-    styleUrl: './sorts-conseilles.component.scss'
+    styleUrl: './sorts-conseilles.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SortsConseillesComponent {
     private readonly classeFormService = inject(ClasseFormService);

@@ -1,5 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ImageService } from '../../../services/imageService';
 import { SortService } from '../../../services/data/sortService';
@@ -14,9 +13,10 @@ export type TypeSort = 'NEUTRE' | 'PASSIF';
 
 @Component({
     selector: 'app-sort-image',
-    imports: [CommonModule, MatTooltipModule, ActivateDirective],
+    imports: [MatTooltipModule, ActivateDirective],
     templateUrl: './sort-image.component.html',
-    styleUrl: './sort-image.component.scss'
+    styleUrl: './sort-image.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SortImageComponent {
     private readonly imageService = inject(ImageService);
@@ -25,8 +25,8 @@ export class SortImageComponent {
     private readonly sortSelectionService = inject(SortSelectionService);
     private readonly sortFormService = inject(SortFormService);
 
-    @Input({ required: true }) sort!: DescriptionSort;
-    @Input({ required: true }) typeSort!: TypeSort;
+    sort = input.required<DescriptionSort>();
+    typeSort = input.required<TypeSort>();
 
     protected readonly level = toSignal(this.levelFormService.level$, {
         initialValue: 246
@@ -37,25 +37,25 @@ export class SortImageComponent {
     }
 
     protected getSortName(): string {
-        return this.sort.name[this.sortService.getCurrentLang()];
+        return this.sort().name[this.sortService.getCurrentLang()];
     }
 
     protected isLocked(): boolean {
-        return this.level() < this.sort.levelUnlock;
+        return this.level() < this.sort().levelUnlock;
     }
 
     protected onDragStart(event: DragEvent): void {
         this.sortSelectionService.setDragSource('list');
         if (event.dataTransfer) {
             event.dataTransfer.effectAllowed = 'copy';
-            event.dataTransfer.setData('sortId', this.sort.gfxId.toString());
-            event.dataTransfer.setData('typeSort', this.typeSort);
+            event.dataTransfer.setData('sortId', this.sort().gfxId.toString());
+            event.dataTransfer.setData('typeSort', this.typeSort());
             event.dataTransfer.setData('source', 'list');
         }
     }
 
     protected onClick(): void {
-        this.sortSelectionService.selectSort(this.sort, this.typeSort);
+        this.sortSelectionService.selectSort(this.sort(), this.typeSort());
     }
 
     protected onDoubleClick(): void {
@@ -68,10 +68,10 @@ export class SortImageComponent {
     }
 
     private addSortToBuild(): void {
-        if (this.typeSort === 'NEUTRE') {
-            this.sortFormService.addSortNeutre(this.sort.gfxId);
-        } else if (this.typeSort === 'PASSIF') {
-            this.sortFormService.addSortPassif(this.sort.gfxId);
+        if (this.typeSort() === 'NEUTRE') {
+            this.sortFormService.addSortNeutre(this.sort().gfxId);
+        } else if (this.typeSort() === 'PASSIF') {
+            this.sortFormService.addSortPassif(this.sort().gfxId);
         }
     }
 }

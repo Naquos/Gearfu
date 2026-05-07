@@ -1,4 +1,4 @@
-import { Component, inject, input, ViewContainerRef } from '@angular/core';
+import { Component, inject, input, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { ChasseFormService } from '../../../services/form/chasseFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -34,7 +34,8 @@ interface DisplayTypeItem {
     selector: 'app-enchantement-chasses',
     imports: [ImageItemComponent, TranslateModule, MatSliderModule, FormsModule, FormatNumberPipe, ActivateDirective, MatTooltip],
     templateUrl: './enchantement-chasses.component.html',
-    styleUrl: './enchantement-chasses.component.scss'
+    styleUrl: './enchantement-chasses.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnchantementChassesComponent extends AbstractDestroyService {
 

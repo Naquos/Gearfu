@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 import { StatesDefinitionService } from '../../../services/data/statesDefinitionService';
@@ -7,10 +7,11 @@ import { StatesDefinitionService } from '../../../services/data/statesDefinition
   selector: 'app-states',
   imports: [],
   templateUrl: './states.component.html',
-  styleUrl: './states.component.scss'
+  styleUrl: './states.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StatesComponent {
-  
+
   protected readonly statesDefinitionService = inject(StatesDefinitionService);
   private readonly translateService = inject(TranslateService);
 

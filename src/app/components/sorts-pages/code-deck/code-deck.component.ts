@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,7 +10,8 @@ import { ActivateDirective } from '../../../directives/activate.directive';
     selector: 'app-code-deck',
     imports: [TranslateModule, MatIconModule, MatTooltipModule, ActivateDirective],
     templateUrl: './code-deck.component.html',
-    styleUrl: './code-deck.component.scss'
+    styleUrl: './code-deck.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CodeDeckComponent {
     private readonly sortFormService = inject(SortFormService);

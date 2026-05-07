@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,7 +10,8 @@ import { ImageService } from '../../../services/imageService';
   selector: 'app-obtention',
   imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
   templateUrl: './obtention.component.html',
-  styleUrl: './obtention.component.scss'
+  styleUrl: './obtention.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ObtentionComponent {
   protected readonly obtentionFormService = inject(ObtentionFormService);

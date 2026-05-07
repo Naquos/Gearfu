@@ -1,5 +1,5 @@
 
-import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, input, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Build } from '../../../models/data/build';
@@ -38,7 +38,8 @@ export enum ItemTypeBuild {
   selector: 'app-build',
   imports: [MatTooltipModule, TranslateModule, LazyImageDirective, MatIcon],
   templateUrl: './build.component.html',
-  styleUrl: './build.component.scss'
+  styleUrl: './build.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BuildComponent implements OnInit {
 

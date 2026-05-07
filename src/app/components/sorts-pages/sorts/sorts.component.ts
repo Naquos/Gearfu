@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ClasseFormService } from '../../../services/form/classeFormService';
 import { CodeDeckComponent } from '../code-deck/code-deck.component';
@@ -10,6 +10,7 @@ import { SortsConseillesComponent } from '../sorts-conseilles/sorts-conseilles.c
 
 @Component({
   selector: 'app-sorts',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TranslateModule,
     CodeDeckComponent,

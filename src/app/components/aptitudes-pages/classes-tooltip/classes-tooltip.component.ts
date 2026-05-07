@@ -1,4 +1,4 @@
-import { Component, inject, viewChild, effect, ElementRef } from '@angular/core';
+import { Component, inject, viewChild, effect, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { ClassIdEnum } from '../../../models/enum/classIdEnum';
 import { ClasseFormService } from '../../../services/form/classeFormService';
@@ -8,7 +8,8 @@ import { ActivateDirective } from "../../../directives/activate.directive";
   selector: 'app-classes-tooltip',
   imports: [LazyImageDirective, ActivateDirective],
   templateUrl: './classes-tooltip.component.html',
-  styleUrl: './classes-tooltip.component.scss'
+  styleUrl: './classes-tooltip.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClassesTooltipComponent {
   private readonly classeFormService = inject(ClasseFormService);

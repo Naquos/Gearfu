@@ -2,6 +2,7 @@ import { Directive, HostListener, output } from '@angular/core';
 
 @Directive({
   selector: '[appSwipe]',
+  standalone: true
 })
 export class SwipeDirective {
 
@@ -14,7 +15,7 @@ export class SwipeDirective {
   public readonly swipeRight = output<void>();
   public readonly swipeUp = output<void>();
   public readonly swipeDown = output<void>();
-  
+
 
   @HostListener('touchstart', ['$event']) onTouchStart(event: TouchEvent) {
     const touch = event.changedTouches[0];
@@ -27,13 +28,13 @@ export class SwipeDirective {
     const endX = touch.clientX;
     const endY = touch.clientY;
 
-    if(endX - this.startX >= SwipeDirective.MINIMUM_MOOVE) {
+    if (endX - this.startX >= SwipeDirective.MINIMUM_MOOVE) {
       this.swipeRight.emit();
     } else if (this.startX - endX >= SwipeDirective.MINIMUM_MOOVE) {
       this.swipeLeft.emit();
     }
-    
-    if(endY - this.startY >= SwipeDirective.MINIMUM_MOOVE) {
+
+    if (endY - this.startY >= SwipeDirective.MINIMUM_MOOVE) {
       this.swipeDown.emit();
     } else if (this.startX - endX >= SwipeDirective.MINIMUM_MOOVE) {
       this.swipeUp.emit();

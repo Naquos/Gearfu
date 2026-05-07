@@ -1,4 +1,4 @@
-import { Inject, PLATFORM_ID, inject, Component } from '@angular/core';
+import { Inject, PLATFORM_ID, inject, Component, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,7 +11,8 @@ import { getBuildIdFromUrl } from '../../models/utils/utils';
     standalone: true,
     imports: [TranslateModule],
     templateUrl: './main-nav.component.html',
-    styleUrl: './main-nav.component.scss'
+    styleUrl: './main-nav.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainNavComponent {
     private readonly router = inject(Router);

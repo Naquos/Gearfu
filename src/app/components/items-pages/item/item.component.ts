@@ -1,5 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component,computed,ElementRef,inject,input, ViewContainerRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AfterViewInit, ChangeDetectorRef, Component, computed, ElementRef, inject, input, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
 import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -22,21 +21,23 @@ import { ElementSelectorComponent } from "../element-selector/element-selector.c
 import { ElementSelectorEnum } from '../../../models/enum/elementSelectorEnum';
 import { mapSortAction, ratioWeightByLevel } from '../../../models/utils/utils';
 import { ActivateDirective } from "../../../directives/activate.directive";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-item',
-  imports: [CommonModule, MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective, LazyImageDirective, ElementSelectorComponent, ActivateDirective],
+  imports: [MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective, LazyImageDirective, ElementSelectorComponent, ActivateDirective, CommonModule],
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.scss']
+  styleUrls: ['./item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
-  
+
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly el = inject(ElementRef);
   protected readonly itemService = inject(ItemsService);
   protected readonly colorRarityService = inject(ColorRarityService);
-  protected readonly tooltipService = inject(TooltipService<{itemsChoosen: Item[], item: Item}>);
-  protected readonly stateTooltipService = inject(TooltipService<{statesDefinitionId: number, nameStates: string}>);
+  protected readonly tooltipService = inject(TooltipService<{ itemsChoosen: Item[], item: Item }>);
+  protected readonly stateTooltipService = inject(TooltipService<{ statesDefinitionId: number, nameStates: string }>);
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly itemConditionService = inject(ItemConditionService);
   protected readonly ElementSelectorEnum = ElementSelectorEnum;
@@ -60,26 +61,26 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     window.open('https://craftkfu.waklab.fr/?' + this.item().id, '_blank');
   }
 
-  protected setItemChoosen() : void {
-    if(this.isTooltip()) { return; }
+  protected setItemChoosen(): void {
+    if (this.isTooltip()) { return; }
     const itemType = this.itemTypeService.getItemType(this.item().itemTypeId);
-    if(!itemType) { return; }
+    if (!itemType) { return; }
     this.itemChooseService.setItem(itemType, this.item())
   }
 
 
   protected itemIsPresentAndNotChoosen(itemsList: (Item | undefined)[][]): boolean {
-    return !!itemsList.find(items =>items.find(x => x !== undefined) && !items.find(item => item?.id === this.item().id));
+    return !!itemsList.find(items => items.find(x => x !== undefined) && !items.find(item => item?.id === this.item().id));
   }
 
   ngAfterViewInit(): void {
     const item = this.item();
-    if(item) {
+    if (item) {
       item.equipEffects = item.equipEffects.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999));
- 
+
       this.initItemChoosen(item);
       const condition = this.itemConditionService.findCondition(item.id);
-      if(condition) {
+      if (condition) {
         this.condition.next(condition);
       }
 
@@ -100,14 +101,14 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
 
     this.tooltipService.closeTooltip();
     this.itemChoosen$.pipe(take(1), map(x => x.find(y => y.find(z => z)))).subscribe(itemsChoosen => {
-        this.tooltipService.openTooltip(this.viewContainerRef, ItemsTooltipComponent, event, {item, itemsChoosen},
-          [{ 
-            originX: mouseOnRight ? 'end' : 'center', originY: 'bottom',
-            overlayX: mouseOnRight ? 'end' : 'center', overlayY: 'bottom',
-            offsetY: 0, offsetX: mouseOnRight ? -this.el.nativeElement.offsetWidth : 340
-          }], false
-        );
-      })
+      this.tooltipService.openTooltip(this.viewContainerRef, ItemsTooltipComponent, event, { item, itemsChoosen },
+        [{
+          originX: mouseOnRight ? 'end' : 'center', originY: 'bottom',
+          overlayX: mouseOnRight ? 'end' : 'center', overlayY: 'bottom',
+          offsetY: 0, offsetX: mouseOnRight ? -this.el.nativeElement.offsetWidth : 340
+        }], false
+      );
+    })
   }
 
   protected openEncyclopedie(itemId: number): void {
@@ -124,7 +125,7 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   }
 
   protected getStatesTranslate(state?: States | null): string {
-    if(!state) { return ""}
+    if (!state) { return "" }
     const lang = this.translateService.currentLang;
     const result = state[lang as keyof typeof state];
     return result.toString() ?? "";
@@ -137,8 +138,8 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
 
   protected openStatesTooltip(event: MouseEvent, statesDefinitionId: number, nameStates: string): void {
     this.stateTooltipService.closeTooltip();
-    this.stateTooltipService.openTooltip(this.viewContainerRef, StatesComponent, event, {statesDefinitionId, nameStates},
-      [{ 
+    this.stateTooltipService.openTooltip(this.viewContainerRef, StatesComponent, event, { statesDefinitionId, nameStates },
+      [{
         originX: 'center', originY: 'top',
         overlayX: 'center', overlayY: 'top',
         offsetY: 20, offsetX: 0

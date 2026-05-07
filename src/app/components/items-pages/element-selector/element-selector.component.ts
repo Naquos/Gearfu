@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -15,6 +15,7 @@ import { ElementSelectorEnum } from '../../../models/enum/elementSelectorEnum';
   imports: [ButtonCheckboxComponent],
   templateUrl: './element-selector.component.html',
   styleUrls: ['./element-selector.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ElementSelectorComponent {
   public readonly item = input<Item>();
@@ -25,7 +26,7 @@ export class ElementSelectorComponent {
   private readonly itemTypeService = inject(ItemTypeServices);
   private readonly itemChooseService = inject(ItemChooseService);
   private readonly elementSelectorService = inject(ElementSelectorService);
-  
+
   protected readonly nbElements = computed(() => {
     const item = this.item();
     if (!item) {
@@ -39,7 +40,7 @@ export class ElementSelectorComponent {
 
   protected readonly mapElements = computed(() => {
     const selector = this.selector();
-    let map = this.mapResistanceToActionId; 
+    let map = this.mapResistanceToActionId;
     if (selector === ElementSelectorEnum.Maitrise) {
       map = this.mapElementMaitriseToActionId;
     }
@@ -48,7 +49,7 @@ export class ElementSelectorComponent {
 
   protected imageUrl = computed(() => {
     const selector = this.selector();
-    if(selector === ElementSelectorEnum.Maitrise) {
+    if (selector === ElementSelectorEnum.Maitrise) {
       return this.imageService.getActionIdUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE);
     } else {
       return this.imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE);
@@ -157,17 +158,17 @@ export class ElementSelectorComponent {
       if (index < nbElements) {
         const isSelected = item.equipEffects.some(effect => effect.actionId === actionId);
         control.setValue(isSelected, { emitEvent: false });
-        index+= isSelected ? 1 : 0;
+        index += isSelected ? 1 : 0;
       } else {
         control.setValue(false, { emitEvent: false });
       }
     }
   }
 
-  
-  private setItem() : void {
+
+  private setItem(): void {
     const itemType = this.itemTypeService.getItemType(this.item()!.itemTypeId);
-    if(!itemType) { return; }
+    if (!itemType) { return; }
     this.itemChooseService.setItem(itemType, this.item()!, false);
   }
 }

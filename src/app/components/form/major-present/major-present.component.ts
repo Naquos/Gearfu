@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,7 +11,8 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
   selector: 'app-major-present',
   imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
   templateUrl: './major-present.component.html',
-  styleUrl: './major-present.component.scss'
+  styleUrl: './major-present.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MajorPresentComponent {
   protected readonly majorPresentFormService = inject(MajorPresentFormService);

@@ -4,7 +4,8 @@ import { GfxIdNeoEnum } from '../models/enum/gfxIdNeoEnum';
 import { GfxIdMobEnum } from '../models/enum/gfxIdMobEnum';
 
 @Directive({
-  selector: 'img[appFallback]'
+  selector: 'img[appFallback]',
+  standalone: true
 })
 export class ImageFallbackDirective {
 
@@ -49,7 +50,7 @@ export class ImageFallbackDirective {
     if (target instanceof HTMLImageElement) {
       const idImage = target.src.split('/').pop()?.split('.').shift();
       const neoImage = idImage ? this.neoImageMap.get(+idImage) : null;
-      if(neoImage) {
+      if (neoImage) {
         target.style.display = 'none'; // Masquer l'image cassée
         return;
       }

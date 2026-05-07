@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef, computed, inject, input } from '@angular/core';
+import { Component, ViewContainerRef, computed, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { ImageService } from '../../../services/imageService';
 import { ActivateDirective } from '../../../directives/activate.directive';
@@ -13,7 +13,8 @@ import { ConnectedPosition } from '@angular/cdk/overlay';
     selector: 'app-enchantement-sublimations-epiques-reliques',
     imports: [ActivateDirective],
     templateUrl: './enchantement-sublimations-epiques-reliques.component.html',
-    styleUrl: './enchantement-sublimations-epiques-reliques.component.scss'
+    styleUrl: './enchantement-sublimations-epiques-reliques.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnchantementSublimationsEpiquesReliquesComponent {
 

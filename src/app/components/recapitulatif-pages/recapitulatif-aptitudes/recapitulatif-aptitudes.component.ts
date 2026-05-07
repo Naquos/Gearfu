@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { AptitudesFormService } from '../../../services/form/aptitudesFormService';
 import { ImageService } from '../../../services/imageService';
@@ -16,6 +16,7 @@ interface RecapitulatifAptitudes {
   imports: [TranslateModule],
   templateUrl: './recapitulatif-aptitudes.component.html',
   styleUrl: './recapitulatif-aptitudes.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecapitulatifAptitudesComponent {
 

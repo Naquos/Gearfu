@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import {  ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 
@@ -12,7 +12,8 @@ import { RarityItemEnum } from '../../../models/enum/rarityItemEnum';
   selector: 'app-rarete-item',
   imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
   templateUrl: './rarete-item.component.html',
-  styleUrl: './rarete-item.component.scss'
+  styleUrl: './rarete-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RareteItemComponent {
   protected readonly rareteItemFormService = inject(RareteItemFormServices);

@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { ColorRarityService } from '../../../services/colorRarityService';
 import { ItemTypeFormServices } from '../../../services/form/itemTypeFormServices';
 import { ItemChooseService } from '../../../services/itemChooseService';
@@ -13,7 +13,8 @@ import { LazyImageDirective } from '../../../directives/lazy-image.directive';
   selector: 'app-image-item',
   imports: [ImageFallbackDirective, LazyImageDirective],
   templateUrl: './image-item.component.html',
-  styleUrl: './image-item.component.scss'
+  styleUrl: './image-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageItemComponent {
   protected readonly colorRarityService = inject(ColorRarityService);
@@ -21,7 +22,7 @@ export class ImageItemComponent {
   protected readonly itemTypeFormServices = inject(ItemTypeFormServices);
   protected readonly imageService = inject(ImageService);
 
-  
+
   public readonly backgroundItemType = input.required<string>();
   public readonly itemType = input<ItemTypeEnum>();
   public readonly indexItem = input<number>(0);
@@ -32,7 +33,7 @@ export class ImageItemComponent {
     switchMap(x => this.itemChooseService.getObsItem(x)),
     map(x => x[this.indexItem()]),
     tap(x => this.level.emit(x?.level ?? 999))
-  ), {initialValue: undefined}); 
-  
+  ), { initialValue: undefined });
+
 
 }

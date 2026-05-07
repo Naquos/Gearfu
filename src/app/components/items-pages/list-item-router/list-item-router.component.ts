@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { DisplayFilterService } from '../../../services/displayFilterService';
 import { FiltersComponent } from "../filters/filters.component";
@@ -12,7 +12,8 @@ import { isMobile } from '../../../models/utils/utils';
   selector: 'app-list-item-router',
   imports: [ItemListComponent, FiltersComponent, ActivateDirective, RecapStatsComponent],
   templateUrl: './list-item-router.component.html',
-  styleUrl: './list-item-router.component.scss'
+  styleUrl: './list-item-router.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListItemRouterComponent {
   protected readonly displayFilterService = inject(DisplayFilterService);

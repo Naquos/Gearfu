@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { SaveBuildService } from '../../services/saveBuildService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { VisibilityBuildFormService } from '../../services/form/visibilityBuildFormService';
@@ -12,7 +12,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     standalone: true,
     imports: [MatIcon, ReactiveFormsModule],
     templateUrl: './current-build-name.component.html',
-    styleUrl: './current-build-name.component.scss'
+    styleUrl: './current-build-name.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '(document:pointerdown)': 'onDocumentPointerDown($event)'
+    }
 })
 export class CurrentBuildNameComponent {
     private readonly saveBuildService = inject(SaveBuildService);
@@ -76,8 +80,7 @@ export class CurrentBuildNameComponent {
      * Cache le champ de saisie du nom du build si l'utilisateur clique en dehors de celui-ci.
      * @param event L'événement de clic.
      */
-    @HostListener('document:pointerdown', ['$event'])
-    onPointerDownOutside(event: PointerEvent): void {
+    onDocumentPointerDown(event: PointerEvent): void {
         if (!this.displayInput()) return;
 
         const host = this.elementRef.nativeElement as HTMLElement;
