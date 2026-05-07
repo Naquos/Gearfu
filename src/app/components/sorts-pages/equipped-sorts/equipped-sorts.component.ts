@@ -2,10 +2,10 @@ import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core
 import { TranslateModule } from '@ngx-translate/core';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { ActivateDirective } from '../../../directives/activate.directive';
-import { SortFormService } from '../../../services/form/sortFormService';
-import { LevelFormService } from '../../../services/form/levelFormService';
+import { SortFormService } from '../../../services/form-signal/sortFormService';
+import { LevelFormService } from '../../../services/form-signal/levelFormService';
 import { ImageService } from '../../../services/imageService';
-import { SortSelectionService } from '../../../services/form/sortSelectionService';
+import { SortSelectionService } from '../../../services/sortSelectionService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SortService } from '../../../services/data/sortService';
 

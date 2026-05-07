@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
-import { AptitudesForm, AptitudesFormService } from "./form/aptitudesFormService";
+import { AptitudesForm, AptitudesFormService } from "./form-signal/aptitudesFormService";
 
 @Injectable({providedIn: 'root'})
 export class CodeAptitudesService {

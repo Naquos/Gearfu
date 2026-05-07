@@ -1,6 +1,6 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ClassIdEnum } from '../../../models/enum/classIdEnum';
-import { FilterSearchBuildFormService } from '../../../services/form/filterSearchBuildFormService';
+import { FilterSearchBuildFormService } from '../../../services/form-signal/filterSearchBuildFormService';
 import { ActivateDirective } from '../../../directives/activate.directive';
 import { MatInputModule, MatLabel } from "@angular/material/input";
 import { TranslateModule } from '@ngx-translate/core';

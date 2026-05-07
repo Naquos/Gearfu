@@ -3,7 +3,7 @@
 <app-bonus></app-bonus>
 <div class="level">
     <p>{{ 'resume-aptitudes.level' | translate }}</p>
-    <input [formControl]="levelFormService.form" type="text">
+    <input [field]="levelFormService.form.level" type="text">
 </div>
 
 <div class="block" id="first-block">

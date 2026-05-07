@@ -9,7 +9,7 @@ import { normalizeString } from '../../../models/utils/utils';
 import { ImageService } from '../../../services/imageService';
 import { Item } from '../../../models/data/item';
 import { ColorRarityService } from '../../../services/colorRarityService';
-import { FilterSearchBuildFormService } from '../../../services/form/filterSearchBuildFormService';
+import { FilterSearchBuildFormService } from '../../../services/form-signal/filterSearchBuildFormService';
 
 @Component({
   selector: 'app-search-list-item',

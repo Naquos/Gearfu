@@ -2,8 +2,8 @@ import { Component, Signal, computed, inject, signal, ChangeDetectionStrategy } 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap, tap } from 'rxjs';
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
-import { ClasseFormService } from '../../../services/form/classeFormService';
-import { ChasseFormService } from '../../../services/form/chasseFormService';
+import { ClasseFormService } from '../../../services/form-signal/classeFormService';
+import { ChasseFormService } from '../../../services/form-signal/chasseFormService';
 import { SublimationService } from '../../../services/data/sublimationService';
 import { SupabaseService } from '../../../services/supabase/supabaseService';
 import { EnchantementSublimationsClassiquesComponent } from '../enchantement-sublimations-classiques/enchantement-sublimations-classiques.component';

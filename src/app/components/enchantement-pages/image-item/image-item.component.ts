@@ -1,6 +1,6 @@
 import { Component, inject, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { ColorRarityService } from '../../../services/colorRarityService';
-import { ItemTypeFormServices } from '../../../services/form/itemTypeFormServices';
+import { ItemTypeFormServices } from '../../../services/form-signal/itemTypeFormServices';
 import { ItemChooseService } from '../../../services/itemChooseService';
 import { ImageService } from '../../../services/imageService';
 import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';

@@ -1,16 +1,16 @@
 import { Component, ElementRef, inject, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { SaveBuildService } from '../../services/saveBuildService';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { VisibilityBuildFormService } from '../../services/form/visibilityBuildFormService';
+import { VisibilityBuildFormService } from '../../services/form-signal/visibilityBuildFormService';
 import { MatIcon } from "@angular/material/icon";
 import { map } from 'rxjs';
-import { NameBuildFormService } from '../../services/form/nameBuildFormService';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NameBuildFormService } from '../../services/form-signal/nameBuildFormService';
+import { Field } from '@angular/forms/signals';
 
 @Component({
     selector: 'app-current-build-name',
     standalone: true,
-    imports: [MatIcon, ReactiveFormsModule],
+    imports: [MatIcon, Field],
     templateUrl: './current-build-name.component.html',
     styleUrl: './current-build-name.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

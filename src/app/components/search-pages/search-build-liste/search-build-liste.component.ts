@@ -2,7 +2,7 @@ import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/cor
 import { SupabaseService } from '../../../services/supabase/supabaseService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BuildComponent } from "../../items-pages/build/build.component";
-import { FilterSearchBuildFormService } from '../../../services/form/filterSearchBuildFormService';
+import { FilterSearchBuildFormService } from '../../../services/form-signal/filterSearchBuildFormService';
 import { finalize, switchMap } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 

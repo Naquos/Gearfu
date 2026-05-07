@@ -13,7 +13,7 @@ import { SaveBuildService } from '../../../services/saveBuildService';
 import { Statistics } from '../../../models/data/statistics';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
-import { ChasseFormService } from '../../../services/form/chasseFormService';
+import { ChasseFormService } from '../../../services/form-signal/chasseFormService';
 import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqueRelique';
 import { MatIcon } from "@angular/material/icon";
 

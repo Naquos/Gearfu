@@ -2,7 +2,7 @@
 <div>
     <mat-form-field>
         <mat-label>{{ "import-build.placeholder" | translate }}</mat-label>
-        <input matInput [formControl]="importBuildService.form">
+        <input matInput [field]="importBuildService.form.url">
     </mat-form-field>
     <mat-icon class="form-action-icon" fontIcon="check" (click)="importBuildService.importBuild()"></mat-icon>
 </div>

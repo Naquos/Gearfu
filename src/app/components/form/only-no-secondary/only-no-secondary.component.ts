@@ -1,7 +1,7 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TranslateModule } from '@ngx-translate/core';
-import { OnlyNoSecondaryFormService } from '../../../services/form/onlyNoSecondaryFormService';
+import { OnlyNoSecondaryFormService } from '../../../services/form-signal/onlyNoSecondaryFormService';
 
 @Component({
   selector: 'app-only-no-secondary',

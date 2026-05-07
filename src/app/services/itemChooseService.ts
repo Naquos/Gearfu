@@ -6,19 +6,19 @@ import { RarityItemEnum } from "../models/enum/rarityItemEnum";
 import { ItemsService } from "./data/itemsService";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { LocalStorageService } from "./data/localStorageService";
-import { ModifierMecanismFormService } from "./form/modifierElemMaitrisesFormService";
-import { ResistancesFormService } from "./form/resistancesFormService";
-import { MaitrisesFormService } from "./form/maitrisesFormService";
+import { ModifierMecanismFormService } from "./form-signal/modifierElemMaitrisesFormService";
+import { ResistancesFormService } from "./form-signal/resistancesFormService";
+import { MaitrisesFormService } from "./form-signal/maitrisesFormService";
 import { Item } from "../models/data/item";
 import { AbstractDestroyService } from "./abstract/abstractDestroyService";
-import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
-import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
+import { OnlyNoElemFormService } from "./form-signal/onlyNoElemFormService";
+import { OnlyNoSecondaryFormService } from "./form-signal/onlyNoSecondaryFormService";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { calculWeight, ID_MAITRISES_MODIFIABLES, ID_RESISTANCES_MODIFIABLES } from "../models/utils/utils";
 import { ElementSelectorService } from "./elementSelectorService";
 import { ElementSelectorEnum } from "../models/enum/elementSelectorEnum";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ItemChooseService extends AbstractDestroyService {
     private readonly itemTypeService = inject(ItemTypeServices);
     private readonly itemService = inject(ItemsService);
@@ -30,20 +30,20 @@ export class ItemChooseService extends AbstractDestroyService {
     private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
     private readonly elementSelectorService = inject(ElementSelectorService);
 
-    private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item|undefined)[]>>(
+    private readonly mapItem = new Map<ItemTypeEnum, BehaviorSubject<(Item | undefined)[]>>(
         [
-            [ItemTypeEnum.UNE_MAIN, new BehaviorSubject<(Item|undefined)[]>([undefined])],
-            [ItemTypeEnum.ANNEAU, new BehaviorSubject<(Item|undefined)[]>([undefined, undefined])],
-            [ItemTypeEnum.BOTTES, new BehaviorSubject<(Item|undefined)[]>([undefined])],
-            [ItemTypeEnum.AMULETTE, new BehaviorSubject<(Item|undefined)[]>([undefined])],
-            [ItemTypeEnum.CAPE, new BehaviorSubject<(Item|undefined)[]>([undefined])],
-            [ItemTypeEnum.CEINTURE, new BehaviorSubject<(Item|undefined)[]>([undefined])],
-            [ItemTypeEnum.CASQUE, new BehaviorSubject<(Item|undefined)[]>([undefined])],
-            [ItemTypeEnum.PLASTRON, new BehaviorSubject<(Item|undefined)[]>([undefined])],
-            [ItemTypeEnum.EPAULETTES, new BehaviorSubject<(Item|undefined)[]>([undefined])],
-            [ItemTypeEnum.ACCESSOIRES, new BehaviorSubject<(Item|undefined)[]>([undefined])],
-            [ItemTypeEnum.BOUCLIER, new BehaviorSubject<(Item|undefined)[]>([undefined])],
-            [ItemTypeEnum.FAMILIER, new BehaviorSubject<(Item|undefined)[]>([undefined])],
+            [ItemTypeEnum.UNE_MAIN, new BehaviorSubject<(Item | undefined)[]>([undefined])],
+            [ItemTypeEnum.ANNEAU, new BehaviorSubject<(Item | undefined)[]>([undefined, undefined])],
+            [ItemTypeEnum.BOTTES, new BehaviorSubject<(Item | undefined)[]>([undefined])],
+            [ItemTypeEnum.AMULETTE, new BehaviorSubject<(Item | undefined)[]>([undefined])],
+            [ItemTypeEnum.CAPE, new BehaviorSubject<(Item | undefined)[]>([undefined])],
+            [ItemTypeEnum.CEINTURE, new BehaviorSubject<(Item | undefined)[]>([undefined])],
+            [ItemTypeEnum.CASQUE, new BehaviorSubject<(Item | undefined)[]>([undefined])],
+            [ItemTypeEnum.PLASTRON, new BehaviorSubject<(Item | undefined)[]>([undefined])],
+            [ItemTypeEnum.EPAULETTES, new BehaviorSubject<(Item | undefined)[]>([undefined])],
+            [ItemTypeEnum.ACCESSOIRES, new BehaviorSubject<(Item | undefined)[]>([undefined])],
+            [ItemTypeEnum.BOUCLIER, new BehaviorSubject<(Item | undefined)[]>([undefined])],
+            [ItemTypeEnum.FAMILIER, new BehaviorSubject<(Item | undefined)[]>([undefined])],
         ]
     );
     private readonly idItems = new BehaviorSubject<string>("");
@@ -54,10 +54,10 @@ export class ItemChooseService extends AbstractDestroyService {
 
     private readonly listItem = new BehaviorSubject<Item[]>([]);
     public readonly listItem$ = this.listItem.asObservable();
-    
+
     private readonly totalMaitrises = new BehaviorSubject<number>(0);
     public readonly totalMaitrises$ = this.totalMaitrises.asObservable();
-    
+
     private readonly totalResistances = new BehaviorSubject<number>(0);
     public readonly totalResistances$ = this.totalResistances.asObservable();
     private indexAnneau = 0;
@@ -117,7 +117,7 @@ export class ItemChooseService extends AbstractDestroyService {
     private initItemsDirectly(): void {
         // Récupérer les items depuis le localStorage de manière synchrone
         const itemsId = this.localStorageService.getItem<string>(KeyEnum.KEY_BUILD) || '';
-        
+
         if (itemsId && itemsId.trim() !== '') {
             this.idItems.next(itemsId);
             const ids = itemsId.split(',');
@@ -128,21 +128,21 @@ export class ItemChooseService extends AbstractDestroyService {
                 }
             });
         }
-        
+
         // Lancer l'ecoute des changements pour mettre a jour le localStorage
         this.updateUrl();
     }
 
-    private calculTotal(list: Item [], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean, chaos: boolean): void {
+    private calculTotal(list: Item[], nbElements: number, idMaitrises: number[], multiplicateurElem: number, idResistances: number[], denouement: boolean, noElem: boolean, noSecondary: boolean, chaos: boolean): void {
         let weight = 0;
         let resistance = 0;
         let maitrise = 0;
         list.forEach(x => {
-            const tempResis  = this.itemService.calculResistancesForAnItem(x, idResistances);
+            const tempResis = this.itemService.calculResistancesForAnItem(x, idResistances);
             const tempMaitrise = this.itemService.calculMaitrisesForAnItem(x, nbElements, idMaitrises, multiplicateurElem, denouement, noElem, noSecondary, chaos);
-            resistance+= tempResis;
-            maitrise+= tempMaitrise;
-            weight+= calculWeight(tempResis, tempMaitrise, x.level)
+            resistance += tempResis;
+            maitrise += tempMaitrise;
+            weight += calculWeight(tempResis, tempMaitrise, x.level)
         })
         this.totalWeight.next(Math.trunc(weight));
         this.totalMaitrises.next(Math.trunc(maitrise));
@@ -151,15 +151,15 @@ export class ItemChooseService extends AbstractDestroyService {
 
     private setItemWithIdItem(idItem: number): void {
         this.itemService.searchItem(idItem)
-        .pipe(
-            first(),
-            filter(x => x !== undefined)
-        ).subscribe(item => {
+            .pipe(
+                first(),
+                filter(x => x !== undefined)
+            ).subscribe(item => {
                 const itemType = this.itemTypeService.getItemType(item.itemTypeId);
-                if(!itemType) {return ;} 
+                if (!itemType) { return; }
                 this.setItem(itemType, item, false)
             }
-        );
+            );
     }
 
     public cleanItemChoosen(): void {
@@ -171,13 +171,13 @@ export class ItemChooseService extends AbstractDestroyService {
         this.cleanItemChoosen();
         this.idItems.next(idItems);
         const idItemList = idItems.split(",");
-        if(!idItemList) {return;}
+        if (!idItemList) { return; }
         idItemList.forEach(idItem => {
             const item = this.itemService.getItem(parseInt(idItem));
-            if(!item) {return;}
+            if (!item) { return; }
 
             const itemType = this.itemTypeService.getItemType(item.itemTypeId);
-            if(!itemType) {return;}
+            if (!itemType) { return; }
 
             this.setItem(itemType, item, false)
         })
@@ -191,37 +191,37 @@ export class ItemChooseService extends AbstractDestroyService {
         return this.idItems.getValue();
     }
 
-    public getObsItem(itemType: ItemTypeEnum): Observable<(Item|undefined)[]> {
+    public getObsItem(itemType: ItemTypeEnum): Observable<(Item | undefined)[]> {
         return this.mapItem.get(itemType)?.asObservable() ?? of();
     }
 
-    public deleteItem(itemType: ItemTypeEnum, indexItem: number) : void {
+    public deleteItem(itemType: ItemTypeEnum, indexItem: number): void {
         this.getObsItem(itemType).pipe(
             first(),
-            switchMap(x => 
+            switchMap(x =>
                 iif(() => x !== undefined && !!x[0]?.itemTypeId && this.itemTypeService.getItemType(x[0]?.itemTypeId) === ItemTypeEnum.DEUX_MAINS,
-                of(x).pipe(tap(() => {
-                    this.deleteElementItem(ItemTypeEnum.BOUCLIER);
-                    this.deleteElementItem(ItemTypeEnum.UNE_MAIN);
-                    this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]);
-                    this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]);
-                })),
-                of(x).pipe(
-                    map(x => {
-                        this.deleteElementItem(itemType, indexItem);
-                        x[indexItem] = undefined; return x
-                    }),
-                    tap(x => this.mapItem.get(itemType)?.next(x))))
+                    of(x).pipe(tap(() => {
+                        this.deleteElementItem(ItemTypeEnum.BOUCLIER);
+                        this.deleteElementItem(ItemTypeEnum.UNE_MAIN);
+                        this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]);
+                        this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]);
+                    })),
+                    of(x).pipe(
+                        map(x => {
+                            this.deleteElementItem(itemType, indexItem);
+                            x[indexItem] = undefined; return x
+                        }),
+                        tap(x => this.mapItem.get(itemType)?.next(x))))
             )
         ).subscribe();
-        
+
     }
     public setItem(itemType: ItemTypeEnum, item: Item, deleteItem = true): void {
         const changedItem = this.changeElements(item);
         of(null).pipe(
             first(),
-            switchMap(() => 
-                iif(() => deleteItem, 
+            switchMap(() =>
+                iif(() => deleteItem,
                     this.deleteItemInBuild(changedItem).pipe(filter(itemFound => !itemFound)),
                     of(null))),
             switchMap(() => this.ensureUniqueRelic(changedItem)),
@@ -238,17 +238,18 @@ export class ItemChooseService extends AbstractDestroyService {
             ? this.deleteFirstItemOnRarity(item.rarity)
             : of(null);
     }
-    
+
     private ensureCompatibleWithSecondHand(itemType: ItemTypeEnum, item: Item): Observable<null> {
         if (![ItemTypeEnum.DAGUE, ItemTypeEnum.BOUCLIER].includes(itemType)) {
             return of(null);
         }
-    
+
         return this.getObsItem(ItemTypeEnum.UNE_MAIN).pipe(
             first(),
             tap(() => {
                 this.deleteElementItem(ItemTypeEnum.BOUCLIER);
-                this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([item])}),
+                this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([item])
+            }),
             map(x => x[0]),
             filter(x => x !== undefined && this.itemTypeService.getItemType(x.itemTypeId) === ItemTypeEnum.DEUX_MAINS),
             tap(() => {
@@ -258,12 +259,12 @@ export class ItemChooseService extends AbstractDestroyService {
             map(() => null)
         );
     }
-    
+
     private ensureCompatibleWithFirstHand(itemType: ItemTypeEnum, item: Item): Observable<null> {
         if (itemType !== ItemTypeEnum.UNE_MAIN) {
             return of(null);
         }
-    
+
         return this.getObsItem(ItemTypeEnum.BOUCLIER).pipe(
             first(),
             tap(() => {
@@ -275,16 +276,16 @@ export class ItemChooseService extends AbstractDestroyService {
             tap(() => {
                 this.deleteElementItem(ItemTypeEnum.BOUCLIER);
                 this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined])
-                }),
+            }),
             map(() => null)
         );
     }
-    
+
     private handleRings(itemType: ItemTypeEnum, item: Item): Observable<null> {
         if (itemType !== ItemTypeEnum.ANNEAU) {
             return of(null);
         }
-    
+
         return this.getObsItem(ItemTypeEnum.ANNEAU).pipe(
             first(),
             switchMap(list =>
@@ -308,12 +309,12 @@ export class ItemChooseService extends AbstractDestroyService {
             map(() => null)
         );
     }
-    
+
     private handleDeuxMains(itemType: ItemTypeEnum, item: Item): Observable<null> {
         if (itemType !== ItemTypeEnum.DEUX_MAINS) {
             return of(null);
         }
-    
+
         return of(null).pipe(
             tap(() => {
                 this.deleteElementItem(ItemTypeEnum.BOUCLIER);
@@ -324,12 +325,12 @@ export class ItemChooseService extends AbstractDestroyService {
             })
         );
     }
-    
+
     private finalEquip(itemType: ItemTypeEnum, item: Item): Observable<null> {
         if (itemType === ItemTypeEnum.ANNEAU) {
             return of(null); // déjà géré dans `handleRings`
         }
-    
+
         return of(null).pipe(
             tap(() => {
                 this.deleteElementItem(itemType);
@@ -347,7 +348,7 @@ export class ItemChooseService extends AbstractDestroyService {
 
     private changeElementsMaitrise(item: Item): void {
         const elementsVariable = item.equipEffects.find(eff => eff.actionId === IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE);
-        if(elementsVariable) {
+        if (elementsVariable) {
             const nbElements = elementsVariable.params[2];
             // Suppression des éléments variables
             const index = item.equipEffects.indexOf(elementsVariable);
@@ -356,11 +357,11 @@ export class ItemChooseService extends AbstractDestroyService {
             }
             // Ajout des éléments fixes
             let elements = this.elementSelectorService.getElementsForItem(item.id, ElementSelectorEnum.Maitrise);
-            if(elements.length === 0) {
+            if (elements.length === 0) {
                 elements = this.maitrisesFormService.orderMaitrises();
             }
             for (let i = 0; i < nbElements; i++) {
-                item.equipEffects.push({id: ID_MAITRISES_MODIFIABLES, actionId: elements[i], params: elementsVariable.params});
+                item.equipEffects.push({ id: ID_MAITRISES_MODIFIABLES, actionId: elements[i], params: elementsVariable.params });
             }
             this.elementSelectorService.setElementsForItem(item.id, elements.slice(0, nbElements), ElementSelectorEnum.Maitrise);
         }
@@ -368,7 +369,7 @@ export class ItemChooseService extends AbstractDestroyService {
 
     private changeElementsResistance(item: Item): void {
         const elementsVariable = item.equipEffects.find(eff => eff.actionId === IdActionsEnum.RESISTANCES_NOMBRE_VARIABLE);
-        if(elementsVariable) {
+        if (elementsVariable) {
             const nbElements = elementsVariable.params[2];
             // Suppression des éléments variables
             const index = item.equipEffects.indexOf(elementsVariable);
@@ -377,39 +378,39 @@ export class ItemChooseService extends AbstractDestroyService {
             }
             // Ajout des éléments fixes
             let elements = this.elementSelectorService.getElementsForItem(item.id, ElementSelectorEnum.Resistance);
-            if(elements.length === 0) {
+            if (elements.length === 0) {
                 elements = this.resistancesFormService.orderResistances();
             }
             for (let i = 0; i < nbElements; i++) {
-                item.equipEffects.push({id: ID_RESISTANCES_MODIFIABLES, actionId: elements[i], params: elementsVariable.params});
+                item.equipEffects.push({ id: ID_RESISTANCES_MODIFIABLES, actionId: elements[i], params: elementsVariable.params });
             }
             this.elementSelectorService.setElementsForItem(item.id, elements.slice(0, nbElements), ElementSelectorEnum.Resistance);
         }
     }
-    
 
-    private deleteFirstItemOnRarity(rarity: RarityItemEnum):Observable<null> {
+
+    private deleteFirstItemOnRarity(rarity: RarityItemEnum): Observable<null> {
         return combineLatest([this.getObsItem(ItemTypeEnum.UNE_MAIN),
-            this.getObsItem(ItemTypeEnum.ANNEAU),
-            this.getObsItem(ItemTypeEnum.BOTTES),
-            this.getObsItem(ItemTypeEnum.AMULETTE),
-            this.getObsItem(ItemTypeEnum.CAPE),
-            this.getObsItem(ItemTypeEnum.CEINTURE),
-            this.getObsItem(ItemTypeEnum.CASQUE),
-            this.getObsItem(ItemTypeEnum.PLASTRON),
-            this.getObsItem(ItemTypeEnum.EPAULETTES),
-            this.getObsItem(ItemTypeEnum.ACCESSOIRES),
-            this.getObsItem(ItemTypeEnum.BOUCLIER),
-            this.getObsItem(ItemTypeEnum.FAMILIER)
+        this.getObsItem(ItemTypeEnum.ANNEAU),
+        this.getObsItem(ItemTypeEnum.BOTTES),
+        this.getObsItem(ItemTypeEnum.AMULETTE),
+        this.getObsItem(ItemTypeEnum.CAPE),
+        this.getObsItem(ItemTypeEnum.CEINTURE),
+        this.getObsItem(ItemTypeEnum.CASQUE),
+        this.getObsItem(ItemTypeEnum.PLASTRON),
+        this.getObsItem(ItemTypeEnum.EPAULETTES),
+        this.getObsItem(ItemTypeEnum.ACCESSOIRES),
+        this.getObsItem(ItemTypeEnum.BOUCLIER),
+        this.getObsItem(ItemTypeEnum.FAMILIER)
         ]).pipe(
             first(),
             map(itemList => itemList.filter(list => list.find(item => item?.rarity === rarity))),
             tap(itemList => itemList.forEach(list => {
-                const itemTypeId=  list.find(x => x !== undefined)?.itemTypeId;
-                if(!itemTypeId) { return; }
-                const itemType = this.itemTypeService.getItemType(itemTypeId); 
+                const itemTypeId = list.find(x => x !== undefined)?.itemTypeId;
+                if (!itemTypeId) { return; }
+                const itemType = this.itemTypeService.getItemType(itemTypeId);
 
-                if( itemType === ItemTypeEnum.DEUX_MAINS) { 
+                if (itemType === ItemTypeEnum.DEUX_MAINS) {
                     const uneMain = this.mapItem.get(ItemTypeEnum.UNE_MAIN);
                     this.elementSelectorService.deleteItem(uneMain?.value[0]?.id ?? 0);
 
@@ -418,13 +419,13 @@ export class ItemChooseService extends AbstractDestroyService {
 
                     this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]);
                     this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined])
-                } 
-                else if(itemType === ItemTypeEnum.DAGUE) { 
+                }
+                else if (itemType === ItemTypeEnum.DAGUE) {
                     const bouclier = this.mapItem.get(ItemTypeEnum.BOUCLIER);
                     this.elementSelectorService.deleteItem(bouclier?.value[0]?.id ?? 0);
 
-                    this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) 
-                } 
+                    this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined])
+                }
                 else if (itemType === ItemTypeEnum.ANNEAU) {
                     const indexRarity = list.findIndex(x => x?.rarity === rarity);
                     this.indexAnneau = indexRarity;
@@ -434,7 +435,7 @@ export class ItemChooseService extends AbstractDestroyService {
 
                     list[indexRarity] = undefined;
                     this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(list);
-                } else if(itemType !== undefined) {
+                } else if (itemType !== undefined) {
                     const item = this.mapItem.get(itemType);
                     this.elementSelectorService.deleteItem(item?.value[0]?.id ?? 0);
 
@@ -447,43 +448,43 @@ export class ItemChooseService extends AbstractDestroyService {
 
     private deleteElementItem(itemType: ItemTypeEnum, index = 0): void {
         const itemInMap = this.mapItem.get(itemType);
-        if(!itemInMap) { return; }
+        if (!itemInMap) { return; }
         this.elementSelectorService.deleteItem(itemInMap?.value[index]?.id ?? 0);
     }
 
-    private deleteItemInBuild(newItem: Item):Observable<boolean> {
+    private deleteItemInBuild(newItem: Item): Observable<boolean> {
         let itemFind = false;
         return combineLatest([this.getObsItem(ItemTypeEnum.UNE_MAIN),
-            this.getObsItem(ItemTypeEnum.ANNEAU),
-            this.getObsItem(ItemTypeEnum.BOTTES),
-            this.getObsItem(ItemTypeEnum.AMULETTE),
-            this.getObsItem(ItemTypeEnum.CAPE),
-            this.getObsItem(ItemTypeEnum.CEINTURE),
-            this.getObsItem(ItemTypeEnum.CASQUE),
-            this.getObsItem(ItemTypeEnum.PLASTRON),
-            this.getObsItem(ItemTypeEnum.EPAULETTES),
-            this.getObsItem(ItemTypeEnum.ACCESSOIRES),
-            this.getObsItem(ItemTypeEnum.BOUCLIER),
-            this.getObsItem(ItemTypeEnum.FAMILIER)
+        this.getObsItem(ItemTypeEnum.ANNEAU),
+        this.getObsItem(ItemTypeEnum.BOTTES),
+        this.getObsItem(ItemTypeEnum.AMULETTE),
+        this.getObsItem(ItemTypeEnum.CAPE),
+        this.getObsItem(ItemTypeEnum.CEINTURE),
+        this.getObsItem(ItemTypeEnum.CASQUE),
+        this.getObsItem(ItemTypeEnum.PLASTRON),
+        this.getObsItem(ItemTypeEnum.EPAULETTES),
+        this.getObsItem(ItemTypeEnum.ACCESSOIRES),
+        this.getObsItem(ItemTypeEnum.BOUCLIER),
+        this.getObsItem(ItemTypeEnum.FAMILIER)
         ]).pipe(
             first(),
             map(itemList => itemList.filter(list => list.find(item => item?.id === newItem.id))),
             tap(itemList => itemList.forEach(list => {
-                const itemTypeId=  list.find(x => x !== undefined)?.itemTypeId;
-                if(!itemTypeId) { return; }
+                const itemTypeId = list.find(x => x !== undefined)?.itemTypeId;
+                if (!itemTypeId) { return; }
                 itemFind = true;
-                const itemType = this.itemTypeService.getItemType(itemTypeId); 
+                const itemType = this.itemTypeService.getItemType(itemTypeId);
 
                 if (itemType === ItemTypeEnum.DEUX_MAINS) {
                     this.deleteElementItem(ItemTypeEnum.UNE_MAIN);
                     this.deleteElementItem(ItemTypeEnum.BOUCLIER);
-                    
+
                     this.mapItem.get(ItemTypeEnum.UNE_MAIN)?.next([undefined]);
                     this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined])
                 }
-                else if (itemType === ItemTypeEnum.DAGUE) { 
+                else if (itemType === ItemTypeEnum.DAGUE) {
                     this.deleteElementItem(ItemTypeEnum.BOUCLIER);
-                    this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined]) 
+                    this.mapItem.get(ItemTypeEnum.BOUCLIER)?.next([undefined])
                 }
                 else if (itemType === ItemTypeEnum.ANNEAU) {
                     const index = list.findIndex(x => x?.id === newItem.id);
@@ -492,7 +493,7 @@ export class ItemChooseService extends AbstractDestroyService {
                     list[index] = undefined;
                     this.indexAnneau = index;
                     this.mapItem.get(ItemTypeEnum.ANNEAU)?.next(list);
-                } else if(itemType !== undefined) {
+                } else if (itemType !== undefined) {
                     this.deleteElementItem(itemType);
                     this.mapItem.get(itemType)?.next([undefined])
                 }

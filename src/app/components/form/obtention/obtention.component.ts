@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonCheckboxComponent } from '../button-checkbox/button-checkbox.component';
-import { ObtentionFormService } from '../../../services/form/obtentionFormService';
+import { ObtentionFormService } from '../../../services/form-signal/obtentionFormService';
 import { ImageService } from '../../../services/imageService';
 
 @Component({

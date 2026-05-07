@@ -15,9 +15,9 @@ import { ItemTypeDefinitionEnum } from "../../models/enum/itemTypeDefinitionEnum
 import { ActionService } from "../data/actionService";
 import { BuildResponse } from "../../models/zenith/buildResponse";
 import { MAX_LVL_TRANCHE } from "../../models/utils/utils";
-import { ClasseFormService } from "../form/classeFormService";
+import { ClasseFormService } from "../form-signal/classeFormService";
 import { CodeAptitudesService } from "../codeAptitudesService";
-import { ChasseFormService } from "../form/chasseFormService";
+import { ChasseFormService } from '../form-signal/chasseFormService';
 import { Enchantement } from "../../models/data/enchantement";
 import { ChasseCombinaison, createEmptyChasseCombinaison } from "../../models/data/chasseCombinaison";
 import { keyId } from "../../models/zenith/enchantResponse";
@@ -102,11 +102,11 @@ export class ZenithService {
         return this.getLevelForBuild().pipe(
             switchMap(() => this.getLevelForBuild()),
             switchMap(level => this.zenithApiService.createBuild({
-            flags: [],
-            id_job: this.classeFormService.getValue(),
-            is_visible: true,
-            level: level,
-            name: "Gearfu - Generated"
+                flags: [],
+                id_job: this.classeFormService.getValue(),
+                is_visible: true,
+                level: level,
+                name: "Gearfu - Generated"
             })),
             tap(x => linkBuild = x.link),
             switchMap(x => this.zenithApiService.getBuildInfo(x.link)),
@@ -359,12 +359,12 @@ export class ZenithService {
                 let result = '';
                 const aptitudes = aptitudeTypes.flatMap(type => type.aptitudes);
                 this.APTITUDES_ORDER.forEach((id, index) => {
-                    if(aptitudes[index].value > 0) {
+                    if (aptitudes[index].value > 0) {
                         result += `${mapCodeReverse.get(id)}:${aptitudes[index].value}-`;
                     }
                 });
-                
-                if(result.endsWith('-')) {
+
+                if (result.endsWith('-')) {
                     result = result.slice(0, -1);
                 }
                 return result;
@@ -409,10 +409,10 @@ export class ZenithService {
                 const chasseCombinaison: ChasseCombinaison[] = [];
                 keyId.forEach(key => {
                     const emptyChasses = createEmptyChasseCombinaison();
-                    if(enchants.sides[key]) {
+                    if (enchants.sides[key]) {
                         const side = enchants.sides[key];
-                        for(let i = 0; i < 4; i++) {
-                            if(side.shards[i]) {
+                        for (let i = 0; i < 4; i++) {
+                            if (side.shards[i]) {
                                 emptyChasses.chasses[i] = {
                                     color: side.shards[i].id_color,
                                     lvl: side.shards[i].level,
@@ -421,7 +421,7 @@ export class ZenithService {
                                 }
                             }
                         }
-                        if(side.sublimation) {
+                        if (side.sublimation) {
                             emptyChasses.sublimation = {
                                 id: this.sublimationService.getSublimationIdByIdLinkSublimation(side.sublimation.id_shard) || 0,
                                 level: side.sublimation.level,

@@ -1,9 +1,9 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
-import { ChasseFormService } from '../../../services/form/chasseFormService';
+import { ChasseFormService } from '../../../services/form-signal/chasseFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { EnchantementStateService } from '../../../services/form/enchantementStateService';
+import { EnchantementStateService } from '../../../services/enchantementStateService';
 import { EnchantementChassesComponent } from '../enchantement-chasses/enchantement-chasses.component';
 import { EnchantementEffetsComponent } from '../enchantement-effets/enchantement-effets.component';
 import { EnchantementSublimationsComponent } from '../enchantement-sublimations/enchantement-sublimations.component';

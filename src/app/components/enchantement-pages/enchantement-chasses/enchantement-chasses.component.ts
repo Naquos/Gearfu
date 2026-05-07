@@ -1,6 +1,6 @@
 import { Component, inject, input, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
-import { ChasseFormService } from '../../../services/form/chasseFormService';
+import { ChasseFormService } from '../../../services/form-signal/chasseFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
 import { ImageItemComponent } from '../image-item/image-item.component';
@@ -14,14 +14,14 @@ import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqu
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { TooltipService } from '../../../services/TooltipService';
 import { DescriptionSublimationComponent, DescriptionSublimationType } from '../description-sublimation/description-sublimation.component';
-import { LevelFormService } from '../../../services/form/levelFormService';
+import { LevelFormService } from '../../../services/form-signal/levelFormService';
 import { maxChasseLevel } from '../../../models/utils/utils';
 import { AbstractDestroyService } from '../../../services/abstract/abstractDestroyService';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { FormatNumberPipe } from '../../../pipe/formatNumber/formatNumber.pipe';
 import { ActivateDirective } from '../../../directives/activate.directive';
 import { MatTooltip } from '@angular/material/tooltip';
-import { EnchantementStateService, EffetDescription } from '../../../services/form/enchantementStateService';
+import { EnchantementStateService, EffetDescription } from '../../../services/enchantementStateService';
 import { SublimationService } from '../../../services/data/sublimationService';
 
 interface DisplayTypeItem {

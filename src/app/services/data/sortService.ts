@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, map, Observable, shareReplay, tap } from "rxjs";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { TranslateService } from "@ngx-translate/core";
-import { ClasseFormService } from "../form/classeFormService";
+import { ClasseFormService } from "../form-signal/classeFormService";
 import { Sort } from "../../models/data/sort";
 import { DescriptionSort } from "../../models/data/descriptionSort";
 import { sortNeutreCommun, sortPassifCommun } from "../../models/data/sort-communs";

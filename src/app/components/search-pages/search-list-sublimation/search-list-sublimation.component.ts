@@ -10,7 +10,7 @@ import { SublimationsDescriptions } from '../../../models/data/sublimationsDescr
 import { ImageService } from '../../../services/imageService';
 import { ColorRarityService } from '../../../services/colorRarityService';
 import { RarityItemEnum } from '../../../models/enum/rarityItemEnum';
-import { FilterSearchBuildFormService } from '../../../services/form/filterSearchBuildFormService';
+import { FilterSearchBuildFormService } from '../../../services/form-signal/filterSearchBuildFormService';
 
 @Component({
   selector: 'app-search-list-sublimation',

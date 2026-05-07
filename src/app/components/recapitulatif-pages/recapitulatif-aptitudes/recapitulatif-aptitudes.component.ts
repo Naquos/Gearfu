@@ -1,6 +1,6 @@
 import { Component, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
-import { AptitudesFormService } from '../../../services/form/aptitudesFormService';
+import { AptitudesFormService } from '../../../services/form-signal/aptitudesFormService';
 import { ImageService } from '../../../services/imageService';
 import { TranslateModule } from '@ngx-translate/core';
 

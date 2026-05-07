@@ -1,7 +1,7 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { ButtonCheckboxComponent } from '../../form/button-checkbox/button-checkbox.component';
-import { BonusFormService } from '../../../services/form/bonusFormService';
+import { BonusFormService } from '../../../services/form-signal/bonusFormService';
 
 @Component({
   selector: 'app-bonus',

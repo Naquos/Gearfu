@@ -3,12 +3,12 @@ import { LocalStorageService } from "./data/localStorageService";
 import { BehaviorSubject, catchError, combineLatest, filter, map, Observable, of, switchMap, take, tap } from "rxjs";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { Build } from "../models/data/build";
-import { LevelFormService } from "./form/levelFormService";
+import { LevelFormService } from "./form-signal/levelFormService";
 import { ItemChooseService } from "./itemChooseService";
-import { ClasseFormService } from "./form/classeFormService";
+import { ClasseFormService } from "./form-signal/classeFormService";
 import { CodeAptitudesService } from "./codeAptitudesService";
-import { SortFormService } from "./form/sortFormService";
-import { ChasseFormService } from "./form/chasseFormService";
+import { SortFormService } from "./form-signal/sortFormService";
+import { ChasseFormService } from "./form-signal/chasseFormService";
 import { ElementSelectorService } from "./elementSelectorService";
 import { SupabaseService } from "./supabase/supabaseService";
 import { Router } from "@angular/router";
@@ -16,8 +16,8 @@ import { ClassIdEnum } from "../models/enum/classIdEnum";
 import { Statistics } from "../models/data/statistics";
 import { RecapStatsService } from "./recapStatsService";
 import { NO_BUILD } from "../models/utils/utils";
-import { VisibilityBuildFormService } from "./form/visibilityBuildFormService";
-import { NameBuildFormService } from "./form/nameBuildFormService";
+import { VisibilityBuildFormService } from "./form-signal/visibilityBuildFormService";
+import { NameBuildFormService } from "./form-signal/nameBuildFormService";
 
 @Injectable({ providedIn: 'root' })
 export class SaveBuildService {

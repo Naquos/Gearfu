@@ -3,7 +3,7 @@
 <div class="row">
     <div></div>
     @if(displayInput()){
-    <input #inputField [formControl]="nameBuildFormService.form" (keydown)="onKeyDown($event)">
+    <input #inputField [field]="nameBuildFormService.form.name" (keydown)="onKeyDown($event)">
     } @else {
     <h3 class="build-name" (click)="toggleDisplayInput()">{{ currentNameBuild() }}</h3>
     }

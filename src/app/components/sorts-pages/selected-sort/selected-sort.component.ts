@@ -8,7 +8,7 @@ import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { ImageService } from '../../../services/imageService';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { SpellEffectService } from '../../../services/spellEffectService';
-import { SortSelectionService } from '../../../services/form/sortSelectionService';
+import { SortSelectionService } from '../../../services/sortSelectionService';
 import { RecapStatsService } from '../../../services/recapStatsService';
 import { ActivateDirective } from '../../../directives/activate.directive';
 import { toSignal } from '@angular/core/rxjs-interop';

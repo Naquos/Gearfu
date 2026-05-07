@@ -2,9 +2,9 @@ import { Component, input, inject, ChangeDetectionStrategy } from '@angular/core
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ImageService } from '../../../services/imageService';
 import { SortService } from '../../../services/data/sortService';
-import { LevelFormService } from '../../../services/form/levelFormService';
-import { SortSelectionService } from '../../../services/form/sortSelectionService';
-import { SortFormService } from '../../../services/form/sortFormService';
+import { LevelFormService } from '../../../services/form-signal/levelFormService';
+import { SortSelectionService } from '../../../services/sortSelectionService';
+import { SortFormService } from '../../../services/form-signal/sortFormService';
 import { ActivateDirective } from '../../../directives/activate.directive';
 import { DescriptionSort } from '../../../models/data/descriptionSort';
 import { toSignal } from '@angular/core/rxjs-interop';

@@ -27,7 +27,7 @@ import { ZenithService } from '../../services/zenith/zenithService';
 import { SaveBuildService } from '../../services/saveBuildService';
 import { getBuildIdFromUrl, isMobile } from '../../models/utils/utils';
 import { FilterSearchBuildComponent } from "../search-pages/filter-search-build/filter-search-build.component";
-import { FilterSidebarService } from '../../services/form/filterSidebarService';
+import { FilterSidebarService } from '../../services/form-signal/filterSidebarService';
 import { FiltersComponent } from "../items-pages/filters/filters.component";
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatTooltip } from "@angular/material/tooltip";

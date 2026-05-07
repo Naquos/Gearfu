@@ -1,7 +1,7 @@
 import { Component, inject, viewChild, effect, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { ClassIdEnum } from '../../../models/enum/classIdEnum';
-import { ClasseFormService } from '../../../services/form/classeFormService';
+import { ClasseFormService } from '../../../services/form-signal/classeFormService';
 import { ActivateDirective } from "../../../directives/activate.directive";
 
 @Component({

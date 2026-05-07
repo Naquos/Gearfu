@@ -2,7 +2,7 @@ import { Component, ViewContainerRef, computed, inject, input, ChangeDetectionSt
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { ImageService } from '../../../services/imageService';
 import { ActivateDirective } from '../../../directives/activate.directive';
-import { EnchantementStateService } from '../../../services/form/enchantementStateService';
+import { EnchantementStateService } from '../../../services/enchantementStateService';
 import { TranslateService } from '@ngx-translate/core';
 import { TooltipService } from '../../../services/TooltipService';
 import { DescriptionSublimationComponent, DescriptionSublimationType } from '../description-sublimation/description-sublimation.component';

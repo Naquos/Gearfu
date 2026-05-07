@@ -1,16 +1,16 @@
 <h3>{{ "modifier-elem-maitrises.label" | translate }}</h3>
 <mat-form-field>
-    <mat-label>{{ "modifier-elem-maitrises.mecaniques" | translate }}</mat-label>
-    <mat-select [formControl]="modifierMecanismFormService.form" multiple>
-      <mat-select-trigger>
-        @if (modifierMecanismFormService.form.value.length) {
-          @for (mecanism of modifierMecanismFormService.form.value; track mecanism; let isLast = $last) {
-            {{("elem-maitrises-mecanism-enum." + mecanism.valueOf()) | translate}}@if (!isLast) {, }
-          }
-        }
-      </mat-select-trigger>
-      @for (mecanism of ElemMaitrisesMecanismEnumList; track mecanism) {
-        <mat-option [value]="mecanism">{{("elem-maitrises-mecanism-enum." + mecanism.valueOf()) | translate}}</mat-option>
+  <mat-label>{{ "modifier-elem-maitrises.mecaniques" | translate }}</mat-label>
+  <mat-select [field]="modifierMecanismFormService.form.mecanisms" multiple>
+    <mat-select-trigger>
+      @if (modifierMecanismFormService.selectedValues().length) {
+      @for (mecanism of modifierMecanismFormService.selectedValues(); track mecanism; let isLast = $last) {
+      {{("elem-maitrises-mecanism-enum." + mecanism.valueOf()) | translate}}@if (!isLast) {, }
       }
-    </mat-select>
-  </mat-form-field>
+      }
+    </mat-select-trigger>
+    @for (mecanism of ElemMaitrisesMecanismEnumList; track mecanism) {
+    <mat-option [value]="mecanism">{{("elem-maitrises-mecanism-enum." + mecanism.valueOf()) | translate}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

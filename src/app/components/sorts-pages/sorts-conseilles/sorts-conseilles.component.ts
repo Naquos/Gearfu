@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap, tap } from 'rxjs';
-import { ClasseFormService } from '../../../services/form/classeFormService';
+import { ClasseFormService } from '../../../services/form-signal/classeFormService';
 import { SupabaseService } from '../../../services/supabase/supabaseService';
 import { SortService } from '../../../services/data/sortService';
 import { DescriptionSort } from '../../../models/data/descriptionSort';

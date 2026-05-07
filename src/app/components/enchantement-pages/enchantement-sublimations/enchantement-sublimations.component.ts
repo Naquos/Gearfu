@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
-import { ChasseFormService } from '../../../services/form/chasseFormService';
+import { ChasseFormService } from '../../../services/form-signal/chasseFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
@@ -8,7 +8,7 @@ import { map } from 'rxjs';
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { SublimationService } from '../../../services/data/sublimationService';
 import { normalizeString } from '../../../models/utils/utils';
-import { EnchantementStateService } from '../../../services/form/enchantementStateService';
+import { EnchantementStateService } from '../../../services/enchantementStateService';
 import { FormsModule } from '@angular/forms';
 import { EnchantementSublimationsClassiquesComponent } from '../enchantement-sublimations-classiques/enchantement-sublimations-classiques.component';
 import { EnchantementSublimationsEpiquesReliquesComponent } from '../enchantement-sublimations-epiques-reliques/enchantement-sublimations-epiques-reliques.component';

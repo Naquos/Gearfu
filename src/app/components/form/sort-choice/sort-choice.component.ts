@@ -1,14 +1,14 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SortChoiceEnum } from '../../../models/enum/sortChoiceEnum';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
-import { SortChoiceFormService } from '../../../services/form/sortChoiceFormService';
+import { SortChoiceFormService } from '../../../services/form-signal/sortChoiceFormService';
+import { Field } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-sort-choice',
-  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule, TranslateModule],
+  imports: [MatFormFieldModule, MatSelectModule, TranslateModule, Field],
   templateUrl: './sort-choice.component.html',
   styleUrl: './sort-choice.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

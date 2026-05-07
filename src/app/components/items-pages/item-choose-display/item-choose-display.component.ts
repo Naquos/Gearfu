@@ -4,7 +4,7 @@ import { ImageFallbackDirective } from '../../../directives/imageFallback.direct
 import { Item } from '../../../models/data/item';
 import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
 import { ColorRarityService } from '../../../services/colorRarityService';
-import { ItemTypeFormServices } from '../../../services/form/itemTypeFormServices';
+import { ItemTypeFormServices } from '../../../services/form-signal/itemTypeFormServices';
 import { ImageService } from '../../../services/imageService';
 import { ItemChooseService } from '../../../services/itemChooseService';
 import { TooltipService } from '../../../services/TooltipService';

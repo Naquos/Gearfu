@@ -1,5 +1,5 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import { ReverseFormService } from '../../../services/form/reverseFormService';
+import { ReverseFormService } from '../../../services/form-signal/reverseFormService';
 import { ButtonCheckboxComponent } from '../button-checkbox/button-checkbox.component';
 import { TranslateModule } from '@ngx-translate/core';
 

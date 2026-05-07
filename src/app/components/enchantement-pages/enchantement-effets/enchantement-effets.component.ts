@@ -4,7 +4,7 @@ import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
 import { ItemTypeServices } from '../../../services/data/ItemTypesServices';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivateDirective } from '../../../directives/activate.directive';
-import { EnchantementStateService, EffetDescription } from '../../../services/form/enchantementStateService';
+import { EnchantementStateService, EffetDescription } from '../../../services/enchantementStateService';
 
 @Component({
     selector: 'app-enchantement-effets',

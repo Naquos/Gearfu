@@ -2,7 +2,7 @@ import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslateModule } from '@ngx-translate/core';
-import { MajorPresentFormService } from '../../../services/form/majorPresentFormService';
+import { MajorPresentFormService } from '../../../services/form-signal/majorPresentFormService';
 import { ButtonCheckboxComponent } from '../button-checkbox/button-checkbox.component';
 import { ImageService } from '../../../services/imageService';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';

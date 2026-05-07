@@ -1,21 +1,21 @@
 import { inject, Injectable } from "@angular/core";
-import { ItemLevelFormService } from "./form/itemLevelFormService";
-import { ItemTypeFormServices } from "./form/itemTypeFormServices";
-import { MaitrisesFormService } from "./form/maitrisesFormService";
-import { RareteItemFormServices } from "./form/rareteItemFormService";
-import { SearchItemNameFormService } from "./form/searchItemNameFormService";
-import { SortChoiceFormService } from "./form/sortChoiceFormService";
-import { MajorPresentFormService } from "./form/majorPresentFormService";
-import { ResistancesFormService } from "./form/resistancesFormService";
-import { ModifierMecanismFormService } from "./form/modifierElemMaitrisesFormService";
-import { OnlyNoSecondaryFormService } from "./form/onlyNoSecondaryFormService";
-import { OnlyNoElemFormService } from "./form/onlyNoElemFormService";
-import { ReverseFormService } from "./form/reverseFormService";
-import { ObtentionFormService } from "./form/obtentionFormService";
+import { ItemLevelFormService } from "./form-signal/itemLevelFormService";
+import { ItemTypeFormServices } from "./form-signal/itemTypeFormServices";
+import { MaitrisesFormService } from "./form-signal/maitrisesFormService";
+import { RareteItemFormServices } from "./form-signal/rareteItemFormService";
+import { SearchItemNameSignalFormService } from "./form-signal/searchItemNameSignalFormService";
+import { SortChoiceFormService } from "./form-signal/sortChoiceFormService";
+import { MajorPresentFormService } from "./form-signal/majorPresentFormService";
+import { ResistancesFormService } from "./form-signal/resistancesFormService";
+import { ModifierMecanismFormService } from "./form-signal/modifierElemMaitrisesFormService";
+import { OnlyNoSecondaryFormService } from "./form-signal/onlyNoSecondaryFormService";
+import { OnlyNoElemFormService } from "./form-signal/onlyNoElemFormService";
+import { ReverseFormService } from "./form-signal/reverseFormService";
+import { ObtentionFormService } from "./form-signal/obtentionFormService";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ResetFormService {
-  
+
     private readonly itemLevelFormService = inject(ItemLevelFormService);
     private readonly itemTypeFormServices = inject(ItemTypeFormServices);
     private readonly maitrisesFormService = inject(MaitrisesFormService);
@@ -25,7 +25,7 @@ export class ResetFormService {
     private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
     private readonly rareteItemFormServices = inject(RareteItemFormServices);
     private readonly resistancesFormService = inject(ResistancesFormService);
-    private readonly searchItemNameFormService = inject(SearchItemNameFormService);
+    private readonly searchItemNameFormService = inject(SearchItemNameSignalFormService);
     private readonly sortChoiceFormService = inject(SortChoiceFormService);
     private readonly reverseFormService = inject(ReverseFormService);
     private readonly dropCraftableFormService = inject(ObtentionFormService);

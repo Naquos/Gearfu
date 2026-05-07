@@ -7,21 +7,21 @@ import { TranslateModule } from '@ngx-translate/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ParameterMajorActionEnum } from '../../../models/enum/parameterMajorActionEnum';
 import { ClassIdEnum } from '../../../models/enum/classIdEnum';
-import { LevelFormService } from '../../../services/form/levelFormService';
-import { ReactiveFormsModule } from '@angular/forms';
+import { LevelFormService } from '../../../services/form-signal/levelFormService';
 import { TooltipService } from '../../../services/TooltipService';
+import { Field } from '@angular/forms/signals';
 import { ClassesTooltipComponent } from '../classes-tooltip/classes-tooltip.component';
-import { ClasseFormService } from '../../../services/form/classeFormService';
+import { ClasseFormService } from '../../../services/form-signal/classeFormService';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { BonusComponent } from "../bonus/bonus.component";
 import { InputResumeAptitudesComponent } from "../input-resume-aptitudes/input-resume-aptitudes.component";
-import { AptitudesManualFormService } from '../../../services/form/aptitudesManualFormServices';
+import { AptitudesManualFormService } from '../../../services/form-signal/aptitudesManualFormServices';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { ActivateDirective } from "../../../directives/activate.directive";
 
 @Component({
   selector: 'app-resume-aptitudes',
-  imports: [TranslateModule, ReactiveFormsModule, LazyImageDirective, BonusComponent, InputResumeAptitudesComponent, ActivateDirective],
+  imports: [TranslateModule, LazyImageDirective, BonusComponent, InputResumeAptitudesComponent, ActivateDirective, Field],
   templateUrl: './resume-aptitudes.component.html',
   styleUrl: './resume-aptitudes.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
