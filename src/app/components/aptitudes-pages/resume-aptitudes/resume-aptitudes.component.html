@@ -1,5 +1,5 @@
-<img class="classes" [src]="`classes/${idClasse()}.jpg`" [attr.key]="idClasse()" alt="class"
-    (appActivate)="openTooltip($event)">
+<img class="classes" [src]="`classes/${idClasse()}.jpg`" [attr.key]="idClasse()" alt="class" loading="eager"
+    fetchpriority="high" data-priority-image (appActivate)="openTooltip($event)">
 <app-bonus></app-bonus>
 <div class="level">
     <p>{{ 'resume-aptitudes.level' | translate }}</p>

@@ -24,10 +24,22 @@ export class LazyImageDirective implements OnInit, OnDestroy {
       return;
     }
 
-    // Ajouter automatiquement loading="lazy" si non présent
-    const loadingAttr = this.el.nativeElement.getAttribute('loading');
+    const image = this.el.nativeElement;
+    const loadingAttr = image.getAttribute('loading');
+    const fetchPriorityAttr = image.getAttribute('fetchpriority');
+    const isPriorityImage =
+      image.hasAttribute('priority') ||
+      image.hasAttribute('data-priority-image') ||
+      fetchPriorityAttr === 'high' ||
+      loadingAttr === 'eager';
+
+    // Lazy par défaut, sauf pour les images marquées prioritaires (LCP/héro)
     if (!loadingAttr) {
-      this.renderer.setAttribute(this.el.nativeElement, 'loading', 'lazy');
+      this.renderer.setAttribute(image, 'loading', isPriorityImage ? 'eager' : 'lazy');
+    }
+
+    if (isPriorityImage && !fetchPriorityAttr) {
+      this.renderer.setAttribute(image, 'fetchpriority', 'high');
     }
 
     // Injecter les styles dans le document
