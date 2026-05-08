@@ -1,13 +1,13 @@
-@if (recapStatsService.recap$ | async; as recap) {
-    <div class="content">
-        @for (effect of recap; track $index) {
-            <span>
-                <img [src]="getEffectPng(effect)" alt="aptitudes">
-                {{ displayEffect(effect) }}
-            </span>
-        }
-    </div>
-    <div class="info">
-        {{ 'recap-stats.info' | translate }}
-    </div>   
+@if (recap(); as recap) {
+<div class="content">
+    @for (effect of recap; track $index) {
+    <span>
+        <img [src]="getEffectPng(effect)" alt="aptitudes">
+        {{ displayEffect(effect) }}
+    </span>
+    }
+</div>
+<div class="info">
+    {{ 'recap-stats.info' | translate }}
+</div>
 }

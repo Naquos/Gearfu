@@ -3,6 +3,7 @@ import { BuildComponent } from '../../items-pages/build/build.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SaveBuildService } from '../../../services/saveBuildService';
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-builds-list',
@@ -12,5 +13,6 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BuildsListComponent {
-  protected readonly saveBuildService = inject(SaveBuildService);
+  private readonly saveBuildService = inject(SaveBuildService);
+  protected readonly buildList = toSignal(this.saveBuildService.buildList$, { initialValue: [] });
 }

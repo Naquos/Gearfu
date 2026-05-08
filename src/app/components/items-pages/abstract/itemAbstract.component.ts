@@ -12,6 +12,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { DifferentStatsItem } from "../../../models/data/differentsStatsItem";
 import { Item } from "../../../models/data/item";
 import { ImageService } from "../../../services/imageService";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-item',
@@ -37,6 +38,7 @@ export abstract class ItemAbstractComponent implements OnDestroy {
   protected readonly Math = Math;
   protected readonly itemChoosen$ = new BehaviorSubject<(Item | undefined)[][]>([[]]);
   protected readonly IdActionsEnum = IdActionsEnum;
+  protected readonly itemChoosen = toSignal(this.itemChoosen$);
 
   protected getEffectPng(effect: EquipEffects | DifferentStatsItem): string {
     return this.imageService.getActionIdUrl(

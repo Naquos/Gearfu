@@ -39,6 +39,7 @@ export class SaveBuildService {
 
     private readonly buildList = new BehaviorSubject<Build[]>([]);
     public readonly buildList$ = this.buildList.asObservable();
+
     private readonly currentBuildId = new BehaviorSubject<string | null>(null);
     private readonly currentTokenBuild = new BehaviorSubject<string | null>(null);
     private readonly statisticsId = new BehaviorSubject<string | null>(null);

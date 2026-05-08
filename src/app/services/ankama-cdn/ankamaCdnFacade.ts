@@ -1,4 +1,5 @@
-import { inject, Injectable } from "@angular/core";
+import { inject, Injectable, Signal } from "@angular/core";
+import { toSignal } from "@angular/core/rxjs-interop";
 import { AnkamaCdnService } from "./ankamaCdnService";
 import { BehaviorSubject, filter, forkJoin, map, Observable, tap } from "rxjs";
 import { ActionsCdn } from "../../models/ankama-cdn/actionsCdn";
@@ -9,21 +10,22 @@ import { JobsItemCdn } from "../../models/ankama-cdn/jobsItemCdn";
 import { RecipeIngredientCdn } from "../../models/ankama-cdn/recipeIngredient";
 import { isItemIdPvp } from "../../models/enum/itemIdPvpEnum";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AnkamaCdnFacade {
 
     private readonly ankamaCdnService = inject(AnkamaCdnService);
-    private static readonly MEDAILLE_BRAVOURE_ITEM_ID = 24705; 
+    private static readonly MEDAILLE_BRAVOURE_ITEM_ID = 24705;
 
     private readonly config = new BehaviorSubject<string>("");
     public readonly config$ = this.config.asObservable().pipe(
         filter(config => config.length > 0),
     );
-    
+
     private readonly action = new BehaviorSubject<ActionsCdn[]>([]);
     public readonly action$ = this.action.asObservable().pipe(
         filter(actions => actions.length > 0),
     );
+    public readonly actions: Signal<ActionsCdn[]> = toSignal(this.action$, { initialValue: [] });
 
     private readonly item = new BehaviorSubject<ItemCdn[]>([]);
     public readonly item$ = this.item.asObservable().pipe(
@@ -67,45 +69,45 @@ export class AnkamaCdnFacade {
 
     private loadRecipeIngredients(): Observable<RecipeIngredientCdn[]> {
         return this.ankamaCdnService.getRecipeIngredients()
-        .pipe(tap(recipeIngredients => this.recipeIngredients.next(recipeIngredients)),
-            tap(recipeIngredients => {
-                recipeIngredients.forEach(recipeIngredient => {
-                    const ingredients = this.mapRecipeIdToRecipeIngredients.get(recipeIngredient.recipeId) || [];
-                    ingredients.push(recipeIngredient);
-                    this.mapRecipeIdToRecipeIngredients.set(recipeIngredient.recipeId, ingredients);
-                });
-            })
-        );
+            .pipe(tap(recipeIngredients => this.recipeIngredients.next(recipeIngredients)),
+                tap(recipeIngredients => {
+                    recipeIngredients.forEach(recipeIngredient => {
+                        const ingredients = this.mapRecipeIdToRecipeIngredients.get(recipeIngredient.recipeId) || [];
+                        ingredients.push(recipeIngredient);
+                        this.mapRecipeIdToRecipeIngredients.set(recipeIngredient.recipeId, ingredients);
+                    });
+                })
+            );
     }
 
     private loadRecipesResult(): Observable<RecipeResultsCdn[]> {
         return this.ankamaCdnService.getRecipesResult()
-        .pipe(
-            tap(recipes => this.recipes.next(recipes)),
-            tap(recipes => {
-                recipes.forEach(recipe => {
-                    this.mapProductItemIdToRecipeResult.set(recipe.productedItemId, recipe);
-                });
-            })
-        );
+            .pipe(
+                tap(recipes => this.recipes.next(recipes)),
+                tap(recipes => {
+                    recipes.forEach(recipe => {
+                        this.mapProductItemIdToRecipeResult.set(recipe.productedItemId, recipe);
+                    });
+                })
+            );
     }
 
     private loadIdSioupere(): Observable<JobsItemCdn[]> {
         return this.ankamaCdnService.getJobsItems()
-        .pipe(
-            map(jobsItems => jobsItems.filter(item => item.title.fr.toLowerCase().includes("sioupère"))),
-            tap(idSioupere => this.idSiouperes.next(idSioupere)));
+            .pipe(
+                map(jobsItems => jobsItems.filter(item => item.title.fr.toLowerCase().includes("sioupère"))),
+                tap(idSioupere => this.idSiouperes.next(idSioupere)));
     }
 
     public load(): Observable<void> {
         return forkJoin([
-                this.loadItems(),
-                this.loadActions(),
-                this.loadStates(),
-                this.loadRecipesResult(),
-                this.loadIdSioupere(),
-                this.loadRecipeIngredients()
-            ]).pipe(map(() => void 0)
+            this.loadItems(),
+            this.loadActions(),
+            this.loadStates(),
+            this.loadRecipesResult(),
+            this.loadIdSioupere(),
+            this.loadRecipeIngredients()
+        ]).pipe(map(() => void 0)
         );
     }
 
@@ -118,7 +120,7 @@ export class AnkamaCdnFacade {
     }
 
     public isItemPvP(itemId: number): boolean {
-        if(isItemIdPvp(itemId)) {
+        if (isItemIdPvp(itemId)) {
             return true;
         }
         const recipe = this.mapProductItemIdToRecipeResult.get(itemId);

@@ -7,6 +7,7 @@ import { ImageService } from '../../../services/imageService';
 import { RecapStatsService } from '../../../services/recapStatsService';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-recap-stats',
@@ -19,6 +20,7 @@ export class RecapStatsComponent {
 
   protected readonly recapStatsService = inject(RecapStatsService);
   protected readonly imageService = inject(ImageService);
+  protected readonly recap = toSignal(this.recapStatsService.recap$, { initialValue: [] as RecapStats[] });
 
   private static readonly RESISTANCES_LIST = [
     IdActionsEnum.RESISTANCES_FEU,

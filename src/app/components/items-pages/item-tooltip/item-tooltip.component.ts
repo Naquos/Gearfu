@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, input, ChangeDetectionStrategy, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { Observable, filter, map, takeUntil, tap } from 'rxjs';
+import { filter, map, takeUntil, tap } from 'rxjs';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
 import { DifferentStatsItem } from '../../../models/data/differentsStatsItem';
 import { Item } from '../../../models/data/item';
@@ -12,6 +12,7 @@ import { ItemsService } from '../../../services/data/itemsService';
 import { ItemAbstractComponent } from '../abstract/itemAbstract.component';
 import { calculWeight, mapSortAction } from '../../../models/utils/utils';
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-item-tooltip',
@@ -32,24 +33,28 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
   protected readonly ARMURE_DONNEE_RECUE = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
 
   protected listDifferentsStatsItem: DifferentStatsItem[] = [];
-  protected loaded$!: Observable<boolean>;
+  protected readonly loaded = signal(false);
   protected weight = 0;
 
-  protected itemSelected$ = this.itemChoosen$.pipe(
+  private itemSelected$ = this.itemChoosen$.pipe(
     filter(items => items.length !== 0),
     map(items => items.map(x => x[this.indexItemChoosen()])),
     map(items => items.length >= 2 && items[0]?.id === items[1]?.id ? [items.find(x => x !== undefined)] : items),
     map(x => x.filter(item => item !== undefined)),
   );
 
-  protected differentStatsItemList$ = this.itemSelected$.pipe(
+  protected itemSelected = toSignal(this.itemSelected$, { initialValue: [] as Item[] });
+
+
+  protected differentStatsItemList = toSignal(this.itemSelected$.pipe(
     takeUntil(this.destroy$),
     tap(listItems => {
       this.listDifferentsStatsItem = [];
       this.fillListCurrentItem();
       listItems.forEach(items => items ? this.fillMapDifferentStatsItem(items!) : "")
     }),
-    map(() => this.listDifferentsStatsItem.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999))));
+    map(() => this.listDifferentsStatsItem.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999)))),
+    { initialValue: [] as DifferentStatsItem[] });
 
   constructor() {
     super();
@@ -61,21 +66,22 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
   public ngAfterViewInit(): void {
     if (this.item()) {
       this.item().equipEffects = this.item().equipEffects.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999));
-      this.loaded$ = this.itemSelected$.pipe(
+      this.itemSelected$.pipe(
         takeUntil(this.destroy$),
-        map((itemSelected) => {
-          this.resistances = this.item().resistance;
-          this.maitrises = this.item().maitrise;
-          this.weight = calculWeight(this.resistances, this.maitrises, this.item().level);
-          itemSelected.forEach(item => {
-            if (item) {
-              this.resistances -= item.resistance;
-              this.maitrises -= item.maitrise;
-              this.weight = calculWeight(this.resistances, this.maitrises, item.level)
-            }
-          })
-          return true;
-        }));
+      ).subscribe((itemSelected) => {
+        this.resistances = this.item().resistance;
+        this.maitrises = this.item().maitrise;
+        this.weight = calculWeight(this.resistances, this.maitrises, this.item().level);
+        itemSelected.forEach(item => {
+          if (item) {
+            this.resistances -= item.resistance;
+            this.maitrises -= item.maitrise;
+            this.weight = calculWeight(this.resistances, this.maitrises, item.level)
+          }
+        })
+        this.loaded.set(true);
+        this.cdr.markForCheck();
+      });
 
       this.initItemChoosen(this.item());
 

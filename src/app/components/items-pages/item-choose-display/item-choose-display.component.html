@@ -1,19 +1,11 @@
-<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-@if(($item | async) !== undefined && ($item | async) !== null) {
-    @let item = $item | async;
-    <div class="itemPresent" 
-        [style.backgroundColor]="colorRarityService.mapColors.get(item!.rarity)"
-        (mouseenter)="openTooltip($event, item!)" 
-        (mouseleave)="onMouseLeave()"
-        >
-        <img [src]="imageService.getItemUrl(item!.idImage)"
-        (appActivate)="setFilter()"    
-        alt="items"
-        appFallback
-        >
-        <span (appActivate)="itemChooseService.deleteItem(itemType(), indexItem())">X</span>
-    </div>
+@if(item() !== undefined && item() !== null) {
+@let _item = item();
+<div class="itemPresent" [style.backgroundColor]="colorRarityService.mapColors.get(_item!.rarity)"
+    (mouseenter)="openTooltip($event, _item!)" (mouseleave)="onMouseLeave()">
+    <img [src]="imageService.getItemUrl(_item!.idImage)" (appActivate)="setFilter()" alt="items" appFallback>
+    <span (appActivate)="itemChooseService.deleteItem(itemType(), indexItem())">X</span>
+</div>
 } @else {
-    <img class="noItem" [src]="backgroundItemType()" (mouseenter)="tooltipService.forceClose()" (appActivate)="setFilter()" alt="noItem" >
+<img class="noItem" [src]="backgroundItemType()" (mouseenter)="tooltipService.forceClose()" (appActivate)="setFilter()"
+    alt="noItem">
 }

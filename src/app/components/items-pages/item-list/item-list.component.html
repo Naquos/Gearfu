@@ -1,18 +1,17 @@
 @if (itemsService.isLoading()) {
-    <div class="content">
-        @for (i of skeletonArray; track i) {
-            <app-item-skeleton></app-item-skeleton>
-        }
-    </div>
-} @else if (displayedItems$ | async; as items) {
-    <div class="content">
-        @for (item of items; track item.id) {
-            <app-item [item]="item"></app-item>
-        }
-        @if (currentIndex < allItems.length) {
-            <div class="load-trigger" #loadTrigger (appIntersect)="onScrollEnd()">
-                <app-item-skeleton></app-item-skeleton>
-            </div>
-        }
-    </div>
+<div class="content">
+    @for (i of skeletonArray; track i) {
+    <app-item-skeleton></app-item-skeleton>
+    }
+</div>
+} @else if (displayedItems(); as items) {
+<div class="content">
+    @for (item of items; track item.id) {
+    <app-item [item]="item"></app-item>
+    }
+    @if (currentIndex < allItems.length) { <div class="load-trigger" #loadTrigger (appIntersect)="onScrollEnd()">
+        <app-item-skeleton></app-item-skeleton>
+</div>
+}
+</div>
 }

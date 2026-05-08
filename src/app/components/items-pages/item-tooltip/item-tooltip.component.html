@@ -1,6 +1,6 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-@if (loaded$ | async) {
+@if (loaded()) {
 <div class="header">
     <span [class]="getBackgroundDifferentsStatsOnValue(maitrises)"><img
             [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{"item.maitrises"
@@ -18,7 +18,7 @@
                     ({{item().level}})</h3>
                 <img [src]="imageService.getItemUrl(item().idImage)" alt="item">
             </div>
-            @if (itemSelected$ | async; as itemSelected) {
+            @if (itemSelected(); as itemSelected) {
             @for (item of itemSelected; track $index) {
             <div class="title">
                 <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{ getTitle(item) }} ({{item.level}})
@@ -34,12 +34,12 @@
         </span>
     </div>
 
-    @if (differentStatsItemList$ | async; as statsList) {
+    @if (differentStatsItemList(); as statsList) {
     <div>
         @for (effect of statsList; track $index) {
         <p [class]="getBackgroundDifferentsStats(effect)">
             @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT && effect.value !== 0) {
-            <img [src]="getEffectPng(effect)" alt="aptitudes"> {{ effect | actions | async }}
+            <img [src]="getEffectPng(effect)" alt="aptitudes"> {{ effect | actions }}
             }
         </p>
         }

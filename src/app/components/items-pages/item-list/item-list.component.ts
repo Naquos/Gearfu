@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { IntersectDirective } from '../../../directives/intersect.directive';
 import { Item } from '../../../models/data/item';
 import { ItemsService } from '../../../services/data/itemsService';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-item-list',
@@ -18,7 +19,8 @@ export class ItemListComponent implements OnInit, OnDestroy {
   protected readonly itemsService = inject(ItemsService);
   protected readonly skeletonArray = Array(36).fill(0).map((x, i) => i); // Tableau pour afficher 36 skeletons
 
-  protected displayedItems$ = new BehaviorSubject<Item[]>([]);
+  private displayedItems$ = new BehaviorSubject<Item[]>([]);
+  protected readonly displayedItems = toSignal(this.displayedItems$);
   protected allItems: Item[] = [];
   private itemsPerLoad = 36; // Charger 36 items à la fois
   protected currentIndex = 0;

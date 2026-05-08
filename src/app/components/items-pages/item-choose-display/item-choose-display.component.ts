@@ -1,5 +1,5 @@
-import { Component, inject, input, OnInit, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
-import { Observable, filter, map, startWith } from 'rxjs';
+import { Component, inject, input, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
+import { combineLatest, filter, map, startWith, switchMap } from 'rxjs';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
 import { Item } from '../../../models/data/item';
 import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { CommonModule } from '@angular/common';
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-item-choose-display',
@@ -24,7 +25,7 @@ import { CommonModule } from '@angular/common';
     ngSkipHydration: 'true'
   }
 })
-export class ItemChooseDisplayComponent implements OnInit {
+export class ItemChooseDisplayComponent {
   protected readonly colorRarityService = inject(ColorRarityService);
   protected readonly itemChooseService = inject(ItemChooseService);
   protected readonly itemTypeFormServices = inject(ItemTypeFormServices);
@@ -36,15 +37,19 @@ export class ItemChooseDisplayComponent implements OnInit {
   public readonly backgroundItemType = input.required<string>();
   public readonly itemType = input.required<ItemTypeEnum>();
   public readonly indexItem = input<number>(0);
-  protected $item!: Observable<Item | undefined>;
 
-  ngOnInit(): void {
-    this.$item = this.itemChooseService.getObsItem(this.itemType()).pipe(
-      filter(x => x !== undefined),
-      map(x => x[this.indexItem()]!),
+  protected readonly item = toSignal(
+    combineLatest([toObservable(this.itemType), toObservable(this.indexItem)]).pipe(
+      switchMap(([itemType, indexItem]) =>
+        this.itemChooseService.getObsItem(itemType).pipe(
+          filter(x => x !== undefined),
+          map(x => x[indexItem]!)
+        )
+      ),
       startWith(undefined)
-    );
-  }
+    ),
+    { initialValue: undefined }
+  );
 
   protected openTooltip(event: MouseEvent, item: Item): void {
     this.tooltipService.forceClose();

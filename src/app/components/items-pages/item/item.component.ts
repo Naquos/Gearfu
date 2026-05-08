@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, computed, ElementRef, inject, input, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
-import { BehaviorSubject, map, Observable, take } from 'rxjs';
+import { BehaviorSubject, map, take } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,6 +22,7 @@ import { ElementSelectorEnum } from '../../../models/enum/elementSelectorEnum';
 import { mapSortAction, ratioWeightByLevel } from '../../../models/utils/utils';
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-item',
@@ -52,6 +53,9 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
 
   private readonly condition = new BehaviorSubject<ItemCondition | undefined>(undefined);
   protected readonly condition$ = this.condition.asObservable();
+
+
+  protected readonly textCondition = toSignal(this.condition$.pipe(map(x => x?.description[this.translateService.currentLang as keyof typeof x.description] ?? undefined)));
 
   constructor() {
     super()
@@ -86,10 +90,6 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
 
       this.cdr.detectChanges();
     }
-  }
-
-  protected textCondition(): Observable<string | undefined> {
-    return this.condition$.pipe(map(x => x?.description[this.translateService.currentLang as keyof typeof x.description] ?? undefined));
   }
 
   protected nameMonster(monster: MonsterDrop): string {

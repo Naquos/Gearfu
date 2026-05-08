@@ -1,6 +1,5 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { EquipEffects } from '../../models/data/equipEffects';
-import { combineLatest, map, Observable, startWith } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ActionsCdn } from '../../models/ankama-cdn/actionsCdn';
 import { IdActionsEnum } from '../../models/enum/idActionsEnum';
@@ -9,7 +8,8 @@ import { ActionService } from '../../services/data/actionService';
 import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
 
 @Pipe({
-  name: 'actions'
+  name: 'actions',
+  pure: false
 })
 export class ActionsPipe implements PipeTransform {
 
@@ -17,18 +17,12 @@ export class ActionsPipe implements PipeTransform {
   private readonly translateService = inject(TranslateService);
   private readonly actionService = inject(ActionService);
 
-  transform(effect: EquipEffects | DifferentStatsItem): Observable<string> {
-    
-    return combineLatest([
-      this.translateService.onLangChange.pipe(startWith({lang: this.translateService.currentLang, translations: {}})),
-      this.ankamaCdnFacade.action$
-    ]).pipe(
-      map(([, actions]) => actions),
-      map(actions => this.findAction(actions, effect)),
-      map(action => this.getDefinitions(action)),
-      map(definition => this.getDefinitionsComplete(definition, effect)),
-    )
-
+  transform(effect: EquipEffects | DifferentStatsItem): string {
+    const actions = this.ankamaCdnFacade.actions();
+    if (actions.length === 0) return '';
+    const action = this.findAction(actions, effect);
+    const definition = this.getDefinitions(action);
+    return this.getDefinitionsComplete(definition, effect);
   }
 
   private getDefinitionsComplete(definition: string, effect: EquipEffects | DifferentStatsItem): string {
@@ -52,7 +46,7 @@ export class ActionsPipe implements PipeTransform {
 
     const type = effect.params[4] === 120 ? this.translateService.instant("abstract.donnee") : this.translateService.instant("abstract.recue")
     const value = Math.abs(effect.params[0]);
-    const isAMalus = this.actionService.isAMalus(effect.actionId); 
+    const isAMalus = this.actionService.isAMalus(effect.actionId);
     const symbol = (isAMalus && effect.params[0] > 0) || (!isAMalus && effect.params[0] < 0) ? "-" : ""
     return symbol + value + this.translateService.instant("abstract.armure") + type;
   }
@@ -67,8 +61,8 @@ export class ActionsPipe implements PipeTransform {
   }
 
   private singularOrPlurial(definition: string, effect: EquipEffects | DifferentStatsItem) {
-    definition = this.singularOrPlurialWithRegex(definition, effect,  /\{\[>2\]\?([^}]){0,5}:([^}]){0,5}\}/g, 2);
-    definition = this.singularOrPlurialWithRegex(definition, effect,  /\{\[>1\]\?([^}]){0,5}:([^}]){0,5}\}/g);
+    definition = this.singularOrPlurialWithRegex(definition, effect, /\{\[>2\]\?([^}]){0,5}:([^}]){0,5}\}/g, 2);
+    definition = this.singularOrPlurialWithRegex(definition, effect, /\{\[>1\]\?([^}]){0,5}:([^}]){0,5}\}/g);
     return definition;
   }
 
@@ -85,7 +79,7 @@ export class ActionsPipe implements PipeTransform {
     return definition;
   }
 
-  private  cleanDefinition(definition: string, regex: RegExp): string {
+  private cleanDefinition(definition: string, regex: RegExp): string {
     const match = definition.match(regex);
     if (match) {
       definition = definition.replace(match[0], '');
@@ -93,7 +87,7 @@ export class ActionsPipe implements PipeTransform {
     return definition;
   }
 
-  
+
   private cleanRecoltEffect(definition: string): string {
     return this.cleanDefinition(definition, /{\[~2]?.+}/g);
   }

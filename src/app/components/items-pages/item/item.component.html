@@ -11,7 +11,7 @@
         {{item().weight}}</span>
 
 </div>
-@if (textCondition() | async; as condition) {
+@if (textCondition(); as condition) {
 <div class="condition">
     [ {{ condition }} ]
 </div>
@@ -36,7 +36,7 @@
             @for (effect of item().equipEffects; track effect.actionId) {
             <p>
                 @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT) {
-                <img [src]="getEffectPng(effect)" alt="aptitudes"> {{ effect | actions | async }}
+                <img [src]="getEffectPng(effect)" alt="aptitudes"> {{ effect | actions }}
                 } @else {
                 @let state = statesService.findStates(effect.params[0]);
                 <span class="appliqueEtat"
@@ -84,7 +84,7 @@
 </div>
 }
 
-@if (itemChoosen$ | async; as itemChoosen) {
+@if (itemChoosen(); as itemChoosen) {
 @if(itemIsPresentAndNotChoosen(itemChoosen)) {
 <mat-icon class="iconComparator" fontIcon="swap_horiz" (mouseenter)="openTooltip($event, item())"
     (mouseleave)="tooltipService.closeTooltip()"></mat-icon>
