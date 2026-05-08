@@ -75,10 +75,13 @@ export class SearchItemNameSignalFormService extends AbstractSignalFormService<S
         this.itemTypeFormServices.setItemType(itemType);
 
         if (item.level <= 20) {
-            this.itemLevelFormService.setValue({ levelMin: 0, levelMax: 20 });
+            this.itemLevelFormService.setValue({ levelMin: '0', levelMax: '20' });
         } else {
             const temp = Math.ceil((item.level - 20) / 15);
-            this.itemLevelFormService.setValue({ levelMin: (temp - 1) * 15 + 20 + 1, levelMax: temp * 15 + 20 });
+            this.itemLevelFormService.setValue({
+                levelMin: String((temp - 1) * 15 + 20 + 1),
+                levelMax: String(temp * 15 + 20)
+            });
         }
     }
 }

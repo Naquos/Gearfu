@@ -5,14 +5,16 @@ import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
 
 export interface ItemLevelForm {
-    levelMin: number;
-    levelMax: number;
+    levelMin: string;
+    levelMax: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class ItemLevelFormService extends AbstractSignalFormService<ItemLevelForm> {
     public static readonly DEFAULT_LEVEL_MIN = 200;
     public static readonly DEFAULT_LEVEL_MAX = 245;
+    private static readonly DEFAULT_LEVEL_MIN_STRING = String(ItemLevelFormService.DEFAULT_LEVEL_MIN);
+    private static readonly DEFAULT_LEVEL_MAX_STRING = String(ItemLevelFormService.DEFAULT_LEVEL_MAX);
 
     private readonly levelMin = new BehaviorSubject<number>(ItemLevelFormService.DEFAULT_LEVEL_MIN);
     public readonly levelMin$ = this.levelMin.asObservable();
@@ -22,8 +24,8 @@ export class ItemLevelFormService extends AbstractSignalFormService<ItemLevelFor
 
     protected readonly keyEnum = KeyEnum.KEY_ITEM_LEVEL;
     protected readonly model = signal<ItemLevelForm>({
-        levelMin: ItemLevelFormService.DEFAULT_LEVEL_MIN,
-        levelMax: ItemLevelFormService.DEFAULT_LEVEL_MAX
+        levelMin: ItemLevelFormService.DEFAULT_LEVEL_MIN_STRING,
+        levelMax: ItemLevelFormService.DEFAULT_LEVEL_MAX_STRING
     });
 
     public readonly form = form(this.model);
@@ -33,31 +35,50 @@ export class ItemLevelFormService extends AbstractSignalFormService<ItemLevelFor
         this.init();
     }
 
-    private validLevel(level: number): boolean {
-        if (!level || isNaN(Number(level))) {
-            return false;
+    private parseLevel(value: unknown, fallback: number): number {
+        const levelNumber = Number(value);
+        if (!levelNumber || Number.isNaN(levelNumber)) {
+            return fallback;
         }
-        return true;
+        return levelNumber;
+    }
+
+    private normalizeStoredLevel(value: unknown, fallback: string): string {
+        if (typeof value === 'string') {
+            return value;
+        }
+
+        if (typeof value === 'number' && !Number.isNaN(value)) {
+            return String(value);
+        }
+
+        return fallback;
     }
 
     protected override handleChanges(value: ItemLevelForm): void {
-        this.levelMin.next(this.validLevel(value.levelMin) ? value.levelMin : ItemLevelFormService.DEFAULT_LEVEL_MIN);
-        this.levelMax.next(this.validLevel(value.levelMax) ? value.levelMax : ItemLevelFormService.DEFAULT_LEVEL_MAX);
+        this.levelMin.next(this.parseLevel(value.levelMin, ItemLevelFormService.DEFAULT_LEVEL_MIN));
+        this.levelMax.next(this.parseLevel(value.levelMax, ItemLevelFormService.DEFAULT_LEVEL_MAX));
     }
 
     public override setValue(value: ItemLevelForm | null): void {
-        const minRaw = value?.levelMin ?? ItemLevelFormService.DEFAULT_LEVEL_MIN;
-        const maxRaw = value?.levelMax ?? ItemLevelFormService.DEFAULT_LEVEL_MAX;
+        const raw = value as unknown;
+        const minRaw = typeof raw === 'object' && raw !== null && 'levelMin' in raw
+            ? (raw as { levelMin?: unknown }).levelMin
+            : undefined;
+        const maxRaw = typeof raw === 'object' && raw !== null && 'levelMax' in raw
+            ? (raw as { levelMax?: unknown }).levelMax
+            : undefined;
+
         this.model.set({
-            levelMin: this.validLevel(minRaw) ? minRaw : ItemLevelFormService.DEFAULT_LEVEL_MIN,
-            levelMax: this.validLevel(maxRaw) ? maxRaw : ItemLevelFormService.DEFAULT_LEVEL_MAX
+            levelMin: this.normalizeStoredLevel(minRaw, ItemLevelFormService.DEFAULT_LEVEL_MIN_STRING),
+            levelMax: this.normalizeStoredLevel(maxRaw, ItemLevelFormService.DEFAULT_LEVEL_MAX_STRING)
         });
     }
 
     public override setDefaultValue(): void {
         this.model.set({
-            levelMin: ItemLevelFormService.DEFAULT_LEVEL_MIN,
-            levelMax: ItemLevelFormService.DEFAULT_LEVEL_MAX
+            levelMin: ItemLevelFormService.DEFAULT_LEVEL_MIN_STRING,
+            levelMax: ItemLevelFormService.DEFAULT_LEVEL_MAX_STRING
         });
     }
 }
