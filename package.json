@@ -6,9 +6,10 @@
     "start": "node node_modules/@angular/cli/bin/ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "deploy": "ng build --base-href /Gearfu/ && npx angular-cli-ghpages --dir=dist/wakfu-builder/browser",
+    "deploy": "npm run build && wrangler deploy",
     "test": "ng test",
-    "serve:ssr:WakfuBuilder": "node dist/wakfu-builder/server/server.mjs"
+    "serve:ssr:WakfuBuilder": "node dist/wakfu-builder/server/server.mjs",
+    "preview": "npm run build && wrangler dev"
   },
   "private": true,
   "dependencies": {
@@ -50,6 +51,7 @@
     "karma-coverage": "^2.2.0",
     "karma-jasmine": "^5.1.0",
     "karma-jasmine-html-reporter": "^2.1.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.90.0"
   }
 }
