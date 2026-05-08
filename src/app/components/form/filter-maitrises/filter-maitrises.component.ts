@@ -1,5 +1,4 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 import { TranslateModule } from '@ngx-translate/core';
@@ -9,7 +8,7 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 
 @Component({
   selector: 'app-filter-maitrises',
-  imports: [ReactiveFormsModule, MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
+  imports: [MatCheckboxModule, ButtonCheckboxComponent, TranslateModule],
   templateUrl: './filter-maitrises.component.html',
   styleUrl: './filter-maitrises.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

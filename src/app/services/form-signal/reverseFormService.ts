@@ -1,7 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
 
@@ -19,22 +18,15 @@ export class ReverseFormService extends AbstractSignalFormService<ReverseModel> 
     protected readonly keyEnum = KeyEnum.KEY_REVERSE;
     protected readonly model = signal<ReverseModel>({ reverse: ReverseFormService.DEFAULT_VALUE });
 
-    // Bridge FormControl for backward compatibility with ButtonCheckboxComponent
-    public readonly form = new FormControl<boolean>(ReverseFormService.DEFAULT_VALUE, { nonNullable: true });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        // Sync FormControl → model (user interaction from ButtonCheckboxComponent)
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => {
-            this.model.update(m => ({ ...m, reverse: val }));
-        });
         this.init();
     }
 
     protected override handleChanges(value: ReverseModel): void {
         this.reverse.next(value.reverse);
-        // Sync model → FormControl (emitEvent: false to break circular update)
-        this.form.setValue(value.reverse, { emitEvent: false });
     }
 
     public override setValue(value: boolean | ReverseModel | null): void {

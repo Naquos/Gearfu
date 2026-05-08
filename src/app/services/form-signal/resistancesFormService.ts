@@ -1,7 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
@@ -26,18 +25,10 @@ export class ResistancesFormService extends AbstractSignalFormService<Resistance
     protected readonly keyEnum = KeyEnum.KEY_RESISTANCES;
     protected readonly model = signal<ResistancesForm>({ ...ResistancesFormService.DEFAULT_VALUE });
 
-    public readonly form = new FormGroup({
-        feu: new FormControl<boolean>(false, { nonNullable: true }),
-        eau: new FormControl<boolean>(false, { nonNullable: true }),
-        terre: new FormControl<boolean>(false, { nonNullable: true }),
-        air: new FormControl<boolean>(false, { nonNullable: true }),
-    });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as ResistancesForm) }));
-        });
         this.init();
     }
 
@@ -48,7 +39,6 @@ export class ResistancesFormService extends AbstractSignalFormService<Resistance
         if (value.terre) { resultId.push(IdActionsEnum.RESISTANCES_TERRE); }
         if (value.air) { resultId.push(IdActionsEnum.RESISTANCES_AIR); }
         this.idResistances.next(resultId);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: ResistancesForm | null): void {
@@ -66,7 +56,7 @@ export class ResistancesFormService extends AbstractSignalFormService<Resistance
 
     public orderResistances(): IdActionsEnum[] {
         const m = this.model();
-        const entries: Array<{ key: keyof ResistancesForm; id: IdActionsEnum }> = [
+        const entries: { key: keyof ResistancesForm; id: IdActionsEnum }[] = [
             { key: 'feu', id: IdActionsEnum.RESISTANCES_FEU },
             { key: 'eau', id: IdActionsEnum.RESISTANCES_EAU },
             { key: 'terre', id: IdActionsEnum.RESISTANCES_TERRE },
@@ -80,3 +70,4 @@ export class ResistancesFormService extends AbstractSignalFormService<Resistance
         return [...selected, ...unselected];
     }
 }
+

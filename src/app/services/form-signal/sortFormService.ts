@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { BehaviorSubject, distinctUntilChanged } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { KeyEnum } from "../../models/enum/keyEnum";
@@ -42,16 +42,10 @@ export class SortFormService extends AbstractSignalFormService<SortForm> {
         sortPassifs: [...SortFormService.DEFAULT_SORT_PASSIF]
     });
 
-    public readonly form = new FormGroup({
-        sortNeutres: new FormControl<number[]>(SortFormService.DEFAULT_SORT_NEUTRE, { nonNullable: true }),
-        sortPassifs: new FormControl<number[]>(SortFormService.DEFAULT_SORT_PASSIF, { nonNullable: true })
-    });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as SortForm) }));
-        });
         this.init();
         this.classeFormService.classe$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(() => {
             if (!this.firstLoad) {
@@ -66,7 +60,6 @@ export class SortFormService extends AbstractSignalFormService<SortForm> {
         this.sortPassifs.next(value.sortPassifs ?? SortFormService.DEFAULT_SORT_PASSIF);
         const code = this.generateCodeBuild(value);
         this.codeBuild.next(code);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: SortForm | null): void {

@@ -3,7 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { IdActionsEnum } from "../models/enum/idActionsEnum";
 import { AptitudesForm, AptitudesFormService } from "./form-signal/aptitudesFormService";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CodeAptitudesService {
     private aptitudesFormService = inject(AptitudesFormService);
     private readonly code = new BehaviorSubject<string>('');
@@ -62,106 +62,107 @@ export class CodeAptitudesService {
 
     private updateCode() {
         let codeAptitudes = '';
-        const formValue = this.aptitudesFormService.form.value;
-        if(!formValue) {
+        const formValue = this.normalizeFormValue(this.aptitudesFormService.value);
+
+        if (!formValue) {
             this.code.next('');
             return;
         }
 
-        if(formValue.percentagePV) {
+        if (formValue.percentagePV) {
             codeAptitudes += `1:${formValue.percentagePV}-`;
         }
-        if(formValue.resistancesElementaires) {
+        if (formValue.resistancesElementaires) {
             codeAptitudes += `16:${formValue.resistancesElementaires}-`;
         }
-        if(formValue.barriere) {
+        if (formValue.barriere) {
             codeAptitudes += `17:${formValue.barriere}-`;
         }
-        if(formValue.soinsRecus) {
+        if (formValue.soinsRecus) {
             codeAptitudes += `27:${formValue.soinsRecus}-`;
         }
-        if(formValue.pdvArmure) {
+        if (formValue.pdvArmure) {
             codeAptitudes += `36:${formValue.pdvArmure}-`;
         }
-        if(formValue.maitriseElem) {
+        if (formValue.maitriseElem) {
             codeAptitudes += `23:${formValue.maitriseElem}-`;
         }
-        if(formValue.maitrisesMelee) {
+        if (formValue.maitrisesMelee) {
             codeAptitudes += `26:${formValue.maitrisesMelee}-`;
         }
-        if(formValue.maitrisesDistance) {
+        if (formValue.maitrisesDistance) {
             codeAptitudes += `30:${formValue.maitrisesDistance}-`;
         }
-        if(formValue.pdv) {
+        if (formValue.pdv) {
             codeAptitudes += `31:${formValue.pdv}-`;
         }
-        if(formValue.tacle) {
+        if (formValue.tacle) {
             codeAptitudes += `18:${formValue.tacle}-`;
         }
-        if(formValue.esquive) {
+        if (formValue.esquive) {
             codeAptitudes += `19:${formValue.esquive}-`;
         }
-        if(formValue.initiative) {
+        if (formValue.initiative) {
             codeAptitudes += `20:${formValue.initiative}-`;
         }
-        if(formValue.tacleEsquive) {
+        if (formValue.tacleEsquive) {
             codeAptitudes += `21:${formValue.tacleEsquive}-`;
         }
-        if(formValue.volonte) {
+        if (formValue.volonte) {
             codeAptitudes += `37:${formValue.volonte}-`;
         }
-        if(formValue.percentageCC) {
+        if (formValue.percentageCC) {
             codeAptitudes += `9:${formValue.percentageCC}-`;
         }
-        if(formValue.parade) {
+        if (formValue.parade) {
             codeAptitudes += `10:${formValue.parade}-`;
         }
-        if(formValue.maitriseCritique) {
+        if (formValue.maitriseCritique) {
             codeAptitudes += `11:${formValue.maitriseCritique}-`;
         }
-        if(formValue.maitriseDos) {
+        if (formValue.maitriseDos) {
             codeAptitudes += `12:${formValue.maitriseDos}-`;
         }
-        if(formValue.maitriseBerzerk) {
+        if (formValue.maitriseBerzerk) {
             codeAptitudes += `13:${formValue.maitriseBerzerk}-`;
         }
-        if(formValue.maitriseSoins) {
+        if (formValue.maitriseSoins) {
             codeAptitudes += `14:${formValue.maitriseSoins}-`;
         }
-        if(formValue.resistancesDos) {
+        if (formValue.resistancesDos) {
             codeAptitudes += `15:${formValue.resistancesDos}-`;
         }
-        if(formValue.resistancesCritique) {
+        if (formValue.resistancesCritique) {
             codeAptitudes += `34:${formValue.resistancesCritique}-`;
         }
-        if(formValue.pa) {
+        if (formValue.pa) {
             codeAptitudes += `2:${formValue.pa}-`;
         }
-        if(formValue.pm) {
+        if (formValue.pm) {
             codeAptitudes += `3:${formValue.pm}-`;
         }
-        if(formValue.po) {
+        if (formValue.po) {
             codeAptitudes += `4:${formValue.po}-`;
         }
-        if(formValue.pw) {
+        if (formValue.pw) {
             codeAptitudes += `5:${formValue.pw}-`;
         }
-        if(formValue.di) {
+        if (formValue.di) {
             codeAptitudes += `8:${formValue.di}-`;
         }
-        if(formValue.resistancesElementairesMajeur) {
+        if (formValue.resistancesElementairesMajeur) {
             codeAptitudes += `35:${formValue.resistancesElementairesMajeur}-`;
         }
-        if(formValue.armureDonnee) {
+        if (formValue.armureDonnee) {
             codeAptitudes += `6:${formValue.armureDonnee}-`;
         }
-        if(formValue.soinsRealise) {
+        if (formValue.soinsRealise) {
             codeAptitudes += `38:${formValue.soinsRealise}-`;
         }
-        if(formValue.diIndirect) {
+        if (formValue.diIndirect) {
             codeAptitudes += `39:${formValue.diIndirect}-`;
         }
-        if(codeAptitudes.endsWith('-')) {
+        if (codeAptitudes.endsWith('-')) {
             codeAptitudes = codeAptitudes.slice(0, -1);
         }
 
@@ -180,8 +181,8 @@ export class CodeAptitudesService {
             const id = parseInt(idStr, 10);
             const value = parseInt(valueStr, 10);
             const actionEnum = this.mapCode.get(id);
-            if(actionEnum !== undefined) {
-                switch(actionEnum) {
+            if (actionEnum !== undefined) {
+                switch (actionEnum) {
                     case IdActionsEnum.PERCENTAGE_PV:
                         formValue.percentagePV = value;
                         break;
@@ -279,6 +280,55 @@ export class CodeAptitudesService {
             }
         });
         this.aptitudesFormService.setValue(formValue);
+    }
+
+    private normalizeFormValue(value: AptitudesForm | null | undefined): AptitudesForm {
+        const base: AptitudesForm = {
+            percentagePV: 0,
+            resistancesElementaires: 0,
+            barriere: 0,
+            soinsRecus: 0,
+            pdvArmure: 0,
+            maitriseElem: 0,
+            maitrisesMelee: 0,
+            maitrisesDistance: 0,
+            pdv: 0,
+            tacle: 0,
+            esquive: 0,
+            initiative: 0,
+            tacleEsquive: 0,
+            volonte: 0,
+            percentageCC: 0,
+            parade: 0,
+            maitriseCritique: 0,
+            maitriseDos: 0,
+            maitriseBerzerk: 0,
+            maitriseSoins: 0,
+            resistancesDos: 0,
+            resistancesCritique: 0,
+            pa: 0,
+            pm: 0,
+            po: 0,
+            pw: 0,
+            di: 0,
+            resistancesElementairesMajeur: 0,
+            armureDonnee: 0,
+            soinsRealise: 0,
+            diIndirect: 0
+        };
+
+        if (!value) {
+            return base;
+        }
+
+        (Object.keys(base) as (keyof AptitudesForm)[]).forEach((key) => {
+            const candidate = value[key];
+            if (typeof candidate === 'number' && Number.isFinite(candidate)) {
+                base[key] = candidate;
+            }
+        });
+
+        return base;
     }
 
 }

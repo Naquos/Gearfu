@@ -1,18 +1,15 @@
-<label class="checkbox-wrapper"
-    [matTooltip]="tooltip() | translate"
-    [matTooltipShowDelay]="300"
-    [class.crossed-out]="crossedOut()"
-    [class.background-color-blue]="control()?.value">
-    
-    <input type="checkbox" 
-        [formControl]="control()!"
-        class="checkbox-input"
-        (appActivate)="toggle()"
-    />
-    
+<label class="checkbox-wrapper" [attr.for]="inputId" [matTooltip]="tooltip() | translate" [matTooltipShowDelay]="300"
+    [class.crossed-out]="crossedOut()" [class.background-color-blue]="isChecked()">
+
+    @if (fieldControl()) {
+    <input [id]="inputId" type="checkbox" [field]="fieldControl()!" class="checkbox-input" />
+    } @else {
+    <input [id]="inputId" type="checkbox" [formControl]="control()!" class="checkbox-input" />
+    }
+
     @if(matIcon()) {
-        <mat-icon [fontIcon]="matIcon()" [style.color]="control()?.value ? 'white' : '#213A57'"></mat-icon>
+    <mat-icon [fontIcon]="matIcon()" [style.color]="isChecked() ? 'white' : '#213A57'"></mat-icon>
     } @else if(srcImg()) {
-        <img [src]="srcImg()" alt="image">
+    <img [src]="srcImg()" alt="image">
     }
 </label>

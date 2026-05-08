@@ -1,7 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
 
@@ -43,19 +42,10 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
     protected readonly keyEnum = KeyEnum.KEY_OBTENTION;
     protected readonly model = signal<ObtentionForm>({ ...ObtentionFormService.DEFAULT_VALUE });
 
-    public readonly form = new FormGroup({
-        DROP: new FormControl<boolean>(ObtentionFormService.DEFAULT_VALUE.DROP, { nonNullable: true }),
-        CRAFTABLE: new FormControl<boolean>(ObtentionFormService.DEFAULT_VALUE.CRAFTABLE, { nonNullable: true }),
-        BOSS: new FormControl<boolean>(ObtentionFormService.DEFAULT_VALUE.BOSS, { nonNullable: true }),
-        ARCHI: new FormControl<boolean>(ObtentionFormService.DEFAULT_VALUE.ARCHI, { nonNullable: true }),
-        PVP: new FormControl<boolean>(ObtentionFormService.DEFAULT_VALUE.PVP, { nonNullable: true }),
-    });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as ObtentionForm) }));
-        });
         this.init();
     }
 
@@ -65,7 +55,6 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
         this.boss.next(!value.BOSS);
         this.archi.next(!value.ARCHI);
         this.pvp.next(!value.PVP);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: ObtentionForm | null): void {
@@ -82,3 +71,4 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
         this.model.set({ ...ObtentionFormService.DEFAULT_VALUE });
     }
 }
+

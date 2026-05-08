@@ -1,7 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { form, max } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
 import { RecapStats } from "../../models/data/recap-stats";
@@ -127,46 +126,37 @@ export class AptitudesFormService extends AbstractSignalFormService<AptitudesFor
         diIndirect: AptitudesFormService.DEFAULT_VALUE
     });
 
-    public readonly form = new FormGroup({
-        percentagePV: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
-        resistancesElementaires: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(10)] }),
-        barriere: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(10)] }),
-        soinsRecus: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(5)] }),
-        pdvArmure: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(10)] }),
-        maitriseElem: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitrisesMelee: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(40)] }),
-        maitrisesDistance: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(40)] }),
-        pdv: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
-        tacle: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
-        esquive: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
-        initiative: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(20)] }),
-        tacleEsquive: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
-        volonte: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(20)] }),
-        percentageCC: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(20)] }),
-        parade: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(20)] }),
-        maitriseCritique: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseDos: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseBerzerk: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseSoins: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true }),
-        resistancesDos: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(20)] }),
-        resistancesCritique: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(20)] }),
-        pa: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
-        pm: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
-        po: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
-        pw: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
-        di: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
-        resistancesElementairesMajeur: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
-        armureDonnee: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
-        soinsRealise: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] }),
-        diIndirect: new FormControl<number>(AptitudesFormService.DEFAULT_VALUE, { nonNullable: true, validators: [Validators.max(1)] })
+    public readonly form = form(this.model, (p) => {
+        max(p.resistancesElementaires, 10);
+        max(p.barriere, 10);
+        max(p.soinsRecus, 5);
+        max(p.pdvArmure, 10);
+        max(p.maitrisesMelee, 40);
+        max(p.maitrisesDistance, 40);
+        max(p.initiative, 20);
+        max(p.volonte, 20);
+        max(p.percentageCC, 20);
+        max(p.parade, 20);
+        max(p.resistancesDos, 20);
+        max(p.resistancesCritique, 20);
+        max(p.pa, 1);
+        max(p.pm, 1);
+        max(p.po, 1);
+        max(p.pw, 1);
+        max(p.di, 1);
+        max(p.resistancesElementairesMajeur, 1);
+        max(p.armureDonnee, 1);
+        max(p.soinsRealise, 1);
+        max(p.diIndirect, 1);
     });
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as AptitudesForm) }));
-        });
         this.init();
+    }
+
+    public get value(): AptitudesForm {
+        return this.model();
     }
 
     protected override handleChanges(value: AptitudesForm): void {
@@ -223,7 +213,6 @@ export class AptitudesFormService extends AbstractSignalFormService<AptitudesFor
         }
 
         this.recapStat.next(recapStatsList);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: AptitudesForm | null): void {

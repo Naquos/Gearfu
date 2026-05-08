@@ -1,15 +1,13 @@
 <h3>{{ "item-level.level" | translate}}</h3>
 
-<form [formGroup]="itemLevelFormService.form">
-    <mat-form-field >
-        <mat-label>{{ "item-level.level-min" | translate}}</mat-label>
-        <input type="number" matInput formControlName="levelMin">
-        <input type="text" matInput formControlName="levelMin">
-      </mat-form-field>
+<div>
+  <mat-form-field>
+    <mat-label>{{ "item-level.level-min" | translate}}</mat-label>
+    <input type="number" matInput [field]="itemLevelFormService.form.levelMin">
+  </mat-form-field>
 
-      <mat-form-field >
-          <mat-label>{{ "item-level.level-max" | translate}}</mat-label>
-          <input type="number" matInput formControlName="levelMax">
-          <input type="text" matInput formControlName="levelMax">
-        </mat-form-field>
-</form>
+  <mat-form-field>
+    <mat-label>{{ "item-level.level-max" | translate}}</mat-label>
+    <input type="number" matInput [field]="itemLevelFormService.form.levelMax">
+  </mat-form-field>
+</div>

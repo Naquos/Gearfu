@@ -1,7 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { ParameterMajorActionEnum } from "../../models/enum/parameterMajorActionEnum";
 import { KeyEnum } from "../../models/enum/keyEnum";
@@ -68,44 +67,10 @@ export class MajorPresentFormService extends AbstractSignalFormService<MajorPres
     protected readonly keyEnum = KeyEnum.KEY_MAJOR_PRESENT;
     protected readonly model = signal<MajorPresentForm>({ ...ALL_FALSE });
 
-    public readonly form = new FormGroup({
-        PA: new FormControl<boolean>(false, { nonNullable: true }),
-        PM: new FormControl<boolean>(false, { nonNullable: true }),
-        PW: new FormControl<boolean>(false, { nonNullable: true }),
-        PO: new FormControl<boolean>(false, { nonNullable: true }),
-        ARMURE_DONNEE: new FormControl<boolean>(false, { nonNullable: true }),
-        ARMURE_RECUE: new FormControl<boolean>(false, { nonNullable: true }),
-        CRITIQUE: new FormControl<boolean>(false, { nonNullable: true }),
-        PARADE: new FormControl<boolean>(false, { nonNullable: true }),
-        RESISTANCE_DOS: new FormControl<boolean>(false, { nonNullable: true }),
-        RESISTANCE_CRITIQUE: new FormControl<boolean>(false, { nonNullable: true }),
-        TACLE: new FormControl<boolean>(false, { nonNullable: true }),
-        ESQUIVE: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_PA: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_PM: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_PW: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_PO: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_ARMURE_DONNEE: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_ARMURE_RECUE: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_CRITIQUE: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_PARADE: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_RESISTANCE_DOS: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_RESISTANCE_CRITIQUE: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_MAITRISES_MELEE: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_MAITRISES_DISTANCE: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_MAITRISES_CRITIQUE: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_MAITRISES_DOS: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_MAITRISES_SOIN: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_MAITRISES_BERZERK: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_TACLE: new FormControl<boolean>(false, { nonNullable: true }),
-        PERTE_ESQUIVE: new FormControl<boolean>(false, { nonNullable: true }),
-    });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as MajorPresentForm) }));
-        });
         this.init();
     }
 
@@ -145,7 +110,6 @@ export class MajorPresentFormService extends AbstractSignalFormService<MajorPres
         if (value.PERTE_ESQUIVE) { result.push({ id: IdActionsEnum.PERTE_ESQUIVE }); }
 
         this.idMajor.next(result);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: MajorPresentForm | null): void {
@@ -222,3 +186,4 @@ export class MajorPresentFormService extends AbstractSignalFormService<MajorPres
         });
     }
 }
+

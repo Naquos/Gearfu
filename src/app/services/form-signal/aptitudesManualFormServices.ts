@@ -1,7 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
 import { RecapStats } from "../../models/data/recap-stats";
@@ -94,48 +93,10 @@ export class AptitudesManualFormService extends AbstractSignalFormService<Aptitu
         maitriseBerzerk: AptitudesManualFormService.DEFAULT_VALUE
     });
 
-    public readonly form = new FormGroup({
-        pointDeVie: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        pa: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        pm: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        pw: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseFeu: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseEau: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseTerre: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseAir: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        resistancesFeu: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        resistancesEau: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        resistancesTerre: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        resistancesAir: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        di: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        soinsRealises: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        cc: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        parade: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        initiative: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        portee: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        esquive: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        tacle: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        sagesse: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        prospection: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        volonte: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseCritique: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        resistancesCritique: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseDos: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        resistancesDos: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseMelee: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        armureDonnee: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseDistance: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        armureRecue: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseSoins: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        DIindirect: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-        maitriseBerzerk: new FormControl<number>(AptitudesManualFormService.DEFAULT_VALUE, { nonNullable: true }),
-    });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as AptitudesManualForm) }));
-        });
         this.init();
     }
 
@@ -244,7 +205,6 @@ export class AptitudesManualFormService extends AbstractSignalFormService<Aptitu
         ];
 
         this.recapStat.next(recapStatsList);
-        this.form.setValue(value, { emitEvent: false });
 
         // Expose code build for URL encoding (not stored in localStorage directly)
         void this.generateCodeBuild(value);

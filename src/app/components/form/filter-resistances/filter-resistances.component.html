@@ -1,10 +1,11 @@
 <h3>{{"filter-resistances.resistances-elementaires" | translate}}</h3>
 
-<form [formGroup]="resistancesFormService.form">
+<div>
     <div class="group">
-        <app-button-checkbox tooltip="filter-maitrises.feu" [control]="resistancesFormService.form.controls.feu" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_FEU)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.eau" [control]="resistancesFormService.form.controls.eau" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_EAU)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.terre" [control]="resistancesFormService.form.controls.terre" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_TERRE)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.air" [control]="resistancesFormService.form.controls.air" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_AIR)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.feu" [fieldControl]="resistancesFormService.form.feu" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_FEU)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.eau" [fieldControl]="resistancesFormService.form.eau" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_EAU)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.terre" [fieldControl]="resistancesFormService.form.terre" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_TERRE)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.air" [fieldControl]="resistancesFormService.form.air" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_AIR)" ></app-button-checkbox>
     </div>
-</form>
+</div>
+

@@ -1,7 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { form } from "@angular/forms/signals";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
 
@@ -27,16 +26,10 @@ export class ItemLevelFormService extends AbstractSignalFormService<ItemLevelFor
         levelMax: ItemLevelFormService.DEFAULT_LEVEL_MAX
     });
 
-    public readonly form = new FormGroup({
-        levelMin: new FormControl<number>(ItemLevelFormService.DEFAULT_LEVEL_MIN, { nonNullable: true }),
-        levelMax: new FormControl<number>(ItemLevelFormService.DEFAULT_LEVEL_MAX, { nonNullable: true })
-    });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as ItemLevelForm) }));
-        });
         this.init();
     }
 
@@ -50,7 +43,6 @@ export class ItemLevelFormService extends AbstractSignalFormService<ItemLevelFor
     protected override handleChanges(value: ItemLevelForm): void {
         this.levelMin.next(this.validLevel(value.levelMin) ? value.levelMin : ItemLevelFormService.DEFAULT_LEVEL_MIN);
         this.levelMax.next(this.validLevel(value.levelMax) ? value.levelMax : ItemLevelFormService.DEFAULT_LEVEL_MAX);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: ItemLevelForm | null): void {

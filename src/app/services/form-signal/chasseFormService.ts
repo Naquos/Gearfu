@@ -1,9 +1,8 @@
 import { inject, Injectable, signal } from "@angular/core";
 import { KeyEnum } from "../../models/enum/keyEnum";
-import { FormControl } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { ChasseCombinaison, createEmptyChasseCombinaison } from "../../models/data/chasseCombinaison";
 import { Chasse } from "../../models/data/chasse";
 import { ItemTypeEnum } from "../../models/enum/itemTypeEnum";
@@ -51,7 +50,7 @@ export class ChasseFormService extends AbstractSignalFormService<Enchantement> {
     protected readonly keyEnum = KeyEnum.KEY_ENCHANTEMENT;
     protected readonly model = signal<Enchantement>(ChasseFormService.DEFAULT_VALUE());
 
-    public readonly form = new FormControl<Enchantement>(ChasseFormService.DEFAULT_VALUE(), { nonNullable: true });
+    public readonly form = form(this.model);
 
     private readonly sublimationService = inject(SublimationService);
 
@@ -88,9 +87,6 @@ export class ChasseFormService extends AbstractSignalFormService<Enchantement> {
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.set(v);
-        });
         this.init();
     }
 
@@ -515,7 +511,6 @@ export class ChasseFormService extends AbstractSignalFormService<Enchantement> {
         this.enchantement.next(value);
         this.recapChassesEffect.next(recapStats);
         this.coutEclatTotal.next(coutEclatTotalVal);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public getCodeBuild(): string {

@@ -8,16 +8,16 @@
 
 <div class="block" id="first-block">
     <div class="row-4">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.pointDeVie"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.pointDeVie"
             [idActionEnum]="IdActionsEnum.POINT_DE_VIE" [label]="'resume-aptitudes.PV'"
             [color]="'red'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.pa"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.pa"
             [idActionEnum]="IdActionsEnum.PA" [label]="'resume-aptitudes.PA'"
             [color]="'#268de2'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.pm"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.pm"
             [idActionEnum]="IdActionsEnum.PM" [label]="'resume-aptitudes.PM'"
             [color]="'green'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.pw"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.pw"
             [idActionEnum]="IdActionsEnum.BOOST_PW" [label]="'resume-aptitudes.PW'"
             [color]="'#268de2'"></app-input-resume-aptitudes>
     </div>
@@ -48,29 +48,29 @@
 
 <div class="block">
     <div class="row-4">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseFeu"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseFeu"
             [idActionEnum]="IdActionsEnum.MAITRISES_FEU" [label]="''" [color]="'orange'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseEau"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseEau"
             [idActionEnum]="IdActionsEnum.MAITRISES_EAU" [label]="''" [color]="'#268de2'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseTerre"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseTerre"
             [idActionEnum]="IdActionsEnum.MAITRISES_TERRE" [label]="''"
             [color]="'rgb(6, 209, 6)'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseAir"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseAir"
             [idActionEnum]="IdActionsEnum.MAITRISES_AIR" [label]="''"
             [color]="'rgb(191, 121, 224)'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-4">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesFeu"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.resistancesFeu"
             [idActionEnum]="IdActionsEnum.RESISTANCES_FEU" [label]="''" [color]="'orange'"
             [displayResistance]="true"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesEau"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.resistancesEau"
             [idActionEnum]="IdActionsEnum.RESISTANCES_EAU" [label]="''" [color]="'#268de2'"
             [displayResistance]="true"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesTerre"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.resistancesTerre"
             [idActionEnum]="IdActionsEnum.RESISTANCES_TERRE" [label]="''" [color]="'rgb(6, 209, 6)'"
             [displayResistance]="true"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesAir"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.resistancesAir"
             [idActionEnum]="IdActionsEnum.RESISTANCES_AIR" [label]="''" [color]="'rgb(191, 121, 224)'"
             [displayResistance]="true"></app-input-resume-aptitudes>
     </div>
@@ -80,45 +80,45 @@
 <h3>{{ 'resume-aptitudes.combat' | translate }}</h3>
 <div class="block">
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.di"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.di"
             [idActionEnum]="IdActionsEnum.DI" [label]="'resume-aptitudes.DI'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.soinsRealises"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.soinsRealises"
             [idActionEnum]="IdActionsEnum.SOINS_REALISE" [label]="'resume-aptitudes.SR'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.cc"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.cc"
             [idActionEnum]="IdActionsEnum.COUP_CRITIQUE"
             [label]="'resume-aptitudes.%-critique'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.parade"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.parade"
             [idActionEnum]="IdActionsEnum.PARADE" [label]="'resume-aptitudes.%-parade'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.initiative"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.initiative"
             [idActionEnum]="IdActionsEnum.INITIATIVE"
             [label]="'resume-aptitudes.initiative'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.portee"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.portee"
             [idActionEnum]="IdActionsEnum.PORTEE" [label]="'resume-aptitudes.po'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.esquive"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.esquive"
             [idActionEnum]="IdActionsEnum.ESQUIVE" [label]="'resume-aptitudes.esquive'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.tacle"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.tacle"
             [idActionEnum]="IdActionsEnum.TACLE" [label]="'resume-aptitudes.tacle'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.sagesse"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.sagesse"
             [idActionEnum]="IdActionsEnum.SAGESSE" [label]="'resume-aptitudes.sagesse'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.prospection"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.prospection"
             [idActionEnum]="IdActionsEnum.PROSPECTION"
             [label]="'resume-aptitudes.prospection'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.volonte"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.volonte"
             [idActionEnum]="IdActionsEnum.VOLONTE" [label]="'resume-aptitudes.volonte'"></app-input-resume-aptitudes>
         <div></div>
     </div>
@@ -129,51 +129,51 @@
 
 <div class="block">
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseCritique"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseCritique"
             [idActionEnum]="IdActionsEnum.MAITRISES_CRITIQUES"
             [label]="'resume-aptitudes.maitrises-critique'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesCritique"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.resistancesCritique"
             [idActionEnum]="IdActionsEnum.RESISTANCES_CRITIQUES"
             [label]="'resume-aptitudes.resistances-critique'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseDos"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseDos"
             [idActionEnum]="IdActionsEnum.MAITRISES_DOS"
             [label]="'resume-aptitudes.maitrises-dos'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.resistancesDos"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.resistancesDos"
             [idActionEnum]="IdActionsEnum.RESISTANCES_DOS"
             [label]="'resume-aptitudes.resistances-dos'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseMelee"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseMelee"
             [idActionEnum]="IdActionsEnum.MAITRISES_MELEE"
             [label]="'resume-aptitudes.maitrises-melee'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.armureDonnee"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.armureDonnee"
             [idActionEnum]="IdActionsEnum.ARMURE_DONNEE_RECUE" [isArmureDonnee]="true"
             [label]="'resume-aptitudes.armure-donnee'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseDistance"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseDistance"
             [idActionEnum]="IdActionsEnum.MAITRISES_DISTANCES"
             [label]="'resume-aptitudes.maitrises-distance'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.armureRecue"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.armureRecue"
             [idActionEnum]="IdActionsEnum.ARMURE_DONNEE_RECUE"
             [label]="'resume-aptitudes.armure-recue'"></app-input-resume-aptitudes>
     </div>
 
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseSoins"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseSoins"
             [idActionEnum]="IdActionsEnum.MAITRISES_SOIN"
             [label]="'resume-aptitudes.maitrises-soin'"></app-input-resume-aptitudes>
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.DIindirect"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.DIindirect"
             [idActionEnum]="IdActionsEnum.DI_INDIRECT"
             [label]="'resume-aptitudes.DI_indirect'"></app-input-resume-aptitudes>
     </div>
     <div class="row-2">
-        <app-input-resume-aptitudes [controlValue]="aptitudesManualFormService.form.controls.maitriseBerzerk"
+        <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseBerzerk"
             [idActionEnum]="IdActionsEnum.MAITRISES_BERZERK"
             [label]="'resume-aptitudes.maitrises-berzerk'"></app-input-resume-aptitudes>
         <div></div>

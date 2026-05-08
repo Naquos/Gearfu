@@ -34,7 +34,7 @@ export class SearchListSublimationComponent {
   protected readonly control = new FormControl<string>('', { nonNullable: true });
 
   constructor() {
-    this.filterSearchBuildFormService.form.controls.sublimations.setValue([]);
+    this.filterSearchBuildFormService.form.sublimations().value.set([]);
     combineLatest([this.sublimations$, this.control.valueChanges]).pipe(
       switchMap(([sublimations, value]) => iif(() => value.length > 2, of(sublimations), of([]))))
       .pipe(
@@ -54,7 +54,7 @@ export class SearchListSublimationComponent {
   }
 
   onOptionsSelected(event: Set<Option<SublimationsDescriptions>>) {
-    this.filterSearchBuildFormService.form.controls.sublimations.setValue(Array.from(event).map(option => `${option.value.id}`));
+    this.filterSearchBuildFormService.form.sublimations().value.set(Array.from(event).map(option => `${option.value.id}`));
   }
 
   /**

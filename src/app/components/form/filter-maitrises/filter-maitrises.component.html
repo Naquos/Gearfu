@@ -1,21 +1,31 @@
 <h3>{{"filter-maitrises.maitrises-elementaires" | translate}}</h3>
 
-<form [formGroup]="maitrisesFormServices.form">
+<div>
     <div class="group">
-        <app-button-checkbox tooltip="filter-maitrises.feu" [control]="maitrisesFormServices.form.controls.feu" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_FEU)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.eau" [control]="maitrisesFormServices.form.controls.eau" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_EAU)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.terre" [control]="maitrisesFormServices.form.controls.terre" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_TERRE)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.air" [control]="maitrisesFormServices.form.controls.air" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_AIR)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.feu" [fieldControl]="maitrisesFormServices.form.feu"
+            [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_FEU)"></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.eau" [fieldControl]="maitrisesFormServices.form.eau"
+            [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_EAU)"></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.terre" [fieldControl]="maitrisesFormServices.form.terre"
+            [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_TERRE)"></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.air" [fieldControl]="maitrisesFormServices.form.air"
+            [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_AIR)"></app-button-checkbox>
     </div>
 
     <h3>{{ "filter-maitrises.maitrises-secondaires" | translate }}</h3>
 
     <div class="group">
-        <app-button-checkbox tooltip="filter-maitrises.melee" [control]="maitrisesFormServices.form.controls.melee" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_MELEE)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.distance" [control]="maitrisesFormServices.form.controls.distance" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_DISTANCES)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.critique" [control]="maitrisesFormServices.form.controls.critique" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_CRITIQUES)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.dos" [control]="maitrisesFormServices.form.controls.dos" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_DOS)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.soin" [control]="maitrisesFormServices.form.controls.soin" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_SOIN)" ></app-button-checkbox>
-        <app-button-checkbox tooltip="filter-maitrises.berzerk" [control]="maitrisesFormServices.form.controls.berzerk" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_BERZERK)" ></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.melee" [fieldControl]="maitrisesFormServices.form.melee"
+            [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_MELEE)"></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.distance" [fieldControl]="maitrisesFormServices.form.distance"
+            [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_DISTANCES)"></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.critique" [fieldControl]="maitrisesFormServices.form.critique"
+            [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_CRITIQUES)"></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.dos" [fieldControl]="maitrisesFormServices.form.dos"
+            [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_DOS)"></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.soin" [fieldControl]="maitrisesFormServices.form.soin"
+            [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_SOIN)"></app-button-checkbox>
+        <app-button-checkbox tooltip="filter-maitrises.berzerk" [fieldControl]="maitrisesFormServices.form.berzerk"
+            [srcImg]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_BERZERK)"></app-button-checkbox>
     </div>
-</form>
+</div>

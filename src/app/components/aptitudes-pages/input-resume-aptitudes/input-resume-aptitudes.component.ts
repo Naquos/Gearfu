@@ -5,13 +5,13 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RecapStats } from '../../../models/data/recap-stats';
 import { RecapStatsService } from '../../../services/recapStatsService';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Field, FieldTree } from '@angular/forms/signals';
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-input-resume-aptitudes',
-  imports: [TranslateModule, ReactiveFormsModule, ActivateDirective, LazyImageDirective],
+  imports: [TranslateModule, ActivateDirective, Field, LazyImageDirective],
   templateUrl: './input-resume-aptitudes.component.html',
   styleUrl: './input-resume-aptitudes.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -56,7 +56,7 @@ export class InputResumeAptitudesComponent {
   public label = input.required<string>();
   public color = input<string>('');
   public displayResistance = input<boolean>(false);
-  public controlValue = input.required<FormControl<number>>();
+  public fieldControl = input.required<FieldTree<number>>();
 
 
   protected calculResistance(id: IdActionsEnum): string {
@@ -71,6 +71,10 @@ export class InputResumeAptitudesComponent {
       return 'positif';
     }
     return value < 0 ? 'negatif' : '';
+  }
+
+  protected inputValue(): number {
+    return this.fieldControl()().value() ?? 0;
   }
 
 

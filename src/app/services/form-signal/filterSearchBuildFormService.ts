@@ -1,7 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
 import { ClassIdEnum } from "../../models/enum/classIdEnum";
@@ -51,35 +50,17 @@ export class FilterSearchBuildFormService extends AbstractSignalFormService<Filt
     protected readonly keyEnum = KeyEnum.KEY_FILTER_SEARCH_BUILD;
     protected readonly model = signal<FilterSearchBuildForm>({ ...FilterSearchBuildFormService.DEFAULT_VALUE });
 
-    public readonly form = new FormGroup({
-        class: new FormControl<ClassIdEnum | null>(FilterSearchBuildFormService.DEFAULT_VALUE.class, { nonNullable: true }),
-        name: new FormControl<string>(FilterSearchBuildFormService.DEFAULT_VALUE.name, { nonNullable: true }),
-        levelMin: new FormControl<number>(FilterSearchBuildFormService.DEFAULT_VALUE.levelMin, { nonNullable: true }),
-        levelMax: new FormControl<number>(FilterSearchBuildFormService.DEFAULT_VALUE.levelMax, { nonNullable: true }),
-        orderBy: new FormControl<OrderBySearchBuildEnum>(FilterSearchBuildFormService.DEFAULT_VALUE.orderBy, { nonNullable: true }),
-        PA: new FormControl<number>(FilterSearchBuildFormService.DEFAULT_VALUE.PA, { nonNullable: true }),
-        PM: new FormControl<number>(FilterSearchBuildFormService.DEFAULT_VALUE.PM, { nonNullable: true }),
-        PW: new FormControl<number>(FilterSearchBuildFormService.DEFAULT_VALUE.PW, { nonNullable: true }),
-        PO: new FormControl<number>(FilterSearchBuildFormService.DEFAULT_VALUE.PO, { nonNullable: true }),
-        CC: new FormControl<number>(FilterSearchBuildFormService.DEFAULT_VALUE.CC, { nonNullable: true }),
-        parade: new FormControl<number>(FilterSearchBuildFormService.DEFAULT_VALUE.parade, { nonNullable: true }),
-        sublimationEpique: new FormControl<string>(FilterSearchBuildFormService.DEFAULT_VALUE.sublimationEpique, { nonNullable: true }),
-        sublimationRelique: new FormControl<string>(FilterSearchBuildFormService.DEFAULT_VALUE.sublimationRelique, { nonNullable: true }),
-        sublimations: new FormControl<string[]>(FilterSearchBuildFormService.DEFAULT_VALUE.sublimations, { nonNullable: true }),
-        idItems: new FormControl<string[][]>(FilterSearchBuildFormService.DEFAULT_VALUE.idItems, { nonNullable: true }),
-    });
+    public readonly form = form(this.model);
+
+    public get value(): FilterSearchBuildForm { return this.model(); }
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as FilterSearchBuildForm) }));
-        });
         this.init();
     }
 
     protected override handleChanges(value: FilterSearchBuildForm): void {
         this.result.next(value);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: FilterSearchBuildForm | null): void {

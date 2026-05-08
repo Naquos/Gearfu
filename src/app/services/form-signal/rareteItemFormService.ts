@@ -1,7 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { RarityItemEnum } from "../../models/enum/rarityItemEnum";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
@@ -35,21 +34,10 @@ export class RareteItemFormServices extends AbstractSignalFormService<RareteItem
     protected readonly keyEnum = KeyEnum.KEY_RARETE_ITEM;
     protected readonly model = signal<RareteItemForm>({ ...RareteItemFormServices.DEFAULT_VALUE });
 
-    public readonly form = new FormGroup({
-        normal: new FormControl<boolean>(false, { nonNullable: true }),
-        rare: new FormControl<boolean>(false, { nonNullable: true }),
-        mythique: new FormControl<boolean>(false, { nonNullable: true }),
-        legendaire: new FormControl<boolean>(false, { nonNullable: true }),
-        souvenir: new FormControl<boolean>(false, { nonNullable: true }),
-        relique: new FormControl<boolean>(false, { nonNullable: true }),
-        epique: new FormControl<boolean>(false, { nonNullable: true }),
-    });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as RareteItemForm) }));
-        });
         this.init();
     }
 
@@ -63,7 +51,6 @@ export class RareteItemFormServices extends AbstractSignalFormService<RareteItem
         if (value.souvenir) { result.push(RarityItemEnum.SOUVENIR); }
         if (value.epique) { result.push(RarityItemEnum.EPIQUE); }
         this.rarity.next(result);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: RareteItemForm | null): void {
@@ -94,3 +81,4 @@ export class RareteItemFormServices extends AbstractSignalFormService<RareteItem
         });
     }
 }
+

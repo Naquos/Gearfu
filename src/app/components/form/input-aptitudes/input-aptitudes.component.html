@@ -1,3 +1,3 @@
 <button (click)="incrementValue(-1, $event)">-</button>
-<input [formControl]="control()" >
+<input type="text" [value]="currentValueStr()" (input)="onInput($event)">
 <button (click)="incrementValue(1, $event )">+</button>

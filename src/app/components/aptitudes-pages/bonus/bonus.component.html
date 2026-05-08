@@ -1,10 +1,6 @@
 <div class="row">
-    <app-button-checkbox
-        [control]="bonusFormService.form.controls.dragodinde"
-        [srcImg]="imageService.getItemUrl(70718708)"
-    ></app-button-checkbox>
-    <app-button-checkbox
-        [control]="bonusFormService.form.controls.guilde"
-        [srcImg]="imageService.getItemUrl(47216942)"
-    ></app-button-checkbox>
+    <app-button-checkbox [fieldControl]="bonusFormService.form.dragodinde"
+        [srcImg]="imageService.getItemUrl(70718708)"></app-button-checkbox>
+    <app-button-checkbox [fieldControl]="bonusFormService.form.guilde"
+        [srcImg]="imageService.getItemUrl(47216942)"></app-button-checkbox>
 </div>

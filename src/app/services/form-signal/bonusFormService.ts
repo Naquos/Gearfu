@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
-import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { form } from "@angular/forms/signals";
+import { BehaviorSubject, takeUntil } from "rxjs";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { RecapStats } from "../../models/data/recap-stats";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
@@ -29,16 +28,10 @@ export class BonusFormService extends AbstractSignalFormService<BonusForm> {
     protected readonly keyEnum = KeyEnum.KEY_BONUS;
     protected readonly model = signal<BonusForm>({ ...BonusFormService.DEFAULT_VALUE });
 
-    public readonly form = new FormGroup({
-        dragodinde: new FormControl<boolean>(BonusFormService.DEFAULT_VALUE.dragodinde, { nonNullable: true }),
-        guilde: new FormControl<boolean>(BonusFormService.DEFAULT_VALUE.guilde, { nonNullable: true }),
-    });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as BonusForm) }));
-        });
         this.init();
         this.levelFormService.level$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.handleChanges(this.model());
@@ -62,7 +55,6 @@ export class BonusFormService extends AbstractSignalFormService<BonusForm> {
             result.push({ id: IdActionsEnum.SOINS_REALISE, value: 8, params: [] });
         }
         this.recapStats.next(result);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: BonusForm | null): void {

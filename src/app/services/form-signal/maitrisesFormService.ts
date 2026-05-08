@@ -1,7 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { IdActionsEnum } from "../../models/enum/idActionsEnum";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
@@ -37,24 +36,10 @@ export class MaitrisesFormService extends AbstractSignalFormService<MaitrisesFor
     protected readonly keyEnum = KeyEnum.KEY_MAITRISES;
     protected readonly model = signal<MaitrisesForm>({ ...MaitrisesFormService.DEFAULT_VALUE });
 
-    public readonly form = new FormGroup({
-        feu: new FormControl<boolean>(false, { nonNullable: true }),
-        eau: new FormControl<boolean>(false, { nonNullable: true }),
-        terre: new FormControl<boolean>(false, { nonNullable: true }),
-        air: new FormControl<boolean>(false, { nonNullable: true }),
-        critique: new FormControl<boolean>(false, { nonNullable: true }),
-        dos: new FormControl<boolean>(false, { nonNullable: true }),
-        melee: new FormControl<boolean>(false, { nonNullable: true }),
-        distance: new FormControl<boolean>(false, { nonNullable: true }),
-        soin: new FormControl<boolean>(false, { nonNullable: true }),
-        berzerk: new FormControl<boolean>(false, { nonNullable: true }),
-    });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as MaitrisesForm) }));
-        });
         this.init();
     }
 
@@ -75,8 +60,6 @@ export class MaitrisesFormService extends AbstractSignalFormService<MaitrisesFor
         if (value.soin) { resultId.push(IdActionsEnum.MAITRISES_SOIN); }
         if (value.berzerk) { resultId.push(IdActionsEnum.MAITRISES_BERZERK); }
         this.idMaitrises.next(resultId);
-
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: MaitrisesForm | null): void {
@@ -115,7 +98,7 @@ export class MaitrisesFormService extends AbstractSignalFormService<MaitrisesFor
 
     public orderMaitrises(): IdActionsEnum[] {
         const m = this.model();
-        const entries: Array<{ key: keyof MaitrisesForm; id: IdActionsEnum }> = [
+        const entries: { key: keyof MaitrisesForm; id: IdActionsEnum }[] = [
             { key: 'feu', id: IdActionsEnum.MAITRISES_FEU },
             { key: 'eau', id: IdActionsEnum.MAITRISES_EAU },
             { key: 'terre', id: IdActionsEnum.MAITRISES_TERRE },
@@ -129,3 +112,4 @@ export class MaitrisesFormService extends AbstractSignalFormService<MaitrisesFor
         return [...selected, ...unselected];
     }
 }
+

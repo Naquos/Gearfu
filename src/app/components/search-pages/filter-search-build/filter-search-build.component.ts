@@ -4,7 +4,7 @@ import { FilterSearchBuildFormService } from '../../../services/form-signal/filt
 import { ActivateDirective } from '../../../directives/activate.directive';
 import { MatInputModule, MatLabel } from "@angular/material/input";
 import { TranslateModule } from '@ngx-translate/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Field } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOption, MatSelectModule } from "@angular/material/select";
 import { OrderBySearchBuildEnum } from '../../../models/enum/orderBySearchBuildEnum';
@@ -19,7 +19,7 @@ import { SearchListSublimationComponent } from "../search-list-sublimation/searc
     MatInputModule,
     MatLabel,
     TranslateModule,
-    ReactiveFormsModule,
+    Field,
     MatSelectModule,
     MatOption,
     SearchListItemComponent, SearchListSublimationComponent],
@@ -35,9 +35,8 @@ export class FilterSearchBuildComponent {
 
 
   protected changeClasses(idClass: ClassIdEnum): void {
-    this.filterSearchBuildFormService.form.controls.class.setValue(
-      this.filterSearchBuildFormService.form.controls.class.value === idClass ? null : idClass
-    );
+    const current = this.filterSearchBuildFormService.form.class().value();
+    this.filterSearchBuildFormService.form.class().value.set(current === idClass ? null : idClass);
   }
 
 }

@@ -32,7 +32,7 @@ export class SearchListItemComponent {
   private readonly items$ = this.itemsService.fullItems$;
 
   constructor() {
-    this.filterSearchBuildFormService.form.controls.idItems.setValue([]);
+    this.filterSearchBuildFormService.form.idItems().value.set([]);
     combineLatest([this.items$, this.control.valueChanges])
       .pipe(switchMap(([items, search]) => iif(() => search.length > 2, of(items), of([]))))
       .pipe(map(items => items.filter(item => normalizeString(item.title[this.translateService.currentLang as keyof typeof item.title]).includes(normalizeString(this.control.value)))),
@@ -67,6 +67,6 @@ export class SearchListItemComponent {
       const itemList = this.itemsService.getItemsByName(option.value.title.fr);
       result.push(itemList.map(item => `${item.id}`));
     });
-    this.filterSearchBuildFormService.form.controls.idItems.setValue(result);
+    this.filterSearchBuildFormService.form.idItems().value.set(result);
   }
 }

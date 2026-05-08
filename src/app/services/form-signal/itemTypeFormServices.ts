@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { form } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { ItemTypeServices } from "../data/ItemTypesServices";
 import { ItemTypeEnum } from "../../models/enum/itemTypeEnum";
 import { KeyEnum } from "../../models/enum/keyEnum";
@@ -42,28 +41,10 @@ export class ItemTypeFormServices extends AbstractSignalFormService<ItemTypeForm
     protected readonly keyEnum = KeyEnum.KEY_ITEM_TYPE;
     protected readonly model = signal<ItemTypeForm>({ ...ItemTypeFormServices.DEFAULT_VALUE });
 
-    public readonly form = new FormGroup({
-        deuxMains: new FormControl<boolean>(false, { nonNullable: true }),
-        uneMain: new FormControl<boolean>(false, { nonNullable: true }),
-        anneau: new FormControl<boolean>(false, { nonNullable: true }),
-        bottes: new FormControl<boolean>(false, { nonNullable: true }),
-        amulette: new FormControl<boolean>(false, { nonNullable: true }),
-        cape: new FormControl<boolean>(false, { nonNullable: true }),
-        ceinture: new FormControl<boolean>(false, { nonNullable: true }),
-        casque: new FormControl<boolean>(false, { nonNullable: true }),
-        plastron: new FormControl<boolean>(false, { nonNullable: true }),
-        epaulettes: new FormControl<boolean>(false, { nonNullable: true }),
-        bouclier: new FormControl<boolean>(false, { nonNullable: true }),
-        dague: new FormControl<boolean>(false, { nonNullable: true }),
-        accessoires: new FormControl<boolean>(false, { nonNullable: true }),
-        familier: new FormControl<boolean>(false, { nonNullable: true }),
-    });
+    public readonly form = form(this.model);
 
     constructor() {
         super();
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(v => {
-            this.model.update(m => ({ ...m, ...(v as ItemTypeForm) }));
-        });
         this.init();
     }
 
@@ -84,7 +65,6 @@ export class ItemTypeFormServices extends AbstractSignalFormService<ItemTypeForm
         if (value.accessoires) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.ACCESSOIRES)?.ids); }
         if (value.familier) { result.push(this.itemTypeServices.getItemTypes().get(ItemTypeEnum.FAMILIER)?.ids); }
         this.selected.next(result.flat() as number[]);
-        this.form.setValue(value, { emitEvent: false });
     }
 
     public override setValue(value: ItemTypeForm | null): void {
