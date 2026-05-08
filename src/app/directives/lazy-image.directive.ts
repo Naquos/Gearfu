@@ -72,31 +72,6 @@ export class LazyImageDirective implements OnInit, OnDestroy {
     const style = this.renderer.createElement('style');
     this.renderer.setAttribute(style, 'id', styleId);
     this.renderer.setAttribute(style, 'type', 'text/css');
-
-    const css = `
-      img.lazy-loading {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-        animation: lazy-pulse 1.5s ease-in-out infinite;
-      }
-
-      img.lazy-loaded {
-        background-color: transparent !important;
-        animation: none;
-      }
-
-      @keyframes lazy-pulse {
-        0%, 100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.5;
-        }
-      }
-    `;
-
-    const textNode = this.renderer.createText(css);
-    this.renderer.appendChild(style, textNode);
-    this.renderer.appendChild(document.head, style);
   }
 
   ngOnDestroy(): void {
