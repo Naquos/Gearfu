@@ -145,6 +145,7 @@ export class EnchantementChassesComponent extends AbstractDestroyService {
             isValid: false,
             level: this.stateService.levelSublimationToApply() || 1
         });
+        this.stateService.indexItemTypeSelected.set(-1);
     }
 
     protected nameSublimation(sublimation: Sublimation | undefined): string {
