@@ -98,8 +98,10 @@ export class SortsConseillesComponent {
             }
             const idsSortsNeutre = idsSorts.slice(0, this.MAX_SORTS_NEUTRE);
             const idsSortsPassif = idsSorts.slice(this.MAX_SORTS_NEUTRE);
-            idsSortsNeutre.forEach(id => this.incrementCount(this.countSortNeutreConseilles, id));
-            idsSortsPassif.forEach(id => this.incrementCount(this.countSortPassifConseilles, id));
+            const setSortsNeutre = new Set(idsSortsNeutre);
+            const setSortsPassif = new Set(idsSortsPassif);
+            setSortsNeutre.forEach(id => this.incrementCount(this.countSortNeutreConseilles, id));
+            setSortsPassif.forEach(id => this.incrementCount(this.countSortPassifConseilles, id));
         });
     }
 
