@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, inject, input, ChangeDetectionStrategy, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, input, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter, map, takeUntil, tap } from 'rxjs';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
@@ -19,7 +19,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [TranslateModule, ActionsPipe, ImageFallbackDirective, CommonModule],
   templateUrl: './item-tooltip.component.html',
   styleUrl: './item-tooltip.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemTooltipComponent extends ItemAbstractComponent implements AfterViewInit {
 
@@ -48,10 +47,24 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
 
   protected differentStatsItemList = toSignal(this.itemSelected$.pipe(
     takeUntil(this.destroy$),
+    map(listItems => ({
+      currentItem: this.getCurrentItem(),
+      listItems,
+    })),
+    filter(({ currentItem }) => currentItem !== undefined),
     tap(listItems => {
       this.listDifferentsStatsItem = [];
-      this.fillListCurrentItem();
-      listItems.forEach(items => items ? this.fillMapDifferentStatsItem(items!) : "")
+      const currentItem = listItems.currentItem;
+      if (!currentItem) {
+        return;
+      }
+
+      this.fillListCurrentItem(currentItem);
+      listItems.listItems.forEach(item => {
+        if (item) {
+          this.fillMapDifferentStatsItem(item, currentItem);
+        }
+      });
     }),
     map(() => this.listDifferentsStatsItem.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999)))),
     { initialValue: [] as DifferentStatsItem[] });
@@ -64,14 +77,15 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
 
 
   public ngAfterViewInit(): void {
-    if (this.item()) {
-      this.item().equipEffects = this.item().equipEffects.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999));
+    const currentItem = this.getCurrentItem();
+    if (currentItem) {
+      currentItem.equipEffects = currentItem.equipEffects.sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999));
       this.itemSelected$.pipe(
         takeUntil(this.destroy$),
       ).subscribe((itemSelected) => {
-        this.resistances = this.item().resistance;
-        this.maitrises = this.item().maitrise;
-        this.weight = calculWeight(this.resistances, this.maitrises, this.item().level);
+        this.resistances = currentItem.resistance;
+        this.maitrises = currentItem.maitrise;
+        this.weight = calculWeight(this.resistances, this.maitrises, currentItem.level);
         itemSelected.forEach(item => {
           if (item) {
             this.resistances -= item.resistance;
@@ -83,7 +97,7 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
         this.cdr.markForCheck();
       });
 
-      this.initItemChoosen(this.item());
+      this.initItemChoosen(currentItem);
 
       this.cdr.detectChanges();
     }
@@ -135,8 +149,8 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     this.listDifferentsStatsItem.push(differentsStatsItem);
   }
 
-  private fillListCurrentItem(): void {
-    this.item().equipEffects.forEach(equipEffect => {
+  private fillListCurrentItem(currentItem: Item): void {
+    currentItem.equipEffects.forEach(equipEffect => {
       const isArmureRecue = this.ARMURE_DONNEE_RECUE.includes(equipEffect.actionId) && equipEffect.params[4] === ParameterMajorActionEnum.ARMURE_RECUE;
       let effect = this.getByActionId(equipEffect.actionId, isArmureRecue);
       if (effect) {
@@ -164,12 +178,12 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
     })
   }
 
-  private fillMapDifferentStatsItem(equippedItem: Item): void {
+  private fillMapDifferentStatsItem(equippedItem: Item, currentItem: Item): void {
 
     equippedItem.equipEffects.forEach(equipEffect => {
       const isArmureRecue = this.ARMURE_DONNEE_RECUE.includes(equipEffect.actionId) && equipEffect.params[4] === ParameterMajorActionEnum.ARMURE_RECUE;
       let differentsStatsItem = this.getByActionId(equipEffect.actionId, isArmureRecue);
-      const opposedStatsItem = this.item().equipEffects.find(x => this.actionsService.isOpposed(x, equipEffect));
+      const opposedStatsItem = currentItem.equipEffects.find(x => this.actionsService.isOpposed(x, equipEffect));
       if (opposedStatsItem) {
         const tempParams = [...equipEffect.params];
         tempParams[0] = opposedStatsItem.params[0] + tempParams[0];
@@ -234,6 +248,14 @@ export class ItemTooltipComponent extends ItemAbstractComponent implements After
         this.pushSetDifferentsStatsItem(differentsStats);
       })
       this.listDifferentsStatsItem = this.listDifferentsStatsItem.filter(x => x.actionId !== IdActionsEnum.RESISTANCES_ELEMENTAIRE);
+    }
+  }
+
+  private getCurrentItem(): Item | undefined {
+    try {
+      return this.item();
+    } catch {
+      return undefined;
     }
   }
 }
