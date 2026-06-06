@@ -10,18 +10,18 @@
 <h2>{{ "filter-search-build.name" | translate }}</h2>
 <mat-form-field>
     <mat-label>{{ "filter-search-build.name" | translate }}</mat-label>
-    <input matInput [field]="filterSearchBuildFormService.form.name">
+    <input matInput [formField]="filterSearchBuildFormService.form.name">
 </mat-form-field>
 <h2>{{ "filter-search-build.level" | translate }}</h2>
 <div>
     <mat-form-field>
         <mat-label>{{ "filter-search-build.level-min" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [field]="$any(filterSearchBuildFormService.form.levelMin)">
+        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.levelMin)">
     </mat-form-field>
 
     <mat-form-field>
         <mat-label>{{ "filter-search-build.level-max" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [field]="$any(filterSearchBuildFormService.form.levelMax)">
+        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.levelMax)">
     </mat-form-field>
 </div>
 
@@ -47,32 +47,32 @@
 <div>
     <mat-form-field>
         <mat-label>{{ "filter-search-build.PA" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [field]="$any(filterSearchBuildFormService.form.PA)">
+        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PA)">
     </mat-form-field>
 
     <mat-form-field>
         <mat-label>{{ "filter-search-build.PM" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [field]="$any(filterSearchBuildFormService.form.PM)">
+        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PM)">
     </mat-form-field>
 
     <mat-form-field>
         <mat-label>{{ "filter-search-build.PW" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [field]="$any(filterSearchBuildFormService.form.PW)">
+        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PW)">
     </mat-form-field>
 
     <mat-form-field>
         <mat-label>{{ "filter-search-build.PO" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [field]="$any(filterSearchBuildFormService.form.PO)">
+        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PO)">
     </mat-form-field>
 
     <mat-form-field>
         <mat-label>{{ "filter-search-build.CC" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [field]="$any(filterSearchBuildFormService.form.CC)">
+        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.CC)">
     </mat-form-field>
 
     <mat-form-field>
         <mat-label>{{ "filter-search-build.parade" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [field]="$any(filterSearchBuildFormService.form.parade)">
+        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.parade)">
     </mat-form-field>
 </div>
 <h2>{{ "filter-search-build.sublimations" | translate }}</h2>

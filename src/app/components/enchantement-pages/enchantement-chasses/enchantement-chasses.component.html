@@ -54,7 +54,7 @@
         <div class="epique-relique">
             <div class="epique" (appActivate)="removeSublimationEpic($event)"
                 (contextmenu)="removeSublimationEpic($event)"
-                (mouseenter)="openTooltip($event, enchantement()?.epique, 1)" (mouseleave)="onMouseLeave()">
+                (mouseenter)="openTooltip($event, $safeNavigationMigration(enchantement()?.epique), 1)" (mouseleave)="onMouseLeave()">
                 @if(enchantement()?.epique) {
                 <img [src]="imageService.getItemUrl(enchantement()!.epique!.idImage)" alt="">
                 <span>{{ nameSublimationEpicRelic(enchantement()!.epique) }}</span>
@@ -64,7 +64,7 @@
             </div>
             <div class="relique" (appActivate)="removeSublimationRelic($event)"
                 (contextmenu)="removeSublimationRelic($event)"
-                (mouseenter)="openTooltip($event, enchantement()?.relique, 1)" (mouseleave)="onMouseLeave()">
+                (mouseenter)="openTooltip($event, $safeNavigationMigration(enchantement()?.relique), 1)" (mouseleave)="onMouseLeave()">
                 @if(enchantement()?.relique) {
                 <img [src]="imageService.getItemUrl(enchantement()!.relique!.idImage)" alt="">
                 <span>{{ nameSublimationEpicRelic(enchantement()!.relique) }}</span>

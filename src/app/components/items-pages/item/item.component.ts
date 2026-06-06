@@ -29,7 +29,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective, LazyImageDirective, ElementSelectorComponent, ActivateDirective, CommonModule],
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
 

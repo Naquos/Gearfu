@@ -4,11 +4,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { SortChoiceFormService } from '../../../services/form-signal/sortChoiceFormService';
-import { Field } from '@angular/forms/signals';
+
 
 @Component({
   selector: 'app-sort-choice',
-  imports: [MatFormFieldModule, MatSelectModule, TranslateModule, Field],
+  imports: [MatFormFieldModule, MatSelectModule, TranslateModule],
   templateUrl: './sort-choice.component.html',
   styleUrl: './sort-choice.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

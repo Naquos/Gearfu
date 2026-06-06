@@ -10,7 +10,7 @@ import { SearchItemNameSignalFormService } from '../../../services/form-signal/s
 import { Item } from '../../../models/data/item';
 import { ImageService } from '../../../services/imageService';
 import { Option } from "../search/search.component";
-import { Field } from '@angular/forms/signals';
+import { FormField } from '@angular/forms/signals';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
 
 @Component({
@@ -20,7 +20,7 @@ import { ImageFallbackDirective } from '../../../directives/imageFallback.direct
     MatInputModule,
     TranslateModule,
     MatAutocompleteModule,
-    Field,
+    FormField,
     ImageFallbackDirective,
   ],
   templateUrl: './search-item-name.component.html',

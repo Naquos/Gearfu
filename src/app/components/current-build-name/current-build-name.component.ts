@@ -5,12 +5,12 @@ import { VisibilityBuildFormService } from '../../services/form-signal/visibilit
 import { MatIcon } from "@angular/material/icon";
 import { map } from 'rxjs';
 import { NameBuildFormService } from '../../services/form-signal/nameBuildFormService';
-import { Field } from '@angular/forms/signals';
+import { FormField } from '@angular/forms/signals';
 
 @Component({
     selector: 'app-current-build-name',
     standalone: true,
-    imports: [MatIcon, Field],
+    imports: [MatIcon, FormField],
     templateUrl: './current-build-name.component.html',
     styleUrl: './current-build-name.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

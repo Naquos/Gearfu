@@ -4,12 +4,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { ModifierMecanismFormService } from '../../../services/form-signal/modifierElemMaitrisesFormService';
-import { Field } from '@angular/forms/signals';
 
 
 @Component({
   selector: 'app-modifier-mecanism',
-  imports: [MatFormFieldModule, MatSelectModule, TranslateModule, Field],
+  imports: [MatFormFieldModule, MatSelectModule, TranslateModule],
   templateUrl: './modifier-mecanism.component.html',
   styleUrl: './modifier-mecanism.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -1,6 +1,6 @@
 <mat-form-field>
     <mat-label>{{ 'search-item-name.label' | translate }}</mat-label>
-    <input matInput [field]="searchItemNameFormService.form.search" [matAutocomplete]="auto">
+    <input matInput [formField]="searchItemNameFormService.form.search" [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
         @for (option of options(); track option.id) {
         <mat-option [value]="option.label" [style.backgroundColor]="option.backgroundColor">

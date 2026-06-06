@@ -1,7 +1,7 @@
 <div (appActivate)="showInput();" [class.change]="inputValue()">
     <img [src]="imageService.getActionIdUrl(idActionEnum())" alt="">
     @if(displayInput()){
-    <input #inputField type="number" [field]="fieldControl()" (keydown)="onKeyDown($event)">
+    <input #inputField type="number" [formField]="fieldControl()" (keydown)="onKeyDown($event)">
     } @else {
     {{ label() | translate }}
     @if(displayResistance()){

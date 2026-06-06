@@ -1,5 +1,6 @@
 <mat-form-field>
-    <mat-select [field]="sortChoiceFormService.form.sortChoice">
+    <mat-select [value]="sortChoiceFormService.form.sortChoice().value()"
+        (selectionChange)="sortChoiceFormService.form.sortChoice().value.set($event.value)">
         <mat-select-trigger>
             {{("sort-choice-enum." + sortChoiceFormService.currentValue()) | translate}}
         </mat-select-trigger>

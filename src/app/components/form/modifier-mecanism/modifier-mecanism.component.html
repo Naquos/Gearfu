@@ -1,7 +1,8 @@
 <h3>{{ "modifier-elem-maitrises.label" | translate }}</h3>
 <mat-form-field>
   <mat-label>{{ "modifier-elem-maitrises.mecaniques" | translate }}</mat-label>
-  <mat-select [field]="modifierMecanismFormService.form.mecanisms" multiple>
+  <mat-select [value]="modifierMecanismFormService.form.mecanisms().value()"
+    (valueChange)="modifierMecanismFormService.setValue($event)" multiple>
     <mat-select-trigger>
       @if (modifierMecanismFormService.selectedValues().length) {
       @for (mecanism of modifierMecanismFormService.selectedValues(); track mecanism; let isLast = $last) {

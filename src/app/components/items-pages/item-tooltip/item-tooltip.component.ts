@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, inject, input, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter, map, takeUntil, tap } from 'rxjs';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
@@ -18,6 +18,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   selector: 'app-item-tooltip',
   imports: [TranslateModule, ActionsPipe, ImageFallbackDirective, CommonModule],
   templateUrl: './item-tooltip.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-tooltip.component.scss',
 })
 export class ItemTooltipComponent extends ItemAbstractComponent implements AfterViewInit {

@@ -2,7 +2,7 @@
     [class.crossed-out]="crossedOut()" [class.background-color-blue]="isChecked()">
 
     @if (fieldControl()) {
-    <input [id]="inputId" type="checkbox" [field]="fieldControl()!" class="checkbox-input" />
+    <input [id]="inputId" type="checkbox" [formField]="fieldControl()!" class="checkbox-input" />
     } @else {
     <input [id]="inputId" type="checkbox" [formControl]="control()!" class="checkbox-input" />
     }

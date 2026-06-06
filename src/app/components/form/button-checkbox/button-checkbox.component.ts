@@ -1,7 +1,7 @@
 
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Field, FieldTree } from '@angular/forms/signals';
+import { FormField, FieldTree } from '@angular/forms/signals';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
@@ -9,7 +9,7 @@ import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 
 @Component({
   selector: 'app-button-checkbox',
-  imports: [MatTooltipModule, MatIconModule, TranslateModule, ReactiveFormsModule, Field, LazyImageDirective],
+  imports: [MatTooltipModule, MatIconModule, TranslateModule, ReactiveFormsModule, FormField, LazyImageDirective],
   templateUrl: './button-checkbox.component.html',
   styleUrl: './button-checkbox.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

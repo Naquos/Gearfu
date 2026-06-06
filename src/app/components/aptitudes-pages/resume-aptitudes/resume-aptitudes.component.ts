@@ -9,7 +9,7 @@ import { ParameterMajorActionEnum } from '../../../models/enum/parameterMajorAct
 import { ClassIdEnum } from '../../../models/enum/classIdEnum';
 import { LevelFormService } from '../../../services/form-signal/levelFormService';
 import { TooltipService } from '../../../services/TooltipService';
-import { Field } from '@angular/forms/signals';
+import { FormField } from '@angular/forms/signals';
 import { ClassesTooltipComponent } from '../classes-tooltip/classes-tooltip.component';
 import { ClasseFormService } from '../../../services/form-signal/classeFormService';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
@@ -21,7 +21,7 @@ import { ActivateDirective } from "../../../directives/activate.directive";
 
 @Component({
   selector: 'app-resume-aptitudes',
-  imports: [TranslateModule, LazyImageDirective, BonusComponent, InputResumeAptitudesComponent, ActivateDirective, Field],
+  imports: [TranslateModule, LazyImageDirective, BonusComponent, InputResumeAptitudesComponent, ActivateDirective, FormField],
   templateUrl: './resume-aptitudes.component.html',
   styleUrl: './resume-aptitudes.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

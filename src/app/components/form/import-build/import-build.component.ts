@@ -4,11 +4,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
-import { Field } from '@angular/forms/signals';
+import { FormField } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-import-build',
-  imports: [MatFormFieldModule, MatInputModule, MatIconModule, TranslateModule, Field],
+  imports: [MatFormFieldModule, MatInputModule, MatIconModule, TranslateModule, FormField],
   templateUrl: './import-build.component.html',
   styleUrl: './import-build.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

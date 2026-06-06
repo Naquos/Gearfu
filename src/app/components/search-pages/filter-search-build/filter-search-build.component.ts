@@ -4,7 +4,7 @@ import { FilterSearchBuildFormService } from '../../../services/form-signal/filt
 import { ActivateDirective } from '../../../directives/activate.directive';
 import { MatInputModule, MatLabel } from "@angular/material/input";
 import { TranslateModule } from '@ngx-translate/core';
-import { Field } from '@angular/forms/signals';
+import { FormField } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOption, MatSelectModule } from "@angular/material/select";
 import { OrderBySearchBuildEnum } from '../../../models/enum/orderBySearchBuildEnum';
@@ -19,7 +19,7 @@ import { SearchListSublimationComponent } from "../search-list-sublimation/searc
     MatInputModule,
     MatLabel,
     TranslateModule,
-    Field,
+    FormField,
     MatSelectModule,
     MatOption,
     SearchListItemComponent, SearchListSublimationComponent],
