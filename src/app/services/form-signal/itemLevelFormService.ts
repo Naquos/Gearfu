@@ -11,7 +11,7 @@ export interface ItemLevelForm {
 
 @Injectable({ providedIn: 'root' })
 export class ItemLevelFormService extends AbstractSignalFormService<ItemLevelForm> {
-    public static readonly DEFAULT_LEVEL_MIN = 200;
+    public static readonly DEFAULT_LEVEL_MIN = 0;
     public static readonly DEFAULT_LEVEL_MAX = 245;
     private static readonly DEFAULT_LEVEL_MIN_STRING = String(ItemLevelFormService.DEFAULT_LEVEL_MIN);
     private static readonly DEFAULT_LEVEL_MAX_STRING = String(ItemLevelFormService.DEFAULT_LEVEL_MAX);
