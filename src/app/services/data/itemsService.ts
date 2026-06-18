@@ -422,10 +422,10 @@ export class ItemsService {
               };
             }),
             title: {
-              fr: x.title.fr.trim(),
-              en: x.title.en.trim(),
-              es: x.title.es.trim(),
-              pt: x.title.pt.trim()
+              fr: x.title.fr?.trim() ?? "",
+              en: x.title.en?.trim() ?? "",
+              es: x.title.es?.trim() ?? "",
+              pt: x.title.pt?.trim() ?? ""
             },
             description: x.description,
             idImage: x.definition.item.graphicParameters.gfxId,

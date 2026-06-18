@@ -95,7 +95,7 @@ export class AnkamaCdnFacade {
     private loadIdSioupere(): Observable<JobsItemCdn[]> {
         return this.ankamaCdnService.getJobsItems()
             .pipe(
-                map(jobsItems => jobsItems.filter(item => item.title.fr.toLowerCase().includes("sioupère"))),
+                map(jobsItems => jobsItems.filter(item => item.title?.fr?.toLowerCase().includes("sioupère") ?? false)),
                 tap(idSioupere => this.idSiouperes.next(idSioupere)));
     }
 
