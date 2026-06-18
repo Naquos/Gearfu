@@ -114,7 +114,6 @@ export class ZenithService {
             switchMap(([infoBuild, idItems]) => {
                 const items = idItems.split(',').map(s => parseInt(s, 10)).filter(n => !isNaN(n));
                 const failedItems: Item[] = []; // on accumule ici les items non trouvés (500)
-                const items231AndMore: Item[] = []; // on accumule ici les items 231+ car Zénith n'est pas à jour
 
                 const itemRequests$ = items.map(id =>
                     this.itemsService.searchItem(id).pipe(
@@ -125,10 +124,6 @@ export class ZenithService {
                                 // failedItems.push({ id, reason: 'notFoundLocally' });
                                 return of(item);
                             }
-                            if (item.level >= 231) {
-                                items231AndMore.push(item);
-                            }
-
                             return this.zenithApiService.addItemRequest(
                                 this.createAddItemsRequest(infoBuild.id_build, item)
                             ).pipe(
@@ -153,17 +148,12 @@ export class ZenithService {
                     tap(x => build = x),
                     switchMap(() => {
                         // if (true) {
-                        if (!failedItems.length && !items231AndMore.length) {
+                        if (!failedItems.length) {
                             // Aucun item manquant → on continue direct
                             return of(infoBuild.link_build);
                         }
                         // 1. On calcule les effets combinés
                         const combinedEffects = this.handleMissingItems(failedItems);
-
-                        // 2. On calcul les effets pour les items 231+
-                        const correctEffects = this.handleItems231AndMore(items231AndMore, build);
-
-                        combinedEffects.push(...correctEffects);
 
                         // 3. Pour chaque effet combiné, on prépare un appel updateCustomStatistics
                         const updateRequests$ = combinedEffects.map(effect =>
@@ -189,37 +179,6 @@ export class ZenithService {
         );
     }
 
-    private handleItems231AndMore(items: Item[], build: BuildResponse): EquipEffects[] {
-        const mapEffects = this.convertItemsToMapEffecs(items);
-
-        const effectsBuild = build.equipments.filter(equipment => items.find(item => item.id === equipment.id_equipment))
-            .map(equipment =>
-                equipment.effects.map(effect => {
-                    return effect.values.map(value => {
-                        let actionId = value.id_stats;
-                        if (this.actionService.isAMalus(actionId)) { actionId = this.actionService.getOpposedEffect(actionId); }
-                        if (actionId === IdActionsEnum.PW) { actionId = IdActionsEnum.BOOST_PW; }
-                        return {
-                            id: value.id_stats,
-                            actionId: actionId,
-                            params: [value.damage, 0, value.elements.length, 0],
-                        }
-                    })
-                })
-            ).flat(2);
-
-
-        effectsBuild.forEach(effect => {
-            const existing = mapEffects.get(effect.actionId);
-            // Somme les params des effets similaires
-            if (existing) { existing.params[0] -= effect.params[0] || 0; }
-
-        });
-
-        return Array.from(mapEffects.values()).filter(x => x.params[0] !== 0);
-
-    }
-
     private handleMissingItems(items: Item[]): EquipEffects[] {
         const mapEffects = this.convertItemsToMapEffecs(items);
         return Array.from(mapEffects.values());
@@ -234,15 +193,20 @@ export class ZenithService {
 
                 }
                 let actionId = effect.actionId;
-                if (this.actionService.isAMalus(actionId)) { actionId = this.actionService.getOpposedEffect(actionId); }
+                const isAMalus = this.actionService.isAMalus(actionId);
+                if (isAMalus) { actionId = this.actionService.getOpposedEffect(actionId); }
 
 
                 const existing = mapEffects.get(actionId);
+                const multiplicateur = isAMalus ? -1 : 1;
+
                 if (!existing) {
-                    mapEffects.set(actionId, { ...effect, actionId, params: [...effect.params] });
+                    const tempEffect: EquipEffects = { ...effect, actionId, params: [...effect.params] };
+                    tempEffect.params[0] = (tempEffect.params[0] || 0) * multiplicateur;
+                    mapEffects.set(actionId, tempEffect);
                 } else {
                     // Somme les params des effets similaires
-                    existing.params[0] += effect.params[0] || 0;
+                    existing.params[0] += (effect.params[0] || 0) * multiplicateur;
                 }
             });
         });

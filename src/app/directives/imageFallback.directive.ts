@@ -2,6 +2,7 @@ import { Directive, HostListener } from '@angular/core';
 import { ImageService } from '../services/imageService';
 import { GfxIdNeoEnum } from '../models/enum/gfxIdNeoEnum';
 import { GfxIdMobEnum } from '../models/enum/gfxIdMobEnum';
+import { GfxIdItemEnum } from '../models/enum/gfxIdItemEnum';
 
 @Directive({
   selector: 'img[appFallback]',
@@ -44,6 +45,10 @@ export class ImageFallbackDirective {
     [GfxIdMobEnum.SCARABRUNI, "mob/scarabruni.png"],
   ]);
 
+  private itemMap = new Map<GfxIdItemEnum, string>([
+    [GfxIdItemEnum.ARCHIEMBLEME, "item/archiembleme.png"],
+  ]);
+
 
   @HostListener('error', ['$event.target'])
   onError(target: EventTarget | null) {
@@ -55,7 +60,16 @@ export class ImageFallbackDirective {
         return;
       }
       const mobImage = idImage ? this.imageMap.get(+idImage) : null;
-      target.src = mobImage ?? ImageService.IMAGE_ERROR; // Fallback image URL
+      if (mobImage) {
+        target.src = mobImage;
+        return;
+      }
+      const itemImage = idImage ? this.itemMap.get(+idImage) : null;
+      if (itemImage) {
+        target.src = itemImage;
+        return;
+      }
+      target.src = ImageService.IMAGE_ERROR; // Fallback image URL
     }
   }
 }

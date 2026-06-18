@@ -322,6 +322,21 @@ export class ItemsService {
     })
   }
 
+  /**
+   * Pour les items qui ne seraient pas à jour
+   * @param item 
+   */
+  private updateItemStatistics(item: Item): void {
+    // Archiemblème - Lacrymorse le Larmoyant
+    if (item.id === 33202) {
+      item.equipEffects = item.equipEffects.filter(effect => effect.actionId !== IdActionsEnum.TACLE);
+      item.equipEffects.find(effect => effect.actionId === IdActionsEnum.POINT_DE_VIE)!.params[0] = 209;
+      item.equipEffects.find(effect => effect.actionId === IdActionsEnum.MAITRISES_MELEE)!.params[0] = 240;
+      item.equipEffects.find(effect => effect.actionId === IdActionsEnum.COUP_CRITIQUE)!.params[0] = 10;
+      item.equipEffects.find(effect => effect.actionId === IdActionsEnum.RESISTANCES_ELEMENTAIRE)!.params[0] = 20;
+    }
+  }
+
   private createEffectsMap(item: Item): Map<number, number> {
     const effectsMap = new Map<number, number>();
     item.equipEffects.forEach(effect => {
@@ -446,6 +461,7 @@ export class ItemsService {
           }));
         this.buildIndexes(recipes, monsterDrops, idSiouperes);
         this.items.forEach(item => {
+          this.updateItemStatistics(item);
           item.effectsMap = this.createEffectsMap(item);
           this.calculItemIsCraftable(item);
           this.calculItemIsDropable(item);

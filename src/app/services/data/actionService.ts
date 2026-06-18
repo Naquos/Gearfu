@@ -4,7 +4,7 @@ import { EquipEffects } from "../../models/data/equipEffects";
 import { TranslateService } from "@ngx-translate/core";
 import { AnkamaCdnFacade } from "../ankama-cdn/ankamaCdnFacade";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ActionService {
 
     private readonly translateService = inject(TranslateService);
@@ -75,12 +75,12 @@ export class ActionService {
             ActionService.opposedEffects.set(positive, negative);
             ActionService.opposedEffects.set(negative, positive);
         }
-        
+
     }
 
     public getEffectById(id: number): string {
         const action = this.ankamaCdnFacade.getActionList().find(action => action.definition.id === id);
-        if(!action) { return ""; }
+        if (!action) { return ""; }
         return `${action.description[this.translateService.currentLang as keyof typeof action.description]}`;
     }
 
@@ -92,11 +92,11 @@ export class ActionService {
     public isOpposed(effect1: EquipEffects, effect2: EquipEffects): boolean {
         const id1 = effect1.actionId;
         const id2 = effect2.actionId;
-    
+
         for (const [positive, negative, checkParam4] of ActionService.opposedPairs) {
             const hasPositive = id1 === positive || id2 === positive;
             const hasNegative = id1 === negative || id2 === negative;
-    
+
             if (hasPositive && hasNegative) {
                 return checkParam4 ? effect1.params[4] === effect2.params[4] : true;
             }
@@ -105,6 +105,6 @@ export class ActionService {
     }
 
     public getOpposedEffect(idAction: IdActionsEnum): IdActionsEnum {
-       return ActionService.opposedEffects.get(idAction) ?? idAction;
+        return ActionService.opposedEffects.get(idAction) ?? idAction;
     }
 }
