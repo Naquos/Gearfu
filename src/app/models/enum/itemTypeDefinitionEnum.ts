@@ -24,5 +24,6 @@ export enum ItemTypeDefinitionEnum {
     FAMILIER = 582,
     LANTERNE = 480,
     STATISTIQUES = 811,
-    SUBLIMATIONS = 812
+    SUBLIMATIONS = 812,
+    PORTE_BONHEUR = 849,
 }

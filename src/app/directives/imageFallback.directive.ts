@@ -47,6 +47,12 @@ export class ImageFallbackDirective {
 
   private itemMap = new Map<GfxIdItemEnum, string>([
     [GfxIdItemEnum.ARCHIEMBLEME, "item/archiembleme.png"],
+    [GfxIdItemEnum.PORTE_BONHEUR_ABRAKNE, "item/porte_bonheur_abrakne.png"],
+    [GfxIdItemEnum.PORTE_BONHEUR_CHACHA, "item/porte_bonheur_chacha.png"],
+    [GfxIdItemEnum.PORTE_BONHEUR_BOUFTOU, "item/porte_bonheur_bouftou.png"],
+    [GfxIdItemEnum.PORTE_BONHEUR_TOFU, "item/porte_bonheur_tofu.png"],
+    [GfxIdItemEnum.PORTE_BONHEUR_LARVE, "item/porte_bonheur_larve.png"],
+    [GfxIdItemEnum.PORTE_BONHEUR_PIOU, "item/porte_bonheur_piou.png"],
   ]);
 
 
