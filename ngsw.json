@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1781771668021,
+  "timestamp": 1781798500992,
   "index": "/Gearfu/index.csr.html",
   "assetGroups": [
     {
@@ -109,6 +109,7 @@
         "/Gearfu/icons/icon-512x512.png",
         "/Gearfu/icons/icon-72x72.png",
         "/Gearfu/icons/icon-96x96.png",
+        "/Gearfu/item/archiembleme.png",
         "/Gearfu/logo-WakFocus.png",
         "/Gearfu/logo.png",
         "/Gearfu/mob/assassin-encapuchonne.png",
@@ -244,6 +245,7 @@
     "/Gearfu/icons/icon-512x512.png": "5222eeb8ce6eee86aa9e9f51851720d01c96ce95",
     "/Gearfu/icons/icon-72x72.png": "f1682da55f3f51493e06577c281deddb498ef3a7",
     "/Gearfu/icons/icon-96x96.png": "bf96900932a13186af36d1aca86a01dbe85ae7ce",
+    "/Gearfu/item/archiembleme.png": "f370c470e3f94cc147603f453235b6101b6a926a",
     "/Gearfu/logo-WakFocus.png": "8db839a70924a93b6d342727a32e80e15c7c0a85",
     "/Gearfu/logo.png": "eb4ca47e89051ede0f24d53970c7406224d3d83c",
     "/Gearfu/mob/assassin-encapuchonne.png": "14bc3c32cc7da46c88b5dbcd7c2d00bc87f3c398",
