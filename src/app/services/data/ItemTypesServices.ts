@@ -38,10 +38,10 @@ export class ItemTypeServices {
     [ItemTypeEnum.CASQUE, { ids: [ItemTypeDefinitionEnum.CASQUE] }],
     [ItemTypeEnum.PLASTRON, { ids: [ItemTypeDefinitionEnum.PLASTRON] }],
     [ItemTypeEnum.EPAULETTES, { ids: [ItemTypeDefinitionEnum.EPAULETTES] }],
-    [ItemTypeEnum.ACCESSOIRES, { ids: [ItemTypeDefinitionEnum.EMBLEME, ItemTypeDefinitionEnum.PORTE_BONHEUR] }],
+    [ItemTypeEnum.ACCESSOIRES, { ids: [ItemTypeDefinitionEnum.EMBLEME] }],
     [ItemTypeEnum.BOUCLIER, { ids: [ItemTypeDefinitionEnum.BOUCLIER] }],
     [ItemTypeEnum.DAGUE, { ids: [ItemTypeDefinitionEnum.DAGUE] }],
-    [ItemTypeEnum.FAMILIER, { ids: [ItemTypeDefinitionEnum.FAMILIER] }],
+    [ItemTypeEnum.FAMILIER, { ids: [ItemTypeDefinitionEnum.FAMILIER, ItemTypeDefinitionEnum.PORTE_BONHEUR] }],
   ]);
 
   public getItemTypes(): Map<ItemTypeEnum, ItemType> {
