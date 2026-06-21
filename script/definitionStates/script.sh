@@ -1,0 +1,1 @@
+curl  https://www.wakfu.com/fr/linker/state?l=fr&id=1284 > temp.html
