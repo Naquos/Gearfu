@@ -226,6 +226,12 @@
         "label": "Activación de mecánicas",
         "mecaniques": "Mecánicas"
     },
+    "modifier-mecanism": {
+        "coeur-huppermage": "Aumenta la maestría elemental en un 20% (reservado para la clase Huppermago)",
+        "denouement": "Sublimación que convierte la maestría crítica en maestría elemental",
+        "demesure": "Sublimación que convierte la anticipación en golpe crítico (filtra los objetos para conservar solo los que tienen anticipación o golpe crítico)",
+        "chaos": "Sublimación que cancela la maestría elemental"
+    },
     "name-build": {
         "label": "Guardar tu build",
         "placeholder": "Nombre de tu build"

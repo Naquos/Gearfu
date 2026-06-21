@@ -226,6 +226,12 @@
         "label": "Activation de mécaniques",
         "mecaniques": "Mécaniques"
     },
+    "modifier-mecanism": {
+        "coeur-huppermage": "Augmentation des maitrises élémentaires de 20% (réservé à la classe Huppermage)",
+        "denouement": "Sublimation transformant la maitrise critique en maitrise élémentaire",
+        "demesure": "Sublimation transformant la parade en coup critique (filtre les items pour garder uniquement ceux ayant de la parade ou des coups critiques)",
+        "chaos": "Sublimation annulant les maitrises élémentaires"
+    },
     "name-build": {
         "label": "Sauvegarder votre build",
         "placeholder": "Nom de votre build"

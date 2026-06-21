@@ -226,6 +226,12 @@
         "label": "Mechanics activation",
         "mecaniques": "Mechanics"
     },
+    "modifier-mecanism": {
+        "coeur-huppermage": "Increases elemental mastery by 20% (reserved for the Huppermage class)",
+        "denouement": "Sublimation that converts critical mastery into elemental mastery",
+        "demesure": "Sublimation that converts block into critical hit (filters items to keep only those with block or critical hit)",
+        "chaos": "Sublimation that cancels elemental mastery"
+    },
     "name-build": {
         "label": "Save your build",
         "placeholder": "Name your build"
