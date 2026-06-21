@@ -96,6 +96,7 @@ export class ItemsService {
   private _itemsFilterByItemName = new BehaviorSubject<Item[]>([]);
   public itemsFilterByItemName$ = this._itemsFilterByItemName.asObservable();
   protected itemsFilters$!: Observable<Item[]>;
+  private itemsWeight$!: Observable<Item[]>;
 
   private recipesByProductId = new Map<number, RecipeResultsCdn>();
   private itemsByName = new Map<string, Item[]>();
@@ -109,10 +110,9 @@ export class ItemsService {
 
   public init(): void {
     this.initItemsList();
-    this.initFilter();
 
-    const itemsFilters$ = combineLatest([
-      this.itemsFilters$,
+    this.itemsWeight$ = combineLatest([
+      this.fullItems$,
       this.maitrisesFormService.nbElements$,
       this.maitrisesFormService.idMaitrises$,
       this.sortChoiceFormService.sort$,
@@ -128,7 +128,9 @@ export class ItemsService {
           this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement, onlyNoElem, onlyNoSecondary, chaos)),
         map(([items,]) => items));
 
-    combineLatest([itemsFilters$, this.reverseFormService.reverse$])
+    this.initFilter();
+
+    combineLatest([this.itemsFilters$, this.reverseFormService.reverse$])
       .pipe(
         map(([items, reverse]) => {
           const sortedItems = items.sort(this.sortItems());
@@ -259,7 +261,7 @@ export class ItemsService {
     this.initFamiliers();
     this._fullItems.next(this.items);
 
-    const itemFilterByName$ = combineLatest([this._fullItems, this.searchItemNameFormService.itemName$])
+    const itemFilterByName$ = combineLatest([this.itemsWeight$, this.searchItemNameFormService.itemName$])
       .pipe(map(([items, itemName]) => items.filter(x => normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(normalizeString(itemName)))),
         tap(items => this._itemsFilterByItemName.next(items)));
 

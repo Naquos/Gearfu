@@ -2,7 +2,10 @@
     <div class="filter-title">
         <h2>{{ "app.filter-item" | translate }}</h2>
         <app-reverse-button></app-reverse-button>
-        <button (click)="resetFormService.resetAllForms()">X</button>
+        <app-button-checkbox color="rgb(207, 148, 11)" matIcon="star"
+            [fieldControl]="displayFavorisFormService.form.display"
+            [tooltip]="'filters.favoris' | translate"></app-button-checkbox>
+        <button (click)="resetFormService.resetAllForms()" [matTooltip]="'filters.reset' | translate">X</button>
     </div>
     <app-search-item-name></app-search-item-name>
     <app-obtention></app-obtention>
@@ -12,7 +15,7 @@
     <app-filter-maitrises></app-filter-maitrises>
     <app-major-present></app-major-present>
     <app-filter-resistances></app-filter-resistances>
-    
+
     <h2>{{ "app.sort-item" | translate }}</h2>
     <app-sort-choice></app-sort-choice>
     <app-modifier-mecanism></app-modifier-mecanism>

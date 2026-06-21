@@ -2,11 +2,13 @@ import { Component, inject, OnInit, OnDestroy, Inject, PLATFORM_ID, ChangeDetect
 import { ItemComponent } from '../item/item.component';
 import { ItemSkeletonComponent } from '../item-skeleton/item-skeleton.component';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { IntersectDirective } from '../../../directives/intersect.directive';
 import { Item } from '../../../models/data/item';
 import { ItemsService } from '../../../services/data/itemsService';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { DisplayFavorisFormService } from '../../../services/form-signal/displayFavorisFormService';
+import { ItemFavorisFormService } from '../../../services/form-signal/itemFavorisFormService';
 
 @Component({
   selector: 'app-item-list',
@@ -18,6 +20,20 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class ItemListComponent implements OnInit, OnDestroy {
   protected readonly itemsService = inject(ItemsService);
   protected readonly skeletonArray = Array(36).fill(0).map((x, i) => i); // Tableau pour afficher 36 skeletons
+  private readonly displayFavorisFormService = inject(DisplayFavorisFormService);
+  protected readonly displayFavoris = toSignal(this.displayFavorisFormService.display$);
+
+  private readonly itemsFavorisFormService = inject(ItemFavorisFormService);
+  protected readonly favorisItems = toSignal(this.itemsFavorisFormService.ids$.pipe(map(ids => {
+    const result: Item[] = [];
+    for (const id of ids) {
+      const item = this.itemsService.getItem(id);
+      if (item) {
+        result.push(item);
+      }
+    }
+    return result;
+  })));
 
   private displayedItems$ = new BehaviorSubject<Item[]>([]);
   protected readonly displayedItems = toSignal(this.displayedItems$);

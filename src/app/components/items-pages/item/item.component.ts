@@ -23,10 +23,22 @@ import { mapSortAction, ratioWeightByLevel } from '../../../models/utils/utils';
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { FavorisButtonComponent } from "../../form/favoris-button/favoris-button.component";
 
 @Component({
   selector: 'app-item',
-  imports: [MatIconModule, TranslateModule, MatTooltipModule, ActionsPipe, ImageFallbackDirective, LazyImageDirective, ElementSelectorComponent, ActivateDirective, CommonModule],
+  imports: [
+    MatIconModule,
+    TranslateModule,
+    MatTooltipModule,
+    ActionsPipe,
+    ImageFallbackDirective,
+    LazyImageDirective,
+    ElementSelectorComponent,
+    ActivateDirective,
+    CommonModule,
+    FavorisButtonComponent
+  ],
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager

@@ -85,7 +85,6 @@
         "maitrise-dos": "Maestria pelas costas",
         "maitrise-soin": "Maestria de cura",
         "maitrise-berserk": "Maestria berserker",
-        "soin": "Cura",
         "vie": "Pontos de vida",
         "tacle": "Bloqueio",
         "esquive": "Evasão",
@@ -97,6 +96,13 @@
     "import-build": {
         "label": "Importe seu build através de uma URL do Gearfu ou Zénith",
         "placeholder": "URL do Gearfu ou Zénith"
+    },
+    "favoris-button": {
+        "label": "Adicionar aos favoritos"
+    },
+    "filters": {
+        "favoris": "Mostrar apenas os itens favoritos",
+        "reset": "Redefinir filtros"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Maestria elemental",

@@ -97,6 +97,13 @@
         "label": "Import your build via a Gearfu or Zenith URL",
         "placeholder": "Gearfu or Zenith URL"
     },
+    "favoris-button": {
+        "label": "Add to favorites"
+    },
+    "filters": {
+        "favoris": "Show only favorite items",
+        "reset": "Reset filters"
+    },
     "filter-maitrises": {
         "maitrises-elementaires": "Elemental Mastery",
         "maitrises-secondaires": "Secondary Mastery",

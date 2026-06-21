@@ -14,14 +14,34 @@ import { ItemLevelComponent } from "../../form/item-level/item-level.component";
 import { ItemTypesComponent } from "../../form/item-types/item-types.component";
 import { ResetFormService } from '../../../services/resetFormService';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonCheckboxComponent } from "../../form/button-checkbox/button-checkbox.component";
+import { DisplayFavorisFormService } from '../../../services/form-signal/displayFavorisFormService';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-filters',
-  imports: [TranslateModule, ReverseButtonComponent, SearchItemNameComponent, ObtentionComponent, OnlyNoSecondaryComponent, OnlyNoElemComponent, ModifierMecanismComponent, SortChoiceComponent, FilterResistancesComponent, MajorPresentComponent, FilterMaitrisesComponent, RareteItemComponent, ItemLevelComponent, ItemTypesComponent],
+  imports: [TranslateModule,
+    ReverseButtonComponent,
+    SearchItemNameComponent,
+    ObtentionComponent,
+    OnlyNoSecondaryComponent,
+    OnlyNoElemComponent,
+    ModifierMecanismComponent,
+    SortChoiceComponent,
+    FilterResistancesComponent,
+    MajorPresentComponent,
+    FilterMaitrisesComponent,
+    RareteItemComponent,
+    ItemLevelComponent,
+    ItemTypesComponent,
+    ButtonCheckboxComponent,
+    MatTooltipModule,
+  ],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FiltersComponent {
   protected readonly resetFormService = inject(ResetFormService);
+  protected readonly displayFavorisFormService = inject(DisplayFavorisFormService);
 }

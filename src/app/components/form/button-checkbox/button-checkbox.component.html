@@ -8,7 +8,7 @@
     }
 
     @if(matIcon()) {
-    <mat-icon [fontIcon]="matIcon()" [style.color]="isChecked() ? 'white' : '#213A57'"></mat-icon>
+    <mat-icon [fontIcon]="matIcon()" [style.color]="isChecked() ? 'white' : color() ?  color() :'#213A57'"></mat-icon>
     } @else if(srcImg()) {
     <img [src]="srcImg()" alt="image">
     }
