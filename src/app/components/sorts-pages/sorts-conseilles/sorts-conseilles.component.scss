@@ -1,3 +1,39 @@
+.skeleton-sort,
+.skeleton-ratio {
+    background: linear-gradient(90deg, #2B3D58 25%, #4A658A 50%, #2B3D58 75%);
+    background-size: 220% 100%;
+    animation: skeleton-loading 1.3s ease-in-out infinite;
+    border-radius: 6px;
+}
+
+.skeleton-sort {
+    width: 56px;
+    height: 56px;
+}
+
+.skeleton-ratio {
+    width: 36px;
+    height: 16px;
+    margin-top: 4px;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .skeleton-sort {
+        width: 30px;
+        height: 30px;
+    }
+}
+
 .card {
     width: 90%;
     padding: 5px;

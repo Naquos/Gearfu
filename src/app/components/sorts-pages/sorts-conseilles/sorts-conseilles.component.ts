@@ -27,7 +27,11 @@ export class SortsConseillesComponent {
     private readonly MAX_SORTS_NEUTRE = 12;
     private readonly MAX_SORTS_PASSIF = 6;
 
+    protected readonly loading = signal(true);
+    protected readonly skeletonItems = Array.from({ length: this.MAX_SORTS });
+
     private readonly sortsConseilles = toSignal(this.classeFormService.classe$.pipe(
+        tap(() => this.loading.set(true)),
         switchMap(classe => this.supabaseService.getSortsConseillees(classe)),
         tap(() => {
             this.countSortNeutreConseilles.clear();
@@ -35,7 +39,8 @@ export class SortsConseillesComponent {
         }),
         tap(sorts => this.nbDeckSorts.set(sorts.length)),
         tap(sorts => this.fillCounts(sorts)),
-        map(() => this.keepBestSortsConseilles())
+        map(() => this.keepBestSortsConseilles()),
+        tap(() => this.loading.set(false))
     ), {
         initialValue: [] as DescriptionSort[]
     });

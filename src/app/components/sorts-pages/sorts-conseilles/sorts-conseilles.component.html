@@ -3,6 +3,14 @@
         {{'sorts.sort-conseille' | translate}}
     </div>
     <div class="content">
+        @if (loading()) {
+        @for (item of skeletonItems; track $index) {
+        <div class="sort-conseille">
+            <div class="skeleton-sort"></div>
+            <div class="skeleton-ratio"></div>
+        </div>
+        }
+        } @else {
         @for (sort of sortsNeutreConseilles(); track sort.gfxId) {
         <div class="sort-conseille">
             <app-sort-image [sort]="sort" typeSort="NEUTRE"></app-sort-image>
@@ -18,6 +26,7 @@
                 {{ratioUsageSortPassif(sort)}}
             </span>
         </div>
+        }
         }
     </div>
 </div>
