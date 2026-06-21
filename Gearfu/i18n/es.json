@@ -97,6 +97,13 @@
         "label": "Importa tu build mediante una URL de Gearfu o Zénith",
         "placeholder": "URL de Gearfu o Zénith"
     },
+    "favoris-button": {
+        "label": "Añadir a favoritos"
+    },
+    "filters": {
+        "favoris": "Mostrar solo los objetos favoritos",
+        "reset": "Restablecer filtros"
+    },
     "filter-maitrises": {
         "maitrises-elementaires": "Dominio elemental",
         "maitrises-secondaires": "Dominio secundario",
