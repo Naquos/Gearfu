@@ -11,7 +11,9 @@
       }
     </mat-select-trigger>
     @for (mecanism of ElemMaitrisesMecanismEnumList; track mecanism) {
-    <mat-option [value]="mecanism">{{("elem-maitrises-mecanism-enum." + mecanism.valueOf()) | translate}}</mat-option>
+    <mat-option [value]="mecanism"
+      [matTooltip]="mapTranslation[mecanism] | translate">{{("elem-maitrises-mecanism-enum." + mecanism.valueOf()) |
+      translate}}</mat-option>
     }
   </mat-select>
 </mat-form-field>

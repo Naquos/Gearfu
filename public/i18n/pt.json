@@ -85,7 +85,6 @@
         "maitrise-dos": "Maestria pelas costas",
         "maitrise-soin": "Maestria de cura",
         "maitrise-berserk": "Maestria berserker",
-        "soin": "Cura",
         "vie": "Pontos de vida",
         "tacle": "Bloqueio",
         "esquive": "Evasão",
@@ -226,6 +225,12 @@
     "modifier-elem-maitrises": {
         "label": "Ativação de mecânicas",
         "mecaniques": "Mecânicas"
+    },
+    "modifier-mecanism": {
+        "coeur-huppermage": "Aumenta a maestria elemental em 20% (reservado para a classe Huppermago)",
+        "denouement": "Sublimação que converte a maestria crítica em maestria elemental",
+        "demesure": "Sublimação que converte a antecipação em golpe crítico (filtra os itens para manter apenas aqueles com antecipação ou golpe crítico)",
+        "chaos": "Sublimação que cancela a maestria elemental"
     },
     "name-build": {
         "label": "Salvar seu build",
