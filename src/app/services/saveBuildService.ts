@@ -88,6 +88,11 @@ export class SaveBuildService {
      * @param buildId
      */
     public createBuildIfNotExistsElseLoadIt(buildId: string): void {
+        // Bloquer les sauvegardes automatiques jusqu'à ce que le build soit chargé.
+        // Sans ça, listenBuildChanges() s'exécute immédiatement avec les valeurs
+        // restaurées depuis le localStorage (celles du build précédent), ce qui
+        // écraserait le build cible avec des données incorrectes.
+        this.buildLoading.next(true);
         if (buildId === NO_BUILD || !buildId) {
             this.createAndNavigate();
         } else {
