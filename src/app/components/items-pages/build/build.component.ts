@@ -16,6 +16,7 @@ import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { ChasseFormService } from '../../../services/form-signal/chasseFormService';
 import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqueRelique';
 import { MatIcon } from "@angular/material/icon";
+import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
 
 export enum ItemTypeBuild {
   CASQUE = "CASQUE",
@@ -36,7 +37,7 @@ export enum ItemTypeBuild {
 
 @Component({
   selector: 'app-build',
-  imports: [MatTooltipModule, TranslateModule, LazyImageDirective, MatIcon],
+  imports: [MatTooltipModule, TranslateModule, LazyImageDirective, MatIcon, ImageFallbackDirective],
   templateUrl: './build.component.html',
   styleUrl: './build.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
