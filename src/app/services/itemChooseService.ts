@@ -61,7 +61,6 @@ export class ItemChooseService extends AbstractDestroyService {
     private readonly totalResistances = new BehaviorSubject<number>(0);
     public readonly totalResistances$ = this.totalResistances.asObservable();
     private indexAnneau = 0;
-    private notUpdateUrl = false;
 
     constructor() {
         super();
@@ -103,7 +102,6 @@ export class ItemChooseService extends AbstractDestroyService {
         this.getObsItem(ItemTypeEnum.FAMILIER),
         ]).pipe(
             takeUntil(this.destroy$),
-            filter(() => !this.notUpdateUrl),
             map(list => list.flat()),
             map(list => list.filter(x => x !== undefined && x !== null)),
             tap(list => this.listItem.next([...new Set<Item>(list)])),
@@ -172,7 +170,6 @@ export class ItemChooseService extends AbstractDestroyService {
     public setIdItemsFromBuild(idItems: string): void {
         this.cleanItemChoosen();
         this.idItems.next(idItems);
-        this.notUpdateUrl = true;
         const idItemList = idItems.split(",");
         if (!idItemList) { return; }
         idItemList.forEach(idItem => {
@@ -184,7 +181,7 @@ export class ItemChooseService extends AbstractDestroyService {
 
             this.setItem(itemType, item, false)
         })
-        this.notUpdateUrl = false;
+        this.setIdItems(idItems);
     }
 
     public setIdItems(idItems: string): void {

@@ -321,7 +321,11 @@ export class SaveBuildService {
         this.buildReadonly.next(!build.token || build.token !== this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN));
         this.visibilityBuildFormService.setValue(!build.hide);
         this.nameBuildFormService.setValue(build.nameBuild || this.generateDefaultName());
-        this.itemHistoricsService.setValue({ historics: JSON.parse(`${build.historics}`) ?? this.itemHistoricsService.getValue() });
+        const historicsRaw = build.historics as unknown as string | string[];
+        const historicsParsed: string[] = Array.isArray(historicsRaw)
+            ? historicsRaw
+            : (typeof historicsRaw === 'string' && historicsRaw.length > 0 ? JSON.parse(historicsRaw) : []);
+        this.itemHistoricsService.setValue({ historics: historicsParsed });
         // La mise à jour des items équipés se fait dans le service itemHistoiricsService
         this.itemHistoricsService.applyHistoric(build.itemsId ?? "");
 
