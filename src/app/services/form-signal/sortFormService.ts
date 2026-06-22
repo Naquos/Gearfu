@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from "@angular/core";
 import { form } from "@angular/forms/signals";
 import { BehaviorSubject, distinctUntilChanged } from "rxjs";
+import { ClassIdEnum } from "../../models/enum/classIdEnum";
 import { takeUntil } from "rxjs/operators";
 import { KeyEnum } from "../../models/enum/keyEnum";
 import { AbstractSignalFormService } from "./abstractSignalFormService";
@@ -32,6 +33,7 @@ export class SortFormService extends AbstractSignalFormService<SortForm> {
     public readonly codeBuild$ = this.codeBuild.asObservable();
 
     private firstLoad = true;
+    private _lastLoadedClass: ClassIdEnum | null = null;
 
     public readonly unlockedEmplacementSortNeutre = [0, 0, 0, 0, 0, 0, 10, 20, 30, 40, 60, 80];
     public readonly unlockedEmplacementSortPassif = [10, 30, 50, 100, 150, 200];
@@ -47,10 +49,11 @@ export class SortFormService extends AbstractSignalFormService<SortForm> {
     constructor() {
         super();
         this.init();
-        this.classeFormService.classe$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(() => {
-            if (!this.firstLoad) {
+        this.classeFormService.classe$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe((newClass) => {
+            if (!this.firstLoad && newClass !== this._lastLoadedClass) {
                 this.setDefaultValue();
             }
+            this._lastLoadedClass = null;
             this.firstLoad = false;
         });
     }
@@ -80,9 +83,14 @@ export class SortFormService extends AbstractSignalFormService<SortForm> {
     }
 
     public decodeAndSaveCodeBuild(codeBuild: string): void {
+        // Mémorise la classe active (signal synchrone, déjà mis à jour avant cet appel)
+        // pour empêcher le reset asynchrone déclenché par l'effect de ClasseFormService
+        this._lastLoadedClass = this.classeFormService.currentValue();
         const parts = codeBuild.split('-');
         const neutres = parts.slice(0, 12).map(part => parseInt(part, 10));
         const passifs = parts.slice(12).map(part => parseInt(part, 10));
+        console.log("decodeAndSaveCodeBuild neutres", neutres);
+        console.log("decodeAndSaveCodeBuild passifs", passifs);
         this.setValue({
             sortNeutres: neutres,
             sortPassifs: passifs
