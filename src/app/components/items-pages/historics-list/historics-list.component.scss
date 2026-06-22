@@ -1,0 +1,19 @@
+.content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    background-color: var(--color-surface-mid);
+    border-radius: 10px;
+    width: 100%;
+    min-height: 200px;
+    z-index: 100000;
+
+    .no-historics {
+        margin: auto;
+        font-size: 16px;
+        font-weight: 400;
+        text-align: center;
+        padding: 20px;
+    }
+}

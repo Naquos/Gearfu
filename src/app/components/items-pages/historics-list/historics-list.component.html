@@ -1,0 +1,11 @@
+<div class="content">
+    @if(historics().length === 0) {
+    <div class="no-historics">
+        {{ "historics-list.nothing" | translate }}
+    </div>
+    } @else {
+    @for(historic of historics(); track $index ) {
+    <app-historics-piece [historic]="historic"></app-historics-piece>
+    }
+    }
+</div>

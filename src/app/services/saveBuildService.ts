@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { LocalStorageService } from "./data/localStorageService";
-import { BehaviorSubject, catchError, combineLatest, filter, map, Observable, of, switchMap, take, tap } from "rxjs";
+import { BehaviorSubject, catchError, combineLatest, debounceTime, filter, map, Observable, of, switchMap, take, tap } from "rxjs";
 import { KeyEnum } from "../models/enum/keyEnum";
 import { Build } from "../models/data/build";
 import { LevelFormService } from "./form-signal/levelFormService";
@@ -18,6 +18,7 @@ import { RecapStatsService } from "./recapStatsService";
 import { NO_BUILD } from "../models/utils/utils";
 import { VisibilityBuildFormService } from "./form-signal/visibilityBuildFormService";
 import { NameBuildFormService } from "./form-signal/nameBuildFormService";
+import { ItemHistoricsService } from "./form-signal/itemHistoricsService";
 
 @Injectable({ providedIn: 'root' })
 export class SaveBuildService {
@@ -35,6 +36,7 @@ export class SaveBuildService {
     private readonly recapStatsService = inject(RecapStatsService);
     private readonly visibilityBuildFormService = inject(VisibilityBuildFormService);
     private readonly nameBuildFormService = inject(NameBuildFormService);
+    private readonly itemHistoricsService = inject(ItemHistoricsService);
 
 
     private readonly buildList = new BehaviorSubject<Build[]>([]);
@@ -159,6 +161,7 @@ export class SaveBuildService {
      */
     public listenBuildChanges(): void {
         combineLatest([
+            this.itemHistoricsService.historics$,
             this.levelFormService.level$,
             this.itemChooseService.idItems$,
             this.classeFormService.classe$,
@@ -169,8 +172,9 @@ export class SaveBuildService {
             this.nameBuildFormService.name$,
             this.buildLoading$,
         ]).pipe(
-            filter(([, , , , , , , , buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
-            tap(([, , , , , , , name,]) => {
+            filter(([, , , , , , , , , buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
+            debounceTime(500), // Attendre que tous les observables liés aient fini de se propager avant de sauvegarder
+            tap(([, , , , , , , , name,]) => {
                 const token_build = this.currentTokenBuild.getValue();
                 const token_user = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN);
                 if (token_build && token_user && token_build !== token_user) {
@@ -199,6 +203,7 @@ export class SaveBuildService {
             elementSelector: this.elementSelectorService.encodeForBuild(),
             compressed: false,
             hide: !this.visibilityBuildFormService.visibilityBuild(),
+            historics: this.itemHistoricsService.getValue()
         };
         this.currentNameBuild.next(build.nameBuild!);
         this.supabaseService.updateBuild(build).pipe(
@@ -248,7 +253,8 @@ export class SaveBuildService {
             compressed: false,
             createdAt: Date.now(),
             token: token || undefined,
-            hide: !this.visibilityBuildFormService.visibilityBuild()
+            hide: !this.visibilityBuildFormService.visibilityBuild(),
+            historics: this.itemHistoricsService.getValue()
         };
         this.currentNameBuild.next(build.nameBuild!);
         if (!build.id || build.id === NO_BUILD) {
@@ -308,7 +314,6 @@ export class SaveBuildService {
         this.currentTokenBuild.next(build.token || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '');
         this.levelFormService.setValue(build.level ?? LevelFormService.DEFAULT_VALUE);
         this.elementSelectorService.decodeAndApplyFromBuild(build.elementSelector ?? "");
-        this.itemChooseService.setIdItemsFromBuild(build.itemsId ?? "");
         this.classeFormService.setValue(build.classe ?? ClassIdEnum.Eniripsa);
         this.codeAptitudesService.saveCode(build.aptitudes ?? "");
         this.sortFormService.decodeAndSaveCodeBuild(build.sorts ?? "0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
@@ -316,6 +321,9 @@ export class SaveBuildService {
         this.buildReadonly.next(!build.token || build.token !== this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN));
         this.visibilityBuildFormService.setValue(!build.hide);
         this.nameBuildFormService.setValue(build.nameBuild || this.generateDefaultName());
+        this.itemHistoricsService.setValue({ historics: JSON.parse(`${build.historics}`) ?? this.itemHistoricsService.getValue() });
+        // La mise à jour des items équipés se fait dans le service itemHistoiricsService
+        this.itemHistoricsService.applyHistoric(build.itemsId ?? "");
 
         of(saveStatistics).pipe(switchMap(save => {
             if (save) {

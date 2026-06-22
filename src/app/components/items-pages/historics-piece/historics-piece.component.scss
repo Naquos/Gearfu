@@ -1,0 +1,27 @@
+$size: 56px;
+
+.content:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: transform 0.2s;
+}
+
+:host {
+    border-radius: 10px;
+}
+
+img {
+    width: $size;
+    height: $size;
+    margin-right: 10px;
+}
+
+
+@media screen and (min-width: 1001px) and (max-width: 1700px) {
+    $size: 36px;
+
+    img {
+        width: $size;
+        height: $size;
+    }
+}

@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 import { ItemChooseDisplayComponent } from "../item-choose-display/item-choose-display.component";
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,13 +13,17 @@ import { RecapStatsService } from '../../../services/recapStatsService';
 import { ZenithService } from '../../../services/zenith/zenithService';
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { SaveBuildService } from '../../../services/saveBuildService';
+import { HistoricsListComponent } from "../historics-list/historics-list.component";
 
 @Component({
   selector: 'app-item-choose',
-  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule, ActivateDirective],
+  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule, ActivateDirective, HistoricsListComponent],
   templateUrl: './item-choose.component.html',
   styleUrl: './item-choose.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(document:click)': 'openHistory.set(false)'
+  }
 })
 export class ItemChooseComponent {
   protected readonly itemChooseService = inject(ItemChooseService);
@@ -27,6 +31,7 @@ export class ItemChooseComponent {
   private readonly recapStatsService = inject(RecapStatsService);
   protected readonly imageService = inject(ImageService);
   protected readonly saveBuildService = inject(SaveBuildService);
+  protected readonly openHistory = signal(false);
 
 
 
@@ -62,5 +67,10 @@ export class ItemChooseComponent {
 
   protected generateBuild(): void {
     this.zenithService.createBuild().pipe(take(1)).subscribe(linkBuild => window.open('https://www.zenithwakfu.com/builder/' + linkBuild, '_blank'));
+  }
+
+  protected toggleHistory(event: Event): void {
+    event.stopPropagation();
+    this.openHistory.update(v => !v);
   }
 }

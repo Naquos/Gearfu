@@ -149,6 +149,9 @@
         "sublimations": "Sublimations devant être présentes sur le build",
         "items": "Items devant être présents sur le build"
     },
+    "historics-list": {
+        "nothing": "Vous n'avez pas encore apporté de modifications à votre build."
+    },
     "item": {
         "maitrises": "Maitrises",
         "resistances": "Résistances",

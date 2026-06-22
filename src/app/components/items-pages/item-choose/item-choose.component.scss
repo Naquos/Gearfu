@@ -1,13 +1,37 @@
 .content {
     display: flex;
     align-items: center;
+    perspective: 700px;
+    perspective-origin: 50% 25%;
+    position: relative;
+
+
+    .nouveauBuild,
+    .historique {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-left: 5px;
+        height: 30px;
+        width: 100%;
+
+
+        color: var(--color-white);
+        font-weight: 400;
+        font-size: 16px;
+
+        cursor: pointer;
+    }
 
     .firstLine:active,
     .firstLine:hover,
     mat-icon:active,
     mat-icon:hover,
     .nouveauBuild:active,
-    .nouveauBuild:hover {
+    .nouveauBuild:hover,
+    .historique:active,
+    .historique:hover {
         background-color: var(--color-surface-deep);
     }
 
@@ -75,32 +99,86 @@
                 cursor: pointer;
                 margin-left: 5px;
             }
-
-            .nouveauBuild {
-                display: flex;
-                align-items: center;
-                flex-direction: row;
-                justify-content: space-around;
-                margin-left: 5px;
-                height: 30px;
-                width: 100%;
-
-
-                color: var(--color-white);
-                font-weight: 400;
-                font-size: 16px;
-
-                cursor: pointer;
-            }
         }
     }
+
+    .items-list {
+        display: flex;
+        transform-origin: top center;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+            box-shadow 0.7s ease-in-out;
+        transform: rotateX(0deg);
+
+        &.open {
+            box-shadow: 0 4px 6px var(--shadow-panel-color);
+            transform: rotateX(35deg);
+            box-shadow: 0 20px 40px var(--shadow-panel-color);
+        }
+    }
+
+    .historique {
+        display: contents;
+
+        mat-icon {
+            color: var(--color-white);
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            align-content: center;
+
+            cursor: pointer;
+        }
+
+    }
+
+
+    .historique:active {
+        transform: translateY(2px);
+    }
+
 
     app-item-choose-display {
         margin-left: 10px;
     }
 
+    app-item-choose-display:last-child {
+        margin-right: 10px;
+    }
+
     app-item-choose-display:hover {
         transform: scale(1.06);
+    }
+
+    app-historics-list {
+        border-radius: 10px;
+        overflow: hidden;
+        position: absolute;
+        top: 100%;
+        left: 200px;
+        z-index: 200;
+        transform-origin: top center;
+
+        // État fermé — fermeture sans délai
+        clip-path: inset(0 0 100% 0);
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: clip-path 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+            transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+            opacity 0.3s ease;
+
+        &.open {
+            // État ouvert — ouverture avec délai (attend le tilt du couvercle)
+            clip-path: inset(0 0 0% 0);
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+            transition: clip-path 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s,
+                transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s,
+                opacity 0.45s ease 0.25s;
+        }
     }
 }
 

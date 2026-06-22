@@ -17,4 +17,5 @@ export interface Build {
     codeZenith?: string;
     token?: string;
     hide?: boolean;
+    historics?: string[];
 }

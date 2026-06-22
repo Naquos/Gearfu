@@ -9,7 +9,7 @@ $height-recap-stats: 112px;
     .close-button {
         position: fixed;
         left: calc($width-app-filters + $width-left-menu);
-        z-index: 100;
+        z-index: 10;
         transition: left 0.3s ease-in-out;
         margin-top: 98px;
         margin-left: 0;
