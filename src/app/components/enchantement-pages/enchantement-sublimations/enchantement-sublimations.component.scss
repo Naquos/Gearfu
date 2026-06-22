@@ -15,6 +15,19 @@
         vertical-align: middle;
         align-items: center;
 
+        .row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            width: 100%;
+
+            app-button-checkbox {
+                margin-bottom: -10px;
+                margin-top: -1px;
+            }
+        }
+
         input {
             width: 80%;
             margin: 10px auto 0;

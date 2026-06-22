@@ -1,5 +1,8 @@
 <div class="subli-container" [class.selected]="isSelected()">
-    <span>{{ displayName() }}</span>
+    <div class="row-name">
+        <span>{{ displayName() }}</span>
+        <app-favoris-button [item]="sublimation()" [height]="24"></app-favoris-button>
+    </div>
     <div class="row">
         <div>
             @for(chasse of sublimation().slotColorPattern; track $index) {

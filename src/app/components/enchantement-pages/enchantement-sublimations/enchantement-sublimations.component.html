@@ -3,8 +3,13 @@
         Sublimations
     </div>
     <div class="body">
-        <input matInput [ngModel]="searchSubli()" (ngModelChange)="searchSubli.set($event)"
-            [placeholder]="'enchantement.recherche-sublimation' | translate">
+        <div class="row">
+            <input matInput [ngModel]="searchSubli()" (ngModelChange)="searchSubli.set($event)"
+                [placeholder]="'enchantement.recherche-sublimation' | translate">
+            <app-button-checkbox color="rgb(207, 148, 11)" matIcon="star"
+                [fieldControl]="displayFavorisSublimationService.form.display"
+                [tooltip]="'filters.favoris' | translate"></app-button-checkbox>
+        </div>
 
         <div class="slider-container">
             @for(sublimation of sublimationsList(); track $index) {

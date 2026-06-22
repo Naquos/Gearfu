@@ -12,6 +12,9 @@ import { EnchantementStateService } from '../../../services/enchantementStateSer
 import { FormsModule } from '@angular/forms';
 import { EnchantementSublimationsClassiquesComponent } from '../enchantement-sublimations-classiques/enchantement-sublimations-classiques.component';
 import { EnchantementSublimationsEpiquesReliquesComponent } from '../enchantement-sublimations-epiques-reliques/enchantement-sublimations-epiques-reliques.component';
+import { DisplayFavorisSublimationFormService } from '../../../services/form-signal/displayFavorisSublimationFormService';
+import { ButtonCheckboxComponent } from "../../form/button-checkbox/button-checkbox.component";
+import { SublimationFavorisFormService } from '../../../services/form-signal/SublimationFavorisFormService';
 
 @Component({
     selector: 'app-enchantement-sublimations',
@@ -20,7 +23,8 @@ import { EnchantementSublimationsEpiquesReliquesComponent } from '../enchantemen
         MatInputModule,
         FormsModule,
         EnchantementSublimationsClassiquesComponent,
-        EnchantementSublimationsEpiquesReliquesComponent
+        EnchantementSublimationsEpiquesReliquesComponent,
+        ButtonCheckboxComponent
     ],
     templateUrl: './enchantement-sublimations.component.html',
     styleUrl: './enchantement-sublimations.component.scss',
@@ -31,7 +35,9 @@ export class EnchantementSublimationsComponent {
     private readonly sublimationService = inject(SublimationService);
     private readonly translateService = inject(TranslateService);
     private readonly chasseFormService = inject(ChasseFormService);
+    private readonly sublimationFavorisFormService = inject(SublimationFavorisFormService);
 
+    protected readonly displayFavorisSublimationService = inject(DisplayFavorisSublimationFormService);
     protected readonly imageService = inject(ImageService);
     protected readonly stateService = inject(EnchantementStateService);
     protected searchSubli = signal("");
@@ -41,6 +47,7 @@ export class EnchantementSublimationsComponent {
     ));
     private readonly sublimations = signal(this.sublimationService.getSublimations());
     private readonly sublimationsEpiqueRelique = signal(this.sublimationService.getSublimationsEpiqueRelique());
+    private readonly displayFavorisSublimation = toSignal(this.displayFavorisSublimationService.display$);
 
     protected readonly sublimationsList = computed(() => {
         this.chasses();
@@ -51,7 +58,7 @@ export class EnchantementSublimationsComponent {
         ).filter(x =>
             this.stateService.indexItemTypeSelected() === -1 ||
             this.chasseFormService.canApplySublimationWithItem(this.chasses()![this.stateService.indexItemTypeSelected()], x)
-        );
+        ).filter(x => this.displayFavorisSublimation() ? this.sublimationFavorisFormService.hasItem(x.id) : true);
     });
 
     protected readonly sublimationsEpiqueReliqueList = computed(() => {
@@ -59,7 +66,7 @@ export class EnchantementSublimationsComponent {
         return this.sublimationsEpiqueRelique()?.filter(subli =>
             normalizeString(this.nameItem(subli)).includes(search) ||
             normalizeString(this.descriptionSublimation(subli)).includes(search)
-        );
+        ).filter(x => this.displayFavorisSublimation() ? this.sublimationFavorisFormService.hasItem(x.id) : true);
     });
 
     private nameItem(sublimation: SublimationsDescriptions | undefined): string {

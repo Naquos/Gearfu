@@ -24,17 +24,6 @@
         cursor: pointer;
     }
 
-    .firstLine:active,
-    .firstLine:hover,
-    mat-icon:active,
-    mat-icon:hover,
-    .nouveauBuild:active,
-    .nouveauBuild:hover,
-    .historique:active,
-    .historique:hover {
-        background-color: var(--color-surface-deep);
-    }
-
     .buttonGroupe {
         display: flex;
         align-items: center;

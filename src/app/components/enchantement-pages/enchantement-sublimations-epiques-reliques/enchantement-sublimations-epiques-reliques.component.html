@@ -1,5 +1,8 @@
 <div class="subli-container" [class.selected]="isSelected()" (appActivate)="onChooseSublimation()">
-    <span>{{ displayName() }}</span>
+    <div class="row-name">
+        <span>{{ displayName() }}</span>
+        <app-favoris-button [item]="sublimation()" [height]="24"></app-favoris-button>
+    </div>
     <div>
         <img (mouseenter)="onTooltipEnter($event)" (mouseleave)="onTooltipLeave()"
             [src]="imageService.getItemUrl(sublimation().gfxId)" [alt]="">

@@ -28,6 +28,7 @@ export class ButtonCheckboxComponent {
   public readonly tooltip = input<string>("");
   public readonly crossedOut = input<boolean>(false);
   protected readonly inputId = `button-checkbox-${ButtonCheckboxComponent.nextId++}`;
+  public readonly height = input<number | null>(null);
 
   private readonly _controlValue = toSignal(
     toObservable(this.control).pipe(

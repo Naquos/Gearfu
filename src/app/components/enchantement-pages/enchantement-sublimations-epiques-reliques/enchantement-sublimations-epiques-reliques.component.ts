@@ -8,10 +8,11 @@ import { ChasseFormService } from '../../../services/form-signal/chasseFormServi
 import { TooltipService } from '../../../services/TooltipService';
 import { DescriptionSublimationComponent, DescriptionSublimationType } from '../description-sublimation/description-sublimation.component';
 import { ConnectedPosition } from '@angular/cdk/overlay';
+import { FavorisButtonComponent } from "../../form/favoris-button/favoris-button.component";
 
 @Component({
     selector: 'app-enchantement-sublimations-epiques-reliques',
-    imports: [ActivateDirective],
+    imports: [ActivateDirective, FavorisButtonComponent],
     templateUrl: './enchantement-sublimations-epiques-reliques.component.html',
     styleUrl: './enchantement-sublimations-epiques-reliques.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

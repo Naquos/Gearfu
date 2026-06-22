@@ -1,5 +1,5 @@
-<label class="checkbox-wrapper" [attr.for]="inputId" [matTooltip]="tooltip() | translate" [matTooltipShowDelay]="300"
-    [class.crossed-out]="crossedOut()" [class.background-color-blue]="isChecked()">
+<label class="checkbox-wrapper" [style.height.px]="height()" [attr.for]="inputId" [matTooltip]="tooltip() | translate"
+    [matTooltipShowDelay]="300" [class.crossed-out]="crossedOut()" [class.background-color-blue]="isChecked()">
 
     @if (fieldControl()) {
     <input [id]="inputId" type="checkbox" [formField]="fieldControl()!" class="checkbox-input" />

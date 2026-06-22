@@ -89,8 +89,6 @@ export class SortFormService extends AbstractSignalFormService<SortForm> {
         const parts = codeBuild.split('-');
         const neutres = parts.slice(0, 12).map(part => parseInt(part, 10));
         const passifs = parts.slice(12).map(part => parseInt(part, 10));
-        console.log("decodeAndSaveCodeBuild neutres", neutres);
-        console.log("decodeAndSaveCodeBuild passifs", passifs);
         this.setValue({
             sortNeutres: neutres,
             sortPassifs: passifs

@@ -322,7 +322,6 @@ export class SaveBuildService {
         this.classeFormService.setValue(build.classe ?? ClassIdEnum.Eniripsa);
         this.codeAptitudesService.saveCode(build.aptitudes ?? "");
         this.aptitudesManualFormService.decodeAndSaveCodeBuild(build.aptitudesManual ?? "");
-        console.log("loadBuild build.sorts", build.sorts);
         this.sortFormService.decodeAndSaveCodeBuild(build.sorts ?? "0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
         this.chasseFormService.decodeAndSaveCodeBuild(build.enchantement ?? "");
         this.buildReadonly.next(!build.token || build.token !== this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN));

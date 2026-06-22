@@ -7,10 +7,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { TooltipService } from '../../../services/TooltipService';
 import { DescriptionSublimationComponent, DescriptionSublimationType } from '../description-sublimation/description-sublimation.component';
 import { ConnectedPosition } from '@angular/cdk/overlay';
+import { FavorisButtonComponent } from "../../form/favoris-button/favoris-button.component";
 
 @Component({
     selector: 'app-enchantement-sublimations-classiques',
-    imports: [ActivateDirective],
+    imports: [ActivateDirective, FavorisButtonComponent],
     templateUrl: './enchantement-sublimations-classiques.component.html',
     styleUrl: './enchantement-sublimations-classiques.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
