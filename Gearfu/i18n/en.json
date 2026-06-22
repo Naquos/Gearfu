@@ -149,6 +149,9 @@
         "sublimations": "Sublimations required on the build",
         "items": "Items required on the build"
     },
+    "historics-list": {
+        "nothing": "You haven't made any changes to your build yet."
+    },
     "item": {
         "maitrises": "Mastery",
         "resistances": "Resistances",

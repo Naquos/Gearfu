@@ -149,6 +149,9 @@
         "sublimations": "Sublimações que devem estar presentes na construção",
         "items": "Itens que devem estar presentes na construção"
     },
+    "historics-list": {
+        "nothing": "Você ainda não fez nenhuma alteração no seu build."
+    },
     "item": {
         "maitrises": "Maestria",
         "resistances": "Resistências",

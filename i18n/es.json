@@ -146,8 +146,11 @@
             "PO": "Alcance",
             "PW": "PW"
         },
-        "sublimations": "Sublimaciones que deben estar presentes en la construcción",
+        "sublimaciones": "Sublimaciones que deben estar presentes en la construcción",
         "items": "Objetos que deben estar presentes en la construcción"
+    },
+    "historics-list": {
+        "nothing": "Aún no has realizado ningún cambio en tu build."
     },
     "item": {
         "maitrises": "Dominio",
