@@ -19,6 +19,7 @@ import { NO_BUILD } from "../models/utils/utils";
 import { VisibilityBuildFormService } from "./form-signal/visibilityBuildFormService";
 import { NameBuildFormService } from "./form-signal/nameBuildFormService";
 import { ItemHistoricsService } from "./form-signal/itemHistoricsService";
+import { AptitudesManualFormService } from "./form-signal/aptitudesManualFormServices";
 
 @Injectable({ providedIn: 'root' })
 export class SaveBuildService {
@@ -37,6 +38,7 @@ export class SaveBuildService {
     private readonly visibilityBuildFormService = inject(VisibilityBuildFormService);
     private readonly nameBuildFormService = inject(NameBuildFormService);
     private readonly itemHistoricsService = inject(ItemHistoricsService);
+    private readonly aptitudesManualFormService = inject(AptitudesManualFormService);
 
 
     private readonly buildList = new BehaviorSubject<Build[]>([]);
@@ -168,13 +170,14 @@ export class SaveBuildService {
             this.codeAptitudesService.code$,
             this.sortFormService.codeBuild$,
             this.chasseFormService.enchantement$,
+            this.aptitudesManualFormService.codeBuild$,
             this.visibilityBuildFormService.visibilityBuild$,
             this.nameBuildFormService.name$,
             this.buildLoading$,
         ]).pipe(
-            filter(([, , , , , , , , , buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
+            filter(([, , , , , , , , , , buildLoading]) => !buildLoading), // Ne pas sauvegarder pendant le chargement d'un build
             debounceTime(500), // Attendre que tous les observables liés aient fini de se propager avant de sauvegarder
-            tap(([, , , , , , , , name,]) => {
+            tap(([, , , , , , , , , name,]) => {
                 const token_build = this.currentTokenBuild.getValue();
                 const token_user = this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN);
                 if (token_build && token_user && token_build !== token_user) {
@@ -198,6 +201,7 @@ export class SaveBuildService {
             itemsId: this.itemChooseService.getIdItems(),
             classe: this.classeFormService.getValue(),
             aptitudes: this.codeAptitudesService.getCode(),
+            aptitudesManual: this.aptitudesManualFormService.getCodeBuild(),
             sorts: this.sortFormService.getCodeBuild(),
             enchantement: this.chasseFormService.getCodeBuild(),
             elementSelector: this.elementSelectorService.encodeForBuild(),
@@ -247,6 +251,7 @@ export class SaveBuildService {
             itemsId: this.itemChooseService.getIdItems(),
             classe: this.classeFormService.getValue(),
             aptitudes: this.codeAptitudesService.getCode(),
+            aptitudesManual: this.aptitudesManualFormService.getCodeBuild(),
             sorts: this.sortFormService.getCodeBuild(),
             enchantement: this.chasseFormService.getCodeBuild(),
             elementSelector: this.elementSelectorService.encodeForBuild(),
@@ -316,6 +321,7 @@ export class SaveBuildService {
         this.elementSelectorService.decodeAndApplyFromBuild(build.elementSelector ?? "");
         this.classeFormService.setValue(build.classe ?? ClassIdEnum.Eniripsa);
         this.codeAptitudesService.saveCode(build.aptitudes ?? "");
+        this.aptitudesManualFormService.decodeAndSaveCodeBuild(build.aptitudesManual ?? "");
         this.sortFormService.decodeAndSaveCodeBuild(build.sorts ?? "0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
         this.chasseFormService.decodeAndSaveCodeBuild(build.enchantement ?? "");
         this.buildReadonly.next(!build.token || build.token !== this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN));

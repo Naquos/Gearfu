@@ -7,6 +7,7 @@ export interface Build {
     itemsId?: string;
     classe?: ClassIdEnum;
     aptitudes?: string;
+    aptitudesManual?: string;
     sorts?: string;
     enchantement?: string;
     elementSelector?: string;

@@ -213,6 +213,7 @@ export class SupabaseService {
             level: 200,
             itemsId: '',
             aptitudes: '',
+            aptitudesManual: '',
             sorts: '0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0',
             enchantement: '',
             elementSelector: '',

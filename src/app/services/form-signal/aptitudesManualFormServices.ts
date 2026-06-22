@@ -1,4 +1,4 @@
-import { Injectable, signal } from "@angular/core";
+import { effect, Injectable, signal } from "@angular/core";
 import { form } from "@angular/forms/signals";
 import { BehaviorSubject } from "rxjs";
 import { KeyEnum } from "../../models/enum/keyEnum";
@@ -54,6 +54,8 @@ export class AptitudesManualFormService extends AbstractSignalFormService<Aptitu
 
     private readonly recapStat = new BehaviorSubject<RecapStats[]>([]);
     public readonly recapStat$ = this.recapStat.asObservable();
+    private readonly codeBuild = new BehaviorSubject<string>('');
+    public readonly codeBuild$ = this.codeBuild.asObservable();
 
     protected readonly keyEnum = KeyEnum.KEY_APTITUDES_MANUAL;
     protected readonly model = signal<AptitudesManualForm>({
@@ -98,6 +100,18 @@ export class AptitudesManualFormService extends AbstractSignalFormService<Aptitu
     constructor() {
         super();
         this.init();
+    }
+
+    protected override init(): void {
+        effect(() => {
+            const value = this.model();
+            try {
+                this.handleChanges(value);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            } catch (_) {
+                this.setDefaultValue();
+            }
+        });
     }
 
     private generateCodeBuild(value: AptitudesManualForm): string {
@@ -206,8 +220,11 @@ export class AptitudesManualFormService extends AbstractSignalFormService<Aptitu
 
         this.recapStat.next(recapStatsList);
 
-        // Expose code build for URL encoding (not stored in localStorage directly)
-        void this.generateCodeBuild(value);
+        this.codeBuild.next(this.generateCodeBuild(value));
+    }
+
+    public getCodeBuild(): string {
+        return this.codeBuild.getValue();
     }
 
     public override setValue(value: AptitudesManualForm | null): void {
