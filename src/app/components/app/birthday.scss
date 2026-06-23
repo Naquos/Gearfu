@@ -57,17 +57,17 @@
             -37px 37px 0 -1px #caffbf,
             -52px 0 0 -1px #ffd6ff,
             -37px -37px 0 -1px #f4f1de,
-            0 -26px 0 -1px #ffffff,
-            26px 0 0 -1px #ffffff,
-            0 26px 0 -1px #ffffff,
-            -26px 0 0 -1px #ffffff;
+            0 -26px 0 -1px var(--color-white),
+            26px 0 0 -1px var(--color-white),
+            0 26px 0 -1px var(--color-white),
+            -26px 0 0 -1px var(--color-white);
     }
 
     &::after {
-        background: #ffffff;
+        background: var(--color-white);
         transform: rotate(18deg) scale(0.8);
         box-shadow:
-            0 -46px 0 -1px #ffffff,
+            0 -46px 0 -1px var(--color-white),
             33px -33px 0 -1px var(--tertiary),
             46px 0 0 -1px var(--secondary),
             33px 33px 0 -1px #f6bd60,

@@ -13,7 +13,7 @@
         background-color: var(--color-surface-deepest);
         font-weight: 600;
         font-size: 17px;
-        color: white;
+        color: var(--color-white);
         box-shadow: none;
     }
 
@@ -29,6 +29,6 @@
         text-align: center;
         border-radius: 25%;
         background-color: var(--color-surface-deepest);
-        color: white;
+        color: var(--color-white);
     }
 }

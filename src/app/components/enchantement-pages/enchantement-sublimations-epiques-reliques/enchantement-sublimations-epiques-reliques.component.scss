@@ -10,16 +10,16 @@
 
 .subli-container {
     cursor: pointer;
-    color: white;
+    color: var(--color-white);
     margin: 0 auto 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    background: linear-gradient(145deg, #0D1B2A, #415A77);
+    background: linear-gradient(145deg, var(--color-surface-deepest), var(--color-surface-soft));
     height: 85px;
     border-radius: 5px;
-    border: 2px solid #0D1B2A;
+    border: 2px solid var(--color-surface-deepest);
     text-align: center;
 
     img {
@@ -33,7 +33,7 @@
 }
 
 .selected {
-    background-color: orange;
+    background-color: var(--color-warning);
 }
 
 @media screen and (max-width: 1500px) {

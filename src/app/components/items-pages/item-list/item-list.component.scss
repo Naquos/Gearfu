@@ -39,7 +39,7 @@
         width: 100px;
         height: 100px;
         padding: 10px;
-        background-color: #415A77;
+        background-color: var(--color-surface-soft);
         border-radius: 50%;
         animation: spin 2s linear infinite;
     }

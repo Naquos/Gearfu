@@ -9,7 +9,7 @@ app-build {
 }
 
 h3 {
-    color: white;
+    color: var(--color-white);
 }
 
 .no-build {
@@ -18,7 +18,7 @@ h3 {
     justify-content: center;
     align-items: center;
     height: 100%;
-    color: white;
+    color: var(--color-white);
 
     span {
         font-size: 200px

@@ -12,11 +12,13 @@ $size: 56px;
     width: $size;
     height: $size;
     position: relative;
+
     img {
         width: $size;
         height: $size;
         margin-right: 10px;
     }
+
     span {
         display: none;
         position: absolute;
@@ -24,21 +26,22 @@ $size: 56px;
         top: 0px;
         right: 5px;
         font-weight: bolder;
-        color: #213A57;
+        color: var(--color-surface-mid);
         font-size: 25px;
         text-shadow:
-            -2px -2px 0 #000,
-            2px -2px 0 #000,
-            -2px 2px 0 #000,
-            2px 2px 0 #000,
-            -3px 0px 0 #000,
-            3px 0px 0 #000,
-            0px -3px 0 #000,
-            0px 3px 0 #000;
+            -2px -2px 0 var(--color-black),
+            2px -2px 0 var(--color-black),
+            -2px 2px 0 var(--color-black),
+            2px 2px 0 var(--color-black),
+            -3px 0px 0 var(--color-black),
+            3px 0px 0 var(--color-black),
+            0px -3px 0 var(--color-black),
+            0px 3px 0 var(--color-black);
     }
 }
 
-.itemPresent:active, .noItem:active {
+.itemPresent:active,
+.noItem:active {
     @include EnfoncementFonce;
 }
 
@@ -54,6 +57,7 @@ $size: 56px;
 
 @media screen and (min-width: 1001px) and (max-width: 1700px) {
     $size: 36px;
+
     .noItem {
         width: $size;
         height: $size;
@@ -62,17 +66,18 @@ $size: 56px;
     .itemPresent {
         width: $size;
         height: $size;
+
         img {
             width: $size;
             height: $size;
         }
-        
+
     }
 }
 
 
 @media screen and (max-width: 1000px) {
     img {
-        margin-right: 0!important;
+        margin-right: 0 !important;
     }
 }

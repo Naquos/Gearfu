@@ -11,7 +11,7 @@
         height: 50px;
         width: 100%;
         border-radius: 50px;
-        color: black;
+        color: var(--color-black);
         overflow: hidden;
 
         img {
@@ -29,7 +29,7 @@
         .remove {
             margin-right: 10px;
             font-size: 40px;
-            color: red;
+            color: var(--color-danger);
         }
 
         .remove:hover {

@@ -44,11 +44,11 @@
             height: 200px;
             overflow-y: scroll;
 
-            background-color: #81AAB7;
-            border: 1px solid #0D1B2A;
+            background-color: var(--color-surface-soft-alt);
+            border: 1px solid var(--color-surface-deepest);
             border-radius: 10px;
 
-            color: #0D1B2A;
+            color: var(--color-surface-deepest);
             padding: 10px;
             margin-top: 20px;
 
@@ -64,7 +64,7 @@
             }
 
             .selected {
-                background-color: orange;
+                background-color: var(--color-warning);
             }
         }
     }

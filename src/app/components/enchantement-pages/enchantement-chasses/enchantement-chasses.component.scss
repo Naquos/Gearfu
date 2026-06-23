@@ -88,9 +88,9 @@
 
                     span {
                         font-size: 11px;
-                        color: #0D1B2A;
-                        background-color: white;
-                        border: 1px solid #415A77;
+                        color: var(--color-surface-deepest);
+                        background-color: var(--color-white);
+                        border: 1px solid var(--color-surface-soft);
                         border-radius: 50%;
                         width: 15px;
                         height: 15px;
@@ -129,20 +129,20 @@
 
             .sublimations.invalid::after {
                 content: "✖";
-                color: red;
+                color: var(--color-danger);
                 font-weight: bold;
                 font-size: 24px;
                 position: absolute;
                 top: 47%;
                 left: 20px;
                 transform: translate(-50%, -50%);
-                text-shadow: 1px 1px 2px black, -1px -1px 2px black;
+                text-shadow: 1px 1px 2px var(--color-black), -1px -1px 2px var(--color-black);
                 pointer-events: none;
             }
         }
 
         .selected {
-            background-color: orange;
+            background-color: var(--color-warning);
         }
 
         .epique-relique {

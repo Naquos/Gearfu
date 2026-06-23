@@ -14,12 +14,12 @@ $border-width: 3px;
     align-items: center;
     justify-content: center;
     margin: 5px;
-    border: 2px solid #415A77;
+    border: 2px solid var(--color-surface-soft);
     border-radius: 25%;
     cursor: pointer;
     width: $width;
     height: $height;
-    background-color: white;
+    background-color: var(--color-white);
 
     mat-icon {
         position: absolute;
@@ -44,27 +44,27 @@ $border-width: 3px;
     }
 
     &:active {
-        background-color: #415A77;
-        border-color: #112a47;
+        background-color: var(--color-surface-soft);
+        border-color: var(--color-border-strong);
         transform: translateY(2px);
     }
 }
 
 .background-color-blue {
-    background-color: #415A77 !important;
+    background-color: var(--color-surface-soft) !important;
     border-width: 3px;
     width: calc(#{$width} - #{$border-width} + 1px);
     height: calc(#{$height} - #{$border-width} + 1px);
-    border-color: #112a47;
+    border-color: var(--color-border-strong);
 }
 
 .crossed-out {
-    background-color: red;
+    background-color: var(--color-danger);
 }
 
 
 button:active {
-    background-color: #415A77;
-    border-color: #112a47;
+    background-color: var(--color-surface-soft);
+    border-color: var(--color-border-strong);
     transform: translateY(2px);
 }
