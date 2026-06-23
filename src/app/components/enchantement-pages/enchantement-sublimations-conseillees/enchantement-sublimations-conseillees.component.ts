@@ -9,6 +9,7 @@ import { SupabaseService } from '../../../services/supabase/supabaseService';
 import { EnchantementSublimationsClassiquesComponent } from '../enchantement-sublimations-classiques/enchantement-sublimations-classiques.component';
 import { EnchantementSublimationsEpiquesReliquesComponent } from '../enchantement-sublimations-epiques-reliques/enchantement-sublimations-epiques-reliques.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { SublimationFavorisFormService } from '../../../services/form-signal/SublimationFavorisFormService';
 
 @Component({
     selector: 'app-enchantement-sublimations-community',
@@ -26,6 +27,7 @@ export class EnchantementSublimationsCommunityComponent {
     private readonly classeFormService = inject(ClasseFormService);
     private readonly chasseFormService = inject(ChasseFormService);
     private readonly sublimationsService = inject(SublimationService);
+    private readonly sublimationFavorisFormService = inject(SublimationFavorisFormService);
 
     private readonly mapSublimationConseilleeCount = new Map<string, number>();
     private readonly mapSublimationConseilleeCountEpic = new Map<string, number>();
@@ -35,6 +37,7 @@ export class EnchantementSublimationsCommunityComponent {
     private readonly nbDeckAvecSublimationClassiqueConseillee = signal(0);
     private readonly nbDeckAvecSublimationEpicConseillee = signal(0);
     private readonly nbDeckAvecSublimationRelicConseillee = signal(0);
+    private readonly idSublimationFavoris = toSignal(this.sublimationFavorisFormService.ids$);
 
     private readonly sublimationsConseillees = toSignal(this.classeFormService.classe$.pipe(
         switchMap(classe => this.supabaseService.getSublimationsConseillees(classe)),
@@ -57,6 +60,7 @@ export class EnchantementSublimationsCommunityComponent {
 
     protected readonly sublimationsConseilleesClassique: Signal<SublimationsDescriptions[]> =
         computed(() => {
+            this.idSublimationFavoris();
             const sublimationsConseillees = this.sublimationsConseillees();
             if (!sublimationsConseillees || sublimationsConseillees.length === 0) {
                 return [];
@@ -66,6 +70,7 @@ export class EnchantementSublimationsCommunityComponent {
 
     protected readonly sublimationsConseilleesEpicRelic: Signal<SublimationsDescriptions[]> =
         computed(() => {
+            this.idSublimationFavoris();
             const sublimationsConseillees = this.sublimationsConseillees();
             if (!sublimationsConseillees || sublimationsConseillees.length === 0) {
                 return [];

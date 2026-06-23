@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
 import { ButtonCheckboxComponent } from "../button-checkbox/button-checkbox.component";
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -9,6 +9,7 @@ import { ItemFavorisFormService } from '../../../services/form-signal/itemFavori
 import { Item } from '../../../models/data/item';
 import { SublimationsDescriptions } from '../../../models/data/sublimationsDescriptions';
 import { SublimationFavorisFormService } from '../../../services/form-signal/SublimationFavorisFormService';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-favoris-button',
@@ -18,36 +19,37 @@ import { SublimationFavorisFormService } from '../../../services/form-signal/Sub
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FavorisButtonComponent {
-  private favorisFormService!: ItemFavorisFormService | SublimationFavorisFormService;
   private readonly itemFavorisFormService = inject(ItemFavorisFormService);
   private readonly sublimationFavorisFormService = inject(SublimationFavorisFormService);
+
+  private readonly itemIds = toSignal(this.itemFavorisFormService.ids$, { initialValue: [] });
+  private readonly sublimationIds = toSignal(this.sublimationFavorisFormService.ids$, { initialValue: [] });
+
   protected readonly control = new FormControl<boolean>(false, { nonNullable: true });
 
   public item = input.required<Item | SublimationsDescriptions>();
   public height = input<number | null>(null);
 
+  private readonly isFavoris = computed(() => {
+    const ids = 'maitrise' in this.item() ? this.itemIds() : this.sublimationIds();
+    return ids.includes(this.item().id);
+  });
+
   constructor() {
     effect(() => {
-      // Si c'est un item, on utilise le service ItemFavorisFormService,
-      // Sinon c'est une sublimation et on utilise SublimationFavorisFormService
-      if ('maitrise' in this.item()) {
-        this.favorisFormService = this.itemFavorisFormService;
-      } else {
-        this.favorisFormService = this.sublimationFavorisFormService;
-      }
-      this.control.setValue(this.favorisFormService.hasItem(this.item().id), { emitEvent: false });
+      this.control.setValue(this.isFavoris(), { emitEvent: false });
     });
 
     this.control.valueChanges.subscribe(() => this.handleClick());
   }
 
   private handleClick(): void {
+    const service = 'maitrise' in this.item() ? this.itemFavorisFormService : this.sublimationFavorisFormService;
     const itemId = this.item().id;
-    const hasItem = this.favorisFormService.hasItem(itemId);
-    if (hasItem) {
-      this.favorisFormService.removeItem(itemId);
+    if (service.hasItem(itemId)) {
+      service.removeItem(itemId);
     } else {
-      this.favorisFormService.addItem(itemId);
+      service.addItem(itemId);
     }
   }
 

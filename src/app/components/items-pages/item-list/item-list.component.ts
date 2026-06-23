@@ -1,8 +1,8 @@
-import { Component, inject, OnInit, OnDestroy, Inject, PLATFORM_ID, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, Inject, PLATFORM_ID, ChangeDetectionStrategy, computed } from '@angular/core';
 import { ItemComponent } from '../item/item.component';
 import { ItemSkeletonComponent } from '../item-skeleton/item-skeleton.component';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { IntersectDirective } from '../../../directives/intersect.directive';
 import { Item } from '../../../models/data/item';
 import { ItemsService } from '../../../services/data/itemsService';
@@ -19,12 +19,16 @@ import { ItemFavorisFormService } from '../../../services/form-signal/itemFavori
 })
 export class ItemListComponent implements OnInit, OnDestroy {
   protected readonly itemsService = inject(ItemsService);
+  private readonly fullItems = toSignal(this.itemsService.items$, { initialValue: [] });
   protected readonly skeletonArray = Array(36).fill(0).map((x, i) => i); // Tableau pour afficher 36 skeletons
   private readonly displayFavorisFormService = inject(DisplayFavorisFormService);
   protected readonly displayFavoris = toSignal(this.displayFavorisFormService.display$);
 
   private readonly itemsFavorisFormService = inject(ItemFavorisFormService);
-  protected readonly favorisItems = toSignal(this.itemsFavorisFormService.ids$.pipe(map(ids => {
+  private readonly idsFavoris = toSignal(this.itemsFavorisFormService.ids$, { initialValue: [] });
+  protected readonly favorisItems = computed(() => {
+    this.fullItems(); // Déclenche la réévaluation lorsque fullItems change
+    const ids = this.idsFavoris();
     const result: Item[] = [];
     for (const id of ids) {
       const item = this.itemsService.getItem(id);
@@ -33,7 +37,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
       }
     }
     return result;
-  })));
+  });
 
   private displayedItems$ = new BehaviorSubject<Item[]>([]);
   protected readonly displayedItems = toSignal(this.displayedItems$);
