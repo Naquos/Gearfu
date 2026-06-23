@@ -7,6 +7,7 @@ $height-recap-stats: 112px;
     flex-wrap: wrap;
 
     .close-button {
+        background-color: var(--color-surface-empty);
         position: fixed;
         left: calc($width-app-filters + $width-left-menu);
         z-index: 10;

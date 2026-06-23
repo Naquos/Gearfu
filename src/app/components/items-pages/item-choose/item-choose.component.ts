@@ -14,6 +14,7 @@ import { ZenithService } from '../../../services/zenith/zenithService';
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { SaveBuildService } from '../../../services/saveBuildService';
 import { HistoricsListComponent } from "../historics-list/historics-list.component";
+import { DarkModeFormService } from '../../../services/form-signal/darkModeFormService';
 
 @Component({
   selector: 'app-item-choose',
@@ -29,11 +30,10 @@ export class ItemChooseComponent {
   protected readonly itemChooseService = inject(ItemChooseService);
   private readonly zenithService = inject(ZenithService);
   private readonly recapStatsService = inject(RecapStatsService);
+  private readonly darkModeFormService = inject(DarkModeFormService);
   protected readonly imageService = inject(ImageService);
   protected readonly saveBuildService = inject(SaveBuildService);
   protected readonly openHistory = signal(false);
-
-
 
   protected readonly maitrisesTotal = toSignal(this.recapStatsService.maitrisesTotal$, {
     initialValue: 0
@@ -72,5 +72,10 @@ export class ItemChooseComponent {
   protected toggleHistory(event: Event): void {
     event.stopPropagation();
     this.openHistory.update(v => !v);
+  }
+
+  protected toggleDarkMode(event: Event): void {
+    event.stopPropagation();
+    this.darkModeFormService.setValue(!this.darkModeFormService.currentValue());
   }
 }

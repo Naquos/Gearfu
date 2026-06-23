@@ -37,6 +37,10 @@
             }
         }
 
+        button {
+            background-color: var(--color-surface-empty);
+        }
+
         button,
         .no-button {
             margin-left: auto;

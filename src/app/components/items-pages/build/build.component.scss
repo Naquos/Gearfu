@@ -28,7 +28,7 @@
             margin-right: 10px;
             cursor: pointer;
             color: var(--color-text-dark);
-            background-color: var(--color-white);
+            background-color: var(--color-surface-empty);
             border-radius: 25%;
             border: 2px solid var(--color-surface-soft);
             box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color);
@@ -150,6 +150,7 @@ img {
             --button-radius: 10px;
             width: 40px;
             height: 40px;
+            background-color: var(--color-surface-empty);
         }
     }
 

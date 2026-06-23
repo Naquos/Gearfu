@@ -95,7 +95,8 @@
         display: flex;
     }
 
-    .historique {
+    .historique,
+    .dark-mode {
         display: contents;
 
         mat-icon {
@@ -111,8 +112,13 @@
     }
 
 
-    .historique:active {
+    .historique:active,
+    .dark-mode:active {
         transform: translateY(2px);
+    }
+
+    .dark-mode {
+        margin-left: 5px;
     }
 
 

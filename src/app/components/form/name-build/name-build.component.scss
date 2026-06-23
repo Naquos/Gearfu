@@ -11,6 +11,10 @@
         mat-form-field {
             width: calc(100% - 76px);
         }
+
+        mat-icon {
+            background-color: var(--color-surface-empty);
+        }
     }
 
 
