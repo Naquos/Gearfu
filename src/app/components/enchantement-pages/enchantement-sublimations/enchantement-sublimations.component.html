@@ -12,14 +12,14 @@
         </div>
 
         <div class="slider-container">
-            @for(sublimation of sublimationsList(); track $index) {
+            @for(sublimation of sublimationsList(); track sublimation.id) {
             <app-enchantement-sublimations-classiques
                 [sublimation]="sublimation"></app-enchantement-sublimations-classiques>
             }
         </div>
 
         <div class="slider-container">
-            @for(sublimation of sublimationsEpiqueReliqueList(); track $index) {
+            @for(sublimation of sublimationsEpiqueReliqueList(); track sublimation.id) {
             <app-enchantement-sublimations-epiques-reliques
                 [sublimation]="sublimation"></app-enchantement-sublimations-epiques-reliques>
             }
