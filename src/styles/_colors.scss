@@ -1,6 +1,8 @@
 :root {
     --color-white: #ffffff;
     --color-black: #000000;
+    --color-orange-favoris: rgb(207, 148, 11);
+    --color-white-checkbox: var(--color-white);
 
     --color-surface-empty: #ffffff;
     --color-surface-page: #415A77;
@@ -55,8 +57,8 @@
 
     --color-text-inverse: var(--color-white);
     --button-color: var(--color-surface-muted);
-
-    --color-text-dark: var(--color-surface-muted);
+    --color-orange-favoris: var(--color-white);
+    --color-white-checkbox: rgb(207, 148, 11);
 
     --color-surface-empty: #1c2536;
     --color-surface-page: #0e1117;
