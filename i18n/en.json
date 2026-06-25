@@ -162,7 +162,8 @@
         "droppable": "Can be dropped by a monster",
         "boss-drop": "Can be dropped by a boss",
         "archi-drop": "Can be dropped by an archimonster or dominant",
-        "pvp": "Can be obtained in PvP"
+        "pvp": "Can be obtained in PvP",
+        "elevage": "Can be obtained through breeding"
     },
     "item-choose": {
         "zenith": "Export build to Zénith Wakfu",
@@ -252,7 +253,8 @@
         "cacher": "Display items obtainable by their means of obtainment",
         "boss": "Can be dropped by a boss",
         "archi": "Can be dropped by an archimonster or dominant",
-        "pvp": "Can be obtained in PvP"
+        "pvp": "Can be obtained in PvP",
+        "elevage": "Can be obtained through breeding"
     },
     "only-no-elem": {
         "label": "Consider only items without elemental mastery",
