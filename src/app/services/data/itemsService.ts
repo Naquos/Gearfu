@@ -174,7 +174,16 @@ export class ItemsService {
     return !!item.title;
   }
 
-  private filterObtention(item: Item, seeDrop: boolean, seeCraftable: boolean, seeBoss: boolean, seeArchi: boolean, seePvP: boolean, seeElevage: boolean): boolean {
+  private filterObtention(
+    item: Item,
+    seeDrop: boolean,
+    seeCraftable: boolean,
+    seeBoss: boolean,
+    seeArchi: boolean,
+    seePvP: boolean,
+    seeElevage: boolean,
+    seeNoObtention: boolean
+  ): boolean {
     let result = item.isCraftable && !seeCraftable;
     result = result || (item.mobDropable.length > 0 && !seeDrop);
     result = result || (item.bossDropable.length > 0 && !seeBoss);
@@ -182,7 +191,8 @@ export class ItemsService {
     result = result || (item.isPvP && !seePvP);
     result = result || (item.isElevage && !seeElevage);
     // Items without obtention method
-    result = result || (item.mobDropable.length === 0 && item.bossDropable.length === 0 && item.archiDropable.length === 0 && !item.isCraftable && !item.isPvP && !item.isElevage);
+    result = result || (item.mobDropable.length === 0 && item.bossDropable.length === 0 && item.archiDropable.length === 0
+      && !item.isCraftable && !item.isPvP && !item.isElevage && !seeNoObtention);
     return result;
   }
 
@@ -269,8 +279,17 @@ export class ItemsService {
       .pipe(map(([items, itemName]) => items.filter(x => normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(normalizeString(itemName)))),
         tap(items => this._itemsFilterByItemName.next(items)));
 
-    const itemsFilterByObtention$ = combineLatest([itemFilterByName$, this.obtentionFormService.drop$, this.obtentionFormService.craftable$, this.obtentionFormService.boss$, this.obtentionFormService.archi$, this.obtentionFormService.pvp$, this.obtentionFormService.elevage$])
-      .pipe(map(([items, drop, craftable, boss, archi, pvp, elevage]) => items.filter(x => this.filterObtention(x, drop, craftable, boss, archi, pvp, elevage))));
+    const itemsFilterByObtention$ = combineLatest([
+      itemFilterByName$,
+      this.obtentionFormService.drop$,
+      this.obtentionFormService.craftable$,
+      this.obtentionFormService.boss$,
+      this.obtentionFormService.archi$,
+      this.obtentionFormService.pvp$,
+      this.obtentionFormService.elevage$,
+      this.obtentionFormService.noObtention$
+    ])
+      .pipe(map(([items, drop, craftable, boss, archi, pvp, elevage, noObtention]) => items.filter(x => this.filterObtention(x, drop, craftable, boss, archi, pvp, elevage, noObtention))));
 
     const itemsFilterByLevelMin$ = combineLatest([itemsFilterByObtention$, this.itemLevelFormService.levelMin$])
       .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));

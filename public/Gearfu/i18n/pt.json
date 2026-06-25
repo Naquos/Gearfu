@@ -254,7 +254,8 @@
         "boss": "Pode ser dropado por um chefe",
         "archi": "Pode ser dropado por um archimonstre ou um dominante",
         "pvp": "Pode ser obtido em PvP",
-        "elevage": "Pode ser obtido através da criação"
+        "elevage": "Pode ser obtido através da criação",
+        "no_obtention": "Pode ser obtido por nenhum meio de obtenção"
     },
     "only-no-elem": {
         "label": "Considerar apenas itens sem maestria elemental",

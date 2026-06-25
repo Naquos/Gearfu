@@ -254,7 +254,8 @@
         "boss": "Puede ser dropeado por un jefe",
         "archi": "Puede ser dropeado por un archimonstre o un dominante",
         "pvp": "Puede ser obtenido en PvP",
-        "elevage": "Puede ser obtenido a través de la cría"
+        "elevage": "Puede ser obtenido a través de la cría",
+        "no_obtention": "Puede ser obtenido por ningún medio de obtención"
     },
     "only-no-elem": {
         "label": "Considerar solo objetos sin dominio elemental",

@@ -254,7 +254,8 @@
         "boss": "Can be dropped by a boss",
         "archi": "Can be dropped by an archimonster or dominant",
         "pvp": "Can be obtained in PvP",
-        "elevage": "Can be obtained through breeding"
+        "elevage": "Can be obtained through breeding",
+        "no_obtention": "Cannot be obtained by any means"
     },
     "only-no-elem": {
         "label": "Consider only items without elemental mastery",

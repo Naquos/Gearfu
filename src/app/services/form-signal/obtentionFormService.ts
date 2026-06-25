@@ -11,6 +11,7 @@ export interface ObtentionForm {
     ARCHI: boolean;
     PVP: boolean;
     ELEVAGE: boolean;
+    NO_OBTENTION: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -22,7 +23,8 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
         BOSS: true,
         ARCHI: true,
         PVP: true,
-        ELEVAGE: true
+        ELEVAGE: true,
+        NO_OBTENTION: true
     };
 
     // Inverted: BehaviorSubject emits !value.FIELD (true = excluded, false = included)
@@ -44,6 +46,9 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
     private readonly elevage = new BehaviorSubject<boolean>(!ObtentionFormService.DEFAULT_VALUE.ELEVAGE);
     public readonly elevage$ = this.elevage.asObservable();
 
+    private readonly noObtention = new BehaviorSubject<boolean>(!ObtentionFormService.DEFAULT_VALUE.NO_OBTENTION);
+    public readonly noObtention$ = this.noObtention.asObservable();
+
     protected readonly keyEnum = KeyEnum.KEY_OBTENTION;
     protected readonly model = signal<ObtentionForm>({ ...ObtentionFormService.DEFAULT_VALUE });
 
@@ -61,6 +66,7 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
         this.archi.next(!value.ARCHI);
         this.pvp.next(!value.PVP);
         this.elevage.next(!value.ELEVAGE);
+        this.noObtention.next(!value.NO_OBTENTION);
     }
 
     public override setValue(value: ObtentionForm | null): void {
@@ -70,7 +76,8 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
             BOSS: value?.BOSS ?? ObtentionFormService.DEFAULT_VALUE.BOSS,
             ARCHI: value?.ARCHI ?? ObtentionFormService.DEFAULT_VALUE.ARCHI,
             PVP: value?.PVP ?? ObtentionFormService.DEFAULT_VALUE.PVP,
-            ELEVAGE: value?.ELEVAGE ?? ObtentionFormService.DEFAULT_VALUE.ELEVAGE
+            ELEVAGE: value?.ELEVAGE ?? ObtentionFormService.DEFAULT_VALUE.ELEVAGE,
+            NO_OBTENTION: value?.NO_OBTENTION ?? ObtentionFormService.DEFAULT_VALUE.NO_OBTENTION
         });
     }
 
