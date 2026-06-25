@@ -254,7 +254,8 @@
         "boss": "Pouvant être droppé par un boss",
         "archi": "Pouvant être droppé par un archimonstre ou un dominant",
         "pvp": "Pouvant être obtenu en PvP",
-        "elevage": "Pouvant être obtenu par élevage"
+        "elevage": "Pouvant être obtenu par élevage",
+        "no_obtention": "Pouvant être obtenu par aucun moyen d'obtention"
     },
     "only-no-elem": {
         "label": "Prendre en compte exclusivement les items avec aucune maitrise élémentaire",
