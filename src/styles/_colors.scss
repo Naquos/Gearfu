@@ -42,6 +42,12 @@
     --skeleton-shimmer-start: rgba(255, 255, 255, 0.05);
     --skeleton-shimmer-middle: rgba(255, 255, 255, 0.15);
 
+    --mat-tab-inactive-label-text-color: var(--color-surface-muted);
+    --mat-tab-active-label-text-color: var(--color-white);
+    --mat-tab-active-focus-label-text-color: var(--color-white);
+    --mat-tab-inactive-hover-label-text-color: var(--color-white);
+    --mat-tab-divider-color: var(--color-surface-mid);
+
     // --gradient-panel: linear-gradient(145deg, var(--color-surface-deepest), var(--color-surface-soft));
     --gradient-panel: var(--color-surface-mid);
     --gradient-app-header: linear-gradient(to right, var(--color-surface-deepest), var(--color-surface-deep), var(--color-surface-soft));
@@ -87,6 +93,11 @@
     --mat-sys-surface-variant: var(--color-surface-empty);
     --mat-sys-on-surface-variant: var(--color-white);
     --mat-sys-on-surface: rgb(29, 29, 29);
+    --mat-tab-inactive-label-text-color: var(--color-surface-muted);
+    --mat-tab-active-label-text-color: var(--color-white);
+    --mat-tab-active-focus-label-text-color: var(--color-white);
+    --mat-tab-inactive-hover-label-text-color: var(--color-white);
+    --mat-tab-inactive-focus-label-text-color: var(--color-surface-muted);
 
     .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input,
     .mat-mdc-select {

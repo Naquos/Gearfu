@@ -1,16 +1,18 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<div class="main-nav">
-    <div (click)="redirectToSearch()" [class.active]="activePage() === 'search'">{{ "app.search-builds" | translate }}
-    </div>
-    <div (click)="redirectToListItems()" [class.active]="activePage() === 'filter'">{{ "app.filter-item" | translate }}
-    </div>
-    <div (click)="redirectToAptitudes()" [class.active]="activePage() === 'aptitudes'">{{ "app.aptitudes" | translate }}
-    </div>
-    <div (click)="redirectToSorts()" [class.active]="activePage() === 'sorts'">{{ "app.sorts" | translate }}</div>
-    <div (click)="redirectToEnchantements()" [class.active]="activePage() === 'enchantements'">{{ "app.enchantement" |
-        translate }}</div>
-    <div (click)="redirectToRecapitulatif()" [class.active]="activePage() === 'recapitulatif'">{{ "app.recapitulatif" |
-        translate }}</div>
-    <div (click)="redirectToBuild()" [class.active]="activePage() === 'build'">{{ "app.build" | translate }}</div>
-</div>
+<mat-tab-group class="main-nav mobile-friendly-tabs" [selectedIndex]="1" (selectedIndexChange)="redirectIndex($event)">
+    <mat-tab [label]="'app.search-builds' | translate">
+    </mat-tab>
+    <mat-tab [label]="'app.filter-item' | translate">
+    </mat-tab>
+    <mat-tab [label]="'app.aptitudes' | translate">
+    </mat-tab>
+    <mat-tab [label]="'app.sorts' | translate">
+    </mat-tab>
+    <mat-tab [label]="'app.enchantement' | translate">
+    </mat-tab>
+    <mat-tab [label]="'app.recapitulatif' | translate">
+    </mat-tab>
+    <mat-tab [label]="'app.build' | translate">
+    </mat-tab>
+</mat-tab-group>

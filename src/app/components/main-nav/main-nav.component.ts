@@ -5,11 +5,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { getBuildIdFromUrl } from '../../models/utils/utils';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
     selector: 'app-main-nav',
     standalone: true,
-    imports: [TranslateModule],
+    imports: [TranslateModule, MatTabsModule],
     templateUrl: './main-nav.component.html',
     styleUrl: './main-nav.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -55,27 +56,29 @@ export class MainNavComponent {
         });
     }
 
-    protected redirectToBuild(): void {
-        this.redirectToPage('build');
-    }
-
-    protected redirectToSearch(): void {
-        this.redirectToPage('search');
-    }
-
-    protected redirectToAptitudes(): void {
-        this.redirectToPage('aptitudes');
-    }
-
-    protected redirectToSorts(): void {
-        this.redirectToPage('sorts');
-    }
-
-    protected redirectToEnchantements(): void {
-        this.redirectToPage('enchantements');
-    }
-
-    protected redirectToRecapitulatif(): void {
-        this.redirectToPage('recapitulatif');
+    protected redirectIndex(index: number): void {
+        switch (index) {
+            case 0:
+                this.redirectToPage('search');
+                break;
+            case 1:
+                this.redirectToListItems();
+                break;
+            case 2:
+                this.redirectToPage('aptitudes');
+                break;
+            case 3:
+                this.redirectToPage('sorts');
+                break;
+            case 4:
+                this.redirectToPage('enchantements');
+                break;
+            case 5:
+                this.redirectToPage('recapitulatif');
+                break;
+            default:
+                this.redirectToPage('build');
+                break;
+        }
     }
 }
