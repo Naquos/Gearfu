@@ -123,7 +123,7 @@ export class ActionsPipe implements PipeTransform {
   }
 
   private getDefinitions(action: ActionsCdn): string {
-    return action.description[this.translateService.currentLang as keyof typeof action.description] as string;
+    return action.description ? (action.description[this.translateService.currentLang as keyof typeof action.description] as string ?? "") : "";
   }
 
   private findAction(actions: ActionsCdn[], effect: EquipEffects | DifferentStatsItem): ActionsCdn {

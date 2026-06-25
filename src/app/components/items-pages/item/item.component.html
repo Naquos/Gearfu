@@ -77,7 +77,11 @@
             }
             }
             @if (item().isPvP) {
-            <img [src]="imageService.getItemUrl(53124705)" alt="pvp" [matTooltip]="'item.pvp' | translate">
+            <img appFallback [src]="imageService.getItemUrl(53124705)" alt="pvp" [matTooltip]="'item.pvp' | translate">
+            }
+            @if (item().isElevage) {
+            <img appFallback [src]="imageService.getItemUrl(84933039)" alt="elevage"
+                [matTooltip]="'item.elevage' | translate">
             }
         </div>
     </div>

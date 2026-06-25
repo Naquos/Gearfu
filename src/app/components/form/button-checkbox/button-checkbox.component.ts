@@ -9,10 +9,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NEVER } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
+import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
 
 @Component({
   selector: 'app-button-checkbox',
-  imports: [MatTooltipModule, MatIconModule, TranslateModule, ReactiveFormsModule, FormField, LazyImageDirective],
+  imports: [MatTooltipModule, MatIconModule, TranslateModule, ReactiveFormsModule, FormField, LazyImageDirective, ImageFallbackDirective],
   templateUrl: './button-checkbox.component.html',
   styleUrl: './button-checkbox.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

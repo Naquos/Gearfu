@@ -11,6 +11,6 @@
     <mat-icon [fontIcon]="matIcon()"
         [style.color]="isChecked() ? 'var(--color-white-checkbox)' : color() ?  color() :'#213A57'"></mat-icon>
     } @else if(srcImg()) {
-    <img [src]="srcImg()" alt="image">
+    <img appFallback [src]="srcImg()" alt="image">
     }
 </label>

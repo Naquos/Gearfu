@@ -31,6 +31,7 @@ import { isExcludeIdItem } from "../../models/enum/excludeIdItemEnum";
 import { BaseEffect, SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
 import { calculWeight, normalizeString } from "../../models/utils/utils";
 import { FamiliersService } from "./familiersService";
+import { IdItemElevageEnum } from "../../models/enum/idItemElevageEnum";
 
 @Injectable({ providedIn: 'root' })
 export class ItemsService {
@@ -86,6 +87,8 @@ export class ItemsService {
     IdPierreDonjonEnum.ENTOURAGE,
     IdPierreDonjonEnum.ULTIME
   ];
+
+  private readonly idElevageItemsSet = new Set<number>(Object.values(IdItemElevageEnum) as number[]);
 
   protected items: Item[] = [];
   protected readonly _fullItems = new BehaviorSubject<Item[]>([]);
@@ -171,14 +174,15 @@ export class ItemsService {
     return !!item.title;
   }
 
-  private filterObtention(item: Item, seeDrop: boolean, seeCraftable: boolean, seeBoss: boolean, seeArchi: boolean, seePvP: boolean): boolean {
+  private filterObtention(item: Item, seeDrop: boolean, seeCraftable: boolean, seeBoss: boolean, seeArchi: boolean, seePvP: boolean, seeElevage: boolean): boolean {
     let result = item.isCraftable && !seeCraftable;
     result = result || (item.mobDropable.length > 0 && !seeDrop);
     result = result || (item.bossDropable.length > 0 && !seeBoss);
     result = result || (item.archiDropable.length > 0 && !seeArchi);
     result = result || (item.isPvP && !seePvP);
+    result = result || (item.isElevage && !seeElevage);
     // Items without obtention method
-    result = result || (item.mobDropable.length === 0 && item.bossDropable.length === 0 && item.archiDropable.length === 0 && !item.isCraftable && !item.isPvP);
+    result = result || (item.mobDropable.length === 0 && item.bossDropable.length === 0 && item.archiDropable.length === 0 && !item.isCraftable && !item.isPvP && !item.isElevage);
     return result;
   }
 
@@ -265,8 +269,8 @@ export class ItemsService {
       .pipe(map(([items, itemName]) => items.filter(x => normalizeString(x.title[this.translateService.currentLang as keyof typeof x.title].toString()).includes(normalizeString(itemName)))),
         tap(items => this._itemsFilterByItemName.next(items)));
 
-    const itemsFilterByObtention$ = combineLatest([itemFilterByName$, this.obtentionFormService.drop$, this.obtentionFormService.craftable$, this.obtentionFormService.boss$, this.obtentionFormService.archi$, this.obtentionFormService.pvp$])
-      .pipe(map(([items, drop, craftable, boss, archi, pvp]) => items.filter(x => this.filterObtention(x, drop, craftable, boss, archi, pvp))));
+    const itemsFilterByObtention$ = combineLatest([itemFilterByName$, this.obtentionFormService.drop$, this.obtentionFormService.craftable$, this.obtentionFormService.boss$, this.obtentionFormService.archi$, this.obtentionFormService.pvp$, this.obtentionFormService.elevage$])
+      .pipe(map(([items, drop, craftable, boss, archi, pvp, elevage]) => items.filter(x => this.filterObtention(x, drop, craftable, boss, archi, pvp, elevage))));
 
     const itemsFilterByLevelMin$ = combineLatest([itemsFilterByObtention$, this.itemLevelFormService.levelMin$])
       .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
@@ -436,6 +440,7 @@ export class ItemsService {
             maitrise: 0,
             resistance: 0,
             isCraftable: false,
+            isElevage: this.idElevageItemsSet.has(x.definition.item.id),
             mobDropable: [],
             bossDropable: [],
             archiDropable: [],
