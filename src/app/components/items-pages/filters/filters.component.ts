@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 import { ReverseButtonComponent } from "../../form/reverse-button/reverse-button.component";
 import { SearchItemNameComponent } from "../../form/search-item-name/search-item-name.component";
 import { ObtentionComponent } from "../../form/obtention/obtention.component";
@@ -17,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonCheckboxComponent } from "../../form/button-checkbox/button-checkbox.component";
 import { DisplayFavorisFormService } from '../../../services/form-signal/displayFavorisFormService';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { isMobile } from '../../../models/utils/utils';
 
 @Component({
   selector: 'app-filters',
@@ -44,4 +45,5 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class FiltersComponent {
   protected readonly resetFormService = inject(ResetFormService);
   protected readonly displayFavorisFormService = inject(DisplayFavorisFormService);
+  protected readonly isMobile = signal(isMobile());
 }

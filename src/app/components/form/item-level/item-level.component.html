@@ -1,6 +1,7 @@
+@if(!noTitle()) {
 <h3>{{ "item-level.level" | translate}}</h3>
-
-<div>
+}
+<div [class.no-title]="noTitle()">
   <mat-form-field>
     <mat-label>{{ "item-level.level-min" | translate}}</mat-label>
     <input type="text" inputmode="numeric" matInput [formField]="itemLevelFormService.form.levelMin">

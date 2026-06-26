@@ -1,4 +1,4 @@
-form {
+div {
 
     display: flex;
     justify-content: space-between;
@@ -8,15 +8,36 @@ form {
     }
 }
 
+.no-title {
+    justify-content: flex-start;
+    align-content: center;
+
+    mat-form-field {
+        margin-right: 20px;
+    }
+
+    ::ng-deep {
+        .mat-mdc-form-field-subscript-wrapper {
+            display: none;
+        }
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1450px) {
+    .no-title {
+        flex-direction: column;
+    }
+}
+
 
 @media screen and (min-width: 700px) {
-        input[type=number] {
+    input[type=number] {
         display: none;
     }
-  }
+}
 
-  @media screen and (max-width: 700px) {
+@media screen and (max-width: 700px) {
     input[type=text] {
         display: none;
-      }
-  }
+    }
+}

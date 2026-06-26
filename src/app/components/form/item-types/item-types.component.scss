@@ -2,5 +2,21 @@
     div {
         display: flex;
         flex-wrap: wrap;
+        align-content: center;
+        height: 100%;
+    }
+}
+
+@media screen and (min-width: 1450px) and (max-width: 1700px) {
+    .no-title {
+        display: grid !important;
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+
+@media screen and (min-width: 701px) and (max-width: 1450px) {
+    .no-title {
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr);
     }
 }

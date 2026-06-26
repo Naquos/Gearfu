@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, input } from '@angular/core';
 import { ItemType } from '../../../models/data/itemType';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -20,4 +20,5 @@ export class ItemTypesComponent {
   protected readonly itemTypesServices = inject(ItemTypeServices);
   protected readonly itemTypes = new Map<string, ItemType>([]);
   protected readonly ItemTypeEnum = ItemTypeEnum;
+  public readonly noTitle = input<boolean>(false);
 }

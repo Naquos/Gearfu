@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, input } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,4 +14,5 @@ import { ItemLevelFormService } from '../../../services/form-signal/itemLevelFor
 })
 export class ItemLevelComponent {
   protected readonly itemLevelFormService = inject(ItemLevelFormService);
+  public readonly noTitle = input<boolean>(false);
 }

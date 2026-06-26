@@ -6,19 +6,20 @@ $height-recap-stats: 112px;
     display: flex;
     flex-wrap: wrap;
 
-    .close-button {
-        background-color: var(--color-surface-empty);
-        position: fixed;
-        left: calc($width-app-filters + $width-left-menu);
-        z-index: 10;
-        transition: left 0.3s ease-in-out;
-        margin-top: 98px;
-        margin-left: 0;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
 
-        &.close {
-            left: calc($width-left-menu);
+    .row {
+        z-index: 1;
+        padding: 5px;
+        position: fixed;
+        width: calc(100% - 19%);
+        left: calc(#{$width-app-filters} + #{$width-left-menu});
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 5px;
+        background: var(--color-surface-mid);
+
+        app-item-types {
+            margin-right: 20px;
         }
     }
 
@@ -46,7 +47,7 @@ $height-recap-stats: 112px;
     app-item-list {
         width: calc(100% - #{$width-app-filters} - 9%);
         margin-left: calc(#{$width-app-filters} + 4%);
-        margin-top: 10px;
+        margin-top: 90px;
         transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
 
         &.close {
@@ -82,12 +83,6 @@ $height-recap-stats: 112px;
 
 
 @media screen and (min-width: 1700px) and (max-width: 2000px) {
-    .close-button {
-        &.close {
-            left: calc($width-app-filters + $width-left-menu);
-        }
-    }
-
     app-filters {
         &.close {
             width: $width-app-filters;
@@ -108,12 +103,9 @@ $height-recap-stats: 112px;
     $width-left-menu-reduced: 300px;
     $width-app-filters-reduced: 430px;
 
-    .close-button {
-        left: calc($width-app-filters-reduced + $width-left-menu-reduced) !important;
-
-        &.close {
-            left: calc($width-app-filters-reduced) !important;
-        }
+    .row {
+        width: 54% !important;
+        left: calc(#{$width-app-filters-reduced} + #{$width-left-menu-reduced}) !important;
     }
 
     app-filters {
@@ -127,6 +119,7 @@ $height-recap-stats: 112px;
     app-item-list {
         width: 68% !important;
         margin-left: calc(#{$width-left-menu-reduced} + 2%) !important;
+        margin-top: 110px !important;
 
         &.close {
             margin-left: 10px !important;
@@ -141,13 +134,12 @@ $height-recap-stats: 112px;
     $width-left-menu-minimized: 350px;
     $width-app-filters-minimized: 430px;
 
-    .close-button {
-        left: calc($width-app-filters-minimized + $width-left-menu-minimized) !important;
-
-        &.close {
-            left: calc($width-app-filters-minimized) !important;
-        }
+    .row {
+        width: 45% !important;
+        left: calc(#{$width-app-filters-minimized} + #{$width-left-menu-minimized}) !important;
+        overflow: hidden;
     }
+
 
     app-filters {
         width: $width-left-menu-minimized !important;
@@ -169,7 +161,19 @@ $height-recap-stats: 112px;
 
 }
 
-@media screen and (min-width: 701px) and (max-width: 1000px) {
+@media screen and (min-width: 1000px) and (max-width: 1450px) {
+
+    app-item-list {
+        margin-top: 150px !important;
+    }
+
+}
+
+@media screen and (max-width: 1000px) {
+    app-item-list {
+        margin-top: 10px !important;
+    }
+
     .content {
         grid-template-columns: repeat(2, 1fr);
     }

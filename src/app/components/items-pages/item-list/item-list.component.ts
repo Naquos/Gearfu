@@ -3,7 +3,6 @@ import { ItemComponent } from '../item/item.component';
 import { ItemSkeletonComponent } from '../item-skeleton/item-skeleton.component';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { IntersectDirective } from '../../../directives/intersect.directive';
 import { Item } from '../../../models/data/item';
 import { ItemsService } from '../../../services/data/itemsService';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -12,7 +11,7 @@ import { ItemFavorisFormService } from '../../../services/form-signal/itemFavori
 
 @Component({
   selector: 'app-item-list',
-  imports: [ItemComponent, CommonModule, ItemSkeletonComponent, IntersectDirective],
+  imports: [ItemComponent, CommonModule, ItemSkeletonComponent],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

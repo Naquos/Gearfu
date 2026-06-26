@@ -1,15 +1,12 @@
 @if (!isMobile()) {
+<div class="row">
+    <app-item-types [noTitle]="true"></app-item-types>
+    <app-item-level [noTitle]="true"></app-item-level>
+</div>
 @if(!open()) {
 <app-recap-stats></app-recap-stats>
 }
 <app-filters [class.close]="!open()"></app-filters>
-<button class="close-button" [class.close]="!open()" (appActivate)="filterSidebarService.setValue(!open())">
-    @if (open()) {
-    &#60;
-    } @else {
-    >
-    }
-</button>
 }
 <app-item-list [class.close]="!open() || isMobile()" appSwipe
     (swipeLeft)="displayFilterService.setDisplay(true)"></app-item-list>
