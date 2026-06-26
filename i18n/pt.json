@@ -105,8 +105,7 @@
         "reset": "Redefinir filtros"
     },
     "filter-maitrises": {
-        "maitrises-elementaires": "Maestria elemental",
-        "maitrises-secondaires": "Maestria secundária",
+        "maitrises-elementaires": "Maestria",
         "feu": "Fogo",
         "eau": "Água",
         "terre": "Terra",
