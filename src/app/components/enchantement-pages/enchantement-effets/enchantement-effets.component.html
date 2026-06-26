@@ -5,7 +5,7 @@
     <div class="body">
         <div class="effets-descriptions-container">
             @for(effet of stateService.effetsDescription; track $index) {
-            <button class="effets-description" (appActivate)="stateService.chooseEffet(effet)"
+            <button appRipple class="effets-description" (appActivate)="stateService.chooseEffet(effet)"
                 [class.selected]="stateService.effectToApply() && stateService.effectToApply()?.id === effet.id"
                 [class.double]="effectIsDouble(effet)">
                 <img [src]="imageService.getChasseColorUrl(effet.chasse)" [alt]="">

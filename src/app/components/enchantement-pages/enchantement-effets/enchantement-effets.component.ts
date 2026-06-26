@@ -5,10 +5,11 @@ import { ItemTypeServices } from '../../../services/data/ItemTypesServices';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivateDirective } from '../../../directives/activate.directive';
 import { EnchantementStateService, EffetDescription } from '../../../services/enchantementStateService';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
     selector: 'app-enchantement-effets',
-    imports: [TranslateModule, ActivateDirective],
+    imports: [TranslateModule, ActivateDirective, RippleDirective],
     templateUrl: './enchantement-effets.component.html',
     styleUrl: './enchantement-effets.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

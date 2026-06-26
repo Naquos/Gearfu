@@ -14,6 +14,7 @@ import { ActivateDirective } from "../../../directives/activate.directive";
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { CommonModule } from '@angular/common';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
   selector: 'app-item-choose-display',
@@ -23,7 +24,8 @@ import { toSignal, toObservable } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     ngSkipHydration: 'true'
-  }
+  },
+  hostDirectives: [RippleDirective]
 })
 export class ItemChooseDisplayComponent {
   protected readonly colorRarityService = inject(ColorRarityService);

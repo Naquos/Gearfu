@@ -10,10 +10,19 @@ import { NEVER } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
   selector: 'app-button-checkbox',
-  imports: [MatTooltipModule, MatIconModule, TranslateModule, ReactiveFormsModule, FormField, LazyImageDirective, ImageFallbackDirective],
+  imports: [MatTooltipModule,
+    MatIconModule,
+    TranslateModule,
+    ReactiveFormsModule,
+    FormField,
+    LazyImageDirective,
+    ImageFallbackDirective,
+    RippleDirective
+  ],
   templateUrl: './button-checkbox.component.html',
   styleUrl: './button-checkbox.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

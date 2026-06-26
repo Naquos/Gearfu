@@ -15,11 +15,12 @@ $border-width: 3px;
     justify-content: center;
     margin: 5px;
     border: 2px solid var(--color-surface-soft);
-    border-radius: 25%;
+    border-radius: 20px;
     cursor: pointer;
     width: $width;
     height: $height;
     background-color: var(--color-surface-empty);
+    box-shadow: 4px 4px 4px var(--shadow-panel-color);
 
     mat-icon {
         pointer-events: none;

@@ -86,3 +86,31 @@ footer {
 .cdk-overlay-connected-position-bounding-box {
     min-width: 600px !important;
 }
+
+.app-ripple {
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    transform: scale(0);
+
+    background: rgba(255, 255, 255, .30);
+
+    animation: ripple 600ms cubic-bezier(.2, 0, .2, 1);
+}
+
+@keyframes ripple {
+
+    from {
+        transform: scale(0);
+        opacity: .80;
+    }
+
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+
+}
