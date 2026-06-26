@@ -8,10 +8,11 @@ import { RecapStatsComponent } from "../recap-stats/recap-stats.component";
 import { isMobile } from '../../../models/utils/utils';
 import { ItemTypesComponent } from "../../form/item-types/item-types.component";
 import { ItemLevelComponent } from "../../form/item-level/item-level.component";
+import { SortChoiceComponent } from "../../form/sort-choice/sort-choice.component";
 
 @Component({
   selector: 'app-list-item-router',
-  imports: [ItemListComponent, FiltersComponent, RecapStatsComponent, ItemTypesComponent, ItemLevelComponent],
+  imports: [ItemListComponent, FiltersComponent, RecapStatsComponent, ItemTypesComponent, ItemLevelComponent, SortChoiceComponent],
   templateUrl: './list-item-router.component.html',
   styleUrl: './list-item-router.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

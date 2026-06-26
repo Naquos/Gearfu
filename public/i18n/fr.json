@@ -105,8 +105,7 @@
         "reset": "Réinitialiser les filtres"
     },
     "filter-maitrises": {
-        "maitrises-elementaires": "Maitrises élémentaires",
-        "maitrises-secondaires": "Maitrises secondaires",
+        "maitrises-elementaires": "Maitrises",
         "feu": "Feu",
         "eau": "Eau",
         "terre": "Terre",

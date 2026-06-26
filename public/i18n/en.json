@@ -105,8 +105,7 @@
         "reset": "Reset filters"
     },
     "filter-maitrises": {
-        "maitrises-elementaires": "Elemental Mastery",
-        "maitrises-secondaires": "Secondary Mastery",
+        "maitrises-elementaires": "Mastery",
         "feu": "Fire",
         "eau": "Water",
         "terre": "Earth",

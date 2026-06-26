@@ -1,4 +1,5 @@
-<mat-form-field>
+<mat-form-field [class.is-not-mobile]="isMobile()">
+    <mat-label>{{ "app.sort-item" | translate }}</mat-label>
     <mat-select [value]="sortChoiceFormService.form.sortChoice().value()"
         (selectionChange)="sortChoiceFormService.form.sortChoice().value.set($event.value)">
         <mat-select-trigger>

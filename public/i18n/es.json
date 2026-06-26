@@ -105,8 +105,7 @@
         "reset": "Restablecer filtros"
     },
     "filter-maitrises": {
-        "maitrises-elementaires": "Dominio elemental",
-        "maitrises-secondaires": "Dominio secundario",
+        "maitrises-elementaires": "Dominio",
         "feu": "Fuego",
         "eau": "Agua",
         "terre": "Tierra",

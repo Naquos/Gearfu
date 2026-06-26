@@ -1,9 +1,10 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 import { SortChoiceEnum } from '../../../models/enum/sortChoiceEnum';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { SortChoiceFormService } from '../../../services/form-signal/sortChoiceFormService';
+import { isMobile } from '../../../models/utils/utils';
 
 
 @Component({
@@ -16,4 +17,5 @@ import { SortChoiceFormService } from '../../../services/form-signal/sortChoiceF
 export class SortChoiceComponent {
   protected readonly sortChoiceFormService = inject(SortChoiceFormService);
   protected readonly SortChoiceEnumList = Object.values(SortChoiceEnum);
+  protected readonly isMobile = signal(isMobile());
 }

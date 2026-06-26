@@ -56,6 +56,10 @@ $height-recap-stats: 112px;
         }
     }
 
+    app-item-level {
+        margin-right: -8px;
+    }
+
 
     scrollbar-width: none;
 
@@ -157,6 +161,11 @@ $height-recap-stats: 112px;
             margin-left: 10px !important;
             width: 97% !important;
         }
+    }
+
+
+    app-item-level {
+        margin-right: 0 !important;
     }
 
 }

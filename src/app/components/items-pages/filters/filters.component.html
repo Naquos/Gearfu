@@ -18,8 +18,10 @@
     <app-major-present></app-major-present>
     <app-filter-resistances></app-filter-resistances>
 
+    @if(isMobile()) {
     <h2>{{ "app.sort-item" | translate }}</h2>
     <app-sort-choice></app-sort-choice>
+    }
     <app-modifier-mecanism></app-modifier-mecanism>
     <app-only-no-elem></app-only-no-elem>
     <app-only-no-secondary></app-only-no-secondary>
