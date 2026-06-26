@@ -1,6 +1,7 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<mat-tab-group class="main-nav mobile-friendly-tabs" [selectedIndex]="1" (selectedIndexChange)="redirectIndex($event)">
+<mat-tab-group class="main-nav mobile-friendly-tabs" [selectedIndex]="activePage()"
+    (selectedIndexChange)="redirectIndex($event)">
     <mat-tab [label]="'app.search-builds' | translate">
     </mat-tab>
     <mat-tab [label]="'app.filter-item' | translate">

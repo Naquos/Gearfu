@@ -62,7 +62,11 @@ export class SaveBuildService {
         this.buildList.next(savedBuilds);
         this.currentBuildId.subscribe(buildId => {
             if (buildId && buildId !== NO_BUILD) {
-                this.router.navigate(["/", buildId || NO_BUILD]); // Met à jour l'URL avec le nouvel id de build sans recharger la page
+                if (this.itemChooseService.getIdItems() === '') {
+                    this.router.navigate(["/", buildId || NO_BUILD]); // Met à jour l'URL avec le nouvel id de build sans recharger la page
+                } else {
+                    this.router.navigate(["/", buildId || NO_BUILD, "recapitulatif"]); // Met à jour l'URL avec le nouvel id de build sans recharger la page
+                }
             }
         }
         )
@@ -315,7 +319,6 @@ export class SaveBuildService {
     public loadBuild(build: Build, saveStatistics = false): void {
         this.currentNameBuild.next(build.nameBuild || this.generateDefaultName());
         this.buildLoading.next(true);
-        this.currentBuildId.next(build.id ?? '');
         this.currentTokenBuild.next(build.token || this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || '');
         this.levelFormService.setValue(build.level ?? LevelFormService.DEFAULT_VALUE);
         this.elementSelectorService.decodeAndApplyFromBuild(build.elementSelector ?? "");
@@ -334,6 +337,8 @@ export class SaveBuildService {
         this.itemHistoricsService.setValue({ historics: historicsParsed });
         // La mise à jour des items équipés se fait dans le service itemHistoiricsService
         this.itemHistoricsService.applyHistoric(build.itemsId ?? "");
+        this.currentBuildId.next(build.id ?? '');
+
 
         of(saveStatistics).pipe(switchMap(save => {
             if (save) {

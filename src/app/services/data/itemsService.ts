@@ -29,7 +29,7 @@ import { MonsterDropService } from "./monsterDropService";
 import { MonsterDrop } from "../../models/data/monsterDrop";
 import { isExcludeIdItem } from "../../models/enum/excludeIdItemEnum";
 import { BaseEffect, SublimationsDescriptions } from "../../models/data/sublimationsDescriptions";
-import { calculWeight, normalizeString } from "../../models/utils/utils";
+import { calculWeight, normalizeString, ratioWeightByLevel } from "../../models/utils/utils";
 import { FamiliersService } from "./familiersService";
 import { IdItemElevageEnum } from "../../models/enum/idItemElevageEnum";
 
@@ -364,7 +364,7 @@ export class ItemsService {
         return item.maitrise;
 
       case SortChoiceEnum.EQUILIBRE:
-        return item.maitrise / maxMaistrises + ItemsService.EQUILIBRE_RESISTANCE_MULTIPLIER * (item.resistance / maxResistances);
+        return item.maitrise / maxMaistrises + ratioWeightByLevel(item.level) * (item.resistance / maxResistances);
 
       case SortChoiceEnum.POINT_DE_VIE:
         return this.calculateNetEffect(effectsMap, IdActionsEnum.POINT_DE_VIE, IdActionsEnum.PERTE_POINT_DE_VIE);

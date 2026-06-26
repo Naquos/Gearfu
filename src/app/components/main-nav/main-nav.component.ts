@@ -1,4 +1,4 @@
-import { Inject, PLATFORM_ID, inject, Component, ChangeDetectionStrategy } from '@angular/core';
+import { Inject, PLATFORM_ID, inject, Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,6 +17,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 })
 export class MainNavComponent {
     private readonly router = inject(Router);
+    protected readonly activePageIndex = signal(1);
 
     protected readonly activePage = toSignal(
         this.router.events.pipe(
@@ -30,14 +31,14 @@ export class MainNavComponent {
     // eslint-disable-next-line @angular-eslint/prefer-inject
     constructor(@Inject(PLATFORM_ID) private readonly platformId: object) { }
 
-    private getActivePage(url: string): string {
-        if (url.includes('/search')) return 'search';
-        if (url.includes('/aptitudes')) return 'aptitudes';
-        if (url.includes('/sorts')) return 'sorts';
-        if (url.includes('/enchantements')) return 'enchantements';
-        if (url.includes('/recapitulatif')) return 'recapitulatif';
-        if (url.includes('/build')) return 'build';
-        return 'filter';
+    private getActivePage(url: string): number {
+        if (url.includes('/search')) return 0;
+        if (url.includes('/aptitudes')) return 2;
+        if (url.includes('/sorts')) return 3;
+        if (url.includes('/enchantements')) return 4;
+        if (url.includes('/recapitulatif')) return 5;
+        if (url.includes('/build')) return 6;
+        return 1;
     }
 
     protected redirectToListItems(): void {
