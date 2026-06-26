@@ -8,10 +8,11 @@ import { ItemsService } from '../../../services/data/itemsService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DisplayFavorisFormService } from '../../../services/form-signal/displayFavorisFormService';
 import { ItemFavorisFormService } from '../../../services/form-signal/itemFavorisFormService';
+import { IntersectDirective } from '../../../directives/intersect.directive';
 
 @Component({
   selector: 'app-item-list',
-  imports: [ItemComponent, CommonModule, ItemSkeletonComponent],
+  imports: [ItemComponent, CommonModule, ItemSkeletonComponent, IntersectDirective],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
