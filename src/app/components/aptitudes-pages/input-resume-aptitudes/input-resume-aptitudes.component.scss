@@ -32,6 +32,19 @@ div {
     .negatif {
         color: var(--color-negative);
     }
+
+    transition: background-color .3s ease,
+    transform .2s ease,
+    box-shadow .3s ease;
+    border-radius: 10px;
+
+
+    &.changed {
+        background-color: var(--animation-scale-up-bg-color);
+        transform: scale(1.1);
+        box-shadow: var(--animation-scale-up-box-shadow);
+    }
+
 }
 
 

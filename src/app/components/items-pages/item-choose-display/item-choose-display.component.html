@@ -1,8 +1,8 @@
 @if(item() !== undefined && item() !== null) {
 @let _item = item();
-<div class="itemPresent" [style.backgroundColor]="colorRarityService.mapColors.get(_item!.rarity)"
+<div #weaponSlot class="itemPresent" [style.backgroundColor]="colorRarityService.mapColors.get(_item!.rarity)"
     (mouseenter)="openTooltip($event, _item!)" (mouseleave)="onMouseLeave()">
-    <img [src]="imageService.getItemUrl(_item!.idImage)" (appActivate)="setFilter()" alt="items" appFallback>
+    <img #itemImage [src]="imageService.getItemUrl(_item!.idImage)" (appActivate)="setFilter()" alt="items" appFallback>
     <span (appActivate)="itemChooseService.deleteItem(itemType(), indexItem())">X</span>
 </div>
 } @else {

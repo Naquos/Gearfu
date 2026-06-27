@@ -1,13 +1,13 @@
-<div (appActivate)="showInput();" [class.change]="inputValue()">
+<div (appActivate)="showInput();" [class.change]="inputValue()" [class.changed]="isChanged()">
     <img [src]="imageService.getActionIdUrl(idActionEnum())" alt="">
     @if(displayInput()){
     <input #inputField type="number" [formField]="fieldControl()" (keydown)="onKeyDown($event)">
     } @else {
     {{ label() | translate }}
     @if(displayResistance()){
-    <span [class]="getClass(idActionEnum())" [style.color]="color()">{{ calculResistance(idActionEnum()) }}</span>
+    <span [class]="getClass()" [style.color]="color()">{{ calculResistance() }}</span>
     } @else {
-    <span [class]="getClass(idActionEnum())" [style.color]="color()">{{ getValue(idActionEnum()) }}</span>
+    <span [class]="getClass()" [style.color]="color()">{{ value() }}</span>
     }
     }
 </div>

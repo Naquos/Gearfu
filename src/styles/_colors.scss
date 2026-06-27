@@ -55,6 +55,9 @@
     --gradient-positive: linear-gradient(145deg, var(--color-positive), var(--color-positive-alt));
     --gradient-negative: linear-gradient(145deg, var(--color-negative-strong), var(--color-negative-alt));
     --gradient-skeleton: linear-gradient(90deg, var(--skeleton-shimmer-start) 25%, var(--skeleton-shimmer-middle) 50%, var(--skeleton-shimmer-start) 75%);
+
+    --animation-scale-up-bg-color: rgb(82, 47, 10);
+    --animation-scale-up-box-shadow: 0 0 12px rgba(255, 150, 40, 0.4);
 }
 
 // ─── Dark mode ────────────────────────────────────────────────────────────────

@@ -1,4 +1,4 @@
-import { Component, inject, input, ViewContainerRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, input, ViewContainerRef, ChangeDetectionStrategy, ElementRef, effect, viewChild } from '@angular/core';
 import { combineLatest, filter, map, startWith, switchMap } from 'rxjs';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
 import { Item } from '../../../models/data/item';
@@ -15,6 +15,7 @@ import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { CommonModule } from '@angular/common';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { RippleDirective } from '../../../directives/ripple.directive';
+import { AnimationService } from '../../../services/animations/animation.service';
 
 @Component({
   selector: 'app-item-choose-display',
@@ -35,10 +36,15 @@ export class ItemChooseDisplayComponent {
   private readonly viewContainerRef = inject(ViewContainerRef);
   protected readonly imageService = inject(ImageService);
   private readonly router = inject(Router);
+  private readonly animationService = inject(AnimationService);
 
   public readonly backgroundItemType = input.required<string>();
   public readonly itemType = input.required<ItemTypeEnum>();
   public readonly indexItem = input<number>(0);
+
+  private readonly weaponSlot = viewChild<ElementRef<HTMLElement>>('weaponSlot');
+
+  private readonly itemImage = viewChild<ElementRef<HTMLElement>>('itemImage');
 
   protected readonly item = toSignal(
     combineLatest([toObservable(this.itemType), toObservable(this.indexItem)]).pipe(
@@ -52,6 +58,33 @@ export class ItemChooseDisplayComponent {
     ),
     { initialValue: undefined }
   );
+
+  constructor() {
+    effect(() => {
+
+      const item = this.item();
+      if (!item) {
+        return;
+      }
+
+      requestAnimationFrame(() => {
+
+        const source = this.itemImage();
+        const target = this.weaponSlot();
+
+        if (!source || !target) {
+          return;
+        }
+
+        this.animationService.flyToTarget({
+          source: source.nativeElement,
+          target: target.nativeElement
+        });
+      });
+    });
+
+  }
+
 
   protected openTooltip(event: MouseEvent, item: Item): void {
     this.tooltipService.forceClose();

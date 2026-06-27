@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, input, signal, viewChild, effect, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, signal, viewChild, effect, ChangeDetectionStrategy, computed } from '@angular/core';
 import { ImageService } from '../../../services/imageService';
 import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -24,12 +24,41 @@ export class InputResumeAptitudesComponent {
 
   protected readonly imageService = inject(ImageService);
   protected readonly displayInput = signal<boolean>(false);
+  protected readonly isChanged = signal<boolean>(false);
+
+  protected readonly value = computed(() => {
+    const id = this.idActionEnum();
+    const recapStats = this.recapStats().filter(rs => rs.id === id);
+    if (!recapStats.length) {
+      return 0;
+    }
+    if (id !== IdActionsEnum.ARMURE_DONNEE_RECUE) {
+      return recapStats[0].value;
+    }
+    return recapStats[this.isArmureDonnee() ? 0 : 1].value;
+  });
 
   constructor() {
     effect(() => {
       if (this.displayInput() && this.inputElement()) {
         setTimeout(() => this.inputElement()?.nativeElement.focus(), 0);
       }
+    });
+
+    effect((onCleanup) => {
+
+      this.value();
+      this.isChanged.set(true);
+
+      const timeout = setTimeout(() => {
+        this.isChanged.set(false);
+      }, 700);
+
+
+      onCleanup(() => {
+        clearTimeout(timeout);
+      });
+
     });
   }
 
@@ -59,14 +88,14 @@ export class InputResumeAptitudesComponent {
   public fieldControl = input.required<FieldTree<number>>();
 
 
-  protected calculResistance(id: IdActionsEnum): string {
-    const resistance = this.getValue(id);
+  protected calculResistance(): string {
+    const resistance = this.value();
     const percentage = Math.floor((1 - Math.pow(0.8, resistance / 100)) * 100);
     return `${percentage}% (${resistance})`;
   }
 
-  protected getClass(id: IdActionsEnum): string {
-    const value = this.getValue(id);
+  protected getClass(): string {
+    const value = this.value();
     if (value > 0) {
       return 'positif';
     }
@@ -75,17 +104,5 @@ export class InputResumeAptitudesComponent {
 
   protected inputValue(): number {
     return this.fieldControl()().value() ?? 0;
-  }
-
-
-  protected getValue(id: IdActionsEnum): number {
-    const recapStats = this.recapStats().filter(rs => rs.id === id);
-    if (!recapStats.length) {
-      return 0;
-    }
-    if (id !== IdActionsEnum.ARMURE_DONNEE_RECUE) {
-      return recapStats[0].value;
-    }
-    return recapStats[this.isArmureDonnee() ? 0 : 1].value;
   }
 }
