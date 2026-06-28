@@ -9,8 +9,8 @@
     grid-column-gap: 30px;
     grid-row-gap: 30px;
 
-    app-item:hover {
-        transform: scale(1.03);
+    .item:hover {
+        transform: scale(1.03) !important;
     }
 }
 

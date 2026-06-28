@@ -2,6 +2,11 @@ $width: 28px;
 $height: 29px;
 $border-width: 3px;
 
+
+label:hover {
+    transform: scale(1.1);
+}
+
 :host {
     width: 51px;
     height: 45px;
