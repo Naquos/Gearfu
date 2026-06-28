@@ -41,7 +41,7 @@ import { FavorisButtonComponent } from "../../form/favoris-button/favoris-button
   ],
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
 
@@ -65,6 +65,7 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
 
   private readonly condition = new BehaviorSubject<ItemCondition | undefined>(undefined);
   protected readonly condition$ = this.condition.asObservable();
+
 
 
   protected readonly textCondition = toSignal(this.condition$.pipe(map(x => x?.description[this.translateService.currentLang as keyof typeof x.description] ?? undefined)));

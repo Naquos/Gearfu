@@ -114,3 +114,26 @@ footer {
     }
 
 }
+
+
+.item-appear {
+    opacity: 0;
+    transform: translateY(8px);
+
+    animation:
+        itemAppear 180ms cubic-bezier(.2, .8, .2, 1) forwards;
+
+    animation-delay: var(--delay);
+}
+
+@keyframes itemAppear {
+    from {
+        opacity: 0;
+        transform: translateY(400px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

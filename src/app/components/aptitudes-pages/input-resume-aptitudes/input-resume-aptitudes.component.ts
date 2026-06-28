@@ -8,13 +8,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormField, FieldTree } from '@angular/forms/signals';
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
   selector: 'app-input-resume-aptitudes',
   imports: [TranslateModule, ActivateDirective, FormField, LazyImageDirective],
   templateUrl: './input-resume-aptitudes.component.html',
   styleUrl: './input-resume-aptitudes.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [RippleDirective]
 })
 export class InputResumeAptitudesComponent {
   private readonly recapStatsService = inject(RecapStatsService);

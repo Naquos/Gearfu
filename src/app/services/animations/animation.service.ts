@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 import { FlyToTargetOptions } from '../../models/animations/animation.types';
 import { InteractionService } from './interaction.service';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -14,6 +15,12 @@ export class AnimationService {
 
     private readonly ngZone = inject(NgZone);
     private readonly interactionService = inject(InteractionService);
+    private readonly listAnimationVersion = new BehaviorSubject<number>(0);
+    public readonly listAnimationVersion$ = this.listAnimationVersion.asObservable();
+
+    public incrementListAnimationVersion(): void {
+        this.listAnimationVersion.next(this.listAnimationVersion.value + 1);
+    }
 
     flyToTarget(options: FlyToTargetOptions): Promise<void> {
 

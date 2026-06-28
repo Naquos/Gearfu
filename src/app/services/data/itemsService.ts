@@ -32,6 +32,7 @@ import { BaseEffect, SublimationsDescriptions } from "../../models/data/sublimat
 import { calculWeight, normalizeString, ratioWeightByLevel } from "../../models/utils/utils";
 import { FamiliersService } from "./familiersService";
 import { IdItemElevageEnum } from "../../models/enum/idItemElevageEnum";
+import { AnimationService } from "../animations/animation.service";
 
 @Injectable({ providedIn: 'root' })
 export class ItemsService {
@@ -52,6 +53,7 @@ export class ItemsService {
   private readonly obtentionFormService = inject(ObtentionFormService);
   private readonly monsterDropService = inject(MonsterDropService);
   private readonly familiersService = inject(FamiliersService);
+  private readonly animationService = inject(AnimationService);
 
   // Constants
   private static readonly ARMURE_DONNEE_RECUE_LIST = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
@@ -141,7 +143,8 @@ export class ItemsService {
         }),
         tap(() => this.isLoading.set(false)),
         shareReplay(1),
-        tap(items => this._items$.next(items))
+        tap(items => this._items$.next(items)),
+        tap(() => this.animationService.incrementListAnimationVersion())
       ).subscribe();
   }
 

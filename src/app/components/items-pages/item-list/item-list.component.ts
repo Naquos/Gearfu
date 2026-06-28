@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, Inject, PLATFORM_ID, ChangeDetectionStrategy, computed } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, Inject, PLATFORM_ID, ChangeDetectionStrategy, computed, effect, QueryList, ViewChildren, Injector } from '@angular/core';
 import { ItemComponent } from '../item/item.component';
 import { ItemSkeletonComponent } from '../item-skeleton/item-skeleton.component';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
@@ -9,10 +9,12 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { DisplayFavorisFormService } from '../../../services/form-signal/displayFavorisFormService';
 import { ItemFavorisFormService } from '../../../services/form-signal/itemFavorisFormService';
 import { IntersectDirective } from '../../../directives/intersect.directive';
+import { ReplayAnimationDirective } from '../../../directives/replayAnimation.directive';
+import { AnimationService } from '../../../services/animations/animation.service';
 
 @Component({
   selector: 'app-item-list',
-  imports: [ItemComponent, CommonModule, ItemSkeletonComponent, IntersectDirective],
+  imports: [ItemComponent, CommonModule, ItemSkeletonComponent, IntersectDirective, ReplayAnimationDirective],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -22,6 +24,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   private readonly fullItems = toSignal(this.itemsService.items$, { initialValue: [] });
   protected readonly skeletonArray = Array(36).fill(0).map((x, i) => i); // Tableau pour afficher 36 skeletons
   private readonly displayFavorisFormService = inject(DisplayFavorisFormService);
+  private readonly animationService = inject(AnimationService);
   protected readonly displayFavoris = toSignal(this.displayFavorisFormService.display$);
 
   private readonly itemsFavorisFormService = inject(ItemFavorisFormService);
@@ -46,9 +49,43 @@ export class ItemListComponent implements OnInit, OnDestroy {
   protected currentIndex = 0;
   private observer?: IntersectionObserver;
   private isBrowser: boolean;
+  private readonly listAnimationVersion = toSignal(this.animationService.listAnimationVersion$);
+  private readonly injector = inject(Injector);
+
+
+  @ViewChildren(ReplayAnimationDirective)
+  private itemAnimations!: QueryList<ReplayAnimationDirective>;
 
   constructor(@Inject(PLATFORM_ID) platformId: object) {
     this.isBrowser = isPlatformBrowser(platformId);
+    effect(() => {
+      this.listAnimationVersion();
+
+      if (!this.itemAnimations) {
+        return;
+      }
+
+      queueMicrotask(() => {
+        this.itemAnimations.forEach(item => item.replay());
+      });
+    });
+  }
+
+  ngAfterViewInit() {
+
+    effect(() => {
+      this.listAnimationVersion();
+
+      if (!this.itemAnimations) {
+        return;
+      }
+
+      this.itemAnimations.forEach(item => item.replay());
+
+    }, {
+      injector: this.injector
+    });
+
   }
 
   ngOnInit(): void {
