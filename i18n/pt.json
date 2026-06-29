@@ -17,7 +17,10 @@
         "sorts": "Feitiços",
         "enchantement": "Encantamento",
         "search-builds": "Pesquisar construções",
-        "readonly": "Este build é somente leitura. Nenhuma alteração será salva."
+        "readonly": "Este build é somente leitura. Nenhuma alteração será salva.",
+        "minimify": "Minimizar exibição:",
+        "oui": "Sim",
+        "non": "Não"
     },
     "aptitudes": {
         "restant": "Restante: ",
