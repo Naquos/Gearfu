@@ -28,8 +28,10 @@
             </div>
         </h3>
         <img [src]="imageService.getItemUrl(item().idImage)" alt="items" appFallback>
+        @if (!minimify()) {
         <span class="imgContainer cliquable" (appActivate)="openEncyclopedie(item().id)"><img
                 src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
+        }
     </div>
     <div class="effects">
         <div>
@@ -50,6 +52,7 @@
         </div>
         <app-element-selector [item]="item()" [selector]="ElementSelectorEnum.Maitrise"></app-element-selector>
         <app-element-selector [item]="item()" [selector]="ElementSelectorEnum.Resistance"></app-element-selector>
+        @if(!minimify()) {
         <div class="craftAndDrop">
             @if (item().isCraftable) {
             <img class="craftable" (click)="navigateToCraftku()" [src]="imageService.getItemUrl(71919810)"
@@ -84,6 +87,7 @@
                 [matTooltip]="'item.elevage' | translate">
             }
         </div>
+        }
     </div>
     <div class="favoris">
         <app-favoris-button [item]="item()"></app-favoris-button>

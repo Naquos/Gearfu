@@ -17,7 +17,10 @@
         "sorts": "Sorts",
         "enchantement": "Enchantement",
         "search-builds": "Rechercher des builds",
-        "readonly": "Ce build est en lecture seule. Aucune modification ne sera sauvegardée."
+        "readonly": "Ce build est en lecture seule. Aucune modification ne sera sauvegardée.",
+        "minimify": "Minimiser l'affichage :",
+        "oui": "Oui",
+        "non": "Non"
     },
     "aptitudes": {
         "restant": "Restant : ",
@@ -257,12 +260,12 @@
         "no_obtention": "Pouvant être obtenu par aucun moyen d'obtention"
     },
     "only-no-elem": {
-        "label": "Prendre en compte exclusivement les items avec aucune maitrise élémentaire",
+        "label": "Prendre en compte exclusivement les items sans aucune maitrise élémentaire",
         "oui": "Oui",
         "non": "Non"
     },
     "only-no-secondary": {
-        "label": "Prendre en compte exclusivement les items avec aucune maitrises secondaires",
+        "label": "Prendre en compte exclusivement les items sans aucune maitrises secondaires",
         "oui": "Oui",
         "non": "Non"
     },

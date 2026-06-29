@@ -17,7 +17,10 @@
         "sorts": "Spells",
         "enchantement": "Enchanting",
         "search-builds": "Search builds",
-        "readonly": "This build is read-only. No changes will be saved."
+        "readonly": "This build is read-only. No changes will be saved.",
+        "minimify": "Minimize display:",
+        "oui": "Yes",
+        "non": "No"
     },
     "aptitudes": {
         "restant": "Remaining: ",

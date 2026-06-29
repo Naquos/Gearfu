@@ -33,6 +33,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { MatTooltip } from "@angular/material/tooltip";
 import { CurrentBuildNameComponent } from '../current-build-name/current-build-name.component';
 import { MainNavComponent } from '../main-nav/main-nav.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MinimifyDisplayFormService } from '../../services/form-signal/minimifyDisplayFormService';
 
 type column = 'filter' | 'aptitudes' | 'search';
 
@@ -51,7 +53,8 @@ type column = 'filter' | 'aptitudes' | 'search';
     FiltersComponent,
     MatTooltip,
     CurrentBuildNameComponent,
-    MainNavComponent
+    MainNavComponent,
+    MatButtonToggleModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss', './birthday.scss'],
@@ -63,6 +66,7 @@ export class AppComponent implements OnInit {
   protected readonly translate = inject(TranslateService);
   protected readonly displayFilterService = inject(DisplayFilterService);
   protected readonly filterSidebarService = inject(FilterSidebarService);
+  protected readonly minimifyDisplayFormService = inject(MinimifyDisplayFormService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly itemService = inject(ItemsService);
   private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);

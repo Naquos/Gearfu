@@ -7,6 +7,20 @@
     <img id="logo" src="logo.png" alt="logo">
     <img class="gearfu" src="gearfu.png" alt="gearfu">
     <app-item-choose></app-item-choose>
+    <button mat-button [matMenuTriggerFor]="param" class="paramButton">
+        <mat-icon fontIcon="settings" class="param"></mat-icon>
+    </button>
+    <mat-menu #param="matMenu">
+        <span>{{ "app.minimify" | translate }}</span>
+        <mat-button-toggle-group>
+            <mat-button-toggle (change)="minimifyDisplayFormService.setValue(true)"
+                [checked]="minimifyDisplayFormService.currentValue()">{{ "app.oui" | translate
+                }}</mat-button-toggle>
+            <mat-button-toggle (change)="minimifyDisplayFormService.setValue(false)"
+                [checked]="!minimifyDisplayFormService.currentValue()">{{ "app.non" | translate
+                }}</mat-button-toggle>
+        </mat-button-toggle-group>
+    </mat-menu>
     <button mat-button [matMenuTriggerFor]="menu" class="flagButton"><img class="flag"
             [src]='"aptitudes/"+ translate.currentLang + ".webp"' alt="flag"></button>
     <mat-menu #menu="matMenu">
