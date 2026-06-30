@@ -7,7 +7,7 @@
     <span>{{'sorts.sorts-neutres' | translate}}</span>
     <div class="sorts-neutres">
         @for(sortId of sortNeutres(); track $index) {
-        <img [src]="sortId ? imageService.getSortUrl(sortId) : 'sorts/empty-sort.png'" alt=""
+        <img appRipple [src]="sortId ? imageService.getSortUrl(sortId) : 'sorts/empty-sort.png'" alt=""
             [class.sort-locked]="level() < sortFormService.unlockedEmplacementSortNeutre[$index]"
             [draggable]="sortId !== 0" (dragstart)="onDragStart($event, sortId, 'NEUTRE', $index)"
             (click)="selectSortById(sortId, 'NEUTRE')" (appActivate)="removeSortFromBuild('NEUTRE', $index)"
@@ -18,7 +18,7 @@
     <span>{{'sorts.passifs' | translate}}</span>
     <div class="sorts-passifs">
         @for(sortId of sortPassifs(); track $index) {
-        <img [src]="sortId ? imageService.getSortUrl(sortId) : 'sorts/empty-sort.png'" alt=""
+        <img appRipple [src]="sortId ? imageService.getSortUrl(sortId) : 'sorts/empty-sort.png'" alt=""
             [class.sort-locked]="level() < sortFormService.unlockedEmplacementSortPassif[$index]"
             [draggable]="sortId !== 0" (dragstart)="onDragStart($event, sortId, 'PASSIF', $index)"
             (click)="selectSortById(sortId, 'PASSIF')" (appActivate)="removeSortFromBuild('PASSIF', $index)"

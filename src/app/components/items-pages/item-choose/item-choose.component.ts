@@ -15,10 +15,11 @@ import { ActivateDirective } from "../../../directives/activate.directive";
 import { SaveBuildService } from '../../../services/saveBuildService';
 import { HistoricsListComponent } from "../historics-list/historics-list.component";
 import { DarkModeFormService } from '../../../services/form-signal/darkModeFormService';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
   selector: 'app-item-choose',
-  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule, ActivateDirective, HistoricsListComponent],
+  imports: [ItemChooseDisplayComponent, MatIconModule, MatTooltipModule, TranslateModule, ActivateDirective, HistoricsListComponent, RippleDirective],
   templateUrl: './item-choose.component.html',
   styleUrl: './item-choose.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

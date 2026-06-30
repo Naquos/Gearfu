@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, effect, input, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FieldTree } from '@angular/forms/signals';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
   selector: 'app-input-aptitudes',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RippleDirective],
   templateUrl: './input-aptitudes.component.html',
   styleUrl: './input-aptitudes.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

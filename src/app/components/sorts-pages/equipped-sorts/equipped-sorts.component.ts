@@ -8,12 +8,13 @@ import { ImageService } from '../../../services/imageService';
 import { SortSelectionService } from '../../../services/sortSelectionService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SortService } from '../../../services/data/sortService';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 type TypeSort = 'NEUTRE' | 'PASSIF';
 
 @Component({
     selector: 'app-equipped-sorts',
-    imports: [TranslateModule, LazyImageDirective, ActivateDirective],
+    imports: [TranslateModule, LazyImageDirective, ActivateDirective, RippleDirective],
     templateUrl: './equipped-sorts.component.html',
     styleUrl: './equipped-sorts.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

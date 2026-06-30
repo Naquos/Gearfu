@@ -50,6 +50,11 @@ export class MainNavComponent {
     }
 
     protected redirectToPage(page: 'aptitudes' | 'sorts' | 'enchantements' | 'search' | 'build' | 'recapitulatif'): void {
+
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+
         const currentFragment = isPlatformBrowser(this.platformId) ? window.location.hash.substring(1) : '';
         const buildId = getBuildIdFromUrl(window.location.href);
         this.router.navigate(['/', buildId, page], {

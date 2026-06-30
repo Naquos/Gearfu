@@ -9,10 +9,11 @@ import { ImageService } from '../../../services/imageService';
 import { InputAptitudesComponent } from '../../form/input-aptitudes/input-aptitudes.component';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { CodeAptitudesComponent } from '../code-aptitudes/code-aptitudes.component';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
   selector: 'app-aptitudes',
-  imports: [TranslateModule, InputAptitudesComponent, LazyImageDirective, CodeAptitudesComponent],
+  imports: [TranslateModule, InputAptitudesComponent, LazyImageDirective, CodeAptitudesComponent, RippleDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './aptitudes.component.html',
   styleUrl: './aptitudes.component.scss'

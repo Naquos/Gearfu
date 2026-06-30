@@ -5,11 +5,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivateDirective } from '../../../directives/activate.directive';
 import { CodeAptitudesService } from '../../../services/codeAptitudesService';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
     selector: 'app-code-aptitudes',
     standalone: true,
-    imports: [TranslateModule, MatIconModule, MatTooltipModule, ActivateDirective],
+    imports: [TranslateModule, MatIconModule, MatTooltipModule, ActivateDirective, RippleDirective],
     templateUrl: './code-aptitudes.component.html',
     styleUrl: './code-aptitudes.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

@@ -8,6 +8,7 @@ import { SortFormService } from '../../../services/form-signal/sortFormService';
 import { ActivateDirective } from '../../../directives/activate.directive';
 import { DescriptionSort } from '../../../models/data/descriptionSort';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 export type TypeSort = 'NEUTRE' | 'PASSIF';
 
@@ -16,7 +17,8 @@ export type TypeSort = 'NEUTRE' | 'PASSIF';
     imports: [MatTooltipModule, ActivateDirective],
     templateUrl: './sort-image.component.html',
     styleUrl: './sort-image.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives: [RippleDirective]
 })
 export class SortImageComponent {
     private readonly imageService = inject(ImageService);

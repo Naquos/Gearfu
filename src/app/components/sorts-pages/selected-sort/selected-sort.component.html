@@ -47,9 +47,11 @@
 
         <div class="effet-sort">
             <div class="button-group">
-                <button (appActivate)="setEffectDisplay('NORMAL')">{{'sorts.effet-normal' | translate}}</button>
+                <button appRipple (appActivate)="setEffectDisplay('NORMAL')">{{'sorts.effet-normal' |
+                    translate}}</button>
                 @if(sortSelected()!.effect_critical.fr) {
-                <button (appActivate)="setEffectDisplay('CRITIQUE')">{{'sorts.effet-critique' | translate}}</button>
+                <button appRipple (appActivate)="setEffectDisplay('CRITIQUE')">{{'sorts.effet-critique' |
+                    translate}}</button>
                 }
             </div>
             <div class="effet">

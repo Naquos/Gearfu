@@ -1,14 +1,15 @@
 <div class="content">
     <div class="buttonGroupe">
         <div class="secondLine">
-            <mat-icon aria-hidden="false" fontIcon="gavel" matTooltip="Craftku" [matTooltipShowDelay]="300"
+            <mat-icon appRipple aria-hidden="false" fontIcon="gavel" matTooltip="Craftku" [matTooltipShowDelay]="300"
                 (appActivate)="navigateToCraftku()" alt="craftku" id="craftkuButton">
             </mat-icon>
-            <div class="nouveauBuild" (appActivate)="saveBuildService.createAndNavigate()">
+            <div appRipple class="nouveauBuild" (appActivate)="saveBuildService.createAndNavigate()">
                 {{ "item-choose.nouveau-build" | translate }}
             </div>
         </div>
-        <div class="firstLine" (appActivate)="generateBuild()" [matTooltip]="'item-choose.zenith' | translate">
+        <div appRipple class="firstLine" (appActivate)="generateBuild()"
+            [matTooltip]="'item-choose.zenith' | translate">
             <img src="./zenith-logo.webp" alt="zenith" id="zenithButton">
             <span>{{"item-choose.zenith-export" | translate}}</span>
         </div>
@@ -46,12 +47,12 @@
     <app-historics-list [class.open]="openHistory()"></app-historics-list>
 
     <div class="buttonGroupe">
-        <div class="firstLine">
+        <div class="firstLine" appRipple>
             <div class="historique" (appActivate)="toggleHistory($event)">
                 <mat-icon fontIcon="history"></mat-icon>
             </div>
         </div>
-        <div class="firstLine">
+        <div class="firstLine" appRipple>
             <div class="dark-mode" (appActivate)="toggleDarkMode($event)">
                 <mat-icon fontIcon="wb_sunny"></mat-icon>
             </div>

@@ -14,10 +14,11 @@ import { ActivateDirective } from '../../../directives/activate.directive';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { DescriptionSort } from '../../../models/data/descriptionSort';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
     selector: 'app-selected-sort',
-    imports: [TranslateModule, MatButtonModule, FormsModule, MatSliderModule, LazyImageDirective, ActivateDirective],
+    imports: [TranslateModule, MatButtonModule, FormsModule, MatSliderModule, LazyImageDirective, ActivateDirective, RippleDirective],
     templateUrl: './selected-sort.component.html',
     styleUrl: './selected-sort.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

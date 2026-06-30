@@ -23,6 +23,7 @@ import { ActivateDirective } from '../../../directives/activate.directive';
 import { MatTooltip } from '@angular/material/tooltip';
 import { EnchantementStateService, EffetDescription } from '../../../services/enchantementStateService';
 import { SublimationService } from '../../../services/data/sublimationService';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 interface DisplayTypeItem {
     indexItem: number;
@@ -32,7 +33,7 @@ interface DisplayTypeItem {
 
 @Component({
     selector: 'app-enchantement-chasses',
-    imports: [ImageItemComponent, TranslateModule, MatSliderModule, FormsModule, FormatNumberPipe, ActivateDirective, MatTooltip],
+    imports: [ImageItemComponent, TranslateModule, MatSliderModule, FormsModule, FormatNumberPipe, ActivateDirective, MatTooltip, RippleDirective],
     templateUrl: './enchantement-chasses.component.html',
     styleUrl: './enchantement-chasses.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

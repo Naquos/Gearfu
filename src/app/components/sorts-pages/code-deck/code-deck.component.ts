@@ -5,10 +5,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SortFormService } from '../../../services/form-signal/sortFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivateDirective } from '../../../directives/activate.directive';
+import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
     selector: 'app-code-deck',
-    imports: [TranslateModule, MatIconModule, MatTooltipModule, ActivateDirective],
+    imports: [TranslateModule, MatIconModule, MatTooltipModule, ActivateDirective, RippleDirective],
     templateUrl: './code-deck.component.html',
     styleUrl: './code-deck.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
