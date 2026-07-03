@@ -27,7 +27,7 @@ CLASS_PATHS = {
 }
 # classes list (use the list you want)
 # CLASS_IDS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,19]
-CLASS_IDS = [12]
+CLASS_IDS = [6, 18, 3, 19, 8, 2, 4, 16, 5,14]
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "

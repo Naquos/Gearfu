@@ -11,4 +11,10 @@
         </mat-option>
         }
     </mat-autocomplete>
+    @if (searchItemNameFormService.form.search()) {
+    <button class="close-button" matSuffix matIconButton aria-label="Clear"
+        (click)="searchItemNameFormService.setDefaultValue()">
+        <mat-icon>close</mat-icon>
+    </button>
+    }
 </mat-form-field>

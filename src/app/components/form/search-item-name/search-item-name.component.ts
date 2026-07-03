@@ -12,6 +12,7 @@ import { ImageService } from '../../../services/imageService';
 import { Option } from "../search/search.component";
 import { FormField } from '@angular/forms/signals';
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-search-item-name',
@@ -22,6 +23,7 @@ import { ImageFallbackDirective } from '../../../directives/imageFallback.direct
     MatAutocompleteModule,
     FormField,
     ImageFallbackDirective,
+    MatIcon
   ],
   templateUrl: './search-item-name.component.html',
   styleUrl: './search-item-name.component.scss',
