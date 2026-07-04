@@ -222,7 +222,13 @@ export class PassiveEffectsService {
     }
 
     if (sortPassifsIds.find(x => x === SortIdEnum.POUSSEES_D_ENTRAVE)) {
-      applyEffectFn({ id: IdActionsEnum.VOLONTE, value: 10, params: [] });
+      applyEffectFn({ id: IdActionsEnum.PERTE_PORTEE, value: 2, params: [] });
+    }
+    if (sortPassifsIds.find(x => x === SortIdEnum.COLLISIONS_DE_SUPPORT)) {
+      applyEffectFn({ id: IdActionsEnum.SOINS_RECUE, value: -30, params: [] });
+    }
+    if (sortPassifsIds.find(x => x === SortIdEnum.COLLISIONS_REGENERANTES)) {
+      applyEffectFn({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, value: -30, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, params: [] });
     }
   }
 

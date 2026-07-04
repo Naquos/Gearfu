@@ -71,6 +71,8 @@ export enum SortIdEnum {
     JEU_DE_JAMBES = 7093,
     ART_DE_LA_VENGEANCE = 7096,
     POUSSEES_D_ENTRAVE = 7113,
+    COLLISIONS_DE_SUPPORT = 7103,
+    COLLISIONS_REGENERANTES = 7106,
 
     //Sorts passif ouginak
     EPUISEMENT = 6276,
