@@ -65,6 +65,7 @@
 @mixin dark-theme-vars {
 
     --color-text-inverse: var(--color-white);
+    --color-text-primary: var(--button-color);
     --button-color: var(--color-surface-muted);
     --button-background: var(--color-surface-soft);
     --color-orange-favoris: var(--color-white);

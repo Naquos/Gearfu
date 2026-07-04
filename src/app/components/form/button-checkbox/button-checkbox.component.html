@@ -10,7 +10,7 @@
 
     @if(matIcon()) {
     <mat-icon [fontIcon]="matIcon()"
-        [style.color]="isChecked() ? 'var(--color-white-checkbox)' : color() ?  color() :'#213A57'"></mat-icon>
+        [style.color]="isChecked() ? 'var(--color-white-checkbox)' : color() ?  color() :'var(--color-text-primary)'"></mat-icon>
     } @else if(srcImg()) {
     <img appFallback [src]="srcImg()" alt="image">
     }
