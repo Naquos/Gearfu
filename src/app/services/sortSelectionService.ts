@@ -1,5 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { DescriptionSort } from '../models/data/descriptionSort';
+import { LevelFormService } from './form-signal/levelFormService';
 
 export type TypeSort = 'NEUTRE' | 'PASSIF';
 export type EffectDisplay = 'NORMAL' | 'CRITIQUE';
@@ -8,11 +9,19 @@ export type EffectDisplay = 'NORMAL' | 'CRITIQUE';
     providedIn: 'root'
 })
 export class SortSelectionService {
+    private readonly levelFormService = inject(LevelFormService);
     readonly sortSelected = signal<DescriptionSort | undefined>(undefined);
     readonly typeSortSelected = signal<TypeSort | undefined>(undefined);
     readonly effectDisplay = signal<EffectDisplay>('NORMAL');
     readonly spellLevel = signal<number>(246);
     readonly currentDragSource = signal<'list' | 'equipped' | null>(null);
+
+    constructor() {
+        effect(() => {
+            const level = this.levelFormService.currentValue();
+            this.spellLevel.set(Number.isNaN(level) ? this.spellLevel() : Number.parseInt(level.toString(), 10) + 1);
+        });
+    }
 
     selectSort(sort: DescriptionSort, typeSort: TypeSort): void {
         this.sortSelected.set(sort);
