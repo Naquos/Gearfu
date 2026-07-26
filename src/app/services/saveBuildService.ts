@@ -96,6 +96,9 @@ export class SaveBuildService {
      * @param buildId
      */
     public createBuildIfNotExistsElseLoadIt(buildId: string): void {
+        if (this.buildLoading.getValue()) {
+            return; // Empêcher les appels concurrents qui créeraient des builds en double
+        }
         // Bloquer les sauvegardes automatiques jusqu'à ce que le build soit chargé.
         // Sans ça, listenBuildChanges() s'exécute immédiatement avec les valeurs
         // restaurées depuis le localStorage (celles du build précédent), ce qui
@@ -124,7 +127,7 @@ export class SaveBuildService {
                         return [];
                     }),
                     catchError(() => {
-                        this.createAndNavigate();
+                        this.buildLoading.next(false);
                         return [];
                     })).subscribe();
         }
@@ -148,7 +151,6 @@ export class SaveBuildService {
                     return;
                 }
                 this.loadBuild(newBuild);
-                this.router.navigate(["/", newBuild.id]);
             });
     }
 
