@@ -15,6 +15,7 @@ import { EnchantementSublimationsEpiquesReliquesComponent } from '../enchantemen
 import { DisplayFavorisSublimationFormService } from '../../../services/form-signal/displayFavorisSublimationFormService';
 import { ButtonCheckboxComponent } from "../../form/button-checkbox/button-checkbox.component";
 import { SublimationFavorisFormService } from '../../../services/form-signal/SublimationFavorisFormService';
+import { DisplayImpactInvocationSublimationFormService } from '../../../services/form-signal/displayImpactInvocationSublimationFormService';
 
 @Component({
     selector: 'app-enchantement-sublimations',
@@ -38,6 +39,7 @@ export class EnchantementSublimationsComponent {
     private readonly sublimationFavorisFormService = inject(SublimationFavorisFormService);
 
     protected readonly displayFavorisSublimationService = inject(DisplayFavorisSublimationFormService);
+    protected readonly displayImpactInvocationSublimationService = inject(DisplayImpactInvocationSublimationFormService);
     protected readonly imageService = inject(ImageService);
     protected readonly stateService = inject(EnchantementStateService);
     protected searchSubli = signal("");
@@ -48,6 +50,9 @@ export class EnchantementSublimationsComponent {
     private readonly sublimations = signal(this.sublimationService.getSublimations());
     private readonly sublimationsEpiqueRelique = signal(this.sublimationService.getSublimationsEpiqueRelique());
     private readonly displayFavorisSublimation = toSignal(this.displayFavorisSublimationService.display$);
+    private readonly displayImpactInvocationSublimation = toSignal(this.displayImpactInvocationSublimationService.impactInvocation$);
+
+    protected readonly bouftouImageUrl = this.imageService.getMonsterUrl(100200039);
 
     protected readonly sublimationsList = computed(() => {
         this.chasses();
@@ -58,7 +63,8 @@ export class EnchantementSublimationsComponent {
         ).filter(x =>
             this.stateService.indexItemTypeSelected() === -1 ||
             this.chasseFormService.canApplySublimationWithItem(this.chasses()![this.stateService.indexItemTypeSelected()], x)
-        ).filter(x => this.displayFavorisSublimation() ? this.sublimationFavorisFormService.hasItem(x.id) : true);
+        ).filter(x => this.displayFavorisSublimation() ? this.sublimationFavorisFormService.hasItem(x.id) : true)
+            .filter(x => this.displayImpactInvocationSublimation() ? x.impactInvocation : true);
     });
 
     protected readonly sublimationsEpiqueReliqueList = computed(() => {
@@ -66,7 +72,8 @@ export class EnchantementSublimationsComponent {
         return this.sublimationsEpiqueRelique()?.filter(subli =>
             normalizeString(this.nameItem(subli)).includes(search) ||
             normalizeString(this.descriptionSublimation(subli)).includes(search)
-        ).filter(x => this.displayFavorisSublimation() ? this.sublimationFavorisFormService.hasItem(x.id) : true);
+        ).filter(x => this.displayFavorisSublimation() ? this.sublimationFavorisFormService.hasItem(x.id) : true)
+            .filter(x => this.displayImpactInvocationSublimation() ? x.impactInvocation : true);
     });
 
     private nameItem(sublimation: SublimationsDescriptions | undefined): string {

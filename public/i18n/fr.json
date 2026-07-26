@@ -94,7 +94,8 @@
         "initiative": "Initiative",
         "sublimations": "Sublimations",
         "recherche-sublimation": "Recherche de sublimation...",
-        "sublimations-conseillees": "Sublimations conseillées par la communauté"
+        "sublimations-conseillees": "Sublimations conseillées par la communauté",
+        "impact-invocations": "Afficher uniquement les sublimations ayant un impact sur les invocations"
     },
     "import-build": {
         "label": "Importer votre build via une url Gearfu ou Zénith",

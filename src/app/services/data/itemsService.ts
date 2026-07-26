@@ -266,7 +266,8 @@ export class ItemsService {
         isRelic: sublimation.enchantement.isRelic,
         slotColorPattern: sublimation.enchantement.slotColorPattern,
         bossDropable: [],
-        isCraftable: false
+        isCraftable: false,
+        impactInvocation: false
       });
     });
   }

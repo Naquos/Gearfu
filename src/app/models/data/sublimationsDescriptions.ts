@@ -34,4 +34,5 @@ export interface SublimationsDescriptions {
     slotColorPattern: IdChassesEnum[];
     bossDropable: MonsterDrop[],
     isCraftable: boolean;
+    impactInvocation: boolean;
 }
