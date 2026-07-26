@@ -94,7 +94,8 @@
         "effets": "Effects",
         "sublimations": "Sublimations",
         "recherche-sublimation": "Search for sublimation...",
-        "sublimations-conseillees": "Community-recommended sublimations"
+        "sublimations-conseillees": "Community-recommended sublimations",
+        "impact-invocations": "Show only sublimations that have an impact on summons"
     },
     "import-build": {
         "label": "Import your build via a Gearfu or Zenith URL",
