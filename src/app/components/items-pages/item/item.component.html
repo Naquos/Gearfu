@@ -24,7 +24,7 @@
                 <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item().itemTypeId))"
                     alt="item type logo">
                 <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy cliquable"
-                    (appActivate)="copyToClipboard()"><mat-icon fontIcon="file_copy"></mat-icon></span>
+                    (appActivate)="copyToClipboard($event)"><mat-icon fontIcon="file_copy"></mat-icon></span>
             </div>
         </h3>
         <img [src]="imageService.getItemUrl(item().idImage)" alt="items" appFallback>
