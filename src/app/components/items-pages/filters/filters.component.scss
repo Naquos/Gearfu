@@ -17,6 +17,12 @@
                 background-color: var(--color-surface-empty);
             }
 
+            button:active {
+                background-color: var(--color-surface-soft);
+                border-color: var(--color-border-strong);
+                transform: translateY(2px);
+            }
+
             button,
             app-reverse-button {
                 width: 41px;
