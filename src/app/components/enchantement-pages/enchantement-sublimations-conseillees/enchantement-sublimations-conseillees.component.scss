@@ -46,3 +46,33 @@
     min-width: 173px;
     min-height: 67px;
 }
+
+.skeleton-sublimation,
+.skeleton-ratio {
+    background: linear-gradient(90deg, #2B3D58 25%, #4A658A 50%, #2B3D58 75%);
+    background-size: 220% 100%;
+    animation: skeleton-loading 1.3s ease-in-out infinite;
+    border-radius: 6px;
+}
+
+.skeleton-sublimation {
+    width: 173px;
+    height: 67px;
+    margin: 0 5px;
+}
+
+.skeleton-ratio {
+    width: 40px;
+    height: 18px;
+    margin-top: 6px;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0 50%;
+    }
+}

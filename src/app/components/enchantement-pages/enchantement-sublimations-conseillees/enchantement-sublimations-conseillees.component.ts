@@ -39,7 +39,11 @@ export class EnchantementSublimationsCommunityComponent {
     private readonly nbDeckAvecSublimationRelicConseillee = signal(0);
     private readonly idSublimationFavoris = toSignal(this.sublimationFavorisFormService.ids$);
 
+    protected readonly loading = signal(true);
+    protected readonly skeletonItems = Array.from({ length: this.nbSublimationsClassiquesConseillees + this.nbSublimationsEpiquesReliquesConseillees * 2 });
+
     private readonly sublimationsConseillees = toSignal(this.classeFormService.classe$.pipe(
+        tap(() => this.loading.set(true)),
         switchMap(classe => this.supabaseService.getSublimationsConseillees(classe)),
         tap(() => {
             this.mapSublimationConseilleeCount.clear();
@@ -55,7 +59,8 @@ export class EnchantementSublimationsCommunityComponent {
             const topSublimationsConseilleesRelic = this.keepSublimationsMoreUsed(this.mapSublimationConseilleeCountRelic,
                 this.nbSublimationsEpiquesReliquesConseillees);
             return [...topSublimationsConseillees, ...topSublimationsConseilleesEpic, ...topSublimationsConseilleesRelic];
-        })
+        }),
+        tap(() => this.loading.set(false))
     ));
 
     protected readonly sublimationsConseilleesClassique: Signal<SublimationsDescriptions[]> =

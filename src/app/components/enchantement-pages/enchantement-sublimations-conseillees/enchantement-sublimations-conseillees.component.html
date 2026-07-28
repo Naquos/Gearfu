@@ -5,6 +5,14 @@
                 {{'enchantement.sublimations-conseillees' | translate}}
             </div>
             <div class="body">
+                @if (loading()) {
+                @for (item of skeletonItems; track $index) {
+                <div class="sublimation-conseillee">
+                    <div class="skeleton-sublimation"></div>
+                    <div class="skeleton-ratio"></div>
+                </div>
+                }
+                } @else {
                 @for (sublimation of sublimationsConseilleesClassique(); track sublimation.id) {
                 <div class="sublimation-conseillee">
                     <app-enchantement-sublimations-classiques
@@ -22,6 +30,7 @@
                         {{ ratioUsageSublimation(sublimation) }}
                     </span>
                 </div>
+                }
                 }
             </div>
         </div>
