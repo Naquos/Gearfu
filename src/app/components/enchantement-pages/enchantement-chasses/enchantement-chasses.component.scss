@@ -41,6 +41,14 @@
             background-color: var(--color-surface-empty);
         }
 
+        button:active,
+        .selected {
+            transform: translateY(2px);
+            box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-deep);
+            color: var(--color-text-inverse);
+            background-color: var(--color-surface-deep) !important;
+        }
+
         button,
         .no-button {
             margin-left: auto;
