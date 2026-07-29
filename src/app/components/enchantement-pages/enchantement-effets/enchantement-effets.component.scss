@@ -67,7 +67,7 @@
         }
 
         .double {
-            background-color: var(--color-warning);
+            background-color: var(--color-warning) !important;
         }
     }
 }
