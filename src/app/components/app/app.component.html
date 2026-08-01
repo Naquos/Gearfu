@@ -10,7 +10,7 @@
     <button mat-button [matMenuTriggerFor]="param" class="paramButton">
         <mat-icon fontIcon="settings" class="param"></mat-icon>
     </button>
-    <mat-menu #param="matMenu">
+    <mat-menu #param="matMenu" id="paramMenu">
         <span>{{ "app.minimify" | translate }}</span>
         <mat-button-toggle-group>
             <mat-button-toggle (change)="minimifyDisplayFormService.setValue(true)"
