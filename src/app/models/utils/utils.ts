@@ -105,6 +105,7 @@ export function normalizeString(str: string): string {
         .replace(/[àâ@]/g, "a")
         .replace(/[ô]/g, "o")
         .replace(/[éèêë]/g, "e")
+        .replace(/[ÉÈÊË]/g, "E")
         .replace(/\s+/g, " ")
         .normalize("NFKD")
         .trim()
