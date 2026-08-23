@@ -166,7 +166,8 @@
         "boss-drop": "Puede ser dropeado por un jefe",
         "archi-drop": "Puede ser dropeado por un archimonstre o un dominante",
         "pvp": "Puede ser obtenido en PvP",
-        "elevage": "Puede ser obtenido a través de la cría"
+        "elevage": "Puede ser obtenido a través de la cría",
+        "croupier": "Puede ser obtenido a través del croupier"
     },
     "item-choose": {
         "zenith": "Exportar construcción a Zénith Wakfu",
@@ -258,7 +259,8 @@
         "archi": "Puede ser dropeado por un archimonstre o un dominante",
         "pvp": "Puede ser obtenido en PvP",
         "elevage": "Puede ser obtenido a través de la cría",
-        "no_obtention": "Puede ser obtenido por ningún medio de obtención"
+        "no_obtention": "Puede ser obtenido por ningún medio de obtención",
+        "croupier": "Puede ser obtenido a través del croupier"
     },
     "only-no-elem": {
         "label": "Considerar solo objetos sin dominio elemental",

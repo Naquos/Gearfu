@@ -166,7 +166,8 @@
         "boss-drop": "Pode ser dropado por um chefe",
         "archi-drop": "Pode ser dropado por um archimonstre ou um dominante",
         "pvp": "Pode ser obtido em PvP",
-        "elevage": "Pode ser obtido através da criação"
+        "elevage": "Pode ser obtido através da criação",
+        "croupier": "Pode ser obtido através do croupier"
     },
     "item-choose": {
         "zenith": "Exportar build para Zénith Wakfu",
@@ -258,7 +259,8 @@
         "archi": "Pode ser dropado por um archimonstre ou um dominante",
         "pvp": "Pode ser obtido em PvP",
         "elevage": "Pode ser obtido através da criação",
-        "no_obtention": "Pode ser obtido por nenhum meio de obtenção"
+        "no_obtention": "Pode ser obtido por nenhum meio de obtenção",
+        "croupier": "Pode ser obtido através do croupier"
     },
     "only-no-elem": {
         "label": "Considerar apenas itens sem maestria elemental",
