@@ -112,7 +112,7 @@ export class SortFormService extends AbstractSignalFormService<SortForm> {
         if (this.sortAlreadySet(sortId)) {
             this.removeSortNeutre(sortId);
         }
-        const sort = this.sortService.getDescriptionSortActifById(sortId) || this.sortService.getDescriptionSortElementaireById(sortId);
+        const sort = this.sortService.getDescriptionSortActifByGfxId(sortId) || this.sortService.getDescriptionSortElementaireByGfxId(sortId);
         if (!sort || this.levelFormService.getValue() < sort.levelUnlock) {
             return;
         }
@@ -129,7 +129,7 @@ export class SortFormService extends AbstractSignalFormService<SortForm> {
         if (this.sortAlreadySet(sortId)) {
             return;
         }
-        const sort = this.sortService.getDescriptionSortActifById(sortId) || this.sortService.getDescriptionSortElementaireById(sortId);
+        const sort = this.sortService.getDescriptionSortActifByGfxId(sortId) || this.sortService.getDescriptionSortElementaireByGfxId(sortId);
         if (!sort || this.levelFormService.getValue() < sort.levelUnlock) {
             return;
         }
@@ -146,7 +146,7 @@ export class SortFormService extends AbstractSignalFormService<SortForm> {
         if (this.sortAlreadySet(sortId)) {
             this.removeSortPassif(sortId);
         }
-        const sort = this.sortService.getDescriptionSortPassifById(sortId);
+        const sort = this.sortService.getDescriptionSortPassifByGfxId(sortId);
         if (!sort || this.levelFormService.getValue() < sort.levelUnlock) {
             return;
         }
@@ -163,7 +163,7 @@ export class SortFormService extends AbstractSignalFormService<SortForm> {
         if (this.sortAlreadySet(sortId)) {
             return;
         }
-        const sort = this.sortService.getDescriptionSortPassifById(sortId);
+        const sort = this.sortService.getDescriptionSortPassifByGfxId(sortId);
         if (!sort || this.levelFormService.getValue() < sort.levelUnlock) {
             return;
         }

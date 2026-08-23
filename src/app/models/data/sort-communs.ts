@@ -3,6 +3,7 @@ import { DescriptionSort } from "./descriptionSort";
 
 export const sortPassifCommun: DescriptionSort[] = [
     {
+        id: SortIdEnum.CARNAGE,
         gfxId: SortIdEnum.CARNAGE,
         name: {
             fr: "Carnage",
@@ -57,6 +58,7 @@ export const sortPassifCommun: DescriptionSort[] = [
         levelUnlock: 0
     },
     {
+        id: SortIdEnum.EVASION,
         gfxId: SortIdEnum.EVASION,
         name: {
             fr: "Evasion",
@@ -111,6 +113,7 @@ export const sortPassifCommun: DescriptionSort[] = [
         levelUnlock: 0
     },
     {
+        id: SortIdEnum.FLUCTUATION,
         gfxId: SortIdEnum.FLUCTUATION,
         name: {
             fr: "Fluctuation",
@@ -165,6 +168,7 @@ export const sortPassifCommun: DescriptionSort[] = [
         levelUnlock: 0
     },
     {
+        id: SortIdEnum.INSPIRATION,
         gfxId: SortIdEnum.INSPIRATION,
         name: {
             fr: "Inspiration",
@@ -219,6 +223,7 @@ export const sortPassifCommun: DescriptionSort[] = [
         levelUnlock: 0
     },
     {
+        id: SortIdEnum.INTERCEPTION,
         gfxId: SortIdEnum.INTERCEPTION,
         name: {
             fr: "Interception",
@@ -273,6 +278,7 @@ export const sortPassifCommun: DescriptionSort[] = [
         levelUnlock: 0
     },
     {
+        id: SortIdEnum.MEDECINE,
         gfxId: SortIdEnum.MEDECINE,
         name: {
             fr: "Médecine",
@@ -327,6 +333,7 @@ export const sortPassifCommun: DescriptionSort[] = [
         levelUnlock: 0
     },
     {
+        id: SortIdEnum.MOTIVATION,
         gfxId: SortIdEnum.MOTIVATION,
         name: {
             fr: "Motivation",
@@ -380,64 +387,66 @@ export const sortPassifCommun: DescriptionSort[] = [
         },
         levelUnlock: 0
     },
-        {
-            gfxId: SortIdEnum.ROCK,
-            name: {
-                fr: "Rock",
-                en: "Rock",
-                es: "Roca",
-                pt: "Rocha"
-            },
-            description: {
-                fr: "Plus solide que la montagne, je prendrai les dégâts pour vous !",
-                en: "Stronger than the mountain, I will take the damage for you!",
-                es: "¡Más fuerte que la montaña, yo recibiré el daño por ti!",
-                pt: "Mais forte que a montanha, eu vou receber o dano por você!"
-            },
-            urls: {
-                fr: "",
-                en: "",
-                es: "",
-                pt: ""
-            },
-            PA: 0,
-            PW: 0,
-            PM: 0,
-            NotLDV: false,
-            POModifiable: false,
-            Ligne: false,
-            PorteeMin: 0,
-            PorteeMax: 0,
-            effect_normal: {
-                fr: "60% Points de Vie\n25% Soins reçus\n-25% DOmmages infligés\n-50% Soins réalisés",
-                en: "60% Health Points\n25% Healing received\n-25% Damage dealt\n-50% Healing done",
-                es: "60% Puntos de vida\n25% de curación recibida\n-25% de daño infligido\n-50% de curación realizada",
-                pt: "60% Pontos de Vida\n25% Cura recebida\n-25% de Dano causado\n-50% de Cura realizada"
-            },
-            effect_critical: {
-                fr: "",
-                en: "",
-                es: "",
-                pt: ""
-            },
-            normalEffect: {
-                fr: [],
-                en: [],
-                es: [],
-                pt: []
-            },
-            criticalEffect: {
-                fr: [],
-                en: [],
-                es: [],
-                pt: []
-            },
-            levelUnlock: 0
-        }
+    {
+        id: SortIdEnum.ROCK,
+        gfxId: SortIdEnum.ROCK,
+        name: {
+            fr: "Rock",
+            en: "Rock",
+            es: "Roca",
+            pt: "Rocha"
+        },
+        description: {
+            fr: "Plus solide que la montagne, je prendrai les dégâts pour vous !",
+            en: "Stronger than the mountain, I will take the damage for you!",
+            es: "¡Más fuerte que la montaña, yo recibiré el daño por ti!",
+            pt: "Mais forte que a montanha, eu vou receber o dano por você!"
+        },
+        urls: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        PA: 0,
+        PW: 0,
+        PM: 0,
+        NotLDV: false,
+        POModifiable: false,
+        Ligne: false,
+        PorteeMin: 0,
+        PorteeMax: 0,
+        effect_normal: {
+            fr: "60% Points de Vie\n25% Soins reçus\n-25% DOmmages infligés\n-50% Soins réalisés",
+            en: "60% Health Points\n25% Healing received\n-25% Damage dealt\n-50% Healing done",
+            es: "60% Puntos de vida\n25% de curación recibida\n-25% de daño infligido\n-50% de curación realizada",
+            pt: "60% Pontos de Vida\n25% Cura recebida\n-25% de Dano causado\n-50% de Cura realizada"
+        },
+        effect_critical: {
+            fr: "",
+            en: "",
+            es: "",
+            pt: ""
+        },
+        normalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        criticalEffect: {
+            fr: [],
+            en: [],
+            es: [],
+            pt: []
+        },
+        levelUnlock: 0
+    }
 ]
 
 export const sortNeutreCommun: DescriptionSort[] = [
     {
+        id: SortIdEnum.CHARME_DE_MASSE,
         gfxId: SortIdEnum.CHARME_DE_MASSE,
         name: {
             fr: "Charme de masse",
@@ -492,6 +501,7 @@ export const sortNeutreCommun: DescriptionSort[] = [
         levelUnlock: 0
     },
     {
+        id: SortIdEnum.MAITRISES_D_ARMES,
         gfxId: SortIdEnum.MAITRISES_D_ARMES,
         name: {
             fr: "Maîtrise d'armes",
@@ -546,6 +556,7 @@ export const sortNeutreCommun: DescriptionSort[] = [
         levelUnlock: 0
     },
     {
+        id: SortIdEnum.OS_A_MOELLE,
         gfxId: SortIdEnum.OS_A_MOELLE,
         name: {
             fr: "Os à Moelle",

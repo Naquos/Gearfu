@@ -77,14 +77,14 @@ export class SortsConseillesComponent {
         const bestSortsNeutre = Array.from(this.countSortNeutreConseilles.entries())
             .sort((a, b) => b[1] - a[1])
             .map(entry => parseInt(entry[0], 10))
-            .map(id => this.sortService.getDescriptionSortNeutreById(id))
+            .map(id => this.sortService.getDescriptionSortNeutreByGfxId(id))
             .filter((x): x is DescriptionSort => !!x)
             .slice(0, this.MAX_SORTS_NEUTRE);
 
         const bestSortsPassif = Array.from(this.countSortPassifConseilles.entries())
             .sort((a, b) => b[1] - a[1])
             .map(entry => parseInt(entry[0], 10))
-            .map(id => this.sortService.getDescriptionSortPassifById(id))
+            .map(id => this.sortService.getDescriptionSortPassifByGfxId(id))
             .filter((x): x is DescriptionSort => !!x)
             .slice(0, this.MAX_SORTS_PASSIF);
 

@@ -1,4 +1,5 @@
 export interface DescriptionSort {
+    id: number;
     gfxId: number;
     name: {
         fr: string;

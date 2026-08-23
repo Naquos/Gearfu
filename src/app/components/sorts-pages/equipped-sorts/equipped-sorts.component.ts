@@ -99,13 +99,13 @@ export class EquippedSortsComponent {
         if (this.readonly()) { return; }
 
         if (typeSort === 'NEUTRE') {
-            const sort = this.sortService.getDescriptionSortElementaireById(sortId) ||
-                this.sortService.getDescriptionSortActifById(sortId);
+            const sort = this.sortService.getDescriptionSortElementaireByGfxId(sortId) ||
+                this.sortService.getDescriptionSortActifByGfxId(sortId);
             if (sort) {
                 this.sortSelectionService.selectSort(sort, 'NEUTRE');
             }
         } else {
-            const sort = this.sortService.getDescriptionSortPassifById(sortId);
+            const sort = this.sortService.getDescriptionSortPassifByGfxId(sortId);
             if (sort) {
                 this.sortSelectionService.selectSort(sort, 'PASSIF');
             }

@@ -71,24 +71,29 @@ export class SortService {
         );
     }
 
-    public getDescriptionSortNeutreById(sortId: number): DescriptionSort | undefined {
-        return this.getDescriptionSortElementaireById(sortId)
-            || this.getDescriptionSortActifById(sortId);
+    public getDescriptionSortNeutreByGfxId(sortId: number): DescriptionSort | undefined {
+        return this.getDescriptionSortElementaireByGfxId(sortId)
+            || this.getDescriptionSortActifByGfxId(sortId);
     }
 
-    public getDescriptionSortElementaireById(sortId: number): DescriptionSort | undefined {
+    public getDescriptionSortElementaireByGfxId(sortId: number): DescriptionSort | undefined {
         return this.sortsClasse()?.sortElementaires.feu.find(s => s.gfxId === sortId)
             || this.sortsClasse()?.sortElementaires.eau.find(s => s.gfxId === sortId)
             || this.sortsClasse()?.sortElementaires.air.find(s => s.gfxId === sortId)
             || this.sortsClasse()?.sortElementaires.terre.find(s => s.gfxId === sortId);
     }
 
-    public getDescriptionSortPassifById(sortId: number): DescriptionSort | undefined {
+    public getDescriptionSortPassifByGfxId(sortId: number): DescriptionSort | undefined {
         return this.sortsClasse()?.sortPassifs.find(s => s.gfxId === sortId);
     }
 
-    public getDescriptionSortActifById(sortId: number): DescriptionSort | undefined {
+    public getDescriptionSortActifByGfxId(sortId: number): DescriptionSort | undefined {
         return this.sortsClasse()?.sortActifs.find(s => s.gfxId === sortId);
+    }
+
+    public getDescriptionSortByGfxId(sortId: number): DescriptionSort | undefined {
+        return this.getDescriptionSortNeutreByGfxId(sortId)
+            || this.getDescriptionSortPassifByGfxId(sortId);
     }
 
     public getCurrentLang(): 'fr' | 'en' | 'es' | 'pt' {
