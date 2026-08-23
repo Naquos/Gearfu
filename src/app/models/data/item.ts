@@ -34,6 +34,7 @@ export interface Item {
     resistance: number;
     isCraftable: boolean;
     isElevage: boolean;
+    isCroupier: boolean;
     mobDropable: MonsterDrop[];
     bossDropable: MonsterDrop[];
     archiDropable: MonsterDrop[];

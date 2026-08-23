@@ -12,6 +12,7 @@ export interface ObtentionForm {
     PVP: boolean;
     ELEVAGE: boolean;
     NO_OBTENTION: boolean;
+    CROUPIER: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -24,7 +25,8 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
         ARCHI: true,
         PVP: true,
         ELEVAGE: true,
-        NO_OBTENTION: true
+        NO_OBTENTION: true,
+        CROUPIER: true
     };
 
     // Inverted: BehaviorSubject emits !value.FIELD (true = excluded, false = included)
@@ -49,6 +51,9 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
     private readonly noObtention = new BehaviorSubject<boolean>(!ObtentionFormService.DEFAULT_VALUE.NO_OBTENTION);
     public readonly noObtention$ = this.noObtention.asObservable();
 
+    private readonly croupier = new BehaviorSubject<boolean>(!ObtentionFormService.DEFAULT_VALUE.CROUPIER);
+    public readonly croupier$ = this.croupier.asObservable();
+
     protected readonly keyEnum = KeyEnum.KEY_OBTENTION;
     protected readonly model = signal<ObtentionForm>({ ...ObtentionFormService.DEFAULT_VALUE });
 
@@ -67,6 +72,7 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
         this.pvp.next(!value.PVP);
         this.elevage.next(!value.ELEVAGE);
         this.noObtention.next(!value.NO_OBTENTION);
+        this.croupier.next(!value.CROUPIER);
     }
 
     public override setValue(value: ObtentionForm | null): void {
@@ -77,7 +83,8 @@ export class ObtentionFormService extends AbstractSignalFormService<ObtentionFor
             ARCHI: value?.ARCHI ?? ObtentionFormService.DEFAULT_VALUE.ARCHI,
             PVP: value?.PVP ?? ObtentionFormService.DEFAULT_VALUE.PVP,
             ELEVAGE: value?.ELEVAGE ?? ObtentionFormService.DEFAULT_VALUE.ELEVAGE,
-            NO_OBTENTION: value?.NO_OBTENTION ?? ObtentionFormService.DEFAULT_VALUE.NO_OBTENTION
+            NO_OBTENTION: value?.NO_OBTENTION ?? ObtentionFormService.DEFAULT_VALUE.NO_OBTENTION,
+            CROUPIER: value?.CROUPIER ?? ObtentionFormService.DEFAULT_VALUE.CROUPIER
         });
     }
 

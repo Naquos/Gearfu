@@ -32,6 +32,7 @@ import { BaseEffect, SublimationsDescriptions } from "../../models/data/sublimat
 import { calculWeight, normalizeString, ratioWeightByLevel } from "../../models/utils/utils";
 import { FamiliersService } from "./familiersService";
 import { IdItemElevageEnum } from "../../models/enum/idItemElevageEnum";
+import { ItemCroupierEnum } from "../../models/enum/ItemCroupierEnum";
 import { AnimationService } from "../animations/animation.service";
 
 @Injectable({ providedIn: 'root' })
@@ -79,7 +80,6 @@ export class ItemsService {
     IdActionsEnum.PERTE_MAITRISES_ELEMENTAIRES,
     IdActionsEnum.PERTE_MAITRISES_FEU
   ]);
-  private static readonly EQUILIBRE_RESISTANCE_MULTIPLIER = 1.2;
   private static readonly DEFAULT_NB_ELEMENTS = 4;
 
   private readonly idPierresList = [
@@ -91,6 +91,7 @@ export class ItemsService {
   ];
 
   private readonly idElevageItemsSet = new Set<number>(Object.values(IdItemElevageEnum) as number[]);
+  private readonly idCroupierItemsSet = new Set<number>((Object.values(ItemCroupierEnum) as number[]).filter(v => v > 0));
 
   protected items: Item[] = [];
   protected readonly _fullItems = new BehaviorSubject<Item[]>([]);
@@ -185,7 +186,8 @@ export class ItemsService {
     seeArchi: boolean,
     seePvP: boolean,
     seeElevage: boolean,
-    seeNoObtention: boolean
+    seeNoObtention: boolean,
+    seeCroupier: boolean
   ): boolean {
     let result = item.isCraftable && !seeCraftable;
     result = result || (item.mobDropable.length > 0 && !seeDrop);
@@ -193,9 +195,10 @@ export class ItemsService {
     result = result || (item.archiDropable.length > 0 && !seeArchi);
     result = result || (item.isPvP && !seePvP);
     result = result || (item.isElevage && !seeElevage);
+    result = result || (item.isCroupier && !seeCroupier);
     // Items without obtention method
     result = result || (item.mobDropable.length === 0 && item.bossDropable.length === 0 && item.archiDropable.length === 0
-      && !item.isCraftable && !item.isPvP && !item.isElevage && !seeNoObtention);
+      && !item.isCraftable && !item.isPvP && !item.isElevage && !item.isCroupier && !seeNoObtention);
     return result;
   }
 
@@ -291,9 +294,10 @@ export class ItemsService {
       this.obtentionFormService.archi$,
       this.obtentionFormService.pvp$,
       this.obtentionFormService.elevage$,
-      this.obtentionFormService.noObtention$
+      this.obtentionFormService.noObtention$,
+      this.obtentionFormService.croupier$
     ])
-      .pipe(map(([items, drop, craftable, boss, archi, pvp, elevage, noObtention]) => items.filter(x => this.filterObtention(x, drop, craftable, boss, archi, pvp, elevage, noObtention))));
+      .pipe(map(([items, drop, craftable, boss, archi, pvp, elevage, noObtention, croupier]) => items.filter(x => this.filterObtention(x, drop, craftable, boss, archi, pvp, elevage, noObtention, croupier))));
 
     const itemsFilterByLevelMin$ = combineLatest([itemsFilterByObtention$, this.itemLevelFormService.levelMin$])
       .pipe(map(([items, levelMin]) => items.filter(x => x.level >= levelMin || x.itemTypeId === ItemTypeDefinitionEnum.FAMILIER)));
@@ -464,6 +468,7 @@ export class ItemsService {
             resistance: 0,
             isCraftable: false,
             isElevage: this.idElevageItemsSet.has(x.definition.item.id),
+            isCroupier: this.idCroupierItemsSet.has(x.definition.item.id),
             mobDropable: [],
             bossDropable: [],
             archiDropable: [],

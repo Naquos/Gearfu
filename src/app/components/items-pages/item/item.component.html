@@ -86,6 +86,9 @@
             <img appFallback [src]="imageService.getItemUrl(84933039)" alt="elevage"
                 [matTooltip]="'item.elevage' | translate">
             }
+            @if (item().isCroupier) {
+            <img appFallback [src]="'croupier.png'" alt="croupier" [matTooltip]="'item.croupier' | translate">
+            }
         </div>
         }
     </div>

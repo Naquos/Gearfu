@@ -166,7 +166,8 @@
         "boss-drop": "Peut être droppé par un boss",
         "archi-drop": "Peut être droppé par un archimonstre ou un dominant",
         "pvp": "Peut être obtenu en PvP",
-        "elevage": "Peut être obtenu par élevage"
+        "elevage": "Peut être obtenu par élevage",
+        "croupier": "Peut être obtenu par le croupier"
     },
     "item-choose": {
         "zenith": "Exporter le build vers Zénith Wakfu",
@@ -258,7 +259,8 @@
         "archi": "Pouvant être droppé par un archimonstre ou un dominant",
         "pvp": "Pouvant être obtenu en PvP",
         "elevage": "Pouvant être obtenu par élevage",
-        "no_obtention": "Pouvant être obtenu par aucun moyen d'obtention"
+        "no_obtention": "Pouvant être obtenu par aucun moyen d'obtention",
+        "croupier": "Pouvant être obtenu par le croupier"
     },
     "only-no-elem": {
         "label": "Prendre en compte exclusivement les items sans aucune maitrise élémentaire",
