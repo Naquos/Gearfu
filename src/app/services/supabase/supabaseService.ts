@@ -1,4 +1,5 @@
 import { inject, Inject, Injectable, PLATFORM_ID } from "@angular/core";
+import { ItemsService } from "../data/itemsService";
 import { isPlatformBrowser } from "@angular/common";
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { catchError, from, map, Observable, of } from "rxjs";
@@ -10,12 +11,20 @@ import { ClassIdEnum } from "../../models/enum/classIdEnum";
 import { OrderBySearchBuildEnum } from "../../models/enum/orderBySearchBuildEnum";
 
 let browserSupabaseClient: SupabaseClient | null = null;
+const BUILDS_PAGE_SIZE = 100;
+const MINIMUM_BUILDS_COUNT = 50;
+const MAXIMUM_BUILDS_COUNT = 100;
+
+type BuildStatisticsRow = Statistics & {
+    build: Build | Build[] | null;
+};
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
     private readonly supabase: SupabaseClient;
     private readonly isBrowser: boolean;
     private readonly localStorageService = inject(LocalStorageService);
+    private readonly itemsService = inject(ItemsService);
 
     // eslint-disable-next-line @angular-eslint/prefer-inject
     constructor(@Inject(PLATFORM_ID) platformId: object) {
@@ -107,66 +116,88 @@ export class SupabaseService {
         const _levelMin = !lvlMin || lvlMin <= 0 ? 0 : lvlMin;
         const _levelMax = !lvlMax || lvlMax <= 0 ? 999 : lvlMax;
         const _name = !name ? '%%' : `%${name}%`;
-        const request = this.supabase.from('statistics')
-            .select('*, build!inner(*)')
-            .eq('build.hide', false) // On filtre pour n'avoir que les builds publics
-            .neq('build.itemsId', '') // On filtre pour n'avoir que les builds avec des items
-            .gte('build.level', _levelMin)
-            .lte('build.level', _levelMax)
-            .gt('maitrises', 40) // On filtre pour n'avoir que les builds avec au moins 40 maitrise qui est la valeur par défaut donnée par la guilde
-            .gte('PA', _PA)
-            .gte('PM', _PM)
-            .gte('PW', _PW)
-            .gte('PO', _PO)
-            .gte('CC', _CC)
-            .gte('parade', _parade)
-            .like('build.enchantement', _sublimationEpique)
-            .like('build.enchantement', _sublimationRelique)
-            .ilike('build.nameBuild', _name);
+        const createRequest = () => {
+            const request = this.supabase.from('statistics')
+                .select('*, build!inner(*)')
+                .eq('build.hide', false) // On filtre pour n'avoir que les builds publics
+                .neq('build.itemsId', '') // On filtre pour n'avoir que les builds avec des items
+                .gte('build.level', _levelMin)
+                .lte('build.level', _levelMax)
+                .gt('maitrises', 40) // On filtre pour n'avoir que les builds avec au moins 40 maitrise qui est la valeur par défaut donnée par la guilde
+                .gte('PA', _PA)
+                .gte('PM', _PM)
+                .gte('PW', _PW)
+                .gte('PO', _PO)
+                .gte('CC', _CC)
+                .gte('parade', _parade)
+                .like('build.enchantement', _sublimationEpique)
+                .like('build.enchantement', _sublimationRelique)
+                .ilike('build.nameBuild', _name);
 
-        if (classe) {
-            request.eq('build.classe', classe);
-        }
-
-        // Filtrage sur les items : on vérifie que pour chaque groupe d'items (correspondant à un item avec différentes raretés), au moins un des ids est présent dans itemsId du build
-        idItems.forEach((group) => {
-            const orGroup = group
-                .filter(id => !!id)
-                .map(id => `itemsId.like.%${id}%`)
-                .join(',');
-
-            if (orGroup) {
-                request.or(orGroup, { referencedTable: 'build' });
+            if (classe) {
+                request.eq('build.classe', classe);
             }
-        });
 
-        // Filtrage sur les sublimations : on vérifie que pour chaque sublimation, elle est présente dans enchantement du build
-        sublimations.forEach((sublimation) => {
-            if (sublimation) {
-                request.like('build.enchantement', `%${sublimation}%`);
-            }
-        });
+            // Filtrage sur les items : on vérifie que pour chaque groupe d'items (correspondant à un item avec différentes raretés), au moins un des ids est présent dans itemsId du build
+            idItems.forEach((group) => {
+                const orGroup = group
+                    .filter(id => !!id)
+                    .map(id => `itemsId.like.%${id}%`)
+                    .join(',');
 
+                if (orGroup) {
+                    request.or(orGroup, { referencedTable: 'build' });
+                }
+            });
 
-        // On part de statistics pour trier directement sur la colonne maitrises,
-        // puis on récupère le build lié via jointure.
-        return from(request.order(orderBy, { ascending: false })
-            .limit(100)
-        ).pipe(
-            map(({ data, error }) => {
+            // Filtrage sur les sublimations : on vérifie que pour chaque sublimation, elle est présente dans enchantement du build
+            sublimations.forEach((sublimation) => {
+                if (sublimation) {
+                    request.like('build.enchantement', `%${sublimation}%`);
+                }
+            });
+
+            return request;
+        };
+
+        return from((async () => {
+            const builds: { build: Build, statistics: Statistics | null }[] = [];
+            let pageStart = 0;
+            let hasNextPage = true;
+
+            while (builds.length < MINIMUM_BUILDS_COUNT && hasNextPage) {
+                const { data, error } = await createRequest()
+                    .order(orderBy, { ascending: false })
+                    .range(pageStart, pageStart + BUILDS_PAGE_SIZE - 1);
+
                 if (error) {
                     throw error;
                 }
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                return (data ?? []).map((item: any) => {
-                    const { build, ...statistics } = item;
-                    return {
-                        build: Array.isArray(build) ? (build[0] as Build) : (build as Build),
-                        statistics: statistics as Statistics,
-                    };
+
+                const rows = (data ?? []) as BuildStatisticsRow[];
+                hasNextPage = rows.length === BUILDS_PAGE_SIZE;
+                pageStart += BUILDS_PAGE_SIZE;
+
+                rows.forEach(({ build, ...statistics }) => {
+                    const currentBuild = Array.isArray(build) ? build[0] : build;
+                    if (!currentBuild) {
+                        return;
+                    }
+
+                    const itemsId = currentBuild.itemsId?.split(',').map(id => Number(id)) ?? [];
+                    const hasEligibleItems = itemsId.every(id => {
+                        const item = this.itemsService.getItem(id);
+                        return item ? item.level <= _levelMax : true;
+                    });
+
+                    if (hasEligibleItems && builds.length < MAXIMUM_BUILDS_COUNT) {
+                        builds.push({ build: currentBuild, statistics });
+                    }
                 });
-            })
-        );
+            }
+
+            return builds;
+        })());
     }
 
     public getBuildById(id: string): Observable<Build | null> {

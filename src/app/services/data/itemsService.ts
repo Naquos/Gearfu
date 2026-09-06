@@ -106,6 +106,7 @@ export class ItemsService {
 
   private recipesByProductId = new Map<number, RecipeResultsCdn>();
   private itemsByName = new Map<string, Item[]>();
+  private itemsById = new Map<number, Item>();
   private monsterDropsByItemId = new Map<number, MonsterDrop[]>();
   private archiIds = new Set<number>();
 
@@ -496,6 +497,9 @@ export class ItemsService {
     }
 
     for (const item of this.items) {
+      if (!this.itemsById.has(item.id)) {
+        this.itemsById.set(item.id, item);
+      }
       if (!this.itemsByName.has(item.title.fr)) {
         this.itemsByName.set(item.title.fr, []);
       }
@@ -600,7 +604,7 @@ export class ItemsService {
   }
 
   public getItem(idItem: number): Item | undefined {
-    return this._fullItems.value.find(x => x.id === idItem);
+    return this.itemsById.get(idItem);
   }
 
   private majorIsPresent(idMajor: MajorAction[], x: Item): boolean {
