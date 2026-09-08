@@ -263,6 +263,9 @@ export class SublimationEffectsService {
         applyEffectFn({ id: IdActionsEnum.PORTEE, value: 3, params: [] });
       } else if (id === IdSublimationEnum.VOLONTE_DE_FER) {
         applyEffectFn({ id: IdActionsEnum.VOLONTE, value: 20, params: [] });
+      } else if (id === IdSublimationEnum.VIVACITE) {
+        applyEffectFn({ id: IdActionsEnum.PA, value: 1, params: [] });
+        applyEffectFn({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: -150 + (levelSubli - 1) * 75, params: [] });
       }
     });
   }

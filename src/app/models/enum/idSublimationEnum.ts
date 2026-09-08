@@ -48,6 +48,7 @@ export enum IdSublimationEnum {
     TOPOLOGIE = 28840,
     VELOCITE = 28847,
     VISIBILITE = 28851,
+    VIVACITE = 28848,
 
 
     // ============= SUBLIMATIONS EPIQUES / RELIQUES ============= //
