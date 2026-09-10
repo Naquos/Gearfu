@@ -256,6 +256,11 @@ export class SublimationEffectsService {
       } else if (id === IdSublimationEnum.SANTE_DE_FER) {
         applyEffectFn({ id: IdActionsEnum.PERCENTAGE_PV, value: -30, params: [] });
         applyEffectFn({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameterMajorAction: ParameterMajorActionEnum.ARMURE_RECUE, value: 30, params: [] });
+      } else if (id === IdSublimationEnum.SECRET_CRITIQUE) {
+        const maitrisesCritiques = recapValue.find(rs => rs.id === IdActionsEnum.MAITRISES_CRITIQUES)?.value ?? 0;
+        if (maitrisesCritiques <= 0) {
+          applyEffectFn({ id: IdActionsEnum.COUP_CRITIQUE, value: 30, params: [] });
+        }
       } else if (id === IdSublimationEnum.SCIENCE_DU_PLACEMENT) {
         applyEffectFn({ id: IdActionsEnum.RESISTANCES_ELEMENTAIRE, value: 50, params: [] });
         applyEffectFn({ id: IdActionsEnum.RESISTANCES_DOS, value: -200, params: [] });
