@@ -90,7 +90,7 @@ export class InputResumeAptitudesComponent {
 
   protected calculResistance(): string {
     const resistance = this.value();
-    const percentage = Math.floor((1 - Math.pow(0.8, resistance / 100)) * 100);
+    const percentage = Math.min(90, Math.floor((1 - Math.pow(0.8, resistance / 100)) * 100));
     return `${percentage}% (${resistance})`;
   }
 
