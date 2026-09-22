@@ -14862,7 +14862,11 @@
         "gfxId": 81228822,
         "isEpic": false,
         "isRelic": false,
-        "slotColorPattern": [],
+        "slotColorPattern": [
+            2,
+            1,
+            2
+        ],
         "bossDropable": [],
         "isCraftable": false,
         "impactInvocation": false
@@ -14905,7 +14909,11 @@
         "gfxId": 81228822,
         "isEpic": false,
         "isRelic": false,
-        "slotColorPattern": [],
+        "slotColorPattern": [
+            2,
+            3,
+            3
+        ],
         "bossDropable": [],
         "isCraftable": false,
         "impactInvocation": false
@@ -14948,7 +14956,11 @@
         "gfxId": 81228822,
         "isEpic": false,
         "isRelic": false,
-        "slotColorPattern": [],
+        "slotColorPattern": [
+            3,
+            1,
+            1
+        ],
         "bossDropable": [],
         "isCraftable": false,
         "impactInvocation": false
@@ -14961,10 +14973,10 @@
             }
         ],
         "title": {
-            "fr": "Tout feu tout flamme II",
-            "en": "Fire and Flame II",
-            "es": "Puro Fuego II",
-            "pt": "Pegando Fogo II"
+            "fr": "Tout feu tout flamme",
+            "en": "Fire and Flame",
+            "es": "Puro Fuego",
+            "pt": "Pegando Fogo"
         },
         "description": {
             "fr": "Lorsque le porteur de l'état subit des dommages directs en mêlée : 1PM (1 activation par tour)",
@@ -14978,7 +14990,11 @@
         "gfxId": 81228822,
         "isEpic": false,
         "isRelic": false,
-        "slotColorPattern": [],
+        "slotColorPattern": [
+            3,
+            2,
+            1
+        ],
         "bossDropable": [],
         "isCraftable": false,
         "impactInvocation": false
