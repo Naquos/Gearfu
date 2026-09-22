@@ -6,6 +6,7 @@ import { IdActionsEnum } from '../../models/enum/idActionsEnum';
 import { DifferentStatsItem } from '../../models/data/differentsStatsItem';
 import { ActionService } from '../../services/data/actionService';
 import { AnkamaCdnFacade } from '../../services/ankama-cdn/ankamaCdnFacade';
+import { LevelFormService } from '../../services/form-signal/levelFormService';
 
 @Pipe({
   name: 'actions',
@@ -16,6 +17,20 @@ export class ActionsPipe implements PipeTransform {
   private readonly ankamaCdnFacade = inject(AnkamaCdnFacade);
   private readonly translateService = inject(TranslateService);
   private readonly actionService = inject(ActionService);
+  private readonly levelFormService = inject(LevelFormService);
+
+  private static readonly ACTION_MAITRISE_PAR_LEVEL: ActionsCdn = {
+    definition: {
+      id: IdActionsEnum.MAITRISE_PAR_LEVEL,
+      effect: "",
+    },
+    description: {
+      fr: "100% du niveau en maitrise élémentaire (${0})",
+      en: "100% of the level in elemental mastery (${0})",
+      es: "100% del nivel en maestría elemental (${0})",
+      pt: "100% do nível em maestria elemental (${0})"
+    }
+  };
 
   transform(effect: EquipEffects | DifferentStatsItem): string {
     const actions = this.ankamaCdnFacade.actions();
@@ -34,7 +49,12 @@ export class ActionsPipe implements PipeTransform {
     result = this.atLeastSixParameters(result, effect);
     result = this.armorGivenOrReceived(result, effect);
     result = this.deleteDoubleMinus(result);
+    result = this.setLevel(result);
     return result;
+  }
+
+  private setLevel(result: string): string {
+    return result.replace(/\$\{0\}/g, this.levelFormService.currentValue());
   }
 
   private deleteDoubleMinus(result: string): string {
@@ -127,6 +147,9 @@ export class ActionsPipe implements PipeTransform {
   }
 
   private findAction(actions: ActionsCdn[], effect: EquipEffects | DifferentStatsItem): ActionsCdn {
+    if (effect.actionId === IdActionsEnum.MAITRISE_PAR_LEVEL) {
+      return ActionsPipe.ACTION_MAITRISE_PAR_LEVEL;
+    }
     return actions.filter(action => action.definition.id === effect.actionId)[0];
   }
 }

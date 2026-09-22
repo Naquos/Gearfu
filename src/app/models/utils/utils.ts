@@ -77,6 +77,8 @@ export const mapSortAction = new Map<IdActionsEnum, number>([
     [IdActionsEnum.PERTE_RESISTANCES_FEU, 49],
     [IdActionsEnum.PERTE_RESISTANCE_EAU, 50],
     [IdActionsEnum.PERTE_RESISTANCES_TERRE, 51],
+    [IdActionsEnum.MAITRISE_PAR_LEVEL, 52],
+    [IdActionsEnum.APPLIQUE_ETAT, 53],
 ]);
 
 export function maxChasseLevel(level: number): number {

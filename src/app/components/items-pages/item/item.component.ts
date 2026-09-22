@@ -99,7 +99,6 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
     const item = this.item();
     if (item) {
       item.equipEffects = item.equipEffects
-        .filter(x => mapSortAction.has(x.actionId) || x.actionId === this.IdActionEnum.APPLIQUE_ETAT)
         .sort((a, b) => (mapSortAction.get(a.actionId) ?? 999) - (mapSortAction.get(b.actionId) ?? 999));
 
       this.initItemChoosen(item);

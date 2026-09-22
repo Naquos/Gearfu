@@ -34,6 +34,7 @@ import { FamiliersService } from "./familiersService";
 import { IdItemElevageEnum } from "../../models/enum/idItemElevageEnum";
 import { ItemCroupierEnum } from "../../models/enum/ItemCroupierEnum";
 import { AnimationService } from "../animations/animation.service";
+import { LevelFormService } from "../form-signal/levelFormService";
 
 @Injectable({ providedIn: 'root' })
 export class ItemsService {
@@ -55,6 +56,7 @@ export class ItemsService {
   private readonly monsterDropService = inject(MonsterDropService);
   private readonly familiersService = inject(FamiliersService);
   private readonly animationService = inject(AnimationService);
+  private readonly levelFormService = inject(LevelFormService);
 
   // Constants
   private static readonly ARMURE_DONNEE_RECUE_LIST = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
@@ -128,10 +130,11 @@ export class ItemsService {
       this.resistanceFormService.idResistances$,
       this.onlyNoElemFormService.onlyNoElem$,
       this.onlyNoSecondaryFormService.onlyNoSecondary$,
-      this.modifierElemMaitrisesFormService.chaos$
+      this.modifierElemMaitrisesFormService.chaos$,
+      this.levelFormService.level$ // Add the level observable to the combineLatest array
     ])
       .pipe(
-        tap(([items, nbElements, idMaitrises, sort, multiplicateurElem, denouement, idResistances, onlyNoElem, onlyNoSecondary, chaos]) =>
+        tap(([items, nbElements, idMaitrises, sort, multiplicateurElem, denouement, idResistances, onlyNoElem, onlyNoSecondary, chaos,]) =>
           this.fillItemWeightMap(items, nbElements, idMaitrises, sort, multiplicateurElem, idResistances, denouement, onlyNoElem, onlyNoSecondary, chaos)),
         map(([items,]) => items));
 
@@ -660,6 +663,9 @@ export class ItemsService {
           (effect.actionId === IdActionsEnum.PERTE_MAITRISES_BERZERK && idMaitrisesSet.has(IdActionsEnum.MAITRISES_BERZERK))
         )) {
         result -= effect.params[0];
+      } else if (effect.actionId === IdActionsEnum.MAITRISE_PAR_LEVEL) {
+        const level = Number(this.levelFormService.currentValue());
+        result += isNaN(level) ? 0 : level;
       }
     })
 
