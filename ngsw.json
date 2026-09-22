@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1790108601674,
+  "timestamp": 1790108869453,
   "index": "/Gearfu/index.csr.html",
   "assetGroups": [
     {
@@ -113,7 +113,6 @@
         "/Gearfu/item/archiembleme.png",
         "/Gearfu/item/dofus_pourpre.png",
         "/Gearfu/item/embleme_pourpre.png",
-        "/Gearfu/item/ignemikhal.png",
         "/Gearfu/item/la_cause_pourpre.png",
         "/Gearfu/item/porte_bonheur_abrakne.png",
         "/Gearfu/item/porte_bonheur_bouftou.png",
@@ -129,6 +128,7 @@
         "/Gearfu/mob/eenca.png",
         "/Gearfu/mob/erpel.png",
         "/Gearfu/mob/gelee-reglisse.png",
+        "/Gearfu/mob/ignemikhal.png",
         "/Gearfu/mob/lela.png",
         "/Gearfu/mob/moumoute-la-postiche.png",
         "/Gearfu/mob/protecteur-encapuchonne.png",
@@ -260,7 +260,6 @@
     "/Gearfu/item/archiembleme.png": "22c7bf973cdd41b4703e99d855426eb4233b94ee",
     "/Gearfu/item/dofus_pourpre.png": "b847941dc5337e61997dcea12a39cf89b9f7c884",
     "/Gearfu/item/embleme_pourpre.png": "04728dfde6f5f3dd23966d7479c757167fbaec39",
-    "/Gearfu/item/ignemikhal.png": "a514fe8be9b2155610c608d53acf29036fc7a3a0",
     "/Gearfu/item/la_cause_pourpre.png": "93101fddf1fe3118d09ba942653b961fc16e6ab1",
     "/Gearfu/item/porte_bonheur_abrakne.png": "64a426fba7990caaf4d8ff63494706912dbdbf71",
     "/Gearfu/item/porte_bonheur_bouftou.png": "2c81a6e7c28efa804c1a628ed0f0562ccdb0579d",
@@ -276,6 +275,7 @@
     "/Gearfu/mob/eenca.png": "3eefbb3a927feaec724aec7522f6c9d012472316",
     "/Gearfu/mob/erpel.png": "6d30f4d72a5660d208274bd75d05d03a7d73b7e0",
     "/Gearfu/mob/gelee-reglisse.png": "f116314f66e10f82acbe3bd725bfe0b66ea24af3",
+    "/Gearfu/mob/ignemikhal.png": "a514fe8be9b2155610c608d53acf29036fc7a3a0",
     "/Gearfu/mob/lela.png": "3760aaa2c4c33c727f2770322c7323bf33cbb177",
     "/Gearfu/mob/moumoute-la-postiche.png": "4da3879cebc4ef85ea1ee1c50d1fce05a0d72c5a",
     "/Gearfu/mob/protecteur-encapuchonne.png": "19b02d1f366756f711923a3b469daca5a17c9791",
