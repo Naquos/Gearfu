@@ -268,5 +268,14 @@
             "es": "Al final del turno, si al portador le queda al menos 1 PA: 1 PA para el siguiente turno",
             "pt": "No final do turno, se o portador tiver pelo menos 1 PA restante: 1 PA para o próximo turno"
         }
+    },
+    {
+        "id": 9364,
+        "description": {
+            "fr": "En début de tour, si le porteur de l'état a subi des dommages directs d'un ennemi le tour précédent : 10% Dommage infligés",
+            "en": "At the start of the turn, if the state bearer took direct damage from an enemy during the previous turn: 10% Damage inflicted",
+            "es": "Al principio del turno, si el portador del estado sufrió daños directos de un enemigo durante el turno anterior: 10% de daños infligidos",
+            "pt": "No início do turno, se o portador do estado sofreu danos diretos de um inimigo no turno anterior: 10% de danos infligidos"
+        }
     }
 ]
