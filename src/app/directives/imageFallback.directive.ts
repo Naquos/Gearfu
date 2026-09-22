@@ -53,6 +53,9 @@ export class ImageFallbackDirective {
     [GfxIdItemEnum.PORTE_BONHEUR_TOFU, "item/porte_bonheur_tofu.png"],
     [GfxIdItemEnum.PORTE_BONHEUR_LARVE, "item/porte_bonheur_larve.png"],
     [GfxIdItemEnum.PORTE_BONHEUR_PIOU, "item/porte_bonheur_piou.png"],
+    [GfxIdItemEnum.DOFUS_POURPRE, "item/dofus_pourpre.png"],
+    [GfxIdItemEnum.EMBLEME_POURPRE, "item/embleme_pourpre.png"],
+    [GfxIdItemEnum.LA_CAUSE_POURPRE, "item/la_cause_pourpre.png"],
   ]);
 
 
