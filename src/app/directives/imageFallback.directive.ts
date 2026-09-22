@@ -43,6 +43,7 @@ export class ImageFallbackDirective {
     [GfxIdMobEnum.SCARAFON, "mob/scarafon.png"],
     [GfxIdMobEnum.SCARAMEL, "mob/scaramel.png"],
     [GfxIdMobEnum.SCARABRUNI, "mob/scarabruni.png"],
+    [GfxIdMobEnum.IGNEMIKHAL, "mob/ignemikhal.png"],
   ]);
 
   private itemMap = new Map<GfxIdItemEnum, string>([
