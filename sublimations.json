@@ -14867,7 +14867,19 @@
             1,
             2
         ],
-        "bossDropable": [],
+        "bossDropable": [
+            {
+                "idMob": -2,
+                "idsDrop": [],
+                "gfxId": -2,
+                "name": {
+                    "pt": "Ignemikhal",
+                    "en": "Ignemikhal",
+                    "fr": "Ignemikhal",
+                    "es": "Ignemikhal"
+                }
+            }
+        ],
         "isCraftable": false,
         "impactInvocation": false
     },
@@ -14914,7 +14926,19 @@
             3,
             3
         ],
-        "bossDropable": [],
+        "bossDropable": [
+            {
+                "idMob": -2,
+                "idsDrop": [],
+                "gfxId": -2,
+                "name": {
+                    "pt": "Ignemikhal",
+                    "en": "Ignemikhal",
+                    "fr": "Ignemikhal",
+                    "es": "Ignemikhal"
+                }
+            }
+        ],
         "isCraftable": false,
         "impactInvocation": false
     },
@@ -14961,7 +14985,19 @@
             1,
             1
         ],
-        "bossDropable": [],
+        "bossDropable": [
+            {
+                "idMob": -2,
+                "idsDrop": [],
+                "gfxId": -2,
+                "name": {
+                    "pt": "Ignemikhal",
+                    "en": "Ignemikhal",
+                    "fr": "Ignemikhal",
+                    "es": "Ignemikhal"
+                }
+            }
+        ],
         "isCraftable": false,
         "impactInvocation": false
     },
@@ -14995,7 +15031,19 @@
             2,
             1
         ],
-        "bossDropable": [],
+        "bossDropable": [
+            {
+                "idMob": -2,
+                "idsDrop": [],
+                "gfxId": -2,
+                "name": {
+                    "pt": "Ignemikhal",
+                    "en": "Ignemikhal",
+                    "fr": "Ignemikhal",
+                    "es": "Ignemikhal"
+                }
+            }
+        ],
         "isCraftable": false,
         "impactInvocation": false
     }
