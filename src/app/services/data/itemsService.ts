@@ -639,7 +639,7 @@ export class ItemsService {
       const armureDonneeRecue = x.equipEffects.some(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === ParameterMajorActionEnum.ARMURE_RECUE);
       return armureRecue || armureDonneeRecue;
     }
-    return false;
+    return true;
   }
 
   public calculResistancesForAnItem(item: Item, idResistances: number[]): number {
