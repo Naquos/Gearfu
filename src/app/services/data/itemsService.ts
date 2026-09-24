@@ -59,7 +59,12 @@ export class ItemsService {
   private readonly levelFormService = inject(LevelFormService);
 
   // Constants
-  private static readonly ARMURE_DONNEE_RECUE_LIST = [IdActionsEnum.ARMURE_DONNEE_RECUE, IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE];
+  private static readonly ARMURE_DONNEE_RECUE_LIST = [
+    IdActionsEnum.ARMURE_DONNEE_RECUE,
+    IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE,
+    IdActionsEnum.ARMURE_DONNEE,
+    IdActionsEnum.ARMURE_RECUE
+  ];
 
   private static readonly RESISTANCE_ELEM_IDS_SET = new Set([
     IdActionsEnum.RESISTANCES_AIR,
@@ -167,6 +172,7 @@ export class ItemsService {
               item.equipEffects[index].params[0] = stat;
             }
           });
+          item.effectsMap = this.createEffectsMap(item);
         }
       });
 
@@ -425,7 +431,8 @@ export class ItemsService {
   private calculateParadeArmureDonnee(item: Item, effectsMap: Map<number, number>): number {
     let result = effectsMap.get(IdActionsEnum.PARADE) ?? 0;
     item.equipEffects.forEach(effect => {
-      if (effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE) {
+      if (effect.actionId === IdActionsEnum.ARMURE_DONNEE
+        || (effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE)) {
         result += effect.params[0];
       }
     });
@@ -612,9 +619,27 @@ export class ItemsService {
 
   private majorIsPresent(idMajor: MajorAction[], x: Item): boolean {
     return !idMajor.find(major => (!ItemsService.ARMURE_DONNEE_RECUE_LIST.includes(major.id) && !x.equipEffects.map(effect => effect.actionId).includes(major.id))
-      || (major.id === IdActionsEnum.ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === major.parameter))
-      || (major.id === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE && effect.params[4] === major.parameter))
+      || !this.handleMajorIsPresentForArmure(major, x)
     );
+  }
+
+  private handleMajorIsPresentForArmure(major: MajorAction, x: Item): boolean {
+    const perteArmureDonneeRecue = major.id === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE && !x.equipEffects.find(effect => effect.actionId === IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE && effect.params[4] === major.parameter);
+    if (perteArmureDonneeRecue) return true;
+    const isArmureDonnee = major.id === IdActionsEnum.ARMURE_DONNEE || (major.id === IdActionsEnum.ARMURE_DONNEE_RECUE && major.parameter === ParameterMajorActionEnum.ARMURE_DONNEE);
+    if (isArmureDonnee) {
+      const armureDonnee = x.equipEffects.map(effect => effect.actionId).includes(IdActionsEnum.ARMURE_DONNEE);
+      const armureDonneeRecue = x.equipEffects.some(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE);
+      return armureDonnee || armureDonneeRecue;
+    }
+
+    const isArmureRecue = major.id === IdActionsEnum.ARMURE_RECUE || (major.id === IdActionsEnum.ARMURE_DONNEE_RECUE && major.parameter === ParameterMajorActionEnum.ARMURE_RECUE);
+    if (isArmureRecue) {
+      const armureRecue = x.equipEffects.map(effect => effect.actionId).includes(IdActionsEnum.ARMURE_RECUE);
+      const armureDonneeRecue = x.equipEffects.some(effect => effect.actionId === IdActionsEnum.ARMURE_DONNEE_RECUE && effect.params[4] === ParameterMajorActionEnum.ARMURE_RECUE);
+      return armureRecue || armureDonneeRecue;
+    }
+    return false;
   }
 
   public calculResistancesForAnItem(item: Item, idResistances: number[]): number {

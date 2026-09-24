@@ -80,8 +80,14 @@ export class MajorPresentFormService extends AbstractSignalFormService<MajorPres
         if (value.PM) { result.push({ id: IdActionsEnum.PM }); }
         if (value.PW) { result.push({ id: IdActionsEnum.BOOST_PW }); }
         if (value.PO) { result.push({ id: IdActionsEnum.PORTEE }); }
-        if (value.ARMURE_DONNEE) { result.push({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_DONNEE }); }
-        if (value.ARMURE_RECUE) { result.push({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_RECUE }); }
+        if (value.ARMURE_DONNEE) {
+            result.push({ id: IdActionsEnum.ARMURE_DONNEE });
+            result.push({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_DONNEE });
+        }
+        if (value.ARMURE_RECUE) {
+            result.push({ id: IdActionsEnum.ARMURE_RECUE });
+            result.push({ id: IdActionsEnum.ARMURE_DONNEE_RECUE, parameter: ParameterMajorActionEnum.ARMURE_RECUE });
+        }
         if (value.CRITIQUE) { result.push({ id: IdActionsEnum.COUP_CRITIQUE }); }
         if (value.PARADE) { result.push({ id: IdActionsEnum.PARADE }); }
         if (value.RESISTANCE_DOS) { result.push({ id: IdActionsEnum.RESISTANCES_DOS }); }
@@ -157,8 +163,8 @@ export class MajorPresentFormService extends AbstractSignalFormService<MajorPres
             PM: major.some(x => x.id === IdActionsEnum.PM),
             PW: major.some(x => x.id === IdActionsEnum.BOOST_PW),
             PO: major.some(x => x.id === IdActionsEnum.PORTEE),
-            ARMURE_DONNEE: major.some(x => x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameter === ParameterMajorActionEnum.ARMURE_DONNEE),
-            ARMURE_RECUE: major.some(x => x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameter === ParameterMajorActionEnum.ARMURE_RECUE),
+            ARMURE_DONNEE: major.some(x => x.id === IdActionsEnum.ARMURE_DONNEE || (x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameter === ParameterMajorActionEnum.ARMURE_DONNEE)),
+            ARMURE_RECUE: major.some(x => x.id === IdActionsEnum.ARMURE_RECUE || (x.id === IdActionsEnum.ARMURE_DONNEE_RECUE && x.parameter === ParameterMajorActionEnum.ARMURE_RECUE)),
             CRITIQUE: major.some(x => x.id === IdActionsEnum.COUP_CRITIQUE),
             PARADE: major.some(x => x.id === IdActionsEnum.PARADE),
             RESISTANCE_DOS: major.some(x => x.id === IdActionsEnum.RESISTANCES_DOS),

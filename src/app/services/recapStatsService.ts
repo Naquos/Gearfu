@@ -298,16 +298,26 @@ export class RecapStatsService extends AbstractDestroyService {
   }
 
   private mapToRecapStats(effects: EquipEffects[]): RecapStats[] {
-    return effects.map(effect => ({
-      id: effect.actionId,
-      parameterMajorAction: effect.actionId !== IdActionsEnum.ARMURE_DONNEE_RECUE
-        ? undefined
-        : (effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE
-          ? ParameterMajorActionEnum.ARMURE_DONNEE
-          : ParameterMajorActionEnum.ARMURE_RECUE),
-      value: effect.params[0],
-      params: effect.params
-    }));
+    return effects.map(effect => {
+      if (effect.actionId === IdActionsEnum.ARMURE_DONNEE || effect.actionId === IdActionsEnum.ARMURE_RECUE) {
+        return {
+          id: IdActionsEnum.ARMURE_DONNEE_RECUE,
+          parameterMajorAction: effect.actionId === IdActionsEnum.ARMURE_DONNEE ? ParameterMajorActionEnum.ARMURE_DONNEE : ParameterMajorActionEnum.ARMURE_RECUE,
+          value: effect.params[0],
+          params: effect.params
+        };
+      }
+      return {
+        id: effect.actionId,
+        parameterMajorAction: effect.actionId !== IdActionsEnum.ARMURE_DONNEE_RECUE
+          ? undefined
+          : (effect.params[4] === ParameterMajorActionEnum.ARMURE_DONNEE
+            ? ParameterMajorActionEnum.ARMURE_DONNEE
+            : ParameterMajorActionEnum.ARMURE_RECUE),
+        value: effect.params[0],
+        params: effect.params
+      };
+    });
   }
 
   private applyEffect(effect: RecapStats): void {

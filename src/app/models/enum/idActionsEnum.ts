@@ -53,6 +53,8 @@ export enum IdActionsEnum {
     VOLONTE = 177,
     MAITRISES_DOS = 180,
     PERTE_MAITRISES_DOS = 181,
+    ARMURE_DONNEE = 183,
+    ARMURE_RECUE = 185,
     PERTE_MAITRISES_SOIN = -1, // N'existe pas dans le jeu, mais est utilisé pour pas qu'on me pose des question sur l'affichage des actions majeures
     CONTROLE = 184,
     PERTE_CONTROLE = -1, // N'existe pas dans le jeu, mais est utilisé pour pas qu'on me pose des question sur l'affichage des actions majeures

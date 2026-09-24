@@ -37,6 +37,8 @@ export class ImageService {
         [IdActionsEnum.MAITRISES_SOIN, ImageService.BASE_URL_CHARACTERISTICS + "HEAL_IN_PERCENT.png"],
         [IdActionsEnum.PA, ImageService.BASE_URL_CHARACTERISTICS + "AP.png"],
         [IdActionsEnum.ARMURE_DONNEE_RECUE, ImageService.BASE_URL_CHARACTERISTICS + "ARMOR_GIVEN.png"],
+        [IdActionsEnum.ARMURE_DONNEE, ImageService.BASE_URL_CHARACTERISTICS + "ARMOR_GIVEN.png"],
+        [IdActionsEnum.ARMURE_RECUE, ImageService.BASE_URL_CHARACTERISTICS + "ARMOR_RECEIVED.png"],
         [IdActionsEnum.PERTE_ARMURE_DONNEE_RECUE, ImageService.BASE_URL_CHARACTERISTICS + "ARMOR_GIVEN.png"],
         [IdActionsEnum.PM, ImageService.BASE_URL_CHARACTERISTICS + "MP.png"],
         [IdActionsEnum.PERTE_PA, ImageService.BASE_URL_CHARACTERISTICS + "AP.png"],
