@@ -43,7 +43,7 @@ export class ItemsService {
   private readonly onlyNoSecondaryFormService = inject(OnlyNoSecondaryFormService);
   private readonly sortChoiceFormService = inject(SortChoiceFormService);
   private readonly majorPresentFormService = inject(MajorPresentFormService);
-  private readonly modifierElemMaitrisesFormService = inject(ModifierMecanismFormService);
+  private readonly modifierMecanismFormService = inject(ModifierMecanismFormService);
   private readonly searchItemNameFormService = inject(SearchItemNameSignalFormService);
   private readonly rareteItemFormService = inject(RareteItemFormServices);
   private readonly itemLevelFormService = inject(ItemLevelFormService);
@@ -130,12 +130,12 @@ export class ItemsService {
       this.maitrisesFormService.nbElements$,
       this.maitrisesFormService.idMaitrises$,
       this.sortChoiceFormService.sort$,
-      this.modifierElemMaitrisesFormService.multiplicateurElem$,
-      this.modifierElemMaitrisesFormService.denouement$,
+      this.modifierMecanismFormService.multiplicateurElem$,
+      this.modifierMecanismFormService.denouement$,
       this.resistanceFormService.idResistances$,
       this.onlyNoElemFormService.onlyNoElem$,
       this.onlyNoSecondaryFormService.onlyNoSecondary$,
-      this.modifierElemMaitrisesFormService.chaos$,
+      this.modifierMecanismFormService.chaos$,
       this.levelFormService.level$ // Add the level observable to the combineLatest array
     ])
       .pipe(
@@ -325,7 +325,7 @@ export class ItemsService {
         IdActionsEnum.MAITRISES_ELEMENTAIRES, IdActionsEnum.MAITRISES_ELEMENTAIRES_NOMBRE_VARIABLE].includes(y.actionId)))
       ));
 
-    const itemsFilterByOnlyNoSecondary$ = combineLatest([itemsFilterByOnlyNoElem$, this.onlyNoSecondaryFormService.onlyNoSecondary$, this.modifierElemMaitrisesFormService.denouement$, this.onlyNoElemFormService.onlyNoElem$])
+    const itemsFilterByOnlyNoSecondary$ = combineLatest([itemsFilterByOnlyNoElem$, this.onlyNoSecondaryFormService.onlyNoSecondary$, this.modifierMecanismFormService.denouement$, this.onlyNoElemFormService.onlyNoElem$])
       .pipe(map(([items, onlyNoSecondary, denouement, onlyNoElem]) =>
         items.filter(x => !onlyNoSecondary || (
           !x.equipEffects.find(y => [IdActionsEnum.MAITRISES_DOS, IdActionsEnum.MAITRISES_MELEE, IdActionsEnum.MAITRISES_DISTANCES, IdActionsEnum.MAITRISES_SOIN, IdActionsEnum.MAITRISES_BERZERK].includes(y.actionId))
@@ -335,7 +335,7 @@ export class ItemsService {
     const itemsFilterByMajor$ = combineLatest([itemsFilterByOnlyNoSecondary$, this.majorPresentFormService.idMajor$])
       .pipe(map(([items, idMajor]) => items.filter(x => this.majorIsPresent(idMajor, x))));
 
-    const itemsFilterByDemesure$ = combineLatest([itemsFilterByMajor$, this.modifierElemMaitrisesFormService.demesure$])
+    const itemsFilterByDemesure$ = combineLatest([itemsFilterByMajor$, this.modifierMecanismFormService.demesure$])
       .pipe(map(([items, demesure]) => items.filter(x => !demesure || x.equipEffects.find(effect => [IdActionsEnum.PARADE, IdActionsEnum.COUP_CRITIQUE].includes(effect.actionId)))));
 
     this.itemsFilters$ = combineLatest([itemsFilterByDemesure$, this.itemTypeFormServices.selected$])

@@ -3,12 +3,12 @@
 @if(item()) {
 <div class="header">
     <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{
-        "item.maitrises" | translate }} {{Math.trunc(item().maitrise)}}</span>
+        "item.maitrises" | translate }} {{Math.trunc(maitrisesToDisplay())}}</span>
     <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances">{{
-        "item.resistances" | translate }} {{item().resistance}}</span>
+        "item.resistances" | translate }} {{resistancesToDisplay()}}</span>
     <span [matTooltip]="'item.poids-infobulle' | translate:{ratio: ratioWeight()}" [matTooltipShowDelay]="300"><img
             [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }}
-        {{item().weight}}</span>
+        {{poidsToDisplay()}}</span>
 
 </div>
 @if (textCondition(); as condition) {

@@ -22,9 +22,11 @@ import { ElementSelectorEnum } from '../../../models/enum/elementSelectorEnum';
 import { mapSortAction, ratioWeightByLevel } from '../../../models/utils/utils';
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { CommonModule } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
 import { FavorisButtonComponent } from "../../form/favoris-button/favoris-button.component";
 import { MinimifyDisplayFormService } from '../../../services/form-signal/minimifyDisplayFormService';
+import { CalculMaitrisesResistancesService } from '../../../services/calculMaitrisesResistancesService';
 
 @Component({
   selector: 'app-item',
@@ -49,6 +51,7 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly el = inject(ElementRef);
   private readonly minimifyDisplayFormService = inject(MinimifyDisplayFormService);
+  private readonly calculMaitrisesResistancesService = inject(CalculMaitrisesResistancesService);
   protected readonly itemService = inject(ItemsService);
   protected readonly colorRarityService = inject(ColorRarityService);
   protected readonly tooltipService = inject(TooltipService<{ itemsChoosen: Item[], item: Item }>);
@@ -67,6 +70,28 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
 
   public item = input.required<Item>();
   public isTooltip = input<boolean>(false);
+
+
+  protected readonly maitrisesToDisplay = toSignal(
+    toObservable(this.item).pipe(
+      switchMap(item => this.calculMaitrisesResistancesService.calculateMaitrises(item))
+    ),
+    { initialValue: 0 }
+  );
+
+  protected readonly resistancesToDisplay = toSignal(
+    toObservable(this.item).pipe(
+      switchMap(item => this.calculMaitrisesResistancesService.calculResistances(item))
+    ),
+    { initialValue: 0 }
+  );
+
+  protected readonly poidsToDisplay = toSignal(
+    toObservable(this.item).pipe(
+      switchMap(item => this.calculMaitrisesResistancesService.calculPoids(item))
+    ),
+    { initialValue: 0 }
+  );
 
   private readonly condition = new BehaviorSubject<ItemCondition | undefined>(undefined);
   protected readonly condition$ = this.condition.asObservable();
