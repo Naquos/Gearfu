@@ -5,11 +5,12 @@ import { ItemTypeEnum } from "../models/enum/itemTypeEnum";
 import { Chasse } from "../models/data/chasse";
 import { IdChassesEnum } from "../models/enum/idChassesEnum";
 import { LinkSublimation } from "../models/data/sublimationsDescriptions";
+import { GEARFU_RESOURCES_URL } from "../models/utils/utils";
 
 @Injectable({ providedIn: 'root' })
 export class ImageService {
 
-    public static readonly BASE_URL = "https://vertylo.github.io/wakassets/"; // Base URL for images
+    public static readonly BASE_URL = GEARFU_RESOURCES_URL; // Base URL for images
     public static readonly BASE_URL_CHARACTERISTICS = ImageService.BASE_URL + "characteristics/";
     public static readonly BASE_URL_RARITIES = ImageService.BASE_URL + "rarities/";
     public static readonly BASE_URL_ITEMS = ImageService.BASE_URL + "items/";

@@ -1,8 +1,8 @@
 import { Directive, HostListener } from '@angular/core';
-import { ImageService } from '../services/imageService';
 import { GfxIdNeoEnum } from '../models/enum/gfxIdNeoEnum';
 import { GfxIdMobEnum } from '../models/enum/gfxIdMobEnum';
 import { GfxIdItemEnum } from '../models/enum/gfxIdItemEnum';
+import { ImageService } from '../services/imageService';
 
 @Directive({
   selector: 'img[appFallback]',
