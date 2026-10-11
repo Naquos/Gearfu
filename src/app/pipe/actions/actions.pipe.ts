@@ -32,6 +32,19 @@ export class ActionsPipe implements PipeTransform {
     }
   };
 
+  private static readonly MAKABRANO_ZER = {
+    definition: {
+      id: IdActionsEnum.NIVEAU_DES_ENFANTS,
+      effect: "",
+    },
+    description: {
+      fr: "Renvoie 10% des dégats",
+      en: "Returns 10% of the damage",
+      es: "Devuelve el 10% del daño",
+      pt: "Retorna 10% do dano"
+    }
+  };
+
   transform(effect: EquipEffects | DifferentStatsItem): string {
     const actions = this.ankamaCdnFacade.actions();
     if (actions.length === 0) return '';
@@ -149,6 +162,8 @@ export class ActionsPipe implements PipeTransform {
   private findAction(actions: ActionsCdn[], effect: EquipEffects | DifferentStatsItem): ActionsCdn {
     if (effect.actionId === IdActionsEnum.MAITRISE_PAR_LEVEL) {
       return ActionsPipe.ACTION_MAITRISE_PAR_LEVEL;
+    } else if (effect.actionId === IdActionsEnum.NIVEAU_DES_ENFANTS) {
+      return ActionsPipe.MAKABRANO_ZER;
     }
     return actions.filter(action => action.definition.id === effect.actionId)[0];
   }
