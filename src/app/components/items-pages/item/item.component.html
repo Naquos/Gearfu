@@ -29,7 +29,7 @@
         </h3>
         <img [src]="imageService.getItemUrl(item().idImage)" alt="items" appFallback>
         @if (!minimify()) {
-        <span class="imgContainer cliquable" (appActivate)="openEncyclopedie(item().id)"><img
+        <span class="imgContainer cliquable" (appActivate)="openEncyclopedie(item().id, $event)"><img
                 src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
         }
     </div>
@@ -61,21 +61,21 @@
             @if(item().mobDropable) {
             @for (drop of item().mobDropable; track $index) {
             <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)"
-                (click)="openEncyclopedieForMonster(drop.idMob)" alt="droppable"
+                (click)="openEncyclopedieForMonster(drop.idMob, $event)" alt="droppable"
                 [matTooltip]="`${'item.droppable' | translate} (${nameMonster(drop)})`" appFallback>
             }
             }
             @if(item().bossDropable) {
             @for (drop of item().bossDropable; track $index) {
             <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)"
-                (click)="openEncyclopedieForMonster(drop.idMob)" alt="boss drop"
+                (click)="openEncyclopedieForMonster(drop.idMob, $event)" alt="boss drop"
                 [matTooltip]="`${'item.boss-drop' | translate} (${nameMonster(drop)})`" appFallback>
             }
             }
             @if(item().archiDropable) {
             @for (drop of item().archiDropable; track $index) {
             <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)"
-                (click)="openEncyclopedieForMonster(drop.idMob)" alt="archi drop"
+                (click)="openEncyclopedieForMonster(drop.idMob, $event)" alt="archi drop"
                 [matTooltip]="`${'item.archi-drop' | translate} (${nameMonster(drop)})`" appFallback>
             }
             }

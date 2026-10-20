@@ -694,9 +694,16 @@ export class ItemsService {
       }
     })
 
-    const effectMaitrises = item.equipEffects.find(x => ItemsService.MAITRISES_ELEM_IDS_SET.has(x.actionId) && (nbElements === 0 || (nbElements === 1 && idMaitrisesSet.has(x.actionId))));
-    if (!noElem && !chaos && effectMaitrises) {
-      result += effectMaitrises.params[0] * multiplicateurElem;
+    if (!noElem && !chaos) {
+      // Les maîtrises élémentaires ne s'additionnent pas : une seule valeur est retenue,
+      // et uniquement si tous les éléments choisis sont présents sur l'item.
+      const itemElemEffects = item.equipEffects.filter(effect => ItemsService.MAITRISES_ELEM_IDS_SET.has(effect.actionId));
+      const selectedElemIds = idMaitrises.filter(id => ItemsService.MAITRISES_ELEM_IDS_SET.has(id));
+      const allSelectedPresent = selectedElemIds.every(id => itemElemEffects.some(effect => effect.actionId === id));
+      const effectMaitrises = itemElemEffects.find(effect => selectedElemIds.length === 0 || selectedElemIds.includes(effect.actionId));
+      if (effectMaitrises && allSelectedPresent) {
+        result += effectMaitrises.params[0] * multiplicateurElem;
+      }
     }
     return result;
   }
