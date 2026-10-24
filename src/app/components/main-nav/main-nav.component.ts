@@ -26,14 +26,14 @@ export class MainNavComponent {
     protected readonly activePageIndex = signal(0);
 
     protected readonly navItems = [
-        { index: 0, icon: 'add', label: 'item-choose.nouveau-build' },
-        { index: 1, icon: 'travel_explore', label: 'app.search-builds' },
-        { index: 2, icon: 'checkroom', label: 'app.filter-item' },
-        { index: 3, icon: 'tune', label: 'app.aptitudes' },
-        { index: 4, icon: 'auto_fix_high', label: 'app.sorts' },
-        { index: 5, icon: 'diamond', label: 'app.enchantement' },
-        { index: 6, icon: 'assignment', label: 'app.recapitulatif' },
-        { index: 7, icon: 'folder_special', label: 'app.build' },
+        { index: 0, icon: 'checkroom', label: 'app.filter-item' },
+        { index: 1, icon: 'tune', label: 'app.aptitudes' },
+        { index: 2, icon: 'auto_fix_high', label: 'app.sorts' },
+        { index: 3, icon: 'diamond', label: 'app.enchantement' },
+        { index: 4, icon: 'assignment', label: 'app.recapitulatif' },
+        { index: 5, icon: 'folder_special', label: 'app.build' },
+        { index: 6, icon: 'add', label: 'item-choose.nouveau-build' },
+        { index: 7, icon: 'travel_explore', label: 'app.search-builds' },
         { index: 8, icon: 'open_in_new', label: 'item-choose.zenith-export' }
     ];
 
@@ -50,13 +50,13 @@ export class MainNavComponent {
     constructor(@Inject(PLATFORM_ID) private readonly platformId: object) { }
 
     private getActivePage(url: string): number {
-        if (url.includes('/search')) return 1;
-        if (url.includes('/aptitudes')) return 3;
-        if (url.includes('/sorts')) return 4;
-        if (url.includes('/enchantements')) return 5;
-        if (url.includes('/recapitulatif')) return 6;
-        if (url.includes('/build')) return 7;
-        return 2;
+        if (url.includes('/search')) return 7;
+        if (url.includes('/aptitudes')) return 1;
+        if (url.includes('/sorts')) return 2;
+        if (url.includes('/enchantements')) return 3;
+        if (url.includes('/recapitulatif')) return 4;
+        if (url.includes('/build')) return 5;
+        return 0;
     }
 
     protected redirectToListItems(): void {
@@ -87,28 +87,28 @@ export class MainNavComponent {
     protected redirectIndex(index: number): void {
         switch (index) {
             case 0:
-                this.saveBuildService.createAndNavigate();
-                break;
-            case 1:
-                this.redirectToPage('search');
-                break;
-            case 2:
                 this.redirectToListItems();
                 break;
-            case 3:
+            case 1:
                 this.redirectToPage('aptitudes');
                 break;
-            case 4:
+            case 2:
                 this.redirectToPage('sorts');
                 break;
-            case 5:
+            case 3:
                 this.redirectToPage('enchantements');
                 break;
-            case 6:
+            case 4:
                 this.redirectToPage('recapitulatif');
                 break;
-            case 7:
+            case 5:
                 this.redirectToPage('build');
+                break;
+            case 6:
+                this.saveBuildService.createAndNavigate();
+                break;
+            case 7:
+                this.redirectToPage('search');
                 break;
             case 8:
                 this.generateBuild();

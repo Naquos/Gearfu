@@ -42,32 +42,6 @@ $header-size: 0px;
         }
     }
 
-    .equipment {
-        display: block;
-        margin: 24px 0 0;
-        padding: 12px 8px;
-        position: relative;
-        z-index: 3;
-        background: var(--color-surface-mid);
-        border-radius: var(--panel-radius);
-        box-shadow: var(--panel-shadow);
-    }
-
-    .equipment ::ng-deep .buttonGroupe {
-        flex: none;
-        display: flex !important;
-        margin-right: 8px;
-
-        .mat-icon,
-        img {
-            display: inline-block !important;
-        }
-    }
-
-    .equipment ::ng-deep app-item-choose-display {
-        margin-left: 4px;
-    }
-
     .row {
         position: sticky;
         top: $header-size;

@@ -9,10 +9,11 @@ import { EnchantementChassesComponent } from '../enchantement-chasses/enchanteme
 import { EnchantementEffetsComponent } from '../enchantement-effets/enchantement-effets.component';
 import { EnchantementSublimationsComponent } from '../enchantement-sublimations/enchantement-sublimations.component';
 import { EnchantementSublimationsCommunityComponent } from '../enchantement-sublimations-conseillees/enchantement-sublimations-conseillees.component';
+import { ItemChooseComponent } from '../../items-pages/item-choose/item-choose.component';
 
 @Component({
   selector: 'app-enchantement',
-  imports: [TranslateModule, EnchantementChassesComponent, EnchantementEffetsComponent, EnchantementSublimationsComponent, EnchantementSublimationsCommunityComponent],
+  imports: [TranslateModule, EnchantementChassesComponent, EnchantementEffetsComponent, EnchantementSublimationsComponent, EnchantementSublimationsCommunityComponent, ItemChooseComponent],
   templateUrl: './enchantement.component.html',
   styleUrl: './enchantement.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

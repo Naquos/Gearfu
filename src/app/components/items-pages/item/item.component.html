@@ -21,10 +21,8 @@
             <app-favoris-button [item]="item()"></app-favoris-button>
             <span [matTooltip]="'item.copier' | translate" class="icon-action fileCopy"
                 (appActivate)="copyToClipboard($event)"><mat-icon fontIcon="file_copy"></mat-icon></span>
-            @if (!minimify()) {
             <span class="icon-action" (appActivate)="openEncyclopedie(item().id, $event)"><img
                     src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
-            }
         </div>
     </div>
 
