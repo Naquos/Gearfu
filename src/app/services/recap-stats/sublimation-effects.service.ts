@@ -47,7 +47,7 @@ export class SublimationEffectsService {
       } else if (id === IdSublimationEnum.POIDS_PLUME) {
         const pm = recapValue.find(rs => rs.id === IdActionsEnum.PM)?.value ?? 0;
         const nbPm = Math.max(0, pm - 4);
-        applyEffectFn({ id: IdActionsEnum.ESQUIVE, value: 2 * nbPm * levelSubli, params: [] });
+        applyEffectFn({ id: IdActionsEnum.DI, value: 2 * nbPm * levelSubli, params: [] });
       }
     });
 
