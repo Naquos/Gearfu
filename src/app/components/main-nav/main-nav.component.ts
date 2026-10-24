@@ -56,7 +56,7 @@ export class MainNavComponent {
         if (url.includes('/enchantements')) return 5;
         if (url.includes('/recapitulatif')) return 6;
         if (url.includes('/build')) return 7;
-        return 0;
+        return 2;
     }
 
     protected redirectToListItems(): void {

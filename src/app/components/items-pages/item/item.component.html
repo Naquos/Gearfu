@@ -12,7 +12,6 @@
                 <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item().itemTypeId))"
                     alt="item type logo">
                 {{ "item.niveau-court" | translate }} {{item().level}}
-                @if (typeKey(); as key) { · {{ key | translate }} }
             </span>
             @if (rarityKey(); as key) {
             <span class="badge">{{ key | translate }}</span>
@@ -30,15 +29,12 @@
     </div>
 
     <div class="pills">
-        <span class="pill pill-mastery"><img
-                [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)"
+        <span class="pill pill-mastery"><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)"
                 alt="Maitrises">{{Math.trunc(maitrisesToDisplay())}}</span>
-        <span class="pill pill-resist"><img
-                [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)"
+        <span class="pill pill-resist"><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)"
                 alt="Résistances">{{resistancesToDisplay()}}</span>
-        <span class="pill pill-weight"
-            [matTooltip]="'item.poids-infobulle' | translate:{ratio: ratioWeight()}" [matTooltipShowDelay]="300"><img
-                [src]="'aptitudes/poids.png'" alt="poids">{{poidsToDisplay()}}</span>
+        <span class="pill pill-weight" [matTooltip]="'item.poids-infobulle' | translate:{ratio: ratioWeight()}"
+            [matTooltipShowDelay]="300"><img [src]="'aptitudes/poids.png'" alt="poids">{{poidsToDisplay()}}</span>
     </div>
 
     @if (textCondition(); as condition) {
@@ -71,8 +67,8 @@
     @if(!minimify()) {
     <div class="obtention">
         @if (item().isCraftable) {
-        <img class="craftable" (click)="navigateToCraftku()" [src]="imageService.getItemUrl(71919810)"
-            alt="craftable" [matTooltip]="'item.craftable' | translate">
+        <img class="craftable" (click)="navigateToCraftku()" [src]="imageService.getItemUrl(71919810)" alt="craftable"
+            [matTooltip]="'item.craftable' | translate">
         }
         <div class="sources">
             @if(item().mobDropable) {

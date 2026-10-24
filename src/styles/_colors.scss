@@ -6,6 +6,8 @@
     --color-white-checkbox: var(--color-white);
 
     --color-accent: #213A57;
+    --stat-water: #268de2;
+    --stat-wind: #8c20be;
     --stat-fire: #b84a00;
     --stat-earth: #0f8a1c;
     --color-accent-hero: linear-gradient(120deg, #1B263B, #415A77);
@@ -33,7 +35,7 @@
     --color-text-dark: #14233a;
     --color-text-muted-on-dark: #3f506a;
 
-    --color-positive: #4CAF50;
+    --color-positive: #19861d;
     --color-positive-alt: #00C896;
     --color-negative: #F44336;
     --color-negative-strong: #E63946;
@@ -76,7 +78,9 @@
 
 @mixin dark-theme-vars {
     --stat-fire: orange;
-    --stat-earth: rgb(6, 209, 6);
+    --stat-earth: #03D106;
+    --stat-water: #268de2;
+    --stat-wind: #BF79E0;
 
     --color-accent: #415A77;
     --color-accent-soft: #253347;

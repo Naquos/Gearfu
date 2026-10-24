@@ -48,17 +48,18 @@
         <div class="description">{{getSortDescription(sortSelected()!) }}</div>
 
         <div class="effet-sort">
+            @if(effetCritique() && effetCritique().length > 1) {
             <mat-tab-group>
                 <mat-tab label="{{'sorts.effet-normal' | translate}}">
                     <div class="effet">
-                        @for(effectLine of getEffect('NORMAL'); track $index) {
+                        @for(effectLine of effetNormal(); track $index) {
                         <span [innerHTML]="effectLine"></span>
                         }
                     </div>
                 </mat-tab>
                 <mat-tab label="{{'sorts.effet-critique' | translate}}">
                     <div class="effet">
-                        @for(effectLine of getEffect('CRITIQUE'); track $index) {
+                        @for(effectLine of effetCritique(); track $index) {
                         <span [innerHTML]="effectLine"></span>
                         }
                     </div>
@@ -69,6 +70,13 @@
                     <input matSliderThumb [(ngModel)]="spellLevel" (ngModelChange)="updateSpellLevel($event)">
                 </mat-slider>
             </div>
+            } @else {
+            <div class="effet">
+                @for(effectLine of effetNormal(); track $index) {
+                <span [innerHTML]="effectLine"></span>
+                }
+            </div>
+            }
         </div>
         }
     </div>

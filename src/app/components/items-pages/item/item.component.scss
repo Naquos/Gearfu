@@ -117,7 +117,7 @@
 .pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 2px;
 
     .pill {
         display: inline-flex;
@@ -127,6 +127,7 @@
         border-radius: 999px;
         font-weight: bold;
         font-size: 0.9rem;
+        border: 1px solid;
 
         img {
             width: 18px;

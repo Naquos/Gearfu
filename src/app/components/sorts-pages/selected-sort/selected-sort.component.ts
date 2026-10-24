@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, computed } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -35,6 +35,15 @@ export class SelectedSortComponent {
     protected readonly sortSelected = this.sortSelectionService.sortSelected;
     protected readonly effectDisplay = this.sortSelectionService.effectDisplay;
     protected readonly spellLevel = this.sortSelectionService.spellLevel;
+
+    protected effetNormal = computed(() => {
+        this.sortSelected();
+        return this.getEffect('NORMAL');
+    });
+    protected effetCritique = computed(() => {
+        this.sortSelected();
+        return this.getEffect('CRITIQUE');
+    });
 
     protected readonly PO = toSignal(this.recapStatsService.recap$.pipe(
         map(x => x.filter(x => x.id === IdActionsEnum.PORTEE)[0]),

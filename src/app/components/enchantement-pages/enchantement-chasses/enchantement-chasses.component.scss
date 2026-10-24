@@ -73,6 +73,12 @@
             width: 90%;
             margin: auto;
 
+            background-color: var(--color-surface-deep);
+            margin: 2px;
+            padding: 5px;
+            border-radius: 10px;
+            overflow: hidden;
+
             app-image-item {
                 margin-right: 10px;
             }
@@ -222,6 +228,7 @@
         }
 
         .group-item-chasses {
+
             img {
                 width: 24px !important;
                 height: 24px !important;
