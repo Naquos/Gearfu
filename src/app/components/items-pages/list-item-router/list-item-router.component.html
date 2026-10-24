@@ -1,14 +1,27 @@
 @if (!isMobile()) {
-<div class="row">
-    <app-item-types [noTitle]="true"></app-item-types>
-    <app-item-level [noTitle]="true"></app-item-level>
-
-    <app-sort-choice></app-sort-choice>
-</div>
-@if(!open()) {
-<app-recap-stats></app-recap-stats>
-}
 <app-filters [class.close]="!open()"></app-filters>
 }
-<app-item-list [class.close]="!open() || isMobile()" appSwipe
-    (swipeLeft)="displayFilterService.setDisplay(true)"></app-item-list>
+<div class="main" [class.wide]="!open() || isMobile()">
+    @if (!isMobile()) {
+    <app-item-choose class="equipment"></app-item-choose>
+    <div class="row">
+        <div class="toolbar">
+            <app-search-item-name class="search"></app-search-item-name>
+            <app-item-level [noTitle]="true"></app-item-level>
+            <app-sort-choice></app-sort-choice>
+        </div>
+        <div class="types-row">
+            <button class="toggle" type="button" [attr.aria-expanded]="open()" (click)="toggleFilters()">
+                <mat-icon fontIcon="tune"></mat-icon>
+                {{ "filters.toggle" | translate }}
+            </button>
+            <app-button-checkbox class="favoris" color="rgb(207, 148, 11)" matIcon="star"
+                [fieldControl]="displayFavorisFormService.form.display"
+                [tooltip]="'filters.favoris' | translate"></app-button-checkbox>
+            <app-item-types [noTitle]="true"></app-item-types>
+        </div>
+        <app-active-filters></app-active-filters>
+    </div>
+    }
+    <app-item-list appSwipe (swipeLeft)="displayFilterService.setDisplay(true)"></app-item-list>
+</div>

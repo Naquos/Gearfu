@@ -1,28 +1,110 @@
 <div class="filter-content">
     <div class="filter-title">
-        <h2>{{ "app.filter-item" | translate }}</h2>
+        <h2>{{ "filters.toggle" | translate }}</h2>
         <app-reverse-button></app-reverse-button>
-        <app-button-checkbox color="rgb(207, 148, 11)" matIcon="star"
-            [fieldControl]="displayFavorisFormService.form.display"
-            [tooltip]="'filters.favoris' | translate"></app-button-checkbox>
-        <button (click)="resetFormService.resetAllForms()" [matTooltip]="'filters.reset' | translate">X</button>
+        <button class="reset" type="button" (click)="resetFormService.resetAllForms()"
+            [matTooltip]="'filters.reset' | translate">{{ "filters.reset-short" | translate }}</button>
     </div>
-    <app-search-item-name></app-search-item-name>
-    <app-obtention></app-obtention>
     @if(isMobile()) {
+    <app-search-item-name></app-search-item-name>
+    <app-button-checkbox color="rgb(207, 148, 11)" matIcon="star"
+        [fieldControl]="displayFavorisFormService.form.display"
+        [tooltip]="'filters.favoris' | translate"></app-button-checkbox>
     <app-item-types></app-item-types>
     <app-item-level></app-item-level>
-    }
-    <app-rarete-item></app-rarete-item>
-    <app-filter-maitrises></app-filter-maitrises>
-    <app-major-present></app-major-present>
-    <app-filter-resistances></app-filter-resistances>
-
-    @if(isMobile()) {
     <h2>{{ "app.sort-item" | translate }}</h2>
     <app-sort-choice></app-sort-choice>
     }
-    <app-modifier-mecanism></app-modifier-mecanism>
-    <app-only-no-elem></app-only-no-elem>
-    <app-only-no-secondary></app-only-no-secondary>
+
+    <section class="fsec">
+        <button type="button" class="fsec-head" [attr.aria-expanded]="isOpen('rarete')" (click)="toggle('rarete')">
+            <span>{{ "rarete-item.label" | translate }}</span>
+            <mat-icon [fontIcon]="isOpen('rarete') ? 'expand_less' : 'expand_more'" aria-hidden="true"></mat-icon>
+        </button>
+        <div class="fsec-collapse" [class.open]="isOpen('rarete')">
+            <div class="fsec-body">
+                <app-rarete-item></app-rarete-item>
+            </div>
+        </div>
+    </section>
+
+    <section class="fsec">
+        <button type="button" class="fsec-head" [attr.aria-expanded]="isOpen('maitrises')"
+            (click)="toggle('maitrises')">
+            <span>{{ "filter-maitrises.maitrises-elementaires" | translate }}</span>
+            <mat-icon [fontIcon]="isOpen('maitrises') ? 'expand_less' : 'expand_more'" aria-hidden="true"></mat-icon>
+        </button>
+        <div class="fsec-collapse" [class.open]="isOpen('maitrises')">
+            <div class="fsec-body">
+                <app-filter-maitrises></app-filter-maitrises>
+            </div>
+        </div>
+    </section>
+
+    <section class="fsec">
+        <button type="button" class="fsec-head" [attr.aria-expanded]="isOpen('major')" (click)="toggle('major')">
+            <span>{{ "major-present.label" | translate }}</span>
+            <mat-icon [fontIcon]="isOpen('major') ? 'expand_less' : 'expand_more'" aria-hidden="true"></mat-icon>
+        </button>
+        <div class="fsec-collapse" [class.open]="isOpen('major')">
+            <div class="fsec-body">
+                <app-major-present></app-major-present>
+            </div>
+        </div>
+    </section>
+
+    <section class="fsec">
+        <button type="button" class="fsec-head" [attr.aria-expanded]="isOpen('obtention')"
+            (click)="toggle('obtention')">
+            <span>{{ "obtention.cacher" | translate }}</span>
+            <mat-icon [fontIcon]="isOpen('obtention') ? 'expand_less' : 'expand_more'" aria-hidden="true"></mat-icon>
+        </button>
+        <div class="fsec-collapse" [class.open]="isOpen('obtention')">
+
+            <div class="fsec-body">
+                <app-obtention></app-obtention>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="fsec">
+        <button type="button" class="fsec-head" [attr.aria-expanded]="isOpen('resistances')"
+            (click)="toggle('resistances')">
+            <span>{{ "filter-resistances.resistances-elementaires" | translate }}</span>
+            <mat-icon [fontIcon]="isOpen('resistances') ? 'expand_less' : 'expand_more'" aria-hidden="true"></mat-icon>
+        </button>
+        <div class="fsec-collapse" [class.open]="isOpen('resistances')">
+            <div class="fsec-body">
+                <app-filter-resistances></app-filter-resistances>
+            </div>
+        </div>
+    </section>
+
+    <section class="fsec">
+        <button type="button" class="fsec-head" [attr.aria-expanded]="isOpen('malusPresent')"
+            (click)="toggle('malusPresent')">
+            <span>{{ "major-present.label-malus" | translate }}</span>
+            <mat-icon [fontIcon]="isOpen('malusPresent') ? 'expand_less' : 'expand_more'" aria-hidden="true"></mat-icon>
+        </button>
+        <div class="fsec-collapse" [class.open]="isOpen('malusPresent')">
+            <div class="fsec-body">
+                <app-malus-present></app-malus-present>
+            </div>
+        </div>
+    </section>
+
+    <section class="fsec options">
+        <button type="button" class="fsec-head" [attr.aria-expanded]="isOpen('options')" (click)="toggle('options')">
+            <span>{{ "filters.options" | translate }}</span>
+            <mat-icon [fontIcon]="isOpen('options') ? 'expand_less' : 'expand_more'" aria-hidden="true"></mat-icon>
+        </button>
+        <div class="fsec-collapse" [class.open]="isOpen('options')">
+            <div class="fsec-body">
+                <app-modifier-mecanism></app-modifier-mecanism>
+                <app-only-no-elem></app-only-no-elem>
+                <app-only-no-secondary></app-only-no-secondary>
+            </div>
+        </div>
+    </section>
 </div>

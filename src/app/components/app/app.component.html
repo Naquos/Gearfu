@@ -6,7 +6,12 @@
     }
     <img id="logo" src="logo.png" alt="logo">
     <img class="gearfu" src="gearfu.png" alt="gearfu">
+    @if (isMobile()) {
     <app-item-choose></app-item-choose>
+    }
+    <button mat-button (appActivate)="toggleDarkMode($event)" class="paramButton">
+        <mat-icon fontIcon="wb_sunny"></mat-icon>
+    </button>
     <button mat-button [matMenuTriggerFor]="param" class="paramButton">
         <mat-icon fontIcon="settings" class="param"></mat-icon>
     </button>
@@ -45,17 +50,17 @@
 
 <div class="content">
     @if(!isMobile()) {
-    <app-main-nav id="mainNavDesktop"></app-main-nav>
+    <app-main-nav id="mainNavDesktop" variant="rail"></app-main-nav>
     }
     @if (buildReadonly()) {
     <div class="readonly" [class.readonly-mobile]="isMobile()">{{ "app.readonly" | translate }}</div>
     }
-    <div class="filter" [tabIndex]="-1" [class.open]="displayFilter" appSwipe
-        (swipeRight)="displayFilterService.setDisplay(false)">
+    <div class="filter" [tabIndex]="-1" [class.open]="displayFilter" [class.filter-left]="filterOrBuild === 'search'"
+        appSwipe (swipeRight)="displayFilterService.setDisplay(false)">
         @if(isMobile()) {
         <app-main-nav></app-main-nav>
         }
-        @if (filterOrBuild === 'filter' && (isMobile() || !openSidebar())) {
+        @if (filterOrBuild === 'filter' && isMobile()) {
         <app-filters></app-filters>
         } @else if(filterOrBuild === 'search') {
         <div class="filter-content">
@@ -67,7 +72,8 @@
         }
 
     </div>
-    <div class="content-application" [class.content-application-readonly]="buildReadonly()">
+    <div class="content-application" [class.content-application-readonly]="buildReadonly()"
+        [class.content-application-left]="filterOrBuild === 'search'">
         <router-outlet></router-outlet>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, input, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, inject, computed, ChangeDetectionStrategy } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ImageService } from '../../../services/imageService';
 import { SortService } from '../../../services/data/sortService';
@@ -33,6 +33,8 @@ export class SortImageComponent {
     protected readonly level = toSignal(this.levelFormService.level$, {
         initialValue: 246
     });
+
+    protected readonly isSelected = computed(() => this.sortSelectionService.sortSelected()?.gfxId === this.sort().gfxId);
 
     protected getSortUrl(gfxId: number): string {
         return this.imageService.getSortUrl(gfxId);

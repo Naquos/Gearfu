@@ -16,6 +16,7 @@ import { DisplayFavorisSublimationFormService } from '../../../services/form-sig
 import { ButtonCheckboxComponent } from "../../form/button-checkbox/button-checkbox.component";
 import { SublimationFavorisFormService } from '../../../services/form-signal/SublimationFavorisFormService';
 import { DisplayImpactInvocationSublimationFormService } from '../../../services/form-signal/displayImpactInvocationSublimationFormService';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-enchantement-sublimations',
@@ -25,7 +26,8 @@ import { DisplayImpactInvocationSublimationFormService } from '../../../services
         FormsModule,
         EnchantementSublimationsClassiquesComponent,
         EnchantementSublimationsEpiquesReliquesComponent,
-        ButtonCheckboxComponent
+        ButtonCheckboxComponent,
+        MatIconModule
     ],
     templateUrl: './enchantement-sublimations.component.html',
     styleUrl: './enchantement-sublimations.component.scss',

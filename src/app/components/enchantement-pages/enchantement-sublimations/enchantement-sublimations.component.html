@@ -4,8 +4,11 @@
     </div>
     <div class="body">
         <div class="row">
-            <input matInput [ngModel]="searchSubli()" (ngModelChange)="searchSubli.set($event)"
-                [placeholder]="'enchantement.recherche-sublimation' | translate">
+            <mat-form-field>
+                <mat-label>{{ "enchantement.recherche-sublimation" | translate }}</mat-label>
+                <input matInput [ngModel]="searchSubli()" (ngModelChange)="searchSubli.set($event)"
+                    [placeholder]="'enchantement.recherche-sublimation' | translate">
+            </mat-form-field>
             <app-button-checkbox [srcImg]="bouftouImageUrl"
                 [fieldControl]="displayImpactInvocationSublimationService.form.impactInvocation"
                 [tooltip]="'enchantement.impact-invocations' | translate"></app-button-checkbox>

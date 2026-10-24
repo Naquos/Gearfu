@@ -14,14 +14,14 @@
     <div class="column">
         <div class="row">
             <div class="title">
-                <h3 [style.color]="colorRarityService.mapColors.get(item().rarity)">{{ getTitle(item()) }}
+                <h3>{{ getTitle(item()) }}
                     ({{item().level}})</h3>
                 <img appFallback [src]="imageService.getItemUrl(item().idImage)" alt="item">
             </div>
             @if (itemSelected(); as itemSelected) {
             @for (item of itemSelected; track $index) {
             <div class="title">
-                <h3 [style.color]="colorRarityService.mapColors.get(item.rarity)">{{ getTitle(item) }} ({{item.level}})
+                <h3>{{ getTitle(item) }} ({{item.level}})
                 </h3>
                 <img appFallback [src]="imageService.getItemUrl(item.idImage)" alt="items">
             </div>

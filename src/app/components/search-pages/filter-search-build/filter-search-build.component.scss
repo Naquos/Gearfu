@@ -1,46 +1,47 @@
-.classes-selector {
-    background-color: var(--color-surface-deep);
-    padding: 10px;
-    border-radius: 40px;
+:host {
+    display: block;
+    padding: 0 16px 24px;
 
+    h2 {
+        margin: 20px 0 8px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+    }
+}
+
+.classes-selector {
+    background-color: var(--color-surface-mid);
+    padding: 12px;
+    border-radius: 16px;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 5px;
-    grid-row-gap: 5px;
+    gap: 8px;
 
     img {
-        width: 60px;
-        height: 60px;
+        width: 100%;
+        max-width: 44px;
+        aspect-ratio: 1;
+        box-sizing: border-box;
         align-self: center;
         justify-self: center;
         cursor: pointer;
-
+        border-radius: 10px;
+        border: 2px solid transparent;
     }
 
     .img-selected {
-        $size-border: 5px;
-        border: $size-border solid red;
-        width: calc(60px - 2 * $size-border);
-        height: calc(60px - 2 * $size-border);
-
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 2px var(--color-accent-soft);
     }
 
     img:hover {
-        transform: scale(1.2);
+        transform: scale(1.08);
         transition: transform 0.2s;
     }
 }
-
-form {
-
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    grid-column-gap: 5px;
-    grid-row-gap: 5px;
-}
-
 
 @media screen and (min-width: 700px) {
     input[type=number] {
@@ -49,11 +50,6 @@ form {
 }
 
 @media screen and (max-width: 700px) {
-    img {
-        width: 40px !important;
-        height: 40px !important;
-    }
-
     input[type=text] {
         display: none;
     }

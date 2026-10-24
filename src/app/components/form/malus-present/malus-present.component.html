@@ -1,0 +1,70 @@
+<h3>{{"major-present.label-malus" | translate}}</h3>
+
+<div>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_PA' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_PA" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PA)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_PM' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_PM" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PM)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_PW' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_PW" [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PW)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_PO' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_PO"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_ARMURE_DONNEE' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_ARMURE_DONNEE"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.ARMURE_DONNEE_RECUE)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_ARMURE_RECUE' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_ARMURE_RECUE"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.ARMURE_DONNEE_RECUE, true)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_CRITIQUE' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_CRITIQUE"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.COUP_CRITIQUE)" [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_PARADE' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_PARADE"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PARADE)" [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_RESISTANCE_DOS' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_RESISTANCE_DOS"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_DOS)" [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_RESISTANCE_CRITIQUE' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_RESISTANCE_CRITIQUE"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_CRITIQUES)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_TACLE' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_TACLE"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.TACLE)" [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_ESQUIVE' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_ESQUIVE"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.ESQUIVE)" [crossedOut]="true"></app-button-checkbox>
+</div>
+
+<div>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_MAITRISES_MELEE' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_MAITRISES_MELEE"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PERTE_MAITRISES_MELEE)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_MAITRISES_DISTANCE' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_MAITRISES_DISTANCE"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PERTE_MAITRISES_DISTANCE)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_MAITRISES_CRITIQUE' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_MAITRISES_CRITIQUE"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PERTE_MAITRISES_CRITIQUE)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_MAITRISES_DOS' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_MAITRISES_DOS"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PERTE_MAITRISES_DOS)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_MAITRISES_SOIN' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_MAITRISES_SOIN"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PERTE_MAITRISES_SOIN)"
+        [crossedOut]="true"></app-button-checkbox>
+    <app-button-checkbox [tooltip]="'major-present.PERTE_MAITRISES_BERZERK' | translate"
+        [fieldControl]="majorPresentFormService.form.PERTE_MAITRISES_BERZERK"
+        [srcImg]="imageService.getActionIdUrl(IdActionsEnum.PERTE_MAITRISES_BERZERK)"
+        [crossedOut]="true"></app-button-checkbox>
+</div>

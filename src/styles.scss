@@ -14,18 +14,18 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-surface-deepest);
+    background: var(--color-surface-soft);
     border-radius: 3px;
 
     &:hover {
-        background: var(--color-surface-deep);
+        background: var(--color-text-muted);
     }
 }
 
 // Scrollbar — Firefox, Chrome 121+ (standard CSS)
 * {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-surface-deepest) transparent;
+    scrollbar-color: var(--color-surface-soft) transparent;
 }
 
 html,
@@ -42,6 +42,7 @@ h3 {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: var(--color-text-inverse);
     background-color: var(--color-surface-page);
     flex-direction: column;
     display: flex;
@@ -64,7 +65,7 @@ app-root {
 footer {
     width: 100%;
     background-color: var(--color-surface-footer);
-    color: var(--color-text-inverse);
+    color: var(--color-text-on-accent);
     text-align: center;
     position: static;
     bottom: 0;

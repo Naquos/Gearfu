@@ -14,7 +14,6 @@ import { ZenithService } from '../../../services/zenith/zenithService';
 import { ActivateDirective } from "../../../directives/activate.directive";
 import { SaveBuildService } from '../../../services/saveBuildService';
 import { HistoricsListComponent } from "../historics-list/historics-list.component";
-import { DarkModeFormService } from '../../../services/form-signal/darkModeFormService';
 import { RippleDirective } from '../../../directives/ripple.directive';
 
 @Component({
@@ -31,7 +30,6 @@ export class ItemChooseComponent {
   protected readonly itemChooseService = inject(ItemChooseService);
   private readonly zenithService = inject(ZenithService);
   private readonly recapStatsService = inject(RecapStatsService);
-  private readonly darkModeFormService = inject(DarkModeFormService);
   protected readonly imageService = inject(ImageService);
   protected readonly saveBuildService = inject(SaveBuildService);
   protected readonly openHistory = signal(false);
@@ -66,17 +64,8 @@ export class ItemChooseComponent {
     window.open('https://www.dropbox.com/scl/fo/12onmfink7n0g5wj96f3y/AAxeJABC7OSe3UkPsbspDkg?rlkey=h2w7w4wp4jer3l0uw3jmy8q0k&st=nrkw68lp&dl=0', '_blank');
   }
 
-  protected generateBuild(): void {
-    this.zenithService.createBuild().pipe(take(1)).subscribe(linkBuild => window.open('https://www.zenithwakfu.com/builder/' + linkBuild, '_blank'));
-  }
-
   protected toggleHistory(event: Event): void {
     event.stopPropagation();
     this.openHistory.update(v => !v);
-  }
-
-  protected toggleDarkMode(event: Event): void {
-    event.stopPropagation();
-    this.darkModeFormService.setValue(!this.darkModeFormService.currentValue());
   }
 }

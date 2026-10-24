@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { EquippedSortsComponent } from "../../sorts-pages/equipped-sorts/equipped-sorts.component";
 import { EnchantementChassesComponent } from "../../enchantement-pages/enchantement-chasses/enchantement-chasses.component";
@@ -5,7 +6,7 @@ import { RecapitulatifAptitudesComponent } from "../recapitulatif-aptitudes/reca
 
 @Component({
   selector: 'app-recapitulatif',
-  imports: [EquippedSortsComponent, EnchantementChassesComponent, RecapitulatifAptitudesComponent,],
+  imports: [TranslateModule, EquippedSortsComponent, EnchantementChassesComponent, RecapitulatifAptitudesComponent,],
   templateUrl: './recapitulatif.component.html',
   styleUrl: './recapitulatif.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -19,6 +19,20 @@
         width: 56px;
         height: 56px;
         cursor: pointer;
+        border-radius: 12px;
+        box-sizing: border-box;
+        border: 2px solid var(--color-surface-soft);
+        background: var(--color-surface-deep);
+    }
+
+    img.empty {
+        border: 2px dashed var(--color-surface-soft);
+        background: transparent;
+        opacity: 0.45;
+    }
+
+    img.selected {
+        border: 3px solid var(--color-accent);
     }
 
     img:hover {

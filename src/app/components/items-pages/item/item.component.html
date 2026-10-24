@@ -1,40 +1,54 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 @if(item()) {
-<div class="header">
-    <span><img [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)" alt="Maitrises">{{
-        "item.maitrises" | translate }} {{Math.trunc(maitrisesToDisplay())}}</span>
-    <span><img [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)" alt="Résistances">{{
-        "item.resistances" | translate }} {{resistancesToDisplay()}}</span>
-    <span [matTooltip]="'item.poids-infobulle' | translate:{ratio: ratioWeight()}" [matTooltipShowDelay]="300"><img
-            [src]="'aptitudes/poids.png'" alt="poids">{{ "item.poids" | translate }}
-        {{poidsToDisplay()}}</span>
-
-</div>
-@if (textCondition(); as condition) {
-<div class="condition">
-    [ {{ condition }} ]
-</div>
-}
-<div class="content" (appActivate)="setItemChoosen()">
-    <div class="title">
-        <h3 [style.color]="colorRarityService.mapColors.get(item().rarity)">
-            {{getTitle()}} ({{item().level}})
-            <div class="icon">
+<div class="body" (appActivate)="setItemChoosen()">
+    <div class="head">
+        <div class="frame">
+            <img [src]="imageService.getItemUrl(item().idImage)" alt="items" appFallback>
+        </div>
+        <div class="identity">
+            <h3 class="name">{{getTitle()}}</h3>
+            <span class="sub">
                 <img [src]="itemTypeService.getLogo(itemTypeService.getItemType(item().itemTypeId))"
                     alt="item type logo">
-                <span [matTooltip]="'item.copier' | translate" class="imgContainer fileCopy cliquable"
-                    (appActivate)="copyToClipboard($event)"><mat-icon fontIcon="file_copy"></mat-icon></span>
-            </div>
-        </h3>
-        <img [src]="imageService.getItemUrl(item().idImage)" alt="items" appFallback>
-        @if (!minimify()) {
-        <span class="imgContainer cliquable" (appActivate)="openEncyclopedie(item().id, $event)"><img
-                src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
-        }
+                {{ "item.niveau-court" | translate }} {{item().level}}
+                @if (typeKey(); as key) { · {{ key | translate }} }
+            </span>
+            @if (rarityKey(); as key) {
+            <span class="badge">{{ key | translate }}</span>
+            }
+        </div>
+        <div class="actions">
+            <app-favoris-button [item]="item()"></app-favoris-button>
+            <span [matTooltip]="'item.copier' | translate" class="icon-action fileCopy"
+                (appActivate)="copyToClipboard($event)"><mat-icon fontIcon="file_copy"></mat-icon></span>
+            @if (!minimify()) {
+            <span class="icon-action" (appActivate)="openEncyclopedie(item().id, $event)"><img
+                    src="aptitudes/Encyclopédie.png" alt="Encyclopédie"></span>
+            }
+        </div>
     </div>
+
+    <div class="pills">
+        <span class="pill pill-mastery"><img
+                [src]="imageService.getActionIdUrl(IdActionEnum.MAITRISES_ELEMENTAIRES)"
+                alt="Maitrises">{{Math.trunc(maitrisesToDisplay())}}</span>
+        <span class="pill pill-resist"><img
+                [src]="imageService.getActionIdUrl(IdActionEnum.RESISTANCES_ELEMENTAIRE)"
+                alt="Résistances">{{resistancesToDisplay()}}</span>
+        <span class="pill pill-weight"
+            [matTooltip]="'item.poids-infobulle' | translate:{ratio: ratioWeight()}" [matTooltipShowDelay]="300"><img
+                [src]="'aptitudes/poids.png'" alt="poids">{{poidsToDisplay()}}</span>
+    </div>
+
+    @if (textCondition(); as condition) {
+    <div class="condition">
+        [ {{ condition }} ]
+    </div>
+    }
+
     <div class="effects">
-        <div>
+        <div class="effects-list">
             @for (effect of item().equipEffects; track effect.actionId) {
             <p>
                 @if (effect.actionId !== IdActionEnum.APPLIQUE_ETAT) {
@@ -52,12 +66,15 @@
         </div>
         <app-element-selector [item]="item()" [selector]="ElementSelectorEnum.Maitrise"></app-element-selector>
         <app-element-selector [item]="item()" [selector]="ElementSelectorEnum.Resistance"></app-element-selector>
-        @if(!minimify()) {
-        <div class="craftAndDrop">
-            @if (item().isCraftable) {
-            <img class="craftable" (click)="navigateToCraftku()" [src]="imageService.getItemUrl(71919810)"
-                alt="craftable" [matTooltip]="'item.craftable' | translate">
-            }
+    </div>
+
+    @if(!minimify()) {
+    <div class="obtention">
+        @if (item().isCraftable) {
+        <img class="craftable" (click)="navigateToCraftku()" [src]="imageService.getItemUrl(71919810)"
+            alt="craftable" [matTooltip]="'item.craftable' | translate">
+        }
+        <div class="sources">
             @if(item().mobDropable) {
             @for (drop of item().mobDropable; track $index) {
             <img class="monster" [src]="imageService.getMonsterUrl(drop.gfxId)"
@@ -90,11 +107,8 @@
             <img appFallback [src]="'croupier.png'" alt="croupier" [matTooltip]="'item.croupier' | translate">
             }
         </div>
-        }
     </div>
-    <div class="favoris">
-        <app-favoris-button [item]="item()"></app-favoris-button>
-    </div>
+    }
 </div>
 }
 

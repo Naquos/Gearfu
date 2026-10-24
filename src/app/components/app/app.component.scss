@@ -1,7 +1,8 @@
 $header-size: 80px;
 $footer-size: 38px;
 $item-choose-size: 70px;
-$width-filter: 430px;
+$width-filter: 340px;
+$rail-size: 84px;
 $height-main-nav: 50px;
 $height-readonly: 39px;
 $height-readonly-mobile: 58px;
@@ -88,14 +89,18 @@ header {
   min-height: calc(100vh - $header-size);
 
   .readonly {
-    top: calc($header-size + $height-main-nav);
-    left: 0;
-    width: calc(100% - $width-filter);
-    margin-left: $width-filter;
+    top: auto;
+    bottom: 20px;
+    left: $rail-size;
+    right: $width-filter;
+    width: fit-content;
+    margin: 0 auto;
     background-color: var(--overlay-danger);
-    color: var(--color-text-inverse);
+    color: var(--color-text-danger);
+    border: 1px solid var(--color-text-danger);
+    border-radius: 999px;
     text-align: center;
-    padding: 10px 0;
+    padding: 6px 18px;
     font-weight: var(--font-weight-title);
     position: fixed;
     z-index: 2;
@@ -109,16 +114,27 @@ header {
 
 .filter {
   z-index: 10;
-  background: var(--color-surface-mid);
+  background: var(--color-surface-deep);
   color: var(--color-text-inverse);
   font-weight: 400;
 
   position: fixed;
+  top: $header-size;
+  right: 0;
   width: $width-filter;
+  box-sizing: border-box;
+  border-left: 1px solid var(--color-surface-soft);
 
   overflow-y: scroll;
-  height: calc(100% - 85px);
+  height: calc(100% - $header-size);
   padding-bottom: 50px;
+
+  &.filter-left {
+    right: auto;
+    left: $rail-size;
+    border-left: 0;
+    border-right: 1px solid var(--color-surface-soft);
+  }
 
   .filter-header {
     background: var(--gradient-app-header);
@@ -171,14 +187,19 @@ header {
 }
 
 .content-application {
-  margin-top: $height-main-nav;
-  width: calc(100% - $width-filter);
-  margin-left: $width-filter;
+  margin-top: 0;
+  width: calc(100% - $width-filter - $rail-size);
+  margin-left: $rail-size;
   padding-bottom: 50px;
+
+  &.content-application-left {
+    margin-left: calc($rail-size + $width-filter);
+    width: calc(100% - $width-filter - $rail-size);
+  }
 }
 
 .content-application-readonly {
-  margin-top: calc($height-main-nav + $height-readonly);
+  margin-top: 0;
 }
 
 
@@ -221,6 +242,69 @@ header {
   }
 }
 
+@media screen and (min-width: 1001px) {
+  header {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 84px;
+    height: auto;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 0 16px;
+    background: transparent;
+    box-shadow: none;
+    z-index: 13;
+
+    #logo,
+    .gearfu,
+    #birthday {
+      display: none;
+    }
+
+    .paramButton {
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+      width: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .paramButton mat-icon {
+      margin: 0;
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
+
+    .flag {
+      width: 30px;
+      height: 30px;
+    }
+
+    .discord {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+    }
+  }
+
+  .content {
+    margin-top: 0;
+    min-height: 100vh;
+  }
+
+  .filter {
+    top: 0;
+    height: 100%;
+  }
+}
+
 @media screen and (min-width: 1000px) {
   .menu {
     display: none;
@@ -249,7 +333,17 @@ header {
     top: $header-size !important;
   }
 
-  .content-application {
+  .content .readonly {
+    left: 0;
+    right: auto;
+    bottom: auto;
+    border-radius: 0;
+    border: 0;
+    padding: 10px 0;
+  }
+
+  .content-application,
+  .content-application.content-application-left {
     margin-top: 0;
     width: calc(100% - $item-choose-size);
     margin-left: $item-choose-size;
@@ -330,6 +424,7 @@ header {
     touch-action: pan-y !important;
 
     .filter {
+      left: auto;
       width: calc(100% - 70px) !important;
       background-color: var(--color-surface-strong);
 

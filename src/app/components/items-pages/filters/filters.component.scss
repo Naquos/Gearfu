@@ -1,38 +1,128 @@
 :host {
-
-    background: var(--color-surface-strong);
+    background: var(--color-surface-deep);
     color: var(--color-text-inverse);
     font-weight: 400;
 
     .filter-content {
-        padding: 10px;
+        padding: 12px 14px;
         margin-bottom: 50px;
+        display: flex;
+        flex-direction: column;
 
         .filter-title {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            padding-bottom: 14px;
 
-            button {
-                background-color: var(--color-surface-empty);
-            }
-
-            button:active {
-                background-color: var(--color-surface-soft);
-                border-color: var(--color-border-strong);
-                transform: translateY(2px);
-            }
-
-            button,
-            app-reverse-button {
-                width: 41px;
-                border-radius: 25%;
+            h2 {
+                margin: 0;
+                font-size: 1.3rem;
             }
 
             app-reverse-button {
                 margin-left: auto;
-                margin-right: 15px;
+                margin-right: 10px;
             }
+
+            .reset {
+                width: auto;
+                height: auto;
+                margin: 0;
+                padding: 6px 4px;
+                background: none;
+                border: none;
+                box-shadow: none;
+                color: var(--color-accent);
+                font-weight: bold;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+
+        .fsec {
+            border-top: 1px solid var(--color-surface-soft);
+
+            .fsec-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                height: auto;
+                margin: 0;
+                padding: 14px 0;
+                border: 0;
+                background: none;
+                box-shadow: none;
+                color: var(--color-text-muted);
+                font-size: 0.75rem;
+                font-weight: bold;
+                letter-spacing: 0.08em;
+                text-align: left;
+                text-transform: uppercase;
+                cursor: pointer;
+
+                &:focus-visible {
+                    outline: 2px solid var(--color-accent);
+                }
+
+                mat-icon {
+                    flex: none;
+                    transition: transform 250ms ease;
+                }
+
+                mat-icon.rotated {
+                    transform: rotate(180deg);
+                }
+            }
+
+            // Conteneur animé
+            .fsec-collapse {
+                display: grid;
+                grid-template-rows: 0fr;
+                opacity: 0;
+                transition:
+                    grid-template-rows 300ms ease,
+                    opacity 250ms ease;
+
+                &.open {
+                    grid-template-rows: 1fr;
+                    opacity: 1;
+                }
+            }
+
+            .fsec-body {
+                min-height: 0;
+                overflow: hidden;
+                padding-bottom: 14px;
+            }
+
+            &:not(.options) .fsec-body ::ng-deep> :first-child>h3:first-child {
+                display: none;
+            }
+        }
+
+
+        .fsec .fsec-head:active {
+            transform: none;
+            box-shadow: none;
+            color: var(--color-text-muted);
+            background-color: transparent;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .fsec-collapse,
+            .fsec-head mat-icon {
+                transition: none;
+            }
+        }
+
+        ::ng-deep h3 {
+            margin: 5px 0 10px;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
         }
     }
 }

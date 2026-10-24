@@ -1,33 +1,35 @@
 .content {
-    width: 95%;
-    margin: 10px auto;
+    margin: 0 20px 24px;
 
-    .card {
-        padding: 0 10px;
+    > .card {
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 24px;
 
         .row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: stretch;
             flex-direction: row;
-
-
+            gap: 24px;
 
             app-name-build,
             app-import-build {
-                width: 45%;
+                flex: 1;
+                width: auto;
+                box-sizing: border-box;
+                padding: 18px 24px;
+                background: var(--panel-background);
+                border-radius: var(--panel-radius);
+                box-shadow: var(--panel-shadow);
             }
         }
     }
 }
 
 @media screen and (max-width: 1100px) {
-    .row {
-        flex-direction: column !important;
-    }
-
-    app-name-build,
-    app-import-build {
-        width: 100% !important;
+    .content > .card .row {
+        flex-direction: column;
     }
 }

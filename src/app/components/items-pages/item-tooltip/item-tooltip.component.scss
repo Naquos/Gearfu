@@ -2,7 +2,6 @@
     background: var(--gradient-panel);
     border-radius: 40px;
     padding: 5px;
-    color: var(--color-text-inverse);
     height: fit-content;
     width: 600px;
     display: flex;
@@ -25,11 +24,6 @@
 
     .red {
         background: var(--gradient-negative);
-    }
-
-    .green,
-    .red {
-        color: var(--color-surface-deepest);
     }
 
     .header {
@@ -128,7 +122,6 @@
         position: absolute;
         right: 10px;
         bottom: 10px;
-        color: var(--color-text-muted-on-dark);
         background-color: var(--color-surface-muted-alt);
         border-radius: 50%;
         cursor: pointer;

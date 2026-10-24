@@ -1,19 +1,21 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+@if (variant() === 'rail') {
+<nav class="rail" aria-label="Navigation principale">
+    <img class="rail-logo" src="gearfu.png" alt="Gearfu">
+    @for (item of navItems; track item.index) {
+    <button type="button" class="rail-item" [class.active]="activePage() === item.index"
+        [attr.aria-current]="activePage() === item.index ? 'page' : null" (click)="redirectIndex(item.index)">
+        <mat-icon [fontIcon]="item.icon" aria-hidden="true"></mat-icon>
+        <span>{{ item.label | translate }}</span>
+    </button>
+    }
+</nav>
+} @else {
 <mat-tab-group class="main-nav mobile-friendly-tabs" [selectedIndex]="activePage()"
     (selectedIndexChange)="redirectIndex($event)">
-    <mat-tab [label]="'app.search-builds' | translate">
-    </mat-tab>
-    <mat-tab [label]="'app.filter-item' | translate">
-    </mat-tab>
-    <mat-tab [label]="'app.aptitudes' | translate">
-    </mat-tab>
-    <mat-tab [label]="'app.sorts' | translate">
-    </mat-tab>
-    <mat-tab [label]="'app.enchantement' | translate">
-    </mat-tab>
-    <mat-tab [label]="'app.recapitulatif' | translate">
-    </mat-tab>
-    <mat-tab [label]="'app.build' | translate">
-    </mat-tab>
+    @for (item of navItems; track item.index) {
+    <mat-tab [label]="item.label | translate"></mat-tab>
+    }
 </mat-tab-group>
+}

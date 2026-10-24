@@ -4,6 +4,15 @@ img {
     cursor: pointer;
 }
 
+img {
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+img.selected {
+    border: 3px solid var(--color-accent);
+}
+
 img:hover {
     transform: scale(1.2);
 }

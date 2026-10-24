@@ -10,6 +10,7 @@
     }
 
     .body {
+        margin-bottom: -10px;
         display: flex;
         flex-direction: column;
         vertical-align: middle;
@@ -21,17 +22,14 @@
             align-items: center;
             justify-content: space-around;
             width: 100%;
-
-            app-button-checkbox {
-                margin-bottom: -10px;
-                margin-top: -1px;
-            }
         }
 
-        input {
+        mat-form-field {
             width: 80%;
-            margin: 10px auto 0;
-            height: 30px;
+        }
+
+        app-button-checkbox {
+            margin-bottom: 20px;
         }
 
         .slider-container {
@@ -50,7 +48,8 @@
 
             color: var(--color-surface-deepest);
             padding: 10px;
-            margin-top: 20px;
+            margin-bottom: 10px;
+
 
             img {
                 width: 30px;

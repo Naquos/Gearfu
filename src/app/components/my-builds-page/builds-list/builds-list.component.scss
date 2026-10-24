@@ -1,15 +1,21 @@
 app-build {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 .card-title {
-    padding: 0 10px;
+    padding: 0 !important;
     width: fit-content;
+    background: transparent;
+    box-shadow: none;
+    margin: 0 20px 12px;
 }
 
 h3 {
-    color: var(--color-white);
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-text-inverse);
 }
 
 .no-build {
@@ -18,23 +24,23 @@ h3 {
     justify-content: center;
     align-items: center;
     height: 100%;
-    color: var(--color-white);
+    padding: 24px;
+    color: var(--color-text-inverse);
 
     span {
-        font-size: 200px
+        font-size: 96px
     }
 }
 
 .build-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 0 20px 24px;
 }
 
-@media screen and (max-width: 1450px) {
-    .build-list {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
+:host > .card {
+    margin: 0 20px 24px;
 }
 
 @media screen and (max-width: 1100px) {

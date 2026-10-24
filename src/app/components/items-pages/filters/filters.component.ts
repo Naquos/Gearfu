@@ -8,6 +8,7 @@ import { ModifierMecanismComponent } from "../../form/modifier-mecanism/modifier
 import { SortChoiceComponent } from "../../form/sort-choice/sort-choice.component";
 import { FilterResistancesComponent } from "../../form/filter-resistances/filter-resistances.component";
 import { MajorPresentComponent } from "../../form/major-present/major-present.component";
+import { MalusPresentComponent } from "../../form/malus-present/malus-present.component";
 import { FilterMaitrisesComponent } from "../../form/filter-maitrises/filter-maitrises.component";
 import { RareteItemComponent } from "../../form/rarete-item/rarete-item.component";
 import { ItemLevelComponent } from "../../form/item-level/item-level.component";
@@ -17,6 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonCheckboxComponent } from "../../form/button-checkbox/button-checkbox.component";
 import { DisplayFavorisFormService } from '../../../services/form-signal/displayFavorisFormService';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { isMobile } from '../../../models/utils/utils';
 
 @Component({
@@ -37,6 +40,9 @@ import { isMobile } from '../../../models/utils/utils';
     ItemTypesComponent,
     ButtonCheckboxComponent,
     MatTooltipModule,
+    MatIconModule,
+    MatExpansionModule,
+    MalusPresentComponent,
   ],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss',
@@ -46,4 +52,15 @@ export class FiltersComponent {
   protected readonly resetFormService = inject(ResetFormService);
   protected readonly displayFavorisFormService = inject(DisplayFavorisFormService);
   protected readonly isMobile = signal(isMobile());
+  private readonly openSections = signal<Record<string, boolean>>({
+    obtention: false, rarete: true, maitrises: true, major: true, malusPresent: false, resistances: false, options: false,
+  });
+
+  protected isOpen(section: string): boolean {
+    return this.openSections()[section] ?? false;
+  }
+
+  protected toggle(section: string): void {
+    this.openSections.update(state => ({ ...state, [section]: !state[section] }));
+  }
 }

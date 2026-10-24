@@ -1,10 +1,19 @@
+:host {
+    display: block;
+    overflow: visible;
+    min-width: 0;
+}
+
 .content {
     display: flex;
     align-items: center;
     perspective: 700px;
     perspective-origin: 50% 25%;
     position: relative;
-
+    align-content: space-between;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    overflow: visible;
 
     .nouveauBuild,
     .historique {
@@ -16,8 +25,7 @@
         height: 30px;
         width: 100%;
 
-
-        color: var(--color-white);
+        color: var(--color-text-inverse);
         font-weight: 400;
         font-size: 16px;
 
@@ -28,40 +36,13 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-
-        .firstLine {
-
-            box-shadow: 0 4px 6px var(--shadow-panel-color);
-            padding: 0 5px;
-            display: flex;
-            align-items: center;
-            flex-direction: row;
-            justify-content: space-around;
-            margin-left: 5px;
-            width: calc(100% - 10px);
-            background: var(--color-surface-strong);
-
-
-            color: var(--color-white);
-            font-weight: 400;
-            font-size: 16px;
-
-            cursor: pointer;
-
-            img {
-                margin-right: 10px;
-            }
-        }
-
-        .firstLine:active {
-            transform: translateY(2px);
-        }
+        width: fit-content;
+        flex-shrink: 0;
 
         .secondLine {
             display: flex;
             align-items: center;
             flex-direction: row;
-            width: 100%;
             z-index: 101000;
             margin-bottom: 5px;
 
@@ -76,9 +57,8 @@
                 transform: translateY(2px);
             }
 
-
             mat-icon {
-                color: var(--color-white);
+                color: var(--color-text-inverse);
                 width: 30px;
                 height: 30px;
                 text-align: center;
@@ -91,8 +71,21 @@
         }
     }
 
+    // Zone de scroll indépendante de l'historique
+    .items-scroll {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: thin;
+    }
+
     .items-list {
         display: flex;
+        width: max-content;
+        min-width: 100%;
+        justify-content: space-around;
     }
 
     .historique,
@@ -100,7 +93,7 @@
         display: contents;
 
         mat-icon {
-            color: var(--color-white);
+            color: var(--color-text-inverse);
             width: 30px;
             height: 30px;
             text-align: center;
@@ -108,9 +101,7 @@
 
             cursor: pointer;
         }
-
     }
-
 
     .historique:active,
     .dark-mode:active {
@@ -121,9 +112,9 @@
         margin-left: 5px;
     }
 
-
     app-item-choose-display {
         margin-left: 10px;
+        flex-shrink: 0;
     }
 
     app-item-choose-display:last-child {
@@ -134,86 +125,107 @@
         transform: scale(1.06);
     }
 
+    // Historique : positionné par rapport à .content,
+    // et non par rapport à la zone scrollable
     app-historics-list {
         border-radius: 10px;
         overflow: hidden;
         position: absolute;
         top: 100%;
-        left: 200px;
+        left: 130px;
         z-index: 200;
+
         transform-origin: top center;
 
-        // État fermé — fermeture sans délai
+        // État fermé
         clip-path: inset(0 0 100% 0);
         transform: translateY(-12px);
         opacity: 0;
         pointer-events: none;
-        transition: clip-path 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+
+        transition:
+            clip-path 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
             transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
             opacity 0.3s ease;
 
+        // État ouvert
         &.open {
-            // État ouvert — ouverture avec délai (attend le tilt du couvercle)
-            clip-path: inset(0 0 0% 0);
+            clip-path: inset(0 0 0 0);
             transform: translateY(0);
             opacity: 1;
             pointer-events: auto;
-            transition: clip-path 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s,
+
+            transition:
+                clip-path 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s,
                 transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s,
                 opacity 0.45s ease 0.25s;
         }
     }
 }
 
+// Écrans larges : animation 3D conservée
 @media screen and (min-width: 1201px) {
-    .items-list {
-        display: flex;
-        transform-origin: top center;
-        transform-style: preserve-3d;
-        backface-visibility: hidden;
-        transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-            box-shadow 0.7s ease-in-out;
-        transform: rotateX(0deg);
+    .content {
+        .items-list {
+            transform-origin: top center;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
 
-        &.open {
-            box-shadow: 0 4px 6px var(--shadow-panel-color);
-            transform: rotateX(35deg);
-            box-shadow: 0 20px 40px var(--shadow-panel-color);
+            transition:
+                transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 0.7s ease-in-out;
+
+            transform: rotateX(0deg);
+
+            &.open {
+                transform: rotateX(35deg);
+                box-shadow: 0 20px 40px var(--shadow-panel-color);
+            }
         }
     }
 }
 
+// Écrans jusqu'à 1200px
 @media screen and (max-width: 1200px) {
+    .content {
+        .buttonGroupe:first-child {
+            display: none;
+        }
 
-    app-historics-list {
-        display: none !important;
+        .items-scroll {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        // L'historique n'est plus masqué ici.
+        // Il reste positionné hors de la zone scrollable.
     }
-
-    .mat-icon,
-    img,
-    .buttonGroupe {
-        display: none !important;
-    }
-
 }
 
+// Petits écrans
 @media screen and (max-width: 1000px) {
-
-    app-item-choose-display {
-        margin-left: unset !important;
-        margin: 0 auto !important;
-    }
-
     .content {
         flex-wrap: wrap;
         height: 100%;
+
+        .items-scroll {
+            flex: 1 1 100%;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .items-list {
+            flex-direction: column;
+            width: 100%;
+            min-width: 0;
+        }
+
+        app-item-choose-display {
+            margin: 0 auto !important;
+        }
     }
 
     span {
         display: none !important;
-    }
-
-    .items-list {
-        flex-direction: column;
     }
 }

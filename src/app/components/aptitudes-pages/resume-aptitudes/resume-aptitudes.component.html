@@ -49,12 +49,12 @@
 <div class="block">
     <div class="row-4">
         <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseFeu"
-            [idActionEnum]="IdActionsEnum.MAITRISES_FEU" [label]="''" [color]="'orange'"></app-input-resume-aptitudes>
+            [idActionEnum]="IdActionsEnum.MAITRISES_FEU" [label]="''" [color]="'var(--stat-fire)'"></app-input-resume-aptitudes>
         <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseEau"
             [idActionEnum]="IdActionsEnum.MAITRISES_EAU" [label]="''" [color]="'#268de2'"></app-input-resume-aptitudes>
         <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseTerre"
             [idActionEnum]="IdActionsEnum.MAITRISES_TERRE" [label]="''"
-            [color]="'rgb(6, 209, 6)'"></app-input-resume-aptitudes>
+            [color]="'var(--stat-earth)'"></app-input-resume-aptitudes>
         <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.maitriseAir"
             [idActionEnum]="IdActionsEnum.MAITRISES_AIR" [label]="''"
             [color]="'rgb(191, 121, 224)'"></app-input-resume-aptitudes>
@@ -62,13 +62,13 @@
 
     <div class="row-4">
         <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.resistancesFeu"
-            [idActionEnum]="IdActionsEnum.RESISTANCES_FEU" [label]="''" [color]="'orange'"
+            [idActionEnum]="IdActionsEnum.RESISTANCES_FEU" [label]="''" [color]="'var(--stat-fire)'"
             [displayResistance]="true"></app-input-resume-aptitudes>
         <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.resistancesEau"
             [idActionEnum]="IdActionsEnum.RESISTANCES_EAU" [label]="''" [color]="'#268de2'"
             [displayResistance]="true"></app-input-resume-aptitudes>
         <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.resistancesTerre"
-            [idActionEnum]="IdActionsEnum.RESISTANCES_TERRE" [label]="''" [color]="'rgb(6, 209, 6)'"
+            [idActionEnum]="IdActionsEnum.RESISTANCES_TERRE" [label]="''" [color]="'var(--stat-earth)'"
             [displayResistance]="true"></app-input-resume-aptitudes>
         <app-input-resume-aptitudes [fieldControl]="aptitudesManualFormService.form.resistancesAir"
             [idActionEnum]="IdActionsEnum.RESISTANCES_AIR" [label]="''" [color]="'rgb(191, 121, 224)'"

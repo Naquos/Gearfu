@@ -1,13 +1,13 @@
 import { Component, inject, ChangeDetectionStrategy, input } from '@angular/core';
-import { FormField } from '@angular/forms/signals';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { ItemLevelFormService } from '../../../services/form-signal/itemLevelFormService';
+import { InputNumberComponent } from '../input-number/input-number.component';
 
 @Component({
   selector: 'app-item-level',
-  imports: [FormField, MatFormFieldModule, MatInputModule, TranslateModule],
+  imports: [MatFormFieldModule, MatInputModule, TranslateModule, InputNumberComponent],
   templateUrl: './item-level.component.html',
   styleUrl: './item-level.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

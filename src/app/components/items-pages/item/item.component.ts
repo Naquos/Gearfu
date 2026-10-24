@@ -27,6 +27,35 @@ import { switchMap } from 'rxjs';
 import { FavorisButtonComponent } from "../../form/favoris-button/favoris-button.component";
 import { MinimifyDisplayFormService } from '../../../services/form-signal/minimifyDisplayFormService';
 import { CalculMaitrisesResistancesService } from '../../../services/calculMaitrisesResistancesService';
+import { RarityItemEnum } from '../../../models/enum/rarityItemEnum';
+import { ItemTypeEnum } from '../../../models/enum/itemTypeEnum';
+
+const RARITY_KEYS = new Map<RarityItemEnum, string>([
+  [RarityItemEnum.NORMAL, 'rarete-item.normal'],
+  [RarityItemEnum.RARE, 'rarete-item.rare'],
+  [RarityItemEnum.MYTHIQUE, 'rarete-item.mythique'],
+  [RarityItemEnum.LEGENDAIRE, 'rarete-item.legendaire'],
+  [RarityItemEnum.RELIQUE, 'rarete-item.relique'],
+  [RarityItemEnum.SOUVENIR, 'rarete-item.souvenir'],
+  [RarityItemEnum.EPIQUE, 'rarete-item.epique'],
+]);
+
+const TYPE_KEYS = new Map<ItemTypeEnum, string>([
+  [ItemTypeEnum.CASQUE, 'item-types.coiffe'],
+  [ItemTypeEnum.AMULETTE, 'item-types.amulette'],
+  [ItemTypeEnum.PLASTRON, 'item-types.plastron'],
+  [ItemTypeEnum.ANNEAU, 'item-types.anneau'],
+  [ItemTypeEnum.BOTTES, 'item-types.bottes'],
+  [ItemTypeEnum.CAPE, 'item-types.cape'],
+  [ItemTypeEnum.EPAULETTES, 'item-types.epaulettes'],
+  [ItemTypeEnum.CEINTURE, 'item-types.ceinture'],
+  [ItemTypeEnum.BOUCLIER, 'item-types.bouclier'],
+  [ItemTypeEnum.DAGUE, 'item-types.seconde-main'],
+  [ItemTypeEnum.UNE_MAIN, 'item-types.une-main'],
+  [ItemTypeEnum.DEUX_MAINS, 'item-types.deux-mains'],
+  [ItemTypeEnum.ACCESSOIRES, 'item-types.accessoires'],
+  [ItemTypeEnum.FAMILIER, 'item-types.familier'],
+]);
 
 @Component({
   selector: 'app-item',
@@ -44,6 +73,7 @@ import { CalculMaitrisesResistancesService } from '../../../services/calculMaitr
   ],
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],
+  host: { '[style.--rarity-color]': 'item() ? colorRarityService.mapColors.get(item().rarity) : null' },
   changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ItemComponent extends ItemAbstractComponent implements AfterViewInit {
@@ -59,6 +89,11 @@ export class ItemComponent extends ItemAbstractComponent implements AfterViewIni
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly itemConditionService = inject(ItemConditionService);
   protected readonly ElementSelectorEnum = ElementSelectorEnum;
+  protected readonly rarityKey = computed(() => RARITY_KEYS.get(this.item().rarity));
+  protected readonly typeKey = computed(() => {
+    const type = this.itemTypeService.getItemType(this.item().itemTypeId);
+    return type === undefined ? undefined : TYPE_KEYS.get(type);
+  });
   protected readonly ratioWeight = computed(() => {
     const level = this.item().level;
     return ratioWeightByLevel(level);

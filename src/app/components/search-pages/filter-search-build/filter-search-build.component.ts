@@ -1,4 +1,5 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { InputNumberComponent } from '../../../components/form/input-number/input-number.component';
 import { ClassIdEnum } from '../../../models/enum/classIdEnum';
 import { FilterSearchBuildFormService } from '../../../services/form-signal/filterSearchBuildFormService';
 import { ActivateDirective } from '../../../directives/activate.directive';
@@ -22,7 +23,9 @@ import { SearchListSublimationComponent } from "../search-list-sublimation/searc
     FormField,
     MatSelectModule,
     MatOption,
-    SearchListItemComponent, SearchListSublimationComponent],
+    SearchListItemComponent,
+    SearchListSublimationComponent,
+    InputNumberComponent],
   templateUrl: './filter-search-build.component.html',
   styleUrl: './filter-search-build.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

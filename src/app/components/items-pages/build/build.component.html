@@ -1,116 +1,90 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<div class="header">
-    @if (build()?.codeZenith) {
-    <div class="header-zenith">
-        <img [matTooltip]="'build.zenith' | translate" src="./zenith-logo.webp" (click)="goToZenith($event)"
-            alt="zenith">
-    </div>
-    }
-    <div class="header-name">
-        <mat-icon fontIcon="reply" [matTooltip]="'build.dupliquer' | translate"
-            (click)="saveBuildService.duplicateBuild(build()!)"></mat-icon>
-        {{ build()?.level }} - {{build()?.nameBuild}}
-        @if(sublimations()) {
-        <img [src]="imageService.getItemUrl(81227111)" alt="sublimations" [matTooltip]="sublimations()"
-            matTooltipClass="multiline-tooltip">
+<div class="head" (click)="loadBuild()">
+    <img class="avatar" [src]="'classes/icon/' + build()?.classe + '.jpg'" alt="">
+    <div class="identity">
+        <span class="name">{{ build()?.nameBuild }}</span>
+        @if (build()?.createdAt) {
+        <span class="date">{{ build()!.createdAt | date:'dd/MM/yyyy · HH:mm' }}</span>
         }
+    </div>
+    <div class="head-actions">
+        <button type="button" class="icon" [matTooltip]="'build.dupliquer' | translate"
+            [attr.aria-label]="'build.dupliquer' | translate" (click)="duplicateBuild($event)">
+            <mat-icon fontIcon="reply"></mat-icon>
+        </button>
+        @if (build()?.codeZenith) {
+        <button type="button" class="icon" [matTooltip]="'build.zenith' | translate"
+            [attr.aria-label]="'build.zenith' | translate" (click)="goToZenith($event)">
+            <img src="./zenith-logo.webp" alt="">
+        </button>
+        }
+        <span class="level">{{ 'item.niveau-court' | translate }} {{ build()?.level }}</span>
     </div>
 </div>
 @if (statistics()) {
-<div class="statistics" [style.border-top-right-radius]="build()?.codeZenith ? '0' : '40px'">
-
-    <div class="values">
-        <div class="cell">
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.MAITRISES_ELEMENTAIRES)" alt="maitrises">
-            <span>{{statistics()?.maitrises}}</span>
+<div class="statistics" (click)="loadBuild()">
+    <div class="tiles">
+        <div class="tile accent">
+            <span class="tile-label">{{ 'resume-aptitudes.maitrises-totales' | translate }}</span>
+            <span class="tile-value">{{ statistics()?.maitrises }}</span>
         </div>
-        <div class="cell">
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.RESISTANCES_ELEMENTAIRE)" alt="resistances">
-            <span>{{statistics()?.resistances}}</span>
+        <div class="tile">
+            <span class="tile-label">{{ 'resume-aptitudes.resistances-totales' | translate }}</span>
+            <span class="tile-value">{{ statistics()?.resistances }}</span>
         </div>
-        <div class="cell">
-            <img src="aptitudes/poids.png" alt="poids">
-            <span>{{statistics()?.poids}}</span>
+        <div class="tile">
+            <span class="tile-label">{{ 'item-choose.poids-total' | translate }}</span>
+            <span class="tile-value">{{ statistics()?.poids }}</span>
         </div>
     </div>
-    <div class="majors">
-        <div class="cell">
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PA)" alt="PA">
-            <span>{{statistics()?.PA}}</span>
-        </div>
-        <div class="cell">
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="PM">
-            <span>{{statistics()?.PM}}</span>
-        </div>
-        <div class="cell">
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PW)" alt="PW">
-            <span>{{statistics()?.PW}}</span>
-        </div>
-        <div class="cell">
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="PO">
-            <span>{{statistics()?.PO}}</span>
-        </div>
-        <div class="cell">
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.COUP_CRITIQUE)" alt="CC">
-            <span>{{statistics()?.CC}}</span>
-        </div>
-        <div class="cell">
-            <img [src]="imageService.getActionIdUrl(IdActionsEnum.PARADE)" alt="parade">
-            <span>{{statistics()?.parade}}</span>
-        </div>
+    <div class="chips">
+        <span class="chip"><img [src]="imageService.getActionIdUrl(IdActionsEnum.PA)" alt="">{{ statistics()?.PA
+            }}</span>
+        <span class="chip"><img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="">{{ statistics()?.PM
+            }}</span>
+        <span class="chip"><img [src]="imageService.getActionIdUrl(IdActionsEnum.PW)" alt="">{{ statistics()?.PW
+            }}</span>
+        <span class="chip"><img [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="">{{ statistics()?.PO
+            }}</span>
+        <span class="chip"><img [src]="imageService.getActionIdUrl(IdActionsEnum.COUP_CRITIQUE)" alt="">{{
+            statistics()?.CC }}</span>
+        <span class="chip"><img [src]="imageService.getActionIdUrl(IdActionsEnum.PARADE)" alt="">{{ statistics()?.parade
+            }}</span>
     </div>
 </div>
 }
-<div class="content" (click)="loadBuild()" [style.background-image]="`url(classes/icon/${build()?.classe}.jpg)`"
-    [style.border-bottom-right-radius]="hasSublimation() ? '0' : '40px'"
-    [style.border-bottom-left-radius]="hasSublimation() ? '0' : '40px'">
-    <div class="row">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.CASQUE)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.CASQUE)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.AMULETTE)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.AMULETTE)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.PLASTRON)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.PLASTRON)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.ANNEAU_GAUCHE)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.ANNEAU_GAUCHE)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.ANNEAU_DROITE)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.ANNEAU_DROITE)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.BOTTES)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.BOTTES)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.CAPE)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.CAPE)">
-    </div>
-    <hr />
-    <div class="row">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.EPAULETTES)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.EPAULETTES)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.CEINTURE)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.CEINTURE)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.SECONDE_MAIN)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.SECONDE_MAIN)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.PREMIERE_MAIN)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.PREMIERE_MAIN)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.ACCESSOIRES)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.ACCESSOIRES)">
-        <img appFallback [src]="mapImageItems.get(ItemTypeBuild.FAMILIER)" alt="image"
-            [matTooltip]="getItemName(ItemTypeBuild.FAMILIER)">
-        <button (click)="removeBuild($event)" [style.visibility]="displayRemove() ? 'visible' : 'hidden'">X</button>
-    </div>
+<div class="slots" (click)="loadBuild()">
+    @for (slot of slots; track slot) {
+    <img appFallback class="slot" [src]="mapImageItems.get(slot)" alt="" [matTooltip]="getItemName(slot)"
+        [style.--slot-color]="slotColor(slot)">
+    }
 </div>
-@if (sublimationEpique() || sublimationRelique()) {
-<div class="row enchantement">
-    <div class="cell">
-        @if(sublimationEpique()) {
-        <img [src]="imageService.getItemUrl(sublimationEpique()!.idImage)" alt="image">
-        <span>{{getSublimationTitle(sublimationEpique())}}</span>
-        }
-    </div>
-    <div class="cell">
-        @if(sublimationRelique()) {
-        <img [src]="imageService.getItemUrl(sublimationRelique()!.idImage)" alt="image">
-        <span>{{getSublimationTitle(sublimationRelique())}}</span>
-        }
-    </div>
+@if (sublimationEpique() || sublimationRelique() || sublimations()) {
+<div class="subs">
+    @if (sublimations()) {
+    <span class="sub" [matTooltip]="sublimations()" matTooltipClass="multiline-tooltip">
+        <img [src]="imageService.getItemUrl(81227111)" alt="">
+        {{ 'enchantement.sublimations' | translate }}
+    </span>
+    }
+    @if (sublimationEpique()) {
+    <span class="sub epique">
+        <img [src]="imageService.getItemUrl(sublimationEpique()!.idImage)" alt="">
+        {{ getSublimationTitle(sublimationEpique()) }}
+    </span>
+    }
+    @if (sublimationRelique()) {
+    <span class="sub relique">
+        <img [src]="imageService.getItemUrl(sublimationRelique()!.idImage)" alt="">
+        {{ getSublimationTitle(sublimationRelique()) }}
+    </span>
+    }
 </div>
 }
+<div class="foot">
+    <button type="button" class="btn" (click)="loadBuild()">{{ 'build.charger' | translate }}</button>
+    @if (displayRemove()) {
+    <button type="button" class="btn danger" (click)="removeBuild($event)">{{ 'build.supprimer' | translate }}</button>
+    }
+</div>

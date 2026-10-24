@@ -159,9 +159,32 @@
 
         .epique-relique {
             width: 100%;
+            height: 54px;
             display: flex;
             justify-content: space-around;
             margin-top: 10px;
+
+            .empty-sublimation-epique {
+                background-color: #eebcd7;
+                color: #d12882;
+            }
+
+            .empty-sublimation-relic {
+                background-color: #c570ef;
+                color: #7a2fc8;
+            }
+
+            .empty-sublimation-epique,
+            .empty-sublimation-relic {
+                border-radius: 10px;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border: 3px dashed;
+                padding: 5px 20px;
+                font-weight: 500;
+            }
 
             .epique,
             .relique {

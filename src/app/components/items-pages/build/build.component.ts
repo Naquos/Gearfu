@@ -17,6 +17,8 @@ import { ChasseFormService } from '../../../services/form-signal/chasseFormServi
 import { SublimationsEpiqueRelique } from '../../../models/data/sublimationEpiqueRelique';
 import { MatIcon } from "@angular/material/icon";
 import { ImageFallbackDirective } from '../../../directives/imageFallback.directive';
+import { DatePipe } from '@angular/common';
+import { ColorRarityService } from '../../../services/colorRarityService';
 
 export enum ItemTypeBuild {
   CASQUE = "CASQUE",
@@ -37,7 +39,7 @@ export enum ItemTypeBuild {
 
 @Component({
   selector: 'app-build',
-  imports: [MatTooltipModule, TranslateModule, LazyImageDirective, MatIcon, ImageFallbackDirective],
+  imports: [MatTooltipModule, TranslateModule, MatIcon, ImageFallbackDirective, DatePipe],
   templateUrl: './build.component.html',
   styleUrl: './build.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -51,6 +53,14 @@ export class BuildComponent implements OnInit {
   protected readonly saveBuildService = inject(SaveBuildService);
   protected readonly itemChooseService = inject(ItemChooseService);
   private readonly translateService = inject(TranslateService);
+  private readonly colorRarityService = inject(ColorRarityService);
+
+  protected readonly slots: ItemTypeBuild[] = [
+    ItemTypeBuild.CASQUE, ItemTypeBuild.AMULETTE, ItemTypeBuild.PLASTRON, ItemTypeBuild.ANNEAU_GAUCHE,
+    ItemTypeBuild.ANNEAU_DROITE, ItemTypeBuild.BOTTES, ItemTypeBuild.CAPE, ItemTypeBuild.EPAULETTES,
+    ItemTypeBuild.CEINTURE, ItemTypeBuild.SECONDE_MAIN, ItemTypeBuild.PREMIERE_MAIN, ItemTypeBuild.ACCESSOIRES,
+    ItemTypeBuild.FAMILIER,
+  ];
 
 
   public readonly build = input<Build | undefined>(undefined);
@@ -113,6 +123,16 @@ export class BuildComponent implements OnInit {
   protected getItemName(itemTypeBuild: ItemTypeBuild): string {
     const item = this.mapItems.get(itemTypeBuild);
     return item ? item.title[this.translateService.currentLang as keyof typeof item.title] : "";
+  }
+
+  protected slotColor(itemTypeBuild: ItemTypeBuild): string | null {
+    const item = this.mapItems.get(itemTypeBuild);
+    return item ? this.colorRarityService.mapColors.get(item.rarity) ?? null : null;
+  }
+
+  protected duplicateBuild(event: MouseEvent): void {
+    event.stopPropagation();
+    this.saveBuildService.duplicateBuild(this.build()!);
   }
 
   protected getSublimationTitle(sublimation: SublimationsEpiqueRelique | undefined): string {

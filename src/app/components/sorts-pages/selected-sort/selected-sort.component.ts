@@ -10,15 +10,14 @@ import { IdActionsEnum } from '../../../models/enum/idActionsEnum';
 import { SpellEffectService } from '../../../services/spellEffectService';
 import { SortSelectionService } from '../../../services/sortSelectionService';
 import { RecapStatsService } from '../../../services/recapStatsService';
-import { ActivateDirective } from '../../../directives/activate.directive';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { DescriptionSort } from '../../../models/data/descriptionSort';
-import { RippleDirective } from '../../../directives/ripple.directive';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
 
 @Component({
     selector: 'app-selected-sort',
-    imports: [TranslateModule, MatButtonModule, FormsModule, MatSliderModule, LazyImageDirective, ActivateDirective, RippleDirective],
+    imports: [TranslateModule, MatButtonModule, FormsModule, MatSliderModule, LazyImageDirective, MatTabGroup, MatTab],
     templateUrl: './selected-sort.component.html',
     styleUrl: './selected-sort.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -64,7 +63,7 @@ export class SelectedSortComponent {
         return (value: number) => `${value - 1}`;
     }
 
-    protected getEffect(): SafeHtml[] {
+    protected getEffect(value: 'NORMAL' | 'CRITIQUE'): SafeHtml[] {
         if (!this.sortSelected()) {
             return [];
         }
@@ -73,7 +72,7 @@ export class SelectedSortComponent {
         const lang = this.translateService.currentLang as 'fr' | 'en' | 'es' | 'pt';
         const level = this.spellLevel() - 1;
 
-        const isNormal = this.effectDisplay() === 'NORMAL';
+        const isNormal = value === 'NORMAL';
         const template = isNormal ? sort.effect_normal[lang] : sort.effect_critical[lang];
         const rleData = isNormal ? sort.normalEffect[lang] : sort.criticalEffect[lang];
 

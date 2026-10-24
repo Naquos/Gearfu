@@ -4,31 +4,37 @@
     justify-content: center;
 
     button {
-        margin: 5px;
+        margin: 0 4px;
         border-radius: 50%;
         cursor: pointer;
-        border: 0;
+        border: 1px solid var(--color-surface-soft);
         width: 30px;
         height: 30px;
-        background-color: var(--color-surface-deepest);
+        background-color: transparent;
         font-weight: 600;
         font-size: 17px;
-        color: var(--color-white);
+        line-height: 1;
+        color: var(--color-text-inverse);
         box-shadow: none;
+    }
+
+    button:last-of-type {
+        background-color: var(--color-accent);
+        border-color: var(--color-accent);
+        color: var(--color-text-on-accent);
     }
 
     button:active {
         transform: translateY(2px);
     }
 
-
     input {
-        width: 20px;
+        width: 28px;
         height: 28px;
         border: 0;
         text-align: center;
-        border-radius: 25%;
-        background-color: var(--color-surface-deepest);
-        color: var(--color-white);
+        background-color: transparent;
+        font-weight: 600;
+        color: var(--color-text-inverse);
     }
 }

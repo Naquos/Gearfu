@@ -3,6 +3,7 @@ import { ImageService } from '../../../services/imageService';
 import { ChasseFormService } from '../../../services/form-signal/chasseFormService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { EnchantementStateService } from '../../../services/enchantementStateService';
 import { EnchantementChassesComponent } from '../enchantement-chasses/enchantement-chasses.component';
 import { EnchantementEffetsComponent } from '../enchantement-effets/enchantement-effets.component';
@@ -11,7 +12,7 @@ import { EnchantementSublimationsCommunityComponent } from '../enchantement-subl
 
 @Component({
   selector: 'app-enchantement',
-  imports: [EnchantementChassesComponent, EnchantementEffetsComponent, EnchantementSublimationsComponent, EnchantementSublimationsCommunityComponent],
+  imports: [TranslateModule, EnchantementChassesComponent, EnchantementEffetsComponent, EnchantementSublimationsComponent, EnchantementSublimationsCommunityComponent],
   templateUrl: './enchantement.component.html',
   styleUrl: './enchantement.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

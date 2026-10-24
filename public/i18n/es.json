@@ -65,7 +65,9 @@
     },
     "build": {
         "zenith": "Ir a Zénith",
-        "dupliquer": "Dupliquer le build"
+        "dupliquer": "Dupliquer le build",
+        "charger": "Cargar",
+        "supprimer": "Eliminar"
     },
     "builds-list": {
         "label": "Tu lista de builds",
@@ -106,7 +108,13 @@
     },
     "filters": {
         "favoris": "Mostrar solo los objetos favoritos",
-        "reset": "Restablecer filtros"
+        "reset": "Restablecer filtros",
+        "toggle": "Filtros",
+        "reset-short": "Restablecer",
+        "actifs": "Filtros activos:",
+        "tout-effacer": "Borrar todo",
+        "retirer": "Quitar este filtro",
+        "options": "Opciones"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Dominio",
@@ -159,6 +167,7 @@
         "maitrises": "Dominio",
         "resistances": "Resistencias",
         "poids": "Peso",
+        "niveau-court": "Nv.",
         "poids-infobulle": "Peso = Dominio + {{ ratio }}*Resistencias",
         "copier": "Copiar nombre del objeto",
         "craftable": "Puede ser craftado",

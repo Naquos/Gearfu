@@ -1,0 +1,70 @@
+:host {
+    display: block;
+}
+
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+
+    .label {
+        color: var(--color-text-muted);
+    }
+
+    .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        width: auto;
+        height: 30px;
+        margin: 0;
+        padding: 0 10px;
+        border-radius: 999px;
+        border: 1px solid var(--color-surface-soft);
+        background: var(--color-surface-mid);
+        color: var(--color-text-inverse);
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: none;
+
+        .prefix {
+            color: var(--color-text-muted);
+            font-weight: 400;
+        }
+
+        mat-icon {
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+        }
+
+        &:hover {
+            background: var(--color-accent-soft);
+        }
+    }
+
+    .clear {
+        width: auto;
+        height: auto;
+        margin: 0;
+        padding: 4px;
+        border: 0;
+        background: none;
+        box-shadow: none;
+        color: var(--color-accent);
+        font-weight: bold;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+}

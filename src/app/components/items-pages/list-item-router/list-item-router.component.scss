@@ -1,81 +1,146 @@
-$width-app-filters: 15%;
-$width-left-menu: 430px;
-$height-recap-stats: 112px;
+$rail-size: 84px;
+$width-filters: 300px;
+$header-size: 0px;
 
 :host {
-    display: flex;
-    flex-wrap: wrap;
+    display: block;
+    scrollbar-width: none;
 
-
-    .row {
-        z-index: 1;
-        padding: 5px;
-        position: fixed;
-        width: calc(100% - 19%);
-        left: calc(#{$width-app-filters} + #{$width-left-menu});
-        display: flex;
-        justify-content: flex-start;
-        margin-bottom: 5px;
-        background: var(--color-surface-mid);
-
-        app-item-types {
-            margin-right: 20px;
-        }
+    ::-webkit-scrollbar {
+        display: none;
     }
 
     app-filters {
         display: block;
         position: fixed;
-        width: $width-app-filters;
-        min-height: 64px;
-        margin-bottom: 10px;
-        margin-right: 1%;
+        top: $header-size;
+        left: $rail-size;
+        width: $width-filters;
+        box-sizing: border-box;
+        height: calc(100% - #{$header-size});
         overflow-y: scroll;
-        height: calc(100% - 85px);
-        padding-bottom: 50px;
-        transition: left 0.3s ease-in-out, opacity 0.3s ease-in-out;
-        left: $width-left-menu;
+        padding: 10px 10px 50px;
+        background: var(--color-surface-deep);
+        border-right: 1px solid var(--color-surface-soft);
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
         z-index: 1;
-        opacity: 1;
 
         &.close {
-            left: calc(430px - $width-app-filters);
+            transform: translateX(-100%);
             opacity: 0;
+            pointer-events: none;
         }
     }
 
-    app-item-list {
-        width: calc(100% - #{$width-app-filters} - 9%);
-        margin-left: calc(#{$width-app-filters} + 4%);
-        margin-top: 90px;
-        transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+    .main {
+        margin-left: $width-filters;
+        padding: 0 24px 24px;
+        transition: margin-left 0.3s ease-in-out;
 
-        &.close {
-            width: 97%;
-            margin-left: 1%;
+        &.wide {
+            margin-left: 0;
         }
     }
 
-    app-item-level {
-        margin-right: -8px;
+    .equipment {
+        display: block;
+        margin: 24px 0 0;
+        padding: 12px 8px;
+        position: relative;
+        z-index: 3;
+        background: var(--color-surface-mid);
+        border-radius: var(--panel-radius);
+        box-shadow: var(--panel-shadow);
     }
 
+    .equipment ::ng-deep .buttonGroupe {
+        flex: none;
+        display: flex !important;
+        margin-right: 8px;
 
-    scrollbar-width: none;
-
-    /* Firefox */
-    ::-webkit-scrollbar {
-        display: none;
-        /* Safari and Chrome */
+        .mat-icon,
+        img {
+            display: inline-block !important;
+        }
     }
-}
 
+    .equipment ::ng-deep app-item-choose-display {
+        margin-left: 4px;
+    }
 
+    .row {
+        position: sticky;
+        top: $header-size;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 0 -24px 24px;
+        padding: 16px 24px 12px;
+        background: var(--color-surface-page);
+        border-bottom: 1px solid var(--color-surface-soft);
 
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
 
-@media screen and (max-width: 700px) {
-    app-recap-stats {
-        display: none;
+            .search {
+                flex: 1 1 200px;
+                max-width: 420px;
+            }
+
+            app-item-level ::ng-deep .no-title {
+                flex-direction: row !important;
+                margin: 0 !important;
+
+                mat-form-field {
+                    width: 96px !important;
+                    margin: 0 8px 0 0;
+                }
+            }
+        }
+
+        .types-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+
+            app-item-types {
+                flex: 1 1 280px;
+                min-width: 0;
+            }
+
+            .toggle {
+                flex: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                width: auto;
+                height: 44px;
+                margin: 0;
+                padding: 0 18px;
+                border-radius: 999px;
+                border: none;
+                background: var(--color-accent);
+                color: var(--color-text-on-accent);
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
+
+        app-item-types {
+            margin-right: 0;
+
+            ::ng-deep .no-title {
+                display: flex !important;
+                flex-wrap: wrap;
+                gap: 0px;
+                height: auto;
+            }
+        }
     }
 }
 
@@ -83,107 +148,9 @@ $height-recap-stats: 112px;
     app-recap-stats {
         display: none !important;
     }
-}
 
-
-@media screen and (min-width: 1700px) and (max-width: 2000px) {
-    app-filters {
-        &.close {
-            width: $width-app-filters;
-        }
-    }
-
-    app-item-list {
-        width: 97%;
-        margin-left: calc(#{$width-app-filters} + 7%) !important;
-
-        &.close {
-            margin-left: 10px !important;
-        }
-    }
-}
-
-@media screen and (min-width: 1450px) and (max-width: 1700px) {
-    $width-left-menu-reduced: 300px;
-    $width-app-filters-reduced: 430px;
-
-    .row {
-        width: 54% !important;
-        left: calc(#{$width-app-filters-reduced} + #{$width-left-menu-reduced}) !important;
-    }
-
-    app-filters {
-        width: $width-left-menu-reduced !important;
-
-        &.close {
-            width: $width-app-filters;
-        }
-    }
-
-    app-item-list {
-        width: 68% !important;
-        margin-left: calc(#{$width-left-menu-reduced} + 2%) !important;
-        margin-top: 110px !important;
-
-        &.close {
-            margin-left: 10px !important;
-            width: 97% !important;
-        }
-    }
-
-}
-
-
-@media screen and (max-width: 1450px) {
-    $width-left-menu-minimized: 350px;
-    $width-app-filters-minimized: 430px;
-
-    .row {
-        width: 45% !important;
-        left: calc(#{$width-app-filters-minimized} + #{$width-left-menu-minimized}) !important;
-        overflow: hidden;
-    }
-
-
-    app-filters {
-        width: $width-left-menu-minimized !important;
-
-        &.close {
-            width: $width-app-filters;
-        }
-    }
-
-    app-item-list {
-        width: 48% !important;
-        margin-left: calc(#{$width-left-menu-minimized} + 4%) !important;
-
-        &.close {
-            margin-left: 10px !important;
-            width: 97% !important;
-        }
-    }
-
-
-    app-item-level {
-        margin-right: 0 !important;
-    }
-
-}
-
-@media screen and (min-width: 1000px) and (max-width: 1450px) {
-
-    app-item-list {
-        margin-top: 150px !important;
-    }
-
-}
-
-@media screen and (max-width: 1000px) {
-    app-item-list {
-        margin-top: 10px !important;
-    }
-
-    .content {
-        grid-template-columns: repeat(2, 1fr);
+    :host .main {
+        margin-left: 0;
+        padding: 0;
     }
 }

@@ -1,0 +1,15 @@
+@if (chips().length) {
+<div class="active-filters">
+    <span class="label">{{ "filters.actifs" | translate }}</span>
+    @for (chip of chips(); track chip.id) {
+    <button type="button" class="chip" (click)="chip.remove()">
+        @if (chip.prefix) { <span class="prefix">{{ chip.prefix | translate }}</span> }
+        {{ chip.id === 'level' ? chip.label : (chip.label | translate) }}
+        <mat-icon fontIcon="close" aria-hidden="true"></mat-icon>
+        <span class="sr-only">{{ "filters.retirer" | translate }}</span>
+    </button>
+    }
+    <button type="button" class="clear" (click)="resetFormService.resetAllForms()">{{ "filters.tout-effacer" | translate
+        }}</button>
+</div>
+}

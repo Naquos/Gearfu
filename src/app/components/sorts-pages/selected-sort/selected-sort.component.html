@@ -12,53 +12,58 @@
         } @else {
         <div class="sort-title">
             <img [src]="imageService.getSortUrl(sortSelected()!.gfxId)" alt="">
-            <span> {{getSortName(sortSelected()!) }}</span>
-            <span class="cout-sort">
-                @if (sortSelected()!.PorteeMax) {
-                <div>
-                    {{ sortSelected()!.PorteeMin }} - {{ sortPOMaximale() }} <img
-                        [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="">
-                </div>
-                }
-                @if (sortSelected()?.NotLDV) {
-                <img src="aptitudes/ligne_not_vu.png" class="ligne-not-vu" alt="">
-                }
-                @if (sortSelected()!.Ligne) {
-                <img src="aptitudes/picto_spell_line.png" class="ligne" alt="">
-                }
-                @if(sortSelected()!.PA) {
-                <div>
-                    {{sortSelected()!.PA}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PA)" alt="">
-                </div>
-                }
-                @if(sortSelected()!.PM) {
-                <div>
-                    {{sortSelected()!.PM}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="">
-                </div>
-                }
-                @if (sortSelected()!.PW) {
-                <div>
-                    {{sortSelected()!.PW}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PW)" alt="">
-                </div>
-                }
-            </span>
+            <div class="sort-info">
+                <span class="sort-name">{{getSortName(sortSelected()!) }}</span>
+                <span class="cout-sort">
+                    @if (sortSelected()!.PorteeMax) {
+                    <div class="badge">
+                        {{ sortSelected()!.PorteeMin }} - {{ sortPOMaximale() }} <img
+                            [src]="imageService.getActionIdUrl(IdActionsEnum.PORTEE)" alt="">
+                    </div>
+                    }
+                    @if (sortSelected()?.NotLDV) {
+                    <div class="badge"><img src="aptitudes/ligne_not_vu.png" class="ligne-not-vu" alt=""></div>
+                    }
+                    @if (sortSelected()!.Ligne) {
+                    <div class="badge"><img src="aptitudes/picto_spell_line.png" class="ligne" alt=""></div>
+                    }
+                    @if(sortSelected()!.PA) {
+                    <div class="badge">
+                        {{sortSelected()!.PA}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PA)" alt="">
+                    </div>
+                    }
+                    @if(sortSelected()!.PM) {
+                    <div class="badge">
+                        {{sortSelected()!.PM}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PM)" alt="">
+                    </div>
+                    }
+                    @if (sortSelected()!.PW) {
+                    <div class="badge">
+                        {{sortSelected()!.PW}} <img [src]="imageService.getActionIdUrl(IdActionsEnum.PW)" alt="">
+                    </div>
+                    }
+                </span>
+            </div>
         </div>
         <div class="description">{{getSortDescription(sortSelected()!) }}</div>
 
         <div class="effet-sort">
-            <div class="button-group">
-                <button appRipple (appActivate)="setEffectDisplay('NORMAL')">{{'sorts.effet-normal' |
-                    translate}}</button>
-                @if(sortSelected()!.effect_critical.fr) {
-                <button appRipple (appActivate)="setEffectDisplay('CRITIQUE')">{{'sorts.effet-critique' |
-                    translate}}</button>
-                }
-            </div>
-            <div class="effet">
-                @for(effectLine of getEffect(); track $index) {
-                <span [innerHTML]="effectLine"></span>
-                }
-            </div>
+            <mat-tab-group>
+                <mat-tab label="{{'sorts.effet-normal' | translate}}">
+                    <div class="effet">
+                        @for(effectLine of getEffect('NORMAL'); track $index) {
+                        <span [innerHTML]="effectLine"></span>
+                        }
+                    </div>
+                </mat-tab>
+                <mat-tab label="{{'sorts.effet-critique' | translate}}">
+                    <div class="effet">
+                        @for(effectLine of getEffect('CRITIQUE'); track $index) {
+                        <span [innerHTML]="effectLine"></span>
+                        }
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
             <div class="level-select or">
                 <mat-slider min="2" max="246" step="1" showTickMarks discrete [displayWith]="displayLevelSelector()">
                     <input matSliderThumb [(ngModel)]="spellLevel" (ngModelChange)="updateSpellLevel($event)">

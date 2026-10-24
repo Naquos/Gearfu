@@ -1,28 +1,28 @@
 :root {
     --panel-background: var(--gradient-panel);
     --panel-border-color: var(--color-surface-soft);
-    --panel-radius: 15px;
-    --panel-shadow: 0px 8px 8px var(--shadow-panel-color);
+    --panel-radius: 18px;
+    --panel-shadow: 0 1px 0 var(--shadow-soft-highlight-color) inset, 0 6px 18px var(--shadow-panel-color);
     --panel-text-color: var(--color-text-inverse);
 
     --button-border-color: var(--color-surface-soft);
-    --button-shadow: 2px 3px 2px var(--shadow-soft-highlight-color);
-    --button-shadow-active: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-deep);
-    --button-background: var(--color-white);
-    --button-background-active: var(--color-surface-deep);
+    --button-shadow: none;
+    --button-shadow-active: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+    --button-background: var(--color-surface-mid);
+    --button-background-active: var(--color-accent);
     --button-color: var(--color-text-primary);
-    --button-color-active: var(--color-text-inverse);
+    --button-color-active: var(--color-text-on-accent);
     --button-font-weight: 600;
     --button-font-size: 17px;
     --button-height: 34px;
     --button-width: 41px;
-    --button-radius: 25%;
+    --button-radius: 12px;
     --button-margin: 5px;
 
-    --icon-button-background: var(--color-surface-muted);
-    --icon-button-background-active: var(--color-surface-deep);
-    --icon-button-color: var(--color-text-dark);
-    --icon-button-color-active: var(--color-surface-muted);
+    --icon-button-background: var(--color-surface-mid);
+    --icon-button-background-active: var(--color-accent);
+    --icon-button-color: var(--color-text-primary);
+    --icon-button-color-active: var(--color-text-on-accent);
 
     --font-weight-title: 500;
     --font-weight-text: 300;
@@ -70,25 +70,63 @@ button:active {
     background-color: var(--button-background-active);
 }
 
+.page-title {
+    margin: 24px 20px 8px;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--color-text-inverse);
+}
+
+.page-section {
+    div.card {
+        width: auto;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 16px 20px;
+        margin: 0 0 24px;
+    }
+
+    div.card>.header {
+        justify-content: flex-start !important;
+        text-align: left;
+        padding: 0 0 8px !important;
+        border-bottom: 0;
+        margin-bottom: 8px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+    }
+}
+
 .code-aptitudes {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    padding: 5px 0;
+    justify-content: flex-start;
+    gap: 12px;
+    margin: 0 20px 24px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    width: auto;
+    max-width: 640px;
     color: var(--panel-text-color);
-    width: 90%;
-    margin-left: 5%;
     background: var(--panel-background);
     border-radius: var(--panel-radius);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
 
     input {
-        margin-left: 10px;
-        width: 50%;
-        border: 2px solid var(--panel-border-color);
-        border-radius: 5px;
-        padding: 5px;
-        font-size: 16px;
+        flex: 1;
+        margin-left: 0;
+        width: auto;
+        border: 0;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 14px;
+        background: var(--color-surface-deep);
+        color: var(--color-text-inverse);
     }
 
     mat-icon {
@@ -111,6 +149,31 @@ button:active {
         transform: translateY(2px);
         box-shadow: 2px 3px 2px var(--shadow-soft-highlight-color), inset 3px 2px 5px var(--color-surface-muted);
     }
+}
+
+mat-label {
+    font-size: 14px;
+}
+
+
+mat-form-field {
+    min-height: 56px;
+
+    .mdc-text-field--filled {
+        border-radius: 999px !important;
+        background-color: var(--color-surface-mid) !important;
+        border: 1px solid var(--color-surface-soft);
+        padding: 0 20px;
+    }
+
+    .mdc-line-ripple {
+        display: none;
+    }
+}
+
+.mat-mdc-form-field.mat-form-field-animations-enabled .mdc-text-field__input {
+    background-color: transparent !important;
+    border: none !important;
 }
 
 .form-action-icon {

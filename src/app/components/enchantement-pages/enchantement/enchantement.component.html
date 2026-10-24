@@ -1,7 +1,8 @@
-<div class="container container-row">
+<h1 class="page-title">{{'app.enchantement' | translate}}</h1>
+<div class="container container-row page-section">
     <app-enchantement-sublimations-community></app-enchantement-sublimations-community>
 </div>
-<div class="container"
+<div class="container page-section"
     [style.cursor]="stateService.effectToApply() ? 'url(cursor/' + imageService.getChasseColorUrl(stateService.effectToApply()!.chasse) + ') 16 16, auto' : 'default'">
     @if (chasses() && enchantement()) {
     <div class="column">

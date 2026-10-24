@@ -60,7 +60,10 @@
                 <img [src]="imageService.getItemUrl(enchantement()!.epique!.idImage)" alt="">
                 <span>{{ nameSublimationEpicRelic(enchantement()!.epique) }}</span>
                 } @else {
-                <img src="chasses/shardEpique.png" alt="">
+                <div class="empty-sublimation-epique">
+                    <label>Epique</label>
+                    <label>Aucune Sublimation</label>
+                </div>
                 }
             </div>
             <div class="relique" (appActivate)="removeSublimationRelic($event)"
@@ -71,7 +74,10 @@
                 <img [src]="imageService.getItemUrl(enchantement()!.relique!.idImage)" alt="">
                 <span>{{ nameSublimationEpicRelic(enchantement()!.relique) }}</span>
                 } @else {
-                <img src="chasses/shardRelique.png" alt="">
+                <div class="empty-sublimation-relic">
+                    <label>Relique</label>
+                    <label>Aucune Sublimation</label>
+                </div>
                 }
             </div>
         </div>

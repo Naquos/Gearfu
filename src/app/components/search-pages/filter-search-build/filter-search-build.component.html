@@ -14,19 +14,12 @@
 </mat-form-field>
 <h2>{{ "filter-search-build.level" | translate }}</h2>
 <div>
-    <mat-form-field>
-        <mat-label>{{ "filter-search-build.level-min" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.levelMin)">
-        <input type="number" inputmode="numeric" matInput
-            [formField]="$any(filterSearchBuildFormService.form.levelMin)">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>{{ "filter-search-build.level-max" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.levelMax)">
-        <input type="number" inputmode="numeric" matInput
-            [formField]="$any(filterSearchBuildFormService.form.levelMax)">
-    </mat-form-field>
+    <app-input-number [label]="'filter-search-build.level-min'"
+        [form]="$any(filterSearchBuildFormService.form.levelMin)">
+    </app-input-number>
+    <app-input-number [label]="'filter-search-build.level-max'"
+        [form]="$any(filterSearchBuildFormService.form.levelMax)">
+    </app-input-number>
 </div>
 
 <h2>{{ "filter-search-build.order-by" | translate }}</h2>
@@ -49,41 +42,18 @@
 
 <h2>{{ "filter-search-build.majeurs" | translate }}</h2>
 <div>
-    <mat-form-field>
-        <mat-label>{{ "filter-search-build.PA" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PA)">
-        <input type="number" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PA)">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>{{ "filter-search-build.PM" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PM)">
-        <input type="number" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PM)">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>{{ "filter-search-build.PW" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PW)">
-        <input type="number" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PW)">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>{{ "filter-search-build.PO" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PO)">
-        <input type="number" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.PO)">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>{{ "filter-search-build.CC" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.CC)">
-        <input type="number" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.CC)">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>{{ "filter-search-build.parade" | translate}}</mat-label>
-        <input type="text" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.parade)">
-        <input type="number" inputmode="numeric" matInput [formField]="$any(filterSearchBuildFormService.form.parade)">
-    </mat-form-field>
+    <app-input-number [label]="'filter-search-build.PA'" [form]="$any(filterSearchBuildFormService.form.PA)">
+    </app-input-number>
+    <app-input-number [label]="'filter-search-build.PM'" [form]="$any(filterSearchBuildFormService.form.PM)">
+    </app-input-number>
+    <app-input-number [label]="'filter-search-build.PW'" [form]="$any(filterSearchBuildFormService.form.PW)">
+    </app-input-number>
+    <app-input-number [label]="'filter-search-build.PO'" [form]="$any(filterSearchBuildFormService.form.PO)">
+    </app-input-number>
+    <app-input-number [label]="'filter-search-build.CC'" [form]="$any(filterSearchBuildFormService.form.CC)">
+    </app-input-number>
+    <app-input-number [label]="'filter-search-build.parade'" [form]="$any(filterSearchBuildFormService.form.parade)">
+    </app-input-number>
 </div>
 <h2>{{ "filter-search-build.sublimations" | translate }}</h2>
 <app-search-list-sublimation></app-search-list-sublimation>

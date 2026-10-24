@@ -1,4 +1,4 @@
-import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
+import { computed, Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { LazyImageDirective } from '../../../directives/lazy-image.directive';
 import { ActivateDirective } from '../../../directives/activate.directive';
@@ -31,6 +31,8 @@ export class EquippedSortsComponent {
     protected readonly level = toSignal(this.levelFormService.level$, {
         initialValue: 246
     });
+
+    protected readonly selectedId = computed(() => this.sortSelectionService.sortSelected()?.gfxId);
 
     protected readonly sortNeutres = toSignal(this.sortFormService.sortNeutres$, {
         initialValue: []

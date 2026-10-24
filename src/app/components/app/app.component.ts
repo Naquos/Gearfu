@@ -35,6 +35,8 @@ import { CurrentBuildNameComponent } from '../current-build-name/current-build-n
 import { MainNavComponent } from '../main-nav/main-nav.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MinimifyDisplayFormService } from '../../services/form-signal/minimifyDisplayFormService';
+import { DarkModeFormService } from '../../services/form-signal/darkModeFormService';
+import { ActivateDirective } from '../../directives/activate.directive';
 
 type column = 'filter' | 'aptitudes' | 'search';
 
@@ -54,7 +56,8 @@ type column = 'filter' | 'aptitudes' | 'search';
     MatTooltip,
     CurrentBuildNameComponent,
     MainNavComponent,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    ActivateDirective
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss', './birthday.scss'],
@@ -81,6 +84,7 @@ export class AppComponent implements OnInit {
   private readonly elementSelectorService = inject(ElementSelectorService);
   private readonly zenithService = inject(ZenithService);
   private readonly saveBuildService = inject(SaveBuildService);
+  private readonly darkModeFormService = inject(DarkModeFormService);
 
   protected displayFilter = false;
   protected filterOrBuild: column = "filter";
@@ -211,4 +215,9 @@ export class AppComponent implements OnInit {
     this.localStorageService.setItem<string>(KeyEnum.KEY_LANG, value);
   }
 
+
+  protected toggleDarkMode(event: Event): void {
+    event.stopPropagation();
+    this.darkModeFormService.setValue(!this.darkModeFormService.currentValue());
+  }
 }
