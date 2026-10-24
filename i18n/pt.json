@@ -65,7 +65,9 @@
     },
     "build": {
         "zenith": "Ir para Zénith",
-        "dupliquer": "Duplicar build"
+        "dupliquer": "Duplicar build",
+        "charger": "Carregar",
+        "supprimer": "Excluir"
     },
     "builds-list": {
         "label": "Sua lista de builds",
@@ -106,7 +108,13 @@
     },
     "filters": {
         "favoris": "Mostrar apenas os itens favoritos",
-        "reset": "Redefinir filtros"
+        "reset": "Redefinir filtros",
+        "toggle": "Filtros",
+        "reset-short": "Redefinir",
+        "actifs": "Filtros ativos:",
+        "tout-effacer": "Limpar tudo",
+        "retirer": "Remover este filtro",
+        "options": "Opções"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Maestria",
@@ -159,6 +167,7 @@
         "maitrises": "Maestria",
         "resistances": "Resistências",
         "poids": "Peso",
+        "niveau-court": "Nv.",
         "poids-infobulle": "Peso = Maestria + {{ ratio }}*Resistências",
         "copier": "Copiar nome do item",
         "craftable": "Pode ser craftado",
