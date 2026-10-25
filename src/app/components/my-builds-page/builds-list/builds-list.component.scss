@@ -3,6 +3,66 @@ app-build {
     margin-bottom: 0;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 24px;
+    gap: 10px;
+
+    mat-form-field {
+        width: 100%;
+        height: 58px;
+
+        margin-bottom: 20px;
+
+        ::ng-deep {
+            .mat-mdc-form-field-subscript-wrapper {
+                display: none;
+            }
+        }
+    }
+
+    .close-button {
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
+.classes-selector {
+    background-color: var(--color-surface-mid);
+    padding: 12px;
+    border-radius: 16px;
+    display: grid;
+    grid-template-columns: repeat(18, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+
+    img {
+        width: 100%;
+        max-width: 44px;
+        aspect-ratio: 1;
+        box-sizing: border-box;
+        align-self: center;
+        justify-self: center;
+        cursor: pointer;
+        border-radius: 10px;
+        border: 2px solid transparent;
+    }
+
+    .img-selected {
+        border: 3px solid var(--color-accent);
+        box-shadow: 0 0 0 2px var(--color-accent-soft);
+    }
+
+    img:hover {
+        transform: scale(1.08);
+        transition: transform 0.2s;
+    }
+}
+
+
 .card-title {
     padding: 0 !important;
     width: fit-content;
@@ -39,7 +99,7 @@ h3 {
     margin: 0 20px 24px;
 }
 
-:host > .card {
+:host>.card {
     margin: 0 20px 24px;
 }
 

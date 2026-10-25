@@ -40,6 +40,14 @@ mat-tab-group {
     border-right: 1px solid var(--color-surface-soft);
     overflow-x: hidden;
     overflow-y: auto;
+
+    #new-build {
+        padding-top: 10px;
+        width: 80%;
+        display: flex;
+        border-top: 1px solid var(--color-surface-soft);
+        justify-content: center;
+    }
 }
 
 .rail-logo {

@@ -10,6 +10,20 @@
         <span>{{ item.label | translate }}</span>
     </button>
     }
+
+    <div id="new-build">
+        <button type="button" class="rail-item" [class.active]="true" (click)="redirectIndex(navNewBuild.index)">
+            <mat-icon [fontIcon]="navNewBuild.icon" aria-hidden="true"></mat-icon>
+            <span>{{ navNewBuild.label | translate }}</span>
+        </button>
+    </div>
+    @for (item of navItemsBuilds; track item.index) {
+    <button type="button" class="rail-item" [class.active]="activePage() === item.index"
+        [attr.aria-current]="activePage() === item.index ? 'page' : null" (click)="redirectIndex(item.index)">
+        <mat-icon [fontIcon]="item.icon" aria-hidden="true"></mat-icon>
+        <span>{{ item.label | translate }}</span>
+    </button>
+    }
 </nav>
 } @else {
 <mat-tab-group class="main-nav mobile-friendly-tabs" [selectedIndex]="activePage()"

@@ -31,11 +31,19 @@ export class MainNavComponent {
         { index: 2, icon: 'auto_fix_high', label: 'app.sorts' },
         { index: 3, icon: 'diamond', label: 'app.enchantement' },
         { index: 4, icon: 'assignment', label: 'app.recapitulatif' },
+    ];
+
+    protected readonly navNewBuild = {
+        index: 6,
+        icon: 'add',
+        label: 'item-choose.nouveau-build'
+    };
+
+    protected readonly navItemsBuilds = [
         { index: 5, icon: 'folder_special', label: 'app.build' },
-        { index: 6, icon: 'add', label: 'item-choose.nouveau-build' },
         { index: 7, icon: 'travel_explore', label: 'app.search-builds' },
         { index: 8, icon: 'open_in_new', label: 'item-choose.zenith-export' }
-    ];
+    ]
 
     protected readonly activePage = toSignal(
         this.router.events.pipe(

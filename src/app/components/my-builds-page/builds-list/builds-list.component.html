@@ -1,6 +1,25 @@
 <div class="card card-title">
     <h3>{{ "builds-list.label" | translate }}</h3>
 </div>
+<div class="row">
+    <mat-form-field>
+        <mat-label>{{ 'builds-list.search-build-name' | translate }}</mat-label>
+        <input matInput [formField]="myBuildsFormService.form.name">
+        <button class="close-button" matSuffix matIconButton aria-label="Clear"
+            (click)="myBuildsFormService.setNameDefault()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <app-input-number [form]="myBuildsFormService.form.levelMin" [label]="'builds-list.level-min'"></app-input-number>
+    <app-input-number [form]="myBuildsFormService.form.levelMax" [label]="'builds-list.level-max'"></app-input-number>
+</div>
+<div class="row classes-selector">
+    @for (id of idClasses; track id; let first = $first) {
+    <img [src]="`classes/icon/${id}.jpg`" [class.img-selected]="myBuildsFormService.form.class().value() === id" alt=""
+        (appActivate)="myBuildsFormService.changeClasses(id)" [tabindex]="0">
+    }
+</div>
 @if (buildList(); as buildList) {
 @if (buildList.length === 0) {
 <div class="card">
