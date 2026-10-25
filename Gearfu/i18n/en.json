@@ -65,11 +65,16 @@
     },
     "build": {
         "zenith": "Go to Zenith",
-        "dupliquer": "Duplicate build"
+        "dupliquer": "Duplicate build",
+        "charger": "Load",
+        "supprimer": "Delete"
     },
     "builds-list": {
         "label": "Your builds list",
-        "no-build": "You haven't saved any builds yet."
+        "no-build": "You haven't saved any builds yet.",
+        "search-build-name": "Build name",
+        "level-min": "Min level",
+        "level-max": "Max level"
     },
     "description-sublimation": {
         "level-max": "Max lvl"
@@ -106,7 +111,13 @@
     },
     "filters": {
         "favoris": "Show only favorite items",
-        "reset": "Reset filters"
+        "reset": "Reset filters",
+        "toggle": "Filters",
+        "reset-short": "Reset",
+        "actifs": "Active filters:",
+        "tout-effacer": "Clear all",
+        "retirer": "Remove this filter",
+        "options": "Options"
     },
     "filter-maitrises": {
         "maitrises-elementaires": "Mastery",
@@ -159,6 +170,7 @@
         "maitrises": "Mastery",
         "resistances": "Resistances",
         "poids": "Weight",
+        "niveau-court": "Lvl",
         "poids-infobulle": "Weight = Mastery + {{ ratio }}*Resistances",
         "copier": "Copy item name",
         "craftable": "Can be crafted",

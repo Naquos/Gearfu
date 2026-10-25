@@ -71,7 +71,10 @@
     },
     "builds-list": {
         "label": "Sua lista de builds",
-        "no-build": "Você ainda não salvou nenhum build."
+        "no-build": "Você ainda não salvou nenhum build.",
+        "search-build-name": "Nome do build",
+        "level-min": "Nível min",
+        "level-max": "Nível max"
     },
     "description-sublimation": {
         "level-max": "Nível máximo"
