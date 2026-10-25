@@ -31,7 +31,7 @@
 } @else {
 <div class="build-list">
     @for (build of buildList; track build.createdAt) {
-    <app-build [build]="build"></app-build>
+    <app-build [build]="build" [statistics]="build.statistics ?? null"></app-build>
     }
 </div>
 }

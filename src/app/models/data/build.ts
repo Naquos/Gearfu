@@ -1,4 +1,5 @@
 import { ClassIdEnum } from "../enum/classIdEnum";
+import { Statistics } from "./statistics";
 
 export interface Build {
     id?: string;
@@ -19,4 +20,5 @@ export interface Build {
     token?: string;
     hide?: boolean;
     historics?: string[];
+    statistics?: Statistics;
 }

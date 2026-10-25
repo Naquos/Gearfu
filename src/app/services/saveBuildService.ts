@@ -225,13 +225,13 @@ export class SaveBuildService {
      * @param build 
      */
     private updateOrCreateStatistics(build: Build): Observable<void> {
-        const statsistics: Statistics = {
+        const statistics: Statistics = {
             ...this.recapStatsService.getCurrentStatistics(),
             id: this.statisticsId.getValue() || undefined,
             buildId: build.id,
             token: this.localStorageService.getItem<string>(KeyEnum.KEY_TOKEN) || ''
         } as Statistics;
-        return this.supabaseService.updateOrCreateStatistics(statsistics);
+        return this.supabaseService.updateOrCreateStatistics(statistics);
     }
 
     /**
@@ -265,7 +265,8 @@ export class SaveBuildService {
             createdAt: Date.now(),
             token: token || undefined,
             hide: !this.visibilityBuildFormService.visibilityBuild(),
-            historics: this.itemHistoricsService.getValue()
+            historics: this.itemHistoricsService.getValue(),
+            statistics: this.recapStatsService.getCurrentStatistics() ?? undefined
         };
         this.currentNameBuild.next(build.nameBuild!);
         if (!build.id || build.id === NO_BUILD) {

@@ -1,5 +1,5 @@
 :host {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     background: var(--color-surface-mid);
     border: 1px solid var(--color-surface-soft);
@@ -149,12 +149,29 @@
         border-radius: 3px;
         background: var(--color-text-muted);
 
-        &.pa { background: #3d7be0; }
-        &.pm { background: #4cb050; }
-        &.pw { background: #2fc4b2; }
-        &.po { background: #8a8f98; }
-        &.cc { background: #e8772e; }
-        &.parade { background: #b061d6; }
+        &.pa {
+            background: #3d7be0;
+        }
+
+        &.pm {
+            background: #4cb050;
+        }
+
+        &.pw {
+            background: #2fc4b2;
+        }
+
+        &.po {
+            background: #8a8f98;
+        }
+
+        &.cc {
+            background: #e8772e;
+        }
+
+        &.parade {
+            background: #b061d6;
+        }
     }
 }
 
