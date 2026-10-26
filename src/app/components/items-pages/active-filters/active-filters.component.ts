@@ -6,6 +6,7 @@ import { MaitrisesFormService } from '../../../services/form-signal/maitrisesFor
 import { RareteItemFormServices } from '../../../services/form-signal/rareteItemFormService';
 import { ResistancesFormService } from '../../../services/form-signal/resistancesFormService';
 import { ResetFormService } from '../../../services/resetFormService';
+import { MajorPresentFormService } from '../../../services/form-signal/majorPresentFormService';
 
 interface BooleanField {
   (): { value: WritableSignal<boolean> };
@@ -21,6 +22,15 @@ interface ActiveChip {
 const MAITRISE_KEYS = ['feu', 'eau', 'terre', 'air', 'melee', 'distance', 'critique', 'dos', 'soin', 'berzerk'];
 const RESISTANCE_KEYS = ['feu', 'eau', 'terre', 'air'];
 const RARITY_KEYS = ['normal', 'rare', 'mythique', 'legendaire', 'souvenir', 'epique', 'relique'];
+const MAJOR_PRESENT_KEYS = ['PA', 'PM', 'PW', 'PO',
+  'ARMURE_DONNEE', 'ARMURE_RECUE', 'CRITIQUE', 'PARADE',
+  'RESISTANCE_DOS', 'RESISTANCE_CRITIQUE', 'TACLE', 'ESQUIVE',
+  'PERTE_PA', 'PERTE_PM', 'PERTE_PW', 'PERTE_PO',
+  'PERTE_ARMURE_DONNEE', 'PERTE_ARMURE_RECUE', 'PERTE_CRITIQUE', 'PERTE_PARADE',
+  'PERTE_RESISTANCE_DOS', 'PERTE_RESISTANCE_CRITIQUE',
+  'PERTE_MAITRISES_MELEE', 'PERTE_MAITRISES_DISTANCE', 'PERTE_MAITRISES_CRITIQUE', 'PERTE_MAITRISES_DOS', 'PERTE_MAITRISES_SOIN', 'PERTE_MAITRISES_BERZERK',
+  'PERTE_TACLE', 'PERTE_ESQUIVE'
+];
 
 @Component({
   selector: 'app-active-filters',
@@ -34,6 +44,7 @@ export class ActiveFiltersComponent {
   private readonly maitrisesService = inject(MaitrisesFormService);
   private readonly resistancesService = inject(ResistancesFormService);
   private readonly levelService = inject(ItemLevelFormService);
+  private readonly majorPresentFormService = inject(MajorPresentFormService);
   protected readonly resetFormService = inject(ResetFormService);
 
   protected readonly chips = computed<ActiveChip[]>(() => {
@@ -41,6 +52,7 @@ export class ActiveFiltersComponent {
     this.collect(result, 'rarete-item.', RARITY_KEYS, this.rareteService.form as unknown as Record<string, BooleanField>, 'rarity');
     this.collect(result, 'filter-maitrises.', MAITRISE_KEYS, this.maitrisesService.form as unknown as Record<string, BooleanField>, 'maitrise', 'filter-maitrises.maitrises-elementaires');
     this.collect(result, 'filter-maitrises.', RESISTANCE_KEYS, this.resistancesService.form as unknown as Record<string, BooleanField>, 'resistance', 'filter-resistances.resistances-elementaires');
+    this.collect(result, 'major-present.', MAJOR_PRESENT_KEYS, this.majorPresentFormService.form as unknown as Record<string, BooleanField>, 'major-present');
 
     const min = Number(this.levelService.form.levelMin().value());
     const max = Number(this.levelService.form.levelMax().value());
