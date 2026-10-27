@@ -122,7 +122,7 @@ export class SublimationEffectsService {
       } else if (id === IdSublimationEnum.INFLUENCE_VITALE) {
         applyEffectFn({ id: IdActionsEnum.COUP_CRITIQUE, value: 4 * levelSubli, params: [] });
       } else if (id === IdSublimationEnum.INTERCEPTION) {
-        applyEffectFn({ id: IdActionsEnum.TACLE, value: Math.floor(0.5 * level), params: [] });
+        applyEffectFn({ id: IdActionsEnum.TACLE, value: Math.floor(0.5 * level * levelSubli), params: [] });
       } else if (id === IdSublimationEnum.NEUTRALITE && allMaitrisesSecondairesNullFn()) {
         applyEffectFn({ id: IdActionsEnum.DI, value: 8 * levelSubli, params: [] });
       } else if (id === IdSublimationEnum.PARADE_BERSERK) {
