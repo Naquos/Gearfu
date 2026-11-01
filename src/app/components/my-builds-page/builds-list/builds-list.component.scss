@@ -108,3 +108,36 @@ h3 {
         grid-template-columns: repeat(1, 1fr) !important;
     }
 }
+
+@media screen and (max-width: 1000px) {
+    .row {
+        flex-wrap: wrap;
+        margin: 0 12px;
+
+        mat-form-field {
+            flex: 1 1 100%;
+            margin-bottom: 0;
+        }
+
+        app-input-number {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+    }
+
+    .classes-selector {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+        margin: 12px 12px 20px;
+
+        img {
+            max-width: none;
+        }
+    }
+
+    .build-list,
+    :host>.card {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+}

@@ -1,6 +1,10 @@
 app-item-choose {
     width: 96%;
     margin: 0 auto 10px auto;
+
+    @media screen and (max-width: 1000px) {
+        display: none !important;
+    }
 }
 
 .container {

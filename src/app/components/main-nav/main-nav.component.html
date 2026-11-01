@@ -3,33 +3,38 @@
 @if (variant() === 'rail') {
 <nav class="rail" aria-label="Navigation principale">
     <img class="rail-logo" src="gearfu.png" alt="Gearfu">
-    @for (item of navItems; track item.index) {
-    <button type="button" class="rail-item" [class.active]="activePage() === item.index"
-        [attr.aria-current]="activePage() === item.index ? 'page' : null" (click)="redirectIndex(item.index)">
-        <mat-icon [fontIcon]="item.icon" aria-hidden="true"></mat-icon>
-        <span>{{ item.label | translate }}</span>
-    </button>
-    }
-
-    <div id="new-build">
-        <button type="button" class="rail-item" [class.active]="true" (click)="redirectIndex(navNewBuild.index)">
-            <mat-icon [fontIcon]="navNewBuild.icon" aria-hidden="true"></mat-icon>
-            <span>{{ navNewBuild.label | translate }}</span>
+    <div class="scroll">
+        @for (item of navItems; track item.index) {
+        <button type="button" class="rail-item" [class.active]="activePage() === item.index"
+            [attr.aria-current]="activePage() === item.index ? 'page' : null" (click)="redirectIndex(item.index)">
+            <mat-icon [fontIcon]="item.icon" aria-hidden="true"></mat-icon>
+            <span>{{ item.label | translate }}</span>
         </button>
+        }
+
+        <div id="new-build">
+            <button type="button" class="rail-item" [class.active]="true" (click)="redirectIndex(navNewBuild.index)">
+                <mat-icon [fontIcon]="navNewBuild.icon" aria-hidden="true"></mat-icon>
+                <span>{{ navNewBuild.label | translate }}</span>
+            </button>
+        </div>
+        @for (item of navItemsBuilds; track item.index) {
+        <button type="button" class="rail-item" [class.active]="activePage() === item.index"
+            [attr.aria-current]="activePage() === item.index ? 'page' : null" (click)="redirectIndex(item.index)">
+            <mat-icon [fontIcon]="item.icon" aria-hidden="true"></mat-icon>
+            <span>{{ item.label | translate }}</span>
+        </button>
+        }
     </div>
-    @for (item of navItemsBuilds; track item.index) {
-    <button type="button" class="rail-item" [class.active]="activePage() === item.index"
+</nav>
+} @else {
+<nav class="nav-grid" aria-label="Navigation principale">
+    @for (item of mobileNavItems; track item.index) {
+    <button type="button" class="nav-grid-item" [class.active]="activePage() === item.index"
         [attr.aria-current]="activePage() === item.index ? 'page' : null" (click)="redirectIndex(item.index)">
         <mat-icon [fontIcon]="item.icon" aria-hidden="true"></mat-icon>
         <span>{{ item.label | translate }}</span>
     </button>
     }
 </nav>
-} @else {
-<mat-tab-group class="main-nav mobile-friendly-tabs" [selectedIndex]="activePage()"
-    (selectedIndexChange)="redirectIndex($event)">
-    @for (item of navItems; track item.index) {
-    <mat-tab [label]="item.label | translate"></mat-tab>
-    }
-</mat-tab-group>
 }

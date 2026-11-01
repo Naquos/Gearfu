@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, take } from 'rxjs';
 import { getBuildIdFromUrl } from '../../models/utils/utils';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { SaveBuildService } from '../../services/saveBuildService';
 import { ZenithService } from '../../services/zenith/zenithService';
@@ -13,7 +12,7 @@ import { ZenithService } from '../../services/zenith/zenithService';
 @Component({
     selector: 'app-main-nav',
     standalone: true,
-    imports: [TranslateModule, MatTabsModule, MatIconModule],
+    imports: [TranslateModule, MatIconModule],
     templateUrl: './main-nav.component.html',
     styleUrl: './main-nav.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -44,6 +43,12 @@ export class MainNavComponent {
         { index: 7, icon: 'travel_explore', label: 'app.search-builds' },
         { index: 8, icon: 'open_in_new', label: 'item-choose.zenith-export' }
     ]
+
+    protected readonly mobileNavItems = [
+        ...this.navItems,
+        this.navNewBuild,
+        ...this.navItemsBuilds.filter(item => item.index !== 8),
+    ];
 
     protected readonly activePage = toSignal(
         this.router.events.pipe(

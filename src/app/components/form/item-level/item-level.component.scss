@@ -49,6 +49,17 @@ div {
 }
 
 
+@media screen and (max-width: 1000px) {
+    div:not(.no-title) {
+        gap: 8px;
+
+        app-input-number {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+    }
+}
+
 @media screen and (min-width: 700px) {
     input[type=number] {
         display: none;

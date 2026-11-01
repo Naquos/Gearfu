@@ -26,8 +26,8 @@ CLASS_PATHS = {
     "pt": "/pt/mmorpg/enciclopedia/classes/"
 }
 # classes list (use the list you want)
-# CLASS_IDS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,19]
-CLASS_IDS = [6, 18, 3, 19, 8, 2, 4, 16, 5,14]
+CLASS_IDS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,19]
+# CLASS_IDS = [6, 18, 3, 19, 8, 2, 4, 16, 5,14]
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -58,13 +58,18 @@ def ensure_dir(path):
 
 def save_bytes(path, data):
     ensure_dir(os.path.dirname(path))
-    with open(path, "wb") as f:
+    temp_path = f"{path}.tmp"
+    with open(temp_path, "wb") as f:
         f.write(data)
+    os.replace(temp_path, path)
 
 def save_text(path, text):
     ensure_dir(os.path.dirname(path))
     with open(path, "w", encoding="utf-8", errors="replace") as f:
         f.write(text)
+
+def is_downloaded(path):
+    return os.path.isfile(path) and os.path.getsize(path) > 0
 
 def random_delay():
     s = random.randint(DELAY_MIN, DELAY_MAX)
@@ -160,38 +165,40 @@ def main():
         ensure_dir(spells_dir)
 
         for class_id in CLASS_IDS:
-            class_url = f"{base_class_url}{class_id}"
-            print(f"[Class] Downloading: {class_url}")
-            random_delay()
-            resp = fetch_with_retries(class_url)
-            if resp is None:
-                print(f"[ERROR] Impossible de télécharger {class_url} (request failed)")
-                continue
-
-            # log response
-            log_response_info(resp)
-
-            # check for suspicious content (Cloudflare/challenge/consent)
-            snippet = resp.text[:1000].lower()
-            if "captcha" in snippet or "cloudflare" in snippet or "you are being redirected" in snippet or "consent" in snippet:
-                print("  -> WARNING: page contains possible anti-bot / captcha / consent markup. Saving for inspection.")
-                err_path = os.path.join(ERROR_DIR, f"class_{lang}_{class_id}_warning.html")
-                save_text(err_path, resp.text)
-                # still attempt to save the page, but warn user
-            # save class page if HTML
-            if is_html_response(resp):
-                class_path_file = os.path.join(classes_dir, f"{class_id}.html")
-                save_bytes(class_path_file, resp.content)
-                print(f"  -> Saved class page: {class_path_file} ({len(resp.content)} bytes)")
+            class_path_file = os.path.join(classes_dir, f"{class_id}.html")
+            if is_downloaded(class_path_file):
+                print(f"[Class] Already downloaded, reusing: {class_path_file}")
+                with open(class_path_file, "rb") as f:
+                    class_html = f.read()
             else:
-                print(f"  -> Unexpected content-type for class page: {resp.headers.get('Content-Type')}. Saved to errors.")
-                err_path = os.path.join(ERROR_DIR, f"class_{lang}_{class_id}_badcontent.bin")
-                save_bytes(err_path, resp.content)
-                continue
+                class_url = f"{base_class_url}{class_id}"
+                print(f"[Class] Downloading: {class_url}")
+                random_delay()
+                resp = fetch_with_retries(class_url)
+                if resp is None:
+                    print(f"[ERROR] Impossible de télécharger {class_url} (request failed)")
+                    continue
+
+                log_response_info(resp)
+
+                snippet = resp.text[:1000].lower()
+                if "captcha" in snippet or "cloudflare" in snippet or "you are being redirected" in snippet or "consent" in snippet:
+                    print("  -> WARNING: page contains possible anti-bot / captcha / consent markup. Saving for inspection.")
+                    err_path = os.path.join(ERROR_DIR, f"class_{lang}_{class_id}_warning.html")
+                    save_text(err_path, resp.text)
+                if is_html_response(resp):
+                    save_bytes(class_path_file, resp.content)
+                    class_html = resp.content
+                    print(f"  -> Saved class page: {class_path_file} ({len(resp.content)} bytes)")
+                else:
+                    print(f"  -> Unexpected content-type for class page: {resp.headers.get('Content-Type')}. Saved to errors.")
+                    err_path = os.path.join(ERROR_DIR, f"class_{lang}_{class_id}_badcontent.bin")
+                    save_bytes(err_path, resp.content)
+                    continue
 
             # parse class html and extract spell links
             try:
-                spell_links = extract_spell_links_from_class_html(resp.text, SITE_ROOT)
+                spell_links = extract_spell_links_from_class_html(class_html, SITE_ROOT)
                 print(f"  -> Found {len(spell_links)} unique spell links in class page.")
             except Exception as e:
                 print(f"  -> Error parsing class HTML: {e}")
@@ -199,6 +206,12 @@ def main():
 
             # download each spell page
             for spell_url in spell_links:
+                sid = extract_spell_id_from_url(spell_url) or "unknown"
+                spell_file = os.path.join(spells_dir, f"{sid}.html")
+                if is_downloaded(spell_file):
+                    print(f"    [Spell] Already downloaded, skipping: {spell_file}")
+                    continue
+
                 # ensure the URL pattern roughly matches expected structure
                 # optional small delay before each spell download
                 random_delay()
@@ -216,9 +229,7 @@ def main():
                     save_text(os.path.join(ERROR_DIR, err_filename), sresp.text)
                 # save only if HTML
                 if is_html_response(sresp):
-                    sid = extract_spell_id_from_url(spell_url) or "unknown"
                     # Use the {idSpell}.html name to avoid collisions across classes
-                    spell_file = os.path.join(spells_dir, f"{sid}.html")
                     save_bytes(spell_file, sresp.content)
                     print(f"      -> Saved spell page: {spell_file} ({len(sresp.content)} bytes)")
                 else:

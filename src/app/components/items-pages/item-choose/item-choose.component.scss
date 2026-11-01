@@ -246,3 +246,26 @@
         display: none !important;
     }
 }
+
+// Mobile : liste fixe à gauche, sans boutons craftku / historique
+@media screen and (max-width: 1000px) {
+    :host {
+        margin: 0;
+        padding: 8px 0 60px;
+        box-sizing: border-box;
+        border-radius: 0;
+        box-shadow: none;
+        scrollbar-width: none;
+    }
+
+    :host::-webkit-scrollbar {
+        display: none;
+    }
+
+    .content {
+        .buttonGroupe,
+        app-historics-list {
+            display: none !important;
+        }
+    }
+}
