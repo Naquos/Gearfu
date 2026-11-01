@@ -35,6 +35,25 @@ app-item-choose {
     }
 }
 
+@media screen and (max-width: 1000px) {
+    .content {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 8px 12px;
+
+        .row {
+            gap: 12px;
+
+            app-equipped-sorts,
+            app-enchantement-chasses,
+            app-recapitulatif-aptitudes {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 1300px) {
     .content {
         .row {

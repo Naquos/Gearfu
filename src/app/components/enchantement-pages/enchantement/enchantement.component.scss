@@ -41,7 +41,16 @@ app-item-choose {
 
         .column,
         app-enchantement-sublimations-community {
-            width: 80% !important;
+            width: 96% !important;
+            min-width: 0;
+        }
+
+        .column {
+            app-enchantement-chasses,
+            app-enchantement-effets,
+            app-enchantement-sublimations {
+                min-width: 0;
+            }
         }
     }
 }

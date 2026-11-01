@@ -6,14 +6,18 @@
     --color-white-checkbox: var(--color-white);
 
     --color-accent: #213A57;
-    --stat-water: #268de2;
-    --stat-wind: #8c20be;
-    --stat-fire: #b84a00;
-    --stat-earth: #0f8a1c;
+    --stat-water: #0a4577;
+    --stat-wind: #62178f;
+    --stat-fire: #7d3200;
+    --stat-earth: #085410;
+    --stat-hp: #861919;
+    --stat-pa: #0a4577;
+    --stat-pm: #085410;
+    --stat-pw: #0a4577;
     --color-accent-hero: linear-gradient(120deg, #1B263B, #415A77);
     --color-accent-soft: #b9cce2;
     --color-text-on-accent: #ffffff;
-    --color-text-muted: #3f506a;
+    --color-text-muted: #2f3e55;
 
     --color-surface-empty: #e8eef5;
     --color-surface-page: #b3c2d5;
@@ -33,19 +37,19 @@
     --color-text-inverse: #14233a;
     --color-text-primary: #213A57;
     --color-text-dark: #14233a;
-    --color-text-muted-on-dark: #3f506a;
+    --color-text-muted-on-dark: #2f3e55;
 
-    --color-positive: #19861d;
+    --color-positive: #0a5410;
     --color-positive-alt: #00C896;
-    --color-negative: #F44336;
+    --color-negative: #8c1a14;
     --color-negative-strong: #E63946;
     --color-negative-alt: #FF6B35;
     --color-warning: orange;
-    --color-danger: red;
+    --color-danger: #861919;
     --color-white: white;
 
     --overlay-danger: #f6d5d5;
-    --color-text-danger: #a33;
+    --color-text-danger: #7f1b1b;
     --shadow-soft-highlight-color: rgba(255, 255, 255, 0.6);
     --shadow-panel-color: rgba(33, 58, 87, 0.1);
     --shadow-header-color: rgba(33, 58, 87, 0.12);
@@ -66,8 +70,8 @@
     --gradient-panel: var(--color-surface-mid);
     --gradient-app-header: var(--color-surface-deep);
     --gradient-sidebar: var(--color-surface-deep);
-    --gradient-positive: linear-gradient(145deg, var(--color-positive), var(--color-positive-alt));
-    --gradient-negative: linear-gradient(145deg, var(--color-negative-strong), var(--color-negative-alt));
+    --gradient-positive: linear-gradient(145deg, #5fd07a, #6fe3b5);
+    --gradient-negative: linear-gradient(145deg, #ff8a80, #ffa27a);
     --gradient-skeleton: linear-gradient(90deg, var(--skeleton-shimmer-start) 25%, var(--skeleton-shimmer-middle) 50%, var(--skeleton-shimmer-start) 75%);
 
     --animation-scale-up-bg-color: rgb(82, 47, 10);
@@ -81,7 +85,15 @@
     --stat-earth: #03D106;
     --stat-water: #268de2;
     --stat-wind: #BF79E0;
-
+    --stat-hp: red;
+    --stat-pa: #268de2;
+    --stat-pm: green;
+    --stat-pw: #268de2;
+    --color-positive: #19861d;
+    --color-negative: #F44336;
+    --color-danger: red;
+    --gradient-positive: linear-gradient(145deg, var(--color-positive), var(--color-positive-alt));
+    --gradient-negative: linear-gradient(145deg, var(--color-negative-strong), var(--color-negative-alt));
     --color-accent: #415A77;
     --color-accent-soft: #253347;
     --color-text-muted: #b1bac4;

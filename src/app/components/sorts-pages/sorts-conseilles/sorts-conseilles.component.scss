@@ -41,6 +41,7 @@
     height: fit-content;
     margin: 0 auto 15px;
 
+
     .header {
         align-items: center;
         justify-content: center;
@@ -71,5 +72,15 @@
                 font-weight: 700;
             }
         }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .card .content {
+        grid-template-rows: none;
+        grid-auto-flow: row;
+        grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+        justify-items: center;
+        overflow-x: visible;
     }
 }

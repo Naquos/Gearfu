@@ -244,6 +244,73 @@
     }
 }
 
+@media screen and (max-width: 1000px) {
+    .card {
+        box-sizing: border-box;
+        white-space: normal;
+
+        .body {
+            min-width: 0;
+
+            .group-item-chasses {
+                flex-wrap: wrap;
+                box-sizing: border-box;
+                width: 100%;
+                margin: 2px 0;
+
+                .sublimations {
+                    flex: 0 0 100%;
+                    flex-direction: row;
+                    width: 100% !important;
+                    margin: 4px 0 0;
+                    padding-left: 5px;
+                    box-sizing: border-box;
+
+                    span {
+                        display: block;
+                        flex: 1;
+                        min-width: 0;
+                        height: auto;
+                        margin-left: 8px;
+                        font-size: 12px;
+                        overflow-wrap: anywhere;
+                    }
+                }
+
+                .sublimations.invalid::after {
+                    left: 20px;
+                }
+            }
+
+            .epique-relique {
+                height: auto;
+                gap: 8px;
+
+                .epique,
+                .relique {
+                    flex: 1 1 0;
+                    min-width: 0;
+
+                    span {
+                        width: auto;
+                        min-width: 0;
+                        overflow-wrap: anywhere;
+                    }
+                }
+
+                .empty-sublimation-epique,
+                .empty-sublimation-relic {
+                    box-sizing: border-box;
+                    min-width: 0;
+                    padding: 5px 8px;
+                    text-align: center;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 700px) {
     .card {
         .sublimations {

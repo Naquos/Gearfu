@@ -81,3 +81,34 @@
         padding: 12px;
     }
 }
+
+@media screen and (max-width: 1000px) {
+    .body {
+        align-items: stretch;
+        margin: 0 12px;
+
+        .column {
+            width: 100%;
+            min-width: 0;
+        }
+    }
+
+    :host ::ng-deep app-sorts-conseilles .card {
+        margin: 0 12px 16px;
+        min-width: 0;
+        width: auto;
+    }
+
+    :host ::ng-deep app-equipped-sorts,
+    :host ::ng-deep app-selected-sort,
+    :host ::ng-deep app-sort-list {
+        min-width: 0;
+    }
+
+    :host ::ng-deep .body app-equipped-sorts .card,
+    :host ::ng-deep .body app-selected-sort .card,
+    :host ::ng-deep .body app-sort-list .card {
+        margin: 0 0 16px;
+        min-width: 0;
+    }
+}

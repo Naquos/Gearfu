@@ -109,6 +109,42 @@
 
 
 
+@media screen and (max-width: 1000px) {
+    .card {
+        box-sizing: border-box;
+
+        .body .effets-descriptions-container {
+            width: 100%;
+
+            .effets-description {
+                height: auto;
+                min-height: 35px;
+                padding: 4px 6px;
+                box-sizing: border-box;
+                margin-left: 0;
+                margin-right: 0;
+
+                img {
+                    flex: none;
+                }
+
+                span {
+                    flex: 1;
+                    min-width: 0;
+                    margin: 0 6px;
+                    text-align: left;
+                    white-space: normal;
+                    overflow-wrap: anywhere;
+                }
+
+                .logos {
+                    flex: none;
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 1700px) {
     .card {
         overflow: hidden;
