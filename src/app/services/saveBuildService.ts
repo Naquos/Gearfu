@@ -359,9 +359,9 @@ export class SaveBuildService {
     public removeBuildByIndex(index: number): void {
         const currentBuilds = this.buildList.getValue();
         if (index >= 0 && index < currentBuilds.length) {
-            currentBuilds.splice(index, 1);
-            this.buildList.next(currentBuilds);
-            this.localStorageService.setItem(KeyEnum.KEY_SAVE_BUILD_ALL, currentBuilds);
+            const updatedBuilds = currentBuilds.filter((_, buildIndex) => buildIndex !== index);
+            this.buildList.next(updatedBuilds);
+            this.localStorageService.setItem(KeyEnum.KEY_SAVE_BUILD_ALL, updatedBuilds);
         }
     }
 
