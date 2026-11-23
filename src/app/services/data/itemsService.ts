@@ -35,6 +35,7 @@ import { IdItemElevageEnum } from "../../models/enum/idItemElevageEnum";
 import { ItemCroupierEnum } from "../../models/enum/ItemCroupierEnum";
 import { AnimationService } from "../animations/animation.service";
 import { LevelFormService } from "../form-signal/levelFormService";
+import { ItemCdn } from "../../models/ankama-cdn/itemCdn";
 
 @Injectable({ providedIn: 'root' })
 export class ItemsService {
@@ -447,12 +448,17 @@ export class ItemsService {
     return this.getEffectValue(effectsMap, positiveId) - this.getEffectValue(effectsMap, negativeId);
   }
 
+  private itemHasNoName(item: ItemCdn): boolean {
+    return !item.title?.fr?.trim();
+  }
+
 
   private initItemsList(): void {
     combineLatest([this.ankamaCdnFacade.item$, this.ankamaCdnFacade.recipes$, this.ankamaCdnFacade.idSiouperes$, this.monsterDropService.monsterDrops$]).pipe(
       take(1),
       tap(([itemsCdn, recipes, idSiouperes, monsterDrops]) => {
         itemsCdn.filter(x => !isExcludeIdItem(x.definition.item.id))
+          .filter(x => !this.itemHasNoName(x))
           .forEach(x => this.items.push({
             id: x.definition.item.id,
             level: x.definition.item.level,

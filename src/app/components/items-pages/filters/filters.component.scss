@@ -32,7 +32,7 @@
                 background: none;
                 border: none;
                 box-shadow: none;
-                color: var(--color-accent);
+                color: var(--color-accent-link);
                 font-weight: bold;
                 text-decoration: underline;
                 cursor: pointer;
@@ -62,7 +62,7 @@
                 cursor: pointer;
 
                 &:focus-visible {
-                    outline: 2px solid var(--color-accent);
+                    outline: 2px solid var(--color-focus, var(--color-accent));
                 }
 
                 mat-icon {

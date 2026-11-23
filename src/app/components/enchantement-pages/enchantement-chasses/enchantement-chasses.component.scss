@@ -172,12 +172,12 @@
 
             .empty-sublimation-epique {
                 background-color: #eebcd7;
-                color: #d12882;
+                color: var(--color-empty-epique-text);
             }
 
             .empty-sublimation-relic {
                 background-color: #c570ef;
-                color: #7a2fc8;
+                color: var(--color-empty-relique-text);
             }
 
             .empty-sublimation-epique,

@@ -79,7 +79,7 @@
     }
 
     &:focus-visible {
-        outline: 2px solid var(--color-accent);
+        outline: 2px solid var(--color-focus, var(--color-accent));
         outline-offset: 1px;
     }
 
@@ -128,7 +128,7 @@
         }
 
         &:focus-visible {
-            outline: 2px solid var(--color-accent);
+            outline: 2px solid var(--color-focus, var(--color-accent));
             outline-offset: 1px;
         }
 

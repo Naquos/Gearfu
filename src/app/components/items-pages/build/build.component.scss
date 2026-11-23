@@ -255,7 +255,7 @@
         &.danger {
             margin-left: auto;
             background: transparent;
-            color: #a3262a;
+            color: var(--color-danger-text);
         }
     }
 }
